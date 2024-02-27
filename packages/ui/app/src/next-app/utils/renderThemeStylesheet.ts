@@ -6,13 +6,17 @@ import { getFontVariables } from "./getFontVariables";
 import { getLayoutVariables } from "./getLayoutVariables";
 
 export function renderThemeStylesheet(
-    config: DocsV1Read.DocsConfig,
+    backgroundImage: string | undefined,
+    colorsConfig: DocsV1Read.ColorsConfigV3 | undefined,
+    typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
+    layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
+    css: DocsV1Read.CssConfig | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): string {
-    const bg = getBgVariables(config, files);
-    const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(config.typographyV2, files);
-    const colors = getColorVariables(config.colorsV3);
-    const layout = getLayoutVariables(config.layout);
+    const bg = getBgVariables(backgroundImage, files);
+    const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(typography, files);
+    const colors = getColorVariables(colorsConfig);
+    const layout = getLayoutVariables(layoutConfig);
 
     const cssVariables = {
         ...bg,
@@ -24,7 +28,7 @@ export function renderThemeStylesheet(
     const bgColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_LIGHT]})`).toHex()}`;
     const bgDarkColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_DARK]})`).toHex()}`;
 
-    const inlinedCss = config.css?.inline?.join("\n\n") ?? "";
+    const inlinedCss = css?.inline?.join("\n\n") ?? "";
 
     return `
 :root {

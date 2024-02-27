@@ -13,13 +13,13 @@ import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace ApiArtifacts {
     export interface Props {
-        apiDefinition: ResolvedWithApiDefinition;
+        apiDefinition: ResolvedWithApiDefinition | undefined;
         apiArtifacts: DocsV1Read.ApiArtifacts;
     }
 }
 
 export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
-    const slug = joinUrlSlugs(...apiDefinition.slug, "client-libraries");
+    const slug = joinUrlSlugs(...(apiDefinition?.slug ?? []), "client-libraries");
 
     const { setTargetRef } = useApiPageCenterElement({ slug });
 

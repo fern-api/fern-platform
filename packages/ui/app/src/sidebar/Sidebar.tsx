@@ -20,7 +20,7 @@ export interface SidebarProps {
     navigation: SidebarNavigation;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     searchInfo: DocsV1Read.SearchInfo;
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
     showSearchBar?: boolean;
 }

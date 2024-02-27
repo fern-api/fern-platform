@@ -4,25 +4,25 @@ import { isNonNullish } from "@fern-ui/core-utils";
 export interface FlattenedParameter {
     key: string;
     type: APIV1Read.TypeReference;
-    description: string | null;
-    availability: APIV1Read.Availability | null;
+    description: string | undefined;
+    availability: APIV1Read.Availability | undefined;
 }
 
 export interface FlattenedEndpointDefinition {
     id: string;
     slug: string[];
-    name: string | null;
-    description: string | null;
-    availability: APIV1Read.Availability | null;
+    name: string | undefined;
+    description: string | undefined;
+    availability: APIV1Read.Availability | undefined;
     authed: boolean;
-    defaultEnvironment: APIV1Read.Environment | null;
+    defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     method: APIV1Read.HttpMethod;
     path: APIV1Read.EndpointPath;
     queryParameters: APIV1Read.QueryParameter[];
     headers: APIV1Read.Header[];
-    request: APIV1Read.HttpRequest | null;
-    response: APIV1Read.HttpResponse | null;
+    request: APIV1Read.HttpRequest | undefined;
+    response: APIV1Read.HttpResponse | undefined;
     errors: APIV1Read.ErrorDeclarationV2[];
     examples: APIV1Read.ExampleEndpointCall[];
 }
@@ -30,11 +30,11 @@ export interface FlattenedEndpointDefinition {
 export interface FlattenedWebSocketChannel {
     id: string;
     slug: string[];
-    name: string | null;
-    description: string | null;
-    availability: APIV1Read.Availability | null;
+    name: string | undefined;
+    description: string | undefined;
+    availability: APIV1Read.Availability | undefined;
     authed: boolean;
-    defaultEnvironment: APIV1Read.Environment | null;
+    defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     path: APIV1Read.EndpointPath;
     headers: APIV1Read.Header[];
@@ -46,9 +46,9 @@ export interface FlattenedWebSocketChannel {
 export interface FlattenedWebhookDefinition {
     id: string;
     slug: string[];
-    name: string | null;
-    description: string | null;
-    availability: APIV1Read.Availability | null;
+    name: string | undefined;
+    description: string | undefined;
+    availability: APIV1Read.Availability | undefined;
     method: APIV1Read.WebhookHttpMethod;
     path: string[];
     headers: APIV1Read.Header[];
@@ -59,7 +59,7 @@ export interface FlattenedWebhookDefinition {
 export interface FlattenedSubpackage extends FlattenedApiDefinitionPackage {
     subpackageId: string;
     name: string;
-    description: string | null;
+    description: string | undefined;
 }
 
 export function isFlattenedSubpackage(package_: FlattenedApiDefinitionPackage): package_ is FlattenedSubpackage {
@@ -72,11 +72,12 @@ export interface FlattenedApiDefinitionPackage {
     webhooks: FlattenedWebhookDefinition[];
     subpackages: FlattenedSubpackage[];
     slug: string[];
+    usedTypes: string[];
 }
 
 export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
     api: FdrAPI.ApiDefinitionId;
-    auth: APIV1Read.ApiAuth | null;
+    auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, APIV1Read.TypeDefinition>;
 }
 
@@ -88,7 +89,7 @@ export function flattenApiDefinition(
 
     return {
         api: apiDefinition.id,
-        auth: apiDefinition.auth ?? null,
+        auth: apiDefinition.auth,
         types: apiDefinition.types,
         ...package_,
     };
@@ -111,6 +112,7 @@ function flattenPackage(
             webhooks: [],
             subpackages: [],
             slug: parentSlugs,
+            usedTypes: [],
         };
     }
 
@@ -119,19 +121,20 @@ function flattenPackage(
             (endpoint): FlattenedEndpointDefinition => ({
                 id: endpoint.id,
                 slug: [...parentSlugs, endpoint.urlSlug],
-                name: endpoint.name ?? null,
-                description: endpoint.description ?? null,
-                availability: endpoint.availability ?? null,
+                name: endpoint.name,
+                description: endpoint.description,
+                availability: endpoint.availability,
                 authed: endpoint.authed,
-                defaultEnvironment:
-                    endpoint.environments.find((enironment) => enironment.id === endpoint.defaultEnvironment) ?? null,
+                defaultEnvironment: endpoint.environments.find(
+                    (enironment) => enironment.id === endpoint.defaultEnvironment,
+                ),
                 environments: endpoint.environments,
                 method: endpoint.method,
                 path: endpoint.path,
                 queryParameters: endpoint.queryParameters,
                 headers: endpoint.headers,
-                request: endpoint.request ?? null,
-                response: endpoint.response ?? null,
+                request: endpoint.request,
+                response: endpoint.response,
                 errors: endpoint.errorsV2 ?? [],
                 examples: endpoint.examples,
             }),
@@ -140,12 +143,13 @@ function flattenPackage(
             (websocket): FlattenedWebSocketChannel => ({
                 id: websocket.id,
                 slug: [...parentSlugs, websocket.urlSlug],
-                name: websocket.name ?? null,
-                description: websocket.description ?? null,
-                availability: websocket.availability ?? null,
+                name: websocket.name,
+                description: websocket.description,
+                availability: websocket.availability,
                 authed: websocket.auth,
-                defaultEnvironment:
-                    websocket.environments.find((enironment) => enironment.id === websocket.defaultEnvironment) ?? null,
+                defaultEnvironment: websocket.environments.find(
+                    (enironment) => enironment.id === websocket.defaultEnvironment,
+                ),
                 environments: websocket.environments,
                 path: websocket.path,
                 headers: websocket.headers,
@@ -158,9 +162,9 @@ function flattenPackage(
             (webhook): FlattenedWebhookDefinition => ({
                 id: webhook.id,
                 slug: [...parentSlugs, webhook.urlSlug],
-                name: webhook.name ?? null,
-                description: webhook.description ?? null,
-                availability: null,
+                name: webhook.name,
+                description: webhook.description,
+                availability: undefined,
                 method: webhook.method,
                 path: webhook.path,
                 headers: webhook.headers,
@@ -178,11 +182,12 @@ function flattenPackage(
                 return {
                     subpackageId: subpackage.subpackageId,
                     name: subpackage.name,
-                    description: subpackage.description ?? null,
+                    description: subpackage.description,
                     ...flattenPackage(subpackage, subpackages, subpackageSlugs),
                 };
             })
             .filter(isNonNullish),
         slug: parentSlugs,
+        usedTypes: currentPackage.types,
     };
 }

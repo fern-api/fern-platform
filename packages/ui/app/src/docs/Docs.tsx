@@ -27,10 +27,18 @@ import { useIsScrolled } from "./useIsScrolled";
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 interface DocsProps {
-    config: DocsV1Read.DocsConfig;
+    // config: DocsV1Read.DocsConfig;
+    hasBackgroundImage: boolean;
+    colors: DocsV1Read.ColorsConfigV3 | undefined;
+    navbarLinks: DocsV1Read.NavbarLink[];
+    layout: DocsV1Read.DocsLayoutConfig | undefined;
+    logo: DocsV1Read.FileId | undefined;
+    logoV2: DocsV1Read.LogoV2 | undefined;
+    logoHeight: DocsV1Read.Height | undefined;
+    logoHref: DocsV1Read.Url | undefined;
     search: DocsV1Read.SearchInfo;
     navigation: SidebarNavigation;
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -38,10 +46,18 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
-    config,
+    // config,
+    hasBackgroundImage,
+    colors,
+    layout,
     search,
     navigation,
     algoliaSearchIndex,
+    navbarLinks,
+    logo,
+    logoV2,
+    logoHeight,
+    logoHref,
 }) {
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
@@ -78,32 +94,28 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const openMobileSidebar = useOpenMobileSidebar();
     const closeMobileSidebar = useCloseMobileSidebar();
 
-    const hasSpecifiedBackgroundImage = !!config.backgroundImage;
-
-    const { colorsV3, layout } = config;
-
     const [accentColor, setAccentColor] = useState<string>();
     useEffect(() => {
-        if (colorsV3?.type === "darkAndLight") {
+        if (colors?.type === "darkAndLight") {
             if (theme === "dark" || theme === "light") {
-                setAccentColor(tinycolor(colorsV3?.[theme].accentPrimary).toHex8String());
+                setAccentColor(tinycolor(colors?.[theme].accentPrimary).toHex8String());
             }
         } else {
-            setAccentColor(tinycolor(colorsV3?.accentPrimary).toHex8String());
+            setAccentColor(tinycolor(colors?.accentPrimary).toHex8String());
         }
-    }, [colorsV3, theme]);
+    }, [colors, theme]);
 
     const renderBackground = useCallback(
         (className?: string) => (
             <div className={classNames(className, "clipped-background")}>
                 <BgImageGradient
                     className="h-screen opacity-60 dark:opacity-80"
-                    colors={colorsV3}
-                    hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage}
+                    colors={colors}
+                    hasSpecifiedBackgroundImage={hasBackgroundImage}
                 />
             </div>
         ),
-        [colorsV3, hasSpecifiedBackgroundImage],
+        [colors, hasBackgroundImage],
     );
 
     const isScrolled = useIsScrolled();
@@ -113,7 +125,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     return (
         <>
             <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
-            <BgImageGradient colors={colorsV3} hasSpecifiedBackgroundImage={hasSpecifiedBackgroundImage} />
+            <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
             <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes}>
@@ -130,7 +142,12 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             {renderBackground()}
                             <Header
                                 className="max-w-page-width mx-auto"
-                                config={config}
+                                logo={logo}
+                                logoV2={logoV2}
+                                logoHeight={logoHeight}
+                                logoHref={logoHref}
+                                colors={colors}
+                                navbarLinks={navbarLinks}
                                 isMobileSidebarOpen={isMobileSidebarOpen}
                                 openMobileSidebar={openMobileSidebar}
                                 closeMobileSidebar={closeMobileSidebar}
@@ -148,7 +165,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             searchInfo={search}
                             algoliaSearchIndex={algoliaSearchIndex}
-                            navbarLinks={config.navbarLinks}
+                            navbarLinks={navbarLinks}
                             showSearchBar={layout?.searchbarPlacement !== "HEADER"}
                         />
 

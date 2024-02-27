@@ -14,9 +14,16 @@ export declare namespace App {
     export interface Props {
         baseUrl: DocsV2Read.BaseUrl;
         navigation: SidebarNavigation;
-        config: DocsV1Read.DocsConfig;
+        hasBackgroundImage: boolean;
+        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        navbarLinks: DocsV1Read.NavbarLink[];
+        layout: DocsV1Read.DocsLayoutConfig | undefined;
+        logo: DocsV1Read.FileId | undefined;
+        logoV2: DocsV1Read.LogoV2 | undefined;
+        logoHeight: DocsV1Read.Height | undefined;
+        logoHref: DocsV1Read.Url | undefined;
         search: DocsV1Read.SearchInfo;
-        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
     }
@@ -25,15 +32,21 @@ export declare namespace App {
 export const DocsApp: React.FC<App.Props> = ({
     baseUrl,
     navigation: unmemoizedNavigation,
-    config: unmemoizedConfig,
+    hasBackgroundImage,
     search: unmemoizedSearch,
     algoliaSearchIndex,
     files,
     resolvedPath: unmemoizedResolvedPath,
+    colors,
+    layout,
+    navbarLinks,
+    logo,
+    logoV2,
+    logoHeight,
+    logoHref,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
     const resolvedPath = useDeepCompareMemoize(unmemoizedResolvedPath);
-    const config = useDeepCompareMemoize(unmemoizedConfig);
     const navigation = useDeepCompareMemoize(unmemoizedNavigation);
 
     useEffect(() => {
@@ -47,14 +60,21 @@ export const DocsApp: React.FC<App.Props> = ({
                     (children, Context) => (
                         <Context>{children}</Context>
                     ),
-                    <DocsContextProvider files={files} config={config} baseUrl={baseUrl}>
+                    <DocsContextProvider files={files} layout={layout} baseUrl={baseUrl}>
                         <NavigationContextProvider
                             resolvedPath={resolvedPath}
                             navigation={navigation}
                             basePath={baseUrl.basePath}
                         >
                             <Docs
-                                config={config}
+                                hasBackgroundImage={hasBackgroundImage}
+                                colors={colors}
+                                layout={layout}
+                                navbarLinks={navbarLinks}
+                                logo={logo}
+                                logoV2={logoV2}
+                                logoHeight={logoHeight}
+                                logoHref={logoHref}
                                 search={search}
                                 navigation={navigation}
                                 algoliaSearchIndex={algoliaSearchIndex}

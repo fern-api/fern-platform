@@ -5,10 +5,9 @@ const CSS_VARIABLES = {
 };
 
 export function getBgVariables(
-    config: DocsV1Read.DocsConfig,
+    backgroundImageKey: string | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Record<string, string> {
-    const backgroundImageKey = config.backgroundImage;
     if (backgroundImageKey == null) {
         return {};
     }

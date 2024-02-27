@@ -1,4 +1,3 @@
-import { Root } from "hast";
 import { sortBy } from "lodash-es";
 import { ResolvedExampleEndpointCall } from "../../util/resolver";
 import { titleCase } from "../../util/titleCase";
@@ -9,7 +8,7 @@ export interface CodeExample {
     language: string;
     name: string;
     code: string;
-    hast: Root;
+    // hast: Root;
     install: string | null | undefined;
     exampleCall: ResolvedExampleEndpointCall;
 }
@@ -34,7 +33,7 @@ export function generateCodeExamples(examples: ResolvedExampleEndpointCall[]): C
                     language: snippet.language,
                     name: snippet.name ?? example.name ?? `Example ${i + 1}`,
                     code: snippet.code,
-                    hast: snippet.hast,
+                    // hast: snippet.hast,
                     install: snippet.install,
                     exampleCall: example,
                 },

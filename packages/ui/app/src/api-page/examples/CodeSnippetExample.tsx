@@ -1,14 +1,14 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import type { Root } from "hast";
 import jp from "jsonpath";
 import { createRef, FC, useEffect, useMemo } from "react";
-import { FernSyntaxHighlighterHast } from "../../commons/FernSyntaxHighlighter";
+import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
 
 export declare namespace CodeSnippetExample {
     export interface Props extends TitledExample.Props {
-        hast: Root;
+        // hast: Root;
+        code: string;
         language: string;
         hoveredPropertyPath: JsonPropertyPath | undefined;
         json: unknown;
@@ -19,7 +19,7 @@ export declare namespace CodeSnippetExample {
 }
 
 export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
-    hast,
+    code,
     language,
     hoveredPropertyPath,
     json,
@@ -68,15 +68,16 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
 
     return (
         <TitledExample {...props}>
-            <FernSyntaxHighlighterHast
+            <FernSyntaxHighlighter
                 className="rounded-t-0 rounded-b-[inherit]"
                 ref={codeBlockRef}
                 style={scrollAreaStyle}
                 viewportRef={viewportRef}
-                hast={hast}
+                // hast={hast}
                 language={language}
                 fontSize="sm"
                 highlightLines={requestHighlightLines}
+                code={code}
             />
         </TitledExample>
     );

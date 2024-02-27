@@ -5,12 +5,12 @@ import { DocsContext } from "./DocsContext";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        config: DocsV1Read.DocsConfig;
+        layout: DocsV1Read.DocsLayoutConfig | undefined;
         baseUrl: DocsV2Read.BaseUrl;
     }>;
 }
 
-export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ baseUrl, files, config, children }) => {
+export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ baseUrl, files, layout, children }) => {
     const resolveFile = useCallback(
         (fileId: DocsV1Read.FileId): DocsV1Read.File_ | undefined => {
             const file = files[fileId];
@@ -27,7 +27,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ baseU
             value={{
                 domain: baseUrl.domain,
                 basePath: baseUrl.basePath,
-                config,
+                layout,
                 resolveFile,
             }}
         >

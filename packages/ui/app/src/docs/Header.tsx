@@ -14,7 +14,12 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        config: DocsV1Read.DocsConfig;
+        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        navbarLinks: DocsV1Read.NavbarLink[];
+        logo: DocsV1Read.FileId | undefined;
+        logoV2: DocsV1Read.LogoV2 | undefined;
+        logoHeight: DocsV1Read.Height | undefined;
+        logoHref: DocsV1Read.Url | undefined;
         isMobileSidebarOpen: boolean;
         openMobileSidebar: () => void;
         closeMobileSidebar: () => void;
@@ -27,12 +32,17 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     {
         className,
         style,
-        config,
+        colors,
+        navbarLinks,
         isMobileSidebarOpen,
         openMobileSidebar,
         closeMobileSidebar,
         showSearchBar = true,
         navigation,
+        logo,
+        logoV2,
+        logoHeight,
+        logoHref,
     },
     ref,
 ) {
@@ -40,7 +50,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const searchService = useSearchService();
 
-    const { navbarLinks, colorsV3 } = config;
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
@@ -69,7 +78,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     </FernLinkButton>
                 ))}
 
-                {colorsV3?.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
+                {colors?.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>
         </div>
     );
@@ -87,7 +96,10 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             style={style}
         >
             <HeaderLogoSection
-                config={config}
+                logo={logo}
+                logoV2={logoV2}
+                logoHeight={logoHeight}
+                logoHref={logoHref}
                 versions={navigation.versions}
                 currentVersionIndex={navigation.currentVersionIndex}
             />
@@ -110,7 +122,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">
-                    {colorsV3?.type === "darkAndLight" && <ThemeButton size="large" />}
+                    {colors?.type === "darkAndLight" && <ThemeButton size="large" />}
 
                     {searchService.isAvailable && (
                         <FernButton

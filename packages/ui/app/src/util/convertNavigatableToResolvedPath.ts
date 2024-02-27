@@ -1,8 +1,7 @@
 import type { DocsNode, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
-import { flattenApiDefinition, FlattenedApiDefinition, FlattenedSubpackage } from "./flattenApiDefinition";
+import { flattenApiDefinition } from "./flattenApiDefinition";
 import { serializeMdxContent } from "./mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { resolveApiDefinition } from "./resolver";
 import { getFullSlugForNavigatable } from "./slug";
 
 export async function convertNavigatableToResolvedPath({
@@ -59,13 +58,14 @@ export async function convertNavigatableToResolvedPath({
                 ? parentSlugs
                 : [...parentSlugs, navigatable.section.urlSlug];
             const flattenedApiDefinition = flattenApiDefinition(api, apiDefinitionParentSlug);
-            const prunedApiDefinition = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
+            // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
+            // const apiDefinition = await resolveApiDefinition(prunedApiDefinition);
 
             return {
                 type: "api-page",
                 fullSlug,
                 api: navigatable.section.api,
-                apiDefinition: await resolveApiDefinition(prunedApiDefinition),
+                apiDefinition: flattenedApiDefinition,
                 artifacts: navigatable.section.artifacts ?? null,
                 showErrors: navigatable.section.showErrors,
                 neighbors,
@@ -76,29 +76,41 @@ export async function convertNavigatableToResolvedPath({
     }
 }
 
-function findAndPruneApiSection(fullSlug: string, apiSection: FlattenedApiDefinition): FlattenedApiDefinition {
-    return {
-        ...apiSection,
-        endpoints: apiSection.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug),
-        websockets: apiSection.websockets.filter((websocket) => websocket.slug.join("/") === fullSlug),
-        webhooks: apiSection.webhooks.filter((webhook) => webhook.slug.join("/") === fullSlug),
-        subpackages: apiSection.subpackages
-            .filter((subpackage) => fullSlug.startsWith(subpackage.slug.join("/")))
-            .map((subpackage) => findAndPruneApiSubpackage(fullSlug, subpackage)),
-    };
-}
+// function findAndPruneApiSection(
+//     fullSlug: string,
+//     subpackage: FlattenedApiDefinition,
+// ): [FlattenedApiDefinition, string[]];
+// function findAndPruneApiSection(fullSlug: string, subpackage: FlattenedSubpackage): [FlattenedSubpackage, string[]];
+// function findAndPruneApiSection(
+//     fullSlug: string,
+//     subpackage: FlattenedSubpackage | FlattenedApiDefinition,
+// ): [FlattenedSubpackage | FlattenedApiDefinition, string[]] {
+//     const endpoints = subpackage.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug);
+//     const websockets = subpackage.websockets.filter((websocket) => websocket.slug.join("/") === fullSlug);
+//     const webhooks = subpackage.webhooks.filter((webhook) => webhook.slug.join("/") === fullSlug);
 
-function findAndPruneApiSubpackage(fullSlug: string, subpackage: FlattenedSubpackage): FlattenedSubpackage {
-    return {
-        ...subpackage,
-        endpoints: subpackage.endpoints.filter((endpoint) => endpoint.slug.join("/") === fullSlug),
-        websockets: subpackage.websockets.filter((websocket) => websocket.slug.join("/") === fullSlug),
-        webhooks: subpackage.webhooks.filter((webhook) => webhook.slug.join("/") === fullSlug),
-        subpackages: subpackage.subpackages
-            .filter((subpackage) => fullSlug.startsWith(subpackage.slug.join("/")))
-            .map((subpackage) => findAndPruneApiSubpackage(fullSlug, subpackage)),
-    };
-}
+//     const subpackages: FlattenedSubpackage[] = [];
+//     const usedTypes =
+//         endpoints.length > 0 && websockets.length > 0 && webhooks.length > 0 ? [...subpackage.usedTypes] : [];
+
+//     subpackage.subpackages
+//         .filter((subpackage) => fullSlug.startsWith(subpackage.slug.join("/")))
+//         .forEach((subpackage) => {
+//             const [prunedSubpackage, usedSubpackageTypes] = findAndPruneApiSection(fullSlug, subpackage);
+//             subpackages.push(prunedSubpackage);
+//             usedTypes.push(...usedSubpackageTypes);
+//         });
+
+//     const toRet = {
+//         ...subpackage,
+//         endpoints,
+//         websockets,
+//         webhooks,
+//         subpackages,
+//     };
+
+//     return [toRet as FlattenedSubpackage, usedTypes];
+// }
 
 function getNeighbor(
     docsNode: DocsNode | null,

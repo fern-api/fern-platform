@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
-import { getRouteNode } from "../../util/anchor";
+import { pinScrollPositionToRoute } from "../../navigation-context/pinScrollPositionToRoute";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 
 export declare namespace CodeExampleClientDropdown {
@@ -39,22 +39,15 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                 }))}
                 onValueChange={(value) => {
                     const client = clients.find((client) => client.language === value);
-                    if (client?.examples[0] != null) {
-                        const scrollY = window.scrollY;
-                        const currentTop = getRouteNode(route)?.getBoundingClientRect().top;
-                        onClickClient(
-                            client.examples.find((example) => example.exampleIndex === selectedClient.exampleIndex) ??
-                                client.examples[0],
-                        );
-
-                        const newTop = getRouteNode(route)?.getBoundingClientRect().top;
-
-                        // when switching between clients, the scroll position should be maintained
-                        if (currentTop != null && newTop != null) {
-                            const offset = scrollY - currentTop;
-                            window.scrollTo(0, newTop + offset);
+                    pinScrollPositionToRoute(route, () => {
+                        if (client?.examples[0] != null) {
+                            onClickClient(
+                                client.examples.find(
+                                    (example) => example.exampleIndex === selectedClient.exampleIndex,
+                                ) ?? client.examples[0],
+                            );
                         }
-                    }
+                    });
                 }}
             >
                 <FernButton

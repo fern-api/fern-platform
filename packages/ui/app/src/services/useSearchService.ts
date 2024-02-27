@@ -53,7 +53,7 @@ export function useSearchService(): SearchService {
 
 export function useCreateSearchService(
     searchInfo: DocsV1Read.SearchInfo,
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null,
+    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined,
     navigation: SidebarNavigation,
 ): void {
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);

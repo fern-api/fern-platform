@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { FlattenedApiDefinition } from "./flattenApiDefinition";
 import { type SerializedMdxContent } from "./mdx";
-import { ResolvedRootPackage } from "./resolver";
 
 export declare namespace ResolvedPath {
     interface Neighbor {
@@ -27,7 +27,7 @@ export declare namespace ResolvedPath {
         type: "api-page";
         fullSlug: string;
         api: string;
-        apiDefinition: ResolvedRootPackage;
+        apiDefinition: FlattenedApiDefinition;
         artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
         neighbors: Neighbors;

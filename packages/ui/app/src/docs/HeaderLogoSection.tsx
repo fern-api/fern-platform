@@ -8,14 +8,20 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { VersionDropdown } from "./VersionDropdown";
 
 export interface HeaderLogoSectionProps {
-    config: DocsV1Read.DocsConfig;
+    logo: DocsV1Read.FileId | undefined;
+    logoV2: DocsV1Read.LogoV2 | undefined;
+    logoHeight: DocsV1Read.Height | undefined;
+    logoHref: DocsV1Read.Url | undefined;
 
-    currentVersionIndex: number | null | undefined;
+    currentVersionIndex: number | undefined;
     versions: VersionInfo[];
 }
 
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
-    config: { logo, logoV2, logoHeight, logoHref },
+    logo,
+    logoV2,
+    logoHeight,
+    logoHref,
     currentVersionIndex,
     versions,
 }) => {

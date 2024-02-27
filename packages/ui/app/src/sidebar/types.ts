@@ -5,9 +5,9 @@ import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
 export interface SidebarNavigation {
-    currentTabIndex: number | null;
+    currentTabIndex: number | undefined;
     tabs: Omit<DocsV1Read.NavigationTab, "items">[];
-    currentVersionIndex: number | null;
+    currentVersionIndex: number | undefined;
     versions: VersionInfo[];
     sidebarNodes: SidebarNode[];
 }
@@ -31,7 +31,7 @@ export declare namespace SidebarNode {
         webhooks: SidebarNode.ApiPage[];
         websockets: SidebarNode.ApiPage[];
         subpackages: SidebarNode.ApiSection[];
-        artifacts: DocsV1Read.ApiArtifacts | null;
+        artifacts: DocsV1Read.ApiArtifacts | undefined;
     }
 
     export interface Section {
@@ -46,7 +46,7 @@ export declare namespace SidebarNode {
         id: string;
         slug: string[];
         title: string;
-        description: string | null;
+        description: string | undefined;
     }
 
     export interface Link {
@@ -88,7 +88,7 @@ function resolveSidebarNodeApiSection(
             id: endpoint.id,
             slug: [...slug, endpoint.urlSlug],
             title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-            description: endpoint.description ?? null,
+            description: endpoint.description,
             method: endpoint.method,
             stream: endpoint.response?.type.type === "stream",
         }),
@@ -100,7 +100,7 @@ function resolveSidebarNodeApiSection(
             id: websocket.id,
             slug: [...slug, websocket.urlSlug],
             title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
-            description: websocket.description ?? null,
+            description: websocket.description,
         }),
     );
     const webhooks = subpackage.webhooks.map(
@@ -110,7 +110,7 @@ function resolveSidebarNodeApiSection(
             id: webhook.id,
             slug: [...slug, webhook.urlSlug],
             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-            description: webhook.description ?? null,
+            description: webhook.description,
         }),
     );
     const subpackages = subpackage.subpackages
@@ -140,7 +140,7 @@ function resolveSidebarNodeApiSection(
         webhooks,
         websockets,
         subpackages,
-        artifacts: null,
+        artifacts: undefined,
     };
 }
 
@@ -163,7 +163,7 @@ export function resolveSidebarNodes(
                         ...page,
                         slug: [...parentSlugs, page.urlSlug],
                         type: "page",
-                        description: null,
+                        description: undefined,
                     });
                 } else {
                     sidebarNodes.push({
@@ -174,7 +174,7 @@ export function resolveSidebarNodes(
                                 ...page,
                                 slug: [...parentSlugs, page.urlSlug],
                                 type: "page",
-                                description: null,
+                                description: undefined,
                             },
                         ],
                     });
@@ -202,7 +202,7 @@ export function resolveSidebarNodes(
                         webhooks: resolved?.webhooks ?? [],
                         websockets: resolved?.websockets ?? [],
                         subpackages: resolved?.subpackages ?? [],
-                        artifacts: api.artifacts ?? null,
+                        artifacts: api.artifacts,
                     });
                 }
             },

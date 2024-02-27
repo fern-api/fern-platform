@@ -18,9 +18,23 @@ export declare namespace DocsPage {
         // docs: DocsV2Read.LoadDocsForUrlResponse;
         baseUrl: DocsV2Read.BaseUrl;
         navigation: SidebarNavigation;
-        config: DocsV1Read.DocsConfig;
+
+        title: string | undefined;
+        favicon: string | undefined;
+        backgroundImage: string | undefined;
+        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        layout: DocsV1Read.DocsLayoutConfig | undefined;
+        typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
+        css: DocsV1Read.CssConfig | undefined;
+        js: DocsV1Read.JsConfig | undefined;
+        navbarLinks: DocsV1Read.NavbarLink[];
+        logo: DocsV1Read.FileId | undefined;
+        logoV2: DocsV1Read.LogoV2 | undefined;
+        logoHeight: DocsV1Read.Height | undefined;
+        logoHref: DocsV1Read.Url | undefined;
+
         search: DocsV1Read.SearchInfo;
-        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
     }
@@ -28,14 +42,26 @@ export declare namespace DocsPage {
 
 export function DocsPage({
     baseUrl,
-    config,
+    title,
+    favicon,
+    backgroundImage,
+    colors,
+    typography,
+    layout,
+    css,
+    js,
+    navbarLinks,
+    logo,
+    logoV2,
+    logoHeight,
+    logoHref,
     search,
     algoliaSearchIndex,
     files,
     resolvedPath,
     navigation,
 }: DocsPage.Props): ReactElement {
-    const stylesheet = renderThemeStylesheet(config, files);
+    const stylesheet = renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files);
     return (
         <>
             {/* 
@@ -54,29 +80,34 @@ export function DocsPage({
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                 />
-                {config.title != null && <title>{config.title}</title>}
-                {config.favicon != null && <link rel="icon" id="favicon" href={files[config.favicon]?.url} />}
+                {title != null && <title>{title}</title>}
+                {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
             </Head>
             <DocsApp
                 baseUrl={baseUrl}
-                config={config}
+                hasBackgroundImage={backgroundImage != null}
+                colors={colors}
+                logo={logo}
+                logoV2={logoV2}
+                logoHeight={logoHeight}
+                logoHref={logoHref}
+                layout={layout}
+                navbarLinks={navbarLinks}
                 search={search}
                 algoliaSearchIndex={algoliaSearchIndex}
                 files={files}
                 resolvedPath={resolvedPath}
                 navigation={navigation}
             />
-            {config.js?.inline?.map((inline, idx) => (
+            {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
                     {inline}
                 </Script>
             ))}
-            {config.js?.files.map((file) => (
+            {js?.files.map((file) => (
                 <Script key={file.fileId} src={files[file.fileId]?.url} strategy={file.strategy} />
             ))}
-            {config.js?.remote?.map((remote) => (
-                <Script key={remote.url} src={remote.url} strategy={remote.strategy} />
-            ))}
+            {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
         </>
     );
 }
@@ -151,16 +182,30 @@ export const getDocsPageProps = async (
 
     return {
         type: "props",
-        props: {
-            // docs: docs.body,
-            baseUrl: docs.body.baseUrl,
-            config: docs.body.definition.config,
-            search: docs.body.definition.search,
-            algoliaSearchIndex: docs.body.definition.algoliaSearchIndex ?? null,
-            files: docs.body.definition.filesV2,
-            resolvedPath,
-            navigation,
-        },
+        props: JSON.parse(
+            JSON.stringify({
+                // docs: docs.body,
+                baseUrl: docs.body.baseUrl,
+                layout: docs.body.definition.config.layout,
+                title: docs.body.definition.config.title,
+                favicon: docs.body.definition.config.favicon,
+                backgroundImage: docs.body.definition.config.backgroundImage,
+                colors: docs.body.definition.config.colorsV3,
+                typography: docs.body.definition.config.typographyV2,
+                css: docs.body.definition.config.css,
+                js: docs.body.definition.config.js,
+                navbarLinks: docs.body.definition.config.navbarLinks ?? [],
+                logo: docs.body.definition.config.logo,
+                logoV2: docs.body.definition.config.logoV2,
+                logoHeight: docs.body.definition.config.logoHeight,
+                logoHref: docs.body.definition.config.logoHref,
+                search: docs.body.definition.search,
+                algoliaSearchIndex: docs.body.definition.algoliaSearchIndex,
+                files: docs.body.definition.filesV2,
+                resolvedPath,
+                navigation,
+            }),
+        ),
         revalidate: 60 * 60 * 24 * 6, // 6 days
     };
 };
@@ -210,7 +255,7 @@ function getNavigation(
     const sidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
 
     return {
-        currentTabIndex: navigatable.context.tab?.index ?? null,
+        currentTabIndex: navigatable.context.tab?.index,
         tabs:
             navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
                 ? navigatable.context.navigationConfig.tabs.map((tab) => ({
@@ -219,7 +264,7 @@ function getNavigation(
                       urlSlug: tab.urlSlug,
                   }))
                 : [],
-        currentVersionIndex: navigatable.context.version?.info.index ?? null,
+        currentVersionIndex: navigatable.context.version?.info.index,
         versions:
             navigatable.context.root.info.type === "versioned"
                 ? navigatable.context.root.info.versions.map((version) => version.info)

@@ -1,5 +1,4 @@
 "use client";
-import { Root } from "hast";
 import { memo } from "react";
 import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
@@ -19,10 +18,11 @@ export declare namespace EndpointContentCodeSnippets {
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
         requestCodeSnippet: string;
-        requestHast: Root;
+        requestCode: string;
+        // requestHast: Root;
         requestCurlJson: unknown;
         responseCodeSnippet: string;
-        responseHast: Root | null;
+        // responseHast: Root | undefined;
         responseJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
@@ -41,10 +41,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     selectedClient,
     onClickClient,
     requestCodeSnippet,
-    requestHast,
+    requestCode,
     requestCurlJson,
     responseCodeSnippet,
-    responseHast,
+    // responseHast,
     responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
@@ -106,7 +106,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                hast={requestHast}
+                code={requestCode}
                 language={selectedClient.language === "curl" ? "bash" : selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
@@ -115,7 +115,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }
                 scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
-            {example.responseBody != null && responseHast != null && (
+            {example.responseBody != null && (
                 <CodeSnippetExample
                     title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
                     type={example.responseStatusCode >= 400 ? "warning" : "primary"}
@@ -123,7 +123,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         e.stopPropagation();
                     }}
                     copyToClipboardText={() => responseCodeSnippet}
-                    hast={responseHast}
+                    code={JSON.stringify(example.responseBody.value, undefined, 2)}
                     language="json"
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={responseJson}

@@ -72,7 +72,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     types,
 }) => {
     const router = useRouter();
-    const { config } = useDocsContext();
+    const { layout } = useDocsContext();
     const { layoutBreakpoint, viewportSize } = useViewportContext();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
     const { ref: containerRef } = useInView({
@@ -142,7 +142,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const requestJson = selectedClient.exampleCall.requestBody?.value;
     const requestCodeSnippet = selectedClient.code;
     const responseJson = selectedClient.exampleCall.responseBody?.value;
-    const responseHast = selectedClient.exampleCall.responseHast;
+    // const responseHast = selectedClient.exampleCall.responseHast;
     const responseCodeSnippet = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);
 
     const selectedExampleClientLineCount = requestCodeSnippet.split("\n").length;
@@ -151,9 +151,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
 
     const headerHeight =
-        config.layout?.headerHeight == null
+        layout?.headerHeight == null
             ? 64
-            : visitDiscriminatedUnion(config.layout.headerHeight, "type")._visit({
+            : visitDiscriminatedUnion(layout.headerHeight, "type")._visit({
                   px: (px) => px.value,
                   rem: (rem) => rem.value * 16,
                   _other: () => 64,
@@ -287,10 +287,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 selectedClient={selectedClient}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
                                 requestCodeSnippet={requestCodeSnippet}
-                                requestHast={selectedClient.hast}
+                                requestCode={selectedClient.code}
                                 requestCurlJson={requestJson}
                                 responseCodeSnippet={responseCodeSnippet}
-                                responseHast={responseHast}
+                                // responseHast={responseHast}
                                 responseJson={responseJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}

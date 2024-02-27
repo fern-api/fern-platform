@@ -1,8 +1,10 @@
+import classNames from "classnames";
 import type { Root } from "hast";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { forwardRef, useEffect, useMemo, useState } from "react";
 // @ts-expect-error: the automatic react runtime is untyped.
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+import { FernScrollArea } from "../components/FernScrollArea";
 import { getHighlighterInstance, highlight } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterContent } from "./FernSyntaxHighlighterContent";
@@ -21,18 +23,37 @@ interface FernSyntaxHighlighterProps {
     viewportRef?: React.RefObject<HTMLDivElement>;
 }
 
+const cachedHighlights = new Map<string, Root>();
+
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>(
     function FernSyntaxHighlighter({ code, language, ...props }, ref) {
-        const [result, setResult] = useState<Root>();
+        const [result, setResult] = useState<Root | undefined>(cachedHighlights.get(code));
         useEffect(() => {
+            if (result != null) {
+                return;
+            }
             void (async () => {
                 const highlighter = await getHighlighterInstance();
                 setResult(highlight(highlighter, code, language));
             })();
-        }, [code, language]);
+        }, [code, language, result]);
 
         if (result == null) {
-            return null;
+            return (
+                <pre className={classNames("code-block-root not-prose", props.className)} style={props.style}>
+                    <FernScrollArea>
+                        <code
+                            className={classNames("code-block", {
+                                "text-xs": props.fontSize === "sm",
+                                "text-sm": props.fontSize === "base",
+                                "text-base": props.fontSize === "lg",
+                            })}
+                        >
+                            <div className="code-block-inner px-3">{code}</div>
+                        </code>
+                    </FernScrollArea>
+                </pre>
+            );
         }
 
         return <FernSyntaxHighlighterHast ref={ref} hast={result} language={language} {...props} />;
