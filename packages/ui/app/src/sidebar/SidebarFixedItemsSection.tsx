@@ -10,10 +10,10 @@ export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
         searchInfo: DocsV1Read.SearchInfo;
-        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | null;
+        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         showBorder?: boolean;
         showSearchBar?: boolean;
-        currentTabIndex?: number | null;
+        currentTabIndex?: number | undefined;
         tabs: SidebarNavigation["tabs"];
     }
 }

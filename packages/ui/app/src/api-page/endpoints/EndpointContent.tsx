@@ -114,9 +114,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const examples = useMemo(() => {
         if (selectedError == null) {
             // Look for success example
-            return endpoint.examples.filter((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300) ?? null;
+            return endpoint.examples.filter((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300);
         }
-        return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
+        return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode);
     }, [endpoint.examples, selectedError]);
 
     const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody[0]?.contentType);

@@ -61,9 +61,9 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(publishMessages, types),
-            name: null,
-            description: null,
-            availability: null,
+            name: undefined,
+            description: undefined,
+            availability: undefined,
         };
     }, [publishMessages, types]);
 
@@ -71,9 +71,9 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(subscribeMessages, types),
-            name: null,
-            description: null,
-            availability: null,
+            name: undefined,
+            description: undefined,
+            availability: undefined,
         };
     }, [subscribeMessages, types]);
 
@@ -430,8 +430,8 @@ function flattenWebSocketShape(
             }
             return [
                 {
-                    description: message.description ?? null,
-                    availability: message.availability ?? null,
+                    description: message.description,
+                    availability: message.availability,
                     displayName: message.displayName ?? message.type,
                     shape: message.body,
                 },

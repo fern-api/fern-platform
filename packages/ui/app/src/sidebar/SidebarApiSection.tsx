@@ -39,7 +39,7 @@ export const SidebarApiSection: React.FC<SidebarApiSectionProps> = ({
 };
 
 interface InnerSidebarApiSectionProps extends SidebarApiSectionProps {
-    artifacts: DocsV1Read.ApiArtifacts | null;
+    artifacts: DocsV1Read.ApiArtifacts | undefined;
 }
 
 const HTTP_METHOD_TAGS: Record<APIV1Read.HttpMethod, ReactElement> = {
@@ -138,7 +138,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     apiSection={subpackage}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     depth={depth}
-                    artifacts={null}
+                    artifacts={undefined}
                 />
             ))}
         </ul>
