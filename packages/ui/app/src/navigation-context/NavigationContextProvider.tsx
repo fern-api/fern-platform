@@ -2,7 +2,7 @@ import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
 import { getRouteAndAnchorNode } from "../util/anchor";
@@ -20,6 +20,12 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
+let userHasScrolled = false;
+let userIsScrolling = false;
+let resizeObserver: ResizeObserver | undefined;
+let preventScrollToPath = false;
+let preventScrollToPathTimeout: number | undefined;
+
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     resolvedPath,
     children,
@@ -27,8 +33,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     navigation,
 }) => {
     const router = useRouter();
-    const userHasScrolled = useRef(false);
-    const userIsScrolling = useRef(false);
     const resolvedRoute = getRouteForResolvedPath({
         resolvedSlug: resolvedPath.fullSlug,
         asPath: router.asPath, // do not include basepath because it is already included
@@ -40,71 +44,67 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
 
-    const resizeObserver = useRef<ResizeObserver>();
-    const preventScrollToPath = useRef(false);
-    const preventScrollToPathTimeout = useRef<number>();
-    const navigateToRoute = useRef((route: string, _disableSmooth = false) => {
-        // eslint-disable-next-line no-console
-        console.log("navigateToRoute", route);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const fullSlug = route.substring(1).split("#")[0]!;
-        const navigatable = resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/"));
-        if (navigatable != null) {
-            setActiveNavigatable(navigatable);
-        }
-
-        const node = getRouteAndAnchorNode(route);
-
-        if (node == null) {
-            if (!userIsScrolling.current) {
-                window.scrollTo(0, 0);
+    const navigateToRoute = useCallback(
+        (route: string, _disableSmooth = false) => {
+            // eslint-disable-next-line no-console
+            console.log("navigateToRoute", route);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const fullSlug = route.substring(1).split("#")[0]!;
+            const navigatable = resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/"));
+            if (navigatable != null) {
+                setActiveNavigatable(navigatable);
             }
-            return;
-        }
 
-        function observe(node: HTMLElement) {
-            let currentTop = node.getBoundingClientRect().top + document.documentElement.scrollTop;
-            let prevHeight = window.innerHeight;
-            const handleNavigate = ([entry]: ResizeObserverEntry[]) => {
-                if (entry == null || entry.contentRect.height === prevHeight) {
-                    return;
+            const node = getRouteAndAnchorNode(route);
+
+            if (node == null) {
+                if (!userIsScrolling) {
+                    window.scrollTo(0, 0);
                 }
-                if (!userHasScrolled.current) {
-                    node.scrollIntoView({ behavior: "auto" });
-                    return;
-                }
+                return;
+            }
 
-                prevHeight = entry.contentRect.height;
-                const newTop = node.getBoundingClientRect().top + document.documentElement.scrollTop;
-                if (currentTop !== newTop && !userIsScrolling.current) {
-                    const offset = window.scrollY - currentTop;
-                    preventScrollToPath.current = true;
-                    clearTimeout(preventScrollToPathTimeout.current);
-                    preventScrollToPathTimeout.current = window.setTimeout(() => {
-                        preventScrollToPath.current = false;
-                    }, 500);
+            function observe(node: HTMLElement) {
+                let currentTop = node.getBoundingClientRect().top + document.documentElement.scrollTop;
+                const handleNavigate = () => {
+                    const lastTop = currentTop;
+                    const newTop = node.getBoundingClientRect().top + document.documentElement.scrollTop;
+                    currentTop = newTop;
 
-                    window.scrollTo(0, newTop + offset);
-                }
+                    if (!userHasScrolled) {
+                        node.scrollIntoView({ behavior: "auto" });
+                        return;
+                    }
 
-                currentTop = newTop;
-            };
-            resizeObserver.current?.disconnect();
-            resizeObserver.current = new window.ResizeObserver(handleNavigate);
-            resizeObserver.current.observe(document.body, { box: "border-box" });
-        }
+                    if (lastTop !== newTop && !userIsScrolling) {
+                        const offset = window.scrollY - lastTop;
+                        preventScrollToPath = true;
+                        clearTimeout(preventScrollToPathTimeout);
+                        preventScrollToPathTimeout = window.setTimeout(() => {
+                            preventScrollToPath = false;
+                        }, 500);
 
-        if (!userIsScrolling.current) {
-            node.scrollIntoView({ behavior: "auto" });
-            userHasScrolled.current = false;
-        }
-        observe(node);
-    });
+                        window.scrollTo(0, newTop + offset);
+                    }
+                };
+                resizeObserver?.disconnect();
+                resizeObserver = new window.ResizeObserver(handleNavigate);
+                resizeObserver.observe(document.body);
+            }
+
+            if (!userIsScrolling) {
+                node.scrollIntoView({ behavior: "auto" });
+                userHasScrolled = false;
+            }
+            observe(node);
+        },
+        [navigation.sidebarNodes],
+    );
 
     // on mount, scroll directly to routed element
     useEffect(() => {
         const handleInit = () => {
-            navigateToRoute.current(resolvedRoute);
+            navigateToRoute(resolvedRoute);
         };
         handleInit();
         window.addEventListener("DOMContentLoaded", handleInit);
@@ -117,7 +117,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const setUserIsScrollingFalse = useRef(
         debounce(
             () => {
-                userIsScrolling.current = false;
+                userIsScrolling = false;
             },
             50,
             { leading: false, trailing: true },
@@ -129,8 +129,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         const handleScroll = () => {
-            userIsScrolling.current = true;
-            userHasScrolled.current = true;
+            userIsScrolling = true;
+            userHasScrolled = true;
             setUserIsScrollingFalse.current();
         };
         window.addEventListener("wheel", handleScroll);
@@ -148,7 +148,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
-                if (fullSlug === selectedSlug || preventScrollToPath.current) {
+                if (fullSlug === selectedSlug || preventScrollToPath) {
                     return;
                 }
                 // eslint-disable-next-line no-console
@@ -166,15 +166,17 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         const handleRouteChangeComplete = (route: string, { shallow }: { shallow: boolean }) => {
-            navigateToRoute.current(route, !shallow);
+            navigateToRoute(route, !shallow);
             closeMobileSidebar();
             closeSearchDialog();
         };
         const handleRouteChangeError = (e: unknown, route: string, options: { shallow: boolean }) => {
-            // eslint-disable-next-line no-console
-            console.error("Error navigating to...", route, options);
-            // eslint-disable-next-line no-console
-            console.error(e);
+            if (process.env.NODE_ENV !== "production") {
+                // eslint-disable-next-line no-console
+                console.error("Error navigating to...", route, options);
+                // eslint-disable-next-line no-console
+                console.error(e);
+            }
         };
         router.events.on("routeChangeError", handleRouteChangeError);
         router.events.on("routeChangeComplete", handleRouteChangeComplete);
@@ -184,7 +186,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             router.events.off("routeChangeComplete", handleRouteChangeComplete);
             router.events.off("hashChangeComplete", handleRouteChangeComplete);
         };
-    }, [closeMobileSidebar, closeSearchDialog, router.events]);
+    }, [closeMobileSidebar, closeSearchDialog, navigateToRoute, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
@@ -193,11 +195,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             const previousNavigatable = resolveActiveSidebarNode(navigation.sidebarNodes, slugCandidate.split("/"));
             if (previousNavigatable != null) {
                 const fullSlug = previousNavigatable.slug.join("/");
-                navigateToRoute.current(`/${fullSlug}`);
+                navigateToRoute(`/${fullSlug}`);
             }
             return true;
         });
-    }, [router, basePath, navigation]);
+    }, [router, basePath, navigation, navigateToRoute]);
 
     const hydrated = useBooleanState(false);
     useEffect(() => {
