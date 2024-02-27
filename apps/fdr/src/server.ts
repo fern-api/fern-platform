@@ -1,3 +1,4 @@
+import compression from "compression";
 import cors from "cors";
 import express from "express";
 import { register } from "./api";
@@ -18,6 +19,7 @@ const config = getConfig();
 
 const expressApp = express();
 expressApp.use(cors());
+expressApp.use(compression());
 expressApp.get("/health", (_req, res) => {
     res.sendStatus(200);
 });
