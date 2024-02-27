@@ -13,10 +13,10 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { selectedSlug, userIsScrolling, onScrollToPath } = useNavigationContext();
+    const { selectedSlug, onScrollToPath } = useNavigationContext();
 
     const onChangeIsInVerticalCenter = useRef((newIsInVerticalCenter: boolean) => {
-        if (newIsInVerticalCenter && userIsScrolling()) {
+        if (newIsInVerticalCenter) {
             onScrollToPath(slug);
         }
     });

@@ -2,7 +2,7 @@ import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
 import { getRouteNode } from "../util/anchor";
@@ -28,11 +28,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 }) => {
     const router = useRouter();
     const userIsScrolling = useRef(false);
+    const offsetFromNavigable = useRef<number | undefined>(undefined);
     const resolvedRoute = getRouteForResolvedPath({
         resolvedSlug: resolvedPath.fullSlug,
         asPath: router.asPath, // do not include basepath because it is already included
     });
-    const justNavigatedTo = useRef<string | undefined>(resolvedRoute);
+    const justNavigatedTo = useRef<string>(resolvedRoute);
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
         resolveActiveSidebarNode(navigation.sidebarNodes, resolvedPath.fullSlug.split("/")),
@@ -48,6 +49,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 getRouteNode(route) ??
                 getRouteNode(routeWithoutAnchor) ??
                 (anchor != null ? document.getElementById(anchor) : undefined);
+            offsetFromNavigable.current = node?.offsetTop;
             node?.scrollIntoView({
                 behavior: "auto",
             });
@@ -85,18 +87,38 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const resizeObserver = useRef<ResizeObserver>();
 
-    const observeDocContent = useCallback((element: HTMLDivElement) => {
+    useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
         const handleNavigate = () => {
-            if (justNavigatedTo.current != null) {
-                navigateToRoute.current(justNavigatedTo.current, true);
+            const [routeWithoutAnchor, anchor] = justNavigatedTo.current.split("#");
+            if (routeWithoutAnchor != null) {
+                const node =
+                    getRouteNode(justNavigatedTo.current) ??
+                    getRouteNode(routeWithoutAnchor) ??
+                    (anchor != null ? document.getElementById(anchor) : undefined);
+
+                // when the size of the page changes, we need to reposition the scroll to align with the previous position
+                if (node != null) {
+                    const scrollY = window.scrollY;
+                    const currentTop = offsetFromNavigable.current;
+                    const newTop = node.offsetTop;
+
+                    if (currentTop != null) {
+                        const offset = scrollY - currentTop;
+                        window.scrollTo(0, newTop + offset);
+                    }
+
+                    offsetFromNavigable.current = newTop;
+                }
             }
         };
-        if (element != null) {
+        resizeObserver.current = new window.ResizeObserver(handleNavigate);
+        resizeObserver.current.observe(document.body);
+        return () => {
             resizeObserver.current?.disconnect();
-            handleNavigate();
-            resizeObserver.current = new window.ResizeObserver(handleNavigate);
-            resizeObserver.current.observe(element);
-        }
+        };
     }, []);
 
     useEffect(() => {
@@ -106,7 +128,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         const handleScroll = () => {
             userIsScrolling.current = true;
             setUserIsScrollingFalse.current();
-            justNavigatedTo.current = undefined;
         };
         window.addEventListener("wheel", handleScroll);
         window.addEventListener("touchmove", handleScroll);
@@ -200,9 +221,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 selectedSlug,
                 activeNavigatable,
                 justNavigated: justNavigatedTo.current != null,
-                userIsScrolling: () => userIsScrolling.current,
                 onScrollToPath,
-                observeDocContent,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 resolvedPath,
                 hydrated: hydrated.value,

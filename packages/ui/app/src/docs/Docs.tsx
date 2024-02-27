@@ -46,7 +46,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     navigation,
     algoliaSearchIndex,
 }) {
-    const { observeDocContent, registerScrolledToPathListener, selectedSlug } = useNavigationContext();
+    const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
     const { layoutBreakpoint } = useViewportContext();
 
@@ -120,7 +120,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
             <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes} apis={apis}>
-                <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col" ref={observeDocContent}>
+                <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     <header id="fern-header">
                         <div
                             className="border-concealed data-[border=show]:dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg transition-[border] lg:backdrop-blur"
