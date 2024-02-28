@@ -23,33 +23,6 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showEr
         setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));
     }, [initialApi, setDefinitions]);
 
-    // useEffect(() => {
-    //     void resolveApiDefinition(initialApi).then((resolvedApi) => {
-    //         pinScrollPositionToRoute(`/${fullSlug}`, () => {
-    //             setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
-    //         });
-    //     });
-    // }, [fullSlug, initialApi, setDefinitions]);
-
-    // useEffect(() => {
-    //     let url = `/api/resolve-api?path=${fullSlug}&api=${initialApi.api}`;
-    //     if (!skipUrlSlug) {
-    //         url += `&slug=${sectionUrlSlug}`;
-    //     }
-    //     void fetch(url).then(async (response) => {
-    //         if (response.ok) {
-    //             const api = (await response.json()) as FlattenedApiDefinition | null;
-    //             if (api != null) {
-    //                 const resolvedApi = resolveApiDefinition(api);
-
-    //                 pinScrollPositionToRoute(`/${fullSlug}`, () => {
-    //                     setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
-    //                 });
-    //             }
-    //         }
-    //     });
-    // }, [fullSlug, initialApi.api, sectionUrlSlug, setDefinitions, skipUrlSlug]);
-
     return (
         <div className="min-h-0 pb-36">
             {artifacts != null && areApiArtifactsNonEmpty(artifacts) && (

@@ -101,7 +101,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                                 clients={clients}
                                 onClickClient={onClickClient}
                                 selectedClient={selectedClient}
-                                route={"/" + endpoint.slug.join("/")}
                             />
                         ) : undefined}
                     </>
