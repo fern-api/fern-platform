@@ -1,7 +1,8 @@
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { forwardRef, ReactElement, useCallback, useImperativeHandle, useRef, useState } from "react";
+import { atom, useSetAtom } from "jotai";
+import { forwardRef, ReactElement, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSearchBox, UseSearchBoxProps } from "react-instantsearch-hooks-web";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
@@ -13,6 +14,8 @@ interface SearchBoxProps extends UseSearchBoxProps {
     onFocus?: () => void;
 }
 
+export const SEARCH_BOX_MOUNTED = atom(false);
+
 export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function SearchBox(
     { queryHook, className, inputClassName, placeholder },
     ref,
@@ -20,6 +23,16 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function S
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const setMounted = useSetAtom(SEARCH_BOX_MOUNTED);
+
+    useEffect(() => {
+        setMounted(true);
+
+        return () => {
+            setMounted(false);
+        };
+    }, [setMounted]);
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     useImperativeHandle(ref, () => inputRef.current!);

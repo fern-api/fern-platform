@@ -1,3 +1,4 @@
+import { VersionInfo } from "@fern-api/fdr-sdk";
 import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
 import classNames from "classnames";
@@ -6,6 +7,7 @@ import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
+import { SidebarNode } from "../sidebar/types";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
 import { SearchHits, SearchMobileHits } from "./SearchHits";
@@ -80,17 +82,20 @@ interface FernInstantSearchProps {
 }
 
 function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstantSearchProps) {
-    const { activeVersion } = useNavigationContext();
+    const {
+        activeVersion,
+        navigation: { sidebarNodes },
+    } = useNavigationContext();
+    const placeholder = useMemo(
+        () => createSearchPlaceholderWithVersion(activeVersion, sidebarNodes),
+        [activeVersion, sidebarNodes],
+    );
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
             <div className="border-default bg-background-translucent flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
-                    placeholder={
-                        activeVersion != null
-                            ? `Search across ${activeVersion.id} for guides and endpoints...`
-                            : "Search for guides and endpoints..."
-                    }
+                    placeholder={placeholder}
                     className="flex-1"
                     inputClassName="form-input w-full text-base t-muted placeholder:t-muted !p-5 form-input !border-none !bg-transparent !outline-none !ring-0"
                 />
@@ -107,7 +112,15 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (providedProps) => {
-    const { activeVersion } = useNavigationContext();
+    const {
+        activeVersion,
+        navigation: { sidebarNodes },
+    } = useNavigationContext();
+    const placeholder = useMemo(
+        () => createSearchPlaceholderWithVersion(activeVersion, sidebarNodes),
+        [activeVersion, sidebarNodes],
+    );
+
     const { searchService, children } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -132,16 +145,45 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <SearchMobileBox
-                ref={inputRef}
-                placeholder={
-                    activeVersion != null
-                        ? `Search across ${activeVersion.id}...`
-                        : "Search for guides and endpoints..."
-                }
-                className="mt-4 flex-1"
-            />
+            <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mt-4 flex-1" />
             <SearchMobileHits>{children}</SearchMobileHits>
         </InstantSearch>
     );
 };
+
+function createSearchPlaceholderWithVersion(
+    activeVersion: VersionInfo | undefined,
+    sidebarNodes: SidebarNode[],
+): string {
+    return `Search ${activeVersion != null ? `across ${activeVersion.id}` : ""}for ${createSearchPlaceholder(sidebarNodes)}...`;
+}
+
+function createSearchPlaceholder(sidebarNodes: SidebarNode[]): string {
+    const hasGuides = checkHasGuides(sidebarNodes);
+    const hasEndpoints = checkHasEndpoints(sidebarNodes);
+    if (hasGuides && hasEndpoints) {
+        return "guides and endpoints";
+    }
+
+    if (hasGuides) {
+        return "guides";
+    }
+
+    if (hasEndpoints) {
+        return "endpoints";
+    }
+
+    return "guides and endpoints";
+}
+
+function checkHasGuides(sidebarNodes: SidebarNode[]): boolean {
+    return sidebarNodes.some(
+        (node) => node.type === "pageGroup" || (node.type === "section" && checkHasGuides(node.items)),
+    );
+}
+
+function checkHasEndpoints(sidebarNodes: SidebarNode[]): boolean {
+    return sidebarNodes.some(
+        (node) => node.type === "apiSection" || (node.type === "section" && checkHasEndpoints(node.items)),
+    );
+}

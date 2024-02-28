@@ -217,6 +217,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 hydrated: hydrated.value,
                 activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
                 selectedSlug,
+                navigation,
             }}
         >
             <Head>
