@@ -172,11 +172,11 @@ export const getDocsPageProps = async (
         };
     }
 
-    if (resolvedPath.fullSlug !== pathname) {
+    if (resolvedPath.type === "redirect") {
         return {
             type: "redirect",
             redirect: {
-                destination: "/" + resolvedPath.fullSlug,
+                destination: "/" + resolvedPath.redirectSlug,
                 permanent: false,
             },
         };

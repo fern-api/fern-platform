@@ -13,6 +13,11 @@ export declare namespace ResolvedPath {
         next: Neighbor | null;
     }
 
+    interface RedirectPage {
+        type: "redirect";
+        redirectSlug: string;
+    }
+
     interface ChangelogPage {
         type: "changelog-page";
         fullSlug: string;
@@ -50,4 +55,8 @@ export declare namespace ResolvedPath {
     }
 }
 
-export type ResolvedPath = ResolvedPath.CustomMarkdownPage | ResolvedPath.ApiPage | ResolvedPath.ChangelogPage;
+export type ResolvedPath =
+    | ResolvedPath.CustomMarkdownPage
+    | ResolvedPath.ApiPage
+    | ResolvedPath.ChangelogPage
+    | ResolvedPath.RedirectPage;

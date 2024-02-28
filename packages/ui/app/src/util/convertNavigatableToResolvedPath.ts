@@ -34,6 +34,13 @@ export async function convertNavigatableToResolvedPath({
                 : null,
     };
 
+    if (slug.join("/") !== traverseState.curr.slug.join("/")) {
+        return {
+            type: "redirect",
+            redirectSlug: traverseState.curr.slug.join("/"),
+        };
+    }
+
     if (isApiPage(traverseState.curr)) {
         const api = apis[traverseState.curr.api];
         const apiSection = findApiSection(traverseState.curr.api, sidebarNodes);
