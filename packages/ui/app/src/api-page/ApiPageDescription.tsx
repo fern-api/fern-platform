@@ -18,9 +18,6 @@ export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ classNa
     if (description == null) {
         return null;
     }
-    if (typeof description === "string") {
-        return <section className={className}>{description}</section>;
-    }
     return (
         <Markdown
             className={classNames(

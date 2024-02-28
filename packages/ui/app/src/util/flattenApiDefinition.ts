@@ -5,6 +5,7 @@ export interface FlattenedParameter {
     key: string;
     type: APIV1Read.TypeReference;
     description: string | undefined;
+    descriptionContainsMarkdown: boolean | undefined;
     availability: APIV1Read.Availability | undefined;
 }
 
@@ -13,6 +14,7 @@ export interface FlattenedEndpointDefinition {
     slug: string[];
     name: string | undefined;
     description: string | undefined;
+    descriptionContainsMarkdown: boolean | undefined;
     availability: APIV1Read.Availability | undefined;
     authed: boolean;
     defaultEnvironment: APIV1Read.Environment | undefined;
@@ -32,6 +34,7 @@ export interface FlattenedWebSocketChannel {
     slug: string[];
     name: string | undefined;
     description: string | undefined;
+    descriptionContainsMarkdown: boolean | undefined;
     availability: APIV1Read.Availability | undefined;
     authed: boolean;
     defaultEnvironment: APIV1Read.Environment | undefined;
@@ -48,6 +51,7 @@ export interface FlattenedWebhookDefinition {
     slug: string[];
     name: string | undefined;
     description: string | undefined;
+    descriptionContainsMarkdown: boolean | undefined;
     availability: APIV1Read.Availability | undefined;
     method: APIV1Read.WebhookHttpMethod;
     path: string[];
@@ -60,6 +64,7 @@ export interface FlattenedSubpackage extends FlattenedApiDefinitionPackage {
     subpackageId: string;
     name: string;
     description: string | undefined;
+    descriptionContainsMarkdown: boolean | undefined;
 }
 
 export function isFlattenedSubpackage(package_: FlattenedApiDefinitionPackage): package_ is FlattenedSubpackage {
@@ -123,6 +128,7 @@ function flattenPackage(
                 slug: [...parentSlugs, endpoint.urlSlug],
                 name: endpoint.name,
                 description: endpoint.description,
+                descriptionContainsMarkdown: endpoint.descriptionContainsMarkdown,
                 availability: endpoint.availability,
                 authed: endpoint.authed,
                 defaultEnvironment: endpoint.environments.find(
@@ -145,6 +151,7 @@ function flattenPackage(
                 slug: [...parentSlugs, websocket.urlSlug],
                 name: websocket.name,
                 description: websocket.description,
+                descriptionContainsMarkdown: websocket.descriptionContainsMarkdown,
                 availability: websocket.availability,
                 authed: websocket.auth,
                 defaultEnvironment: websocket.environments.find(
@@ -164,6 +171,7 @@ function flattenPackage(
                 slug: [...parentSlugs, webhook.urlSlug],
                 name: webhook.name,
                 description: webhook.description,
+                descriptionContainsMarkdown: webhook.descriptionContainsMarkdown,
                 availability: undefined,
                 method: webhook.method,
                 path: webhook.path,
@@ -183,6 +191,7 @@ function flattenPackage(
                     subpackageId: subpackage.subpackageId,
                     name: subpackage.name,
                     description: subpackage.description,
+                    descriptionContainsMarkdown: subpackage.descriptionContainsMarkdown,
                     ...flattenPackage(subpackage, subpackages, subpackageSlugs),
                 };
             })

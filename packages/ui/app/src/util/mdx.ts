@@ -13,7 +13,7 @@ export interface FernDocsFrontmatter {
     image?: string;
 }
 
-export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter>;
+export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 /**
  * Should only be invoked server-side.
@@ -24,18 +24,26 @@ export async function serializeMdxContent(content: string | undefined): Promise<
     if (content == null) {
         return undefined;
     }
-    return await serialize(content, {
-        scope: {},
-        mdxOptions: {
-            remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
-            rehypePlugins: [rehypeFernCode, rehypeStringify],
-            format: "detect",
-            /**
-             * development=true is required to render MdxRemote from the client-side.
-             * https://github.com/hashicorp/next-mdx-remote/issues/350
-             */
-            development: process.env.NODE_ENV !== "production",
-        },
-        parseFrontmatter: true,
-    });
+    try {
+        return await serialize(content, {
+            scope: {},
+            mdxOptions: {
+                remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
+                rehypePlugins: [rehypeFernCode, rehypeStringify],
+                format: "detect",
+                /**
+                 * development=true is required to render MdxRemote from the client-side.
+                 * https://github.com/hashicorp/next-mdx-remote/issues/350
+                 */
+                development: process.env.NODE_ENV !== "production",
+            },
+            parseFrontmatter: true,
+        });
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        // eslint-disable-next-line no-console
+        console.log(content);
+        return content;
+    }
 }

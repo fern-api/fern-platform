@@ -106,12 +106,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
         window.addEventListener("wheel", handleScroll);
         window.addEventListener("touchmove", handleScroll);
-        window.addEventListener("scroll", handleScroll);
 
         return () => {
             window.removeEventListener("wheel", handleScroll);
             window.removeEventListener("touchmove", handleScroll);
-            window.addEventListener("scroll", handleScroll);
         };
     }, []);
 
