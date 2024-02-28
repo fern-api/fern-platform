@@ -50,10 +50,11 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
             },
         ) => {
             if (!shallow || showOnShallow) {
-                NProgress.set(startPosition);
                 timer = window.setTimeout(() => {
+                    NProgress.set(startPosition);
                     NProgress.start();
-                }, 250);
+                    document.querySelector("#nprogress .bar")?.classList.remove("blurout");
+                }, 400);
             }
         };
 
@@ -71,6 +72,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                 }
 
                 NProgress.done(true);
+                document.querySelector("#nprogress .bar")?.classList.add("blurout");
             }
         };
 
@@ -88,6 +90,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                     clearTimeout(timer);
                 }
                 NProgress.done(true);
+                document.querySelector("#nprogress .bar")?.classList.add("blurout");
             }
         };
 

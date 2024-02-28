@@ -112,7 +112,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <>
-            <NextNProgress options={{ showSpinner: false, easing: "ease-out" }} showOnShallow={false} />
+            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
