@@ -15,7 +15,7 @@ export declare namespace ResolvedPath {
 
     interface RedirectPage {
         type: "redirect";
-        redirectSlug: string;
+        fullSlug: string;
     }
 
     interface ChangelogPage {

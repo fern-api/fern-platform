@@ -37,7 +37,7 @@ export async function convertNavigatableToResolvedPath({
     if (slug.join("/") !== traverseState.curr.slug.join("/")) {
         return {
             type: "redirect",
-            redirectSlug: traverseState.curr.slug.join("/"),
+            fullSlug: traverseState.curr.slug.join("/"),
         };
     }
 
