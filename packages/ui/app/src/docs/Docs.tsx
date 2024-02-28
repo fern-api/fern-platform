@@ -4,9 +4,7 @@ import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import NextNProgress from "nextjs-progressbar";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import tinycolor from "tinycolor2";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useCreateSearchService, useSearchService } from "../services/useSearchService";
@@ -22,6 +20,7 @@ import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
+import { NextNProgress } from "./NProgress";
 import { useIsScrolled } from "./useIsScrolled";
 
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
@@ -94,17 +93,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const openMobileSidebar = useOpenMobileSidebar();
     const closeMobileSidebar = useCloseMobileSidebar();
 
-    const [accentColor, setAccentColor] = useState<string>();
-    useEffect(() => {
-        if (colors?.type === "darkAndLight") {
-            if (theme === "dark" || theme === "light") {
-                setAccentColor(tinycolor(colors?.[theme].accentPrimary).toHex8String());
-            }
-        } else {
-            setAccentColor(tinycolor(colors?.accentPrimary).toHex8String());
-        }
-    }, [colors, theme]);
-
     const renderBackground = useCallback(
         (className?: string) => (
             <div className={classNames(className, "clipped-background")}>
@@ -124,7 +112,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <>
-            <NextNProgress color={accentColor} options={{ showSpinner: false }} showOnShallow={false} />
+            <NextNProgress options={{ showSpinner: false, easing: "ease-out" }} showOnShallow={false} />
             <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 

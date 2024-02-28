@@ -374,6 +374,9 @@ module.exports = {
                 ".shadow-border-primary": {
                     "@apply shadow-border-accent-muted-light dark:shadow-border-accent-muted-dark": {},
                 },
+                ".shadow-accent": {
+                    "@apply shadow-accent-primary-light dark:shadow-accent-primary-dark": {},
+                },
             });
         }),
     ],

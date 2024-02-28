@@ -2706,6 +2706,7 @@ __metadata:
     "@types/jsonpath": ^0.2.4
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    "@types/nprogress": ^0.2.3
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.2.18
     "@types/react-test-renderer": ^18.0.7
@@ -2729,8 +2730,8 @@ __metadata:
     next: ^14.0.4
     next-mdx-remote: ^4.4.1
     next-themes: ^0.2.1
-    nextjs-progressbar: ^0.0.16
     node-html-parser: ^6.1.12
+    nprogress: ^0.2.0
     organize-imports-cli: ^0.10.0
     posthog-js: ^1.81.1
     prettier: ^3.2.4
@@ -4931,7 +4932,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/nprogress@npm:^0.2.0":
+"@types/nprogress@npm:^0.2.3":
   version: 0.2.3
   resolution: "@types/nprogress@npm:0.2.3"
   checksum: 2bd96ba1167f548e8f898ae8a790b6501a5422217621c9b8ea75962f3e8473f0e371058b79d83e04e80a6bfee2d66fc6612cdb28296648007b35d3c2a6d64e5c
@@ -13092,20 +13093,6 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     next: dist/bin/next
   checksum: 879842979d3c7e2d2e2cd3edad3e715d408060a286bb12299089e08d7142af9effceee877e6d18aad359983119d025298ec5c63dd6317443027b47dc5167ac40
-  languageName: node
-  linkType: hard
-
-"nextjs-progressbar@npm:^0.0.16":
-  version: 0.0.16
-  resolution: "nextjs-progressbar@npm:0.0.16"
-  dependencies:
-    "@types/nprogress": ^0.2.0
-    nprogress: ^0.2.0
-    prop-types: ^15.8.1
-  peerDependencies:
-    next: ">= 6.0.0"
-    react: ">= 16.0.0"
-  checksum: b75f7bd1f336765aab203613e028ba5cb7e89590add46e4df435cc868bad042c2c5c6fe8c2cf1b127b1cae66eaae6e10d061b2908d7d4b6a9dcd79ad4e41bbcd
   languageName: node
   linkType: hard
 

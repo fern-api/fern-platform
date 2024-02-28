@@ -4453,6 +4453,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jsonpath", "npm:0.2.4"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
+            ["@types/nprogress", "npm:0.2.3"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["@types/react-test-renderer", "npm:18.0.7"],\
@@ -4476,8 +4477,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
             ["next-mdx-remote", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.4.1"],\
             ["next-themes", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1"],\
-            ["nextjs-progressbar", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.0.16"],\
             ["node-html-parser", "npm:6.1.12"],\
+            ["nprogress", "npm:0.2.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["posthog-js", "npm:1.81.1"],\
             ["prettier", "npm:3.2.4"],\
@@ -17030,35 +17031,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/react",\
             "next",\
             "react-dom",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["nextjs-progressbar", [\
-        ["npm:0.0.16", {\
-          "packageLocation": "./.yarn/cache/nextjs-progressbar-npm-0.0.16-63ea303e14-b75f7bd1f3.zip/node_modules/nextjs-progressbar/",\
-          "packageDependencies": [\
-            ["nextjs-progressbar", "npm:0.0.16"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.0.16", {\
-          "packageLocation": "./.yarn/__virtual__/nextjs-progressbar-virtual-d938ece349/0/cache/nextjs-progressbar-npm-0.0.16-63ea303e14-b75f7bd1f3.zip/node_modules/nextjs-progressbar/",\
-          "packageDependencies": [\
-            ["nextjs-progressbar", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.0.16"],\
-            ["@types/next", null],\
-            ["@types/nprogress", "npm:0.2.3"],\
-            ["@types/react", "npm:18.0.20"],\
-            ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
-            ["nprogress", "npm:0.2.0"],\
-            ["prop-types", "npm:15.8.1"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/next",\
-            "@types/react",\
-            "next",\
             "react"\
           ],\
           "linkType": "HARD"\
