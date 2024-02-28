@@ -58,7 +58,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                     NProgress.set(startPosition);
                     NProgress.start();
                     document.querySelector("#nprogress .bar")?.classList.remove("blurout");
-                }, 400);
+                }, 700);
             }
         };
 
