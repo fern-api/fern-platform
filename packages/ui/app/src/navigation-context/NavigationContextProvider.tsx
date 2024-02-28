@@ -1,4 +1,5 @@
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
+import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
@@ -21,8 +22,6 @@ export declare namespace NavigationContextProvider {
 
 let userIsScrolling = false;
 let userIsScrollingTimeout: number;
-let justNavigated = false;
-let justNavigatedTimeout: number;
 let justNavigatedTo: string | undefined;
 
 function navigateToRoute(route: string, _disableSmooth = false) {
@@ -99,7 +98,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         if (typeof window === "undefined") {
             return;
         }
-        const handleScroll = () => {
+        const handleUserTriggeredScroll = () => {
             userIsScrolling = true;
             justNavigatedTo = undefined;
             clearTimeout(userIsScrollingTimeout);
@@ -107,55 +106,78 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 userIsScrolling = false;
             }, 150); // reaction time
         };
-        window.addEventListener("wheel", handleScroll);
-        window.addEventListener("touchmove", handleScroll);
+
+        const handleScroll = () => {
+            if (userIsScrolling) {
+                clearTimeout(userIsScrollingTimeout);
+                userIsScrollingTimeout = window.setTimeout(() => {
+                    userIsScrolling = false;
+                }, 150); // reaction time
+            }
+        };
+
+        window.addEventListener("wheel", handleUserTriggeredScroll);
+        window.addEventListener("touchmove", handleUserTriggeredScroll);
+        window.addEventListener("scroll", handleScroll);
 
         return () => {
-            window.removeEventListener("wheel", handleScroll);
-            window.removeEventListener("touchmove", handleScroll);
+            window.removeEventListener("wheel", handleUserTriggeredScroll);
+            window.removeEventListener("touchmove", handleUserTriggeredScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
     // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
-    const onScrollToPath = useEventCallback((fullSlug: string) => {
-        if (justNavigated || fullSlug === selectedSlug) {
-            return;
-        }
-        setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
-
-        void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
-        scrollToPathListeners.invokeListeners(fullSlug);
-    });
+    const onScrollToPath = useEventCallback(
+        debounce(
+            (fullSlug: string) => {
+                if (fullSlug === selectedSlug) {
+                    return;
+                }
+                void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
+                setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+                scrollToPathListeners.invokeListeners(fullSlug);
+            },
+            150,
+            { trailing: true },
+        ),
+    );
 
     const navigateToPath = useEventCallback((route: string, shallow = false) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        justNavigated = true;
         navigateToRoute(route, !shallow);
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
-        // navigateToPathListeners.invokeListeners(slug);
-        justNavigatedTimeout != null && clearTimeout(justNavigatedTimeout);
-        justNavigatedTimeout = window.setTimeout(() => {
-            justNavigated = false;
-        }, 500);
     });
 
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
 
     useEffect(() => {
-        const handleRouteChangeStart = (route: string, { shallow }: { shallow: boolean }) => {
+        const handleRouteChange = (route: string, { shallow }: { shallow: boolean }) => {
             navigateToPath(route, shallow);
             closeMobileSidebar();
             closeSearchDialog();
         };
-        router.events.on("routeChangeComplete", handleRouteChangeStart);
-        router.events.on("hashChangeComplete", handleRouteChangeStart);
+        const handleRouteChangeError = (err: Error, route: string, options: { shallow: boolean }) => {
+            if (process.env.NODE_ENV === "development") {
+                // eslint-disable-next-line no-console
+                console.error(err);
+                // eslint-disable-next-line no-console
+                console.error("Failed to navigate to route", route, options);
+            }
+
+            handleRouteChange(route, options);
+        };
+        router.events.on("routeChangeComplete", handleRouteChange);
+        router.events.on("hashChangeComplete", handleRouteChange);
+        router.events.on("routeChangeError", handleRouteChangeError);
         return () => {
-            router.events.off("routeChangeComplete", handleRouteChangeStart);
-            router.events.off("hashChangeComplete", handleRouteChangeStart);
+            router.events.off("routeChangeComplete", handleRouteChange);
+            router.events.off("hashChangeComplete", handleRouteChange);
+            router.events.off("routeChangeError", handleRouteChangeError);
         };
     }, [closeMobileSidebar, closeSearchDialog, navigateToPath, router.events]);
 
@@ -167,10 +189,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             if (previousNavigatable != null) {
                 const fullSlug = previousNavigatable.slug.join("/");
                 navigateToPath(`/${fullSlug}`);
+                closeMobileSidebar();
+                closeSearchDialog();
             }
             return true;
         });
-    }, [router, navigateToPath, basePath, navigation.sidebarNodes]);
+    }, [router, navigateToPath, basePath, navigation.sidebarNodes, closeMobileSidebar, closeSearchDialog]);
 
     const hydrated = useBooleanState(false);
     useEffect(() => {

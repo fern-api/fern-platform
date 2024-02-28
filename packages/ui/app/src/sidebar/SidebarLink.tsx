@@ -168,13 +168,13 @@ export const SidebarSlugLink = forwardRef<HTMLButtonElement, PropsWithChildren<S
                 return undefined;
             }
             return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
-                elementRef.current?.scrollIntoView({ block: "nearest", inline: "nearest" });
+                elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
             });
         }, [slug, registerScrolledToPathListener]);
 
         useEffect(() => {
             if (isMobileSidebarOpen && props.selected) {
-                elementRef.current?.scrollIntoView({ block: "nearest", inline: "nearest" });
+                elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
             }
         }, [isMobileSidebarOpen, props.selected]);
 
