@@ -69,20 +69,18 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
             const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link");
 
             return href != null ? (
-                <button className="block w-full" ref={ref}>
-                    <Link
-                        href={href}
-                        className={classNames(linkClassName, "w-full")}
-                        onClick={(e) => {
-                            onClick?.(e);
-                            toggleExpand?.();
-                        }}
-                        shallow={shallow}
-                        scroll={false}
-                    >
-                        {child}
-                    </Link>
-                </button>
+                <Link
+                    href={href}
+                    className={linkClassName}
+                    onClick={(e) => {
+                        onClick?.(e);
+                        toggleExpand?.();
+                    }}
+                    shallow={shallow}
+                    scroll={false}
+                >
+                    {child}
+                </Link>
             ) : (
                 <button
                     className={linkClassName}
