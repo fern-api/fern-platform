@@ -166,6 +166,7 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
                 showErrors: writeShape.showErrors ?? false,
+                changelog: undefined,
             };
         case "page":
             return {
