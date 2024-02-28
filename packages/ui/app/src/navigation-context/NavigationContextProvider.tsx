@@ -58,7 +58,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     });
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
-        resolveActiveSidebarNode(navigation.sidebarNodes, resolvedPath.fullSlug.split("/")),
+        resolveActiveSidebarNode(
+            navigation.sidebarNodes,
+            resolvedPath.fullSlug.split("/").filter((str) => str.trim().length > 0),
+        ),
     );
 
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";

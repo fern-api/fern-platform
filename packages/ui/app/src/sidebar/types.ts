@@ -329,6 +329,7 @@ function visitNode(
                 traverseState.curr = pageGroup.pages.find((page) => page.type === "page") as
                     | SidebarNode.Page
                     | undefined;
+                traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
             }
 
             for (const page of pageGroup.pages) {
