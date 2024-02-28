@@ -12,20 +12,10 @@ export declare namespace ApiPage {
         initialApi: ResolvedRootPackage;
         artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
-        fullSlug: string;
-        sectionUrlSlug: string;
-        skipUrlSlug: boolean;
     }
 }
 
-export const ApiPage: React.FC<ApiPage.Props> = ({
-    initialApi,
-    artifacts,
-    showErrors,
-    // fullSlug,
-    // sectionUrlSlug,
-    // skipUrlSlug,
-}) => {
+export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showErrors }) => {
     const setDefinitions = useSetAtom(APIS);
     // const definition = apis[initialApi.api];
 

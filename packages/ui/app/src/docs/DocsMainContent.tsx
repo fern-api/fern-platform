@@ -12,6 +12,10 @@ const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) =
     ssr: true,
 });
 
+const ChangelogPage = dynamic(() => import("./ChangelogPage2").then(({ ChangelogPage }) => ChangelogPage), {
+    ssr: true,
+});
+
 export interface DocsMainContentProps {}
 
 export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
@@ -25,11 +29,10 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
                 initialApi={resolvedPath.apiDefinition}
                 artifacts={resolvedPath.artifacts}
                 showErrors={resolvedPath.showErrors}
-                fullSlug={resolvedPath.fullSlug}
-                sectionUrlSlug={resolvedPath.sectionUrlSlug}
-                skipUrlSlug={resolvedPath.skipUrlSlug}
             />
         );
+    } else if (resolvedPath.type === "changelog-page") {
+        return <ChangelogPage resolvedPath={resolvedPath} />;
     } else {
         return null;
     }

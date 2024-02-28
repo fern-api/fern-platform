@@ -14,12 +14,8 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     resolvedPath: {
         type: "custom-markdown-page",
         fullSlug: "",
-        page: {
-            id: "",
-            title: "",
-            urlSlug: "",
-        },
-        sectionTitle: "",
+        title: "",
+        sectionTitleBreadcrumbs: [],
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
         editThisPageUrl: null,
         neighbors: {

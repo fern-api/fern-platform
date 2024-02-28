@@ -5,16 +5,27 @@ import { getSlugFromText } from "../mdx/base-components";
 import { TableOfContentsContext } from "./TableOfContentsContext";
 
 export declare namespace TableOfContents {
-    export interface Props {
+    export interface HTMLProps {
         className?: string;
         style?: CSSProperties;
         renderedHtml: string;
     }
+
+    export interface Props {
+        className?: string;
+        style?: CSSProperties;
+        tableOfContents: TableOfContentsItem[];
+    }
 }
 
-export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, renderedHtml, style }) => {
-    const { anchorInView } = useContext(TableOfContentsContext);
+export const HTMLTableOfContents: React.FC<TableOfContents.HTMLProps> = ({ className, renderedHtml, style }) => {
     const tableOfContents = useMemo(() => generateTableOfContents(renderedHtml), [renderedHtml]);
+    return <TableOfContents className={className} style={style} tableOfContents={tableOfContents} />;
+};
+
+export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
+    const { anchorInView } = useContext(TableOfContentsContext);
+
     const renderList = (headings: TableOfContentsItem[], indent?: boolean) => {
         if (headings.length === 0) {
             return null;
@@ -28,12 +39,11 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                 })}
                 style={style}
             >
-                {headings.map(({ simpleString: text, children }, index) => {
+                {headings.map(({ simpleString: text, anchorString, children }, index) => {
                     if (text.length === 0 && children.length === 0) {
                         // don't render empty headings
                         return null;
                     }
-                    const anchor = getSlugFromText(text);
                     return (
                         <li key={index}>
                             {text.length > 0 && (
@@ -41,11 +51,11 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
                                     className={classNames(
                                         "hover:dark:text-text-default-dark hover:text-text-default-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline hover:transition hover:no-underline",
                                         {
-                                            "t-muted": anchorInView !== anchor,
-                                            "t-accent-aaa": anchorInView === anchor,
+                                            "t-muted": anchorInView !== anchorString,
+                                            "t-accent-aaa": anchorInView === anchorString,
                                         },
                                     )}
-                                    href={`#${getSlugFromText(text)}`}
+                                    href={`#${anchorString}`}
                                 >
                                     {text}
                                 </a>
@@ -66,8 +76,9 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, re
     );
 };
 
-interface TableOfContentsItem {
+export interface TableOfContentsItem {
     simpleString: string;
+    anchorString: string;
     children: TableOfContentsItem[];
 }
 
@@ -111,6 +122,7 @@ const makeTree = (
             const simpleString = token != null ? token.text.trim() : "";
             tree.push({
                 simpleString,
+                anchorString: getSlugFromText(simpleString),
                 children: makeTree(headings, depth + 1),
             });
         } else {

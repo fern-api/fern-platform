@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
+import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { MdxContent } from "../mdx/MdxContent";
 import { type SerializedMdxContent } from "../util/mdx";
 import { type ResolvedPath } from "../util/ResolvedPath";
 import { Feedback } from "./Feedback";
-import { TableOfContents } from "./TableOfContents";
+import { HTMLTableOfContents } from "./TableOfContents";
 import { TableOfContentsContextProvider } from "./TableOfContentsContext";
 
 export declare namespace CustomDocsPage {
@@ -17,17 +18,18 @@ export declare namespace CustomDocsPage {
     }
 }
 
-export const CustomDocsPageHeader = ({ resolvedPath }: Pick<CustomDocsPage.Props, "resolvedPath">): ReactElement => {
+interface CustomDocsPageHeaderProps {
+    sectionTitleBreadcrumbs: string[];
+    title: string;
+}
+
+export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomDocsPageHeaderProps): ReactElement => {
     return (
         <header className="mb-8">
-            <div className="space-y-2.5">
-                {resolvedPath.sectionTitle != null && (
-                    <div className="t-accent text-xs font-semibold uppercase tracking-wider">
-                        {resolvedPath.sectionTitle}
-                    </div>
-                )}
+            <div className="space-y-1">
+                <Breadcrumbs breadcrumbs={sectionTitleBreadcrumbs} />
 
-                <h1 className="my-0 inline-block">{resolvedPath.page.title}</h1>
+                <h1 className="my-0 inline-block">{title}</h1>
             </div>
         </header>
     );
@@ -42,7 +44,10 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
             <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
                 <div className="w-full min-w-0 pt-8 lg:pr-8">
                     <article className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
-                        <CustomDocsPageHeader resolvedPath={resolvedPath} />
+                        <CustomDocsPageHeader
+                            title={resolvedPath.title}
+                            sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                        />
                         {mdxContent}
                         <BottomNavigationButtons />
                         <div className="h-20" />
@@ -53,7 +58,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                     className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0  xl:block"
                 >
                     <FernScrollArea viewportClassName="px-4 lg:pr-8 pb-12 pt-8">
-                        <TableOfContents renderedHtml={mdxString} />
+                        <HTMLTableOfContents renderedHtml={mdxString} />
                         {editThisPage != null && (
                             <Link
                                 href={editThisPage}

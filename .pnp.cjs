@@ -4066,10 +4066,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.50.9-1-gd87477b", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.50.9-1-gd87477b-83bea0b2e6-d253f693d5.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.50.12-4-gdf2d015", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.50.12-4-gdf2d015-09f61a30fd-e688367577.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.50.9-1-gd87477b"],\
+            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
@@ -4428,7 +4428,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/app/",\
           "packageDependencies": [\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@fern-api/fdr-sdk", "npm:0.50.9-1-gd87477b"],\
+            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
@@ -4472,6 +4472,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonpath", "npm:1.1.1"],\
             ["lodash-es", "npm:4.17.21"],\
             ["lru-cache", "npm:10.0.1"],\
+            ["moment", "npm:2.30.1"],\
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
             ["next-mdx-remote", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.4.1"],\
             ["next-themes", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1"],\
@@ -16682,6 +16683,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mkdirp-npm-1.0.4-37f6ef56b9-a96865108c.zip/node_modules/mkdirp/",\
           "packageDependencies": [\
             ["mkdirp", "npm:1.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["moment", [\
+        ["npm:2.30.1", {\
+          "packageLocation": "./.yarn/cache/moment-npm-2.30.1-1c51a5c631-859236bab1.zip/node_modules/moment/",\
+          "packageDependencies": [\
+            ["moment", "npm:2.30.1"]\
           ],\
           "linkType": "HARD"\
         }]\

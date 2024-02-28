@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.50.9-1-gd87477b":
-  version: 0.50.9-1-gd87477b
-  resolution: "@fern-api/fdr-sdk@npm:0.50.9-1-gd87477b"
+"@fern-api/fdr-sdk@npm:0.50.12-4-gdf2d015":
+  version: 0.50.12-4-gdf2d015
+  resolution: "@fern-api/fdr-sdk@npm:0.50.12-4-gdf2d015"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2355,7 +2355,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: d253f693d5b3f64c7d2a340cd3f3b4ec3ceac58331922125857edf3f407aa81cc58ba61132bcac1bea11549954ba784cc6e74b0447f49ec7421ba4ceaa063bc6
+  checksum: e688367577a88a2cceab4016a1d5521f1c0e76e495462d167d06de782411300a23ead33ca314d28660ed6bde70a9801799841497e425fe7d98908727e4db8016
   languageName: node
   linkType: hard
 
@@ -2681,7 +2681,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.9-1-gd87477b
+    "@fern-api/fdr-sdk": 0.50.12-4-gdf2d015
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
@@ -2725,6 +2725,7 @@ __metadata:
     jsonpath: ^1.1.1
     lodash-es: ^4.17.21
     lru-cache: ^10.0.1
+    moment: ^2.30.1
     next: ^14.0.4
     next-mdx-remote: ^4.4.1
     next-themes: ^0.2.1
@@ -12913,6 +12914,13 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
   languageName: node
   linkType: hard
 
