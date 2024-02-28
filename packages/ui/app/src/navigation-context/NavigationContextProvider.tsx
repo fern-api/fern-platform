@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
-import { getRouteNodeWithAnchor } from "../util/anchor";
+import { getRouteNode, getRouteNodeWithAnchor } from "../util/anchor";
 import { FernDocsFrontmatter } from "../util/mdx";
 import { ResolvedPath } from "../util/ResolvedPath";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
@@ -22,11 +22,12 @@ export declare namespace NavigationContextProvider {
 
 let userIsScrolling = false;
 let userIsScrollingTimeout: number;
+let justNavigatedTo: string | undefined;
 
 function navigateToRoute(route: string, _disableSmooth = false) {
     if (!userIsScrolling) {
         // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
-        const node = getRouteNodeWithAnchor(route);
+        const { node } = getRouteNodeWithAnchor(route);
         node?.scrollIntoView({
             behavior: "auto",
         });
@@ -36,7 +37,6 @@ function navigateToRoute(route: string, _disableSmooth = false) {
             window.scrollTo(0, 0);
         }
     }
-    // justNavigatedTo = route;
 }
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
@@ -68,8 +68,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         let lastActiveNavigatableOffsetTop: number | undefined;
         let lastScrollY: number | undefined;
         function step() {
-            const node = getRouteNodeWithAnchor(resolvedRoute);
+            const [route, anchor] = resolvedRoute.split("#");
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const node = getRouteNode(route!);
             if (node != null) {
+                if (lastActiveNavigatableOffsetTop == null && resolvedRoute === justNavigatedTo && anchor == null) {
+                    node.scrollIntoView({ behavior: "auto" });
+                }
                 const currentActiveNavigatableOffsetTop =
                     node.getBoundingClientRect().top + document.documentElement.scrollTop;
                 if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
@@ -111,6 +116,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         }
         const handleUserTriggeredScroll = () => {
             userIsScrolling = true;
+            justNavigatedTo = undefined;
         };
 
         const handleScroll = () => {
@@ -139,7 +145,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
-                if (fullSlug === selectedSlug) {
+                if (fullSlug === selectedSlug || justNavigatedTo != null) {
                     return;
                 }
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
@@ -153,12 +159,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const navigateToPath = useEventCallback((route: string, shallow = false) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
+        justNavigatedTo = route;
         navigateToRoute(route, !shallow);
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
     });
 
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
+
+    const { value: hydrated, setTrue: hydrate } = useBooleanState(false);
+    useEffect(() => {
+        hydrate();
+    }, [hydrate, selectedSlug]);
 
     useEffect(() => {
         const handleRouteChange = (route: string, { shallow }: { shallow: boolean }) => {
@@ -201,12 +213,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         });
     }, [router, navigateToPath, basePath, navigation.sidebarNodes, closeMobileSidebar, closeSearchDialog]);
 
-    const hydrated = useBooleanState(false);
-    useEffect(() => {
-        hydrated.setTrue();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
     const activeDescription = convertToDescription(activeNavigatable, frontmatter);
@@ -219,7 +225,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 resolvedPath,
-                hydrated: hydrated.value,
+                hydrated,
                 activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
                 selectedSlug,
                 navigation,

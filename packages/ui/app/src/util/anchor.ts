@@ -22,14 +22,24 @@ export function getRouteAndAnchorNode(route: string): HTMLElement | undefined {
     return undefined;
 }
 
-export function getRouteNodeWithAnchor(route: string): HTMLElement | undefined {
+export function getRouteNodeWithAnchor(route: string): { node: HTMLElement | undefined; hasAnchor: boolean } {
     const [routeWithoutAnchor, anchor] = route.split("#");
     if (routeWithoutAnchor != null) {
-        return (
-            getRouteNode(route) ??
-            getRouteNode(routeWithoutAnchor) ??
-            (anchor != null ? document.getElementById(anchor) ?? undefined : undefined)
-        );
+        let node = getRouteNode(route);
+        let hasAnchor = anchor != null && node != null;
+
+        if (!node && anchor != null) {
+            node = document.getElementById(anchor) ?? undefined;
+            if (node) {
+                hasAnchor = true;
+            }
+        }
+
+        if (!node) {
+            node = getRouteNode(routeWithoutAnchor);
+        }
+
+        return { node, hasAnchor };
     }
-    return undefined;
+    return { node: undefined, hasAnchor: false };
 }
