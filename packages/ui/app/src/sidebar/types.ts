@@ -236,25 +236,7 @@ export function resolveSidebarNodes(
                                           pageId: item.pageId,
                                       })),
                                   }
-                                : {
-                                      type: "page",
-                                      pageType: "changelog",
-                                      id: "changelog",
-                                      title: "Changelog",
-                                      description: undefined,
-                                      pageId: undefined,
-                                      slug: [...definitionSlug, "changelog"],
-                                      items: [
-                                          {
-                                              date: "2024-02-28",
-                                              pageId: "changelog",
-                                          },
-                                          {
-                                              date: "2021-01-01",
-                                              pageId: "changelog",
-                                          },
-                                      ],
-                                  },
+                                : undefined,
                     });
                 }
             },
