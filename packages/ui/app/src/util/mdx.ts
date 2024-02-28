@@ -18,7 +18,12 @@ export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unkno
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdxContent(content: string): Promise<SerializedMdxContent> {
+export async function serializeMdxContent(content: string): Promise<SerializedMdxContent>;
+export async function serializeMdxContent(content: string | undefined): Promise<SerializedMdxContent | undefined>;
+export async function serializeMdxContent(content: string | undefined): Promise<SerializedMdxContent | undefined> {
+    if (content == null) {
+        return undefined;
+    }
     return await serialize(content, {
         scope: {},
         mdxOptions: {

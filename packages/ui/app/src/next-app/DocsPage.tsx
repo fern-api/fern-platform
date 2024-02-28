@@ -178,7 +178,7 @@ export const getDocsPageProps = async (
         };
     }
 
-    const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
+    const navigation = await getNavigation(basePath, docs.body.definition.apis, navigatable);
 
     return {
         type: "props",
@@ -240,11 +240,11 @@ export function getVersionAndTabSlug(basePath: string | undefined, navigatable: 
     return versionAndTabSlug;
 }
 
-function getNavigation(
+async function getNavigation(
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     navigatable: NavigatableDocsNode,
-): SidebarNavigation {
+): Promise<SidebarNavigation> {
     const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
 
     const currentNavigationItems =
@@ -252,7 +252,7 @@ function getNavigation(
             ? navigatable.context.tab?.items
             : navigatable.context.navigationConfig.items;
 
-    const sidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
+    const sidebarNodes = await resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
 
     return {
         currentTabIndex: navigatable.context.tab?.index,

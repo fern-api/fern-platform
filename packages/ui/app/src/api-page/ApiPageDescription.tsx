@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import dynamic from "next/dynamic";
+import { SerializedMdxContent } from "../util/mdx";
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
@@ -8,27 +9,26 @@ const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ M
 export declare namespace ApiPageDescription {
     export interface Props {
         className?: string;
-        description?: string | null;
+        description: string | SerializedMdxContent | undefined;
         isMarkdown: boolean;
     }
 }
 
-export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ className, isMarkdown, description }) => {
-    if (description == null || description.trim().length === 0) {
+export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ className, description }) => {
+    if (description == null) {
         return null;
     }
-    if (isMarkdown) {
-        return (
-            <Markdown
-                className={classNames(
-                    className,
-                    className?.includes("text-sm") ? "prose-sm dark:prose-invert-sm" : "prose dark:prose-invert",
-                )}
-                notProse
-            >
-                {description}
-            </Markdown>
-        );
+    if (typeof description === "string") {
+        return <section className={className}>{description}</section>;
     }
-    return <div className={className}>{description}</div>;
+    return (
+        <Markdown
+            className={classNames(
+                className,
+                className?.includes("text-sm") ? "prose-sm dark:prose-invert-sm" : "prose dark:prose-invert",
+            )}
+            notProse
+            mdx={description}
+        />
+    );
 };

@@ -40,7 +40,7 @@ export function PlaygroundEndpointDescription({ endpoint }: PlaygroundEndpointDe
                 })}
                 ref={descriptionRef}
             >
-                {endpoint.description != null ? <Markdown>{endpoint.description}</Markdown> : null}
+                <Markdown mdx={endpoint.description} />
             </div>
             {descriptionIsClamped && (
                 <div className="mt-4">

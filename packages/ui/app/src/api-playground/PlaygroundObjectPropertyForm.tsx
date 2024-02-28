@@ -119,7 +119,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                 labelClassName: "font-mono",
                 tooltip:
                     property.description != null ? (
-                        <Markdown className="text-xs">{property.description}</Markdown>
+                        <Markdown className="text-xs" mdx={property.description} />
                     ) : undefined,
             }),
         );

@@ -5,7 +5,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { noop } from "lodash-es";
-import dynamic from "next/dynamic";
 import { FC, Fragment, ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
@@ -14,8 +13,6 @@ import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { SidebarNode } from "../sidebar/types";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
-
-const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface ApiPlaygroundEndpointSelectorProps {
     navigation: SidebarNode[];
@@ -153,14 +150,7 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                         const text = renderTextWithHighlight(endpointItem.title, filterValue);
                         return (
                             <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                <FernTooltip
-                                    content={
-                                        endpointItem.description != null ? (
-                                            <Markdown className="text-xs">{endpointItem.description}</Markdown>
-                                        ) : undefined
-                                    }
-                                    side="right"
-                                >
+                                <FernTooltip content={endpointItem.description} side="right">
                                     <FernButton
                                         text={endpointItem.stream ? withStream(text) : text}
                                         className="w-full rounded-none text-left"

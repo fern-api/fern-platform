@@ -60,7 +60,7 @@ export async function convertNavigatableToResolvedPath({
                 : [...parentSlugs, navigatable.section.urlSlug];
             const flattenedApiDefinition = flattenApiDefinition(api, apiDefinitionParentSlug);
             // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-            const apiDefinition = resolveApiDefinition(flattenedApiDefinition);
+            const apiDefinition = await resolveApiDefinition(flattenedApiDefinition);
 
             return {
                 type: "api-page",

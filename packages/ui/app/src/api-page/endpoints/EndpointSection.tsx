@@ -4,6 +4,7 @@ import { createElement, ReactNode, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { getAnchorId } from "../../util/anchor";
+import { SerializedMdxContent } from "../../util/mdx";
 
 const Markdown = dynamic(() => import("../markdown/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
@@ -13,7 +14,7 @@ export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
         title: ReactNode;
-        description?: string;
+        description?: SerializedMdxContent | undefined;
         anchorIdParts: string[];
         route: string;
         expandAll?: () => void;
@@ -58,7 +59,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
             </div>
             {description != null && (
                 <div className="mb-2">
-                    <Markdown className="text-base">{description}</Markdown>
+                    <Markdown className="text-base" mdx={description} />
                 </div>
             )}
             <div className="flex flex-col">{children}</div>

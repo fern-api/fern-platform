@@ -58,7 +58,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     // todo: handle availability
                     tooltip:
                         variant.description != null ? (
-                            <Markdown className="text-xs">{variant.description}</Markdown>
+                            <Markdown className="text-xs" mdx={variant.description} />
                         ) : undefined,
                 }),
             ),

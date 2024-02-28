@@ -16,9 +16,10 @@ import {
     FlattenedWebhookDefinition,
     FlattenedWebSocketChannel,
 } from "./flattenApiDefinition";
+import { SerializedMdxContent, serializeMdxContent } from "./mdx";
 import { titleCase } from "./titleCase";
 
-type WithDescription = { description: string | undefined };
+type WithDescription = { description: SerializedMdxContent | undefined };
 type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 // export async function resolveNavigationItems(
@@ -98,18 +99,21 @@ type WithAvailability = { availability: APIV1Read.Availability | undefined };
 //     return resolvedNavigationItems;
 // }
 
-export function resolveApiDefinition(
+export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,
     filteredTypes?: string[],
-): ResolvedRootPackage {
+): Promise<ResolvedRootPackage> {
     // const highlighter = await getHighlighterInstance();
 
-    const resolvedTypes = mapValues(
-        filteredTypes != null ? pick(apiDefinition.types, filteredTypes) : apiDefinition.types,
-        (type) => resolveTypeDefinition(type, apiDefinition.types),
+    const resolvedTypes = Object.fromEntries(
+        await Promise.all(
+            Object.entries(filteredTypes != null ? pick(apiDefinition.types, filteredTypes) : apiDefinition.types).map(
+                async ([key, value]) => [key, await resolveTypeDefinition(value, apiDefinition.types)],
+            ),
+        ),
     );
 
-    const withPackage = resolveApiDefinitionPackage(
+    const withPackage = await resolveApiDefinitionPackage(
         apiDefinition.auth,
         apiDefinition.api,
         apiDefinition.api,
@@ -127,7 +131,7 @@ export function resolveApiDefinition(
     };
 }
 
-function resolveApiDefinitionPackage(
+async function resolveApiDefinitionPackage(
     auth: APIV1Read.ApiAuth | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     id: APIV1Read.SubpackageId,
@@ -135,7 +139,7 @@ function resolveApiDefinitionPackage(
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
     // highlighter: Highlighter,
-): ResolvedWithApiDefinition {
+): Promise<ResolvedWithApiDefinition> {
     if (package_ == null) {
         return {
             endpoints: [],
@@ -147,15 +151,25 @@ function resolveApiDefinitionPackage(
     }
 
     const endpoints = mergeContentTypes(
-        package_.endpoints.map((endpoint) =>
-            resolveEndpointDefinition(auth, apiSectionId, id, endpoint, types, resolvedTypes),
+        await Promise.all(
+            package_.endpoints.map((endpoint) =>
+                resolveEndpointDefinition(auth, apiSectionId, id, endpoint, types, resolvedTypes),
+            ),
         ),
     );
-    const websockets = package_.websockets.map((websocket) => resolveWebsocketChannel(websocket, types));
-    const webhooks = package_.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes));
-    const subpackages = package_.subpackages
-        .map((subpackage) => resolveSubpackage(auth, apiSectionId, subpackage, types, resolvedTypes))
-        .filter(isNonNullish);
+    const websockets = await Promise.all(
+        package_.websockets.map((websocket) => resolveWebsocketChannel(websocket, types)),
+    );
+    const webhooks = await Promise.all(
+        package_.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes)),
+    );
+    const subpackages = (
+        await Promise.all(
+            package_.subpackages.map((subpackage) =>
+                resolveSubpackage(auth, apiSectionId, subpackage, types, resolvedTypes),
+            ),
+        )
+    ).filter(isNonNullish);
 
     return {
         endpoints,
@@ -166,15 +180,15 @@ function resolveApiDefinitionPackage(
     };
 }
 
-function resolveSubpackage(
+async function resolveSubpackage(
     auth: APIV1Read.ApiAuth | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     subpackage: FlattenedSubpackage,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
     // highlighter: Highlighter,
-): ResolvedSubpackage | undefined {
-    const { endpoints, webhooks, subpackages, websockets } = resolveApiDefinitionPackage(
+): Promise<ResolvedSubpackage | undefined> {
+    const { endpoints, webhooks, subpackages, websockets } = await resolveApiDefinitionPackage(
         auth,
         apiSectionId,
         subpackage.subpackageId,
@@ -192,7 +206,7 @@ function resolveSubpackage(
     }
     return {
         name: subpackage.name,
-        description: subpackage.description,
+        description: await serializeMdxContent(subpackage.description),
         title: titleCase(subpackage.name),
         type: "subpackage",
         apiSectionId,
@@ -205,7 +219,7 @@ function resolveSubpackage(
     };
 }
 
-function resolveEndpointDefinition(
+async function resolveEndpointDefinition(
     auth: APIV1Read.ApiAuth | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     apiPackageId: FdrAPI.ApiDefinitionId,
@@ -213,14 +227,16 @@ function resolveEndpointDefinition(
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
     // highlighter: Highlighter,
-): ResolvedEndpointDefinition {
-    const pathParameters = endpoint.path.pathParameters.map(
-        (parameter): ResolvedObjectProperty => ({
-            key: parameter.key,
-            valueShape: resolveTypeReference(parameter.type, types),
-            description: parameter.description,
-            availability: parameter.availability,
-        }),
+): Promise<ResolvedEndpointDefinition> {
+    const pathParameters = await Promise.all(
+        endpoint.path.pathParameters.map(
+            async (parameter): Promise<ResolvedObjectProperty> => ({
+                key: parameter.key,
+                valueShape: await resolveTypeReference(parameter.type, types),
+                description: await serializeMdxContent(parameter.description),
+                availability: parameter.availability,
+            }),
+        ),
     );
     const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
         if (pathPart.type === "literal") {
@@ -246,7 +262,7 @@ function resolveEndpointDefinition(
         name: endpoint.name,
         id: endpoint.id,
         slug: endpoint.slug,
-        description: endpoint.description,
+        description: await serializeMdxContent(endpoint.description),
         authed: endpoint.authed,
         availability: endpoint.availability,
         apiSectionId,
@@ -258,46 +274,52 @@ function resolveEndpointDefinition(
         defaultEnvironment: endpoint.defaultEnvironment,
         path,
         pathParameters,
-        queryParameters: endpoint.queryParameters.map((parameter) => ({
-            key: parameter.key,
-            valueShape: resolveTypeReference(parameter.type, types),
-            description: parameter.description,
-            availability: parameter.availability,
-        })),
-        headers: endpoint.headers.map((header) => ({
-            key: header.key,
-            valueShape: resolveTypeReference(header.type, types),
-            description: header.description,
-            availability: header.availability,
-        })),
+        queryParameters: await Promise.all(
+            endpoint.queryParameters.map(async (parameter) => ({
+                key: parameter.key,
+                valueShape: await resolveTypeReference(parameter.type, types),
+                description: await serializeMdxContent(parameter.description),
+                availability: parameter.availability,
+            })),
+        ),
+        headers: await Promise.all(
+            endpoint.headers.map(async (header) => ({
+                key: header.key,
+                valueShape: await resolveTypeReference(header.type, types),
+                description: await serializeMdxContent(header.description),
+                availability: header.availability,
+            })),
+        ),
         requestBody:
             endpoint.request != null
                 ? [
                       {
                           contentType: endpoint.request.contentType,
-                          shape: resolveRequestBodyShape(endpoint.request.type, types),
-                          description: endpoint.request.description,
+                          shape: await resolveRequestBodyShape(endpoint.request.type, types),
+                          description: await serializeMdxContent(endpoint.request.description),
                       },
                   ]
                 : [],
         responseBody:
             endpoint.response != null
                 ? {
-                      shape: resolveResponseBodyShape(endpoint.response.type, types),
-                      description: endpoint.response.description,
+                      shape: await resolveResponseBodyShape(endpoint.response.type, types),
+                      description: await serializeMdxContent(endpoint.response.description),
                   }
                 : undefined,
-        errors: endpoint.errors.map(
-            (error): ResolvedError => ({
-                statusCode: error.statusCode,
-                name: error.name,
-                shape:
-                    error.type != null
-                        ? resolveTypeShape(undefined, error.type, types, undefined, undefined)
-                        : undefined,
-                description: error.description,
-                availability: error.availability,
-            }),
+        errors: await Promise.all(
+            endpoint.errors.map(
+                async (error): Promise<ResolvedError> => ({
+                    statusCode: error.statusCode,
+                    name: error.name,
+                    shape:
+                        error.type != null
+                            ? await resolveTypeShape(undefined, error.type, types, undefined, undefined)
+                            : undefined,
+                    description: await serializeMdxContent(error.description),
+                    availability: error.availability,
+                }),
+            ),
         ),
     };
 
@@ -334,17 +356,19 @@ function resolveEndpointDefinition(
     return toRet;
 }
 
-function resolveWebsocketChannel(
+async function resolveWebsocketChannel(
     websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
-): ResolvedWebSocketChannel {
-    const pathParameters = websocket.path.pathParameters.map(
-        (parameter): ResolvedObjectProperty => ({
-            key: parameter.key,
-            valueShape: resolveTypeReference(parameter.type, types),
-            description: parameter.description,
-            availability: parameter.availability,
-        }),
+): Promise<Promise<ResolvedWebSocketChannel>> {
+    const pathParameters = await Promise.all(
+        websocket.path.pathParameters.map(
+            async (parameter): Promise<ResolvedObjectProperty> => ({
+                key: parameter.key,
+                valueShape: await resolveTypeReference(parameter.type, types),
+                description: await serializeMdxContent(parameter.description),
+                availability: parameter.availability,
+            }),
+        ),
     );
     return {
         authed: websocket.authed,
@@ -372,53 +396,65 @@ function resolveWebsocketChannel(
                 }
             })
             .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
-        headers: websocket.headers.map((header) => ({
-            key: header.key,
-            valueShape: resolveTypeReference(header.type, types),
-            description: header.description,
-            availability: header.availability,
-        })),
-        pathParameters,
-        queryParameters: websocket.queryParameters.map(
-            (parameter): ResolvedObjectProperty => ({
-                key: parameter.key,
-                valueShape: resolveTypeReference(parameter.type, types),
-                description: parameter.description,
-                availability: parameter.availability,
-            }),
+        headers: await Promise.all(
+            websocket.headers.map(async (header) => ({
+                key: header.key,
+                valueShape: await resolveTypeReference(header.type, types),
+                description: await serializeMdxContent(header.description),
+                availability: header.availability,
+            })),
         ),
-        messages: websocket.messages.map(({ body, ...message }) => ({
-            ...message,
-            body: resolvePayloadShape(body, types),
-        })),
+        pathParameters,
+        queryParameters: await Promise.all(
+            websocket.queryParameters.map(
+                async (parameter): Promise<ResolvedObjectProperty> => ({
+                    key: parameter.key,
+                    valueShape: await resolveTypeReference(parameter.type, types),
+                    description: await serializeMdxContent(parameter.description),
+                    availability: parameter.availability,
+                }),
+            ),
+        ),
+        messages: await Promise.all(
+            websocket.messages.map(async ({ type, body, origin, displayName, description, availability }) => ({
+                type,
+                body: await resolvePayloadShape(body, types),
+                displayName,
+                origin,
+                description: await serializeMdxContent(description),
+                availability,
+            })),
+        ),
         examples: websocket.examples,
         defaultEnvironment: websocket.defaultEnvironment,
     };
 }
 
-function resolveWebhookDefinition(
+async function resolveWebhookDefinition(
     webhook: FlattenedWebhookDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
     // highlighter: Highlighter,
-): ResolvedWebhookDefinition {
-    const payloadShape = resolvePayloadShape(webhook.payload.type, types);
+): Promise<ResolvedWebhookDefinition> {
+    const payloadShape = await resolvePayloadShape(webhook.payload.type, types);
     return {
         name: webhook.name,
-        description: webhook.description,
+        description: await serializeMdxContent(webhook.description),
         slug: webhook.slug,
         method: webhook.method,
         id: webhook.id,
         path: webhook.path,
-        headers: webhook.headers.map((header) => ({
-            key: header.key,
-            valueShape: resolveTypeReference(header.type, types),
-            description: header.description,
-            availability: header.availability,
-        })),
+        headers: await Promise.all(
+            webhook.headers.map(async (header) => ({
+                key: header.key,
+                valueShape: await resolveTypeReference(header.type, types),
+                description: await serializeMdxContent(header.description),
+                availability: header.availability,
+            })),
+        ),
         payload: {
             shape: payloadShape,
-            description: webhook.payload.description,
+            description: await serializeMdxContent(webhook.payload.description),
         },
         examples: webhook.examples.map((example) => {
             const sortedPayload = stripUndefines(sortKeysByShape(example.payload, payloadShape, resolvedTypes));
@@ -433,60 +469,64 @@ function resolveWebhookDefinition(
 function resolvePayloadShape(
     payloadShape: APIV1Read.WebhookPayloadShape | APIV1Read.WebSocketMessageBodyShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-): ResolvedTypeShape {
-    return visitDiscriminatedUnion(payloadShape, "type")._visit<ResolvedTypeShape>({
-        object: (object) => ({
+): Promise<ResolvedTypeShape> {
+    return visitDiscriminatedUnion(payloadShape, "type")._visit<Promise<ResolvedTypeShape>>({
+        object: async (object) => ({
             type: "object",
             name: undefined,
             extends: object.extends,
-            properties: resolveObjectProperties(object, types),
+            properties: await resolveObjectProperties(object, types),
             description: undefined,
             availability: undefined,
         }),
         reference: (reference) => resolveTypeReference(reference.value, types),
-        _other: () => ({ type: "unknown" }),
+        _other: () => Promise.resolve({ type: "unknown" }),
     });
 }
 
 function resolveRequestBodyShape(
     requestBodyShape: APIV1Read.HttpRequestBodyShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-): ResolvedHttpRequestBodyShape {
-    return visitDiscriminatedUnion(requestBodyShape, "type")._visit<ResolvedHttpRequestBodyShape>({
-        object: (object) => ({
+): Promise<ResolvedHttpRequestBodyShape> {
+    return visitDiscriminatedUnion(requestBodyShape, "type")._visit<Promise<ResolvedHttpRequestBodyShape>>({
+        object: async (object) => ({
             type: "object",
             name: undefined,
             extends: object.extends,
-            properties: resolveObjectProperties(object, types),
+            properties: await resolveObjectProperties(object, types),
             description: undefined,
             availability: undefined,
         }),
-        fileUpload: (fileUpload) => fileUpload,
+        fileUpload: (fileUpload) => Promise.resolve(fileUpload),
         reference: (reference) => resolveTypeReference(reference.value, types),
-        _other: () => ({ type: "unknown" }),
+        _other: () => Promise.resolve({ type: "unknown" }),
     });
 }
 
 function resolveResponseBodyShape(
     responseBodyShape: APIV1Read.HttpResponseBodyShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-): ResolvedHttpResponseBodyShape {
-    return visitDiscriminatedUnion(responseBodyShape, "type")._visit<ResolvedHttpResponseBodyShape>({
-        object: (object) => ({
-            type: "object",
-            name: undefined,
-            extends: object.extends,
-            properties: resolveObjectProperties(object, types),
-            description: undefined,
-            availability: undefined,
+): Promise<ResolvedHttpResponseBodyShape> {
+    return Promise.resolve(
+        visitDiscriminatedUnion(responseBodyShape, "type")._visit<
+            ResolvedHttpResponseBodyShape | Promise<ResolvedHttpResponseBodyShape>
+        >({
+            object: async (object) => ({
+                type: "object",
+                name: undefined,
+                extends: object.extends,
+                properties: await resolveObjectProperties(object, types),
+                description: undefined,
+                availability: undefined,
+            }),
+            fileDownload: (fileDownload) => fileDownload,
+            streamingText: (streamingText) => streamingText,
+            streamCondition: (streamCondition) => streamCondition,
+            reference: (reference) => resolveTypeReference(reference.value, types),
+            stream: () => ({ type: "unknown" }), // TODO: IMPLEMENT
+            _other: () => ({ type: "unknown" }),
         }),
-        fileDownload: (fileDownload) => fileDownload,
-        streamingText: (streamingText) => streamingText,
-        streamCondition: (streamCondition) => streamCondition,
-        reference: (reference) => resolveTypeReference(reference.value, types),
-        stream: () => ({ type: "unknown" }), //TODO IMPLEMENT
-        _other: () => ({ type: "unknown" }),
-    });
+    );
 }
 
 function resolveTypeDefinition(
@@ -508,93 +548,101 @@ function resolveTypeShape(
     types: Record<string, APIV1Read.TypeDefinition>,
     description?: string,
     availability?: APIV1Read.Availability,
-): ResolvedTypeDefinition {
-    return visitDiscriminatedUnion(typeShape, "type")._visit<ResolvedTypeDefinition>({
-        object: (object) => ({
+): Promise<ResolvedTypeDefinition> {
+    return visitDiscriminatedUnion(typeShape, "type")._visit<Promise<ResolvedTypeDefinition>>({
+        object: async (object) => ({
             type: "object",
             name,
             extends: object.extends,
-            properties: resolveObjectProperties(object, types),
-            description,
+            properties: await resolveObjectProperties(object, types),
+            description: await serializeMdxContent(description),
             availability,
         }),
-        enum: (enum_) => ({
+        enum: async (enum_) => ({
             type: "enum",
             name,
-            values: enum_.values.map((enumValue) => ({
-                value: enumValue.value,
-                description: enumValue.description,
-            })),
-            description,
+            values: await Promise.all(
+                enum_.values.map(async (enumValue) => ({
+                    value: enumValue.value,
+                    description: await serializeMdxContent(enumValue.description),
+                })),
+            ),
+            description: await serializeMdxContent(description),
             availability,
         }),
-        undiscriminatedUnion: (undiscriminatedUnion) => ({
+        undiscriminatedUnion: async (undiscriminatedUnion) => ({
             type: "undiscriminatedUnion",
             name,
-            variants: undiscriminatedUnion.variants.map((variant) => ({
-                displayName: variant.displayName,
-                shape: resolveTypeReference(variant.type, types),
-                description: variant.description,
-                availability: variant.availability,
-            })),
-            description,
+            variants: await Promise.all(
+                undiscriminatedUnion.variants.map(async (variant) => ({
+                    displayName: variant.displayName,
+                    shape: await resolveTypeReference(variant.type, types),
+                    description: await serializeMdxContent(variant.description),
+                    availability: variant.availability,
+                })),
+            ),
+            description: await serializeMdxContent(description),
             availability,
         }),
-        alias: (alias) => ({
+        alias: async (alias) => ({
             type: "alias",
             name,
-            shape: resolveTypeReference(alias.value, types),
-            description,
+            shape: await resolveTypeReference(alias.value, types),
+            description: await serializeMdxContent(description),
             availability,
         }),
-        discriminatedUnion: (discriminatedUnion) => {
+        discriminatedUnion: async (discriminatedUnion) => {
             return {
                 type: "discriminatedUnion",
                 name,
                 discriminant: discriminatedUnion.discriminant,
-                variants: discriminatedUnion.variants.map((variant) => ({
-                    discriminantValue: variant.discriminantValue,
-                    extends: variant.additionalProperties.extends,
-                    properties: resolveObjectProperties(variant.additionalProperties, types),
-                    description: variant.description,
-                    availability: variant.availability,
-                })),
-                description,
+                variants: await Promise.all(
+                    discriminatedUnion.variants.map(async (variant) => ({
+                        discriminantValue: variant.discriminantValue,
+                        extends: variant.additionalProperties.extends,
+                        properties: await resolveObjectProperties(variant.additionalProperties, types),
+                        description: await serializeMdxContent(variant.description),
+                        availability: variant.availability,
+                    })),
+                ),
+                description: await serializeMdxContent(description),
                 availability,
             };
         },
-        _other: () => ({ type: "unknown" }),
+        _other: () => Promise.resolve({ type: "unknown" }),
     });
 }
 
 function resolveTypeReference(
     typeReference: APIV1Read.TypeReference,
     types: Record<string, APIV1Read.TypeDefinition>,
-): ResolvedTypeShape {
-    return visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeShape>({
-        literal: (literal) => literal.value,
-        unknown: (unknown) => unknown,
-        optional: (optional) => ({
-            type: "optional",
-            shape: unwrapOptionalRaw(resolveTypeReference(optional.itemType, types), types),
+): Promise<ResolvedTypeShape> {
+    return Promise.resolve(
+        visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeShape | Promise<ResolvedTypeShape>>({
+            literal: (literal) => literal.value,
+            unknown: (unknown) => unknown,
+            optional: async (optional) => ({
+                type: "optional",
+                shape: await unwrapOptionalRaw(await resolveTypeReference(optional.itemType, types), types),
+            }),
+            list: async (list) => ({ type: "list", shape: await resolveTypeReference(list.itemType, types) }),
+            set: async (set) => ({ type: "set", shape: await resolveTypeReference(set.itemType, types) }),
+            map: async (map) => ({
+                type: "map",
+                keyShape: await resolveTypeReference(map.keyType, types),
+                valueShape: await resolveTypeReference(map.valueType, types),
+            }),
+            id: ({ value: typeId }) => {
+                const typeDefinition = types[typeId];
+                if (typeDefinition == null) {
+                    return { type: "unknown" };
+                }
+                return { type: "reference", typeId };
+            },
+            primitive: (primitive) => primitive.value,
+            _other: () => ({ type: "unknown" }),
         }),
-        list: (list) => ({ type: "list", shape: resolveTypeReference(list.itemType, types) }),
-        set: (set) => ({ type: "set", shape: resolveTypeReference(set.itemType, types) }),
-        map: (map) => ({
-            type: "map",
-            keyShape: resolveTypeReference(map.keyType, types),
-            valueShape: resolveTypeReference(map.valueType, types),
-        }),
-        id: ({ value: typeId }) => {
-            const typeDefinition = types[typeId];
-            if (typeDefinition == null) {
-                return { type: "unknown" };
-            }
-            return { type: "reference", typeId };
-        },
-        primitive: (primitive) => primitive.value,
-        _other: () => ({ type: "unknown" }),
-    });
+    );
 }
 
 export function dereferenceObjectProperties(
@@ -639,14 +687,16 @@ export function dereferenceObjectProperties(
 function resolveObjectProperties(
     object: APIV1Read.ObjectType,
     types: Record<string, APIV1Read.TypeDefinition>,
-): ResolvedObjectProperty[] {
-    return object.properties.map(
-        (property): ResolvedObjectProperty => ({
-            key: property.key,
-            valueShape: resolveTypeReference(property.valueType, types),
-            description: property.description,
-            availability: property.availability,
-        }),
+): Promise<ResolvedObjectProperty[]> {
+    return Promise.all(
+        object.properties.map(
+            async (property): Promise<ResolvedObjectProperty> => ({
+                key: property.key,
+                valueShape: await resolveTypeReference(property.valueType, types),
+                description: await serializeMdxContent(property.description),
+                availability: property.availability,
+            }),
+        ),
     );
 }
 
@@ -1106,8 +1156,11 @@ export interface ResolvedWebSocketChannel {
     examples: APIV1Read.ExampleWebSocketSession[];
 }
 
-export interface ResolvedWebSocketMessage extends Omit<APIV1Read.WebSocketMessage, "body"> {
+export interface ResolvedWebSocketMessage extends WithAvailability, WithDescription {
+    type: APIV1Read.WebSocketMessageId;
     body: ResolvedTypeShape;
+    displayName: string | undefined;
+    origin: APIV1Read.WebSocketMessageOrigin;
 }
 
 export interface ResolvedWebhookDefinition extends WithDescription {
@@ -1297,25 +1350,25 @@ export function unwrapOptional(
     return shape;
 }
 
-export function unwrapReferenceRaw(
+export async function unwrapReferenceRaw(
     shape: ResolvedTypeShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-): DereferencedTypeShape {
+): Promise<DereferencedTypeShape> {
     if (shape.type === "reference") {
         const nestedShape = types[shape.typeId];
         if (nestedShape == null) {
             return { type: "unknown" };
         }
-        return unwrapReferenceRaw(resolveTypeDefinition(nestedShape, types), types);
+        return unwrapReferenceRaw(await resolveTypeDefinition(nestedShape, types), types);
     }
     return shape;
 }
 
-export function unwrapOptionalRaw(
+export async function unwrapOptionalRaw(
     shape: ResolvedTypeShape,
     types: Record<string, APIV1Read.TypeDefinition>,
-): NonOptionalTypeShape {
-    shape = unwrapReferenceRaw(shape, types);
+): Promise<NonOptionalTypeShape> {
+    shape = await unwrapReferenceRaw(shape, types);
     if (shape.type === "optional") {
         return unwrapOptionalRaw(shape.shape, types);
     }

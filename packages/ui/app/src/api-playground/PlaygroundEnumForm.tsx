@@ -1,6 +1,7 @@
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { sortBy } from "lodash-es";
 import { FC, useMemo } from "react";
+import { Markdown } from "../api-page/markdown/Markdown";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { ResolvedEnumValue } from "../util/resolver";
@@ -24,7 +25,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                 (enumValue): FernDropdown.Option => ({
                     type: "value",
                     label: enumValue.value,
-                    helperText: enumValue.description,
+                    helperText: <Markdown mdx={enumValue.description} className="text-xs" />,
                     value: enumValue.value,
                     // tooltip:
                     //     enumValue.description != null && enumValues.length >= ENUM_RADIO_BREAKPOINT ? (

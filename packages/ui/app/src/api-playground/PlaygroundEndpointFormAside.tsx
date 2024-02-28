@@ -112,7 +112,7 @@ export function PlaygroundEndpointFormAside({
                         <span className="font-mono">{property.key}</span>
                     </div>
                     <FernCollapse isOpen={isFocused}>
-                        <Markdown className="py-2 text-xs">{property.description}</Markdown>
+                        <Markdown className="py-2 text-xs" mdx={property.description} />
                     </FernCollapse>
                 </div>
                 {shape.type === "object" && (
