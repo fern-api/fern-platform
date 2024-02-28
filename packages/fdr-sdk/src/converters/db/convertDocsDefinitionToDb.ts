@@ -166,7 +166,19 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
                 showErrors: writeShape.showErrors ?? false,
-                changelog: undefined,
+                changelog:
+                    writeShape.changelog != null
+                        ? {
+                              title: writeShape.changelog.title,
+                              description: writeShape.changelog.description,
+                              items: writeShape.changelog.items.map((item) => ({
+                                  date: item.date,
+                                  pageId: item.pageId,
+                              })),
+                              pageId: writeShape.changelog.pageId,
+                              urlSlug: writeShape.changelog.urlSlug,
+                          }
+                        : undefined,
             };
         case "page":
             return {

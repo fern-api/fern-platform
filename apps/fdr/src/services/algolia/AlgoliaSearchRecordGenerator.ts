@@ -124,22 +124,101 @@ export class AlgoliaSearchRecordGenerator {
             );
             return records.flat(1);
         } else if (item.type === "api") {
+            const records: AlgoliaSearchRecord[] = [];
             const api = item;
             const apiId = api.api;
             const apiDef = this.config.apiDefinitionsById.get(apiId);
-            if (apiDef == null) {
-                return [];
+            if (apiDef != null) {
+                records.push(
+                    ...this.generateAlgoliaSearchRecordsForApiDefinition(
+                        apiDef,
+                        context.withPathPart(
+                            compact({
+                                name: api.title,
+                                urlSlug: api.urlSlug,
+                                skipUrlSlug: api.skipUrlSlug || undefined,
+                            }),
+                        ),
+                    ),
+                );
             }
-            return this.generateAlgoliaSearchRecordsForApiDefinition(
-                apiDef,
-                context.withPathPart(
-                    compact({
-                        name: api.title,
-                        urlSlug: api.urlSlug,
-                        skipUrlSlug: api.skipUrlSlug || undefined,
-                    }),
-                ),
-            );
+
+            if (item.changelog != null) {
+                if (item.changelog.pageId != null) {
+                    const changelogPageContent = this.config.docsDefinition.pages[item.changelog.pageId];
+                    const urlSlug = item.changelog.urlSlug;
+                    const title = item.changelog.title ?? `${api.title} Changelog`;
+
+                    if (changelogPageContent != null) {
+                        const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                        const { indexSegment } = context;
+                        const pageContext = context.withPathPart({
+                            // TODO: parse from frontmatter?
+                            name: title,
+                            urlSlug,
+                        });
+                        records.push(
+                            compact({
+                                type: "page-v2",
+                                objectID: uuid(),
+                                title,
+                                // TODO: Set to something more than 10kb on prod
+                                // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
+                                content: truncateToBytes(processedContent, 10_000 - 1),
+                                path: {
+                                    parts: pageContext.pathParts,
+                                },
+                                version:
+                                    indexSegment.type === "versioned"
+                                        ? {
+                                              id: indexSegment.version.id,
+                                              urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                          }
+                                        : undefined,
+                                indexSegmentId: indexSegment.id,
+                            }),
+                        );
+                    }
+
+                    item.changelog.items.forEach((changelogItem) => {
+                        const changelogItemContext = context.withPathPart({
+                            name: `${title} - ${changelogItem.date}`,
+                            urlSlug, // changelogs are all under the same page
+                        });
+
+                        const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
+                        if (changelogPageContent != null) {
+                            const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                            const { indexSegment } = context;
+
+                            records.push(
+                                compact({
+                                    type: "page-v2",
+                                    objectID: uuid(),
+                                    title: `${title} - ${changelogItem.date}`,
+                                    // TODO: Set to something more than 10kb on prod
+                                    // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
+                                    content: truncateToBytes(processedContent, 10_000 - 1),
+                                    path: {
+                                        parts: changelogItemContext.pathParts,
+                                        // TODO: add anchor
+                                    },
+                                    version:
+                                        indexSegment.type === "versioned"
+                                            ? {
+                                                  id: indexSegment.version.id,
+                                                  urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                              }
+                                            : undefined,
+                                    indexSegmentId: indexSegment.id,
+                                }),
+                            );
+                        }
+                    });
+                }
+            }
+
+            return records;
         } else if (item.type === "page") {
             const page = item;
             const pageContent = this.config.docsDefinition.pages[page.id];
@@ -153,7 +232,7 @@ export class AlgoliaSearchRecordGenerator {
                 compact({
                     type: "page-v2",
                     objectID: uuid(),
-                    title: page.title,
+                    title: page.title, // TODO: parse from frontmatter?
                     // TODO: Set to something more than 10kb on prod
                     // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
                     content: truncateToBytes(processedContent, 10_000 - 1),
