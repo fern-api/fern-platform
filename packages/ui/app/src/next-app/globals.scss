@@ -195,8 +195,7 @@
     .fern-search-bar {
         @apply cursor-pointer;
         @apply text-sm border-default flex items-center rounded-lg border px-2.5 py-2 t-muted;
-        @apply bg-background;
-        @apply dark:bg-black/[0.25];
+        @apply bg-tag-default;
         @apply shadow-card-light dark:shadow-none;
         @apply hover:shadow-card-light-elevated hover:dark:shadow-card-dark transition-shadow;
 

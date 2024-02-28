@@ -106,7 +106,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 currentVersionIndex={navigation.currentVersionIndex}
             />
 
-            {showSearchBar && searchService.isAvailable && (
+            {showSearchBar && (
                 <div
                     className={classNames("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
                         invisible: isSearchBoxMounted,
@@ -118,7 +118,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             <div
                 className={classNames("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
-                    "flex-1": showSearchBar && searchService.isAvailable,
+                    "flex-1": showSearchBar,
                 })}
             >
                 {navbarLinksSection}
@@ -144,6 +144,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     <FernButton
                         onClickCapture={(e) => {
                             e.stopPropagation();
+                            e.preventDefault();
                             if (isMobileSidebarOpen) {
                                 closeMobileSidebar();
                             } else {
