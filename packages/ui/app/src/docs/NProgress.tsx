@@ -58,7 +58,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                     NProgress.set(startPosition);
                     NProgress.start();
                     document.querySelector("#nprogress .bar")?.classList.remove("blurout");
-                }, 700);
+                }, 400);
             }
         };
 
@@ -74,7 +74,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                 if (timer) {
                     clearTimeout(timer);
                 }
-                NProgress.done(true);
+                NProgress.done(false);
                 document.querySelector("#nprogress .bar")?.classList.add("blurout");
             }
         };
@@ -92,7 +92,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                 if (timer) {
                     clearTimeout(timer);
                 }
-                NProgress.done(true);
+                NProgress.done(false);
                 document.querySelector("#nprogress .bar")?.classList.add("blurout");
             }
         };
