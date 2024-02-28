@@ -56,7 +56,7 @@ export async function convertNavigatableToResolvedPath({
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
         return {
             type: "changelog-page",
-            fullSlug: slug.join("/"),
+            fullSlug: traverseState.curr.slug.join("/"),
             title: traverseState.curr.title,
             sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             markdown: pageContent != null ? await serializeMdxContent(pageContent.markdown) : null,
@@ -81,7 +81,7 @@ export async function convertNavigatableToResolvedPath({
         }
         return {
             type: "custom-markdown-page",
-            fullSlug: slug.join("/"),
+            fullSlug: traverseState.curr.slug.join("/"),
             title: traverseState.curr.title,
             sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             serializedMdxContent: await serializeMdxContent(pageContent.markdown),

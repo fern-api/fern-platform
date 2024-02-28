@@ -34,12 +34,13 @@ export interface NextNProgressProps {
     transformCSS?: (css: string) => JSX.Element;
 }
 
+let timer: number;
+
 const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, options }: NextNProgressProps) => {
     React.useEffect(() => {
         if (options) {
             NProgress.configure(options);
         }
-        let timer: number;
 
         const routeChangeStart = (
             _: string,
@@ -50,6 +51,9 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
             },
         ) => {
             if (!shallow || showOnShallow) {
+                if (timer) {
+                    clearTimeout(timer);
+                }
                 timer = window.setTimeout(() => {
                     NProgress.set(startPosition);
                     NProgress.start();
@@ -70,7 +74,6 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                 if (timer) {
                     clearTimeout(timer);
                 }
-
                 NProgress.done(true);
                 document.querySelector("#nprogress .bar")?.classList.add("blurout");
             }

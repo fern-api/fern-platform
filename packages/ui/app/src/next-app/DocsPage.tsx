@@ -172,6 +172,16 @@ export const getDocsPageProps = async (
         };
     }
 
+    if (resolvedPath.fullSlug !== pathname) {
+        return {
+            type: "redirect",
+            redirect: {
+                destination: "/" + resolvedPath.fullSlug,
+                permanent: false,
+            },
+        };
+    }
+
     return {
         type: "props",
         props: JSON.parse(

@@ -11,7 +11,7 @@
     height: 3px;
 }
 #nprogress .bar.blurout {
-    @apply blur-sm;
+    @apply blur-md opacity-0 transition-all ease-out;
 }
 #nprogress .peg {
     @apply bg-accent blur-md;
