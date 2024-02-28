@@ -70,9 +70,7 @@ const NextNProgressInternal = ({ startPosition = 0.3, showOnShallow = true, opti
                     clearTimeout(timer);
                 }
 
-                timer = window.setTimeout(() => {
-                    NProgress.done(true);
-                }, 1000);
+                NProgress.done(true);
             }
         };
 
