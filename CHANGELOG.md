@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 2024-02-28
+
+- Fixed [scrolling issue in mobile](https://github.com/fern-api/fern-ui/commit/a0dbc6195c3de6c2145dce32baf1826bb6b99c25).
+
 # 2024-02-27
 
 - Resolved issues with shiki syntax highlighter causing the page to crash on some code samples because the server-generated HAST was too large. Switching to client-side rendering for code samples to avoid this issue.
