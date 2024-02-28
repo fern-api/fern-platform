@@ -313,7 +313,7 @@ types:
         docs: |
           Optional title for the changelog section. Defaults to "Changelog" if not provided.
       description: optional<string>
-      markdown:
+      pageId:
         type: optional<string>
         docs: |
           Optional mdx content to display at the top of the changelog section. The title and description will be parsed from the frontmatter and replace the config-defined values.
@@ -323,7 +323,7 @@ types:
   ChangelogItem:
     properties:
       date: date
-      markdown: string
+      pageId: string
 
   DocsSection:
     properties:
