@@ -45,7 +45,19 @@ interface ApiPlaygroundProps {
     navigation: SidebarNode[];
 }
 
-const CUSTOMERS = ["cloudflare", "assemblyai", "cohere", "shipbob", "hume", "flagright", "sayari", "webflow", "dapi"];
+const CUSTOMERS = [
+    "cloudflare",
+    "assemblyai",
+    "cohere",
+    "shipbob",
+    "hume",
+    "flagright",
+    "sayari",
+    "webflow",
+    "dapi",
+    "astronomer",
+    "trmlabs",
+];
 
 function isApiPlaygroundEnabled(domain: string) {
     domain = domain.toLowerCase();
