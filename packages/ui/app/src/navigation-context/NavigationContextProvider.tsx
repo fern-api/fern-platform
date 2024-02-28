@@ -1,5 +1,4 @@
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
-import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
@@ -23,6 +22,7 @@ export declare namespace NavigationContextProvider {
 let userIsScrolling = false;
 let userIsScrollingTimeout: number;
 let justNavigatedTo: string | undefined;
+let scrollToPathTimeout: number;
 
 function navigateToRoute(route: string, _disableSmooth = false) {
     const [routeWithoutAnchor, anchor] = route.split("#");
@@ -130,20 +130,20 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
-    const onScrollToPath = useEventCallback(
-        debounce(
-            (fullSlug: string) => {
-                if (fullSlug === selectedSlug) {
-                    return;
-                }
-                void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
-                setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
-                scrollToPathListeners.invokeListeners(fullSlug);
-            },
-            150,
-            { trailing: true },
-        ),
-    );
+    const onScrollToPath = useEventCallback((fullSlug: string) => {
+        if (fullSlug === selectedSlug) {
+            return;
+        }
+        justNavigatedTo = undefined;
+        userIsScrolling = true;
+        clearTimeout(scrollToPathTimeout);
+        scrollToPathTimeout = window.setTimeout(() => {
+            void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
+            setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+            scrollToPathListeners.invokeListeners(fullSlug);
+            userIsScrolling = false;
+        }, 150);
+    });
 
     const navigateToPath = useEventCallback((route: string, shallow = false) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
