@@ -134,6 +134,7 @@ module.exports = {
                         maxWidth: "var(--spacing-content-width)",
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
+                        "--tw-prose-hr": "var(--gray-a5)",
                     },
                 },
                 sm: {
@@ -146,6 +147,7 @@ module.exports = {
                         color: "#ffffff",
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
+                        "--tw-prose-hr": "var(--gray-a5)",
                     },
                 },
                 "invert-sm": {

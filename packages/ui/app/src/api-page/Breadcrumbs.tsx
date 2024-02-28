@@ -7,11 +7,11 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: string[] }): ReactEl
     }
     return (
         <div>
-            <span className="inline-flex items-center font-semibold uppercase tracking-wider">
+            <span className="inline-flex items-center font-semibold">
                 {breadcrumbs.map((breadcrumb, idx) => (
                     <Fragment key={idx}>
                         {idx > 0 && <ChevronRightIcon className="text-faded mx-0.5" />}
-                        <span className="t-accent shrink truncate whitespace-nowrap text-xs">{breadcrumb}</span>
+                        <span className="t-accent shrink truncate whitespace-nowrap text-sm">{breadcrumb}</span>
                     </Fragment>
                 ))}
             </span>

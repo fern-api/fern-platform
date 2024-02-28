@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, NavigatableDocsNode, PathResolver } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, VersionInfo } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
@@ -9,6 +9,11 @@ import { REGISTRY_SERVICE } from "../services/registry";
 import { resolveSidebarNodes, SidebarNavigation } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
+import {
+    isUnversionedTabbedNavigationConfig,
+    isUnversionedUntabbedNavigationConfig,
+    isVersionedNavigationConfig,
+} from "../util/fern";
 import { type ResolvedPath } from "../util/ResolvedPath";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
@@ -142,30 +147,19 @@ export const getDocsPageProps = async (
 
     const docsDefinition = docs.body.definition;
     const basePath = docs.body.baseUrl.basePath;
+    const docsConfig = docsDefinition.config;
 
-    const { apis, config: docsConfig } = docsDefinition;
-    const resolver = new PathResolver({ definition: { apis, docsConfig, basePath } });
+    const navigation = getNavigation(slugArray, basePath, docs.body.definition.apis, docsConfig.navigation);
 
-    const navigatable = resolver.resolveNavigatable(pathname);
-
-    if (navigatable == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Cannot resolve navigatable corresponding to "${pathname}"`);
-        return {
-            type: "notFound",
-            notFound: true,
-            revalidate: 60 * 60, // 1 hour
-        };
+    if (navigation == null) {
+        return { type: "notFound", notFound: true };
     }
 
-    const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
-
     const resolvedPath = await convertNavigatableToResolvedPath({
-        resolver,
-        navigatable,
-        docsDefinition,
-        basePath,
-        parentSlugs: versionAndTabSlug,
+        slug: slugArray,
+        sidebarNodes: navigation.sidebarNodes,
+        apis: docsDefinition.apis,
+        pages: docsDefinition.pages,
     });
 
     if (resolvedPath == null) {
@@ -177,8 +171,6 @@ export const getDocsPageProps = async (
             revalidate: 60 * 60, // 1 hour
         };
     }
-
-    const navigation = getNavigation(basePath, docs.body.definition.apis, navigatable);
 
     return {
         type: "props",
@@ -224,51 +216,152 @@ export const getDocsPageStaticProps: GetStaticProps<DocsPage.Props> = async ({ p
     });
 };
 
-export function getVersionAndTabSlug(basePath: string | undefined, navigatable: NavigatableDocsNode): string[] {
+export function getVersionAndTabSlug(
+    slugArray: string[],
+    basePath: string | undefined,
+    nav: DocsV1Read.NavigationConfig,
+): string[] | undefined {
+    let currentPath = slugArray;
+
     const versionAndTabSlug = [];
     if (basePath != null) {
-        versionAndTabSlug.push(...basePath.split("/").filter((s) => s.length > 0));
-    }
-    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "versioned-untabbed") {
-        if (navigatable.context.version.info.index !== 0) {
-            versionAndTabSlug.push(navigatable.context.version.slug);
+        for (const part of basePath.split("/")) {
+            if (part.trim().length === 0) {
+                continue;
+            }
+            if (currentPath[0] === part) {
+                currentPath = currentPath.slice(1);
+                versionAndTabSlug.push(part);
+            } else {
+                return undefined;
+            }
         }
     }
-    if (navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed") {
-        versionAndTabSlug.push(navigatable.context.tab.slug);
+
+    if (isVersionedNavigationConfig(nav)) {
+        const matchedVersion = nav.versions.find((version) => version.urlSlug === currentPath[0]) ?? nav.versions[0];
+
+        if (matchedVersion == null) {
+            return undefined;
+        }
+
+        versionAndTabSlug.push(matchedVersion.urlSlug);
+
+        if (isUnversionedTabbedNavigationConfig(matchedVersion.config)) {
+            const matchedTab =
+                matchedVersion.config.tabs.find((tab) => tab.urlSlug === currentPath[1]) ??
+                matchedVersion.config.tabs[0];
+
+            if (matchedTab == null) {
+                return undefined;
+            }
+
+            versionAndTabSlug.push(matchedVersion.urlSlug, matchedTab.urlSlug);
+        }
+    } else if (isUnversionedTabbedNavigationConfig(nav)) {
+        const matchedTab = nav.tabs.find((tab) => tab.urlSlug === currentPath[0]) ?? nav.tabs[0];
+
+        if (matchedTab == null) {
+            return undefined;
+        }
+
+        versionAndTabSlug.push(matchedTab.urlSlug);
     }
     return versionAndTabSlug;
 }
 
 function getNavigation(
+    slugArray: string[],
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    navigatable: NavigatableDocsNode,
-): SidebarNavigation {
-    const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
+    nav: DocsV1Read.NavigationConfig,
+): SidebarNavigation | undefined {
+    let currentPath = slugArray;
 
-    const currentNavigationItems =
-        navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
-            ? navigatable.context.tab?.items
-            : navigatable.context.navigationConfig.items;
+    let currentVersionIndex: number | undefined;
+    let versions: VersionInfo[] = [];
+    let currentTabIndex: number | undefined;
+    let tabs: Omit<DocsV1Read.NavigationTab, "items">[] = [];
+    const slug: string[] = [];
 
-    const sidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, versionAndTabSlug);
+    if (basePath != null) {
+        for (const part of basePath.split("/")) {
+            if (part.trim().length === 0) {
+                continue;
+            }
+            if (currentPath[0] === part) {
+                currentPath = currentPath.slice(1);
+                slug.push(part);
+            } else {
+                return undefined;
+            }
+        }
+    }
+
+    if (isVersionedNavigationConfig(nav)) {
+        versions = nav.versions.map((version, idx) => {
+            return {
+                id: version.version,
+                slug: version.urlSlug,
+                index: idx,
+                availability: version.availability ?? null,
+            };
+        });
+        currentVersionIndex = nav.versions.findIndex((version) => version.urlSlug === currentPath[0]);
+
+        // If the version slug is not found based on the current path, default to the first version
+        // otherwise, remove the version slug from the current path
+        if (currentVersionIndex === -1) {
+            currentVersionIndex = 0;
+        } else {
+            currentPath = currentPath.slice(1);
+        }
+
+        const matchedVersion = nav.versions[currentVersionIndex];
+
+        if (matchedVersion == null) {
+            return undefined;
+        }
+
+        slug.push(matchedVersion.urlSlug);
+
+        nav = matchedVersion.config;
+    }
+
+    let currentNavigationItems: DocsV1Read.NavigationItem[] = [];
+
+    if (isUnversionedTabbedNavigationConfig(nav)) {
+        tabs = nav.tabs.map((tab) => ({
+            title: tab.title,
+            icon: tab.icon,
+            urlSlug: tab.urlSlug,
+        }));
+
+        currentTabIndex = currentPath.length === 0 ? 0 : nav.tabs.findIndex((tab) => tab.urlSlug === currentPath[0]);
+
+        const matchedTab = nav.tabs[currentTabIndex];
+
+        if (matchedTab == null) {
+            return undefined;
+        }
+
+        slug.push(matchedTab.urlSlug);
+
+        currentNavigationItems = matchedTab.items;
+    }
+
+    if (isUnversionedUntabbedNavigationConfig(nav)) {
+        currentNavigationItems = nav.items;
+    }
+
+    const sidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, slug);
 
     return {
-        currentTabIndex: navigatable.context.tab?.index,
-        tabs:
-            navigatable.context.type === "versioned-tabbed" || navigatable.context.type === "unversioned-tabbed"
-                ? navigatable.context.navigationConfig.tabs.map((tab) => ({
-                      title: tab.title,
-                      icon: tab.icon,
-                      urlSlug: tab.urlSlug,
-                  }))
-                : [],
-        currentVersionIndex: navigatable.context.version?.info.index,
-        versions:
-            navigatable.context.root.info.type === "versioned"
-                ? navigatable.context.root.info.versions.map((version) => version.info)
-                : [],
+        currentTabIndex,
+        tabs,
+        currentVersionIndex,
+        versions,
         sidebarNodes,
+        slug,
     };
 }

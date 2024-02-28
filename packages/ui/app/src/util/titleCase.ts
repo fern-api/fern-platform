@@ -8,6 +8,9 @@ export function titleCase(name: string): string {
     // regex match snake_case and replace "_" with " "
     name = name.replace(/_/g, " ");
 
+    // regex match kebab-case and replace "-" with " "
+    name = name.replace(/-/g, " ");
+
     const titleCased = title(name, { special: SPECIAL_TOKENS });
 
     // regex match "V 2", "V 4", etc. and replace it with "V2", "V4", etc.

@@ -1,7 +1,9 @@
 import { APIV1Read, DocsV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { ActivityLogIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { isEqual } from "lodash-es";
-import { memo, ReactElement, useCallback } from "react";
+import { isEqual, last, sortBy } from "lodash-es";
+import moment from "moment";
+import { memo, ReactElement, ReactNode, useCallback } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernTooltip } from "../components/FernTooltip";
@@ -141,9 +143,48 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     artifacts={undefined}
                 />
             ))}
+            {apiSection.changelog != null && (
+                <SidebarSlugLink
+                    slug={apiSection.changelog.slug}
+                    title={apiSection.changelog.title}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    selected={isEqual(apiSection.changelog.slug, selectedSlug)}
+                    depth={Math.max(0, depth - 1)}
+                    icon={<ActivityLogIcon />}
+                    rightElement={
+                        shouldShowIndicator(apiSection.changelog) && (
+                            <span className="relative flex size-2">
+                                <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75"></span>
+                                <span className="bg-accent relative inline-flex size-2 rounded-full"></span>
+                            </span>
+                        )
+                    }
+                    tooltipContent={renderChangelogTooltip(apiSection.changelog)}
+                />
+            )}
         </ul>
     );
 });
+
+function shouldShowIndicator(changelog: SidebarNode.ChangelogPage): boolean {
+    // if latest change was within the last 7 days
+    const latestChange = last(sortBy(changelog.items, "date"));
+    if (latestChange == null) {
+        return false;
+    }
+
+    return moment().diff(latestChange.date, "days") <= 7;
+}
+
+function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode {
+    const latestChange = last(sortBy(changelog.items, "date"));
+
+    if (latestChange == null) {
+        return null;
+    }
+
+    return `Last updated ${moment(latestChange.date).fromNow()}`;
+}
 
 interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
     className?: string;

@@ -10,6 +10,7 @@ export interface SidebarNavigation {
     currentVersionIndex: number | undefined;
     versions: VersionInfo[];
     sidebarNodes: SidebarNode[];
+    slug: string[]; // contains basepath, current version, and tab
 }
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
@@ -19,6 +20,15 @@ export declare namespace SidebarNode {
         type: "pageGroup";
         slug: string[];
         pages: (SidebarNode.Page | SidebarNode.Link)[];
+    }
+
+    export interface ChangelogPage extends Page {
+        pageType: "changelog";
+        pageId: string | undefined;
+        items: {
+            date: string;
+            pageId: string;
+        }[];
     }
 
     export interface ApiSection {
@@ -32,6 +42,8 @@ export declare namespace SidebarNode {
         websockets: SidebarNode.ApiPage[];
         subpackages: SidebarNode.ApiSection[];
         artifacts: DocsV1Read.ApiArtifacts | undefined;
+        showErrors: boolean;
+        changelog: ChangelogPage | undefined;
     }
 
     export interface Section {
@@ -71,6 +83,7 @@ function resolveSidebarNodeApiSection(
     package_: APIV1Read.ApiDefinitionPackage | undefined,
     title: string,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+    showErrors: boolean,
     parentSlugs: string[],
 ): SidebarNode.ApiSection | undefined {
     let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
@@ -121,6 +134,7 @@ function resolveSidebarNodeApiSection(
                 subpackagesMap[innerSubpackageId],
                 titleCase(subpackagesMap[innerSubpackageId]?.name ?? ""),
                 subpackagesMap,
+                showErrors,
                 slug,
             ),
         )
@@ -140,7 +154,9 @@ function resolveSidebarNodeApiSection(
         webhooks,
         websockets,
         subpackages,
+        showErrors,
         artifacts: undefined,
+        changelog: undefined,
     };
 }
 
@@ -190,6 +206,7 @@ export function resolveSidebarNodes(
                         definition.rootPackage,
                         api.title,
                         definition.subpackages,
+                        api.showErrors,
                         definitionSlug,
                     );
                     sidebarNodes.push({
@@ -203,6 +220,41 @@ export function resolveSidebarNodes(
                         websockets: resolved?.websockets ?? [],
                         subpackages: resolved?.subpackages ?? [],
                         artifacts: api.artifacts,
+                        showErrors: api.showErrors,
+                        changelog:
+                            api.changelog != null
+                                ? {
+                                      type: "page",
+                                      pageType: "changelog",
+                                      id: api.changelog.urlSlug,
+                                      title: api.changelog.title ?? "Changelog",
+                                      description: api.changelog.description,
+                                      pageId: api.changelog.pageId,
+                                      slug: [...definitionSlug, api.changelog.urlSlug],
+                                      items: api.changelog.items.map((item) => ({
+                                          date: item.date,
+                                          pageId: item.pageId,
+                                      })),
+                                  }
+                                : {
+                                      type: "page",
+                                      pageType: "changelog",
+                                      id: "changelog",
+                                      title: "Changelog",
+                                      description: undefined,
+                                      pageId: undefined,
+                                      slug: [...definitionSlug, "changelog"],
+                                      items: [
+                                          {
+                                              date: "2024-02-28",
+                                              pageId: "changelog",
+                                          },
+                                          {
+                                              date: "2021-01-01",
+                                              pageId: "changelog",
+                                          },
+                                      ],
+                                  },
                     });
                 }
             },
@@ -238,75 +290,175 @@ export function resolveActiveSidebarNode(
     sidebarNodes: SidebarNode[],
     fullSlug: string[],
 ): SidebarNode.Page | undefined {
-    for (const node of sidebarNodes) {
-        const activeNode = resolveActiveSidebarNodeRecursive(node, fullSlug);
-        if (activeNode != null) {
-            return activeNode;
+    return visitSidebarNodes(sidebarNodes, fullSlug).curr;
+}
+
+function matchSlug(slug: string[], nodeSlug: string[]): boolean {
+    for (let i = 0; i < slug.length; i++) {
+        if (slug[i] !== nodeSlug[i]) {
+            return false;
         }
     }
-    if (sidebarNodes[0] != null) {
-        return resolveActiveSidebarNodeRecursive(sidebarNodes[0], sidebarNodes[0].slug);
+    return true;
+}
+
+interface TraverseState {
+    prev: SidebarNode.Page | undefined;
+    curr: SidebarNode.Page | undefined;
+    sectionTitleBreadcrumbs: string[];
+    next: SidebarNode.Page | undefined;
+}
+
+function visitPage(
+    page: SidebarNode.Page,
+    slug: string[],
+    traverseState: TraverseState,
+    sectionTitleBreadcrumbs: string[],
+): TraverseState {
+    if (traverseState.next != null) {
+        return traverseState;
+    }
+    if (traverseState.curr == null) {
+        if (matchSlug(slug, page.slug)) {
+            traverseState.curr = page;
+            traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
+        } else {
+            traverseState.prev = page;
+        }
+    } else {
+        traverseState.next = page;
+    }
+    return traverseState;
+}
+
+function visitNode(
+    node: SidebarNode,
+    slug: string[],
+    traverseState: TraverseState,
+    sectionTitleBreadcrumbs: string[],
+): TraverseState {
+    if (traverseState.next != null) {
+        return traverseState;
+    }
+
+    return visitDiscriminatedUnion(node, "type")._visit({
+        pageGroup: (pageGroup) => {
+            if (matchSlug(slug, pageGroup.slug) && slug.length < pageGroup.slug.length) {
+                traverseState.curr = pageGroup.pages.find((page) => page.type === "page") as
+                    | SidebarNode.Page
+                    | undefined;
+            }
+
+            for (const page of pageGroup.pages) {
+                if (page.type === "page") {
+                    traverseState = visitPage(page, slug, traverseState, sectionTitleBreadcrumbs);
+                    if (traverseState.next != null) {
+                        return traverseState;
+                    }
+                }
+            }
+
+            return traverseState;
+        },
+        apiSection: (apiSection) => {
+            const apiSectionBreadcrumbs = [...sectionTitleBreadcrumbs, apiSection.title];
+            if (matchSlug(slug, apiSection.slug) && slug.length < apiSection.slug.length) {
+                traverseState.curr = apiSection.endpoints[0] ?? apiSection.websockets[0] ?? apiSection.webhooks[0];
+                traverseState.sectionTitleBreadcrumbs = apiSectionBreadcrumbs;
+            }
+
+            if (apiSection.changelog != null) {
+                traverseState = visitPage(apiSection.changelog, slug, traverseState, apiSectionBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
+            for (const endpoint of apiSection.endpoints) {
+                traverseState = visitPage(endpoint, slug, traverseState, apiSectionBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
+            for (const websocket of apiSection.websockets) {
+                traverseState = visitPage(websocket, slug, traverseState, apiSectionBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
+            for (const webhook of apiSection.webhooks) {
+                traverseState = visitPage(webhook, slug, traverseState, apiSectionBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
+            for (const subpackage of apiSection.subpackages) {
+                traverseState = visitNode(subpackage, slug, traverseState, apiSectionBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
+            if (matchSlug(slug, apiSection.slug) && slug.length < apiSection.slug.length) {
+                traverseState.curr = apiSection.changelog;
+                traverseState.sectionTitleBreadcrumbs = apiSectionBreadcrumbs;
+            }
+
+            return traverseState;
+        },
+        section: (section) => {
+            for (const item of section.items) {
+                traverseState = visitNode(item, slug, traverseState, [...sectionTitleBreadcrumbs, section.title]);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
+            return traverseState;
+        },
+        _other: () => traverseState,
+    });
+}
+
+export function visitSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]): TraverseState {
+    let traverseState: TraverseState = {
+        prev: undefined,
+        curr: undefined,
+        next: undefined,
+        sectionTitleBreadcrumbs: [],
+    };
+    for (const node of sidebarNodes) {
+        traverseState = visitNode(node, slug, traverseState, []);
+        if (traverseState.next != null) {
+            break;
+        }
+    }
+    return traverseState;
+}
+
+export function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
+    for (const node of sidebarNodes) {
+        if (node.type === "apiSection") {
+            if (node.id === api) {
+                return node;
+            }
+        } else if (node.type === "section") {
+            const innerSection = findApiSection(api, node.items);
+            if (innerSection != null) {
+                return innerSection;
+            }
+        }
     }
     return undefined;
 }
 
-export function resolveActiveSidebarNodeRecursive(node: SidebarNode, fullSlug: string[]): SidebarNode.Page | undefined {
-    if (node.type === "section") {
-        if (fullSlug.join("/") === node.slug.join("/") && node.items[0] != null) {
-            // get the first page in the section
-            const firstPage = resolveActiveSidebarNodeRecursive(node.items[0], node.items[0].slug);
-            if (firstPage != null) {
-                return firstPage;
-            }
-        }
-        for (const item of node.items) {
-            const activeNode = resolveActiveSidebarNodeRecursive(item, fullSlug);
-            if (activeNode != null) {
-                return activeNode;
-            }
-        }
-    } else if (node.type === "apiSection") {
-        if (fullSlug.join("/") === node.slug.join("/")) {
-            return node.endpoints[0] ?? node.websockets[0] ?? node.webhooks[0];
-        } else {
-            for (const endpoint of node.endpoints) {
-                if (fullSlug.join("/") === endpoint.slug.join("/")) {
-                    return endpoint;
-                }
-            }
-            for (const websocket of node.websockets) {
-                if (fullSlug.join("/") === websocket.slug.join("/")) {
-                    return websocket;
-                }
-            }
-            for (const webhook of node.webhooks) {
-                if (fullSlug.join("/") === webhook.slug.join("/")) {
-                    return webhook;
-                }
-            }
-            for (const subpackage of node.subpackages) {
-                const activeNode = resolveActiveSidebarNodeRecursive(subpackage, fullSlug);
-                if (activeNode != null) {
-                    return activeNode;
-                }
-            }
-        }
-    } else if (node.type === "pageGroup") {
-        if (fullSlug.join("/") === node.slug.join("/")) {
-            const firstPage = node.pages.find((page) => page.type === "page") as SidebarNode.Page | undefined;
-            if (firstPage != null) {
-                return firstPage;
-            }
-        }
-        for (const page of node.pages) {
-            if (page.type === "page" && fullSlug.join("/") === page.slug.join("/")) {
-                return page;
-            }
-        }
-    }
-    return;
-}
-
 export function isApiPage(node: SidebarNode.Page): node is SidebarNode.ApiPage {
     return node.type === "page" && "api" in node;
+}
+
+export function isChangelogPage(node: SidebarNode.Page): node is SidebarNode.ChangelogPage {
+    return node.type === "page" && (node as SidebarNode.ChangelogPage).pageType === "changelog";
 }

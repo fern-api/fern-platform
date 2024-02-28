@@ -58,14 +58,18 @@ export const resolveApiHandler: NextApiHandler = async (req, res: NextApiRespons
         const { apis, config: docsConfig } = docsDefinition;
         const resolver = new PathResolver({ definition: { apis, docsConfig, basePath } });
 
+        const versionAndTabSlug = getVersionAndTabSlug(
+            pathname.slice(1).split("/"),
+            basePath,
+            docs.body.definition.config.navigation,
+        );
+
         const navigatable = resolver.resolveNavigatable(pathname.slice(1));
 
-        if (navigatable == null) {
+        if (navigatable == null || versionAndTabSlug == null) {
             res.status(404).json(null);
             return;
         }
-
-        const versionAndTabSlug = getVersionAndTabSlug(basePath, navigatable);
 
         if (apiSectionSlug != null) {
             versionAndTabSlug.push(apiSectionSlug);
