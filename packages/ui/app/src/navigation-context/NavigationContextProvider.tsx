@@ -72,7 +72,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const node = getRouteNode(route!);
             if (node != null) {
-                if (lastActiveNavigatableOffsetTop == null && resolvedRoute === justNavigatedTo && anchor == null) {
+                if (
+                    lastActiveNavigatableOffsetTop == null &&
+                    resolvedRoute === justNavigatedTo &&
+                    anchor == null &&
+                    !userIsScrolling
+                ) {
                     node.scrollIntoView({ behavior: "auto" });
                 }
                 const currentActiveNavigatableOffsetTop =
@@ -151,7 +156,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
             },
-            100,
+            50,
             { trailing: true },
         ),
     );
