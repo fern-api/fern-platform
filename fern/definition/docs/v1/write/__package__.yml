@@ -304,6 +304,26 @@ types:
       artifacts: optional<ApiArtifacts>
       skipUrlSlug: optional<boolean>
       showErrors: optional<boolean>
+      changelog: optional<ChangelogSection>
+
+  ChangelogSection:
+    properties:
+      title:
+        type: optional<string>
+        docs: |
+          Optional title for the changelog section. Defaults to "Changelog" if not provided.
+      description: optional<string>
+      markdown:
+        type: optional<string>
+        docs: |
+          Optional mdx content to display at the top of the changelog section. The title and description will be parsed from the frontmatter and replace the config-defined values.
+      items: list<ChangelogItem>
+      urlSlug: string
+
+  ChangelogItem:
+    properties:
+      date: date
+      markdown: string
 
   DocsSection:
     properties:

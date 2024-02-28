@@ -351,6 +351,20 @@ types:
       skipUrlSlug: boolean
       artifacts: optional<ApiArtifacts>
       showErrors: boolean
+      changelog: optional<ChangelogSection>
+
+  ChangelogSection:
+    properties:
+      title: optional<string>
+      description: optional<string>
+      pageId: optional<PageId>
+      items: list<ChangelogItem>
+      urlSlug: string
+
+  ChangelogItem:
+    properties:
+      date: date
+      pageId: PageId
 
   DocsSection:
     properties:

@@ -143,6 +143,7 @@ types:
       skipUrlSlug: boolean
       artifacts: optional<docsReadV1.ApiArtifacts>
       showErrors: optional<boolean>
+      changelog: optional<docsReadV1.ChangelogSection>
 
   DocsSection:
     properties:
