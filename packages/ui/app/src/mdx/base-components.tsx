@@ -231,7 +231,11 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     const isExternalUrl = href != null && href.startsWith("http");
 
     if (!isExternalUrl && href != null && !href.startsWith("/")) {
-        return <RelativePathAnchor className={className} href={href} {...rest} />;
+        return (
+            <RelativePathAnchor className={className} href={href} {...rest}>
+                {children}
+            </RelativePathAnchor>
+        );
     }
 
     const classNamesCombined = classNames("fern-mdx-link", className);
