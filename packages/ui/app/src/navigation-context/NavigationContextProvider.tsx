@@ -27,7 +27,7 @@ const setUserIsNotScrolling = debounce(
     () => {
         userIsScrolling = false;
     },
-    250,
+    1000,
     { leading: false, trailing: true },
 );
 
@@ -151,7 +151,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
             },
-            50,
+            100,
             { trailing: true },
         ),
     );

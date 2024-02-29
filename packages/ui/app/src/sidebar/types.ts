@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI, VersionInfo } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { last, noop } from "lodash-es";
+import { last, memoize, noop } from "lodash-es";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
@@ -268,12 +268,12 @@ export function resolveSidebarNodes(
     return sidebarNodes;
 }
 
-export function resolveActiveSidebarNode(
-    sidebarNodes: SidebarNode[],
-    fullSlug: string[],
-): SidebarNode.Page | undefined {
-    return visitSidebarNodes(sidebarNodes, fullSlug).curr;
-}
+export const resolveActiveSidebarNode = memoize(
+    (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
+        return visitSidebarNodes(sidebarNodes, fullSlug).curr;
+    },
+    (_sidebarNodes, fullSlug) => fullSlug.join("/"),
+);
 
 function matchSlug(slug: string[], nodeSlug: string[]): boolean {
     for (let i = 0; i < slug.length; i++) {
