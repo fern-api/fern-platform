@@ -295,17 +295,16 @@ function getNavigation(
     const slug: string[] = [];
 
     if (basePath != null) {
-        for (const part of basePath.split("/")) {
-            if (part.trim().length === 0) {
-                continue;
+        basePath.split("/").forEach((part) => {
+            part = part.trim();
+            if (part.length === 0) {
+                return;
             }
             if (currentPath[0] === part) {
                 currentPath = currentPath.slice(1);
-                slug.push(part);
-            } else {
-                return undefined;
             }
-        }
+            slug.push(part);
+        });
     }
 
     if (isVersionedNavigationConfig(nav)) {
