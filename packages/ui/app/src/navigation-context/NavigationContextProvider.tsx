@@ -22,6 +22,7 @@ export declare namespace NavigationContextProvider {
 
 let userIsScrolling = false;
 let justNavigatedTo: string | undefined;
+let justScrolledTo: string | undefined;
 
 const setUserIsNotScrolling = debounce(
     () => {
@@ -150,8 +151,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 if (fullSlug === selectedSlug || justNavigatedTo != null) {
                     return;
                 }
+                justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
+                setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
             },
             300,
             { trailing: true },
@@ -159,9 +162,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     );
 
     const navigateToPath = useEventCallback((route: string) => {
-        if (route === resolvedRoute || justNavigatedTo === route) {
+        if (route === resolvedRoute || justNavigatedTo === route || justScrolledTo === route) {
             return;
         }
+        justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
         if (!userIsScrolling) {
