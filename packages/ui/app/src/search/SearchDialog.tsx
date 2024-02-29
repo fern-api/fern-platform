@@ -154,7 +154,7 @@ function createSearchPlaceholderWithVersion(
     activeVersion: SidebarVersionInfo | undefined,
     sidebarNodes: SidebarNode[],
 ): string {
-    return `Search ${activeVersion != null ? `across ${activeVersion.id}` : ""}for ${createSearchPlaceholder(sidebarNodes)}...`;
+    return `Search ${activeVersion != null ? `across ${activeVersion.id} ` : ""}for ${createSearchPlaceholder(sidebarNodes)}...`;
 }
 
 function createSearchPlaceholder(sidebarNodes: SidebarNode[]): string {
