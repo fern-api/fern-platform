@@ -77,7 +77,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
                         toggleExpand?.();
                     }}
                     shallow={shallow}
-                    scroll={false}
+                    scroll={!shallow}
                 >
                     {child}
                 </Link>
