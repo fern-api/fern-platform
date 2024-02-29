@@ -310,31 +310,29 @@ function getNavigation(
     if (isVersionedNavigationConfig(nav)) {
         currentVersionIndex = nav.versions.findIndex((version) => version.urlSlug === currentPath[0]);
 
-        versions = nav.versions.map((version, idx) => {
-            return {
-                id: version.version,
-                slug: idx === 0 && currentVersionIndex !== 0 ? [...slug] : [...slug, version.urlSlug],
-                index: idx,
-                availability: version.availability ?? null,
-            };
-        });
+        versions = nav.versions.map((version, idx) => ({
+            id: version.version,
+            slug: idx === 0 && currentVersionIndex === -1 ? [...slug] : [...slug, version.urlSlug],
+            index: idx,
+            availability: version.availability ?? null,
+        }));
 
         // If the version slug is not found based on the current path, default to the first version
         // otherwise, remove the version slug from the current path
-        if (currentVersionIndex === -1) {
-            currentVersionIndex = 0;
-        } else {
+        if (currentVersionIndex > -1) {
             currentPath = currentPath.slice(1);
         }
 
-        const matchedVersion = nav.versions[currentVersionIndex];
+        const matchedVersion = nav.versions[currentVersionIndex > -1 ? currentVersionIndex : 0];
 
         if (matchedVersion == null) {
             return undefined;
         }
 
-        if (currentVersionIndex > 0) {
+        if (currentVersionIndex > -1) {
             slug.push(matchedVersion.urlSlug);
+        } else {
+            currentVersionIndex = 0;
         }
 
         nav = matchedVersion.config;
