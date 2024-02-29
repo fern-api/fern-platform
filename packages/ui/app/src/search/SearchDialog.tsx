@@ -1,4 +1,3 @@
-import { VersionInfo } from "@fern-api/fdr-sdk";
 import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
 import classNames from "classnames";
@@ -7,7 +6,7 @@ import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../navigation-context";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
-import { SidebarNode } from "../sidebar/types";
+import { SidebarNode, SidebarVersionInfo } from "../sidebar/types";
 import { useViewportContext } from "../viewport-context/useViewportContext";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
 import { SearchHits, SearchMobileHits } from "./SearchHits";
@@ -152,7 +151,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 };
 
 function createSearchPlaceholderWithVersion(
-    activeVersion: VersionInfo | undefined,
+    activeVersion: SidebarVersionInfo | undefined,
     sidebarNodes: SidebarNode[],
 ): string {
     return `Search ${activeVersion != null ? `across ${activeVersion.id}` : ""}for ${createSearchPlaceholder(sidebarNodes)}...`;
