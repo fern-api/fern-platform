@@ -6,6 +6,6 @@ export function useNavigationContext(): NavigationContextValue {
 }
 
 export function useShouldHideFromSsg(slug: string): boolean {
-    const { selectedSlug, hydrated } = useNavigationContext();
-    return selectedSlug !== slug && !hydrated;
+    const { selectedSlug, resolvedPath, hydrated } = useNavigationContext();
+    return selectedSlug !== slug && (resolvedPath.type !== "api-page" || !hydrated);
 }

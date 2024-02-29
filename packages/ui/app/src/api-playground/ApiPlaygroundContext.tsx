@@ -58,6 +58,7 @@ const CUSTOMERS = [
     "dapi",
     "astronomer",
     "trmlabs",
+    "qdrant",
 ];
 
 function isApiPlaygroundEnabled(domain: string) {

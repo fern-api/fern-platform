@@ -14,6 +14,7 @@ import {
     useRef,
 } from "react";
 import { FernTooltip } from "../components/FernTooltip";
+import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
@@ -75,9 +76,12 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
                     onClick={(e) => {
                         onClick?.(e);
                         toggleExpand?.();
+                        if (shallow && typeof href === "string") {
+                            getRouteNodeWithAnchor(href)?.node?.scrollIntoView({ behavior: "auto" });
+                        }
                     }}
                     shallow={shallow}
-                    scroll={false}
+                    scroll={!shallow}
                 >
                     {child}
                 </Link>

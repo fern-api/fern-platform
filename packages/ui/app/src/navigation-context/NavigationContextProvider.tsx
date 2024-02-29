@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
-import { getRouteNode, getRouteNodeWithAnchor } from "../util/anchor";
+import { getRouteNodeWithAnchor } from "../util/anchor";
 import { FernDocsFrontmatter } from "../util/mdx";
 import { ResolvedPath } from "../util/ResolvedPath";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
@@ -20,22 +20,79 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
+let userHasScrolled = false;
 let userIsScrolling = false;
-let userIsScrollingTimeout: number;
 let justNavigatedTo: string | undefined;
+let justScrolledTo: string | undefined;
 
-function navigateToRoute(route: string, _disableSmooth = false) {
+const setUserIsNotScrolling = debounce(
+    () => {
+        userIsScrolling = false;
+    },
+    250,
+    { leading: false, trailing: true },
+);
+
+// function navigateToRoute(route: string) {
+//     if (!userIsScrolling) {
+//         // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
+//         const { node } = getRouteNodeWithAnchor(route);
+//         node?.scrollIntoView({
+//             behavior: "auto",
+//         });
+//         console.log(1, route);
+
+//         // on mobile, the scrollToTop is not working, so we need to force it
+//         if (node == null) {
+//             window.scrollTo(0, 0);
+//         }
+//     }
+// }
+let raf: number;
+
+function startScrollTracking(route: string) {
     if (!userIsScrolling) {
-        // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
+        getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
+    }
+    userHasScrolled = false;
+    let lastActiveNavigatableOffsetTop: number | undefined;
+    let lastScrollY: number | undefined;
+    function step() {
         const { node } = getRouteNodeWithAnchor(route);
-        node?.scrollIntoView({
-            behavior: "auto",
-        });
-
-        // on mobile, the scrollToTop is not working, so we need to force it
-        if (node == null) {
-            window.scrollTo(0, 0);
+        if (node != null) {
+            if (lastActiveNavigatableOffsetTop == null && !userIsScrolling) {
+                node.scrollIntoView({ behavior: "auto" });
+            }
+            const currentActiveNavigatableOffsetTop =
+                node.getBoundingClientRect().top + document.documentElement.scrollTop;
+            if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
+                lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
+                lastScrollY = window.scrollY;
+            } else {
+                if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
+                    const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
+                    const newScrollY = lastScrollY - diff;
+                    if (!userHasScrolled) {
+                        node.scrollIntoView({ behavior: "auto" });
+                        lastScrollY = window.scrollY;
+                    } else {
+                        window.scrollTo(0, newScrollY);
+                        lastScrollY = newScrollY;
+                    }
+                    // console.log(3, resolvedRoute);
+                    lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
+                } else {
+                    lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
+                    lastScrollY = window.scrollY;
+                }
+            }
         }
+        raf = window.requestAnimationFrame(step);
+    }
+    if (justNavigatedTo !== route) {
+        window.cancelAnimationFrame(raf);
+        justNavigatedTo = route;
+        raf = window.requestAnimationFrame(step);
     }
 }
 
@@ -61,57 +118,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     });
 
     useEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
-        let raf: number;
-        let lastActiveNavigatableOffsetTop: number | undefined;
-        let lastScrollY: number | undefined;
-        function step() {
-            const [route, anchor] = resolvedRoute.split("#");
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const node = getRouteNode(route!);
-            if (node != null) {
-                if (
-                    lastActiveNavigatableOffsetTop == null &&
-                    resolvedRoute === justNavigatedTo &&
-                    anchor == null &&
-                    !userIsScrolling
-                ) {
-                    node.scrollIntoView({ behavior: "auto" });
-                }
-                const currentActiveNavigatableOffsetTop =
-                    node.getBoundingClientRect().top + document.documentElement.scrollTop;
-                if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
-                    lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                    lastScrollY = window.scrollY;
-                } else {
-                    if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
-                        const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
-                        const newScrollY = lastScrollY - diff;
-                        if (!userIsScrolling) {
-                            window.scrollTo(0, newScrollY);
-                        }
-                        lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                        lastScrollY = newScrollY;
-                    } else {
-                        lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                        lastScrollY = window.scrollY;
-                    }
-                }
-            }
-            raf = window.requestAnimationFrame(step);
-        }
-
-        raf = window.requestAnimationFrame(step);
+        startScrollTracking(resolvedRoute);
         return () => {
             window.cancelAnimationFrame(raf);
         };
-    }, [resolvedRoute]);
-
-    // on mount, scroll directly to routed element
-    useEffect(() => {
-        navigateToRoute(resolvedRoute);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -120,17 +130,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         const handleUserTriggeredScroll = () => {
+            userHasScrolled = true;
             userIsScrolling = true;
+            // setUserIsNotScrolling();
             justNavigatedTo = undefined;
         };
 
         const handleScroll = () => {
-            if (userIsScrolling) {
-                clearTimeout(userIsScrollingTimeout);
-                userIsScrollingTimeout = window.setTimeout(() => {
-                    userIsScrolling = false;
-                }, 500);
-            }
+            setUserIsNotScrolling();
         };
 
         window.addEventListener("wheel", handleUserTriggeredScroll);
@@ -153,20 +160,25 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 if (fullSlug === selectedSlug || justNavigatedTo != null) {
                     return;
                 }
+                justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
+                setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
             },
-            50,
+            300,
             { trailing: true },
         ),
     );
 
-    const navigateToPath = useEventCallback((route: string, shallow = false) => {
+    const navigateToPath = useEventCallback((route: string) => {
+        if (route === resolvedRoute || justNavigatedTo === route || justScrolledTo === route) {
+            return;
+        }
+        justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        justNavigatedTo = route;
-        navigateToRoute(route, !shallow);
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+        startScrollTracking(route);
     });
 
     const closeMobileSidebar = useCloseMobileSidebar();
@@ -178,8 +190,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [hydrate, selectedSlug]);
 
     useEffect(() => {
-        const handleRouteChange = (route: string, { shallow }: { shallow: boolean }) => {
-            navigateToPath(route, shallow);
+        const handleRouteChange = (route: string) => {
+            navigateToPath(route);
             closeMobileSidebar();
             closeSearchDialog();
         };
@@ -191,7 +203,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 console.error("Failed to navigate to route", route, options);
             }
 
-            handleRouteChange(route, options);
+            handleRouteChange(route);
         };
         router.events.on("routeChangeComplete", handleRouteChange);
         router.events.on("hashChangeComplete", handleRouteChange);
@@ -205,18 +217,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const slugCandidate = as.substring(1).split("#")[0]!;
-            const previousNavigatable = resolveActiveSidebarNode(navigation.sidebarNodes, slugCandidate.split("/"));
-            if (previousNavigatable != null) {
-                const fullSlug = previousNavigatable.slug.join("/");
-                navigateToPath(`/${fullSlug}`);
-                closeMobileSidebar();
-                closeSearchDialog();
-            }
+            navigateToPath(as);
+            startScrollTracking(as);
+            closeMobileSidebar();
+            closeSearchDialog();
             return true;
         });
-    }, [router, navigateToPath, basePath, navigation.sidebarNodes, closeMobileSidebar, closeSearchDialog]);
+    }, [router, navigateToPath, closeMobileSidebar, closeSearchDialog]);
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);

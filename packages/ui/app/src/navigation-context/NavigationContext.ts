@@ -1,7 +1,6 @@
-import { VersionInfo } from "@fern-api/fdr-sdk";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
-import { SidebarNavigation, SidebarNode } from "../sidebar/types";
+import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "../sidebar/types";
 import { type ResolvedPath } from "../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
@@ -36,7 +35,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 
 export interface NavigationContextValue {
     basePath: string | undefined;
-    activeVersion: VersionInfo | undefined;
+    activeVersion: SidebarVersionInfo | undefined;
     selectedSlug: string;
     activeNavigatable: SidebarNode.Page | undefined;
     onScrollToPath: (slug: string) => void;

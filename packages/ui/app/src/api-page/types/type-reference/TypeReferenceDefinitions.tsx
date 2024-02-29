@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../util/resolver";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
@@ -17,7 +18,7 @@ export declare namespace TypeReferenceDefinitions {
     }
 }
 
-export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> = ({
+export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(function TypeReferenceDefinitions({
     shape,
     isCollapsible,
     applyErrorStyles,
@@ -27,7 +28,7 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     route,
     defaultExpandAll = false,
     types,
-}) => {
+}) {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
             <InternalTypeReferenceDefinitions
@@ -42,4 +43,4 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
             />
         </TypeDefinitionContextProvider>
     );
-};
+});
