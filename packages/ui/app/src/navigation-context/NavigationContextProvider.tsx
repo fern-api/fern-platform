@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../sidebar/types";
-import { getRouteNode, getRouteNodeWithAnchor } from "../util/anchor";
+import { getRouteNodeWithAnchor } from "../util/anchor";
 import { FernDocsFrontmatter } from "../util/mdx";
 import { ResolvedPath } from "../util/ResolvedPath";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
@@ -21,10 +21,17 @@ export declare namespace NavigationContextProvider {
 }
 
 let userIsScrolling = false;
-let userIsScrollingTimeout: number;
 let justNavigatedTo: string | undefined;
 
-function navigateToRoute(route: string, _disableSmooth = false) {
+const setUserIsNotScrolling = debounce(
+    () => {
+        userIsScrolling = false;
+    },
+    250,
+    { leading: false, trailing: true },
+);
+
+function navigateToRoute(route: string) {
     if (!userIsScrolling) {
         // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
         const { node } = getRouteNodeWithAnchor(route);
@@ -38,6 +45,7 @@ function navigateToRoute(route: string, _disableSmooth = false) {
         }
     }
 }
+let raf: number;
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     resolvedPath,
@@ -60,24 +68,21 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         asPath: router.asPath, // do not include basepath because it is already included
     });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => navigateToRoute(resolvedRoute), []);
+
     useEffect(() => {
         if (typeof window === "undefined") {
             return;
         }
-        let raf: number;
         let lastActiveNavigatableOffsetTop: number | undefined;
         let lastScrollY: number | undefined;
         function step() {
-            const [route, anchor] = resolvedRoute.split("#");
+            // const [route, anchor] = resolvedRoute.split("#");
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const node = getRouteNode(route!);
+            const { node } = getRouteNodeWithAnchor(resolvedRoute);
             if (node != null) {
-                if (
-                    lastActiveNavigatableOffsetTop == null &&
-                    resolvedRoute === justNavigatedTo &&
-                    anchor == null &&
-                    !userIsScrolling
-                ) {
+                if (lastActiveNavigatableOffsetTop == null && resolvedRoute === justNavigatedTo && !userIsScrolling) {
                     node.scrollIntoView({ behavior: "auto" });
                 }
                 const currentActiveNavigatableOffsetTop =
@@ -109,28 +114,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, [resolvedRoute]);
 
-    // on mount, scroll directly to routed element
-    useEffect(() => {
-        navigateToRoute(resolvedRoute);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     useEffect(() => {
         if (typeof window === "undefined") {
             return;
         }
         const handleUserTriggeredScroll = () => {
             userIsScrolling = true;
+            setUserIsNotScrolling();
             justNavigatedTo = undefined;
         };
 
         const handleScroll = () => {
-            if (userIsScrolling) {
-                clearTimeout(userIsScrollingTimeout);
-                userIsScrollingTimeout = window.setTimeout(() => {
-                    userIsScrolling = false;
-                }, 500);
-            }
+            setUserIsNotScrolling();
         };
 
         window.addEventListener("wheel", handleUserTriggeredScroll);
@@ -161,12 +156,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         ),
     );
 
-    const navigateToPath = useEventCallback((route: string, shallow = false) => {
+    const navigateToPath = useEventCallback((route: string) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        justNavigatedTo = route;
-        navigateToRoute(route, !shallow);
+        window.cancelAnimationFrame(raf);
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+        justNavigatedTo = route;
+        navigateToRoute(route);
     });
 
     const closeMobileSidebar = useCloseMobileSidebar();
@@ -178,8 +174,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [hydrate, selectedSlug]);
 
     useEffect(() => {
-        const handleRouteChange = (route: string, { shallow }: { shallow: boolean }) => {
-            navigateToPath(route, shallow);
+        const handleRouteChange = (route: string) => {
+            navigateToPath(route);
             closeMobileSidebar();
             closeSearchDialog();
         };
@@ -191,7 +187,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 console.error("Failed to navigate to route", route, options);
             }
 
-            handleRouteChange(route, options);
+            handleRouteChange(route);
         };
         router.events.on("routeChangeComplete", handleRouteChange);
         router.events.on("hashChangeComplete", handleRouteChange);
