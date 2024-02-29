@@ -27,7 +27,7 @@ const setUserIsNotScrolling = debounce(
     () => {
         userIsScrolling = false;
     },
-    1000,
+    250,
     { leading: false, trailing: true },
 );
 
