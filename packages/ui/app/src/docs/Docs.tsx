@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useEffect, useMemo } from "react";
-import { ApiPlaygroundContextProvider } from "../api-playground/ApiPlaygroundContext";
+import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useNavigationContext } from "../navigation-context/useNavigationContext";
 import { useCreateSearchService, useSearchService } from "../services/useSearchService";
 import {
@@ -116,7 +116,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <ApiPlaygroundContextProvider navigation={navigation.sidebarNodes}>
+            <PlaygroundContextProvider navigation={navigation.sidebarNodes}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     <header id="fern-header">
                         <div
@@ -165,7 +165,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     {/* Enables footer DOM injection */}
                     <footer id="fern-footer" />
                 </div>
-            </ApiPlaygroundContextProvider>
+            </PlaygroundContextProvider>
         </>
     );
 });

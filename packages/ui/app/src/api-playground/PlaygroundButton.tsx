@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
-import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
-import { ApiPlaygroundSelectionState } from "./ApiPlaygroundDrawer";
+import { usePlaygroundContext } from "./PlaygroundContext";
+import { PlaygroundSelectionState } from "./PlaygroundDrawer";
 
-export const ApiPlaygroundButton: FC<{ state: ApiPlaygroundSelectionState }> = ({ state }) => {
-    const { hasPlayground, setSelectionStateAndOpen } = useApiPlaygroundContext();
+export const PlaygroundButton: FC<{ state: PlaygroundSelectionState }> = ({ state }) => {
+    const { hasPlayground, setSelectionStateAndOpen } = usePlaygroundContext();
 
     if (!hasPlayground) {
         return null;

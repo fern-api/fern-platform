@@ -10,7 +10,7 @@ export interface WebSocketMessage {
     type: string;
     origin: APIV1Read.WebSocketMessageOrigin | undefined;
     displayName: string | undefined;
-    body: unknown | undefined;
+    data: unknown | undefined;
     // shape: APIV1Read.WebSocketMessageBodyShape;
 }
 
@@ -30,24 +30,12 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                     <Accordion.Item
                         value={index.toString()}
                         key={index}
-                        className={classNames("group relative last:rounded-b-xl px-px last:pb-px")}
+                        className={classNames("group relative px-px last:pb-px")}
                     >
-                        <div
-                            className={classNames(
-                                "group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-20 rounded-[inherit]",
-                                {
-                                    "group-focus-within:ring-border-success":
-                                        message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-                                    "group-focus-within:ring-border-primary":
-                                        message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-                                    "group-focus-within:ring-border-default": message.origin == null,
-                                },
-                            )}
-                        />
                         <Accordion.Trigger
                             className={classNames(
                                 "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background group-data-[state=closed]:rounded-[inherit] transition-[border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]",
-                                "sticky top-0 z-10 backdrop-blur",
+                                "sticky top-0 z-auto backdrop-blur",
                                 {
                                     "data-[state=open]:bg-tag-success":
                                         message.origin === APIV1Read.WebSocketMessageOrigin.Client,
@@ -67,7 +55,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 </span>
                             ) : null}
                             <span className="min-w-0 shrink truncate font-mono text-xs">
-                                {JSON.stringify(message.body)}
+                                {JSON.stringify(message.data)}
                             </span>
                             <span
                                 className={classNames("flex-1 inline-flex justify-end", {
@@ -82,7 +70,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
 
                             <CopyToClipboardButton
                                 className="-my-2 -ml-1 -mr-2"
-                                content={() => JSON.stringify(message.body, null, 2)}
+                                content={() => JSON.stringify(message.data, null, 2)}
                                 onClick={(e) => e.stopPropagation()}
                             />
 
@@ -95,12 +83,24 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                             <div className="group/cb-container relative">
                                 <FernSyntaxHighlighter
                                     className="w-0 min-w-full overflow-y-auto"
-                                    code={JSON.stringify(message.body, null, 2)}
+                                    code={JSON.stringify(message.data, null, 2)}
                                     language="json"
                                     fontSize="sm"
                                 />
                             </div>
                         </Accordion.Content>
+                        <div
+                            className={classNames(
+                                "group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
+                                {
+                                    "group-focus-within:ring-border-success":
+                                        message.origin === APIV1Read.WebSocketMessageOrigin.Client,
+                                    "group-focus-within:ring-border-primary":
+                                        message.origin === APIV1Read.WebSocketMessageOrigin.Server,
+                                    "group-focus-within:ring-border-default": message.origin == null,
+                                },
+                            )}
+                        />
                     </Accordion.Item>
                 );
             })}

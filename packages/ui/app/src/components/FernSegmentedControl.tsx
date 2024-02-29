@@ -11,6 +11,7 @@ interface FernSegmentedControlProps {
     options: FernDropdown.Option[];
     value?: string;
     onValueChange: (value: string) => void;
+    muted?: boolean;
 }
 
 export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
@@ -19,6 +20,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
     options,
     value,
     onValueChange,
+    muted,
 }) => (
     <FernTooltipProvider>
         <ToggleGroup.Root
@@ -34,7 +36,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
                             <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
                                 <FernButton
                                     variant={"minimal"}
-                                    intent={option.value === value ? "primary" : "none"}
+                                    intent={muted ? "none" : option.value === value ? "primary" : "none"}
                                     className="w-full"
                                 >
                                     {option.label ?? option.value}

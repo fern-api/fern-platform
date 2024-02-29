@@ -18,6 +18,7 @@ interface PlaygroundUniscriminatedUnionFormProps {
     value: unknown;
     id: string;
     types: Record<string, ResolvedTypeDefinition>;
+    disabled?: boolean;
 }
 
 export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnionFormProps> = ({
@@ -26,6 +27,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
     value,
     id,
     types,
+    disabled,
 }) => {
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
@@ -73,6 +75,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                     value={internalSelectedVariant.toString()}
                     onValueChange={setSelectedVariant}
                     className="mb-4 w-full"
+                    muted={disabled}
                 />
             ) : (
                 <FernDropdown
@@ -92,6 +95,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                         className="w-full text-left"
                         variant="outlined"
                         mono={true}
+                        disabled={disabled}
                     />
                 </FernDropdown>
             )}
@@ -103,6 +107,7 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
                         onChange={onChange}
                         value={value}
                         types={types}
+                        disabled={disabled}
                     />
                 </div>
             )}

@@ -23,6 +23,7 @@ interface PlaygroundObjectPropertyFormProps {
     value: unknown;
     expandByDefault?: boolean;
     types: Record<string, ResolvedTypeDefinition>;
+    disabled?: boolean;
 }
 
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
@@ -32,6 +33,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     value,
     expandByDefault = true,
     types,
+    disabled,
 }) => {
     const handleChange = useCallback(
         (newValue: unknown) => {
@@ -68,6 +70,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
             onOpenStack={handleOpenStack}
             onCloseStack={handleCloseStack}
             types={types}
+            disabled={disabled}
         />
     );
 };
@@ -79,6 +82,7 @@ interface PlaygroundObjectPropertiesFormProps {
     value: unknown;
     indent?: boolean;
     types: Record<string, ResolvedTypeDefinition>;
+    disabled?: boolean;
 }
 
 export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
@@ -88,6 +92,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
     value,
     indent = false,
     types,
+    disabled,
 }) => {
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
@@ -156,6 +161,7 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
                                     onChange={onChangeObjectProperty}
                                     value={castToRecord(value)[property.key]}
                                     types={types}
+                                    disabled={disabled}
                                 />
                             </li>
                         );

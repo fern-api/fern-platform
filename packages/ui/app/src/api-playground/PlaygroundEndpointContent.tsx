@@ -19,7 +19,7 @@ import { PlaygroundEndpointRequestFormState, ResponsePayload } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
-interface ApiPlaygroundEndpointContentProps {
+interface PlaygroundEndpointContentProps {
     auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
@@ -33,7 +33,7 @@ interface ApiPlaygroundEndpointContentProps {
 
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
 
-export const ApiPlaygroundEndpointContent: FC<ApiPlaygroundEndpointContentProps> = ({
+export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     auth,
     endpoint,
     formState,

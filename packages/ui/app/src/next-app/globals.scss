@@ -698,14 +698,14 @@
     }
 
     .fern-card {
-        @apply ring-default t-default hover:t-default ring-1 ring-inset bg-white/70 dark:bg-tag-default-soft border-none;
+        @apply border-default t-default hover:t-default border bg-white/70 dark:bg-tag-default-soft;
 
         &.interactive {
-            @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:ring-border-primary hover:transition-all;
-            @apply dark:hover:ring-border-accent-muted-dark dark:shadow-none dark:hover:shadow-card-dark-elevated;
+            @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-primary hover:transition-all;
+            @apply hover:border-primary;
 
             &.active {
-                @apply shadow-card-light-elevated ring-border-primary dark:shadow-card-dark-elevated;
+                @apply shadow-card-light-elevated border-primary dark:shadow-card-dark-elevated;
             }
         }
     }

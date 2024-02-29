@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isUndefined, omitBy } from "lodash-es";
-import { FC, Fragment } from "react";
+import { FC, Fragment, ReactNode } from "react";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../util/resolver";
@@ -18,7 +18,7 @@ interface PlaygroundEndpointPathProps {
     queryParameters: ResolvedObjectProperty[];
     sendRequest: () => void;
     sendRequestButtonLabel?: string;
-    sendRequestIcon?: string;
+    sendRequestIcon?: ReactNode;
 }
 
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({

@@ -35,6 +35,7 @@ interface PlaygroundTypeReferenceFormProps {
     onlyRequired?: boolean;
     onlyOptional?: boolean;
     types: Record<string, ResolvedTypeDefinition>;
+    disabled?: boolean;
 }
 
 // interface WithPanelProps {
@@ -111,6 +112,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
     onChange,
     value,
     types,
+    disabled,
 }) => {
     const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
@@ -126,6 +128,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     indent={true}
                     id={id}
                     types={types}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -139,6 +142,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -150,6 +154,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={value}
                     id={id}
                     types={types}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -161,6 +166,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     value={value}
                     id={id}
                     types={types}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -174,6 +180,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -185,7 +192,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                         {/* <label className="t-muted font-mono text-sm leading-none">
                         {checked == null ? "undefined" : checked ? "true" : "false"}
                     </label> */}
-                        <FernSwitch checked={checked} onCheckedChange={onChange} id={id} />
+                        <FernSwitch checked={checked} onCheckedChange={onChange} id={id} disabled={disabled} />
                     </div>
                 </WithLabel>
             );
@@ -201,6 +208,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                         setFocusedParameter(id);
                     }}
                     disallowFloat={true}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -214,6 +222,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -228,6 +237,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                         setFocusedParameter(id);
                     }}
                     disallowFloat={true}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -243,6 +253,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -257,6 +268,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -270,6 +282,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -285,6 +298,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     onFocus={() => {
                         setFocusedParameter(id);
                     }}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -334,6 +348,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                     className="w-full"
                     value={typeof value === "string" ? value : ""}
                     onValueChange={onChange}
+                    disabled={disabled}
                 />
             </WithLabel>
         ),
@@ -346,6 +361,7 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 onChange={onChange}
                 value={value}
                 types={types}
+                disabled={disabled}
             />
         ),
     });

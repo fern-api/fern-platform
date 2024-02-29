@@ -1,16 +1,17 @@
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
-import "./ApiPlaygroundEndpoint.css";
-import { ApiPlaygroundEndpointContent } from "./ApiPlaygroundEndpointContent";
+import "./PlaygroundEndpoint.css";
+import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundEndpointRequestFormState, ResponsePayload } from "./types";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
-interface ApiPlaygroundEndpointProps {
+interface PlaygroundEndpointProps {
     auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
@@ -20,7 +21,7 @@ interface ApiPlaygroundEndpointProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-export const ApiPlaygroundEndpoint: FC<ApiPlaygroundEndpointProps> = ({
+export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     auth,
     endpoint,
     formState,
@@ -97,10 +98,13 @@ export const ApiPlaygroundEndpoint: FC<ApiPlaygroundEndpointProps> = ({
                         environment={endpoint.defaultEnvironment ?? endpoint.environments[0]}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
+                        sendRequestIcon={
+                            <PaperPlaneIcon className="size-6 transition-transform group-hover:translate-x-0.5" />
+                        }
                     />
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">
-                    <ApiPlaygroundEndpointContent
+                    <PlaygroundEndpointContent
                         auth={auth}
                         endpoint={endpoint}
                         formState={formState}

@@ -9,31 +9,31 @@ import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
 import { flattenRootPackage, isEndpoint, isWebSocket, ResolvedApiDefinition } from "../util/resolver";
 import {
-    ApiPlaygroundSelectionState,
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,
+    PlaygroundSelectionState,
     usePlaygroundHeight,
-} from "./ApiPlaygroundDrawer";
+} from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 
-const ApiPlaygroundDrawer = dynamic(() => import("./ApiPlaygroundDrawer").then((m) => m.ApiPlaygroundDrawer), {
+const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
     ssr: false,
 });
 
-interface ApiPlaygroundContextValue {
+interface PlaygroundContextValue {
     hasPlayground: boolean;
-    selectionState: ApiPlaygroundSelectionState | undefined;
-    setSelectionStateAndOpen: (state: ApiPlaygroundSelectionState) => void;
-    expandApiPlayground: () => void;
-    collapseApiPlayground: () => void;
+    selectionState: PlaygroundSelectionState | undefined;
+    setSelectionStateAndOpen: (state: PlaygroundSelectionState) => void;
+    expandPlayground: () => void;
+    collapsePlayground: () => void;
 }
 
-const ApiPlaygroundContext = createContext<ApiPlaygroundContextValue>({
+const PlaygroundContext = createContext<PlaygroundContextValue>({
     hasPlayground: false,
     selectionState: undefined,
     setSelectionStateAndOpen: noop,
-    expandApiPlayground: noop,
-    collapseApiPlayground: noop,
+    expandPlayground: noop,
+    collapsePlayground: noop,
 });
 
 export const PLAYGROUND_OPEN_ATOM = atomWithStorage<boolean>("api-playground-is-open", false);
@@ -42,7 +42,7 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
     {},
 );
 
-interface ApiPlaygroundProps {
+interface PlaygroundProps {
     navigation: SidebarNode[];
 }
 
@@ -61,7 +61,7 @@ const CUSTOMERS = [
     "qdrant",
 ];
 
-function isApiPlaygroundEnabled(domain: string) {
+function isPlaygroundEnabled(domain: string) {
     domain = domain.toLowerCase();
     if (CUSTOMERS.some((customer) => domain.includes(customer))) {
         return true;
@@ -74,10 +74,10 @@ function isApiPlaygroundEnabled(domain: string) {
     return process.env.NODE_ENV !== "production";
 }
 
-export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundProps>> = ({ children, navigation }) => {
+export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
     const [apis] = useAtom(APIS);
     const { domain } = useDocsContext();
-    const [selectionState, setSelectionState] = useState<ApiPlaygroundSelectionState | undefined>();
+    const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
@@ -85,14 +85,14 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
     const [playgroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
-    const expandApiPlayground = useCallback(() => {
+    const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
         return setPlaygroundOpen(true);
     }, [setPlaygroundOpen]);
-    const collapseApiPlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
+    const collapsePlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
 
     const setSelectionStateAndOpen = useCallback(
-        (newSelectionState: ApiPlaygroundSelectionState) => {
+        (newSelectionState: PlaygroundSelectionState) => {
             const matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
                 return;
@@ -104,7 +104,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                         isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;
                 setSelectionState(newSelectionState);
-                expandApiPlayground();
+                expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     endpointId: newSelectionState.endpointId,
                     endpointName: matchedEndpoint?.name,
@@ -128,37 +128,37 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                         isWebSocket(definition) && definition.slug.join("/") === newSelectionState.webSocketId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;
                 setSelectionState(newSelectionState);
-                expandApiPlayground();
+                expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     webSocketId: newSelectionState.webSocketId,
                     webSocketName: matchedWebSocket?.name,
                 });
             }
         },
-        [expandApiPlayground, flattenedApis, globalFormState, setGlobalFormState],
+        [expandPlayground, flattenedApis, globalFormState, setGlobalFormState],
     );
 
-    if (!isApiPlaygroundEnabled(domain)) {
+    if (!isPlaygroundEnabled(domain)) {
         return <>{children}</>;
     }
 
     return (
-        <ApiPlaygroundContext.Provider
+        <PlaygroundContext.Provider
             value={{
                 hasPlayground: Object.keys(apis).length > 0,
                 selectionState,
                 setSelectionStateAndOpen,
-                expandApiPlayground,
-                collapseApiPlayground,
+                expandPlayground,
+                collapsePlayground,
             }}
         >
             {children}
-            <ApiPlaygroundDrawer navigation={navigation} apis={flattenedApis} />
+            <PlaygroundDrawer navigation={navigation} apis={flattenedApis} />
             {isPlaygroundOpen && <div style={{ height: playgroundHeight }} />}
-        </ApiPlaygroundContext.Provider>
+        </PlaygroundContext.Provider>
     );
 };
 
-export function useApiPlaygroundContext(): ApiPlaygroundContextValue {
-    return useContext(ApiPlaygroundContext);
+export function usePlaygroundContext(): PlaygroundContextValue {
+    return useContext(PlaygroundContext);
 }

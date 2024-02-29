@@ -1,5 +1,4 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { endpoint } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/api/resources/v1/resources/db";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
@@ -21,10 +20,11 @@ import {
     ResolvedTypeDefinition,
     ResolvedWebSocketChannel,
 } from "../util/resolver";
-import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
-import { ApiPlaygroundEndpoint } from "./ApiPlaygroundEndpoint";
-import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
-import { ApiPlaygroundWebSocket } from "./ApiPlaygroundWebSocket";
+import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
+import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
+import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
+import { PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
+import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundRequestFormAuth,
@@ -33,14 +33,14 @@ import {
 import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
 
-export type ApiPlaygroundSelectionState = ApiPlaygroundSelectionStateEndpoint | ApiPlaygroundSelectionStateWebSocket;
-export interface ApiPlaygroundSelectionStateEndpoint {
+export type PlaygroundSelectionState = PlaygroundSelectionStateEndpoint | PlaygroundSelectionStateWebSocket;
+export interface PlaygroundSelectionStateEndpoint {
     type: "endpoint";
     api: FdrAPI.ApiId;
     endpointId: APIV1Read.EndpointId;
 }
 
-export interface ApiPlaygroundSelectionStateWebSocket {
+export interface PlaygroundSelectionStateWebSocket {
     type: "websocket";
     api: FdrAPI.ApiId;
     webSocketId: APIV1Read.WebSocketId;
@@ -86,13 +86,13 @@ export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>
     return [height, setHeight];
 }
 
-interface ApiPlaygroundDrawerProps {
+interface PlaygroundDrawerProps {
     navigation: SidebarNode[];
     apis: Record<string, FlattenedRootPackage>;
 }
 
-export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, apis }) => {
-    const { selectionState, hasPlayground, collapseApiPlayground } = useApiPlaygroundContext();
+export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }) => {
+    const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
     const windowHeight = useWindowHeight();
 
     const matchedSection = selectionState != null ? apis[selectionState.api] : undefined;
@@ -281,7 +281,11 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                             </div>
 
                             <div className="flex items-center justify-center">
-                                {endpoint != null && <ApiPlaygroundEndpointSelector navigation={navigation} />}
+                                {selectionState != null ? (
+                                    <PlaygroundEndpointSelector navigation={navigation} />
+                                ) : (
+                                    <h6 className="t-accent">Select an endpoint to get started</h6>
+                                )}
                             </div>
 
                             <div className="flex items-center justify-end">
@@ -299,7 +303,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                                                 variant="minimal"
                                                 className="-mr-2"
                                                 icon={<Cross1Icon />}
-                                                onClick={collapseApiPlayground}
+                                                onClick={collapsePlayground}
                                                 rounded
                                             />
                                         </FernTooltip>
@@ -309,7 +313,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                         </div>
                     </div>
                     {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
-                        <ApiPlaygroundEndpoint
+                        <PlaygroundEndpoint
                             auth={matchedSection?.auth}
                             endpoint={matchedEndpoint}
                             formState={
@@ -323,7 +327,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                             types={types}
                         />
                     ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
-                        <ApiPlaygroundWebSocket
+                        <PlaygroundWebSocket
                             auth={matchedSection?.auth}
                             websocket={matchedWebSocket}
                             formState={
@@ -332,16 +336,13 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                                     : EMPTY_WEBSOCKET_FORM_STATE
                             }
                             setFormState={setPlaygroundWebSocketFormState}
-                            resetWithExample={resetWithExample}
-                            resetWithoutExample={resetWithoutExample}
                             types={types}
                         />
                     ) : (
-                        <div className="flex flex-1 items-center justify-center">
-                            <ApiPlaygroundEndpointSelector
+                        <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
+                            <PlaygroundEndpointSelectorContent
                                 navigation={navigation}
-                                placeholderText="Select an endpoint to get started"
-                                buttonClassName="text-base"
+                                className="fern-card mb-6 min-h-0 shrink p-px"
                             />
                         </div>
                     )}
@@ -416,6 +417,6 @@ export function getInitialEndpointRequestFormStateWithExample(
     };
 }
 
-export function createFormStateKey(state: ApiPlaygroundSelectionState): string {
+export function createFormStateKey(state: PlaygroundSelectionState): string {
     return `${state.api}/${state.type}/${state.type === "endpoint" ? state.endpointId : state.webSocketId}`;
 }
