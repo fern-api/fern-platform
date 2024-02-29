@@ -20,6 +20,7 @@ export declare namespace NavigationContextProvider {
     }>;
 }
 
+let userHasScrolled = false;
 let userIsScrolling = false;
 let justNavigatedTo: string | undefined;
 let justScrolledTo: string | undefined;
@@ -50,6 +51,7 @@ const setUserIsNotScrolling = debounce(
 let raf: number;
 
 function startScrollTracking(route: string) {
+    userHasScrolled = false;
     let lastActiveNavigatableOffsetTop: number | undefined;
     let lastScrollY: number | undefined;
     function step() {
@@ -67,10 +69,15 @@ function startScrollTracking(route: string) {
                 if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
                     const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
                     const newScrollY = lastScrollY - diff;
-                    window.scrollTo(0, newScrollY);
+                    if (!userIsScrolling) {
+                        node.scrollIntoView({ behavior: "auto" });
+                        lastScrollY = window.scrollY;
+                    } else {
+                        window.scrollTo(0, newScrollY);
+                        lastScrollY = newScrollY;
+                    }
                     // console.log(3, resolvedRoute);
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                    lastScrollY = newScrollY;
                 } else {
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
                     lastScrollY = window.scrollY;
@@ -122,6 +129,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         const handleUserTriggeredScroll = () => {
+            userHasScrolled = true;
             userIsScrolling = true;
             // setUserIsNotScrolling();
             justNavigatedTo = undefined;
