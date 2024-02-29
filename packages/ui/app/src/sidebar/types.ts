@@ -1,14 +1,27 @@
-import { APIV1Read, DocsV1Read, FdrAPI, VersionInfo } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, memoize, noop } from "lodash-es";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
+export interface SidebarVersionInfo {
+    id: string;
+    slug: string[];
+    index: number;
+    availability: DocsV1Read.VersionAvailability | null;
+}
+
+export interface SidebarTab {
+    title: string;
+    icon: string;
+    slug: string[];
+}
+
 export interface SidebarNavigation {
     currentTabIndex: number | undefined;
-    tabs: Omit<DocsV1Read.NavigationTab, "items">[];
+    tabs: SidebarTab[];
     currentVersionIndex: number | undefined;
-    versions: VersionInfo[];
+    versions: SidebarVersionInfo[];
     sidebarNodes: SidebarNode[];
     slug: string[]; // contains basepath, current version, and tab
 }

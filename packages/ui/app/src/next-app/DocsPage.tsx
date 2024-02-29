@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI, VersionInfo } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { GetStaticProps, Redirect } from "next";
@@ -6,7 +6,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
-import { resolveSidebarNodes, SidebarNavigation } from "../sidebar/types";
+import { resolveSidebarNodes, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
 import {
@@ -289,9 +289,9 @@ function getNavigation(
     let currentPath = slugArray;
 
     let currentVersionIndex: number | undefined;
-    let versions: VersionInfo[] = [];
+    let versions: SidebarVersionInfo[] = [];
     let currentTabIndex: number | undefined;
-    let tabs: Omit<DocsV1Read.NavigationTab, "items">[] = [];
+    let tabs: SidebarTab[] = [];
     const slug: string[] = [];
 
     if (basePath != null) {
@@ -312,7 +312,7 @@ function getNavigation(
         versions = nav.versions.map((version, idx) => {
             return {
                 id: version.version,
-                slug: version.urlSlug,
+                slug: idx === 0 ? [...slug] : [...slug, version.urlSlug],
                 index: idx,
                 availability: version.availability ?? null,
             };
@@ -333,7 +333,9 @@ function getNavigation(
             return undefined;
         }
 
-        slug.push(matchedVersion.urlSlug);
+        if (currentVersionIndex > 0) {
+            slug.push(matchedVersion.urlSlug);
+        }
 
         nav = matchedVersion.config;
     }
@@ -344,7 +346,7 @@ function getNavigation(
         tabs = nav.tabs.map((tab) => ({
             title: tab.title,
             icon: tab.icon,
-            urlSlug: tab.urlSlug,
+            slug: [...slug, tab.urlSlug],
         }));
 
         currentTabIndex = currentPath.length === 0 ? 0 : nav.tabs.findIndex((tab) => tab.urlSlug === currentPath[0]);

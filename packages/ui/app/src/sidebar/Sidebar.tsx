@@ -48,12 +48,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
         return (
             <ul className="mt-3 flex list-none flex-col">
                 {navigation.tabs.map((tab, idx) => (
-                    <SidebarTabButton
-                        key={idx}
-                        tab={tab}
-                        selected={idx === navigation.currentTabIndex}
-                        slug={tab.urlSlug}
-                    />
+                    <SidebarTabButton key={idx} tab={tab} selected={idx === navigation.currentTabIndex} />
                 ))}
             </ul>
         );
