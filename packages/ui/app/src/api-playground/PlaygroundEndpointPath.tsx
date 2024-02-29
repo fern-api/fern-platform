@@ -1,33 +1,47 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment } from "react";
 import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { ResolvedEndpointDefinition } from "../util/resolver";
+import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../util/resolver";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "./types";
-import { buildEndpointUrl, unknownToString } from "./utils";
+import { buildRequestUrl, unknownToString } from "./utils";
 
 interface PlaygroundEndpointPathProps {
-    endpoint: ResolvedEndpointDefinition;
+    method: APIV1Read.HttpMethod | undefined;
+    environment: APIV1Read.Environment | undefined;
     formState: PlaygroundRequestFormState;
+    path: ResolvedEndpointPathParts[];
+    queryParameters: ResolvedObjectProperty[];
     sendRequest: () => void;
+    sendRequestButtonLabel?: string;
+    sendRequestIcon?: string;
 }
 
-export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoint, formState, sendRequest }) => {
-    const environment = endpoint.defaultEnvironment ?? endpoint.environments[0];
+export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
+    environment,
+    method,
+    formState,
+    path,
+    queryParameters,
+    sendRequest,
+    sendRequestButtonLabel,
+    sendRequestIcon,
+}) => {
     return (
         <div className="playground-endpoint">
             <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink gap-2 rounded-[20px] px-4 py-2">
-                {endpoint != null && <HttpMethodTag method={endpoint.method} className="playground-endpoint-method" />}
+                {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span className="playground-endpoint-url">
                     <span className="playground-endpoint-baseurl">{environment?.baseUrl}</span>
-                    {endpoint?.path.map((part, idx) => {
+                    {path.map((part, idx) => {
                         return visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => <span key={idx}>{literal.value}</span>,
                             pathParameter: (pathParameter) => {
-                                const stateValue = unknownToString(formState?.pathParameters[pathParameter.key]);
+                                const stateValue = unknownToString(formState.pathParameters[pathParameter.key]);
                                 return (
                                     <span
                                         key={idx}
@@ -44,19 +58,18 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoi
                             _other: () => null,
                         });
                     })}
-                    {endpoint != null &&
-                        endpoint.queryParameters.length > 0 &&
-                        Object.keys(omitBy(formState?.queryParameters, isUndefined)).length > 0 &&
-                        endpoint.queryParameters
+                    {queryParameters.length > 0 &&
+                        Object.keys(omitBy(formState.queryParameters, isUndefined)).length > 0 &&
+                        queryParameters
                             .filter((queryParameter) => {
-                                const stateValue = formState?.queryParameters[queryParameter.key];
+                                const stateValue = formState.queryParameters[queryParameter.key];
                                 if (stateValue == null && queryParameter.valueShape.type === "optional") {
                                     return false;
                                 }
                                 return true;
                             })
                             .map((queryParameter, idx) => {
-                                const stateValue = unknownToString(formState?.queryParameters[queryParameter.key]);
+                                const stateValue = unknownToString(formState.queryParameters[queryParameter.key]);
                                 return (
                                     <Fragment key={idx}>
                                         <span>{idx === 0 ? "?" : "&"}</span>
@@ -70,11 +83,17 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({ endpoi
                 </span>
                 <CopyToClipboardButton
                     className="playground-endpoint-copy-button"
-                    content={() => buildEndpointUrl(endpoint, formState)}
+                    content={() =>
+                        buildRequestUrl(environment?.baseUrl, path, formState.pathParameters, formState.queryParameters)
+                    }
                 />
             </div>
 
-            <PlaygroundSendRequestButton sendRequest={sendRequest} />
+            <PlaygroundSendRequestButton
+                sendRequest={sendRequest}
+                sendRequestButtonLabel={sendRequestButtonLabel}
+                sendRequestIcon={sendRequestIcon}
+            />
         </div>
     );
 };

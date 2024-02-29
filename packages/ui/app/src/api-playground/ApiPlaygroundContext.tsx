@@ -7,11 +7,12 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
-import { flattenRootPackage, isEndpoint, ResolvedApiDefinition } from "../util/resolver";
+import { flattenRootPackage, isEndpoint, isWebSocket, ResolvedApiDefinition } from "../util/resolver";
 import {
     ApiPlaygroundSelectionState,
     createFormStateKey,
-    getInitialModalFormStateWithExample,
+    getInitialEndpointRequestFormStateWithExample,
+    usePlaygroundHeight,
 } from "./ApiPlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 
@@ -79,7 +80,8 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
-    const [, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
+    const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
+    const [playgroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
     const expandApiPlayground = useCallback(() => {
@@ -95,29 +97,40 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
                 return;
             }
 
-            const matchedEndpoint = matchedPackage.apiDefinitions.find(
-                (definition) => isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
-            ) as ResolvedApiDefinition.Endpoint | undefined;
-            if (matchedEndpoint == null) {
-                return;
-            }
-            setSelectionState(newSelectionState);
-            expandApiPlayground();
-            capturePosthogEvent("api_playground_opened", {
-                endpointId: newSelectionState.endpointId,
-                endpointName: matchedEndpoint.name,
-            });
-            if (globalFormState[createFormStateKey(newSelectionState)] == null) {
-                setGlobalFormState((currentFormState) => {
-                    return {
-                        ...currentFormState,
-                        [createFormStateKey(newSelectionState)]: getInitialModalFormStateWithExample(
-                            matchedPackage.auth,
-                            matchedEndpoint,
-                            matchedEndpoint.examples[0],
-                            matchedPackage.types,
-                        ),
-                    };
+            if (newSelectionState.type === "endpoint") {
+                const matchedEndpoint = matchedPackage.apiDefinitions.find(
+                    (definition) =>
+                        isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
+                ) as ResolvedApiDefinition.Endpoint | undefined;
+                setSelectionState(newSelectionState);
+                expandApiPlayground();
+                capturePosthogEvent("api_playground_opened", {
+                    endpointId: newSelectionState.endpointId,
+                    endpointName: matchedEndpoint?.name,
+                });
+                if (matchedEndpoint != null && globalFormState[createFormStateKey(newSelectionState)] == null) {
+                    setGlobalFormState((currentFormState) => {
+                        return {
+                            ...currentFormState,
+                            [createFormStateKey(newSelectionState)]: getInitialEndpointRequestFormStateWithExample(
+                                matchedPackage.auth,
+                                matchedEndpoint,
+                                matchedEndpoint?.examples[0],
+                                matchedPackage.types,
+                            ),
+                        };
+                    });
+                }
+            } else if (newSelectionState.type === "websocket") {
+                const matchedWebSocket = matchedPackage.apiDefinitions.find(
+                    (definition) =>
+                        isWebSocket(definition) && definition.slug.join("/") === newSelectionState.webSocketId,
+                ) as ResolvedApiDefinition.Endpoint | undefined;
+                setSelectionState(newSelectionState);
+                expandApiPlayground();
+                capturePosthogEvent("api_playground_opened", {
+                    webSocketId: newSelectionState.webSocketId,
+                    webSocketName: matchedWebSocket?.name,
                 });
             }
         },
@@ -140,6 +153,7 @@ export const ApiPlaygroundContextProvider: FC<PropsWithChildren<ApiPlaygroundPro
         >
             {children}
             <ApiPlaygroundDrawer navigation={navigation} apis={flattenedApis} />
+            {isPlaygroundOpen && <div style={{ height: playgroundHeight }} />}
         </ApiPlaygroundContext.Provider>
     );
 };

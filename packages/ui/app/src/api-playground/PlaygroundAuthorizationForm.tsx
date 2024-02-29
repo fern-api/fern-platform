@@ -8,10 +8,9 @@ import { Key } from "react-feather";
 import { FernButton } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernInput } from "../components/FernInput";
-import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
-import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
+import { PlaygroundRequestFormAuth } from "./types";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -233,37 +232,21 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
 };
 
 interface PlaygroundAuthorizationFormCardProps {
-    endpoint: ResolvedEndpointDefinition;
-    auth: APIV1Read.ApiAuth | null | undefined;
-    formState: PlaygroundRequestFormState | undefined;
-    setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    auth: APIV1Read.ApiAuth;
+    authState: PlaygroundRequestFormAuth | undefined;
+    setAuthorization: Dispatch<SetStateAction<PlaygroundRequestFormAuth | undefined>>;
 }
 
 export function PlaygroundAuthorizationFormCard({
-    endpoint,
     auth,
-    formState,
-    setFormState,
+    authState,
+    setAuthorization,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
-    const setAuthorization = useCallback(
-        (newAuthValue: PlaygroundRequestFormAuth) => {
-            setFormState((state) => ({
-                ...state,
-                auth: newAuthValue,
-            }));
-        },
-        [setFormState],
-    );
-
     const isOpen = useBooleanState(false);
-
-    if (!endpoint.authed || auth == null) {
-        return null;
-    }
 
     return (
         <div>
-            {isAuthed(auth, formState?.auth) ? (
+            {isAuthed(auth, authState) ? (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -299,7 +282,7 @@ export function PlaygroundAuthorizationFormCard({
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown">
-                        <PlaygroundAuthorizationForm auth={auth} value={formState?.auth} onChange={setAuthorization} />
+                        <PlaygroundAuthorizationForm auth={auth} value={authState} onChange={setAuthorization} />
                         <div className="flex justify-end p-4 pt-2">
                             <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
                         </div>

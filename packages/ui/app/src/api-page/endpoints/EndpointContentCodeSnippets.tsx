@@ -92,8 +92,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 actions={
                     <>
                         <ApiPlaygroundButton
-                            api={api}
-                            endpointId={endpoint.slug.join("/")}
+                            state={{
+                                type: "endpoint",
+                                api,
+                                endpointId: endpoint.slug.join("/"),
+                            }}
                             // example={selectedClient.exampleCall}
                         />
                         {clients.length > 1 ? (

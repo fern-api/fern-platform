@@ -23,7 +23,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
     return (
         <Accordion.Root
             type="multiple"
-            className="divide-border-default fix relative table w-full table-fixed divide-y"
+            className="divide-border-default fix relative z-0 table w-full table-fixed divide-y"
         >
             {messages.map((message, index) => {
                 return (
@@ -80,6 +80,12 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 </span>
                             </span>
 
+                            <CopyToClipboardButton
+                                className="-my-2 -ml-1 -mr-2"
+                                content={() => JSON.stringify(message.body, null, 2)}
+                                onClick={(e) => e.stopPropagation()}
+                            />
+
                             <ChevronDownIcon
                                 className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
                                 aria-hidden
@@ -92,12 +98,6 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                     code={JSON.stringify(message.body, null, 2)}
                                     language="json"
                                     fontSize="sm"
-                                />
-                                <CopyToClipboardButton
-                                    className={
-                                        "absolute right-1 top-1 opacity-0 transition group-hover/cb-container:opacity-100"
-                                    }
-                                    content={() => JSON.stringify(message.body, null, 2)}
                                 />
                             </div>
                         </Accordion.Content>

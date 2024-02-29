@@ -198,6 +198,7 @@ export function resolveSidebarNodes(
             },
             api: (api) => {
                 const definition = apis[api.api];
+                console.log(parentSlugs, api.urlSlug);
                 if (definition != null) {
                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
                     const resolved = resolveSidebarNodeApiSection(
@@ -444,4 +445,8 @@ export function isApiPage(node: SidebarNode.Page): node is SidebarNode.ApiPage {
 
 export function isChangelogPage(node: SidebarNode.Page): node is SidebarNode.ChangelogPage {
     return node.type === "page" && (node as SidebarNode.ChangelogPage).pageType === "changelog";
+}
+
+export function isEndpointPage(node: SidebarNode.Page): node is SidebarNode.EndpointPage {
+    return node.type === "page" && "method" in node;
 }

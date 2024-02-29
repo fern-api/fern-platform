@@ -4,7 +4,7 @@ import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 import { ApiPlaygroundSelectionState } from "./ApiPlaygroundDrawer";
 
-export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ api, endpointId }) => {
+export const ApiPlaygroundButton: FC<{ state: ApiPlaygroundSelectionState }> = ({ state }) => {
     const { hasPlayground, setSelectionStateAndOpen } = useApiPlaygroundContext();
 
     if (!hasPlayground) {
@@ -22,7 +22,7 @@ export const ApiPlaygroundButton: FC<ApiPlaygroundSelectionState> = ({ api, endp
             >
                 <FernButton
                     onClick={() => {
-                        setSelectionStateAndOpen({ api, endpointId });
+                        setSelectionStateAndOpen(state);
                     }}
                     rightIcon="play"
                     variant="outlined"

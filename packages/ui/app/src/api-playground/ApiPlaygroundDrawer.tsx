@@ -1,31 +1,53 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { endpoint } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/api/resources/v1/resources/db";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarNode } from "../sidebar/types";
 import {
     FlattenedRootPackage,
     isEndpoint,
+    isWebSocket,
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
     ResolvedTypeDefinition,
+    ResolvedWebSocketChannel,
 } from "../util/resolver";
-import { ApiPlayground } from "./ApiPlayground";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, useApiPlaygroundContext } from "./ApiPlaygroundContext";
-import { PlaygroundRequestFormAuth, PlaygroundRequestFormState } from "./types";
+import { ApiPlaygroundEndpoint } from "./ApiPlaygroundEndpoint";
+import { ApiPlaygroundEndpointSelector } from "./ApiPlaygroundEndpointSelector";
+import { ApiPlaygroundWebSocket } from "./ApiPlaygroundWebSocket";
+import {
+    PlaygroundEndpointRequestFormState,
+    PlaygroundRequestFormAuth,
+    PlaygroundWebSocketRequestFormState,
+} from "./types";
 import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
-import { getDefaultValueForObjectProperties, getDefaultValuesForBody } from "./utils";
+import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
 
-export interface ApiPlaygroundSelectionState {
+export type ApiPlaygroundSelectionState = ApiPlaygroundSelectionStateEndpoint | ApiPlaygroundSelectionStateWebSocket;
+export interface ApiPlaygroundSelectionStateEndpoint {
+    type: "endpoint";
     api: FdrAPI.ApiId;
     endpointId: APIV1Read.EndpointId;
 }
 
-const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
+export interface ApiPlaygroundSelectionStateWebSocket {
+    type: "websocket";
+    api: FdrAPI.ApiId;
+    webSocketId: APIV1Read.WebSocketId;
+}
+
+const EMPTY_ENDPOINT_FORM_STATE: PlaygroundEndpointRequestFormState = {
+    type: "endpoint",
     auth: undefined,
     headers: {},
     pathParameters: {},
@@ -33,7 +55,36 @@ const EMPTY_FORM_STATE: PlaygroundRequestFormState = {
     body: undefined,
 };
 
-const playgroundHeightAtom = atomWithStorage<number>("api-playground-height", 400);
+const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
+    type: "websocket",
+
+    auth: undefined,
+    headers: {},
+    pathParameters: {},
+    queryParameters: {},
+
+    messages: {},
+};
+
+export const PLAYGROUND_HEIGHT_ATOM = atomWithStorage<number>("api-playground-height", 400);
+
+export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>] {
+    const { layout } = useDocsContext();
+    const headerHeight =
+        layout?.headerHeight == null
+            ? 60
+            : layout.headerHeight.type === "px"
+              ? layout.headerHeight.value
+              : layout.headerHeight.type === "rem"
+                ? layout.headerHeight.value * 16
+                : 60;
+    const [playgroundHeight, setHeight] = useAtom(PLAYGROUND_HEIGHT_ATOM);
+    const windowHeight = useWindowHeight();
+    const height =
+        windowHeight != null ? Math.max(Math.min(windowHeight - headerHeight, playgroundHeight), 40) : playgroundHeight;
+
+    return [height, setHeight];
+}
 
 interface ApiPlaygroundDrawerProps {
     navigation: SidebarNode[];
@@ -41,21 +92,18 @@ interface ApiPlaygroundDrawerProps {
 }
 
 export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, apis }) => {
-    const { selectionState, hasPlayground } = useApiPlaygroundContext();
+    const { selectionState, hasPlayground, collapseApiPlayground } = useApiPlaygroundContext();
+    const windowHeight = useWindowHeight();
 
     const matchedSection = selectionState != null ? apis[selectionState.api] : undefined;
-    const matchedEndpoint = matchedSection?.apiDefinitions.find(
-        (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState?.endpointId,
-    ) as ResolvedApiDefinition.Endpoint | undefined;
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
-    const [height, setHeight] = useAtom(playgroundHeightAtom);
-    const windowHeight = useWindowHeight();
+    const [height, setHeight] = usePlaygroundHeight();
 
     const setOffset = useCallback(
         (offset: number) => {
-            windowHeight != null && setHeight(Math.min(windowHeight - 60, windowHeight - offset));
+            windowHeight != null && setHeight(windowHeight - offset);
         },
         [setHeight, windowHeight],
     );
@@ -65,18 +113,42 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
-    const setPlaygroundFormState = useCallback<Dispatch<SetStateAction<PlaygroundRequestFormState>>>(
+    const setPlaygroundEndpointFormState = useCallback<Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>>(
         (newFormState) => {
             if (selectionState == null) {
                 return;
             }
-            setGlobalFormState((currentFormState) => {
+            setGlobalFormState((currentGlobalFormState) => {
+                let currentFormState = currentGlobalFormState[createFormStateKey(selectionState)];
+                if (currentFormState == null || currentFormState.type !== "endpoint") {
+                    currentFormState = EMPTY_ENDPOINT_FORM_STATE;
+                }
+                const mutatedFormState =
+                    typeof newFormState === "function" ? newFormState(currentFormState) : newFormState;
                 return {
-                    ...currentFormState,
-                    [createFormStateKey(selectionState)]:
-                        typeof newFormState === "function"
-                            ? newFormState(currentFormState[createFormStateKey(selectionState)] ?? EMPTY_FORM_STATE)
-                            : newFormState,
+                    ...currentGlobalFormState,
+                    [createFormStateKey(selectionState)]: mutatedFormState,
+                };
+            });
+        },
+        [selectionState, setGlobalFormState],
+    );
+
+    const setPlaygroundWebSocketFormState = useCallback<Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>>(
+        (newFormState) => {
+            if (selectionState == null) {
+                return;
+            }
+            setGlobalFormState((currentGlobalFormState) => {
+                let currentFormState = currentGlobalFormState[createFormStateKey(selectionState)];
+                if (currentFormState == null || currentFormState.type !== "websocket") {
+                    currentFormState = EMPTY_WEBSOCKET_FORM_STATE;
+                }
+                const mutatedFormState =
+                    typeof newFormState === "function" ? newFormState(currentFormState) : newFormState;
+                return {
+                    ...currentGlobalFormState,
+                    [createFormStateKey(selectionState)]: mutatedFormState,
                 };
             });
         },
@@ -84,9 +156,7 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
     );
 
     const playgroundFormState =
-        selectionState != null
-            ? globalFormState[createFormStateKey(selectionState)] ?? EMPTY_FORM_STATE
-            : EMPTY_FORM_STATE;
+        selectionState != null ? globalFormState[createFormStateKey(selectionState)] : undefined;
 
     const togglePlayground = useCallback(
         (usingKeyboardShortcut: boolean) => {
@@ -99,20 +169,65 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
         },
         [setPlaygroundOpen],
     );
+
+    const matchedEndpoint =
+        selectionState?.type === "endpoint"
+            ? (matchedSection?.apiDefinitions.find(
+                  (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState?.endpointId,
+              ) as ResolvedApiDefinition.Endpoint | undefined)
+            : undefined;
+
+    const matchedWebSocket =
+        selectionState?.type === "websocket"
+            ? (matchedSection?.apiDefinitions.find(
+                  (definition) => isWebSocket(definition) && definition.slug.join("/") === selectionState.webSocketId,
+              ) as ResolvedApiDefinition.WebSocket | undefined)
+            : undefined;
+
     const resetWithExample = useCallback(() => {
-        setPlaygroundFormState(
-            getInitialModalFormStateWithExample(
-                matchedSection?.auth,
-                matchedEndpoint,
-                matchedEndpoint?.examples[0],
-                types,
-            ),
-        );
-    }, [matchedEndpoint, matchedSection?.auth, setPlaygroundFormState, types]);
+        if (selectionState?.type === "endpoint") {
+            setPlaygroundEndpointFormState(
+                getInitialEndpointRequestFormStateWithExample(
+                    matchedSection?.auth,
+                    matchedEndpoint,
+                    matchedEndpoint?.examples[0],
+                    types,
+                ),
+            );
+        } else if (selectionState?.type === "websocket") {
+            setPlaygroundWebSocketFormState(
+                getInitialWebSocketRequestFormState(matchedSection?.auth, matchedWebSocket, types),
+            );
+        }
+    }, [
+        matchedEndpoint,
+        matchedSection?.auth,
+        matchedWebSocket,
+        selectionState?.type,
+        setPlaygroundEndpointFormState,
+        setPlaygroundWebSocketFormState,
+        types,
+    ]);
 
     const resetWithoutExample = useCallback(() => {
-        setPlaygroundFormState(getInitialModalFormState(matchedSection?.auth, matchedEndpoint, types));
-    }, [matchedEndpoint, matchedSection?.auth, setPlaygroundFormState, types]);
+        if (selectionState?.type === "endpoint") {
+            setPlaygroundEndpointFormState(
+                getInitialEndpointRequestFormState(matchedSection?.auth, matchedEndpoint, types),
+            );
+        } else if (selectionState?.type === "websocket") {
+            setPlaygroundWebSocketFormState(
+                getInitialWebSocketRequestFormState(matchedSection?.auth, matchedWebSocket, types),
+            );
+        }
+    }, [
+        matchedEndpoint,
+        matchedSection?.auth,
+        matchedWebSocket,
+        selectionState?.type,
+        setPlaygroundEndpointFormState,
+        setPlaygroundWebSocketFormState,
+        types,
+    ]);
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
@@ -153,32 +268,120 @@ export const ApiPlaygroundDrawer: FC<ApiPlaygroundDrawerProps> = ({ navigation, 
                         <div className="bg-accent h-1 w-10 rounded-full" />
                     </div>
                 </div>
-                <ApiPlayground
-                    navigation={navigation}
-                    auth={matchedSection?.auth}
-                    endpoint={matchedEndpoint}
-                    formState={playgroundFormState}
-                    setFormState={setPlaygroundFormState}
-                    resetWithExample={resetWithExample}
-                    resetWithoutExample={resetWithoutExample}
-                    types={types}
-                />
+                <div className="flex h-full flex-col rounded-lg">
+                    <div>
+                        <div className="grid h-10 grid-cols-3 gap-2 px-4">
+                            <div className="flex items-center">
+                                <span className="inline-flex items-baseline gap-2">
+                                    <span className="t-accent text-sm font-semibold">API Playground</span>
+                                    <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                                        BETA
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div className="flex items-center justify-center">
+                                {endpoint != null && <ApiPlaygroundEndpointSelector navigation={navigation} />}
+                            </div>
+
+                            <div className="flex items-center justify-end">
+                                <FernTooltipProvider>
+                                    <FernButtonGroup>
+                                        <FernTooltip
+                                            content={
+                                                <span className="space-x-4">
+                                                    <span>Close API Playground</span>
+                                                    <span className="text-faded font-mono">CTRL + `</span>
+                                                </span>
+                                            }
+                                        >
+                                            <FernButton
+                                                variant="minimal"
+                                                className="-mr-2"
+                                                icon={<Cross1Icon />}
+                                                onClick={collapseApiPlayground}
+                                                rounded
+                                            />
+                                        </FernTooltip>
+                                    </FernButtonGroup>
+                                </FernTooltipProvider>
+                            </div>
+                        </div>
+                    </div>
+                    {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
+                        <ApiPlaygroundEndpoint
+                            auth={matchedSection?.auth}
+                            endpoint={matchedEndpoint}
+                            formState={
+                                playgroundFormState?.type === "endpoint"
+                                    ? playgroundFormState
+                                    : EMPTY_ENDPOINT_FORM_STATE
+                            }
+                            setFormState={setPlaygroundEndpointFormState}
+                            resetWithExample={resetWithExample}
+                            resetWithoutExample={resetWithoutExample}
+                            types={types}
+                        />
+                    ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
+                        <ApiPlaygroundWebSocket
+                            auth={matchedSection?.auth}
+                            websocket={matchedWebSocket}
+                            formState={
+                                playgroundFormState?.type === "websocket"
+                                    ? playgroundFormState
+                                    : EMPTY_WEBSOCKET_FORM_STATE
+                            }
+                            setFormState={setPlaygroundWebSocketFormState}
+                            resetWithExample={resetWithExample}
+                            resetWithoutExample={resetWithoutExample}
+                            types={types}
+                        />
+                    ) : (
+                        <div className="flex flex-1 items-center justify-center">
+                            <ApiPlaygroundEndpointSelector
+                                navigation={navigation}
+                                placeholderText="Select an endpoint to get started"
+                                buttonClassName="text-base"
+                            />
+                        </div>
+                    )}
+                </div>
             </Transition>
         </Portal>
     );
 };
 
-function getInitialModalFormState(
+function getInitialEndpointRequestFormState(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     types: Record<string, ResolvedTypeDefinition>,
-): PlaygroundRequestFormState {
+): PlaygroundEndpointRequestFormState {
     return {
+        type: "endpoint",
         auth: getInitialAuthState(auth),
         headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
         body: getDefaultValuesForBody(endpoint?.requestBody[0]?.shape, types),
+    };
+}
+
+function getInitialWebSocketRequestFormState(
+    auth: APIV1Read.ApiAuth | null | undefined,
+    webSocket: ResolvedWebSocketChannel | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
+): PlaygroundWebSocketRequestFormState {
+    return {
+        type: "websocket",
+
+        auth: getInitialAuthState(auth),
+        headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
+        pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
+        queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
+
+        messages: Object.fromEntries(
+            webSocket?.messages.map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
+        ),
     };
 }
 
@@ -194,16 +397,17 @@ function getInitialAuthState(auth: APIV1Read.ApiAuth | null | undefined): Playgr
     });
 }
 
-export function getInitialModalFormStateWithExample(
+export function getInitialEndpointRequestFormStateWithExample(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     exampleCall: ResolvedExampleEndpointCall | undefined,
     types: Record<string, ResolvedTypeDefinition>,
-): PlaygroundRequestFormState {
+): PlaygroundEndpointRequestFormState {
     if (exampleCall == null) {
-        return getInitialModalFormState(auth, endpoint, types);
+        return getInitialEndpointRequestFormState(auth, endpoint, types);
     }
     return {
+        type: "endpoint",
         auth: getInitialAuthState(auth),
         headers: exampleCall.headers,
         pathParameters: exampleCall.pathParameters,
@@ -211,6 +415,7 @@ export function getInitialModalFormStateWithExample(
         body: exampleCall.requestBody,
     };
 }
-export function createFormStateKey({ api, endpointId }: ApiPlaygroundSelectionState): string {
-    return `${api}/${endpointId}`;
+
+export function createFormStateKey(state: ApiPlaygroundSelectionState): string {
+    return `${state.api}/${state.type}/${state.type === "endpoint" ? state.endpointId : state.webSocketId}`;
 }

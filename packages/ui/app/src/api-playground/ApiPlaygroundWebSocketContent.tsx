@@ -1,0 +1,152 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { Loadable, visitLoadable } from "@fern-ui/loadable";
+import classNames from "classnames";
+import { isEmpty, round } from "lodash-es";
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { CopyToClipboardButton } from "../commons/CopyToClipboardButton";
+import { FernCard } from "../components/FernCard";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../util/resolver";
+import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
+import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
+import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
+import { PlaygroundWebSocketRequestFormState, ResponsePayload } from "./types";
+import { HorizontalSplitPane } from "./VerticalSplitPane";
+
+interface ApiPlaygroundWebSocketContentProps {
+    auth: APIV1Read.ApiAuth | null | undefined;
+    websocket: ResolvedWebSocketChannel;
+    formState: PlaygroundWebSocketRequestFormState;
+    setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
+    resetWithExample: () => void;
+    resetWithoutExample: () => void;
+    response: Loadable<ResponsePayload>;
+    sendRequest: () => void;
+    types: Record<string, ResolvedTypeDefinition>;
+}
+
+export const ApiPlaygroundWebSocketContent: FC<ApiPlaygroundWebSocketContentProps> = ({
+    auth,
+    websocket,
+    formState,
+    setFormState,
+    // resetWithExample,
+    // resetWithoutExample,
+    response,
+    sendRequest,
+    // types,
+}) => {
+    const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
+
+    useEffect(() => {
+        if (typeof window === "undefined" || scrollAreaRef.current == null) {
+            return;
+        }
+        const resizeObserver = new window.ResizeObserver(([size]) => {
+            if (size != null) {
+                setScrollAreaHeight(size.contentRect.height);
+            }
+        });
+        resizeObserver.observe(scrollAreaRef.current);
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
+
+    return (
+        <div className="flex min-h-0 flex-1 shrink items-stretch divide-x">
+            <div
+                ref={scrollAreaRef}
+                className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
+            >
+                <HorizontalSplitPane
+                    rizeBarHeight={scrollAreaHeight}
+                    leftClassName="pl-6 pr-1 mt"
+                    rightClassName="pl-1"
+                >
+                    <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
+                        {websocket.authed && auth != null && (
+                            <PlaygroundAuthorizationFormCard
+                                auth={auth}
+                                authState={formState?.auth}
+                                setAuthorization={(newState) =>
+                                    setFormState((oldState) => ({
+                                        ...oldState,
+                                        auth: typeof newState === "function" ? newState(oldState.auth) : newState,
+                                    }))
+                                }
+                            />
+                        )}
+
+                        <div className="grid grid-cols-3 gap-4">Webhook</div>
+                    </div>
+
+                    <div className="sticky inset-0 flex py-6 pr-6" style={{ height: scrollAreaHeight }}>
+                        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
+                            <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
+                                <span className="t-muted text-xs uppercase">Messages</span>
+
+                                {response.type === "loaded" && (
+                                    <div className="flex items-center gap-2 text-xs">
+                                        <span
+                                            className={classNames(
+                                                "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
+                                                {
+                                                    ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
+                                                        response.value.status >= 200 && response.value.status < 300,
+                                                    ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
+                                                        response.value.status > 300,
+                                                },
+                                            )}
+                                        >
+                                            status: {response.value.status}
+                                        </span>
+                                        <span
+                                            className={
+                                                "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                            }
+                                        >
+                                            time: {round(response.value.time, 2)}ms
+                                        </span>
+                                        {!isEmpty(response.value.size) && (
+                                            <span
+                                                className={
+                                                    "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
+                                                }
+                                            >
+                                                size: {response.value.size}b
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
+
+                                {visitLoadable(response, {
+                                    loading: () => <div />,
+                                    loaded: (response) => (
+                                        <CopyToClipboardButton
+                                            content={() => JSON.stringify(response.body, null, 2)}
+                                            className="-mr-2"
+                                        />
+                                    ),
+                                    failed: () => <div />,
+                                })}
+                            </div>
+                            {visitLoadable(response, {
+                                loading: () =>
+                                    response.type === "notStartedLoading" ? (
+                                        <div className="flex flex-1 items-center justify-center">
+                                            <PlaygroundSendRequestButton sendRequest={sendRequest} />
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-1 items-center justify-center">Loading...</div>
+                                    ),
+                                loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                                failed: () => <span>Failed</span>,
+                            })}
+                        </FernCard>
+                    </div>
+                </HorizontalSplitPane>
+            </div>
+        </div>
+    );
+};

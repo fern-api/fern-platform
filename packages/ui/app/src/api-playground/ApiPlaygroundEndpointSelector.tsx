@@ -1,18 +1,19 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState, useKeyboardPress } from "@fern-ui/react-commons";
+import { useBooleanState } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { ChevronDownIcon, ChevronUpIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { FC, Fragment, ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { Chip } from "../components/Chip";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
-import { SidebarNode } from "../sidebar/types";
+import { isEndpointPage, SidebarNode } from "../sidebar/types";
 import { useApiPlaygroundContext } from "./ApiPlaygroundContext";
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -28,8 +29,8 @@ interface ApiGroup {
     id: string;
     breadcrumbs: string[];
     endpoints: SidebarNode.EndpointPage[];
-    webhooks: SidebarNode.Page[];
-    websockets: SidebarNode.Page[];
+    webhooks: SidebarNode.ApiPage[];
+    websockets: SidebarNode.ApiPage[];
 }
 
 function isApiGroupNotEmpty(group: ApiGroup): boolean {
@@ -72,11 +73,11 @@ function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
     return result.filter(isApiGroupNotEmpty);
 }
 
-function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.EndpointPage): boolean {
+function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.ApiPage): boolean {
     return (
         group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
         endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
-        endpoint.method.toLowerCase().includes(query.toLowerCase())
+        (isEndpointPage(endpoint) && endpoint.method.toLowerCase().includes(query.toLowerCase()))
     );
 }
 
@@ -92,47 +93,46 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     const selectedItemRef = useRef<HTMLLIElement>(null);
 
-    useKeyboardPress({ key: "Escape", onPress: closeDropdown });
-
     const apiGroups = useMemo(() => flattenApiSection(navigation), [navigation]);
 
     const { endpoint: selectedEndpoint, group: selectedGroup } = apiGroups
-        .flatMap((group) => group.endpoints.map((endpoint) => ({ group, endpoint })))
-        .find(({ endpoint }) => endpoint.slug.join("/") === selectionState?.endpointId) ?? {
+        .flatMap((group) => [
+            ...group.endpoints.map((endpoint) => ({ group, endpoint })),
+            ...group.websockets.map((endpoint) => ({ group, endpoint })),
+        ])
+        .find(({ endpoint }) =>
+            selectionState?.type === "endpoint"
+                ? endpoint.slug.join("/") === selectionState?.endpointId
+                : selectionState?.type === "websocket"
+                  ? endpoint.slug.join("/") === selectionState?.webSocketId
+                  : false,
+        ) ?? {
         endpoint: undefined,
         group: undefined,
     };
 
-    const createClickHandler = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
+    const createSelectEndpoint = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
         setSelectionStateAndOpen({
+            type: "endpoint",
             api: group.api,
             endpointId: endpoint.slug.join("/"),
         });
         closeDropdown();
     };
 
-    // // click anywhere outside the dropdown to close it
-    // const dropdownRef = useRef<HTMLDivElement>(null);
-    // useEffect(() => {
-    //     if (!showDropdown) {
-    //         return;
-    //     }
-    //     const listener = (e: MouseEvent) => {
-    //         if (dropdownRef.current != null && !dropdownRef.current.contains(e.target as Node)) {
-    //             closeDropdown();
-    //         }
-    //     };
-
-    //     document.addEventListener("click", listener);
-
-    //     return () => {
-    //         document.removeEventListener("click", listener);
-    //     };
-    // }, [closeDropdown, showDropdown]);
+    const createSelectWebSocket = (group: ApiGroup, websocket: SidebarNode.ApiPage) => () => {
+        setSelectionStateAndOpen({
+            type: "websocket",
+            api: group.api,
+            webSocketId: websocket.slug.join("/"),
+        });
+        closeDropdown();
+    };
 
     function renderApiDefinitionPackage(apiGroup: ApiGroup) {
         const endpoints = apiGroup.endpoints.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
-        if (endpoints.length === 0) {
+        const websockets = apiGroup.websockets.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
+        if (endpoints.length === 0 && websockets.length === 0) {
             return null;
         }
         return (
@@ -167,8 +167,34 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                                         variant="minimal"
                                         intent={active ? "primary" : "none"}
                                         active={active}
-                                        onClick={createClickHandler(apiGroup, endpointItem)}
+                                        onClick={createSelectEndpoint(apiGroup, endpointItem)}
                                         rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
+                                    />
+                                </FernTooltip>
+                            </li>
+                        );
+                    })}
+                    {websockets.map((endpointItem) => {
+                        const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
+                        const text = renderTextWithHighlight(endpointItem.title, filterValue);
+                        return (
+                            <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
+                                <FernTooltip
+                                    content={
+                                        endpointItem.description != null ? (
+                                            <Markdown className="text-xs">{endpointItem.description}</Markdown>
+                                        ) : undefined
+                                    }
+                                    side="right"
+                                >
+                                    <FernButton
+                                        text={text}
+                                        className="w-full rounded-none text-left"
+                                        variant="minimal"
+                                        intent={active ? "primary" : "none"}
+                                        active={active}
+                                        onClick={createSelectWebSocket(apiGroup, endpointItem)}
+                                        rightIcon={<Chip name="WSS" description={null} small />}
                                     />
                                 </FernTooltip>
                             </li>
@@ -181,25 +207,26 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
 
     const renderedListItems = apiGroups.map((group) => renderApiDefinitionPackage(group)).filter(isNonNullish);
 
-    const [isPopoverBelow, setIsPopoverBelow] = useState(true);
-
-    const RightIcon = isPopoverBelow ? ChevronDownIcon : ChevronUpIcon;
+    const RightIcon = ChevronDownIcon;
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+    const shouldScrollIntoView = useRef(false);
     const determinePlacement = useCallback(() => {
-        // check if menuref is below buttonref, if not, set isPopoverBelow to false
-        if (buttonRef.current != null && menuRef.current != null) {
-            const buttonRect = buttonRef.current.getBoundingClientRect();
-            const menuRect = menuRef.current.getBoundingClientRect();
-            setIsPopoverBelow(buttonRect.bottom < menuRect.top);
+        if (shouldScrollIntoView.current) {
+            selectedItemRef.current?.scrollIntoView({ block: "center" });
         }
-
-        selectedItemRef.current?.scrollIntoView({ block: "center" });
+        shouldScrollIntoView.current = false;
     }, []);
 
     return (
-        <DropdownMenu.Root onOpenChange={handleOpenChange} open={showDropdown}>
+        <DropdownMenu.Root
+            onOpenChange={(open) => {
+                handleOpenChange(open);
+                shouldScrollIntoView.current = open;
+            }}
+            open={showDropdown}
+        >
             <DropdownMenu.Trigger asChild={true}>
                 <FernButton
                     ref={buttonRef}
@@ -231,63 +258,36 @@ export const ApiPlaygroundEndpointSelector: FC<ApiPlaygroundEndpointSelectorProp
                 </FernButton>
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
-                <DropdownMenu.Content asChild={true} sideOffset={4} onAnimationStartCapture={determinePlacement}>
+                <DropdownMenu.Content asChild={true} sideOffset={4} ref={determinePlacement}>
                     <div className="fern-dropdown min-w-[300px] overflow-hidden rounded-xl" ref={menuRef}>
-                        {isPopoverBelow && (
-                            <div
-                                className={classNames("relative z-20 px-1 pt-1", {
-                                    "pb-1": renderedListItems.length === 0,
-                                    "pb-0": renderedListItems.length > 0,
-                                })}
-                            >
-                                <FernInput
-                                    leftIcon={<MagnifyingGlassIcon />}
-                                    data-1p-ignore="true"
-                                    autoFocus={true}
-                                    value={filterValue}
-                                    onValueChange={setFilterValue}
-                                    rightElement={
-                                        filterValue.length > 0 && (
-                                            <FernButton
-                                                icon={<Cross1Icon />}
-                                                variant="minimal"
-                                                onClick={() => setFilterValue("")}
-                                            />
-                                        )
-                                    }
-                                />
-                            </div>
-                        )}
+                        <div
+                            className={classNames("relative z-20 px-1 pt-1", {
+                                "pb-1": renderedListItems.length === 0,
+                                "pb-0": renderedListItems.length > 0,
+                            })}
+                        >
+                            <FernInput
+                                leftIcon={<MagnifyingGlassIcon />}
+                                data-1p-ignore="true"
+                                autoFocus={true}
+                                value={filterValue}
+                                onValueChange={setFilterValue}
+                                rightElement={
+                                    filterValue.length > 0 && (
+                                        <FernButton
+                                            icon={<Cross1Icon />}
+                                            variant="minimal"
+                                            onClick={() => setFilterValue("")}
+                                        />
+                                    )
+                                }
+                            />
+                        </div>
                         <FernScrollArea>
                             <FernTooltipProvider>
                                 <ul className="list-none">{renderedListItems}</ul>
                             </FernTooltipProvider>
                         </FernScrollArea>
-                        {!isPopoverBelow && (
-                            <div
-                                className={classNames("relative z-20 px-1 pb-1", {
-                                    "pt-1": renderedListItems.length === 0,
-                                    "pt-0": renderedListItems.length > 0,
-                                })}
-                            >
-                                <FernInput
-                                    leftIcon={<MagnifyingGlassIcon />}
-                                    data-1p-ignore="true"
-                                    autoFocus={true}
-                                    value={filterValue}
-                                    onValueChange={setFilterValue}
-                                    rightElement={
-                                        filterValue.length > 0 && (
-                                            <FernButton
-                                                icon={<Cross1Icon />}
-                                                variant="minimal"
-                                                onClick={() => setFilterValue("")}
-                                            />
-                                        )
-                                    }
-                                />
-                            </div>
-                        )}
                     </div>
                 </DropdownMenu.Content>
             </DropdownMenu.Portal>
