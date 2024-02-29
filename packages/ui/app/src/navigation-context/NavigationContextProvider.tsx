@@ -69,7 +69,7 @@ function startScrollTracking(route: string) {
                 if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
                     const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
                     const newScrollY = lastScrollY - diff;
-                    if (!userIsScrolling) {
+                    if (!userHasScrolled) {
                         node.scrollIntoView({ behavior: "auto" });
                         lastScrollY = window.scrollY;
                     } else {
