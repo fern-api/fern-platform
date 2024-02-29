@@ -51,6 +51,9 @@ const setUserIsNotScrolling = debounce(
 let raf: number;
 
 function startScrollTracking(route: string) {
+    if (!userIsScrolling) {
+        getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
+    }
     userHasScrolled = false;
     let lastActiveNavigatableOffsetTop: number | undefined;
     let lastScrollY: number | undefined;
@@ -116,13 +119,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         startScrollTracking(resolvedRoute);
-        if (!userIsScrolling) {
-            getRouteNodeWithAnchor(resolvedRoute)?.node?.scrollIntoView({ behavior: "auto" });
-        }
         return () => {
             window.cancelAnimationFrame(raf);
         };
-    }, [resolvedRoute]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (typeof window === "undefined") {
@@ -176,10 +177,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        if (!userIsScrolling) {
-            getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
-        }
         setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+        startScrollTracking(route);
     });
 
     const closeMobileSidebar = useCloseMobileSidebar();
@@ -218,18 +217,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const slugCandidate = as.substring(1).split("#")[0]!;
-            const previousNavigatable = resolveActiveSidebarNode(navigation.sidebarNodes, slugCandidate.split("/"));
-            if (previousNavigatable != null) {
-                const fullSlug = previousNavigatable.slug.join("/");
-                navigateToPath(`/${fullSlug}`);
-                closeMobileSidebar();
-                closeSearchDialog();
-            }
+            navigateToPath(as);
+            startScrollTracking(as);
+            closeMobileSidebar();
+            closeSearchDialog();
             return true;
         });
-    }, [router, navigateToPath, basePath, navigation.sidebarNodes, closeMobileSidebar, closeSearchDialog]);
+    }, [router, navigateToPath, closeMobileSidebar, closeSearchDialog]);
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
