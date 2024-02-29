@@ -308,15 +308,16 @@ function getNavigation(
     }
 
     if (isVersionedNavigationConfig(nav)) {
+        currentVersionIndex = nav.versions.findIndex((version) => version.urlSlug === currentPath[0]);
+
         versions = nav.versions.map((version, idx) => {
             return {
                 id: version.version,
-                slug: idx === 0 ? [...slug] : [...slug, version.urlSlug],
+                slug: idx === 0 && currentVersionIndex !== 0 ? [...slug] : [...slug, version.urlSlug],
                 index: idx,
                 availability: version.availability ?? null,
             };
         });
-        currentVersionIndex = nav.versions.findIndex((version) => version.urlSlug === currentPath[0]);
 
         // If the version slug is not found based on the current path, default to the first version
         // otherwise, remove the version slug from the current path
