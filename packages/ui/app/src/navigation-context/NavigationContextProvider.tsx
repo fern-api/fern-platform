@@ -206,10 +206,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             handleRouteChange(route);
         };
         router.events.on("routeChangeComplete", handleRouteChange);
+        router.events.on("hashChangeStart", handleRouteChange);
         router.events.on("hashChangeComplete", handleRouteChange);
         router.events.on("routeChangeError", handleRouteChangeError);
         return () => {
             router.events.off("routeChangeComplete", handleRouteChange);
+            router.events.off("hashChangeStart", handleRouteChange);
             router.events.off("hashChangeComplete", handleRouteChange);
             router.events.off("routeChangeError", handleRouteChangeError);
         };
