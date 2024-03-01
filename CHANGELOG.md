@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 2024-03-01
+
+- Fully removed react-markdown in favor of using next-mdx-remote to serialize all description fields. This allows us to use the same components that we already we use in markdown guides in the API reference. Also, this reduces the bundle size and improves client-side performance since all markdown-based descriptions are now compiled server-side. See [#468](https://github.com/fern-api/fern-ui/pull/468).
+
 # 2024-02-29
 
 - API Playground now supports WebSocket. See [#470](https://github.com/fern-api/fern-ui/pull/470)
