@@ -71,7 +71,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             if (data.type === "handshake" && data.status === "connected") {
                 setConnectedState("opened");
                 setStep("session");
-            } else if (data === "data") {
+            } else if (data.type === "data") {
                 pushWebSocketMessage({
                     type: "received",
                     data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,
