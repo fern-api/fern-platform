@@ -52,8 +52,12 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
     );
 
     return (
-        <HorizontalSplitPane rizeBarHeight={scrollAreaHeight} leftClassName="pl-6 pr-1 mt" rightClassName="pl-1">
-            <div className="relative mx-auto w-full max-w-5xl space-y-6 pt-6">
+        <HorizontalSplitPane
+            rizeBarHeight={scrollAreaHeight}
+            leftClassName="pl-6 pr-1 mt relative"
+            rightClassName="pl-1"
+        >
+            <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
                 <div
                     className={classNames("col-span-2 space-y-8 pb-20", {
                         "opacity-50 pointer-events-none": !connected,

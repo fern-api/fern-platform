@@ -7,6 +7,7 @@ import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMess
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundWebSocketRequestFormState } from "./types";
+import { buildRequestUrl } from "./utils";
 
 interface PlaygroundWebSocketProps {
     auth: APIV1Read.ApiAuth | null | undefined;
@@ -35,7 +36,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     const socket = useRef<WebSocket | null>(null);
 
     // auto-destroy the socket when the component is unmounted
-    useEffect(() => () => socket.current?.close());
+    useEffect(() => () => socket.current?.close(), []);
 
     const startSession = useCallback(() => {
         if (socket.current != null && socket.current.readyState !== WebSocket.CLOSED) {
@@ -44,27 +45,40 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
         setWebSocketMessages([]);
 
-        // const url = buildRequestUrl(websocket.defaultEnvironment?.baseUrl, websocket.path, formState.pathParameters, {
-        //     ...formState.queryParameters,
-        //     ...formState.headers,
-        // });
+        const url = buildRequestUrl(
+            websocket.defaultEnvironment?.baseUrl,
+            websocket.path,
+            formState.pathParameters,
+            formState.queryParameters,
+        );
 
         setConnectedState("opening");
 
-        socket.current = new WebSocket("wss://websocket-dev.danny-312.workers.dev/ws");
+        socket.current = new WebSocket("ws://fern-websocket-worker.danny-312.workers.dev/ws");
 
         socket.current.onopen = () => {
-            setConnectedState("opened");
-            setStep("session");
+            socket.current?.send(
+                JSON.stringify({
+                    type: "handshake",
+                    url,
+                    headers: formState.headers,
+                }),
+            );
         };
 
         socket.current.onmessage = (event) => {
-            pushWebSocketMessage({
-                type: "received",
-                data: typeof event.data === "string" ? JSON.parse(event.data) : event.data,
-                origin: "server",
-                displayName: undefined,
-            });
+            const data = JSON.parse(event.data);
+            if (data.type === "handshake" && data.status === "connected") {
+                setConnectedState("opened");
+                setStep("session");
+            } else if (data === "data") {
+                pushWebSocketMessage({
+                    type: "received",
+                    data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,
+                    origin: "server",
+                    displayName: undefined,
+                });
+            }
         };
 
         socket.current.onclose = () => {
