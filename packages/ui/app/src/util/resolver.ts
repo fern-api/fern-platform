@@ -235,59 +235,74 @@ async function resolveEndpointDefinition(
     // highlighter: Highlighter,
 ): Promise<ResolvedEndpointDefinition> {
     const pathParametersPromise = await Promise.all(
-        endpoint.path.pathParameters.map(
-            async (parameter): Promise<ResolvedObjectProperty> => ({
+        endpoint.path.pathParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(parameter.type, types),
+                parameter.descriptionContainsMarkdown !== false
+                    ? serializeMdxContent(parameter.description)
+                    : parameter.description,
+            ]);
+            return {
                 key: parameter.key,
-                valueShape: await resolveTypeReference(parameter.type, types),
-                description:
-                    parameter.descriptionContainsMarkdown !== false
-                        ? await serializeMdxContent(parameter.description)
-                        : parameter.description,
+                valueShape,
+                description,
                 availability: parameter.availability,
-            }),
-        ),
+            };
+        }),
     );
 
     const queryParametersPromise = Promise.all(
-        endpoint.queryParameters.map(async (parameter) => ({
-            key: parameter.key,
-            valueShape: await resolveTypeReference(parameter.type, types),
-            description:
+        endpoint.queryParameters.map(async (parameter) => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(parameter.type, types),
                 parameter.descriptionContainsMarkdown !== false
-                    ? await serializeMdxContent(parameter.description)
+                    ? serializeMdxContent(parameter.description)
                     : parameter.description,
-            availability: parameter.availability,
-        })),
+            ]);
+            return {
+                key: parameter.key,
+                valueShape,
+                description,
+                availability: parameter.availability,
+            };
+        }),
     );
 
     const headersPromise = Promise.all(
-        endpoint.headers.map(async (header) => ({
-            key: header.key,
-            valueShape: await resolveTypeReference(header.type, types),
-            description:
+        endpoint.headers.map(async (header) => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(header.type, types),
                 header.descriptionContainsMarkdown !== false
-                    ? await serializeMdxContent(header.description)
+                    ? serializeMdxContent(header.description)
                     : header.description,
-            availability: header.availability,
-        })),
+            ]);
+            return {
+                key: header.key,
+                valueShape,
+                description,
+                availability: header.availability,
+            };
+        }),
     );
 
     const errorsPromise = Promise.all(
-        endpoint.errors.map(
-            async (error): Promise<ResolvedError> => ({
+        endpoint.errors.map(async (error): Promise<ResolvedError> => {
+            const [shape, description] = await Promise.all([
+                error.type != null
+                    ? resolveTypeShape(undefined, error.type, types, undefined, undefined)
+                    : ({ type: "unknown" } as ResolvedTypeDefinition),
+                error.descriptionContainsMarkdown !== false
+                    ? serializeMdxContent(error.description)
+                    : error.description,
+            ]);
+            return {
                 statusCode: error.statusCode,
                 name: error.name,
-                shape:
-                    error.type != null
-                        ? await resolveTypeShape(undefined, error.type, types, undefined, undefined)
-                        : undefined,
-                description:
-                    error.descriptionContainsMarkdown !== false
-                        ? await serializeMdxContent(error.description)
-                        : error.description,
+                shape,
+                description,
                 availability: error.availability,
-            }),
-        ),
+            };
+        }),
     );
 
     const descriptionPromise = Promise.resolve(
@@ -296,13 +311,40 @@ async function resolveEndpointDefinition(
             : endpoint.description,
     );
 
-    const [pathParameters, queryParameters, headers, errors, description] = await Promise.all([
-        pathParametersPromise,
-        queryParametersPromise,
-        headersPromise,
-        errorsPromise,
-        descriptionPromise,
-    ]);
+    async function resolveRequestBody(request: APIV1Read.HttpRequest): Promise<ResolvedRequestBody> {
+        const [shape, description] = await Promise.all([
+            resolveRequestBodyShape(request.type, types),
+            request.descriptionContainsMarkdown !== false
+                ? serializeMdxContent(request.description)
+                : request.description,
+        ]);
+        return {
+            contentType: request.contentType,
+            shape,
+            description,
+        };
+    }
+
+    async function resolveResponseBody(response: APIV1Read.HttpResponse): Promise<ResolvedResponseBody> {
+        const [shape, description] = await Promise.all([
+            resolveResponseBodyShape(response.type, types),
+            response.descriptionContainsMarkdown !== false
+                ? serializeMdxContent(response.description)
+                : response.description,
+        ]);
+        return { shape, description };
+    }
+
+    const [pathParameters, queryParameters, headers, errors, description, requestBody, responseBody] =
+        await Promise.all([
+            pathParametersPromise,
+            queryParametersPromise,
+            headersPromise,
+            errorsPromise,
+            descriptionPromise,
+            endpoint.request != null ? [await resolveRequestBody(endpoint.request)] : [],
+            endpoint.response != null ? await resolveResponseBody(endpoint.response) : undefined,
+        ]);
 
     const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
         if (pathPart.type === "literal") {
@@ -343,29 +385,8 @@ async function resolveEndpointDefinition(
         pathParameters,
         queryParameters,
         headers,
-        requestBody:
-            endpoint.request != null
-                ? [
-                      {
-                          contentType: endpoint.request.contentType,
-                          shape: await resolveRequestBodyShape(endpoint.request.type, types),
-                          description:
-                              endpoint.request.descriptionContainsMarkdown !== false
-                                  ? await serializeMdxContent(endpoint.request.description)
-                                  : endpoint.request.description,
-                      },
-                  ]
-                : [],
-        responseBody:
-            endpoint.response != null
-                ? {
-                      shape: await resolveResponseBodyShape(endpoint.response.type, types),
-                      description:
-                          endpoint.response.descriptionContainsMarkdown !== false
-                              ? await serializeMdxContent(endpoint.response.description)
-                              : endpoint.response.description,
-                  }
-                : undefined,
+        requestBody,
+        responseBody,
         errors,
     };
 
@@ -406,7 +427,7 @@ async function resolveWebsocketChannel(
     websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
 ): Promise<Promise<ResolvedWebSocketChannel>> {
-    const pathParameters = await Promise.all(
+    const pathParametersPromise = Promise.all(
         websocket.path.pathParameters.map(
             async (parameter): Promise<ResolvedObjectProperty> => ({
                 key: parameter.key,
@@ -419,6 +440,63 @@ async function resolveWebsocketChannel(
             }),
         ),
     );
+    const headersPromise = Promise.all(
+        websocket.headers.map(async (header) => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(header.type, types),
+                header.descriptionContainsMarkdown !== false
+                    ? serializeMdxContent(header.description)
+                    : header.description,
+            ]);
+            return {
+                key: header.key,
+                valueShape,
+                description,
+                availability: header.availability,
+            };
+        }),
+    );
+    const queryParametersPromise = Promise.all(
+        websocket.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(parameter.type, types),
+                parameter.descriptionContainsMarkdown !== false
+                    ? serializeMdxContent(parameter.description)
+                    : parameter.description,
+            ]);
+            return {
+                key: parameter.key,
+                valueShape,
+                description,
+                availability: parameter.availability,
+            };
+        }),
+    );
+    const messagesPromise = Promise.all(
+        websocket.messages.map(
+            async ({ type, body, origin, displayName, description, availability, descriptionContainsMarkdown }) => {
+                const [resolvedBody, resolvedDescription] = await Promise.all([
+                    resolvePayloadShape(body, types),
+                    descriptionContainsMarkdown !== false ? serializeMdxContent(description) : description,
+                ]);
+                return {
+                    type,
+                    body: resolvedBody,
+                    displayName,
+                    origin,
+                    description: resolvedDescription,
+                    availability,
+                };
+            },
+        ),
+    );
+    const [pathParameters, headers, queryParameters, messages] = await Promise.all([
+        pathParametersPromise,
+        headersPromise,
+        queryParametersPromise,
+        messagesPromise,
+    ]);
+
     return {
         authed: websocket.authed,
         environments: websocket.environments,
@@ -445,52 +523,10 @@ async function resolveWebsocketChannel(
                 }
             })
             .filter((param) => param !== undefined) as ResolvedEndpointPathParts[],
-        headers: await Promise.all(
-            websocket.headers.map(async (header) => ({
-                key: header.key,
-                valueShape: await resolveTypeReference(header.type, types),
-                description:
-                    header.descriptionContainsMarkdown !== false
-                        ? await serializeMdxContent(header.description)
-                        : header.description,
-                availability: header.availability,
-            })),
-        ),
+        headers,
         pathParameters,
-        queryParameters: await Promise.all(
-            websocket.queryParameters.map(
-                async (parameter): Promise<ResolvedObjectProperty> => ({
-                    key: parameter.key,
-                    valueShape: await resolveTypeReference(parameter.type, types),
-                    description:
-                        parameter.descriptionContainsMarkdown !== false
-                            ? await serializeMdxContent(parameter.description)
-                            : parameter.description,
-                    availability: parameter.availability,
-                }),
-            ),
-        ),
-        messages: await Promise.all(
-            websocket.messages.map(
-                async ({
-                    type,
-                    body,
-                    origin,
-                    displayName,
-                    description,
-                    availability,
-                    descriptionContainsMarkdown,
-                }) => ({
-                    type,
-                    body: await resolvePayloadShape(body, types),
-                    displayName,
-                    origin,
-                    description:
-                        descriptionContainsMarkdown !== false ? await serializeMdxContent(description) : description,
-                    availability,
-                }),
-            ),
-        ),
+        queryParameters,
+        messages,
         examples: websocket.examples,
         defaultEnvironment: websocket.defaultEnvironment,
     };
@@ -502,18 +538,12 @@ async function resolveWebhookDefinition(
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
     // highlighter: Highlighter,
 ): Promise<ResolvedWebhookDefinition> {
-    const payloadShape = await resolvePayloadShape(webhook.payload.type, types);
-    return {
-        name: webhook.name,
-        description:
-            webhook.descriptionContainsMarkdown !== false
-                ? await serializeMdxContent(webhook.description)
-                : webhook.description,
-        slug: webhook.slug,
-        method: webhook.method,
-        id: webhook.id,
-        path: webhook.path,
-        headers: await Promise.all(
+    const [payloadShape, description, headers] = await Promise.all([
+        resolvePayloadShape(webhook.payload.type, types),
+        webhook.descriptionContainsMarkdown !== false
+            ? await serializeMdxContent(webhook.description)
+            : webhook.description,
+        Promise.all(
             webhook.headers.map(async (header) => ({
                 key: header.key,
                 valueShape: await resolveTypeReference(header.type, types),
@@ -524,6 +554,15 @@ async function resolveWebhookDefinition(
                 availability: header.availability,
             })),
         ),
+    ]);
+    return {
+        name: webhook.name,
+        description,
+        slug: webhook.slug,
+        method: webhook.method,
+        id: webhook.id,
+        path: webhook.path,
+        headers,
         payload: {
             shape: payloadShape,
             description:
@@ -776,17 +815,20 @@ function resolveObjectProperties(
     types: Record<string, APIV1Read.TypeDefinition>,
 ): Promise<ResolvedObjectProperty[]> {
     return Promise.all(
-        object.properties.map(
-            async (property): Promise<ResolvedObjectProperty> => ({
+        object.properties.map(async (property): Promise<ResolvedObjectProperty> => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(property.valueType, types),
+                property.descriptionContainsMarkdown !== false
+                    ? serializeMdxContent(property.description)
+                    : property.description,
+            ]);
+            return {
                 key: property.key,
-                valueShape: await resolveTypeReference(property.valueType, types),
-                description:
-                    property.descriptionContainsMarkdown !== false
-                        ? await serializeMdxContent(property.description)
-                        : property.description,
+                valueShape,
+                description,
                 availability: property.availability,
-            }),
-        ),
+            };
+        }),
     );
 }
 
