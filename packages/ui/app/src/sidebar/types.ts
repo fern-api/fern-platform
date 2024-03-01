@@ -211,7 +211,6 @@ export function resolveSidebarNodes(
             },
             api: (api) => {
                 const definition = apis[api.api];
-                console.log(parentSlugs, api.urlSlug);
                 if (definition != null) {
                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
                     const resolved = resolveSidebarNodeApiSection(
