@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { FC, Fragment, PropsWithChildren, RefObject, useEffect, useRef } from "react";
-import { useViewportContext } from "../viewport-context/useViewportContext";
+import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 
 interface FeedbackFormDialogProps {
     className?: string;

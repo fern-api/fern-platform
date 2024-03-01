@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SidebarVersionInfo } from "../sidebar/types";
 import { VersionDropdown } from "./VersionDropdown";
 

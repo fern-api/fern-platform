@@ -9,7 +9,7 @@ import { titleCase } from "../util/titleCase";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 
-const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 

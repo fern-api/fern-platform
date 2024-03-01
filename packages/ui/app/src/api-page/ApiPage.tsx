@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { useNavigationContext } from "../navigation-context";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";

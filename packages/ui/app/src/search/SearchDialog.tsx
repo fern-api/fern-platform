@@ -3,11 +3,11 @@ import algolia, { SearchClient } from "algoliasearch";
 import classNames from "classnames";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
-import { useNavigationContext } from "../navigation-context";
+import { useNavigationContext } from "../contexts/navigation-context";
+import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
 import { SidebarNode, SidebarVersionInfo } from "../sidebar/types";
-import { useViewportContext } from "../viewport-context/useViewportContext";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
 import { SearchHits, SearchMobileHits } from "./SearchHits";
 

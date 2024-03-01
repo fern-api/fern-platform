@@ -8,7 +8,7 @@ import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNo
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
-import { useNavigationContext } from "../navigation-context";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 import { isApiPage, SidebarNode } from "./types";

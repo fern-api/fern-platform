@@ -6,7 +6,8 @@ import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useEffect, useMemo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
-import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
+import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useCreateSearchService, useSearchService } from "../services/useSearchService";
 import {
     useCloseMobileSidebar,
@@ -16,7 +17,6 @@ import {
     useOpenSearchDialog,
 } from "../sidebar/atom";
 import { SidebarNavigation } from "../sidebar/types";
-import { useViewportContext } from "../viewport-context/useViewportContext";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";

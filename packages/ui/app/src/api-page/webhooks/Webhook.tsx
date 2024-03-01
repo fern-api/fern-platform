@@ -1,5 +1,5 @@
 import { joinUrlSlugs } from "@fern-api/fdr-sdk";
-import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
+import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";

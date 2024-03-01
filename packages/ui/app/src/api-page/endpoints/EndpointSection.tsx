@@ -6,7 +6,7 @@ import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { getAnchorId } from "../../util/anchor";
 import { SerializedMdxContent } from "../../util/mdx";
 
-const Markdown = dynamic(() => import("../markdown/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 

@@ -1,7 +1,7 @@
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
-import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "../sidebar/types";
-import { type ResolvedPath } from "../util/ResolvedPath";
+import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "../../sidebar/types";
+import { type ResolvedPath } from "../../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     basePath: undefined,

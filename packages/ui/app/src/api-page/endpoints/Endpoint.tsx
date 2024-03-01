@@ -1,4 +1,4 @@
-import { useNavigationContext, useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
+import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";

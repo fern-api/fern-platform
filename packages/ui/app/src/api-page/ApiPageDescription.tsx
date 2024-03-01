@@ -2,7 +2,7 @@ import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { SerializedMdxContent } from "../util/mdx";
 
-const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 

@@ -14,7 +14,7 @@ import { FernTooltip } from "../components/FernTooltip";
 import { isEndpointPage, SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
-const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
+const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface PlaygroundEndpointSelectorContentProps {
     navigation: SidebarNode[];

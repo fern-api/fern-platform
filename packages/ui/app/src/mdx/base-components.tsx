@@ -6,8 +6,8 @@ import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, LiHTMLA
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernCard } from "../components/FernCard";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
-import { useNavigationContext } from "../navigation-context";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
 

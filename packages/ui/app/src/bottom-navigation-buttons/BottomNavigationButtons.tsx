@@ -1,4 +1,4 @@
-import { useNavigationContext } from "../navigation-context";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { BottomNavigationButton } from "./BottomNavigationButton";
 
 export const BottomNavigationButtons: React.FC = () => {

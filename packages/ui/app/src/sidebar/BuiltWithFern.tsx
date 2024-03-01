@@ -1,7 +1,7 @@
 import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import Link from "next/link";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FernLogo } from "./FernLogo";
 
 export declare namespace BuiltWithFern {

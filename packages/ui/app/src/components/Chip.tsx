@@ -1,7 +1,7 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { ReactElement } from "react";
-import { Markdown } from "../api-page/markdown/Markdown";
+import { Markdown } from "../mdx/Markdown";
 import { SerializedMdxContent } from "../util/mdx";
 import { FernTooltip } from "./FernTooltip";
 

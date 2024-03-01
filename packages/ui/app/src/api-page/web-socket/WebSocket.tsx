@@ -7,7 +7,7 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { FernScrollArea } from "../../components/FernScrollArea";
-import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
+import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,

@@ -10,7 +10,7 @@ import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
-const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 

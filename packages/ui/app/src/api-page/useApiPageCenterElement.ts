@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {

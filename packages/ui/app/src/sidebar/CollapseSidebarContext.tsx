@@ -1,6 +1,6 @@
 import { noop } from "lodash-es";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useNavigationContext } from "../navigation-context/useNavigationContext";
+import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 interface CollapseSidebarContextValue {
     expanded: string[][]; // true = expand all, string[] = expand only these slugs

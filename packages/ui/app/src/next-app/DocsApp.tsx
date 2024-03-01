@@ -4,9 +4,9 @@ import "@fontsource/ibm-plex-mono";
 import { useEffect } from "react";
 import { initializePosthog } from "../analytics/posthog";
 import { CONTEXTS } from "../contexts";
-import { DocsContextProvider } from "../docs-context/DocsContextProvider";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
+import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { Docs } from "../docs/Docs";
-import { NavigationContextProvider } from "../navigation-context/NavigationContextProvider";
 import { SidebarNavigation } from "../sidebar/types";
 import type { ResolvedPath } from "../util/ResolvedPath";
 

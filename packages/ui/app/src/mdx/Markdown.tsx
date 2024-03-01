@@ -1,8 +1,7 @@
 import classNames from "classnames";
 import React from "react";
-import { MdxContent } from "../../mdx/MdxContent";
-import { SerializedMdxContent } from "../../util/mdx";
-import styles from "./Markdown.module.scss";
+import { SerializedMdxContent } from "../util/mdx";
+import { MdxContent } from "./MdxContent";
 
 export declare namespace Markdown {
     export interface Props {
@@ -19,7 +18,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ mdx, notP
 
     return (
         <article
-            className={classNames(className, styles.container, "break-words max-w-none", {
+            className={classNames(className, "break-words max-w-none", {
                 ["prose dark:prose-invert"]: !notProse,
             })}
         >

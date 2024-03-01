@@ -4,8 +4,8 @@ import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { useDocsContext } from "../docs-context/useDocsContext";
-import { useNavigationContext } from "../navigation-context";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
 import {

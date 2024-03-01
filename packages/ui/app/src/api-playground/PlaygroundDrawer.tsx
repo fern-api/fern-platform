@@ -9,7 +9,7 @@ import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SidebarNode } from "../sidebar/types";
 import {
     FlattenedRootPackage,

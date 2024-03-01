@@ -10,7 +10,7 @@ import { ReactElement, useEffect, useRef, useState } from "react";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { useNavigationContext } from "../navigation-context";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { isApiPage } from "../sidebar/types";
 import {
     dereferenceObjectProperties,
@@ -23,7 +23,7 @@ import {
 } from "../util/resolver";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
-const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 
