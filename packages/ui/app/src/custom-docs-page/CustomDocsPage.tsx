@@ -29,7 +29,7 @@ export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomD
             <div className="space-y-1">
                 <Breadcrumbs breadcrumbs={sectionTitleBreadcrumbs} />
 
-                <h1 className="my-0 inline-block">{title}</h1>
+                <h1 className="my-0 inline-block leading-tight">{title}</h1>
             </div>
         </header>
     );

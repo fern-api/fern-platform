@@ -216,7 +216,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                     <div>
-                        <h1 className="my-0 inline">{endpoint.title}</h1>
+                        <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
                         {endpoint.availability != null && (
                             <span className="relative">
                                 <EndpointAvailabilityTag

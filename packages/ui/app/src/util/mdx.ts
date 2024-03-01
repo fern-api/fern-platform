@@ -15,6 +15,17 @@ export interface FernDocsFrontmatter {
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
+function stringHasMarkdown(s: string): boolean {
+    return (
+        s.startsWith("---") ||
+        s.includes("#") ||
+        s.includes("*") ||
+        s.includes("`") ||
+        s.includes("[") ||
+        s.includes(">")
+    );
+}
+
 /**
  * Should only be invoked server-side.
  */
@@ -25,6 +36,10 @@ export async function serializeMdxContent(content: string | undefined): Promise<
         return undefined;
     }
     try {
+        if (!stringHasMarkdown(content)) {
+            return content;
+        }
+
         return await serialize(content, {
             scope: {},
             mdxOptions: {
