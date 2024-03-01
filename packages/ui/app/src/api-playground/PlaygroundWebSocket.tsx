@@ -54,7 +54,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
         setConnectedState("opening");
 
-        socket.current = new WebSocket("ws://fern-websocket-worker.danny-312.workers.dev/ws");
+        socket.current = new WebSocket("wss://fern-websocket-worker.danny-312.workers.dev/ws");
 
         socket.current.onopen = () => {
             socket.current?.send(
