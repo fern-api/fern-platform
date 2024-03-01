@@ -7,7 +7,7 @@ import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {
     name: string;
-    description: SerializedMdxContent | undefined;
+    description?: SerializedMdxContent | undefined;
     small?: boolean;
 };
 
