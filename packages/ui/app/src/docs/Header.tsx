@@ -1,10 +1,12 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
+import { useAtomValue } from "jotai";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
+import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
 import { useSearchService } from "../services/useSearchService";
-import { useIsSearchDialogOpen, useOpenSearchDialog } from "../sidebar/atom";
+import { useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { SidebarNavigation } from "../sidebar/types";
 import { HeaderLogoSection } from "./HeaderLogoSection";
@@ -47,7 +49,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     ref,
 ) {
     const openSearchDialog = useOpenSearchDialog();
-    const isSearchDialogOpen = useIsSearchDialogOpen();
+    const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const searchService = useSearchService();
 
     const navbarLinksSection = (
@@ -104,10 +106,10 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 currentVersionIndex={navigation.currentVersionIndex}
             />
 
-            {showSearchBar && searchService.isAvailable && (
+            {showSearchBar && (
                 <div
                     className={classNames("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
-                        invisible: isSearchDialogOpen,
+                        invisible: isSearchBoxMounted,
                     })}
                 >
                     <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
@@ -116,7 +118,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             <div
                 className={classNames("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
-                    "flex-1": showSearchBar && searchService.isAvailable,
+                    "flex-1": showSearchBar,
                 })}
             >
                 {navbarLinksSection}
@@ -142,6 +144,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     <FernButton
                         onClickCapture={(e) => {
                             e.stopPropagation();
+                            e.preventDefault();
                             if (isMobileSidebarOpen) {
                                 closeMobileSidebar();
                             } else {

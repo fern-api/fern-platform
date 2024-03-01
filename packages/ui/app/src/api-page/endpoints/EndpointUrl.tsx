@@ -1,17 +1,24 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React, { PropsWithChildren, ReactElement, useMemo } from "react";
+import React, {
+    PropsWithChildren,
+    ReactElement,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import { ResolvedEndpointPathParts } from "../../util/resolver";
-import styles from "./EndpointUrl.module.scss";
+import "./EndpointUrl.scss";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
-        urlStyle: "default" | "overflow";
         path: ResolvedEndpointPathParts[];
         method: APIV1Read.HttpMethod;
         environment?: string;
@@ -22,10 +29,14 @@ export declare namespace EndpointUrl {
 }
 
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { path, method, environment, showEnvironment, large, className, urlStyle },
-    ref,
+    { path, method, environment, showEnvironment, large, className },
+    parentRef,
 ) {
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(path), [path]);
+
+    const ref = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(parentRef, () => ref.current!);
 
     const renderPathParts = (parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
@@ -61,14 +72,61 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         return elements;
     };
 
+    // check if overflow is visible
+    const isOverflowVisible = ref.current != null ? ref.current.scrollWidth > ref.current.clientWidth : false;
+
+    const [showLeftMask, setShowLeftMask] = useState(false);
+    const [hideRightMask, setHideRightMask] = useState(() =>
+        ref.current != null ? ref.current.scrollLeft === ref.current.scrollWidth - ref.current.clientWidth : false,
+    );
+
+    const [nonce, setNonce] = useState(0);
+
+    // force measurement on mount
+    useEffect(() => setNonce((n) => n + 1), []);
+
+    // check if overflow is visible
+    useEffect(() => {
+        const refCurrent = ref.current;
+
+        if (refCurrent == null) {
+            return;
+        }
+        const measure = () => {
+            // check if scrolled to right > 0px
+            setShowLeftMask(refCurrent.scrollLeft > 0);
+
+            // check if scrolled all the way to the right
+            setHideRightMask(refCurrent.scrollLeft === refCurrent.scrollWidth - refCurrent.clientWidth);
+        };
+
+        refCurrent.addEventListener("scroll", measure);
+
+        measure();
+        const resizeObserver = new ResizeObserver(measure);
+        resizeObserver.observe(refCurrent);
+
+        return () => {
+            refCurrent.removeEventListener("scroll", measure);
+            resizeObserver.disconnect();
+        };
+    }, [nonce]);
+
     return (
-        <div ref={ref} className={classNames("flex h-8 items-center gap-1", className)}>
+        <div
+            ref={ref}
+            className={classNames(
+                "flex h-8 items-center gap-1 overflow-x-auto pr-2",
+                {
+                    ["url-overflow"]: isOverflowVisible,
+                    ["left-mask"]: showLeftMask,
+                    ["right-mask"]: !hideRightMask,
+                },
+                className,
+            )}
+        >
             <HttpMethodTag method={method} />
-            <div
-                className={classNames("flex items-center overflow-hidden", {
-                    [styles.urlOverflowContainer ?? ""]: urlStyle === "overflow",
-                })}
-            >
+            <div className={classNames("flex items-center")}>
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
                     {(onClick) => (
                         <span

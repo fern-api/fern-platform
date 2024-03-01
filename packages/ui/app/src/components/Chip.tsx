@@ -1,4 +1,5 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
+import classNames from "classnames";
 import { ReactElement } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
 import { SerializedMdxContent } from "../util/mdx";
@@ -7,9 +8,10 @@ import { FernTooltip } from "./FernTooltip";
 type ChipProps = {
     name: string;
     description: SerializedMdxContent | undefined;
+    small?: boolean;
 };
 
-export const Chip = ({ name, description = undefined }: ChipProps): ReactElement => {
+export const Chip = ({ name, description = undefined, small }: ChipProps): ReactElement => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
     return (
         <FernTooltip
@@ -17,7 +19,13 @@ export const Chip = ({ name, description = undefined }: ChipProps): ReactElement
             content={wasJustCopied ? "Copied!" : description != null ? <Markdown mdx={description} /> : undefined}
         >
             <span
-                className="t-default bg-tag-default hover:bg-tag-default-hover cursor-default rounded-md px-1.5 py-1 font-mono text-xs"
+                className={classNames(
+                    "t-default bg-tag-default hover:bg-tag-default-hover cursor-default font-mono text-xs flex items-center",
+                    {
+                        ["py-1 px-1.5 rounded-md h-5"]: small,
+                        ["py-1 px-2 rounded-lg h-6"]: !small,
+                    },
+                )}
                 onClick={copyToClipboard}
             >
                 <span>{name}</span>

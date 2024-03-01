@@ -1,12 +1,12 @@
 import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
-import * as Accordion from "@radix-ui/react-accordion";
-import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
+import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
+import { FernScrollArea } from "../../components/FernScrollArea";
 import { useShouldHideFromSsg } from "../../navigation-context/useNavigationContext";
 import {
     ResolvedTypeDefinition,
@@ -24,11 +24,13 @@ import { TitledExample } from "../examples/TitledExample";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
 export declare namespace WebSocket {
     export interface Props {
         websocket: ResolvedWebSocketChannel;
         isLastInApi: boolean;
+        api: string;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -42,7 +44,7 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
     return <WebhookContent {...props} />;
 };
 
-const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, types }) => {
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
 
@@ -78,6 +80,20 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     }, [subscribeMessages, types]);
 
     const example = websocket.examples[0];
+
+    const exampleMessages = useMemo((): WebSocketMessage[] => {
+        return (
+            example?.messages.map((message) => {
+                const messageDefinition = websocket.messages.find((m) => m.type === message.type);
+                return {
+                    type: message.type,
+                    data: message.body,
+                    origin: messageDefinition?.origin,
+                    displayName: messageDefinition?.displayName,
+                };
+            }) ?? []
+        );
+    }, [example?.messages, websocket.messages]);
 
     return (
         <div
@@ -261,118 +277,48 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     </section>
                     <aside className="max-w-content-width">
                         {example != null && example.messages.length > 0 && (
-                            <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height sticky space-y-6 py-8">
-                                <TitledExample title={"Handshake"} type={"primary"} disableClipboard={true}>
-                                    <div className="flex px-1 py-3">
-                                        <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words">
-                                            <tbody>
-                                                <tr>
-                                                    <td className="text-left align-top">URL</td>
-                                                    <td className="text-left align-top">
-                                                        {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example.path ?? ""}`}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="text-left align-top">Method</td>
-                                                    <td className="text-left align-top">GET</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="text-left align-top">Status</td>
-                                                    <td className="text-left align-top">101 Switching Protocols</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height flex flex-col gap-6 py-8">
+                                <TitledExample
+                                    title={"Handshake"}
+                                    type={"primary"}
+                                    actions={
+                                        <PlaygroundButton
+                                            state={{
+                                                type: "websocket",
+                                                webSocketId: websocket.slug.join("/"),
+                                                api,
+                                            }}
+                                        />
+                                    }
+                                    disableClipboard={true}
+                                >
+                                    <FernScrollArea>
+                                        <div className="flex px-1 py-3">
+                                            <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words font-mono text-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <td className="text-left align-top">URL</td>
+                                                        <td className="text-left align-top">
+                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example.path ?? ""}`}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="text-left align-top">Method</td>
+                                                        <td className="text-left align-top">GET</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="text-left align-top">Status</td>
+                                                        <td className="text-left align-top">101 Switching Protocols</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </FernScrollArea>
                                 </TitledExample>
-                                <TitledExample title={"Messages"} type={"primary"}>
-                                    <Accordion.Root type="multiple" className="divide-border-default divide-y">
-                                        {websocket.examples[0]?.messages.map((message, index) => {
-                                            const messageType = websocket.messages.find((m) => m.type === message.type);
-                                            if (messageType == null) {
-                                                // eslint-disable-next-line no-console
-                                                console.error(
-                                                    `Error: websocket (${websocket.name}) message type not found: ${message.type}`,
-                                                );
-                                                return null;
-                                            }
-                                            return (
-                                                <Accordion.Item
-                                                    value={index.toString()}
-                                                    key={index}
-                                                    className={classNames(
-                                                        "divide-border-default group divide-y focus-within:ring-1 ring-inset last:rounded-b-xl",
-                                                        {
-                                                            "focus-within:ring-border-success":
-                                                                messageType.origin ===
-                                                                APIV1Read.WebSocketMessageOrigin.Client,
-                                                            "focus-within:ring-border-primary":
-                                                                messageType.origin ===
-                                                                APIV1Read.WebSocketMessageOrigin.Server,
-                                                        },
-                                                    )}
-                                                >
-                                                    <Accordion.Trigger
-                                                        className={classNames(
-                                                            "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background",
-                                                            {
-                                                                "data-[state=open]:bg-tag-success":
-                                                                    messageType.origin ===
-                                                                    APIV1Read.WebSocketMessageOrigin.Client,
-                                                                "data-[state=open]:bg-tag-primary":
-                                                                    messageType.origin ===
-                                                                    APIV1Read.WebSocketMessageOrigin.Server,
-                                                            },
-                                                        )}
-                                                    >
-                                                        {messageType.origin ===
-                                                        APIV1Read.WebSocketMessageOrigin.Client ? (
-                                                            <span className="bg-tag-success t-success inline-block shrink-0 rounded-full p-0.5">
-                                                                <ArrowUpIcon />
-                                                            </span>
-                                                        ) : (
-                                                            <span className="bg-tag-primary t-accent-aaa inline-block shrink-0 rounded-full p-0.5">
-                                                                <ArrowDownIcon />
-                                                            </span>
-                                                        )}
-                                                        <span className="min-w-0 shrink truncate font-mono text-xs">
-                                                            {JSON.stringify(message.body)}
-                                                        </span>
-                                                        <span
-                                                            className={classNames("flex-1 inline-flex justify-end", {
-                                                                // "justify-start": event.action === "send",
-                                                                // "justify-end": event.action === "recieve",
-                                                            })}
-                                                        >
-                                                            <span className="bg-tag-default t-muted h-5 rounded-md px-1.5 py-1 text-xs leading-none">
-                                                                {messageType.displayName ?? messageType.type}
-                                                            </span>
-                                                        </span>
-
-                                                        <ChevronDownIcon
-                                                            className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
-                                                            aria-hidden
-                                                        />
-                                                    </Accordion.Trigger>
-                                                    <Accordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
-                                                        <div className="group/cb-container relative">
-                                                            <CopyToClipboardButton
-                                                                className={
-                                                                    "absolute right-1 top-1 opacity-0 transition group-hover/cb-container:opacity-100"
-                                                                }
-                                                                content={() => JSON.stringify(message.body, null, 2)}
-                                                            />
-                                                            <FernSyntaxHighlighter
-                                                                className="max-h-[200px] w-0 min-w-full overflow-y-auto"
-                                                                code={JSON.stringify(message.body, null, 2)}
-                                                                language="json"
-                                                                fontSize="sm"
-                                                            />
-                                                        </div>
-                                                    </Accordion.Content>
-                                                </Accordion.Item>
-                                            );
-                                        })}
-                                    </Accordion.Root>
+                                <TitledExample title={"Messages"} type={"primary"} className="min-h-0 shrink">
+                                    <FernScrollArea className="rounded-b-[inherit]">
+                                        <WebSocketMessages messages={exampleMessages} />
+                                    </FernScrollArea>
                                 </TitledExample>
                             </div>
                         )}

@@ -19,6 +19,7 @@ interface PlaygroundDiscriminatedUnionFormProps {
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
+    disabled?: boolean;
 }
 
 export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFormProps> = ({
@@ -27,6 +28,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
     onChange,
     value,
     id,
+    disabled,
 }) => {
     const selectedVariantKey =
         value != null ? (castToRecord(value)[discriminatedUnion.discriminant] as string) : undefined;
@@ -91,6 +93,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                     value={selectedVariantKey}
                     onValueChange={setSelectedVariant}
                     className="mb-4 w-full"
+                    muted={disabled}
                 />
             ) : (
                 <FernDropdown options={options} onValueChange={setSelectedVariant} value={selectedVariantKey}>
@@ -117,6 +120,7 @@ export const PlaygroundDiscriminatedUnionForm: FC<PlaygroundDiscriminatedUnionFo
                         onChange={onChange}
                         id={id}
                         types={types}
+                        disabled={disabled}
                     />
                 </div>
             )}

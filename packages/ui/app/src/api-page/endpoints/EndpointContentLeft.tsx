@@ -32,7 +32,6 @@ export declare namespace EndpointContentLeft {
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         selectedError: ResolvedError | undefined;
         setSelectedError: (idx: ResolvedError | undefined) => void;
-        route: string;
         contentType: string | undefined;
         setContentType: (contentType: string) => void;
         types: Record<string, ResolvedTypeDefinition>;
@@ -46,7 +45,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     onHoverResponseProperty,
     selectedError,
     setSelectedError,
-    route,
     contentType,
     setContentType,
     types,
@@ -58,7 +56,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
             {endpoint.pathParameters.length > 0 && (
-                <EndpointSection title="Path parameters" anchorIdParts={["request", "path"]} route={route}>
+                <EndpointSection
+                    title="Path parameters"
+                    anchorIdParts={["request", "path"]}
+                    route={"/" + endpoint.slug.join("/")}
+                >
                     <div className="flex flex-col">
                         {endpoint.pathParameters.map((parameter) => (
                             <div className="flex flex-col" key={parameter.key}>
@@ -67,7 +69,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={["request", "path", parameter.key]}
-                                    route={route}
+                                    route={"/" + endpoint.slug.join("/")}
                                     description={parameter.description}
                                     availability={parameter.availability}
                                     types={types}
@@ -78,7 +80,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {endpoint.headers.length > 0 && (
-                <EndpointSection title="Headers" anchorIdParts={["request", "header"]} route={route}>
+                <EndpointSection
+                    title="Headers"
+                    anchorIdParts={["request", "header"]}
+                    route={"/" + endpoint.slug.join("/")}
+                >
                     <div className="flex flex-col">
                         {endpoint.headers.map((parameter) => (
                             <div className="flex flex-col" key={parameter.key}>
@@ -87,7 +93,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={["request", "header", parameter.key]}
-                                    route={route}
+                                    route={"/" + endpoint.slug.join("/")}
                                     description={parameter.description}
                                     availability={parameter.availability}
                                     types={types}
@@ -98,7 +104,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {endpoint.queryParameters.length > 0 && (
-                <EndpointSection title="Query parameters" anchorIdParts={["request", "query"]} route={route}>
+                <EndpointSection
+                    title="Query parameters"
+                    anchorIdParts={["request", "query"]}
+                    route={"/" + endpoint.slug.join("/")}
+                >
                     <div className="flex flex-col">
                         {endpoint.queryParameters.map((parameter) => (
                             <div className="flex flex-col" key={parameter.key}>
@@ -107,7 +117,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={["request", "query", parameter.key]}
-                                    route={route}
+                                    route={"/" + endpoint.slug.join("/")}
                                     description={parameter.description}
                                     availability={parameter.availability}
                                     types={types}
@@ -147,7 +157,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         key={requestBody.contentType}
                                         title="Request"
                                         anchorIdParts={["request"]}
-                                        route={route}
+                                        route={"/" + endpoint.slug.join("/")}
                                         expandAll={requestExpandAll.setTrue}
                                         collapseAll={requestExpandAll.setFalse}
                                         showExpandCollapse={shouldShowExpandCollapse(requestBody.shape, types)}
@@ -156,7 +166,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                             requestBody={requestBody}
                                             onHoverProperty={onHoverRequestProperty}
                                             anchorIdParts={["request", "body"]}
-                                            route={route}
+                                            route={"/" + endpoint.slug.join("/")}
                                             defaultExpandAll={requestExpandAll.value}
                                             types={types}
                                         />
@@ -171,7 +181,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     key={endpoint.requestBody[0].contentType}
                     title="Request"
                     anchorIdParts={["request"]}
-                    route={route}
+                    route={"/" + endpoint.slug.join("/")}
                     expandAll={requestExpandAll.setTrue}
                     collapseAll={requestExpandAll.setFalse}
                     showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody[0].shape, types)}
@@ -180,7 +190,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         requestBody={endpoint.requestBody[0]}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={["request", "body"]}
-                        route={route}
+                        route={"/" + endpoint.slug.join("/")}
                         defaultExpandAll={requestExpandAll.value}
                         types={types}
                     />
@@ -190,7 +200,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection
                     title="Response"
                     anchorIdParts={["response"]}
-                    route={route}
+                    route={"/" + endpoint.slug.join("/")}
                     expandAll={responseExpandAll.setTrue}
                     collapseAll={responseExpandAll.setFalse}
                     showExpandCollapse={shouldShowExpandCollapse(endpoint.responseBody.shape, types)}
@@ -199,7 +209,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         responseBody={endpoint.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={["response", "body"]}
-                        route={route}
+                        route={"/" + endpoint.slug.join("/")}
                         defaultExpandAll={responseExpandAll.value}
                         types={types}
                     />
@@ -209,7 +219,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection
                     title="Errors"
                     anchorIdParts={["response", "error"]}
-                    route={route}
+                    route={"/" + endpoint.slug.join("/")}
                     expandAll={errorExpandAll.setTrue}
                     collapseAll={errorExpandAll.setFalse}
                     showExpandCollapse={false}
@@ -237,7 +247,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         "error",
                                         `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
                                     ]}
-                                    route={route}
+                                    route={"/" + endpoint.slug.join("/")}
                                     availability={error.availability}
                                     defaultExpandAll={errorExpandAll.value}
                                     types={types}

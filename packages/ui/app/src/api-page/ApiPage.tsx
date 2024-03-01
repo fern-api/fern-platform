@@ -12,53 +12,16 @@ export declare namespace ApiPage {
         initialApi: ResolvedRootPackage;
         artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
-        fullSlug: string;
-        sectionUrlSlug: string;
-        skipUrlSlug: boolean;
     }
 }
 
-export const ApiPage: React.FC<ApiPage.Props> = ({
-    initialApi,
-    artifacts,
-    showErrors,
-    // fullSlug,
-    // sectionUrlSlug,
-    // skipUrlSlug,
-}) => {
+export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showErrors }) => {
     const setDefinitions = useSetAtom(APIS);
     // const definition = apis[initialApi.api];
 
     useEffect(() => {
         setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));
     }, [initialApi, setDefinitions]);
-
-    // useEffect(() => {
-    //     void resolveApiDefinition(initialApi).then((resolvedApi) => {
-    //         pinScrollPositionToRoute(`/${fullSlug}`, () => {
-    //             setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
-    //         });
-    //     });
-    // }, [fullSlug, initialApi, setDefinitions]);
-
-    // useEffect(() => {
-    //     let url = `/api/resolve-api?path=${fullSlug}&api=${initialApi.api}`;
-    //     if (!skipUrlSlug) {
-    //         url += `&slug=${sectionUrlSlug}`;
-    //     }
-    //     void fetch(url).then(async (response) => {
-    //         if (response.ok) {
-    //             const api = (await response.json()) as FlattenedApiDefinition | null;
-    //             if (api != null) {
-    //                 const resolvedApi = resolveApiDefinition(api);
-
-    //                 pinScrollPositionToRoute(`/${fullSlug}`, () => {
-    //                     setDefinitions((prev) => ({ ...prev, [resolvedApi.api]: resolvedApi }));
-    //                 });
-    //             }
-    //         }
-    //     });
-    // }, [fullSlug, initialApi.api, sectionUrlSlug, setDefinitions, skipUrlSlug]);
 
     return (
         <div className="min-h-0 pb-36">

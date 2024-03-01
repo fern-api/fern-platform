@@ -195,8 +195,7 @@
     .fern-search-bar {
         @apply cursor-pointer;
         @apply text-sm border-default flex items-center rounded-lg border px-2.5 py-2 t-muted;
-        @apply bg-background;
-        @apply dark:bg-black/[0.25];
+        @apply bg-tag-default;
         @apply shadow-card-light dark:shadow-none;
         @apply hover:shadow-card-light-elevated hover:dark:shadow-card-dark transition-shadow;
 
@@ -409,12 +408,12 @@
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {
-                @apply pl-2;
+                @apply pl-3;
             }
 
             &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
             &:not(.square):has(> .fern-button-content > svg:last-child) {
-                @apply pr-2;
+                @apply pr-3;
             }
 
             > .fern-button-content {
@@ -443,7 +442,7 @@
             &.minimal {
                 @apply bg-transparent;
                 @apply t-muted hover:t-default;
-                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
+                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
 
                 .fa-icon {
                     @apply bg-text-default-light/60;
@@ -457,7 +456,7 @@
 
                 &.primary {
                     @apply t-accent hover:t-accent;
-                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
+                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary  data-[selected=true]:bg-tag-primary;
 
                     .fa-icon {
                         @apply bg-accent-aa;
@@ -466,7 +465,7 @@
 
                 &.success {
                     @apply t-success hover:t-success;
-                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success;
+                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success  data-[selected=true]:bg-tag-success;
 
                     .fa-icon {
                         @apply bg-intent-success;
@@ -475,7 +474,7 @@
 
                 &.warning {
                     @apply t-warning hover:t-warning;
-                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning;
+                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning  data-[selected=true]:bg-tag-warning;
 
                     .fa-icon {
                         @apply bg-intent-warning;
@@ -484,7 +483,7 @@
 
                 &.danger {
                     @apply t-danger hover:t-danger;
-                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger;
+                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger  data-[selected=true]:bg-tag-danger;
 
                     .fa-icon {
                         @apply bg-intent-danger;
@@ -699,14 +698,14 @@
     }
 
     .fern-card {
-        @apply ring-default t-default hover:t-default ring-1 ring-inset bg-white/70 dark:bg-tag-default-soft border-none;
+        @apply border-default t-default hover:t-default border bg-white/70 dark:bg-tag-default-soft;
 
         &.interactive {
-            @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:ring-border-primary hover:transition-all;
-            @apply dark:hover:ring-border-accent-muted-dark dark:shadow-none dark:hover:shadow-card-dark-elevated;
+            @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-primary hover:transition-all;
+            @apply hover:border-primary;
 
             &.active {
-                @apply shadow-card-light-elevated ring-border-primary dark:shadow-card-dark-elevated;
+                @apply shadow-card-light-elevated border-primary dark:shadow-card-dark-elevated;
             }
         }
     }

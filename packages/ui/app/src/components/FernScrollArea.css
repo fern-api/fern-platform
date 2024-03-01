@@ -1,5 +1,5 @@
 .fern-scroll-area {
-    @apply h-full w-full overflow-hidden flex flex-col;
+    @apply h-full w-full overflow-hidden flex flex-col z-0;
 }
 
 .fern-scroll-area-viewport {

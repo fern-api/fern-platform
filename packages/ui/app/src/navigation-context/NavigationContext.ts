@@ -1,7 +1,6 @@
-import { VersionInfo } from "@fern-api/fdr-sdk";
 import { noop } from "@fern-ui/core-utils";
 import React from "react";
-import { SidebarNode } from "../sidebar/types";
+import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "../sidebar/types";
 import { type ResolvedPath } from "../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
@@ -14,12 +13,8 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     resolvedPath: {
         type: "custom-markdown-page",
         fullSlug: "",
-        page: {
-            id: "",
-            title: "",
-            urlSlug: "",
-        },
-        sectionTitle: "",
+        title: "",
+        sectionTitleBreadcrumbs: [],
         serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
         editThisPageUrl: null,
         neighbors: {
@@ -28,15 +23,24 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
     },
     hydrated: false,
+    navigation: {
+        sidebarNodes: [],
+        versions: [],
+        tabs: [],
+        slug: [],
+        currentVersionIndex: undefined,
+        currentTabIndex: undefined,
+    },
 });
 
 export interface NavigationContextValue {
     basePath: string | undefined;
-    activeVersion: VersionInfo | undefined;
+    activeVersion: SidebarVersionInfo | undefined;
     selectedSlug: string;
     activeNavigatable: SidebarNode.Page | undefined;
     onScrollToPath: (slug: string) => void;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
     hydrated: boolean;
+    navigation: SidebarNavigation;
 }

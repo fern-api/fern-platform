@@ -1,3 +1,4 @@
+import { useBooleanState } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import React, { ReactElement, useState } from "react";
@@ -27,11 +28,12 @@ export const EnumTypeDefinition = ({
     collapsibleContentContextValue,
     showText,
 }: EnumTypeDefinitionProps): ReactElement => {
+    const autofocus = useBooleanState(false);
     const [searchInput, setSearchInput] = useState("");
     const hideText = (
         <div className="-mx-1 py-1">
             <FernInput
-                autoFocus={true}
+                autoFocus={autofocus.value}
                 type="search"
                 placeholder="Search..."
                 value={searchInput}
@@ -80,7 +82,13 @@ export const EnumTypeDefinition = ({
                     buttonProps={{
                         className: !isCollapsed ? "multiline" : undefined,
                         disableAutomaticTooltip: true,
+                        onClickCapture: () => {
+                            if (isCollapsed) {
+                                autofocus.setTrue();
+                            }
+                        },
                     }}
+                    onClose={autofocus.setFalse}
                 >
                     <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
                         <EnumDefinitionDetails elements={elements} searchInput={searchInput} />

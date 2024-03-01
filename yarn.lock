@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.50.9-1-gd87477b":
-  version: 0.50.9-1-gd87477b
-  resolution: "@fern-api/fdr-sdk@npm:0.50.9-1-gd87477b"
+"@fern-api/fdr-sdk@npm:0.50.12-4-gdf2d015":
+  version: 0.50.12-4-gdf2d015
+  resolution: "@fern-api/fdr-sdk@npm:0.50.12-4-gdf2d015"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2355,7 +2355,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: d253f693d5b3f64c7d2a340cd3f3b4ec3ceac58331922125857edf3f407aa81cc58ba61132bcac1bea11549954ba784cc6e74b0447f49ec7421ba4ceaa063bc6
+  checksum: e688367577a88a2cceab4016a1d5521f1c0e76e495462d167d06de782411300a23ead33ca314d28660ed6bde70a9801799841497e425fe7d98908727e4db8016
   languageName: node
   linkType: hard
 
@@ -2681,7 +2681,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
-    "@fern-api/fdr-sdk": 0.50.9-1-gd87477b
+    "@fern-api/fdr-sdk": 0.50.12-4-gdf2d015
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
@@ -2698,7 +2698,6 @@ __metadata:
     "@radix-ui/react-tabs": ^1.0.4
     "@radix-ui/react-toggle-group": ^1.0.4
     "@radix-ui/react-tooltip": ^1.0.7
-    "@react-hook/size": ^2.1.2
     "@shikijs/transformers": ^1.1.7
     "@testing-library/react": ^14.2.1
     "@types/hast": ^3.0.4
@@ -2706,6 +2705,7 @@ __metadata:
     "@types/jsonpath": ^0.2.4
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
+    "@types/nprogress": ^0.2.3
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.2.18
     "@types/react-test-renderer": ^18.0.7
@@ -2724,12 +2724,12 @@ __metadata:
     jotai: ^2.6.0
     jsonpath: ^1.1.1
     lodash-es: ^4.17.21
-    lru-cache: ^10.0.1
+    moment: ^2.30.1
     next: ^14.0.4
     next-mdx-remote: ^4.4.1
     next-themes: ^0.2.1
-    nextjs-progressbar: ^0.0.16
     node-html-parser: ^6.1.12
+    nprogress: ^0.2.0
     organize-imports-cli: ^0.10.0
     posthog-js: ^1.81.1
     prettier: ^3.2.4
@@ -3306,13 +3306,6 @@ __metadata:
     "@jridgewell/resolve-uri": ^3.1.0
     "@jridgewell/sourcemap-codec": ^1.4.14
   checksum: cd1a7353135f385909468ff0cf20bdd37e59f2ee49a13a966dedf921943e222082c583ade2b579ff6cd0d8faafcb5461f253e1bf2a9f48fec439211fdbe788f5
-  languageName: node
-  linkType: hard
-
-"@juggle/resize-observer@npm:^3.3.1":
-  version: 3.4.0
-  resolution: "@juggle/resize-observer@npm:3.4.0"
-  checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
   languageName: node
   linkType: hard
 
@@ -4335,49 +4328,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-hook/latest@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "@react-hook/latest@npm:1.0.3"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 2408c9cd35c5cfa7697b6da3bc5eebef254a932ade70955074c474f23be7dd3e2f81bbba12edcc9208bd0f89c6ed366d6b11d4f6d7b1052877a0bac8f74afad4
-  languageName: node
-  linkType: hard
-
-"@react-hook/passive-layout-effect@npm:^1.2.0":
-  version: 1.2.1
-  resolution: "@react-hook/passive-layout-effect@npm:1.2.1"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 217cb8aa90fb8e677672319a9a466d7752890cf4357c76df000b207696e9cc717cf2ee88080671cc9dae238a82f92093ab4f61ab2f6032d2a8db958fc7d99b5d
-  languageName: node
-  linkType: hard
-
-"@react-hook/resize-observer@npm:^1.2.1":
-  version: 1.2.6
-  resolution: "@react-hook/resize-observer@npm:1.2.6"
-  dependencies:
-    "@juggle/resize-observer": ^3.3.1
-    "@react-hook/latest": ^1.0.2
-    "@react-hook/passive-layout-effect": ^1.2.0
-  peerDependencies:
-    react: ">=16.8"
-  checksum: d2ff6c50e847514acad774f2a4010fb1e6782a231ae00c9507c1a98028b3a26399e35f094170918f11b1eeafc581d60da7641bc178d496abf00c56eee8a6b36b
-  languageName: node
-  linkType: hard
-
-"@react-hook/size@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@react-hook/size@npm:2.1.2"
-  dependencies:
-    "@react-hook/passive-layout-effect": ^1.2.0
-    "@react-hook/resize-observer": ^1.2.1
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 89876e93957f420ba63518b60992b46ca82b0d12da0cf50ad487461e0b4230ec0e036ecf100840e2b2e93c9101895ad33e8bd6bc02a25641c28c904a09ab2563
-  languageName: node
-  linkType: hard
-
 "@rushstack/eslint-patch@npm:^1.3.3":
   version: 1.6.1
   resolution: "@rushstack/eslint-patch@npm:1.6.1"
@@ -4929,7 +4879,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/nprogress@npm:^0.2.0":
+"@types/nprogress@npm:^0.2.3":
   version: 0.2.3
   resolution: "@types/nprogress@npm:0.2.3"
   checksum: 2bd96ba1167f548e8f898ae8a790b6501a5422217621c9b8ea75962f3e8473f0e371058b79d83e04e80a6bfee2d66fc6612cdb28296648007b35d3c2a6d64e5c
@@ -11842,13 +11792,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "lru-cache@npm:10.0.1"
-  checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
-  languageName: node
-  linkType: hard
-
 "lru-cache@npm:^4.0.1, lru-cache@npm:^4.1.5":
   version: 4.1.5
   resolution: "lru-cache@npm:4.1.5"
@@ -12908,6 +12851,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
+  languageName: node
+  linkType: hard
+
 "mrlint@npm:^0.0.133":
   version: 0.0.133
   resolution: "mrlint@npm:0.0.133"
@@ -13076,20 +13026,6 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     next: dist/bin/next
   checksum: 879842979d3c7e2d2e2cd3edad3e715d408060a286bb12299089e08d7142af9effceee877e6d18aad359983119d025298ec5c63dd6317443027b47dc5167ac40
-  languageName: node
-  linkType: hard
-
-"nextjs-progressbar@npm:^0.0.16":
-  version: 0.0.16
-  resolution: "nextjs-progressbar@npm:0.0.16"
-  dependencies:
-    "@types/nprogress": ^0.2.0
-    nprogress: ^0.2.0
-    prop-types: ^15.8.1
-  peerDependencies:
-    next: ">= 6.0.0"
-    react: ">= 16.0.0"
-  checksum: b75f7bd1f336765aab203613e028ba5cb7e89590add46e4df435cc868bad042c2c5c6fe8c2cf1b127b1cae66eaae6e10d061b2908d7d4b6a9dcd79ad4e41bbcd
   languageName: node
   linkType: hard
 

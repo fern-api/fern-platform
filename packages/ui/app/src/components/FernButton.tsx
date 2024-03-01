@@ -71,6 +71,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
             aria-disabled={disabled}
             aria-selected={active}
             data-state={active ? "on" : "off"}
+            data-selected={active}
             {...linkProps}
             className={getButtonClassName(props)}
             onClick={
@@ -124,6 +125,7 @@ export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, Fer
                 data-state={active ? "on" : "off"}
                 aria-disabled={disabled}
                 aria-selected={active}
+                data-selected={active}
                 {...buttonProps}
                 className={getButtonClassName(props)}
                 onClick={

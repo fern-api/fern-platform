@@ -25,7 +25,6 @@ export declare namespace EndpointContent {
         breadcrumbs: string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
-        route: string;
         isInViewport: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -68,7 +67,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     hideBottomSeparator = false,
     setContainerRef,
     isInViewport: initiallyInViewport,
-    route,
     types,
 }) => {
     const router = useRouter();
@@ -213,7 +211,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     "border-default border-b mb-px pb-20": !hideBottomSeparator,
                 })}
                 ref={setContainerRef}
-                data-route={route.toLowerCase()}
+                data-route={`/${endpoint.slug.join("/")}`}
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
@@ -257,7 +255,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 onHoverResponseProperty={onHoverResponseProperty}
                                 selectedError={selectedError}
                                 setSelectedError={setSelectedError}
-                                route={route}
                                 contentType={contentType}
                                 setContentType={setContentType}
                                 types={types}

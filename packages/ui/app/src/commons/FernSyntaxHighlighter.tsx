@@ -14,6 +14,7 @@ type HighlightLine = number | [number, number];
 interface FernSyntaxHighlighterProps {
     className?: string;
     style?: React.CSSProperties;
+    id?: string;
     code: string;
     language: string;
     fontSize?: "sm" | "base" | "lg";
@@ -39,9 +40,9 @@ function createRawHast(code: string): Root {
 }
 
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>(
-    function FernSyntaxHighlighter({ code, language, ...props }, ref) {
+    function FernSyntaxHighlighter({ id, code, language, ...props }, ref) {
         const [, setNonce] = useState<number>(0);
-        const result = cachedHighlights.get(code);
+        const result = cachedHighlights.get(id ?? code);
         useEffect(() => {
             if (result != null) {
                 return;
@@ -49,10 +50,10 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
             void (async () => {
                 const highlighter = await getHighlighterInstance();
                 const newResult = highlight(highlighter, code, language);
-                cachedHighlights.set(code, newResult);
+                cachedHighlights.set(id ?? code, newResult);
                 setNonce((nonce) => nonce + 1);
             })();
-        }, [code, language, result]);
+        }, [code, id, language, result]);
 
         return (
             <FernSyntaxHighlighterHast ref={ref} hast={result ?? createRawHast(code)} language={language} {...props} />

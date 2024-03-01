@@ -1,24 +1,17 @@
-import { VersionInfo } from "@fern-api/fdr-sdk";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
-import { useNavigationContext } from "../navigation-context";
+import { SidebarVersionInfo } from "../sidebar/types";
 import { getVersionAvailabilityLabel } from "../util/fern";
 
 export declare namespace VersionDropdown {
     export interface Props {
         currentVersionIndex: number | null | undefined;
-        versions: VersionInfo[];
+        versions: SidebarVersionInfo[];
     }
 }
 
-// TODO: move this into utils, or standardize this upstream
-function createSlugHref(basePath: string | undefined, slug: string) {
-    return basePath != null && basePath.trim().length > 1 ? `${basePath.trim()}/${slug}` : `/${slug}`;
-}
-
 export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersionIndex, versions }) => {
-    const { basePath } = useNavigationContext();
     if (versions.length <= 1) {
         return null;
     }
@@ -27,13 +20,13 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
         <div className="flex w-32">
             <FernDropdown
                 value={currentVersion?.id}
-                options={versions.map(({ id: versionName, availability, slug, index }) => ({
+                options={versions.map(({ id: versionName, availability, slug }) => ({
                     type: "value",
                     label: versionName,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
-                    value: slug,
+                    value: slug.join("/"),
                     disabled: availability == null,
-                    href: createSlugHref(basePath, index === 0 ? "" : slug),
+                    href: "/" + slug.join("/"),
                 }))}
             >
                 <FernButton

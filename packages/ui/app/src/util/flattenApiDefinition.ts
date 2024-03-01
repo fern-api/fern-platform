@@ -1,5 +1,6 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-ui/core-utils";
+import { titleCase } from "./titleCase";
 
 export interface FlattenedParameter {
     key: string;
@@ -189,7 +190,7 @@ function flattenPackage(
                 const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
                 return {
                     subpackageId: subpackage.subpackageId,
-                    name: subpackage.name,
+                    name: titleCase(subpackage.name),
                     description: subpackage.description,
                     descriptionContainsMarkdown: subpackage.descriptionContainsMarkdown,
                     ...flattenPackage(subpackage, subpackages, subpackageSlugs),

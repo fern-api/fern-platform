@@ -4,7 +4,7 @@ import { Link1Icon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, memo } from "react";
 import { Check } from "react-feather";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -38,7 +38,10 @@ function hrefToString(href: Url): string {
 /**
  * Can only be used with a parent div that has `position` set to `"relative"`.
  */
-export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Props> = ({ href, smallGap = false }) => {
+export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>(function AbsolutelyPositionedAnchor({
+    href,
+    smallGap = false,
+}) {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() => window.location.origin + hrefToString(href));
 
     const mounted = useMounted();
@@ -77,4 +80,4 @@ export const AbsolutelyPositionedAnchor: React.FC<AbsolutelyPositionedAnchor.Pro
             </Link>
         </div>
     );
-};
+});

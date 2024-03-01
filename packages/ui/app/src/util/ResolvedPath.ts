@@ -13,11 +13,32 @@ export declare namespace ResolvedPath {
         next: Neighbor | null;
     }
 
+    interface RedirectPage {
+        type: "redirect";
+        fullSlug: string;
+    }
+
+    interface ChangelogPage {
+        type: "changelog-page";
+        fullSlug: string;
+        title: string;
+        sectionTitleBreadcrumbs: string[];
+        markdown: SerializedMdxContent | null;
+        editThisPageUrl: string | null;
+        items: {
+            date: string;
+            dateString: string;
+            markdown: SerializedMdxContent;
+            editThisPageUrl: string | null;
+        }[];
+        neighbors: Neighbors;
+    }
+
     interface CustomMarkdownPage {
         type: "custom-markdown-page";
         fullSlug: string;
-        page: DocsV1Read.PageMetadata;
-        sectionTitle: string | null;
+        title: string;
+        sectionTitleBreadcrumbs: string[];
         serializedMdxContent: SerializedMdxContent;
         editThisPageUrl: string | null;
         neighbors: Neighbors;
@@ -31,9 +52,11 @@ export declare namespace ResolvedPath {
         artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
         neighbors: Neighbors;
-        sectionUrlSlug: string;
-        skipUrlSlug: boolean;
     }
 }
 
-export type ResolvedPath = ResolvedPath.CustomMarkdownPage | ResolvedPath.ApiPage;
+export type ResolvedPath =
+    | ResolvedPath.CustomMarkdownPage
+    | ResolvedPath.ApiPage
+    | ResolvedPath.ChangelogPage
+    | ResolvedPath.RedirectPage;

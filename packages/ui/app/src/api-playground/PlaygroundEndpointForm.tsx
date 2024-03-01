@@ -10,12 +10,12 @@ import {
 } from "../util/resolver";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { PlaygroundRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState } from "./types";
 
 interface PlaygroundEndpointFormProps {
     endpoint: ResolvedEndpointDefinition;
-    formState: PlaygroundRequestFormState | undefined;
-    setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    formState: PlaygroundEndpointRequestFormState | undefined;
+    setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     types: Record<string, ResolvedTypeDefinition>;
 }
 

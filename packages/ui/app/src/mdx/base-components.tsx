@@ -208,8 +208,35 @@ export const Li: React.FC<DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTM
     return <li {...rest} className={classNames(className, "marker:text-inherit")} />;
 };
 
+const RelativePathAnchor: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
+    className,
+    children,
+    href,
+    ...rest
+}) => {
+    const { resolvedPath } = useNavigationContext();
+    const classNamesCombined = classNames("fern-mdx-link", className);
+    const newHref = href != null ? `/${resolvedPath.fullSlug}/${href}` : undefined;
+
+    return (
+        <Link className={classNamesCombined} href={newHref ?? "#"} {...rest}>
+            {React.isValidElement(children) && isImgElement(children)
+                ? React.cloneElement<ImgProps>(children, { disableZoom: true })
+                : children}
+        </Link>
+    );
+};
+
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const isExternalUrl = href != null && href.startsWith("http");
+    const isExternalUrl = href?.startsWith("http") || href?.startsWith("mailto:") || href?.startsWith("tel:");
+
+    if (!isExternalUrl && href != null && !href.startsWith("/")) {
+        return (
+            <RelativePathAnchor className={className} href={href} {...rest}>
+                {children}
+            </RelativePathAnchor>
+        );
+    }
 
     const classNamesCombined = classNames("fern-mdx-link", className);
 

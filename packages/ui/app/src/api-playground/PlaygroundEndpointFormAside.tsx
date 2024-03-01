@@ -21,7 +21,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { PlaygroundRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
@@ -29,7 +29,7 @@ const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ M
 
 interface PlaygroundEndpointFormAsideProps {
     className?: string;
-    formState: PlaygroundRequestFormState | undefined;
+    formState: PlaygroundEndpointRequestFormState | undefined;
     endpoint: ResolvedEndpointDefinition;
     scrollAreaHeight: number;
     resetWithExample: () => void;
