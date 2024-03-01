@@ -32,22 +32,6 @@ const setUserIsNotScrolling = debounce(
     250,
     { leading: false, trailing: true },
 );
-
-// function navigateToRoute(route: string) {
-//     if (!userIsScrolling) {
-//         // fallback to "routeWithoutAnchor" if anchor is not detected (otherwise API reference will scroll to top)
-//         const { node } = getRouteNodeWithAnchor(route);
-//         node?.scrollIntoView({
-//             behavior: "auto",
-//         });
-//         console.log(1, route);
-
-//         // on mobile, the scrollToTop is not working, so we need to force it
-//         if (node == null) {
-//             window.scrollTo(0, 0);
-//         }
-//     }
-// }
 let raf: number;
 
 function startScrollTracking(route: string) {
@@ -60,7 +44,7 @@ function startScrollTracking(route: string) {
     function step() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
-            if (lastActiveNavigatableOffsetTop == null && !userIsScrolling) {
+            if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
                 node.scrollIntoView({ behavior: "auto" });
             }
             const currentActiveNavigatableOffsetTop =
