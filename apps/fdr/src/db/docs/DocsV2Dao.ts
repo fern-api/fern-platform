@@ -69,16 +69,13 @@ export class DocsV2DaoImpl implements DocsV2Dao {
     }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
-        const possibleDocs = await this.prisma.docsV2.findMany({
+        const docsDomain = await this.prisma.docsV2.findFirst({
             where: {
                 domain: url.hostname,
             },
             orderBy: {
                 updatedTime: "desc",
             },
-        });
-        const docsDomain = possibleDocs.find((registeredDocs) => {
-            return url.pathname.startsWith(registeredDocs.path);
         });
         if (docsDomain == null) {
             return undefined;
