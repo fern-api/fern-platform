@@ -228,7 +228,7 @@ const RelativePathAnchor: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
 };
 
 export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const isExternalUrl = href != null && href.startsWith("http");
+    const isExternalUrl = href?.startsWith("http") || href?.startsWith("mailto:") || href?.startsWith("tel:");
 
     if (!isExternalUrl && href != null && !href.startsWith("/")) {
         return (
