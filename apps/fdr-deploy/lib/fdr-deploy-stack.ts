@@ -89,9 +89,9 @@ export class FdrDeployStack extends Stack {
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
-            cpu: 512,
-            memoryLimitMiB: 1024,
-            desiredCount: 1,
+            cpu: environmentType === "PROD" ? 2048 : 512,
+            memoryLimitMiB: environmentType === "PROD" ? 4096 : 1024,
+            desiredCount: environmentType === "PROD" ? 2 : 1,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
