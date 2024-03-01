@@ -1,11 +1,13 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { ReactElement } from "react";
+import { Markdown } from "../api-page/markdown/Markdown";
+import { SerializedMdxContent } from "../util/mdx";
 import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {
     name: string;
-    description: string | null | undefined;
+    description?: SerializedMdxContent | undefined;
     small?: boolean;
 };
 
@@ -14,7 +16,7 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
     return (
         <FernTooltip
             open={wasJustCopied ? true : description == null ? false : undefined}
-            content={wasJustCopied ? "Copied!" : description}
+            content={wasJustCopied ? "Copied!" : description != null ? <Markdown mdx={description} /> : undefined}
         >
             <span
                 className={classNames(

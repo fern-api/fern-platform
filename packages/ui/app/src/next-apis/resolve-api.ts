@@ -49,7 +49,7 @@ export const resolveApiHandler: NextApiHandler = async (req, res: NextApiRespons
             return;
         }
 
-        const navigation = getNavigation(
+        const navigation = await getNavigation(
             pathname.slice(1).split("/"),
             basePath,
             docsDefinition.apis,
@@ -63,7 +63,7 @@ export const resolveApiHandler: NextApiHandler = async (req, res: NextApiRespons
 
         const apiSectionSlug = findApiSection(api, navigation.sidebarNodes)?.slug;
 
-        res.status(200).json(resolveApiDefinition(flattenApiDefinition(apiDefinition, apiSectionSlug ?? [])));
+        res.status(200).json(await resolveApiDefinition(flattenApiDefinition(apiDefinition, apiSectionSlug ?? [])));
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

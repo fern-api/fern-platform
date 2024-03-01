@@ -29,7 +29,7 @@ export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomD
             <div className="space-y-1">
                 <Breadcrumbs breadcrumbs={sectionTitleBreadcrumbs} />
 
-                <h1 className="my-0 inline-block">{title}</h1>
+                <h1 className="my-0 inline-block leading-tight">{title}</h1>
             </div>
         </header>
     );
@@ -38,7 +38,10 @@ export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomD
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath }) => {
     const mdxContent = <MdxContent mdx={resolvedPath.serializedMdxContent} />;
     const mdxString = renderToString(mdxContent);
-    const editThisPage = resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl;
+    const editThisPage =
+        typeof resolvedPath.serializedMdxContent !== "string"
+            ? resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl
+            : undefined;
     return (
         <TableOfContentsContextProvider>
             <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">

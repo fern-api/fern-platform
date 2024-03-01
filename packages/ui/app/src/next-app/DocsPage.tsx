@@ -149,7 +149,7 @@ export const getDocsPageProps = async (
     const basePath = docs.body.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
 
-    const navigation = getNavigation(slugArray, basePath, docs.body.definition.apis, docsConfig.navigation);
+    const navigation = await getNavigation(slugArray, basePath, docs.body.definition.apis, docsConfig.navigation);
 
     if (navigation == null) {
         return { type: "notFound", notFound: true };
@@ -280,12 +280,12 @@ export function getVersionAndTabSlug(
     return versionAndTabSlug;
 }
 
-export function getNavigation(
+export async function getNavigation(
     slugArray: string[],
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     nav: DocsV1Read.NavigationConfig,
-): SidebarNavigation | undefined {
+): Promise<SidebarNavigation | undefined> {
     let currentPath = slugArray;
 
     let currentVersionIndex: number | undefined;
@@ -364,7 +364,7 @@ export function getNavigation(
         currentNavigationItems = nav.items;
     }
 
-    const sidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, slug);
+    const sidebarNodes = await resolveSidebarNodes(currentNavigationItems, apis, slug);
 
     return {
         currentTabIndex,

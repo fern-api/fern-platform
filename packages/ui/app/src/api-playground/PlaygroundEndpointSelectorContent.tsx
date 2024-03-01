@@ -139,7 +139,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                     <FernTooltip
                                         content={
                                             endpointItem.description != null ? (
-                                                <Markdown className="text-xs">{endpointItem.description}</Markdown>
+                                                <Markdown className="text-xs" mdx={endpointItem.description} />
                                             ) : undefined
                                         }
                                         side="right"
@@ -165,7 +165,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                     <FernTooltip
                                         content={
                                             endpointItem.description != null ? (
-                                                <Markdown className="text-xs">{endpointItem.description}</Markdown>
+                                                <Markdown className="text-xs" mdx={endpointItem.description} />
                                             ) : undefined
                                         }
                                         side="right"
@@ -177,7 +177,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                             intent={active ? "primary" : "none"}
                                             active={active}
                                             onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                            rightIcon={<Chip name="WSS" description={null} small />}
+                                            rightIcon={<Chip name="WSS" small />}
                                         />
                                     </FernTooltip>
                                 </li>

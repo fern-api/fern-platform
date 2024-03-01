@@ -92,6 +92,10 @@ export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx
         return <MdxErrorBoundaryContent error={error} />;
     }, []);
 
+    if (typeof mdx === "string") {
+        return <>{mdx}</>;
+    }
+
     return (
         <ErrorBoundary fallbackRender={fallbackRender}>
             <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>

@@ -45,7 +45,13 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                         <div className="bg-border-default z-5 absolute h-full w-0.5" />
                                     </div>
                                     <div className="pb-16">
-                                        {<h2>{item.markdown.frontmatter.title ?? item.dateString}</h2>}
+                                        {
+                                            <h2>
+                                                {(typeof item.markdown !== "string"
+                                                    ? item.markdown.frontmatter.title
+                                                    : undefined) ?? item.dateString}
+                                            </h2>
+                                        }
                                         <MdxContent mdx={item.markdown} />
                                     </div>
                                 </div>

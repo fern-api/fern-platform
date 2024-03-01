@@ -256,7 +256,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 };
 
 function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undefined {
-    if (resolvedPath.type === "custom-markdown-page") {
+    if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.serializedMdxContent !== "string") {
         return resolvedPath.serializedMdxContent.frontmatter;
     }
     return undefined;

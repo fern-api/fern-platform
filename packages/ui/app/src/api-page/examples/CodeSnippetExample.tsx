@@ -8,6 +8,7 @@ import { TitledExample } from "./TitledExample";
 export declare namespace CodeSnippetExample {
     export interface Props extends TitledExample.Props {
         // hast: Root;
+        id?: string;
         code: string;
         language: string;
         hoveredPropertyPath: JsonPropertyPath | undefined;
@@ -19,6 +20,7 @@ export declare namespace CodeSnippetExample {
 }
 
 export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
+    id,
     code,
     language,
     hoveredPropertyPath,
@@ -69,6 +71,7 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
     return (
         <TitledExample {...props}>
             <FernSyntaxHighlighter
+                id={id}
                 className="rounded-t-0 rounded-b-[inherit]"
                 ref={codeBlockRef}
                 style={scrollAreaStyle}

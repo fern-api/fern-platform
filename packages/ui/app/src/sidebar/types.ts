@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last, memoize, noop } from "lodash-es";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
@@ -90,7 +90,7 @@ export declare namespace SidebarNode {
     }
 }
 
-function resolveSidebarNodeApiSection(
+async function resolveSidebarNodeApiSection(
     api: FdrAPI.ApiId,
     id: string,
     package_: APIV1Read.ApiDefinitionPackage | undefined,
@@ -98,7 +98,7 @@ function resolveSidebarNodeApiSection(
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     showErrors: boolean,
     parentSlugs: string[],
-): SidebarNode.ApiSection | undefined {
+): Promise<SidebarNode.ApiSection | undefined> {
     let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
     while (subpackage?.pointsTo != null) {
         subpackage = subpackagesMap[subpackage.pointsTo];
@@ -107,8 +107,8 @@ function resolveSidebarNodeApiSection(
         return;
     }
     const slug = package_ != null && isSubpackage(package_) ? [...parentSlugs, package_.urlSlug] : parentSlugs;
-    const endpoints = subpackage.endpoints.map(
-        (endpoint): SidebarNode.EndpointPage => ({
+    const endpointsPromise = subpackage.endpoints.map(
+        async (endpoint): Promise<SidebarNode.EndpointPage> => ({
             type: "page",
             api,
             id: endpoint.id,
@@ -119,8 +119,8 @@ function resolveSidebarNodeApiSection(
             stream: endpoint.response?.type.type === "stream",
         }),
     );
-    const websockets = subpackage.websockets.map(
-        (websocket): SidebarNode.ApiPage => ({
+    const websocketsPromise = subpackage.websockets.map(
+        async (websocket): Promise<SidebarNode.ApiPage> => ({
             type: "page",
             api,
             id: websocket.id,
@@ -129,8 +129,8 @@ function resolveSidebarNodeApiSection(
             description: websocket.description,
         }),
     );
-    const webhooks = subpackage.webhooks.map(
-        (webhook): SidebarNode.ApiPage => ({
+    const webhooksPromise = subpackage.webhooks.map(
+        async (webhook): Promise<SidebarNode.ApiPage> => ({
             type: "page",
             api,
             id: webhook.id,
@@ -139,21 +139,28 @@ function resolveSidebarNodeApiSection(
             description: webhook.description,
         }),
     );
-    const subpackages = subpackage.subpackages
-        .map((innerSubpackageId) =>
-            resolveSidebarNodeApiSection(
-                api,
-                innerSubpackageId,
-                subpackagesMap[innerSubpackageId],
-                titleCase(subpackagesMap[innerSubpackageId]?.name ?? ""),
-                subpackagesMap,
-                showErrors,
-                slug,
-            ),
-        )
-        .filter(isNonNullish);
+    const subpackagesPromise = subpackage.subpackages.map((innerSubpackageId) =>
+        resolveSidebarNodeApiSection(
+            api,
+            innerSubpackageId,
+            subpackagesMap[innerSubpackageId],
+            titleCase(subpackagesMap[innerSubpackageId]?.name ?? ""),
+            subpackagesMap,
+            showErrors,
+            slug,
+        ),
+    );
 
-    if (endpoints.length === 0 && webhooks.length === 0 && websockets.length === 0 && subpackages.length === 0) {
+    const [endpoints, websockets, webhooks, subpackagesOrNull] = await Promise.all([
+        Promise.all(endpointsPromise),
+        Promise.all(websocketsPromise),
+        Promise.all(webhooksPromise),
+        Promise.all(subpackagesPromise),
+    ]);
+
+    const subpackages = subpackagesOrNull.filter((subpackage) => subpackage != null) as SidebarNode.ApiSection[];
+
+    if (endpoints.length === 0 && websockets.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
         return;
     }
 
@@ -177,14 +184,14 @@ function stringifyEndpointPathParts(path: APIV1Read.EndpointPathPart[]): string 
     return "/" + path.map((part) => (part.type === "literal" ? part.value : `${part.value}`)).join("/");
 }
 
-export function resolveSidebarNodes(
+export async function resolveSidebarNodes(
     navigationItems: DocsV1Read.NavigationItem[],
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     parentSlugs: string[] = [],
-): SidebarNode[] {
+): Promise<SidebarNode[]> {
     const sidebarNodes: SidebarNode[] = [];
     for (const navigationItem of navigationItems) {
-        visitDiscriminatedUnion(navigationItem, "type")._visit({
+        await visitDiscriminatedUnion(navigationItem, "type")._visit<Promise<void> | void>({
             page: (page) => {
                 const lastSidebarNode = last(sidebarNodes);
                 if (lastSidebarNode != null && lastSidebarNode.type === "pageGroup") {
@@ -209,11 +216,11 @@ export function resolveSidebarNodes(
                     });
                 }
             },
-            api: (api) => {
+            api: async (api) => {
                 const definition = apis[api.api];
                 if (definition != null) {
                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
-                    const resolved = resolveSidebarNodeApiSection(
+                    const resolved = await resolveSidebarNodeApiSection(
                         api.api,
                         api.api,
                         definition.rootPackage,
@@ -253,13 +260,13 @@ export function resolveSidebarNodes(
                     });
                 }
             },
-            section: (section) => {
+            section: async (section) => {
                 const sectionSlug = section.skipUrlSlug ? parentSlugs : [...parentSlugs, section.urlSlug];
                 sidebarNodes.push({
                     type: "section",
                     title: section.title,
                     slug: sectionSlug,
-                    items: resolveSidebarNodes(section.items, apis, sectionSlug),
+                    items: await resolveSidebarNodes(section.items, apis, sectionSlug),
                 });
             },
             link: (link) => {
