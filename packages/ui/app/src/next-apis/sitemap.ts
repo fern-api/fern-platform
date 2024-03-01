@@ -1,7 +1,11 @@
-import { FdrAPI, PathResolver } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { isNonNullish } from "@fern-ui/core-utils";
+import { flatten } from "lodash-es";
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../services/registry";
+import { isPage, resolveSidebarNodes, SidebarNode } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
+import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../util/fern";
 
 export function toValidPathname(pathname: string | string[] | undefined): string {
     if (typeof pathname === "string") {
@@ -44,29 +48,81 @@ export const sitemapApiHandler: NextApiHandler = async (req, res: NextApiRespons
             return;
         }
 
-        type ApiDefinition = FdrAPI.api.v1.read.ApiDefinition;
-        const resolver = new PathResolver({
-            definition: {
-                apis: docs.body.definition.apis as Record<ApiDefinition["id"], ApiDefinition>,
-                docsConfig: docs.body.definition.config,
-                basePath: docs.body.baseUrl.basePath,
-            },
-        });
-
-        const urls = resolver.getAllSlugsWithBaseURL(docs.body.baseUrl.basePath ?? "/");
-
-        res.status(200).json(
-            urls.map((url) => {
-                const toRet = url.replace("https://", "");
-                if (toRet.length === 0) {
-                    return "/";
-                }
-                return toRet;
-            }),
+        const urls = await getAllUrlsFromDocsConfig(
+            docs.body.baseUrl.domain,
+            docs.body.baseUrl.basePath,
+            docs.body.definition.config,
+            docs.body.definition.apis,
         );
+
+        res.status(200).json(urls);
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
         res.status(500).json([]);
     }
 };
+
+export async function getAllUrlsFromDocsConfig(
+    host: string,
+    basePath: string | undefined,
+    docsConfig: DocsV1Read.DocsConfig,
+    apis: Record<string, APIV1Read.ApiDefinition>,
+): Promise<string[]> {
+    const flattenedNavigationConfig = flattenNavigationConfig(
+        docsConfig.navigation,
+        basePath != null
+            ? basePath
+                  .split("/")
+                  .map((t) => t.trim())
+                  .filter((t) => t.length > 0)
+            : [],
+    );
+
+    const sidebarNodes = flatten(
+        await Promise.all(
+            flattenedNavigationConfig.map(async ({ slug, items }) => await resolveSidebarNodes(items, apis, slug)),
+        ),
+    );
+
+    const flattenedSidebarNodes = flattenSidebarNodeSlugs(sidebarNodes);
+
+    return flattenedSidebarNodes.map((node) => buildUrl({ host, pathname: node.slug.join("/") }));
+}
+
+interface FlattenedNavigationConfig {
+    slug: string[];
+    items: DocsV1Read.NavigationItem[];
+}
+
+function flattenNavigationConfig(nav: DocsV1Read.NavigationConfig, parentSlugs: string[]): FlattenedNavigationConfig[] {
+    if (isVersionedNavigationConfig(nav)) {
+        return nav.versions.flatMap((version, idx) =>
+            idx === 0
+                ? [
+                      ...flattenNavigationConfig(version.config, [...parentSlugs]), // default version
+                      ...flattenNavigationConfig(version.config, [...parentSlugs, version.urlSlug]),
+                  ]
+                : flattenNavigationConfig(version.config, [...parentSlugs, version.urlSlug]),
+        );
+    }
+
+    if (isUnversionedTabbedNavigationConfig(nav)) {
+        return nav.tabs.map((tab) => ({ slug: [...parentSlugs, tab.urlSlug], items: tab.items }));
+    }
+
+    return [{ slug: parentSlugs, items: nav.items }];
+}
+
+function flattenSidebarNodeSlugs(nodes: SidebarNode[]): SidebarNode.Page[] {
+    return nodes.flatMap((node) => {
+        if (node.type === "pageGroup") {
+            return node.pages.filter(isPage);
+        } else if (node.type === "section") {
+            return flattenSidebarNodeSlugs(node.items);
+        } else if (node.type === "apiSection") {
+            return [...node.endpoints, ...node.websockets, ...node.webhooks, node.changelog].filter(isNonNullish);
+        }
+        return [];
+    });
+}

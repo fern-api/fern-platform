@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, req,
 
     const urls: string[] = await sitemapResponse.json();
 
-    const sitemap = getSitemapXml(urls.map((url) => `https://${hostWithoutTrailingSlash}${url}`));
+    const sitemap = getSitemapXml(urls.map((url) => `https://${url}`));
 
     res.setHeader("Content-Type", "text/xml");
     // we send the XML to the browser
