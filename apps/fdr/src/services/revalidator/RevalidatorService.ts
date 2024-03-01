@@ -1,8 +1,6 @@
-import { DocsV1Read, PathResolver } from "@fern-api/fdr-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
-import { Semaphore } from "./Semaphore";
 
 export interface RevalidatePathSuccessResult {
     success: true;
@@ -21,30 +19,27 @@ export type RevalidatedPaths = {
 };
 
 export interface RevalidatorService {
-    revalidate(params: {
-        definition: Pick<DocsV1Read.DocsDefinition, "apis" | "config">;
-        baseUrl: ParsedBaseUrl;
-    }): Promise<RevalidatedPaths>;
+    revalidate(params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPaths>;
 }
 
-interface RequestBody {
-    path: string;
-}
+// interface RequestBody {
+//     path: string;
+// }
 
-type ResponseBody = SuccessResponseBody | ErrorResponseBody;
+// type ResponseBody = SuccessResponseBody | ErrorResponseBody;
 
-interface SuccessResponseBody {
-    success: true;
-}
+// interface SuccessResponseBody {
+//     success: true;
+// }
 
-interface ErrorResponseBody {
-    success: false;
-    message: string;
-}
+// interface ErrorResponseBody {
+//     success: false;
+//     message: string;
+// }
 
 export class RevalidatorServiceImpl implements RevalidatorService {
     public readonly axiosInstance: AxiosInstance;
-    private readonly semaphore = new Semaphore(50);
+    // private readonly semaphore = new Semaphore(50);
 
     public constructor() {
         this.axiosInstance = axios.create();
@@ -52,41 +47,19 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         this.axiosInstance.interceptors.request.use(AxiosLogger.requestLogger);
     }
 
-    public async revalidate({
-        definition,
-        baseUrl,
-    }: {
-        definition: DocsV1Read.DocsDefinition;
-        baseUrl: ParsedBaseUrl;
-    }): Promise<RevalidatedPaths> {
-        const resolver = new PathResolver({
-            definition: {
-                apis: definition.apis,
-                docsConfig: definition.config,
-            },
-        });
-
+    public async revalidate({ baseUrl }: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPaths> {
         const successfulRevalidations: RevalidatePathSuccessResult[] = [];
         const failedRevalidations: RevalidatePathErrorResult[] = [];
 
-        const slugs = resolver.getAllSlugs();
-        await Promise.all(
-            slugs.map(async (slug) => {
-                const response = await this.revalidatePath({ baseUrl, path: `/${slug}` });
-                if (response.success) {
-                    successfulRevalidations.push({
-                        success: true,
-                        url: `/${slug}`,
-                    });
-                } else {
-                    failedRevalidations.push({
-                        success: false,
-                        url: `/${slug}`,
-                        message: response.message,
-                    });
-                }
-            }),
-        );
+        try {
+            await this.axiosInstance.post(
+                `https://${baseUrl.getFullUrl()}/api/revalidate-all${
+                    baseUrl.path != null ? `?basePath=${baseUrl.path}` : ""
+                }`,
+            );
+        } catch (e) {
+            // TODO: the server should return a list of paths that succeeded or failed to revalidate
+        }
 
         return {
             failedRevalidations,
@@ -94,21 +67,21 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         };
     }
 
-    private async revalidatePath({ baseUrl, path }: { baseUrl: ParsedBaseUrl; path: string }): Promise<ResponseBody> {
-        await this.semaphore.acquire();
-        try {
-            const body: RequestBody = { path };
-            const response = await this.axiosInstance.post<SuccessResponseBody>(
-                `https://${baseUrl.getFullUrl()}/api/revalidate-v2`,
-                body,
-            );
-            this.semaphore.release();
-            return { success: response.data.success };
-        } catch (e) {
-            this.semaphore.release();
-            const response = axios.isAxiosError(e) ? (e.response?.data as ErrorResponseBody | undefined) : undefined;
-            const message = response?.message ?? "Unknown error.";
-            return { success: false, message };
-        }
-    }
+    // private async revalidatePath({ baseUrl, path }: { baseUrl: ParsedBaseUrl; path: string }): Promise<ResponseBody> {
+    //     await this.semaphore.acquire();
+    //     try {
+    //         const body: RequestBody = { path };
+    //         const response = await this.axiosInstance.post<SuccessResponseBody>(
+    //             `https://${baseUrl.getFullUrl()}/api/revalidate-v2`,
+    //             body,
+    //         );
+    //         this.semaphore.release();
+    //         return { success: response.data.success };
+    //     } catch (e) {
+    //         this.semaphore.release();
+    //         const response = axios.isAxiosError(e) ? (e.response?.data as ErrorResponseBody | undefined) : undefined;
+    //         const message = response?.message ?? "Unknown error.";
+    //         return { success: false, message };
+    //     }
+    // }
 }
