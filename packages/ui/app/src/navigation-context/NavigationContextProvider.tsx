@@ -39,12 +39,13 @@ function startScrollTracking(route: string) {
         getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
     }
     userHasScrolled = false;
+    userIsScrolling = false;
     let lastActiveNavigatableOffsetTop: number | undefined;
     let lastScrollY: number | undefined;
     function step() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
-            if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
+            if (lastActiveNavigatableOffsetTop == null && !userIsScrolling) {
                 node.scrollIntoView({ behavior: "auto" });
             }
             const currentActiveNavigatableOffsetTop =

@@ -1,6 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
+import { useNavigationContext } from "../navigation-context";
 import { APIS } from "../sidebar/atom";
 import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
@@ -16,6 +17,7 @@ export declare namespace ApiPage {
 }
 
 export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showErrors }) => {
+    const { hydrated } = useNavigationContext();
     const setDefinitions = useSetAtom(APIS);
     // const definition = apis[initialApi.api];
 
@@ -39,6 +41,9 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showEr
             />
 
             <div className="px-4">{/* <BottomNavigationButtons /> */}</div>
+
+            {/* anchor links should get additional padding to scroll to on initial load */}
+            {!hydrated && <div className="h-full" />}
         </div>
     );
 };
