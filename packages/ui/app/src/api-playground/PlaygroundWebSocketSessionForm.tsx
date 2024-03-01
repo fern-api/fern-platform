@@ -100,24 +100,22 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
 
                 {!connected && (
                     <div className="absolute inset-0">
-                        {
-                            <div className="flex h-full w-full items-center justify-center">
-                                <div className="flex flex-col items-center space-y-4">
-                                    <WifiOff className="t-muted" size={28} />
-                                    <h4 className="m-0">Websocket session is closed.</h4>
-                                    <FernButtonGroup>
-                                        <FernButton
-                                            text="Return to handshake"
-                                            icon={<ArrowLeftIcon />}
-                                            intent="primary"
-                                            variant="outlined"
-                                            onClick={returnToHandshake}
-                                        />
-                                        <FernButton text="Restart session" intent="primary" onClick={startSession} />
-                                    </FernButtonGroup>
-                                </div>
+                        <div className="flex h-full w-full items-center justify-center">
+                            <div className="flex flex-col items-center space-y-4">
+                                <WifiOff className="t-muted" size={28} />
+                                <h4 className="m-0">Websocket session is closed.</h4>
+                                <FernButtonGroup>
+                                    <FernButton
+                                        text="Return to handshake"
+                                        icon={<ArrowLeftIcon />}
+                                        intent="primary"
+                                        variant="outlined"
+                                        onClick={returnToHandshake}
+                                    />
+                                    <FernButton text="Restart session" intent="primary" onClick={startSession} />
+                                </FernButtonGroup>
                             </div>
-                        }
+                        </div>
                     </div>
                 )}
             </div>
@@ -126,6 +124,25 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                 <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
                     <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
                         <span className="t-muted text-xs uppercase">Messages</span>
+                        <span
+                            className={classNames("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
+                                "bg-tag-primary text-accent": connected,
+                                "bg-tag-danger text-intent-danger": !connected,
+                            })}
+                        >
+                            <span className="relative inline-flex size-2">
+                                {connected && (
+                                    <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
+                                )}
+                                <span
+                                    className={classNames("relative inline-flex size-2 rounded-full", {
+                                        "bg-accent": connected,
+                                        "bg-border-danger": !connected,
+                                    })}
+                                ></span>
+                            </span>
+                            <span className="font-mono text-sm">{connected ? "Connected" : "Not connected"}</span>
+                        </span>
                     </div>
                     <WebSocketMessages messages={messages} />
                 </FernCard>

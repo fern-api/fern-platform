@@ -3,6 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import classNames from "classnames";
 import { noop } from "lodash-es";
 import { FC, Fragment, useCallback, useMemo, useRef } from "react";
@@ -107,53 +108,55 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
     }, []);
 
     return (
-        <DropdownMenu.Root
-            onOpenChange={(open) => {
-                handleOpenChange(open);
-                shouldScrollIntoView.current = open;
-            }}
-            open={showDropdown}
-        >
-            <DropdownMenu.Trigger asChild={true} disabled={disabled}>
-                <FernButton
-                    ref={buttonRef}
-                    className={classNames(buttonClassName, "max-w-full -my-1 !text-left")}
-                    active={showDropdown}
-                    rightIcon={
-                        <RightIcon
-                            className={classNames("transition-transform", {
-                                "rotate-180": showDropdown,
-                            })}
-                        />
-                    }
-                    variant="minimal"
-                >
-                    <span className="inline-flex items-center gap-1">
-                        {selectedGroup != null &&
-                            selectedGroup.breadcrumbs.length > 1 &&
-                            selectedGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
-                                <Fragment key={idx}>
-                                    <span className="t-accent shrink truncate whitespace-nowrap">{breadcrumb}</span>
-                                    <SlashIcon className="text-faded" />
-                                </Fragment>
-                            ))}
+        <TooltipProvider>
+            <DropdownMenu.Root
+                onOpenChange={(open) => {
+                    handleOpenChange(open);
+                    shouldScrollIntoView.current = open;
+                }}
+                open={showDropdown}
+            >
+                <DropdownMenu.Trigger asChild={true} disabled={disabled}>
+                    <FernButton
+                        ref={buttonRef}
+                        className={classNames(buttonClassName, "max-w-full -my-1 !text-left")}
+                        active={showDropdown}
+                        rightIcon={
+                            <RightIcon
+                                className={classNames("transition-transform", {
+                                    "rotate-180": showDropdown,
+                                })}
+                            />
+                        }
+                        variant="minimal"
+                    >
+                        <span className="inline-flex items-center gap-1">
+                            {selectedGroup != null &&
+                                selectedGroup.breadcrumbs.length > 1 &&
+                                selectedGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                                    <Fragment key={idx}>
+                                        <span className="t-accent shrink truncate whitespace-nowrap">{breadcrumb}</span>
+                                        <SlashIcon className="text-faded" />
+                                    </Fragment>
+                                ))}
 
-                        <span className="whitespace-nowrap font-semibold">
-                            {selectedEndpoint?.title ?? placeholderText ?? "Select an endpoint"}
+                            <span className="whitespace-nowrap font-semibold">
+                                {selectedEndpoint?.title ?? placeholderText ?? "Select an endpoint"}
+                            </span>
                         </span>
-                    </span>
-                </FernButton>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Portal>
-                <DropdownMenu.Content sideOffset={4} ref={determinePlacement} className="fern-dropdown">
-                    <PlaygroundEndpointSelectorContent
-                        navigation={navigation}
-                        closeDropdown={closeDropdown}
-                        selectedEndpoint={selectedEndpoint}
-                        className="h-full"
-                    />
-                </DropdownMenu.Content>
-            </DropdownMenu.Portal>
-        </DropdownMenu.Root>
+                    </FernButton>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Portal>
+                    <DropdownMenu.Content sideOffset={4} ref={determinePlacement} className="fern-dropdown">
+                        <PlaygroundEndpointSelectorContent
+                            navigation={navigation}
+                            closeDropdown={closeDropdown}
+                            selectedEndpoint={selectedEndpoint}
+                            className="h-full"
+                        />
+                    </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+        </TooltipProvider>
     );
 };

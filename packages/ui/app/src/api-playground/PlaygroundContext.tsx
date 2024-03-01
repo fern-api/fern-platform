@@ -5,9 +5,16 @@ import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useNavigationContext } from "../navigation-context";
 import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
-import { flattenRootPackage, isEndpoint, isWebSocket, ResolvedApiDefinition } from "../util/resolver";
+import {
+    flattenRootPackage,
+    isEndpoint,
+    isWebSocket,
+    ResolvedApiDefinition,
+    ResolvedRootPackage,
+} from "../util/resolver";
 import {
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,
@@ -75,8 +82,9 @@ function isPlaygroundEnabled(domain: string) {
 }
 
 export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
-    const [apis] = useAtom(APIS);
+    const [apis, setApis] = useAtom(APIS);
     const { domain } = useDocsContext();
+    const { selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
@@ -92,10 +100,19 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
     const collapsePlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
 
     const setSelectionStateAndOpen = useCallback(
-        (newSelectionState: PlaygroundSelectionState) => {
-            const matchedPackage = flattenedApis[newSelectionState.api];
+        async (newSelectionState: PlaygroundSelectionState) => {
+            let matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
-                return;
+                const r = await fetch("/api/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api);
+
+                const data: ResolvedRootPackage | null = await r.json();
+
+                if (data == null) {
+                    return;
+                }
+
+                setApis((currentApis) => ({ ...currentApis, [newSelectionState.api]: data }));
+                matchedPackage = flattenRootPackage(data);
             }
 
             if (newSelectionState.type === "endpoint") {
@@ -114,10 +131,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
                         return {
                             ...currentFormState,
                             [createFormStateKey(newSelectionState)]: getInitialEndpointRequestFormStateWithExample(
-                                matchedPackage.auth,
+                                matchedPackage?.auth,
                                 matchedEndpoint,
                                 matchedEndpoint?.examples[0],
-                                matchedPackage.types,
+                                matchedPackage?.types ?? {},
                             ),
                         };
                     });

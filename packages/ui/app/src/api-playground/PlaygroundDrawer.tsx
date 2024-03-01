@@ -2,6 +2,7 @@ import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
@@ -173,7 +174,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
     const matchedEndpoint =
         selectionState?.type === "endpoint"
             ? (matchedSection?.apiDefinitions.find(
-                  (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState?.endpointId,
+                  (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState.endpointId,
               ) as ResolvedApiDefinition.Endpoint | undefined)
             : undefined;
 
@@ -339,12 +340,14 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                             types={types}
                         />
                     ) : (
-                        <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
-                            <PlaygroundEndpointSelectorContent
-                                navigation={navigation}
-                                className="fern-card mb-6 min-h-0 shrink p-px"
-                            />
-                        </div>
+                        <TooltipProvider>
+                            <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
+                                <PlaygroundEndpointSelectorContent
+                                    navigation={navigation}
+                                    className="fern-card mb-6 min-h-0 shrink p-px"
+                                />
+                            </div>
+                        </TooltipProvider>
                     )}
                 </div>
             </Transition>

@@ -280,7 +280,7 @@ export function getVersionAndTabSlug(
     return versionAndTabSlug;
 }
 
-function getNavigation(
+export function getNavigation(
     slugArray: string[],
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,

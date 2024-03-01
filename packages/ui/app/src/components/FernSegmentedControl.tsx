@@ -32,7 +32,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
             {options.map((option) =>
                 option.type === "value" ? (
                     <FernTooltip key={option.value} content={option.tooltip}>
-                        <div className="flex-1">
+                        <div className="min-w-0 flex-1 shrink">
                             <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
                                 <FernButton
                                     variant={"minimal"}

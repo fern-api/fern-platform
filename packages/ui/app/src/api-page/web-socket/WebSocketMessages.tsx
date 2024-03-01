@@ -23,8 +23,16 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
     return (
         <Accordion.Root
             type="multiple"
-            className="divide-border-default fix relative z-0 table w-full table-fixed divide-y"
+            className="divide-border-default relative z-0 table h-full w-full table-fixed divide-y"
         >
+            {messages.length === 0 && (
+                <div className="absolute inset-0 flex h-full w-full items-center justify-center">
+                    <div className="flex flex-col items-center space-y-4">
+                        {/* <WifiOff className="t-muted" size={28} /> */}
+                        <h4 className="m-0">No messages...</h4>
+                    </div>
+                </div>
+            )}
             {messages.map((message, index) => {
                 return (
                     <Accordion.Item

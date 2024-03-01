@@ -10,7 +10,7 @@ import { Chip } from "../components/Chip";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
+import { FernTooltip } from "../components/FernTooltip";
 import { isEndpointPage, SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
@@ -222,9 +222,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     />
                 </div>
                 <FernScrollArea className="min-h-0 flex-1 shrink">
-                    <FernTooltipProvider>
-                        <ul className="list-none">{renderedListItems}</ul>
-                    </FernTooltipProvider>
+                    <ul className="list-none">{renderedListItems}</ul>
                 </FernScrollArea>
             </div>
         );
