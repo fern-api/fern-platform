@@ -39,7 +39,6 @@ function startScrollTracking(route: string) {
         getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
     }
     userHasScrolled = false;
-    userIsScrolling = false;
     let lastActiveNavigatableOffsetTop: number | undefined;
     let lastScrollY: number | undefined;
     function step() {
@@ -117,7 +116,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         const handleUserTriggeredScroll = () => {
             userHasScrolled = true;
             userIsScrolling = true;
-            // setUserIsNotScrolling();
+            setUserIsNotScrolling();
             justNavigatedTo = undefined;
         };
 
@@ -175,7 +174,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     }, [hydrate, selectedSlug]);
 
     useEffect(() => {
-        const handleRouteChange = (route: string) => {
+        const handleRouteChange = (route: string, options: { shallow: boolean }) => {
+            if (!options.shallow) {
+                userIsScrolling = false;
+                userHasScrolled = false;
+            }
             navigateToPath(route);
             closeMobileSidebar();
             closeSearchDialog();
@@ -188,7 +191,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 console.error("Failed to navigate to route", route, options);
             }
 
-            handleRouteChange(route);
+            handleRouteChange(route, options);
         };
         router.events.on("routeChangeComplete", handleRouteChange);
         router.events.on("hashChangeStart", handleRouteChange);
