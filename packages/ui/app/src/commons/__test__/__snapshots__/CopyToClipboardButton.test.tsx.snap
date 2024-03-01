@@ -9,6 +9,7 @@ exports[`CopyToClipboardButton renders correctly 1`] = `
   disabled={false}
   onBlur={[Function]}
   onClick={[Function]}
+  onClickCapture={[Function]}
   onFocus={[Function]}
   onPointerDown={[Function]}
   onPointerLeave={[Function]}

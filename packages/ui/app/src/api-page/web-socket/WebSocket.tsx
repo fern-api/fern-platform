@@ -85,7 +85,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                 const messageDefinition = websocket.messages.find((m) => m.type === message.type);
                 return {
                     type: message.type,
-                    body: message.body,
+                    data: message.body,
                     origin: messageDefinition?.origin,
                     displayName: messageDefinition?.displayName,
                 };

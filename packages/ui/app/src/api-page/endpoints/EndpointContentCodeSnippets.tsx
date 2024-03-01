@@ -1,6 +1,6 @@
 "use client";
 import { memo } from "react";
-import { ApiPlaygroundButton } from "../../api-playground/ApiPlaygroundButton";
+import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
@@ -91,9 +91,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 copyToClipboardText={() => requestCodeSnippet}
                 actions={
                     <>
-                        <ApiPlaygroundButton
-                            api={api}
-                            endpointId={endpoint.slug.join("/")}
+                        <PlaygroundButton
+                            state={{
+                                type: "endpoint",
+                                api,
+                                endpointId: endpoint.slug.join("/"),
+                            }}
                             // example={selectedClient.exampleCall}
                         />
                         {clients.length > 1 ? (

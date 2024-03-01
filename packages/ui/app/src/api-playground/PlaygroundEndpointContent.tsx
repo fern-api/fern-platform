@@ -15,15 +15,15 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { PlaygroundRequestFormState, ResponsePayload } from "./types";
+import { PlaygroundEndpointRequestFormState, ResponsePayload } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
-interface ApiPlayroundContentProps {
+interface PlaygroundEndpointContentProps {
     auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
-    formState: PlaygroundRequestFormState;
-    setFormState: Dispatch<SetStateAction<PlaygroundRequestFormState>>;
+    formState: PlaygroundEndpointRequestFormState;
+    setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
     response: Loadable<ResponsePayload>;
@@ -33,7 +33,7 @@ interface ApiPlayroundContentProps {
 
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
 
-export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
+export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     auth,
     endpoint,
     formState,
@@ -76,12 +76,18 @@ export const ApiPlayroundContent: FC<ApiPlayroundContentProps> = ({
                     rightClassName="pl-1"
                 >
                     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
-                        <PlaygroundAuthorizationFormCard
-                            endpoint={endpoint}
-                            auth={auth}
-                            formState={formState}
-                            setFormState={setFormState}
-                        />
+                        {endpoint.authed && auth != null && (
+                            <PlaygroundAuthorizationFormCard
+                                auth={auth}
+                                authState={formState?.auth}
+                                setAuthorization={(newState) =>
+                                    setFormState((oldState) => ({
+                                        ...oldState,
+                                        auth: typeof newState === "function" ? newState(oldState.auth) : newState,
+                                    }))
+                                }
+                            />
+                        )}
 
                         <div className="grid grid-cols-3 gap-4">
                             <PlaygroundEndpointFormAside

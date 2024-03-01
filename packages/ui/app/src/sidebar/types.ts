@@ -458,3 +458,7 @@ export function isApiPage(node: SidebarNode.Page): node is SidebarNode.ApiPage {
 export function isChangelogPage(node: SidebarNode.Page): node is SidebarNode.ChangelogPage {
     return node.type === "page" && (node as SidebarNode.ChangelogPage).pageType === "changelog";
 }
+
+export function isEndpointPage(node: SidebarNode.Page): node is SidebarNode.EndpointPage {
+    return node.type === "page" && "method" in node;
+}

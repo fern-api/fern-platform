@@ -15,9 +15,17 @@ interface PlaygroundEnumFormProps {
     value: unknown;
     id: string;
     onFocus?: () => void;
+    disabled?: boolean;
 }
 
-export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, onChange, value, id, onFocus }) => {
+export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({
+    enumValues,
+    onChange,
+    value,
+    id,
+    onFocus,
+    disabled,
+}) => {
     const options = useMemo(
         () =>
             sortBy(enumValues, "value").map(
@@ -69,6 +77,7 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({ enumValues, on
                 variant="outlined"
                 rightIcon={<CaretDownIcon />}
                 className="w-full text-left"
+                disabled={disabled}
             />
         </FernDropdown>
     );

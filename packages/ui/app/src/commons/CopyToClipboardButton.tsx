@@ -10,7 +10,8 @@ export declare namespace CopyToClipboardButton {
         className?: string;
         content?: string | (() => string);
         testId?: string;
-        children?: (onClick: (() => void) | undefined) => JSX.Element;
+        children?: (onClick: ((e: React.MouseEvent) => void) | undefined) => JSX.Element;
+        onClick?: (e: React.MouseEvent) => void;
     }
 }
 
@@ -19,6 +20,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
     content,
     testId,
     children,
+    onClick,
 }) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
@@ -32,11 +34,17 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                 content={wasJustCopied ? "Copied!" : "Copy to clipboard"}
                 open={wasJustCopied ? true : undefined}
             >
-                {children?.(copyToClipboard) ?? (
+                {children?.((e) => {
+                    onClick?.(e);
+                    copyToClipboard?.();
+                }) ?? (
                     <FernButton
                         className={classNames("group", className)}
                         disabled={copyToClipboard == null}
-                        onClick={copyToClipboard}
+                        onClickCapture={(e) => {
+                            onClick?.(e);
+                            copyToClipboard?.();
+                        }}
                         data-testid={testId}
                         rounded={true}
                         icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}

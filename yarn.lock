@@ -2724,7 +2724,6 @@ __metadata:
     jotai: ^2.6.0
     jsonpath: ^1.1.1
     lodash-es: ^4.17.21
-    lru-cache: ^10.0.1
     moment: ^2.30.1
     next: ^14.0.4
     next-mdx-remote: ^4.4.1
@@ -11798,13 +11797,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.0.0
   resolution: "lowercase-keys@npm:2.0.0"
   checksum: 24d7ebd56ccdf15ff529ca9e08863f3c54b0b9d1edb97a3ae1af34940ae666c01a1e6d200707bce730a8ef76cb57cc10e65f245ecaaf7e6bc8639f2fb460ac23
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "lru-cache@npm:10.0.1"
-  checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
   languageName: node
   linkType: hard
 

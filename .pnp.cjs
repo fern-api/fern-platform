@@ -4471,7 +4471,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
             ["jsonpath", "npm:1.1.1"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["lru-cache", "npm:10.0.1"],\
             ["moment", "npm:2.30.1"],\
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
             ["next-mdx-remote", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.4.1"],\
@@ -15435,13 +15434,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["lru-cache", [\
-        ["npm:10.0.1", {\
-          "packageLocation": "./.yarn/cache/lru-cache-npm-10.0.1-0e1abf4c13-06f8d0e1ce.zip/node_modules/lru-cache/",\
-          "packageDependencies": [\
-            ["lru-cache", "npm:10.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:10.1.0", {\
           "packageLocation": "./.yarn/cache/lru-cache-npm-10.1.0-f3d3a0f0ab-58056d33e2.zip/node_modules/lru-cache/",\
           "packageDependencies": [\

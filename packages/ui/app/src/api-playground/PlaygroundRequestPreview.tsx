@@ -2,13 +2,13 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FC, useMemo } from "react";
 import { FernSyntaxHighlighter } from "../commons/FernSyntaxHighlighter";
 import { ResolvedEndpointDefinition } from "../util/resolver";
-import { PlaygroundRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 
 interface PlaygroundRequestPreviewProps {
     auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition | undefined;
-    formState: PlaygroundRequestFormState;
+    formState: PlaygroundEndpointRequestFormState;
     requestType: "curl" | "javascript" | "python";
 }
 

@@ -10,7 +10,7 @@ export interface WebSocketMessage {
     type: string;
     origin: APIV1Read.WebSocketMessageOrigin | undefined;
     displayName: string | undefined;
-    body: unknown | undefined;
+    data: unknown | undefined;
     // shape: APIV1Read.WebSocketMessageBodyShape;
 }
 
@@ -23,31 +23,27 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
     return (
         <Accordion.Root
             type="multiple"
-            className="divide-border-default fix relative table w-full table-fixed divide-y"
+            className="divide-border-default relative z-0 table h-full w-full table-fixed divide-y"
         >
+            {messages.length === 0 && (
+                <div className="absolute inset-0 flex h-full w-full items-center justify-center">
+                    <div className="flex flex-col items-center space-y-4">
+                        {/* <WifiOff className="t-muted" size={28} /> */}
+                        <h4 className="m-0">No messages...</h4>
+                    </div>
+                </div>
+            )}
             {messages.map((message, index) => {
                 return (
                     <Accordion.Item
                         value={index.toString()}
                         key={index}
-                        className={classNames("group relative last:rounded-b-xl px-px last:pb-px")}
+                        className={classNames("group relative px-px last:pb-px")}
                     >
-                        <div
-                            className={classNames(
-                                "group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-20 rounded-[inherit]",
-                                {
-                                    "group-focus-within:ring-border-success":
-                                        message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-                                    "group-focus-within:ring-border-primary":
-                                        message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-                                    "group-focus-within:ring-border-default": message.origin == null,
-                                },
-                            )}
-                        />
                         <Accordion.Trigger
                             className={classNames(
                                 "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background group-data-[state=closed]:rounded-[inherit] transition-[border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]",
-                                "sticky top-0 z-10 backdrop-blur",
+                                "sticky top-0 z-auto backdrop-blur",
                                 {
                                     "data-[state=open]:bg-tag-success":
                                         message.origin === APIV1Read.WebSocketMessageOrigin.Client,
@@ -67,7 +63,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 </span>
                             ) : null}
                             <span className="min-w-0 shrink truncate font-mono text-xs">
-                                {JSON.stringify(message.body)}
+                                {JSON.stringify(message.data)}
                             </span>
                             <span
                                 className={classNames("flex-1 inline-flex justify-end", {
@@ -80,6 +76,12 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 </span>
                             </span>
 
+                            <CopyToClipboardButton
+                                className="-my-2 -ml-1 -mr-2"
+                                content={() => JSON.stringify(message.data, null, 2)}
+                                onClick={(e) => e.stopPropagation()}
+                            />
+
                             <ChevronDownIcon
                                 className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
                                 aria-hidden
@@ -89,18 +91,24 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                             <div className="group/cb-container relative">
                                 <FernSyntaxHighlighter
                                     className="w-0 min-w-full overflow-y-auto"
-                                    code={JSON.stringify(message.body, null, 2)}
+                                    code={JSON.stringify(message.data, null, 2)}
                                     language="json"
                                     fontSize="sm"
                                 />
-                                <CopyToClipboardButton
-                                    className={
-                                        "absolute right-1 top-1 opacity-0 transition group-hover/cb-container:opacity-100"
-                                    }
-                                    content={() => JSON.stringify(message.body, null, 2)}
-                                />
                             </div>
                         </Accordion.Content>
+                        <div
+                            className={classNames(
+                                "group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
+                                {
+                                    "group-focus-within:ring-border-success":
+                                        message.origin === APIV1Read.WebSocketMessageOrigin.Client,
+                                    "group-focus-within:ring-border-primary":
+                                        message.origin === APIV1Read.WebSocketMessageOrigin.Server,
+                                    "group-focus-within:ring-border-default": message.origin == null,
+                                },
+                            )}
+                        />
                     </Accordion.Item>
                 );
             })}

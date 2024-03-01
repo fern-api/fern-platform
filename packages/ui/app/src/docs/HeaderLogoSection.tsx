@@ -1,6 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
@@ -26,7 +25,6 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     currentVersionIndex,
     versions,
 }) => {
-    const { resolvedTheme: theme } = useTheme();
     const { resolveFile } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
@@ -57,7 +55,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             className={classNames(imageClassName, "block dark:hidden")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
-                            priority={theme === "light" ? true : undefined}
+                            priority={true}
                             loading="eager"
                             quality={100}
                         />
@@ -68,7 +66,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             className={classNames(imageClassName, "hidden dark:block")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
-                            priority={theme === "dark" ? true : undefined}
+                            priority={true}
                             loading="eager"
                             quality={100}
                         />

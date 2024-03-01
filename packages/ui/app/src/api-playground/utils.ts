@@ -13,7 +13,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { PlaygroundRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 export function unknownToString(value: unknown): string {
     if (typeof value === "string") {
@@ -97,7 +97,7 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
 export function stringifyFetch(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState,
+    formState: PlaygroundEndpointRequestFormState,
     redacted = true,
 ): string {
     if (endpoint == null) {
@@ -128,7 +128,7 @@ console.log(body);`;
 export function stringifyPythonRequests(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState,
+    formState: PlaygroundEndpointRequestFormState,
     redacted = true,
 ): string {
     if (endpoint == null) {
@@ -263,7 +263,7 @@ export function buildUnredactedHeaders(
 export function stringifyCurl(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState,
+    formState: PlaygroundEndpointRequestFormState,
     redacted = true,
     contentType?: string,
 ): string {
