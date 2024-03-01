@@ -458,6 +458,10 @@ export function findApiSection(api: string, sidebarNodes: SidebarNode[]): Sideba
     return undefined;
 }
 
+export function isPage(node: SidebarNode.Page | SidebarNode.Link): node is SidebarNode.Page {
+    return node.type === "page";
+}
+
 export function isApiPage(node: SidebarNode.Page): node is SidebarNode.ApiPage {
     return node.type === "page" && "api" in node;
 }
