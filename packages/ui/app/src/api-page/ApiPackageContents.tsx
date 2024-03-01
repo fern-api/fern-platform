@@ -52,6 +52,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
             {websockets.map((websocket, idx) => (
                 <WebSocket
                     key={websocket.id}
+                    api={api}
                     websocket={websocket}
                     isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === websockets.length - 1}
                     types={types}

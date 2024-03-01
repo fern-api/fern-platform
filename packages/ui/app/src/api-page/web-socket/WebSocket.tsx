@@ -3,6 +3,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
+import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { FernScrollArea } from "../../components/FernScrollArea";
@@ -29,6 +30,7 @@ export declare namespace WebSocket {
     export interface Props {
         websocket: ResolvedWebSocketChannel;
         isLastInApi: boolean;
+        api: string;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -42,7 +44,7 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
     return <WebhookContent {...props} />;
 };
 
-const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, types }) => {
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
 
@@ -276,7 +278,20 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     <aside className="max-w-content-width">
                         {example != null && example.messages.length > 0 && (
                             <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height flex flex-col gap-6 py-8">
-                                <TitledExample title={"Handshake"} type={"primary"} disableClipboard={true}>
+                                <TitledExample
+                                    title={"Handshake"}
+                                    type={"primary"}
+                                    actions={
+                                        <PlaygroundButton
+                                            state={{
+                                                type: "websocket",
+                                                webSocketId: websocket.slug.join("/"),
+                                                api,
+                                            }}
+                                        />
+                                    }
+                                    disableClipboard={true}
+                                >
                                     <FernScrollArea>
                                         <div className="flex px-1 py-3">
                                             <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words font-mono text-sm">
