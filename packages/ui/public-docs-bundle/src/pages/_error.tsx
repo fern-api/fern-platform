@@ -2,11 +2,18 @@ import { GetServerSideProps } from "next";
 import Error from "next/error";
 import { ReactElement } from "react";
 
+export function parseResolvedUrl(resolvedUrl: string): string {
+    // if resolvedUrl is `/static/[host]/[...slug]` or `/dynamic/[host]/[..slug]` then return '/[...slug]`
+    const match = resolvedUrl.match(/\/(static|dynamic)\/[^/]+(.*)/);
+    return match?.[2] ?? resolvedUrl;
+}
+
 export const getServerSideProps: GetServerSideProps = async ({ req, res, resolvedUrl }) => {
     if (res.statusCode >= 500 && res.statusCode < 600 && req.url != null && resolvedUrl.startsWith("/static")) {
+        const url = parseResolvedUrl(resolvedUrl);
         return {
             redirect: {
-                destination: `${req.url}${req.url.includes("?") ? "&" : "?"}error=true`,
+                destination: `${url}${url.includes("?") ? "&" : "?"}error=true`,
                 permanent: false,
             },
         };
