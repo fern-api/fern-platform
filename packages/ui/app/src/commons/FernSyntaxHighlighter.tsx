@@ -1,12 +1,8 @@
-import type { Root } from "hast";
-import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { h } from "hastscript";
-import { forwardRef, useEffect, useMemo, useState } from "react";
-// @ts-expect-error: the automatic react runtime is untyped.
-import { Fragment, jsx, jsxs } from "react/jsx-runtime";
-import { getHighlighterInstance, highlight } from "./fernShiki";
+import { forwardRef, useEffect, useState } from "react";
+import { getHighlighterInstance, HighlightedTokens, highlightTokens, trimCode } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
-import { FernSyntaxHighlighterContent } from "./FernSyntaxHighlighterContent";
+import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
@@ -23,19 +19,31 @@ interface FernSyntaxHighlighterProps {
     viewportRef?: React.RefObject<HTMLDivElement>;
 }
 
-const cachedHighlights = new Map<string, Root>();
+const cachedHighlights = new Map<string, HighlightedTokens>();
 
-function createRawHast(code: string): Root {
+function createRawTokens(code: string, lang: string): HighlightedTokens {
+    code = trimCode(code);
+
     return {
-        type: "root",
-        children: [
-            h("pre", [
-                h(
-                    "code",
-                    code.split("\n").map((line) => h("span", { class: "line" }, line)),
-                ),
-            ]),
-        ],
+        code,
+        lang,
+        hast: {
+            type: "root",
+            children: [
+                h("pre", [
+                    h(
+                        "code",
+                        code
+                            .split("\n")
+                            .flatMap((line, idx) =>
+                                idx === 0
+                                    ? [h("span", { class: "line" }, line)]
+                                    : ["\n", h("span", { class: "line" }, line)],
+                            ),
+                    ),
+                ]),
+            ],
+        },
     };
 }
 
@@ -49,55 +57,12 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
             }
             void (async () => {
                 const highlighter = await getHighlighterInstance();
-                const newResult = highlight(highlighter, code, language);
-                cachedHighlights.set(id ?? code, newResult);
+                const tokens = highlightTokens(highlighter, code, language);
+                cachedHighlights.set(id ?? code, tokens);
                 setNonce((nonce) => nonce + 1);
             })();
         }, [code, id, language, result]);
 
-        return (
-            <FernSyntaxHighlighterHast ref={ref} hast={result ?? createRawHast(code)} language={language} {...props} />
-        );
+        return <FernSyntaxHighlighterTokens ref={ref} tokens={result ?? createRawTokens(code, language)} {...props} />;
     },
 );
-
-interface FernSyntaxHighlighterHastProps {
-    className?: string;
-    style?: React.CSSProperties;
-    hast: Root;
-    language: string;
-    fontSize?: "sm" | "base" | "lg";
-    highlightLines?: HighlightLine[];
-    highlightStyle?: "highlight" | "focus";
-    viewportRef?: React.RefObject<HTMLDivElement>;
-}
-
-export const FernSyntaxHighlighterHast = forwardRef<HTMLPreElement, FernSyntaxHighlighterHastProps>(
-    function FernSyntaxHighlighter({ hast, language, ...props }, ref) {
-        const result = useMemo(
-            () =>
-                toJsxRuntime(hast, {
-                    Fragment,
-                    jsx,
-                    jsxs,
-                }),
-            [hast],
-        );
-
-        return (
-            <FernSyntaxHighlighterContent
-                ref={ref}
-                gutterCli={language === "bash" || language === "shell"}
-                plaintext={language === "plaintext" || language === "text" || language === "txt"}
-                {...props}
-            >
-                {result}
-            </FernSyntaxHighlighterContent>
-        );
-    },
-);
-
-// remove leading and trailing newlines
-export function trimCode(code: string): string {
-    return code.replace(/^\n+|\n+$/g, "");
-}

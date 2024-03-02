@@ -28,7 +28,6 @@ import { Availability } from "./components/Availability";
 import { Callout } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
-import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
 import { SyntaxHighlighter } from "./components/SyntaxHighlighter";
 import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
@@ -40,20 +39,6 @@ export declare namespace MdxContent {
 }
 
 const COMPONENTS: MDXRemoteProps["components"] = {
-    // pre: ({ children }: HTMLAttributes<HTMLPreElement>) => {
-    //     type PreElemChildren = {
-    //         props?: {
-    //             className?: string;
-    //             children?: string;
-    //         };
-    //     };
-    //     const { children: content, className } = (children as PreElemChildren)?.props ?? {};
-    //     const language = parseCodeBlockLanguageFromClassName(className);
-    //     if (typeof content !== "string") {
-    //         return null;
-    //     }
-    //     return <CodeBlockWithClipboardButton language={language} variant="lg" content={content} />;
-    // },
     // code: ({ className, ...rest }) => {
     //     return <code {...rest} className={classNames(className, "not-prose")} />;
     // },
@@ -80,7 +65,6 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     Availability,
     Cards,
     Card,
-    CodeBlock,
     CodeBlocks,
     Callout,
     Icon: RemoteFontAwesomeIcon,

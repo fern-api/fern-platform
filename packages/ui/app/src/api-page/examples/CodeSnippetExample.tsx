@@ -76,7 +76,6 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
                 ref={codeBlockRef}
                 style={scrollAreaStyle}
                 viewportRef={viewportRef}
-                // hast={hast}
                 language={language}
                 fontSize="sm"
                 highlightLines={requestHighlightLines}

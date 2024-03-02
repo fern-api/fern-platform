@@ -2700,6 +2700,7 @@ __metadata:
     "@radix-ui/react-tooltip": ^1.0.7
     "@shikijs/transformers": ^1.1.7
     "@testing-library/react": ^14.2.1
+    "@types/estree": ^1.0.5
     "@types/hast": ^3.0.4
     "@types/jest": ^29.5.11
     "@types/jsonpath": ^0.2.4
@@ -2711,6 +2712,7 @@ __metadata:
     "@types/react-test-renderer": ^18.0.7
     "@types/tinycolor2": ^1.4.6
     "@types/title": ^3.4.3
+    "@types/unist": ^3.0.2
     "@vercel/speed-insights": ^1.0.7
     algoliasearch: ^4.22.1
     classnames: ^2.5.1
@@ -2724,6 +2726,7 @@ __metadata:
     jotai: ^2.6.0
     jsonpath: ^1.1.1
     lodash-es: ^4.17.21
+    mdast-util-mdx-jsx: ^3.1.0
     moment: ^2.30.1
     next: ^14.0.4
     next-mdx-remote: ^4.4.1
@@ -2746,6 +2749,7 @@ __metadata:
     remark-parse: ^11.0.0
     remark-rehype: ^11.1.0
     shiki: ^1.1.7
+    style-to-object: ^1.0.5
     stylelint: ^16.1.0
     tinycolor2: ^1.6.0
     title: ^3.5.3
@@ -4678,6 +4682,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/estree@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@types/estree@npm:1.0.5"
+  checksum: dd8b5bed28e6213b7acd0fb665a84e693554d850b0df423ac8076cc3ad5823a6bc26b0251d080bdc545af83179ede51dd3f6fa78cad2c46ed1f29624ddf3e41a
+  languageName: node
+  linkType: hard
+
 "@types/google.maps@npm:^3.45.3":
   version: 3.53.4
   resolution: "@types/google.maps@npm:3.53.4"
@@ -5064,7 +5075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/unist@npm:^3.0.0":
+"@types/unist@npm:^3.0.0, @types/unist@npm:^3.0.2":
   version: 3.0.2
   resolution: "@types/unist@npm:3.0.2"
   checksum: 3d04d0be69316e5f14599a0d993a208606c12818cf631fd399243d1dc7a9bd8a3917d6066baa6abc290814afbd744621484756803c80cba892c39cd4b4a85616
@@ -12063,7 +12074,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mdast-util-mdx-jsx@npm:^3.0.0":
+"mdast-util-mdx-jsx@npm:^3.0.0, mdast-util-mdx-jsx@npm:^3.1.0":
   version: 3.1.0
   resolution: "mdast-util-mdx-jsx@npm:3.1.0"
   dependencies:
@@ -15831,7 +15842,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"style-to-object@npm:^1.0.0":
+"style-to-object@npm:^1.0.0, style-to-object@npm:^1.0.5":
   version: 1.0.5
   resolution: "style-to-object@npm:1.0.5"
   dependencies:

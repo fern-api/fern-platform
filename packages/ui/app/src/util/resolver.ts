@@ -7,7 +7,6 @@ import {
     sortKeysByShape,
     stringifyHttpRequestExampleToCurl,
 } from "../api-page/examples/types";
-import { trimCode } from "../commons/FernSyntaxHighlighter";
 import {
     FlattenedApiDefinition,
     FlattenedApiDefinitionPackage,
@@ -1161,36 +1160,33 @@ function resolveCodeSnippets(
     });
 
     if (example.codeExamples.pythonSdk != null) {
-        const code = trimCode(example.codeExamples.pythonSdk.sync_client);
         toRet.push({
             name: undefined,
             language: "python",
             install: example.codeExamples.pythonSdk.install,
-            code,
+            code: example.codeExamples.pythonSdk.sync_client,
             // hast: highlight(highlighter, code, "python"),
             generated: true,
         });
     }
 
     if (example.codeExamples.typescriptSdk != null) {
-        const code = trimCode(example.codeExamples.typescriptSdk.client);
         toRet.push({
             name: undefined,
             language: "typescript",
             install: example.codeExamples.typescriptSdk.install,
-            code,
+            code: example.codeExamples.typescriptSdk.client,
             // hast: highlight(highlighter, code, "typescript"),
             generated: true,
         });
     }
 
     if (example.codeExamples.goSdk != null) {
-        const code = trimCode(example.codeExamples.goSdk.client);
         toRet.push({
             name: undefined,
             language: "go",
             install: example.codeExamples.goSdk.install,
-            code,
+            code: example.codeExamples.goSdk.client,
             // hast: highlight(highlighter, code, "go"),
             generated: true,
         });
@@ -1200,12 +1196,11 @@ function resolveCodeSnippets(
         const language = cleanLanguage(codeSample.language);
         // Remove any generated code snippets with the same language
         toRet = toRet.filter((snippet) => (snippet.generated ? snippet.language !== language : true));
-        const code = trimCode(codeSample.code);
         toRet.push({
             name: codeSample.name,
             language,
             install: codeSample.install,
-            code,
+            code: codeSample.code,
             // hast: highlight(highlighter, code, language),
             generated: false,
         });
