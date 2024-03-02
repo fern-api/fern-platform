@@ -1,17 +1,15 @@
-import { convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
+import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
 import { DocsDefinitionDb } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/docs/resources/v1/resources/db";
 import { AuthType } from "@prisma/client";
-import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
 import { type S3FileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
+import { createObjectFromMap } from "../../../util/object";
 
-const DOCS_REGISTRATIONS = new NodeCache({
-    stdTTL: 60 * 60, // 1 hour
-});
+const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
 export interface DocsRegistrationInfo {
     fernUrl: ParsedBaseUrl;
@@ -80,14 +78,14 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 orgId: req.body.orgId,
                 urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
             });
-            DOCS_REGISTRATIONS.set(docsRegistrationId, {
+            DOCS_REGISTRATIONS[docsRegistrationId] = {
                 fernUrl: fernUrl,
                 customUrls: customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
                 authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
-            });
+            };
             return res.send({
                 docsRegistrationId,
                 uploadUrls: Object.fromEntries(
@@ -111,14 +109,14 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
             });
-            DOCS_REGISTRATIONS.set(docsRegistrationId, {
+            DOCS_REGISTRATIONS[docsRegistrationId] = {
                 fernUrl,
                 customUrls: [],
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: true,
                 authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
-            });
+            };
             return res.send({
                 docsRegistrationId,
                 uploadUrls: Object.fromEntries(
@@ -130,9 +128,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             });
         },
         finishDocsRegister: async (req, res) => {
-            const docsRegistrationInfo: DocsRegistrationInfo | undefined = DOCS_REGISTRATIONS.get(
-                req.params.docsRegistrationId,
-            );
+            const docsRegistrationInfo = DOCS_REGISTRATIONS[req.params.docsRegistrationId];
             if (docsRegistrationInfo == null) {
                 throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
@@ -160,26 +156,33 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 
                 await uploadToAlgolia(app, docsRegistrationInfo, dbDocsDefinition, apiDefinitionsById);
 
-                DOCS_REGISTRATIONS.del(req.params.docsRegistrationId);
-
-                await Promise.all(
-                    [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map(async (baseUrl) => {
-                        const results = await app.services.revalidator.revalidate({ baseUrl });
-
-                        if (results.failedRevalidations.length === 0) {
-                            app.logger.info(
-                                `Successfully revalidated ${
-                                    results.successfulRevalidations.length
-                                } paths for ${baseUrl.getFullUrl()}.`,
-                            );
-                        } else {
-                            void app.services.slack.notifyFailedToRevalidatePaths({
-                                domain: baseUrl.getFullUrl(),
-                                paths: results,
-                            });
-                        }
-                    }),
-                );
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
+                for (const baseUrl of [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls]) {
+                    const results = await app.services.revalidator.revalidate({
+                        definition: {
+                            apis: Object.fromEntries(
+                                Object.entries(createObjectFromMap(apiDefinitionsById)).map(
+                                    ([definitionId, apiDefinition]) => {
+                                        return [definitionId, convertDbAPIDefinitionToRead(apiDefinition)];
+                                    },
+                                ),
+                            ),
+                            config: convertDbDocsConfigToRead({
+                                dbShape: dbDocsDefinition.config,
+                            }),
+                        },
+                        baseUrl,
+                    });
+                    if (results.failedRevalidations.length === 0) {
+                        app.logger.info(`Successfully revalidated ${results.successfulRevalidations.length} paths.`);
+                    } else {
+                        await app.services.slack.notifyFailedToRevalidatePaths({
+                            domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+                            paths: results,
+                        });
+                    }
+                }
 
                 return res.send();
             } catch (e) {
