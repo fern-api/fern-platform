@@ -33,7 +33,13 @@ function createRawTokens(code: string, lang: string): HighlightedTokens {
                 h("pre", [
                     h(
                         "code",
-                        code.split("\n").map((line) => h("span", { class: "line" }, line)),
+                        code
+                            .split("\n")
+                            .flatMap((line, idx) =>
+                                idx === 0
+                                    ? [h("span", { class: "line" }, line)]
+                                    : ["\n", h("span", { class: "line" }, line)],
+                            ),
                     ),
                 ]),
             ],

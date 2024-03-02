@@ -1,4 +1,4 @@
-import { Expression } from "estree";
+import type { Expression } from "estree";
 import type { Element, ElementContent, Node, Root, RootContent, Text } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { Highlighter } from "shiki";

@@ -39,20 +39,6 @@ export declare namespace MdxContent {
 }
 
 const COMPONENTS: MDXRemoteProps["components"] = {
-    // pre: ({ children }: HTMLAttributes<HTMLPreElement>) => {
-    //     type PreElemChildren = {
-    //         props?: {
-    //             className?: string;
-    //             children?: string;
-    //         };
-    //     };
-    //     const { children: content, className } = (children as PreElemChildren)?.props ?? {};
-    //     const language = parseCodeBlockLanguageFromClassName(className);
-    //     if (typeof content !== "string") {
-    //         return null;
-    //     }
-    //     return <CodeBlockWithClipboardButton language={language} variant="lg" content={content} />;
-    // },
     // code: ({ className, ...rest }) => {
     //     return <code {...rest} className={classNames(className, "not-prose")} />;
     // },

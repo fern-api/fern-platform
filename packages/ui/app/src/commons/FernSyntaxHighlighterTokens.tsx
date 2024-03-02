@@ -52,7 +52,7 @@ export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntax
         visit(tokens.hast, "element", (node) => {
             if (node.tagName === "code") {
                 node.children.forEach((child) => {
-                    if (child.type === "element" && child.tagName === "span" && child.properties.class === "line") {
+                    if (child.type === "element" && child.tagName === "span") {
                         lines.push(child);
                     }
                 });
@@ -64,6 +64,7 @@ export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntax
                 className={classNames("code-block-root not-prose", className)}
                 style={{ ...style, ...preStyle }}
                 ref={ref}
+                tabIndex={0}
             >
                 <FernScrollArea viewportRef={viewportRef}>
                     <code
@@ -93,9 +94,7 @@ export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntax
                                         >
                                             <td className="code-block-line-gutter" />
                                             <td className="code-block-line-content">
-                                                {line.children.map((token, i) => (
-                                                    <HastToJSX hast={token} key={i} />
-                                                ))}
+                                                <HastToJSX hast={line} />
                                             </td>
                                         </tr>
                                     ))}
