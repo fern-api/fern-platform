@@ -2719,8 +2719,6 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.56.0
     hast: ^1.0.0
-    hast-util-to-jsx-runtime: ^2.3.0
-    hastscript: ^9.0.0
     instantsearch.js: ^4.63.0
     jest: ^29.7.0
     jotai: ^2.6.0
@@ -2744,7 +2742,6 @@ __metadata:
     react-intersection-observer: ^9.4.3
     react-medium-image-zoom: ^5.1.10
     react-test-renderer: ^18.2.0
-    rehype-sanitize: ^6.0.0
     rehype-stringify: ^10.0.0
     remark-gfm: ^4.0.0
     remark-parse: ^11.0.0
@@ -9722,17 +9719,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"hast-util-sanitize@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "hast-util-sanitize@npm:5.0.1"
-  dependencies:
-    "@types/hast": ^3.0.0
-    "@ungap/structured-clone": ^1.2.0
-    unist-util-position: ^5.0.0
-  checksum: cf7f3d1bb615f228fb90313adfd22ab4f7b2f34982d8d5aa86e3a5008964c0767de874b43530f2daae05823d16432783461c5dc4f45639018a3139d5363571de
-  languageName: node
-  linkType: hard
-
 "hast-util-to-estree@npm:^3.0.0":
   version: 3.1.0
   resolution: "hast-util-to-estree@npm:3.1.0"
@@ -9777,7 +9763,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"hast-util-to-jsx-runtime@npm:^2.0.0, hast-util-to-jsx-runtime@npm:^2.3.0":
+"hast-util-to-jsx-runtime@npm:^2.0.0":
   version: 2.3.0
   resolution: "hast-util-to-jsx-runtime@npm:2.3.0"
   dependencies:
@@ -9841,19 +9827,6 @@ env-cmd@toddbluhm/env-cmd:
     property-information: ^6.0.0
     space-separated-tokens: ^2.0.0
   checksum: ae3c20223e7b847320c0f98b6fb3c763ebe1bf3913c5805fbc176cf84553a9db1117ca34cf842a5235890b4b9ae0e94501bfdc9a9b870a5dbf5fc52426db1097
-  languageName: node
-  linkType: hard
-
-"hastscript@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "hastscript@npm:9.0.0"
-  dependencies:
-    "@types/hast": ^3.0.0
-    comma-separated-tokens: ^2.0.0
-    hast-util-parse-selector: ^4.0.0
-    property-information: ^6.0.0
-    space-separated-tokens: ^2.0.0
-  checksum: de8daf7686b478f459b3a586cdae92a3538d12d19144ab3172e067da10b19f7afb4709c8b015dcd343ef2f4c9701289131d8b6a92474f5a94bd90c5aa74028c1
   languageName: node
   linkType: hard
 
@@ -14784,16 +14757,6 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     regjsparser: bin/parser
   checksum: 5e1b76afe8f1d03c3beaf9e0d935dd467589c3625f6d65fb8ffa14f224d783a0fed4bf49c2c1b8211043ef92b6117313419edf055a098ed8342e340586741afc
-  languageName: node
-  linkType: hard
-
-"rehype-sanitize@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "rehype-sanitize@npm:6.0.0"
-  dependencies:
-    "@types/hast": ^3.0.0
-    hast-util-sanitize: ^5.0.0
-  checksum: 8f1b44323a6012fbfa83ee6bc48163b846398952c60e5ddbd3d2275cb46cec4fb8d98a919ffce1b3322af469c6dcef9a0127bcf0a1d96203a5c193d07cd26742
   languageName: node
   linkType: hard
 

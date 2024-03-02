@@ -4466,8 +4466,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["hast", "npm:1.0.0"],\
-            ["hast-util-to-jsx-runtime", "npm:2.3.0"],\
-            ["hastscript", "npm:9.0.0"],\
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
@@ -4491,7 +4489,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-intersection-observer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:9.4.3"],\
             ["react-medium-image-zoom", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10"],\
             ["react-test-renderer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:18.2.0"],\
-            ["rehype-sanitize", "npm:6.0.0"],\
             ["rehype-stringify", "npm:10.0.0"],\
             ["remark-gfm", "npm:4.0.0"],\
             ["remark-parse", "npm:11.0.0"],\
@@ -13066,18 +13063,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["hast-util-sanitize", [\
-        ["npm:5.0.1", {\
-          "packageLocation": "./.yarn/cache/hast-util-sanitize-npm-5.0.1-ee7c1e95a7-cf7f3d1bb6.zip/node_modules/hast-util-sanitize/",\
-          "packageDependencies": [\
-            ["hast-util-sanitize", "npm:5.0.1"],\
-            ["@types/hast", "npm:3.0.4"],\
-            ["@ungap/structured-clone", "npm:1.2.0"],\
-            ["unist-util-position", "npm:5.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["hast-util-to-estree", [\
         ["npm:3.1.0", {\
           "packageLocation": "./.yarn/cache/hast-util-to-estree-npm-3.1.0-0bbaae89ac-61272f7c18.zip/node_modules/hast-util-to-estree/",\
@@ -13179,18 +13164,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/hastscript-npm-8.0.0-acde2e34a0-ae3c20223e.zip/node_modules/hastscript/",\
           "packageDependencies": [\
             ["hastscript", "npm:8.0.0"],\
-            ["@types/hast", "npm:3.0.4"],\
-            ["comma-separated-tokens", "npm:2.0.3"],\
-            ["hast-util-parse-selector", "npm:4.0.0"],\
-            ["property-information", "npm:6.2.0"],\
-            ["space-separated-tokens", "npm:2.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:9.0.0", {\
-          "packageLocation": "./.yarn/cache/hastscript-npm-9.0.0-86f664feba-de8daf7686.zip/node_modules/hastscript/",\
-          "packageDependencies": [\
-            ["hastscript", "npm:9.0.0"],\
             ["@types/hast", "npm:3.0.4"],\
             ["comma-separated-tokens", "npm:2.0.3"],\
             ["hast-util-parse-selector", "npm:4.0.0"],\
@@ -19805,17 +19778,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["regjsparser", "npm:0.9.1"],\
             ["jsesc", "npm:0.5.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["rehype-sanitize", [\
-        ["npm:6.0.0", {\
-          "packageLocation": "./.yarn/cache/rehype-sanitize-npm-6.0.0-121642631f-8f1b44323a.zip/node_modules/rehype-sanitize/",\
-          "packageDependencies": [\
-            ["rehype-sanitize", "npm:6.0.0"],\
-            ["@types/hast", "npm:3.0.4"],\
-            ["hast-util-sanitize", "npm:5.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

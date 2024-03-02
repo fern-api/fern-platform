@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import { Expression } from "estree";
-import { Node } from "unist";
+import type { Expression } from "estree";
+import type { Node } from "unist";
 
 // forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
 
