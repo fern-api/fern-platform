@@ -19,6 +19,10 @@ const nextConfig = {
                 source: "/_next/:path*",
                 destination: "/_next/:path*",
             },
+            {
+                source: "/_vercel/:path*",
+                destination: "/_vercel/:path*",
+            },
             ...[
                 "proxy",
                 "revalidate-all",
@@ -31,6 +35,22 @@ const nextConfig = {
                 source: `/api/${prefix}`,
                 destination: `/api/${prefix}`,
             })),
+            {
+                has: [
+                    {
+                        type: "cookie",
+                        key: "_fern_docs_preview",
+                        value: "(?<host>.*)",
+                    },
+                    {
+                        type: "query",
+                        key: "error",
+                        value: "true",
+                    },
+                ],
+                source: "/:path*",
+                destination: "/dynamic/:host/:path*",
+            },
             {
                 has: [
                     {
@@ -61,6 +81,17 @@ const nextConfig = {
                 ],
                 source: "/:path*",
                 destination: "/dynamic/:host/:path*",
+            },
+            {
+                has: [
+                    {
+                        type: "cookie",
+                        key: "_fern_docs_preview",
+                        value: "(?<host>.*)",
+                    },
+                ],
+                source: "/:path*",
+                destination: "/static/:host/:path*",
             },
             {
                 has: [

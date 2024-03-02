@@ -51,6 +51,7 @@
     "@vercel/speed-insights": "^1.0.7",
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
+    "cookies-next": "^4.1.1",
     "hast": "^1.0.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",

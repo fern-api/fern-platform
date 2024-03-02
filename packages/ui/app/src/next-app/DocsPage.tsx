@@ -131,13 +131,12 @@ export const getDocsPageProps = async (
     }
 
     const pathname = slugArray != null ? slugArray.join("/") : "";
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: buildUrl({ host: xFernHost, pathname }),
-    });
+    const url = buildUrl({ host: xFernHost, pathname });
+    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
     if (!docs.ok) {
         // eslint-disable-next-line no-console
-        console.error(`Failed to fetch docs for path: /${pathname}`, docs.error);
+        console.error(`Failed to fetch docs for ${url}`, docs.error);
         return {
             type: "notFound",
             notFound: true,
@@ -152,6 +151,8 @@ export const getDocsPageProps = async (
     const navigation = await getNavigation(slugArray, basePath, docs.body.definition.apis, docsConfig.navigation);
 
     if (navigation == null) {
+        // eslint-disable-next-line no-console
+        console.error(`Failed to resolve navigation for ${url}`);
         return { type: "notFound", notFound: true };
     }
 
@@ -164,7 +165,7 @@ export const getDocsPageProps = async (
 
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
-        console.error(`Cannot convert navigatable to resolved path: "${pathname}"`);
+        console.error(`Failed to resolve path for ${url}`);
         return {
             type: "notFound",
             notFound: true,

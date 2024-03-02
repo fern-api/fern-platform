@@ -2716,6 +2716,7 @@ __metadata:
     "@vercel/speed-insights": ^1.0.7
     algoliasearch: ^4.22.1
     classnames: ^2.5.1
+    cookies-next: ^4.1.1
     depcheck: ^1.4.3
     eslint: ^8.56.0
     hast: ^1.0.0
@@ -4643,6 +4644,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 5edce7995775b0b196b142883e4d4f71fd93c294eaec973670f1fa2540b70ea7390408ed513ddefef5fcb12a578100c76596e8f2a714b0c2ae9f70ee773f4510
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.0.0":
   version: 4.1.7
   resolution: "@types/debug@npm:4.1.7"
@@ -4877,6 +4885,13 @@ __metadata:
   version: 18.7.18
   resolution: "@types/node@npm:18.7.18"
   checksum: 8aec61f0f96e2a69ce51f1f40f949ca578bbb4fe05d7c0b8ce3aeeb848e90f755837f17f6ac132ca404d974fe9b2974150ad3b4984fc9dc7c3ceddb10bae0167
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.10.2":
+  version: 16.18.86
+  resolution: "@types/node@npm:16.18.86"
+  checksum: 12d70d3a51c9a95c401532dabb1014ccb06f638283cb46f72886a8939baf20f62d2dcd6292743be61dca2808e837801e610b511bcbf1282e9d4033751002d870
   languageName: node
   linkType: hard
 
@@ -6986,6 +7001,24 @@ __metadata:
   version: 2.0.0
   resolution: "convert-source-map@npm:2.0.0"
   checksum: 63ae9933be5a2b8d4509daca5124e20c14d023c820258e484e32dc324d34c2754e71297c94a05784064ad27615037ef677e3f0c00469fb55f409d2bb21261035
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "cookie@npm:0.6.0"
+  checksum: f56a7d32a07db5458e79c726b77e3c2eff655c36792f2b6c58d351fb5f61531e5b1ab7f46987150136e366c65213cbe31729e02a3eaed630c3bf7334635fb410
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "cookies-next@npm:4.1.1"
+  dependencies:
+    "@types/cookie": ^0.6.0
+    "@types/node": ^16.10.2
+    cookie: ^0.6.0
+  checksum: 2bdd593b77e5c1b54314ac35615723c1c358c28391e61fba313015977f27c34d55b44120db99dee05b1a53193532a3a553e939e3f1f5f1364c9a3ab84111e749
   languageName: node
   linkType: hard
 

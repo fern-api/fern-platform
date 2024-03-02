@@ -1,3 +1,4 @@
+export { fernDocsPreviewHandler } from "./next-apis/fern-docs-preview";
 export { proxyApiHandler } from "./next-apis/proxy";
 export { resolveApiHandler } from "./next-apis/resolve-api";
 export { revalidateAllApiHandler } from "./next-apis/revalidate-all";
