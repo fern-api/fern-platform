@@ -19,9 +19,9 @@ export const MdxErrorBoundaryContent: React.FC<MdxErrorBoundaryContent.Props> = 
     }, [error]);
 
     return (
-        <Callout intent="warn">
+        <Callout intent="danger">
             <h4>Failed to render</h4>
-            <pre className="pre t-muted mt-6 whitespace-normal rounded bg-black/30 p-5">{stringifiedError}</pre>
+            <pre className="pre t-muted bg-tag-default mt-4 whitespace-normal rounded p-4">{stringifiedError}</pre>
         </Callout>
     );
 };

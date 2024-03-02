@@ -38,9 +38,40 @@ const nextConfig = {
                         key: "x-fern-host",
                         value: "(?<host>.*)",
                     },
+                    {
+                        type: "query",
+                        key: "error",
+                        value: "true",
+                    },
                 ],
                 source: "/:path*",
-                destination: "/:host/:path*",
+                destination: "/dynamic/:host/:path*",
+            },
+            {
+                has: [
+                    {
+                        type: "host",
+                        value: "(?<host>.*)",
+                    },
+                    {
+                        type: "query",
+                        key: "error",
+                        value: "true",
+                    },
+                ],
+                source: "/:path*",
+                destination: "/dynamic/:host/:path*",
+            },
+            {
+                has: [
+                    {
+                        type: "header",
+                        key: "x-fern-host",
+                        value: "(?<host>.*)",
+                    },
+                ],
+                source: "/:path*",
+                destination: "/static/:host/:path*",
             },
             {
                 has: [
@@ -50,7 +81,7 @@ const nextConfig = {
                     },
                 ],
                 source: "/:path*",
-                destination: "/:host/:path*",
+                destination: "/static/:host/:path*",
             },
         ],
     }),

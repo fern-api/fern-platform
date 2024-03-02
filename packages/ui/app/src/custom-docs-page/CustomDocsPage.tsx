@@ -37,7 +37,15 @@ export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomD
 
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath }) => {
     const mdxContent = <MdxContent mdx={resolvedPath.serializedMdxContent} />;
-    const mdxString = renderToString(mdxContent);
+    let mdxString: string = "";
+
+    try {
+        mdxString = renderToString(mdxContent);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Error rendering MDX to string", e);
+    }
+
     const editThisPage =
         typeof resolvedPath.serializedMdxContent !== "string"
             ? resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl

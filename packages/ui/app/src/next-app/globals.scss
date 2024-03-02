@@ -67,22 +67,26 @@
         @apply scroll-mt-header-height-padded;
 
         font-family: var(--typography-heading-font-family);
+
+        &:first-child {
+            @apply mt-0;
+        }
     }
 
     h1 {
-        @apply text-[2.25rem] font-extrabold;
+        @apply text-[2.25rem] font-extrabold leading-tight;
     }
 
     h2 {
-        @apply text-[1.5rem] font-bold;
+        @apply text-[1.5rem] font-bold leading-tight;
     }
 
     h3 {
-        @apply text-[1.25rem] font-semibold;
+        @apply text-[1.25rem] font-semibold leading-tight;
     }
 
     h4 {
-        @apply text-[1.125rem] font-semibold;
+        @apply text-[1.125rem] font-semibold leading-tight;
     }
 
     h5 {
