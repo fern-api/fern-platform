@@ -3,5 +3,5 @@ export function buildUrl({ host, pathname }: { host: string; pathname: string })
     if (pathname.length === 0) {
         return hostWithoutTrailingSlash;
     }
-    return `${hostWithoutTrailingSlash}/${pathname}`;
+    return `${hostWithoutTrailingSlash.replace(".docs.staging.", ".docs.")}/${pathname}`;
 }
