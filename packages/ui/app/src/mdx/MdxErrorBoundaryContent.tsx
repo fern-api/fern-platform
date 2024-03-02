@@ -1,5 +1,6 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useMemo } from "react";
-import { capturePosthogEvent } from "../analytics/posthog";
+import { FallbackProps } from "react-error-boundary";
 import { Callout } from "./components/Callout";
 
 export declare namespace MdxErrorBoundaryContent {
@@ -8,10 +9,15 @@ export declare namespace MdxErrorBoundaryContent {
     }
 }
 
-export const MdxErrorBoundaryContent: React.FC<MdxErrorBoundaryContent.Props> = ({ error }) => {
+export const MdxErrorBoundaryContent: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
+    const router = useRouter();
+
     useEffect(() => {
-        capturePosthogEvent("failed_to_render_mdx");
-    }, []);
+        router.events.on("routeChangeComplete", resetErrorBoundary);
+        return () => {
+            router.events.off("routeChangeComplete", resetErrorBoundary);
+        };
+    }, [resetErrorBoundary, router.events]);
 
     const stringifiedError = useMemo(() => {
         if (typeof error === "string") {

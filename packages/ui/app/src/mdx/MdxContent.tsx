@@ -1,6 +1,7 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
-import React, { HTMLAttributes, useCallback } from "react";
+import React, { HTMLAttributes } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { capturePosthogEvent } from "../analytics/posthog";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { SerializedMdxContent } from "../util/mdx";
 import {
@@ -72,16 +73,17 @@ const COMPONENTS: MDXRemoteProps["components"] = {
 };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
-    const fallbackRender = useCallback(({ error }: { error: unknown }) => {
-        return <MdxErrorBoundaryContent error={error} />;
-    }, []);
-
     if (typeof mdx === "string") {
         return <>{mdx}</>;
     }
 
     return (
-        <ErrorBoundary fallbackRender={fallbackRender}>
+        <ErrorBoundary
+            FallbackComponent={MdxErrorBoundaryContent}
+            onError={(error) => {
+                capturePosthogEvent("failed_to_render_mdx", { error });
+            }}
+        >
             <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>
         </ErrorBoundary>
     );
