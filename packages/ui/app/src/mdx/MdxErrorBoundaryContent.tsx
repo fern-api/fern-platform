@@ -13,9 +13,14 @@ export const MdxErrorBoundaryContent: React.FC<FallbackProps> = ({ error, resetE
     const router = useRouter();
 
     useEffect(() => {
-        router.events.on("routeChangeComplete", resetErrorBoundary);
+        const handleRouteChange = (_route: string, options: { shallow: boolean }) => {
+            if (!options.shallow) {
+                resetErrorBoundary();
+            }
+        };
+        router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
-            router.events.off("routeChangeComplete", resetErrorBoundary);
+            router.events.off("routeChangeComplete", handleRouteChange);
         };
     }, [resetErrorBoundary, router.events]);
 
