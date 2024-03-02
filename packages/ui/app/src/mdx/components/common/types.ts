@@ -1,10 +1,10 @@
-import { ReactNode } from "react";
+import { Root } from "hast";
 
 export interface CodeBlockItem {
     // language: string;
     title?: string;
     code: string | undefined;
-    children: ReactNode | undefined;
+    hast: Root | undefined;
     // highlightLines?: (number | [number, number])[];
     // highlightStyle?: "highlight" | "focus";
 }

@@ -1,18 +1,12 @@
 import { FC } from "react";
 import { CodeBlockWithClipboardButton } from "../../commons/CodeBlockWithClipboardButton";
 import {
-    FernSyntaxHighlighterContent,
-    FernSyntaxHighlighterContentProps,
-} from "../../commons/FernSyntaxHighlighterContent";
+    FernSyntaxHighlighterTokens,
+    FernSyntaxHighlighterTokensProps,
+} from "../../commons/FernSyntaxHighlighterTokens";
 
-export declare namespace SyntaxHighlighter {
-    export interface Props extends FernSyntaxHighlighterContentProps {
-        code: string;
-    }
-}
-
-export const SyntaxHighlighter: FC<SyntaxHighlighter.Props> = ({ code, ...props }) => (
-    <CodeBlockWithClipboardButton code={code}>
-        <FernSyntaxHighlighterContent {...props} />
+export const SyntaxHighlighter: FC<FernSyntaxHighlighterTokensProps> = (props) => (
+    <CodeBlockWithClipboardButton code={props.tokens.code}>
+        <FernSyntaxHighlighterTokens {...props} />
     </CodeBlockWithClipboardButton>
 );

@@ -28,7 +28,6 @@ import { Availability } from "./components/Availability";
 import { Callout } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
-import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
 import { SyntaxHighlighter } from "./components/SyntaxHighlighter";
 import { MdxErrorBoundaryContent } from "./MdxErrorBoundaryContent";
@@ -80,7 +79,6 @@ const COMPONENTS: MDXRemoteProps["components"] = {
     Availability,
     Cards,
     Card,
-    CodeBlock,
     CodeBlocks,
     Callout,
     Icon: RemoteFontAwesomeIcon,

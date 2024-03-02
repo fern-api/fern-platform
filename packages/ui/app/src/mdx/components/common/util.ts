@@ -1,23 +1,16 @@
-import { Children, createElement, isValidElement, ReactNode } from "react";
-import { CodeBlockWithClipboardButton } from "../../../commons/CodeBlockWithClipboardButton";
-import { FernSyntaxHighlighterContent } from "../../../commons/FernSyntaxHighlighterContent";
-import { CodeBlock } from "../CodeBlock";
-import { SyntaxHighlighter } from "../SyntaxHighlighter";
-import type { CodeBlockItem } from "./types";
-
 /**
  * The interface that the user-provided `CodeBlocks` children should adhere to.
  */
-// type ExpectedCodeBlockChildren = {
-//     props?: {
-//         children?: {
-//             props?: {
-//                 className?: string;
-//                 children?: string;
-//             };
-//         };
-//     };
-// };
+export type ExpectedCodeBlockChildren = {
+    props?: {
+        children?: {
+            props?: {
+                className?: string;
+                children?: string;
+            };
+        };
+    };
+};
 
 // function isObject(o: unknown): o is Record<string, unknown> {
 //     return typeof o === "object" && o != null;
@@ -71,61 +64,61 @@ import type { CodeBlockItem } from "./types";
 /**
  * Transforms the user-provided `CodeBlock` to a `CodeBlockItem` with a cleaner interface
  */
-export function transformCodeBlockChildrenToCodeBlockItem(
-    title: string | undefined,
-    rawChildren: ReactNode,
-    highlightLines?: (number | [number, number])[],
-    highlightStyle?: "highlight" | "focus",
-): CodeBlockItem {
-    const [code, children] = unwrapCodeBlockChildren(rawChildren, highlightLines, highlightStyle);
-    return {
-        title,
-        code,
-        children,
-    };
-}
+// export function transformCodeBlockChildrenToCodeBlockItem(
+//     title: string | undefined,
+//     rawChildren: ReactNode,
+//     highlightLines?: (number | [number, number])[],
+//     highlightStyle?: "highlight" | "focus",
+// ): CodeBlockItem {
+//     const [code, children] = unwrapCodeBlockChildren(rawChildren, highlightLines, highlightStyle);
+//     return {
+//         title,
+//         code,
+//         children,
+//     };
+// }
 
-function unwrapCodeBlockChildren(
-    children: ReactNode,
-    highlightLines?: (number | [number, number])[],
-    highlightStyle?: "highlight" | "focus",
-): [string, ReactNode] {
-    if (!isValidElement(children)) {
-        return ["", children];
-    }
+// function unwrapCodeBlockChildren(
+//     children: ReactNode,
+//     highlightLines?: (number | [number, number])[],
+//     highlightStyle?: "highlight" | "focus",
+// ): [string, ReactNode] {
+//     if (!isValidElement(children)) {
+//         return ["", children];
+//     }
 
-    if (children.type === SyntaxHighlighter) {
-        const { code, children: syntaxHighlighterChildren, ...rest } = children.props;
-        return [
-            children.props.code,
-            createElement(
-                FernSyntaxHighlighterContent,
-                { ...rest, highlightLines, highlightStyle },
-                syntaxHighlighterChildren,
-            ),
-        ];
-    }
+//     if (children.type === SyntaxHighlighter) {
+//         const { code, children: syntaxHighlighterChildren, ...rest } = children.props;
+//         return [
+//             children.props.code,
+//             createElement(
+//                 FernSyntaxHighlighterContent,
+//                 { ...rest, highlightLines, highlightStyle },
+//                 syntaxHighlighterChildren,
+//             ),
+//         ];
+//     }
 
-    if (children.type === CodeBlockWithClipboardButton) {
-        return [children.props.code, children.props.children];
-    }
+//     if (children.type === CodeBlockWithClipboardButton) {
+//         return [children.props.code, children.props.children];
+//     }
 
-    return ["", children];
-}
+//     return ["", children];
+// }
 
-/**
- * Transforms the user-provided `CodeBlocks` to a `CodeBlockItem` with a cleaner interface
- */
-export function transformCodeBlocksChildrenToCodeBlockItem(children: ReactNode): CodeBlockItem[] {
-    return Children.toArray(children).map((child) => {
-        if (isValidElement(child) && child.type === CodeBlock) {
-            return transformCodeBlockChildrenToCodeBlockItem(
-                child.props.title,
-                child.props.children,
-                child.props.highlightLines,
-                child.props.highlightStyle,
-            );
-        }
-        return transformCodeBlockChildrenToCodeBlockItem(undefined, child, undefined, undefined);
-    });
-}
+// /**
+//  * Transforms the user-provided `CodeBlocks` to a `CodeBlockItem` with a cleaner interface
+//  */
+// export function transformCodeBlocksChildrenToCodeBlockItem(children: ReactNode): CodeBlockItem[] {
+//     return Children.toArray(children).map((child) => {
+//         if (isValidElement(child) && child.type === CodeBlock) {
+//             return transformCodeBlockChildrenToCodeBlockItem(
+//                 child.props.title,
+//                 child.props.children,
+//                 child.props.highlightLines,
+//                 child.props.highlightStyle,
+//             );
+//         }
+//         return transformCodeBlockChildrenToCodeBlockItem(undefined, child, undefined, undefined);
+//     });
+// }

@@ -4447,6 +4447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@radix-ui/react-tooltip", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["@shikijs/transformers", "npm:1.1.7"],\
             ["@testing-library/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.2.1"],\
+            ["@types/estree", "npm:1.0.5"],\
             ["@types/hast", "npm:3.0.4"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/jsonpath", "npm:0.2.4"],\
@@ -4458,6 +4459,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-test-renderer", "npm:18.0.7"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["@types/title", "npm:3.4.3"],\
+            ["@types/unist", "npm:3.0.2"],\
             ["@vercel/speed-insights", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["algoliasearch", "npm:4.22.1"],\
             ["classnames", "npm:2.5.1"],\
@@ -4471,6 +4473,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
             ["jsonpath", "npm:1.1.1"],\
             ["lodash-es", "npm:4.17.21"],\
+            ["mdast-util-mdx-jsx", "npm:3.1.0"],\
             ["moment", "npm:2.30.1"],\
             ["next", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:14.0.4"],\
             ["next-mdx-remote", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.4.1"],\
@@ -4488,6 +4491,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-intersection-observer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:9.4.3"],\
             ["react-medium-image-zoom", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10"],\
             ["react-test-renderer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:18.2.0"],\
+            ["rehype-sanitize", "npm:6.0.0"],\
             ["rehype-stringify", "npm:10.0.0"],\
             ["remark-gfm", "npm:4.0.0"],\
             ["remark-parse", "npm:11.0.0"],\
@@ -6963,6 +6967,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-estree-npm-1.0.1-4c9469c165-e9aa175eac.zip/node_modules/@types/estree/",\
           "packageDependencies": [\
             ["@types/estree", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:1.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-estree-npm-1.0.5-5b7faed3b4-dd8b5bed28.zip/node_modules/@types/estree/",\
+          "packageDependencies": [\
+            ["@types/estree", "npm:1.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13051,6 +13062,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vfile", "npm:6.0.1"],\
             ["web-namespaces", "npm:2.0.1"],\
             ["zwitch", "npm:2.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hast-util-sanitize", [\
+        ["npm:5.0.1", {\
+          "packageLocation": "./.yarn/cache/hast-util-sanitize-npm-5.0.1-ee7c1e95a7-cf7f3d1bb6.zip/node_modules/hast-util-sanitize/",\
+          "packageDependencies": [\
+            ["hast-util-sanitize", "npm:5.0.1"],\
+            ["@types/hast", "npm:3.0.4"],\
+            ["@ungap/structured-clone", "npm:1.2.0"],\
+            ["unist-util-position", "npm:5.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -19782,6 +19805,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["regjsparser", "npm:0.9.1"],\
             ["jsesc", "npm:0.5.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["rehype-sanitize", [\
+        ["npm:6.0.0", {\
+          "packageLocation": "./.yarn/cache/rehype-sanitize-npm-6.0.0-121642631f-8f1b44323a.zip/node_modules/rehype-sanitize/",\
+          "packageDependencies": [\
+            ["rehype-sanitize", "npm:6.0.0"],\
+            ["@types/hast", "npm:3.0.4"],\
+            ["hast-util-sanitize", "npm:5.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
