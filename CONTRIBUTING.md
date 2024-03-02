@@ -94,3 +94,35 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 # uncomment the next line when targeting the dev cloud environment
 # NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
 ```
+
+## Testing in Staging
+
+### PR previews
+
+After pushing a commit to a PR, vercel will automatically generate a preview URL for that PR, i.e.
+
+```
+fern-prod-it1bn6vh9-buildwithfern.vercel.app
+```
+
+To access the preview for a given customer site, use the following pattern:
+
+```
+https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs-preview?site=proficientai
+```
+
+Or,
+
+```
+https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs-preview?host=proficientai.docs.buildwithfern.com
+```
+
+### Before deploying
+
+Before cutting a release from `main`, we test our changes in a staging environment. All production URLs have a secret staging URL:
+
+```
+https://vellum.docs.buildwithfern.com -> https://vellum.docs.staging.buildwithfern.com
+https://docs.buildwithfern.com -> https://fern.docs.staging.buildwithfern.com
+https://documentation.sayari.com -> https://sayari.docs.staging.buildwithfern.com
+```
