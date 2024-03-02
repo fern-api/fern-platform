@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 const CustomDocsPage = dynamic(
@@ -19,7 +20,14 @@ const ChangelogPage = dynamic(() => import("./ChangelogPage2").then(({ Changelog
 export interface DocsMainContentProps {}
 
 export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
-    const { resolvedPath } = useNavigationContext();
+    const { resolvedPath, hydrated } = useNavigationContext();
+
+    const router = useRouter();
+    if (router.query.error === "true") {
+        if (!hydrated) {
+            return null;
+        }
+    }
 
     if (resolvedPath.type === "custom-markdown-page") {
         return <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />;
