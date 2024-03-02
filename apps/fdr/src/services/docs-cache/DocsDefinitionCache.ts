@@ -1,5 +1,4 @@
 import { AuthType } from "@prisma/client";
-import NodeCache from "node-cache";
 import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
@@ -25,6 +24,12 @@ export interface DocsDefinitionCache {
     }): Promise<void>;
 }
 
+/** The hostname without url scheme (e.g. docs.vellum.ai) */
+type Hostnme = string;
+
+/** The hostname without url scheme (e.g. docs.vellum.ai) */
+type Path = string;
+
 interface CachedDocsResponse {
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
@@ -32,14 +37,9 @@ interface CachedDocsResponse {
     isPrivate: boolean;
 }
 
-const TTL = 60 * 60 * 24; // 24 hours
-
-const DOCS_CACHE = new NodeCache({
-    stdTTL: TTL,
-    maxKeys: 100,
-});
-
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
+    private cache: Record<Hostnme, Record<Path, CachedDocsResponse>> = {};
+
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
@@ -54,7 +54,6 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
-            this.app.logger.info(`Cache HIT for ${url}`);
             if (cachedResponse.isPrivate) {
                 await this.checkUserBelongsToOrg(url, authorization);
             }
@@ -73,8 +72,6 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 },
             };
         }
-
-        this.app.logger.info(`Cache MISS for ${url}`);
         const dbResponse = await this.getDocsForUrlFromDatabase({ url });
         this.cacheResponse({ url, cachedResponse: dbResponse });
 
@@ -132,11 +129,26 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        DOCS_CACHE.set(url.hostname, cachedResponse, TTL);
+        const cacheForHost = this.cache[url.hostname];
+        if (cacheForHost == null) {
+            this.cache[url.hostname] = { [url.pathname]: cachedResponse };
+        } else {
+            cacheForHost[url.pathname] = cachedResponse;
+        }
     }
 
     private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
-        return DOCS_CACHE.get(url.hostname);
+        const responsesForHost = this.cache[url.hostname] ?? {};
+        const cachedResponses = Object.entries(responsesForHost)
+            .filter(([path]) => {
+                return url.pathname.startsWith(path);
+            })
+            .sort(
+                ([, cachedResponseA], [, cachedResponseB]) =>
+                    cachedResponseB.updatedTime.getTime() - cachedResponseA.updatedTime.getTime(),
+            )
+            .map(([, cachedResponse]) => cachedResponse);
+        return cachedResponses[0];
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
@@ -153,7 +165,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 response: {
                     baseUrl: {
                         domain: dbDocs.domain,
-                        basePath: dbDocs.path.trim() === "" ? undefined : dbDocs.path.trim(),
+                        basePath: dbDocs.path === "" ? undefined : dbDocs.path,
                     },
                     definition,
                     lightModeEnabled: definition.config.colorsV3?.type !== "dark",
