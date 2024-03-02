@@ -126,7 +126,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <h5 className="t-muted m-0">Body</h5>
                             </div>
                             <FernCard className="rounded-xl p-4 shadow-sm">
-                                <Callout intent="warn">File upload is not yet supported.</Callout>
+                                <Callout intent="warning">File upload is not yet supported.</Callout>
                             </FernCard>
                         </div>
                     ),

@@ -135,6 +135,9 @@ module.exports = {
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
                         "--tw-prose-hr": "var(--gray-a5)",
+                        "--tw-prose-body": "inherit",
+                        "--tw-prose-headings": "inherit",
+                        "--tw-prose-pre-bg": "initial",
                     },
                 },
                 sm: {
@@ -148,6 +151,9 @@ module.exports = {
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
                         "--tw-prose-hr": "var(--gray-a5)",
+                        "--tw-prose-invert-body": "inherit",
+                        "--tw-prose-invert-headings": "inherit",
+                        "--tw-prose-pre-bg": "initial",
                     },
                 },
                 "invert-sm": {

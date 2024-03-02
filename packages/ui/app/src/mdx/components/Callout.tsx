@@ -67,7 +67,14 @@ export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ inte
                     }),
                 )}
             >
-                <div className={classNames(styles.content)}>{children}</div>
+                <div
+                    className={classNames(
+                        styles.content,
+                        "prose-h1:first:-mt-1 prose-h2:first:-mt-1 prose-h3:first:-mt-1 prose-h4:first:-mt-1",
+                    )}
+                >
+                    {children}
+                </div>
             </div>
         </div>
     );
