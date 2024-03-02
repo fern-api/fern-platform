@@ -1,3 +1,4 @@
+import { h } from "hastscript";
 import { forwardRef, useEffect, useState } from "react";
 import { getHighlighterInstance, HighlightedTokens, highlightTokens, trimCode } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
@@ -26,9 +27,17 @@ function createRawTokens(code: string, lang: string): HighlightedTokens {
     return {
         code,
         lang,
-        tokens: code.split("\n").map((line) => [{ content: line, variants: {}, offset: 0 }]),
-        light: { name: "light", type: "light", bg: "initial", fg: "initial" },
-        dark: { name: "dark", type: "dark", bg: "initial", fg: "initial" },
+        hast: {
+            type: "root",
+            children: [
+                h("pre", [
+                    h(
+                        "code",
+                        code.split("\n").map((line) => h("span", { class: "line" }, line)),
+                    ),
+                ]),
+            ],
+        },
     };
 }
 

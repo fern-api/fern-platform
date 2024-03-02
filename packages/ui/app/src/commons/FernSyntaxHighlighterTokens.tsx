@@ -1,9 +1,12 @@
 import classNames from "classnames";
-import { CSSProperties, forwardRef, ReactNode, useMemo } from "react";
-import { FontStyle, type ThemedTokenWithVariants } from "shiki";
+import { Element } from "hast";
+import { forwardRef, ReactNode, useMemo } from "react";
+import StyleToObject from "style-to-object";
+import { visit } from "unist-util-visit";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { HighlightedTokens } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
+import { HastToJSX } from "./HastToJsx";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
@@ -37,11 +40,29 @@ export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntax
     ) {
         const highlightedLines = useMemo(() => flattenHighlightLines(highlightLines || []), [highlightLines]);
 
+        let preStyle = {};
+
+        visit(tokens.hast, "element", (node) => {
+            if (node.tagName === "pre") {
+                preStyle = StyleToObject(node.properties.style as string) ?? {};
+            }
+        });
+
+        const lines: Element[] = [];
+        visit(tokens.hast, "element", (node) => {
+            if (node.tagName === "code") {
+                node.children.forEach((child) => {
+                    if (child.type === "element" && child.tagName === "span" && child.properties.class === "line") {
+                        lines.push(child);
+                    }
+                });
+            }
+        });
+
         return (
             <pre
                 className={classNames("code-block-root not-prose", className)}
-                style={{ ...style, color: tokens.light.fg }}
-                data-dark-color={tokens.dark.fg}
+                style={{ ...style, ...preStyle }}
                 ref={ref}
             >
                 <FernScrollArea viewportRef={viewportRef}>
@@ -63,7 +84,7 @@ export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntax
                                 })}
                             >
                                 <tbody>
-                                    {tokens.tokens.map((line, lineNumber) => (
+                                    {lines.map((line, lineNumber) => (
                                         <tr
                                             className={classNames("code-block-line", {
                                                 highlight: highlightedLines.includes(lineNumber),
@@ -72,10 +93,8 @@ export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntax
                                         >
                                             <td className="code-block-line-gutter" />
                                             <td className="code-block-line-content">
-                                                {line.map((token, i) => (
-                                                    <span key={i} style={createTokenStyle(token)}>
-                                                        {token.content}
-                                                    </span>
+                                                {line.children.map((token, i) => (
+                                                    <HastToJSX hast={token} key={i} />
                                                 ))}
                                             </td>
                                         </tr>
@@ -98,19 +117,4 @@ function flattenHighlightLines(highlightLines: HighlightLine[]): number[] {
         }
         return [lineNumber - 1];
     });
-}
-
-function createTokenStyle(token: ThemedTokenWithVariants): CSSProperties | undefined {
-    return {
-        color: token.variants.light?.color,
-        backgroundColor: token.variants.light?.bgColor,
-        fontStyle: token.variants.light?.fontStyle === FontStyle.Italic ? "italic" : "normal",
-        fontWeight: token.variants.light?.fontStyle === FontStyle.Bold ? "bold" : "initial",
-        textDecoration: token.variants.light?.fontStyle === FontStyle.Underline ? "underline" : "none",
-        "--dark-color": token.variants.dark?.color,
-        "--dark-bg": token.variants.dark?.bgColor,
-        "--dark-font-style": token.variants.dark?.fontStyle === FontStyle.Italic ? "italic" : "normal",
-        "--dark-font-weight": token.variants.dark?.fontStyle === FontStyle.Bold ? "bold" : "initial",
-        "--dark-text-decoration": token.variants.dark?.fontStyle === FontStyle.Underline ? "underline" : "none",
-    } as CSSProperties;
 }

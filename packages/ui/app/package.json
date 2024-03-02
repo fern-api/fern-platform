@@ -52,6 +52,8 @@
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
     "hast": "^1.0.0",
+    "hast-util-to-jsx-runtime": "^2.3.0",
+    "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
     "jotai": "^2.6.0",
     "jsonpath": "^1.1.1",
@@ -76,6 +78,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "shiki": "^1.1.7",
+    "style-to-object": "^1.0.5",
     "tinycolor2": "^1.6.0",
     "title": "^3.5.3",
     "unist-util-visit": "^5.0.0"

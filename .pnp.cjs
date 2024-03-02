@@ -4466,6 +4466,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["hast", "npm:1.0.0"],\
+            ["hast-util-to-jsx-runtime", "npm:2.3.0"],\
+            ["hastscript", "npm:9.0.0"],\
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
@@ -4494,6 +4496,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["remark-parse", "npm:11.0.0"],\
             ["remark-rehype", "npm:11.1.0"],\
             ["shiki", "npm:1.1.7"],\
+            ["style-to-object", "npm:1.0.5"],\
             ["stylelint", "npm:16.1.0"],\
             ["tinycolor2", "npm:1.6.0"],\
             ["title", "npm:3.5.3"],\
@@ -13164,6 +13167,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/hastscript-npm-8.0.0-acde2e34a0-ae3c20223e.zip/node_modules/hastscript/",\
           "packageDependencies": [\
             ["hastscript", "npm:8.0.0"],\
+            ["@types/hast", "npm:3.0.4"],\
+            ["comma-separated-tokens", "npm:2.0.3"],\
+            ["hast-util-parse-selector", "npm:4.0.0"],\
+            ["property-information", "npm:6.2.0"],\
+            ["space-separated-tokens", "npm:2.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.0.0", {\
+          "packageLocation": "./.yarn/cache/hastscript-npm-9.0.0-86f664feba-de8daf7686.zip/node_modules/hastscript/",\
+          "packageDependencies": [\
+            ["hastscript", "npm:9.0.0"],\
             ["@types/hast", "npm:3.0.4"],\
             ["comma-separated-tokens", "npm:2.0.3"],\
             ["hast-util-parse-selector", "npm:4.0.0"],\

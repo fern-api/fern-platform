@@ -1,11 +1,5 @@
-import {
-    BundledLanguage,
-    BundledTheme,
-    getHighlighter,
-    Highlighter,
-    SpecialLanguage,
-    ThemedTokenWithVariants,
-} from "shiki/index.mjs";
+import { Root } from "hast";
+import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
 
 let highlighter: Highlighter;
 export async function getHighlighterInstance(): Promise<Highlighter> {
@@ -38,50 +32,23 @@ export async function getHighlighterInstance(): Promise<Highlighter> {
 //     return { hast: root as Root, language: lang };
 // }
 
-interface ThemeMetadata {
-    name: string;
-    type: "light" | "dark";
-    bg: string;
-    fg: string;
-}
-
 export interface HighlightedTokens {
     code: string;
     lang: string;
-    tokens: ThemedTokenWithVariants[][];
-    light: ThemeMetadata;
-    dark: ThemeMetadata;
+    hast: Root;
 }
 
 export function highlightTokens(highlighter: Highlighter, code: string, rawLang: string): HighlightedTokens {
     code = trimCode(code);
     const lang = parseLang(rawLang);
-    const tokens = highlighter.codeToTokensWithThemes(code, {
+    const hast = highlighter.codeToHast(code, {
         lang,
         themes: {
             light: LIGHT_THEME,
             dark: DARK_THEME,
         },
-    });
-    const lightTheme = highlighter.getTheme(LIGHT_THEME);
-    const darkTheme = highlighter.getTheme(DARK_THEME);
-    return {
-        code,
-        lang,
-        tokens,
-        light: {
-            name: lightTheme.name,
-            type: "light",
-            bg: lightTheme.bg,
-            fg: lightTheme.fg,
-        },
-        dark: {
-            name: darkTheme.name,
-            type: "dark",
-            bg: darkTheme.bg,
-            fg: darkTheme.fg,
-        },
-    };
+    }) as Root;
+    return { code, lang, hast };
 }
 
 // remove leading and trailing newlines
