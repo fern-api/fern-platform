@@ -2,17 +2,17 @@ import { GetServerSideProps } from "next";
 import Error from "next/error";
 import { ReactElement } from "react";
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    if (req.url != null) {
+export const getServerSideProps: GetServerSideProps = async ({ req, resolvedUrl }) => {
+    if (req.statusCode === 500 && req.url != null && resolvedUrl.startsWith("/static")) {
         return {
             redirect: {
-                destination: `${req.url}?error=true`,
+                destination: `${req.url}${req.url.includes("?") ? "&" : "?"}error=true`,
                 permanent: false,
             },
         };
     }
     return {
-        props: { errorCode: 500 },
+        props: { errorCode: req.statusCode },
     };
 };
 
