@@ -13,6 +13,17 @@ const nextConfig = {
                 source: "/:prefix*/_next/:path*",
                 destination: "/_next/:path*",
             },
+            {
+                source: "/_next/data/:hash/:subpath/:oldhost/:path*",
+                has: [
+                    {
+                        type: "cookie",
+                        key: "_fern_docs_preview",
+                        value: "(?<host>.*)",
+                    },
+                ],
+                destination: "/_next/data/:hash/:subpath/:host/:path*",
+            },
         ],
         afterFiles: [
             {
