@@ -70,19 +70,30 @@ export class SlackServiceImpl implements SlackService {
 
     async notifyFailedToRevalidatePaths(request: FailedToRevalidatePathsNotification): Promise<void> {
         try {
-            const { ts } = await this.client.chat.postMessage({
-                channel: "#engineering-notifs",
-                text: `:rotating_light: \`${request.domain}\` encountered ${request.paths.failedRevalidations.length} revalidation failurs. }`,
-                blocks: [],
-            });
-            const failedUrlsMessage = `The following paths failed:\n ${request.paths.failedRevalidations
-                .map((e) => `${e.url} : ${e.message}`)
-                .join("\n")}`;
-            await this.client.chat.postMessage({
-                channel: "#engineering-notifs",
-                text: failedUrlsMessage,
-                thread_ts: ts,
-            });
+            if (request.paths.failedRevalidations.length > 0) {
+                const { ts } = await this.client.chat.postMessage({
+                    channel: "#engineering-notifs",
+                    text: `:rotating_light: \`${request.domain}\` encountered ${request.paths.failedRevalidations.length} revalidation failurs. }`,
+                    blocks: [],
+                });
+                const failedUrlsMessage = `The following paths failed:\n ${request.paths.failedRevalidations
+                    .map((e) => `${e.url} : ${e.message}`)
+                    .join("\n")}`;
+                await this.client.chat.postMessage({
+                    channel: "#engineering-notifs",
+                    text: failedUrlsMessage,
+                    thread_ts: ts,
+                });
+            }
+
+            // if hitting the vercel function failed somehow (such as due to timeout)
+            if (request.paths.revalidationFailed) {
+                await this.client.chat.postMessage({
+                    channel: "#engineering-notifs",
+                    text: `:rotating_light: \`${request.domain}\` revalidation *completely* failed.`,
+                    blocks: [],
+                });
+            }
         } catch (err) {
             this.logger.debug("Failed to send slack message: ", err);
         }

@@ -89,6 +89,7 @@ class MockRevalidatorService implements RevalidatorService {
         return {
             successfulRevalidations: [],
             failedRevalidations: [],
+            revalidationFailed: false,
         };
     }
 }
