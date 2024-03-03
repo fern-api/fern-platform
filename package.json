@@ -34,8 +34,7 @@
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
     "docs:dev": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-prod",
-    "docs-dev:dev": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-dev",
-    "private-docs:dev": "yarn workspace @fern-ui/private-docs-bundle run dev:fern-prod"
+    "docs-dev:dev": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-dev"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -69,7 +68,7 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.133",
+    "mrlint": "^0.1.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "react": "^18.2.0",

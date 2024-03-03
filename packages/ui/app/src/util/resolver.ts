@@ -1,5 +1,5 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
+import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import {
@@ -20,83 +20,6 @@ import { titleCase } from "./titleCase";
 
 type WithDescription = { description: SerializedMdxContent | undefined };
 type WithAvailability = { availability: APIV1Read.Availability | undefined };
-
-// export async function resolveNavigationItems(
-//     navigationItems: DocsV1Read.NavigationItem[],
-//     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-//     parentSlugs: string[] = [],
-// ): Promise<ResolvedNavigationItem[]> {
-//     const highlighter = await getHighlighterInstance();
-//     return resolveNavigationItemsInternal(navigationItems, apis, highlighter, parentSlugs);
-// }
-
-// function resolveNavigationItemsInternal(
-//     navigationItems: DocsV1Read.NavigationItem[],
-//     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-//     highlighter: Highlighter,
-//     parentSlugs: string[] = [],
-// ): ResolvedNavigationItemApiSection[] {
-//     const resolvedNavigationItems: ResolvedNavigationItemApiSection[] = [];
-
-//     for (const navigationItem of navigationItems) {
-//         visitDiscriminatedUnion(navigationItem, "type")._visit({
-//             page: noop,
-//             api: (api) => {
-//                 const definition = apis[api.api];
-//                 if (definition != null) {
-//                     const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
-//                     const resolvedTypes = mapValues(definition.types, (type) =>
-//                         resolveTypeDefinition(type, definition.types),
-//                     );
-
-//                     const { endpoints, webhooks, subpackages, websockets } = resolveApiDefinitionPackage(
-//                         definition.auth,
-//                         api.api,
-//                         api.api,
-//                         definition.rootPackage,
-//                         definition.subpackages,
-//                         definition.types,
-//                         resolvedTypes,
-//                         definitionSlug,
-//                         highlighter,
-//                     );
-
-//                     resolvedNavigationItems.push({
-//                         api: api.api,
-//                         title: api.title,
-//                         skipUrlSlug: api.skipUrlSlug,
-//                         artifacts: api.artifacts ,
-//                         showErrors: api.showErrors,
-//                         type: "apiSection",
-//                         auth: definition.auth ,
-//                         hasMultipleBaseUrls: definition.hasMultipleBaseUrls ,
-//                         slug: definitionSlug,
-//                         endpoints,
-//                         websockets,
-//                         webhooks,
-//                         subpackages,
-//                         types: resolvedTypes,
-//                     });
-//                 }
-//             },
-//             section: (section) => {
-//                 const sectionSlug = [...parentSlugs, section.urlSlug];
-//                 resolvedNavigationItems.push(
-//                     ...resolveNavigationItemsInternal(
-//                         section.items,
-//                         apis,
-//                         highlighter,
-//                         section.skipUrlSlug ? parentSlugs : sectionSlug,
-//                     ),
-//                 );
-//             },
-//             link: noop,
-//             _other: noop,
-//         });
-//     }
-
-//     return resolvedNavigationItems;
-// }
 
 export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,

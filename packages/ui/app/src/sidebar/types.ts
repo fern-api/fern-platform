@@ -1,6 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { last, memoize, noop } from "lodash-es";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
@@ -193,7 +192,7 @@ export async function resolveSidebarNodes(
     for (const navigationItem of navigationItems) {
         await visitDiscriminatedUnion(navigationItem, "type")._visit<Promise<void> | void>({
             page: (page) => {
-                const lastSidebarNode = last(sidebarNodes);
+                const lastSidebarNode = sidebarNodes[sidebarNodes.length - 1];
                 if (lastSidebarNode != null && lastSidebarNode.type === "pageGroup") {
                     lastSidebarNode.pages.push({
                         ...page,
@@ -270,7 +269,7 @@ export async function resolveSidebarNodes(
                 });
             },
             link: (link) => {
-                const lastSidebarNode = last(sidebarNodes);
+                const lastSidebarNode = sidebarNodes[sidebarNodes.length - 1];
                 if (lastSidebarNode != null && lastSidebarNode.type === "pageGroup") {
                     lastSidebarNode.pages.push(link);
                 } else {
@@ -281,19 +280,12 @@ export async function resolveSidebarNodes(
                     });
                 }
             },
-            _other: noop,
+            _other: () => Promise.resolve(),
         });
     }
 
     return sidebarNodes;
 }
-
-export const resolveActiveSidebarNode = memoize(
-    (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
-        return visitSidebarNodes(sidebarNodes, fullSlug).curr;
-    },
-    (_sidebarNodes, fullSlug) => fullSlug.join("/"),
-);
 
 function matchSlug(slug: string[], nodeSlug: string[]): boolean {
     for (let i = 0; i < slug.length; i++) {

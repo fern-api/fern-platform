@@ -3,14 +3,15 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src",
+    "rootDir": ".",
     "allowJs": true,
     "incremental": true,
     "noEmit": true,
     "jsx": "preserve",
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
+    "strictNullChecks": true
   },
-  "include": ["./src/**/*"],
   "exclude": ["node_modules"],
-  "references": [{ "path": "../app" }]
+  "include": ["./src/**/*", ".next/types/**/*.ts"],
+  "references": [{ "path": "../../commons/core-utils" }, { "path": "../app" }]
 }
