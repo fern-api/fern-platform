@@ -161,7 +161,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+        setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, decodeURI(fullSlug).split("/")));
         startScrollTracking(route);
     });
 

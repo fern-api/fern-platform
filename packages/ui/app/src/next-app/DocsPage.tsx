@@ -130,7 +130,7 @@ export const getDocsPageProps = async (
         return { type: "notFound", notFound: true };
     }
 
-    const pathname = slugArray != null ? slugArray.join("/") : "";
+    const pathname = decodeURI(slugArray != null ? slugArray.join("/") : "");
     const url = buildUrl({ host: xFernHost, pathname });
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 

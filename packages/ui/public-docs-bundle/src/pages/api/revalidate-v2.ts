@@ -62,7 +62,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
         const { path } = parseResult.request;
 
         try {
-            await res.revalidate(`/static/${host}/${path}`);
+            await res.revalidate(`/static/${encodeURI(host)}/${encodeURI(path)}`);
             // return jsonResponse<ResponseBody>(200, {
             //     success: true,
             //     message: "Successfully revalidated path: " + `${host}/${path}`,

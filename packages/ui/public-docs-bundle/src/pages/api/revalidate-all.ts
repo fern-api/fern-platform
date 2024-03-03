@@ -81,7 +81,7 @@ const handler: NextApiHandler = async (
         const results = await Promise.all(
             urls.map(async (url): Promise<RevalidatePathResult> => {
                 try {
-                    await res.revalidate(`/static/${url}`);
+                    await res.revalidate(`/static/${encodeURI(url)}`);
                     return { success: true, url };
                 } catch (e) {
                     // eslint-disable-next-line no-console
