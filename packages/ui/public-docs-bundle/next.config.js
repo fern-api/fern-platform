@@ -8,35 +8,7 @@ const nextConfig = {
     },
     assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
     rewrites: async () => ({
-        beforeFiles: [
-            { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
-            {
-                source: "/_next/data/:hash/:subpath/:oldhost/:path*",
-                has: [{ type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" }],
-                destination: "/_next/data/:hash/:subpath/:host/:path*",
-            },
-            { source: "/_axiom/:path*", destination: "/_axiom/:path*" },
-        ],
-        afterFiles: [
-            { source: "/_next/:path*", destination: "/_next/:path*" },
-            { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
-            { source: "/_axiom/:path*", destination: "/_axiom/:path*" },
-            { source: "/robots.txt", destination: "/api/robots.txt" },
-            { source: "/sitemap.xml", destination: "/api/sitemap.xml" },
-            // ...[
-            //     "proxy",
-            //     "revalidate-all",
-            //     "revalidate-v2",
-            //     "serialize-mdx",
-            //     "sitemap",
-            //     "resolve-api",
-            //     "robots.txt",
-            //     "sitemap.xml",
-            // ].map((prefix) => ({
-            //     source: `/api/${prefix}`,
-            //     destination: `/api/${prefix}`,
-            // })),
-        ],
+        beforeFiles: [{ source: "/:prefix*/_next/:path*", destination: "/_next/:path*" }],
         fallback: [
             {
                 has: [
