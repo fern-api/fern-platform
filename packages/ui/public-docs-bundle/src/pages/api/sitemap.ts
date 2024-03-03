@@ -7,12 +7,25 @@ import { toValidPathname } from "../../utils/toValidPathname";
 
 export const runtime = "edge";
 
+function getHostFromUrl(url: string | undefined): string | undefined {
+    if (url == null) {
+        return undefined;
+    }
+    const urlObj = new URL(url);
+    return urlObj.host;
+}
+
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
 
-    let xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host");
+    let xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
+
+    if (xFernHost?.includes("localhost")) {
+        xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
+    }
+
     const headers: Record<string, string> = {};
 
     if (xFernHost != null) {

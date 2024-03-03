@@ -3,8 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;
 
+function getHostFromUrl(url: string | undefined): string | undefined {
+    if (url == null) {
+        return undefined;
+    }
+    const urlObj = new URL(url);
+    return urlObj.host;
+}
+
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host");
+    const xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
 
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return notFoundResponse();
