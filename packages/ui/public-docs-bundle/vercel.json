@@ -1,38 +1,38 @@
 {
-    "headers": [
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
         {
-            "source": "/sitemap.xml",
-            "headers": [
-                {
-                    "key": "Vercel-CDN-Cache-Control",
-                    "value": "max-age=3600"
-                },
-                {
-                    "key": "CDN-Cache-Control",
-                    "value": "max-age=60"
-                },
-                {
-                    "key": "Cache-Control",
-                    "value": "maxage=60"
-                }
-            ]
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
         },
         {
-            "source": "/robots.xml",
-            "headers": [
-                {
-                    "key": "Vercel-CDN-Cache-Control",
-                    "value": "max-age=3600"
-                },
-                {
-                    "key": "CDN-Cache-Control",
-                    "value": "max-age=60"
-                },
-                {
-                    "key": "Cache-Control",
-                    "value": "maxage=60"
-                }
-            ]
+          "key": "CDN-Cache-Control",
+          "value": "max-age=60"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "maxage=60"
         }
-    ]
+      ]
+    },
+    {
+      "source": "/robots.xml",
+      "headers": [
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=60"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "maxage=60"
+        }
+      ]
+    }
+  ]
 }
