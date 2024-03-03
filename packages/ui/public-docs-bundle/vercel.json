@@ -1,0 +1,21 @@
+{
+    "headers": [
+        {
+            "source": "/api/sitemap.ts",
+            "headers": [
+                {
+                    "key": "Vercel-CDN-Cache-Control",
+                    "value": "max-age=3600"
+                },
+                {
+                    "key": "CDN-Cache-Control",
+                    "value": "max-age=60"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "maxage=60"
+                }
+            ]
+        }
+    ]
+}

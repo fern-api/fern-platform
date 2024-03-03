@@ -52,3 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params = {}, req,
 
     return { props: {} };
 };
+
+export const config = {
+    runtime: "edge",
+};

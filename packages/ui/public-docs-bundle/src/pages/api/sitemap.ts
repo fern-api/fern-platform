@@ -22,10 +22,6 @@ export function toValidPathname(pathname: string | string[] | undefined): string
 }
 
 const sitemapApiHandler: NextApiHandler = async (req, res: NextApiResponse<string[]>) => {
-    res.setHeader("Vercel-CDN-Cache-Control", "max-age=3600");
-    res.setHeader("CDN-Cache-Control", "max-age=60");
-    res.setHeader("Cache-Control", "max-age=10");
-
     try {
         if (req.method !== "GET") {
             res.status(400).json([]);

@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.50.12-4-gdf2d015",
-    "@fern-ui/core-utils": "workspace:^",
+    "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@tailwindcss/forms": "^0.5.7",
     "cookies-next": "^4.1.1",
