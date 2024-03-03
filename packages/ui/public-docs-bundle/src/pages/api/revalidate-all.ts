@@ -1,21 +1,30 @@
 import { buildUrl } from "@fern-ui/ui";
-import { revalidatePath } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import { getAllUrlsFromDocsConfig } from "../../utils/getAllUrlsFromDocsConfig";
 import { loadWithUrl } from "../../utils/loadWithUrl";
-import { jsonResponse, notFoundResponse } from "../../utils/serverResponse";
+import { notFoundResponse } from "../../utils/serverResponse";
 import { toValidPathname } from "../../utils/toValidPathname";
 
-export const runtime = "edge";
+function getHostFromUrl(url: string | undefined): string | undefined {
+    if (url == null) {
+        return undefined;
+    }
+    const urlObj = new URL(url);
+    return urlObj.host;
+}
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+const handler: NextApiHandler = async (
+    req: NextApiRequest,
+    res: NextApiResponse<{ pathsRevalidated: string[] }>,
+): Promise<unknown> => {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host");
+        const xFernHost = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
         if (typeof xFernHost !== "string") {
             return notFoundResponse();
         }
@@ -24,12 +33,13 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         const docs = await loadWithUrl(
             buildUrl({
                 host: hostWithoutTrailingSlash,
-                pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")),
+                pathname: toValidPathname(req.query.basePath),
             }),
         );
 
         if (docs == null) {
-            return notFoundResponse();
+            // return notFoundResponse();
+            return res.status(404).json({ pathsRevalidated: [] });
         }
 
         const urls = await getAllUrlsFromDocsConfig(
@@ -39,12 +49,16 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             docs.definition.apis,
         );
 
-        urls.map((url) => revalidatePath(`/static/${url}`, "page"));
+        await Promise.all(urls.map(async (url) => await res.revalidate(`/static/${url}`)));
 
-        return jsonResponse(200, { pathsRevalidated: urls });
+        // return jsonResponse(200, { pathsRevalidated: urls });
+        return res.status(200).json({ pathsRevalidated: urls });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return new NextResponse(null, { status: 500 });
+        // return new NextResponse(null, { status: 500 });
+        return res.status(500).json({ pathsRevalidated: [] });
     }
-}
+};
+
+export default handler;

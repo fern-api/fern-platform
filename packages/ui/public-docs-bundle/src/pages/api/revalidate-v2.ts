@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 
 import { isPlainObject } from "@fern-ui/core-utils";
-import { revalidatePath } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
-import { jsonResponse } from "../../utils/serverResponse";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 interface RequestBody {
     path: string;
@@ -32,18 +31,29 @@ interface ErrorParseResult {
     success: false;
     message: string;
 }
-export const runtime = "edge";
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+function getHostFromUrl(url: string | undefined): string | undefined {
+    if (url == null) {
+        return undefined;
+    }
+    const urlObj = new URL(url);
+    return urlObj.host;
+}
+
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>): Promise<unknown> => {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
-    const host = req.headers.get("x-fern-host") ?? req.nextUrl.host;
+    const host = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
     try {
-        const parseResult = parseRequestBody(await req.json());
+        const parseResult = parseRequestBody(req.body);
 
         if (!parseResult.success) {
-            return jsonResponse<ResponseBody>(400, {
+            // return jsonResponse<ResponseBody>(400, {
+            //     success: false,
+            //     message: "Bad request: " + parseResult.message,
+            // });
+            return res.status(400).json({
                 success: false,
                 message: "Bad request: " + parseResult.message,
             });
@@ -52,8 +62,12 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         const { path } = parseResult.request;
 
         try {
-            revalidatePath(`static/${host}/${path}`, "page");
-            return jsonResponse<ResponseBody>(200, {
+            await res.revalidate(`static/${host}/${path}`);
+            // return jsonResponse<ResponseBody>(200, {
+            //     success: true,
+            //     message: "Successfully revalidated path: " + `${host}/${path}`,
+            // });
+            return res.status(200).json({
                 success: true,
                 message: "Successfully revalidated path: " + `${host}/${path}`,
             });
@@ -61,7 +75,11 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             const message = e instanceof Error ? e.message : "Unknown error.";
             console.error("Revalidation error:", message);
             console.error(e);
-            return jsonResponse<ResponseBody>(500, {
+            // return jsonResponse<ResponseBody>(500, {
+            //     success: false,
+            //     message: "Failed to revalidate path: " + message,
+            // });
+            return res.status(500).json({
                 success: false,
                 message: "Failed to revalidate path: " + message,
             });
@@ -69,9 +87,15 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     } catch (err) {
         const message = err instanceof Error ? err.message : "Unknown error.";
         console.error(err);
-        return jsonResponse<ResponseBody>(500, { success: false, message: "Unexpected error: " + message });
+        // return jsonResponse<ResponseBody>(500, { success: false, message: "Unexpected error: " + message });
+        return res.status(500).json({
+            success: false,
+            message: "Unexpected error: " + message,
+        });
     }
-}
+};
+
+export default handler;
 
 function parseRequestBody(rawBody: unknown): ParseResult {
     if (!isPlainObject(rawBody)) {
