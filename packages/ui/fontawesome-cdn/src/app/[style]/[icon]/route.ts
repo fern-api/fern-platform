@@ -5,40 +5,42 @@ import { fad } from "@fortawesome/pro-duotone-svg-icons";
 import { fal } from "@fortawesome/pro-light-svg-icons";
 import { far } from "@fortawesome/pro-regular-svg-icons";
 import { fas as fasPro } from "@fortawesome/pro-solid-svg-icons";
-import { GetServerSideProps } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 library.add(fas, fab, fad, fal, far, fasPro);
 
-export default function FontawesomeIcon(): null {
-    return null;
-}
+export const runtime = "edge";
 
 // This gets called on every request
-export const getServerSideProps: GetServerSideProps = async ({ params = {}, res }) => {
+export async function GET(
+    _req: NextRequest,
+    { params }: { params: { style: string; icon: string } },
+): Promise<NextResponse> {
     const { style, icon: iconName } = params;
 
     if (typeof style !== "string" || typeof iconName !== "string" || !iconName.endsWith(".svg")) {
-        return { notFound: true };
+        return new NextResponse(null, { status: 404 });
     }
     const prefix = getIconPrefix(style);
 
     const foundIcon = icon({ prefix, iconName: iconName.replace(".svg", "") as IconName });
 
     if (foundIcon == null || foundIcon.abstract[0] == null) {
-        return { notFound: true };
+        return new NextResponse(null, { status: 404 });
     }
 
     const iconAbstract = foundIcon.abstract[0];
 
-    res.setHeader("Content-Type", "image/svg+xml");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET");
-
-    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-    res.write(abstractToString(iconAbstract));
-    res.end();
-    return { props: {} };
-};
+    return new NextResponse(abstractToString(iconAbstract), {
+        status: 200,
+        headers: {
+            "Content-Type": "image/svg+xml",
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET",
+        },
+    });
+}
 
 const DUOTONE_CSS = "<defs><style>.fa-secondary{opacity:.4}</style></defs>";
 
