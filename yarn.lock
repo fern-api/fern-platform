@@ -3293,7 +3293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/mdx@npm:^3.0.0":
+"@mdx-js/mdx@npm:^3.0.1":
   version: 3.0.1
   resolution: "@mdx-js/mdx@npm:3.0.1"
   dependencies:
@@ -3324,7 +3324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/react@npm:^3.0.0":
+"@mdx-js/react@npm:^3.0.1":
   version: 3.0.1
   resolution: "@mdx-js/react@npm:3.0.1"
   dependencies:
@@ -4760,7 +4760,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-yaml@npm:^4.0.0, @types/js-yaml@npm:^4.0.5":
+"@types/js-yaml@npm:^4.0.0":
+  version: 4.0.9
+  resolution: "@types/js-yaml@npm:4.0.9"
+  checksum: e5e5e49b5789a29fdb1f7d204f82de11cb9e8f6cb24ab064c616da5d6e1b3ccfbf95aa5d1498a9fbd3b9e745564e69b4a20b6c530b5a8bbb2d4eb830cda9bc69
+  languageName: node
+  linkType: hard
+
+"@types/js-yaml@npm:^4.0.5":
   version: 4.0.5
   resolution: "@types/js-yaml@npm:4.0.5"
   checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
@@ -4841,9 +4848,9 @@ __metadata:
   linkType: hard
 
 "@types/mdx@npm:^2.0.0":
-  version: 2.0.5
-  resolution: "@types/mdx@npm:2.0.5"
-  checksum: 1069baff0b2d0fb0bc724748e2386af626cc30f8ef99e680afb4dee566ed0aeabd31cea774212a7033f491e594a0acc234116078b252cba94ac413f91eb585a3
+  version: 2.0.11
+  resolution: "@types/mdx@npm:2.0.11"
+  checksum: 4199e8d58f0a40be908fe8148959a4e9779f94339f83327495dd5a6609fc82cd5f6ff7391bf6077d7d2ca73cedec3557a51cac5044f0d6f2ae37e40019813dfe
   languageName: node
   linkType: hard
 
@@ -5564,12 +5571,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.0":
-  version: 8.9.0
-  resolution: "acorn@npm:8.9.0"
+"acorn@npm:^8.0.0, acorn@npm:^8.9.0":
+  version: 8.11.3
+  resolution: "acorn@npm:8.11.3"
   bin:
     acorn: bin/acorn
-  checksum: 25dfb94952386ecfb847e61934de04a4e7c2dc21c2e700fc4e2ef27ce78cb717700c4c4f279cd630bb4774948633c3859fc16063ec8573bda4568e0a312e6744
+  checksum: 76d8e7d559512566b43ab4aadc374f11f563f0a9e21626dd59cb2888444e9445923ae9f3699972767f18af61df89cd89f5eaaf772d1327b055b45cb829b4a88c
   languageName: node
   linkType: hard
 
@@ -5597,15 +5604,6 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 7270ca82b242eafe5687a11fea6e088c960af712683756abf0791b68855ea9cace3057bd5e998ffcef50c944810c1e0ca1da526d02b32110e13c722aa959afdc
-  languageName: node
-  linkType: hard
-
-"acorn@npm:^8.9.0":
-  version: 8.11.3
-  resolution: "acorn@npm:8.11.3"
-  bin:
-    acorn: bin/acorn
-  checksum: 76d8e7d559512566b43ab4aadc374f11f563f0a9e21626dd59cb2888444e9445923ae9f3699972767f18af61df89cd89f5eaaf772d1327b055b45cb829b4a88c
   languageName: node
   linkType: hard
 
@@ -10503,11 +10501,11 @@ env-cmd@toddbluhm/env-cmd:
   linkType: hard
 
 "is-reference@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "is-reference@npm:3.0.1"
+  version: 3.0.2
+  resolution: "is-reference@npm:3.0.2"
   dependencies:
     "@types/estree": "*"
-  checksum: 12c316d16191961938057e949c9f59ecac3c00c8101005a81ee351fde0775590238939c294ecac3a371400eb85d4b2556675396ebd4db821b767c145df28623f
+  checksum: ac3bf5626fe9d0afbd7454760d73c47f16b9f471401b9749721ad3b66f0a39644390382acf88ca9d029c95782c1e2ec65662855e3ba91acf52d82231247a7fd3
   languageName: node
   linkType: hard
 
@@ -12974,8 +12972,8 @@ env-cmd@toddbluhm/env-cmd:
   version: 4.4.1
   resolution: "next-mdx-remote@npm:4.4.1"
   dependencies:
-    "@mdx-js/mdx": ^3.0.0
-    "@mdx-js/react": ^3.0.0
+    "@mdx-js/mdx": ^3.0.1
+    "@mdx-js/react": ^3.0.1
     vfile: ^5.3.0
     vfile-matter: ^3.0.1
   peerDependencies:

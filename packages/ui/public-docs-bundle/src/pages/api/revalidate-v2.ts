@@ -41,7 +41,7 @@ function parseRequestBody(rawBody: unknown): ParseResult {
     return { success: true, request: { path } };
 }
 
-export const revalidateV2ApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResponseBody>) => {
+const revalidateV2ApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResponseBody>) => {
     try {
         if (req.method !== "POST") {
             res.status(400).send({
@@ -92,6 +92,8 @@ export const revalidateV2ApiHandler: NextApiHandler = async (req, res: NextApiRe
         });
     }
 };
+
+export default revalidateV2ApiHandler;
 
 export const config = {
     runtime: "edge",

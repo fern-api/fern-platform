@@ -5,12 +5,11 @@ import {
     isPage,
     isUnversionedTabbedNavigationConfig,
     isVersionedNavigationConfig,
-    REGISTRY_SERVICE,
     resolveSidebarNodes,
     type SidebarNode,
 } from "@fern-ui/ui";
-import { flatten } from "lodash-es";
 import { NextApiHandler, NextApiResponse } from "next";
+import { loadWithUrl } from "../../utils/loadWithUrl";
 
 export function toValidPathname(pathname: string | string[] | undefined): string {
     if (typeof pathname === "string") {
@@ -22,7 +21,11 @@ export function toValidPathname(pathname: string | string[] | undefined): string
     return "";
 }
 
-export const sitemapApiHandler: NextApiHandler = async (req, res: NextApiResponse<string[]>) => {
+const sitemapApiHandler: NextApiHandler = async (req, res: NextApiResponse<string[]>) => {
+    res.setHeader("Vercel-CDN-Cache-Control", "max-age=3600");
+    res.setHeader("CDN-Cache-Control", "max-age=60");
+    res.setHeader("Cache-Control", "max-age=10");
+
     try {
         if (req.method !== "GET") {
             res.status(400).json([]);
@@ -41,23 +44,23 @@ export const sitemapApiHandler: NextApiHandler = async (req, res: NextApiRespons
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url: buildUrl({
+        const docs = await loadWithUrl(
+            buildUrl({
                 host: hostWithoutTrailingSlash,
                 pathname: toValidPathname(req.query.basePath),
             }),
-        });
+        );
 
-        if (!docs.ok) {
+        if (docs == null) {
             res.status(404).json([]);
             return;
         }
 
         const urls = await getAllUrlsFromDocsConfig(
-            docs.body.baseUrl.domain,
-            docs.body.baseUrl.basePath,
-            docs.body.definition.config,
-            docs.body.definition.apis,
+            docs.baseUrl.domain,
+            docs.baseUrl.basePath,
+            docs.definition.config,
+            docs.definition.apis,
         );
 
         res.status(200).json(urls);
@@ -67,6 +70,8 @@ export const sitemapApiHandler: NextApiHandler = async (req, res: NextApiRespons
         res.status(500).json([]);
     }
 };
+
+export default sitemapApiHandler;
 
 export const config = {
     runtime: "edge",
@@ -88,11 +93,11 @@ export async function getAllUrlsFromDocsConfig(
             : [],
     );
 
-    const sidebarNodes = flatten(
+    const sidebarNodes = (
         await Promise.all(
             flattenedNavigationConfig.map(async ({ slug, items }) => await resolveSidebarNodes(items, apis, slug)),
-        ),
-    );
+        )
+    ).flatMap((nodes) => nodes);
 
     const flattenedSidebarNodes = flattenSidebarNodeSlugs(sidebarNodes);
 

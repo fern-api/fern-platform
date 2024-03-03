@@ -1,4 +1,4 @@
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote";
 import React, { HTMLAttributes } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { capturePosthogEvent } from "../analytics/posthog";

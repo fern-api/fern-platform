@@ -1,10 +1,10 @@
 import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
-import { debounce } from "lodash-es";
+import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { resolveActiveSidebarNode, SidebarNavigation, SidebarNode } from "../../sidebar/types";
+import { SidebarNavigation, SidebarNode, visitSidebarNodes } from "../../sidebar/types";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { FernDocsFrontmatter } from "../../util/mdx";
 import { ResolvedPath } from "../../util/ResolvedPath";
@@ -263,3 +263,10 @@ function convertToDescription(
 ): string | undefined {
     return frontmatter?.description ?? page?.description ?? undefined;
 }
+
+const resolveActiveSidebarNode = memoize(
+    (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
+        return visitSidebarNodes(sidebarNodes, fullSlug).curr;
+    },
+    (_sidebarNodes, fullSlug) => fullSlug.join("/"),
+);

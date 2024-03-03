@@ -8,7 +8,7 @@ import {
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 
-export const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
+const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {
         if (req.method !== "GET") {
             res.status(400).json(null);
@@ -74,6 +74,8 @@ export const resolveApiHandler: NextApiHandler = async (req, res: NextApiRespons
     }
 };
 
+export default resolveApiHandler;
+
 function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode | undefined {
     for (const node of sidebarNodes) {
         if (node.type === "apiSection" && node.api === api) {
@@ -88,6 +90,6 @@ function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode |
     return undefined;
 }
 
-export const config = {
-    runtime: "edge",
-};
+// export const config = {
+//     runtime: "edge",
+// };

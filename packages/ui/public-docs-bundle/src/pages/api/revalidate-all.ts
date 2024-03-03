@@ -1,8 +1,9 @@
-import { buildUrl, REGISTRY_SERVICE } from "@fern-ui/ui";
+import { buildUrl } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { loadWithUrl } from "../../utils/loadWithUrl";
 import { getAllUrlsFromDocsConfig, toValidPathname } from "./sitemap";
 
-export const revalidateAllApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
+const revalidateAllApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
     try {
         if (req.method !== "POST") {
             res.status(400).send();
@@ -21,23 +22,23 @@ export const revalidateAllApiHandler: NextApiHandler = async (req, res: NextApiR
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url: buildUrl({
+        const docs = await loadWithUrl(
+            buildUrl({
                 host: hostWithoutTrailingSlash,
                 pathname: toValidPathname(req.query.basePath),
             }),
-        });
+        );
 
-        if (!docs.ok) {
+        if (docs == null) {
             res.status(404).send();
             return;
         }
 
         const urls = await getAllUrlsFromDocsConfig(
-            docs.body.baseUrl.domain,
-            docs.body.baseUrl.basePath,
-            docs.body.definition.config,
-            docs.body.definition.apis,
+            docs.baseUrl.domain,
+            docs.baseUrl.basePath,
+            docs.definition.config,
+            docs.definition.apis,
         );
 
         await Promise.all(urls.map((url) => res.revalidate(`/${url}`)));
@@ -49,6 +50,8 @@ export const revalidateAllApiHandler: NextApiHandler = async (req, res: NextApiR
         res.status(500).send();
     }
 };
+
+export default revalidateAllApiHandler;
 
 export const config = {
     runtime: "edge",
