@@ -7,7 +7,6 @@ import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernCard } from "../components/FernCard";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { useAnchorInView } from "../custom-docs-page/TableOfContentsContext";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
 
@@ -85,7 +84,6 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
-            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -102,7 +100,6 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
-            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -119,7 +116,6 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
-            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -136,7 +132,6 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
-            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -153,7 +148,6 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
-            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             <span>{children}</span>
@@ -170,7 +164,6 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
             id={slug}
             className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
             {...rest}
-            ref={useAnchorInView(slug)}
         >
             <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
             {children}

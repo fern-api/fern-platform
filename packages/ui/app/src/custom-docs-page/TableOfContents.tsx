@@ -1,8 +1,9 @@
 import classNames from "classnames";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { parse } from "node-html-parser";
-import { CSSProperties, useContext, useMemo } from "react";
+import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { getSlugFromText } from "../mdx/base-components";
-import { TableOfContentsContext } from "./TableOfContentsContext";
 
 export declare namespace TableOfContents {
     export interface HTMLProps {
@@ -23,8 +24,84 @@ export const HTMLTableOfContents: React.FC<TableOfContents.HTMLProps> = ({ class
     return <TableOfContents className={className} style={style} tableOfContents={tableOfContents} />;
 };
 
+let anchorJustSet = false;
+let anchorJustSetTimeout: number;
+
 export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
-    const { anchorInView } = useContext(TableOfContentsContext);
+    const router = useRouter();
+
+    const [, currentPathAnchor] = router.asPath.split("#");
+
+    const allAnchors = useMemo(() => getAllAnchorStrings(tableOfContents), [tableOfContents]);
+
+    const [anchorInView, setAnchorInView] = useState(currentPathAnchor ?? allAnchors[0]);
+
+    useEffect(() => {
+        const handleHashChange = (url: string) => {
+            const [, newAnchor] = url.split("#");
+            if (newAnchor != null) {
+                setAnchorInView(newAnchor);
+                anchorJustSet = true;
+                clearTimeout(anchorJustSetTimeout);
+                anchorJustSetTimeout = window.setTimeout(() => {
+                    anchorJustSet = false;
+                }, 150);
+            }
+        };
+        router.events.on("hashChangeComplete", handleHashChange);
+
+        return () => {
+            router.events.off("hashChangeComplete", handleHashChange);
+        };
+    }, [router]);
+
+    useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
+
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+
+            // when the user scrolls to the very top of the page, set the anchorInView to the first anchor
+            if (scrollY === 0) {
+                setAnchorInView(allAnchors[0]);
+                return;
+            }
+
+            // when the user scrolls to the very bottom of the page, set the anchorInView to the last anchor
+            if (window.innerHeight + scrollY >= document.body.scrollHeight) {
+                setAnchorInView(allAnchors[allAnchors.length - 1]);
+                return;
+            }
+
+            // when the user scrolls down, check if an anchor has just scrolled up just past 40% from the top of the viewport
+            // if so, set the anchorInView to that anchor
+
+            if (!anchorJustSet) {
+                for (let i = allAnchors.length - 1; i >= 0; i--) {
+                    const anchor = allAnchors[i];
+                    if (anchor == null) {
+                        continue;
+                    }
+                    const element = document.getElementById(anchor);
+                    if (element != null) {
+                        const { bottom } = element.getBoundingClientRect();
+                        if (bottom < window.innerHeight * 0.5) {
+                            setAnchorInView(anchor);
+                            break;
+                        }
+                    }
+                }
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [allAnchors, tableOfContents]);
 
     const renderList = (headings: TableOfContentsItem[], indent?: boolean) => {
         if (headings.length === 0) {
@@ -47,7 +124,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
                     return (
                         <li key={index}>
                             {text.length > 0 && (
-                                <a
+                                <Link
                                     className={classNames(
                                         "hover:dark:text-text-default-dark hover:text-text-default-light block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline hover:transition hover:no-underline",
                                         {
@@ -58,7 +135,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
                                     href={`#${anchorString}`}
                                 >
                                     {text}
-                                </a>
+                                </Link>
                             )}
                             {children.length > 0 && renderList(children, true)}
                         </li>
@@ -132,3 +209,7 @@ const makeTree = (
 
     return tree;
 };
+
+function getAllAnchorStrings(tableOfContents: TableOfContentsItem[]): string[] {
+    return tableOfContents.flatMap((item) => [item.anchorString, ...getAllAnchorStrings(item.children)]);
+}
