@@ -34,14 +34,23 @@ const nextConfig = {
                 source: "/_vercel/:path*",
                 destination: "/_vercel/:path*",
             },
+            {
+                source: "/robots.txt",
+                destination: "/api/robots.txt",
+            },
+            {
+                source: "/sitemap.xml",
+                destination: "/api/sitemap.xml",
+            },
             ...[
                 "proxy",
                 "revalidate-all",
                 "revalidate-v2",
-                "revalidate",
                 "serialize-mdx",
                 "sitemap",
                 "resolve-api",
+                "robots.txt",
+                "sitemap.xml",
             ].map((prefix) => ({
                 source: `/api/${prefix}`,
                 destination: `/api/${prefix}`,
