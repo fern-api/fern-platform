@@ -42,7 +42,6 @@
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@tailwindcss/forms": "^0.5.7",
-    "cookies-next": "^4.1.1",
     "cssnano": "^6.0.3",
     "lodash-es": "^4.17.21",
     "next": "^14.0.4",

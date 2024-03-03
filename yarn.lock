@@ -2564,7 +2564,6 @@ __metadata:
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.2.18
     autoprefixer: ^10.4.16
-    cookies-next: ^4.1.1
     cssnano: ^6.0.3
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd

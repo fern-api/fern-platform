@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src",
+    "rootDir": ".",
     "allowJs": true,
     "incremental": true,
     "noEmit": true,
@@ -15,13 +15,8 @@
     ],
     "strictNullChecks": true
   },
-  "include": [
-    "./src/**/*",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["./src/**/*", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"],
   "references": [
     {
       "path": "../../commons/core-utils"

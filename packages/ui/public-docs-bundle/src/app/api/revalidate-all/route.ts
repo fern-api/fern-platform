@@ -1,9 +1,10 @@
 import { buildUrl } from "@fern-ui/ui";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { getAllUrlsFromDocsConfig } from "../../../utils/getAllUrlsFromDocsConfig";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse, notFoundResponse } from "../../../utils/serverResponse";
-import { getAllUrlsFromDocsConfig, toValidPathname } from "../sitemap/route";
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 export const runtime = "edge";
 
