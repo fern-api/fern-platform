@@ -26,7 +26,7 @@
     *::after {
         box-sizing: inherit;
 
-        @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
+        @apply focus:outline-accent-primary focus-visible:outline-accent-primary;
     }
 
     ::selection {
@@ -198,18 +198,22 @@
 
     .fern-search-bar {
         @apply cursor-pointer;
-        @apply text-sm border-default flex items-center rounded-lg border px-2.5 py-2 t-muted;
+        @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;
         @apply bg-tag-default;
-        @apply shadow-card-light dark:shadow-none;
-        @apply hover:shadow-card-light-elevated hover:dark:shadow-card-dark transition-shadow;
+        @apply hover:bg-tag-default-hover transition-[background,shadow];
+        @apply ring-inset ring-border-concealed hover:ring-border-default ring-1;
 
         .search-placeholder {
             @apply inline-flex flex-1 items-center space-x-3;
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted border-default shadow-card-light inline-flex size-5 items-center justify-center rounded border bg-white font-mono text-xs leading-none;
+            @apply t-muted ring-border-concealed shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 bg-white font-mono text-xs leading-none;
             @apply dark:shadow-card-dark dark:bg-white/5;
+        }
+
+        &:hover .keyboard-shortcut-hint {
+            @apply ring-border-default;
         }
 
         &:disabled {

@@ -13,6 +13,8 @@ export interface HeaderLogoSectionProps {
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
 
+    // currentTabIndex: number | undefined;
+    // tabs: SidebarTab[];
     currentVersionIndex: number | undefined;
     versions: SidebarVersionInfo[];
 }
@@ -22,6 +24,8 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     logoV2,
     logoHeight,
     logoHref,
+    // currentTabIndex,
+    // tabs,
     currentVersionIndex,
     versions,
 }) => {
@@ -77,19 +81,35 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     };
 
     return (
-        <div className="relative mr-4 flex h-full min-w-fit flex-1 shrink-0 items-center space-x-3 py-1">
-            {logoHref != null ? (
-                <Link href={logoHref} className="flex shrink-0 items-center">
-                    {renderLogoContent()}
-                </Link>
-            ) : (
-                <div className="flex shrink-0 items-center">{renderLogoContent()}</div>
-            )}
-            {versions.length > 1 && (
-                <div>
-                    <VersionDropdown currentVersionIndex={currentVersionIndex} versions={versions} />
+        <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center space-x-2 py-1">
+            <div className="flex items-center pr-4">
+                {logoHref != null ? (
+                    <Link href={logoHref} className="flex shrink-0 items-center">
+                        {renderLogoContent()}
+                    </Link>
+                ) : (
+                    <div className="flex shrink-0 items-center">{renderLogoContent()}</div>
+                )}
+                {/* {tabs.length > 1 && (
+                <div style={{ marginBottom: -1 * logoImageHeight * 0.125 }}>
+                    <span
+                        className="t-accent tracking-tight"
+                        style={{
+                            fontSize: logoImageHeight,
+                            lineHeight: `${logoImageHeight * 0.875}px`,
+                            fontFamily: "var(--typography-heading-font-family)",
+                        }}
+                    >
+                        {tabs[currentTabIndex ?? 0]?.title}
+                    </span>
                 </div>
-            )}
+            )} */}
+                {versions.length > 1 && (
+                    <div>
+                        <VersionDropdown currentVersionIndex={currentVersionIndex} versions={versions} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

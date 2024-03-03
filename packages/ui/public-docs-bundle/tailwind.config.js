@@ -273,24 +273,12 @@ module.exports = {
                 ".bg-accent-highlight-faded": {
                     "@apply bg-accent-primary-light/10 dark:bg-accent-primary-dark/10": {},
                 },
-                // ".bg-tag-default": {
-                //     "@apply bg-tag-default": {},
-                // },
                 ".bg-tag-primary": {
                     "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
                 ".bg-border-primary": {
                     "@apply bg-border-accent-muted-light dark:bg-border-accent-muted-dark": {},
                 },
-                // ".bg-tag-success": {
-                //     "@apply bg-tag-success-light dark:bg-tag-success-dark": {},
-                // },
-                // ".bg-tag-warning": {
-                //     "@apply bg-tag-warning-light dark:bg-tag-warning-dark": {},
-                // },
-                // ".bg-tag-danger": {
-                //     "@apply bg-tag-danger-light dark:bg-tag-danger-dark": {},
-                // },
                 // Border
                 ".border-accent-primary": {
                     "@apply border-accent-primary-light dark:border-accent-primary-dark": {},

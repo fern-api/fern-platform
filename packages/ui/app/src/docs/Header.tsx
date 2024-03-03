@@ -102,6 +102,8 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 logoV2={logoV2}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
+                // tabs={navigation.tabs}
+                // currentTabIndex={navigation.currentTabIndex}
                 versions={navigation.versions}
                 currentVersionIndex={navigation.currentVersionIndex}
             />
