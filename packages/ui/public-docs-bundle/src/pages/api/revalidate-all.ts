@@ -14,6 +14,10 @@ function getHostFromUrl(url: string | undefined): string | undefined {
     return urlObj.host;
 }
 
+export const config = {
+    maxDuration: 300,
+};
+
 const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<{ pathsRevalidated: string[] }>,
