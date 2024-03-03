@@ -37,23 +37,15 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
     const [anchorInView, setAnchorInView] = useState(currentPathAnchor ?? allAnchors[0]);
 
     useEffect(() => {
-        const handleHashChange = (url: string) => {
-            const [, newAnchor] = url.split("#");
-            if (newAnchor != null) {
-                setAnchorInView(newAnchor);
-                anchorJustSet = true;
-                clearTimeout(anchorJustSetTimeout);
-                anchorJustSetTimeout = window.setTimeout(() => {
-                    anchorJustSet = false;
-                }, 150);
-            }
-        };
-        router.events.on("hashChangeComplete", handleHashChange);
-
-        return () => {
-            router.events.off("hashChangeComplete", handleHashChange);
-        };
-    }, [router]);
+        if (currentPathAnchor != null) {
+            setAnchorInView(currentPathAnchor);
+            anchorJustSet = true;
+            clearTimeout(anchorJustSetTimeout);
+            anchorJustSetTimeout = window.setTimeout(() => {
+                anchorJustSet = false;
+            }, 150);
+        }
+    }, [currentPathAnchor]);
 
     useEffect(() => {
         if (typeof window === "undefined") {
