@@ -8,10 +8,13 @@ import {
     resolveSidebarNodes,
     type SidebarNode,
 } from "@fern-ui/ui";
-import { NextApiHandler, NextApiResponse } from "next";
-import { loadWithUrl } from "../../utils/loadWithUrl";
+import { NextRequest, NextResponse } from "next/server";
+import { loadWithUrl } from "../../../utils/loadWithUrl";
+import { jsonResponse } from "../../../utils/serverResponse";
 
-export function toValidPathname(pathname: string | string[] | undefined): string {
+export const runtime = "edge";
+
+export function toValidPathname(pathname: string | string[] | undefined | null): string {
     if (typeof pathname === "string") {
         return pathname.startsWith("/") ? pathname.slice(1) : pathname;
     }
@@ -21,35 +24,26 @@ export function toValidPathname(pathname: string | string[] | undefined): string
     return "";
 }
 
-const sitemapApiHandler: NextApiHandler = async (req, res: NextApiResponse<string[]>) => {
-    try {
-        if (req.method !== "GET") {
-            res.status(400).json([]);
-            return;
-        }
+export async function GET(req: NextRequest): Promise<NextResponse> {
+    let xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host");
+    const headers: Record<string, string> = {};
 
+    if (xFernHost != null) {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"];
-        if (typeof xFernHost === "string") {
-            req.headers.host = xFernHost;
-            res.setHeader("host", xFernHost);
-        } else {
-            res.status(400).json([]);
-            return;
-        }
-        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
+        xFernHost = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
+        headers["x-fern-host"] = xFernHost;
+    } else {
+        return jsonResponse(400, [], headers);
+    }
 
+    try {
         const docs = await loadWithUrl(
-            buildUrl({
-                host: hostWithoutTrailingSlash,
-                pathname: toValidPathname(req.query.basePath),
-            }),
+            buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) }),
         );
 
         if (docs == null) {
-            res.status(404).json([]);
-            return;
+            return jsonResponse(404, [], headers);
         }
 
         const urls = await getAllUrlsFromDocsConfig(
@@ -59,19 +53,13 @@ const sitemapApiHandler: NextApiHandler = async (req, res: NextApiResponse<strin
             docs.definition.apis,
         );
 
-        res.status(200).json(urls);
+        return jsonResponse(200, urls, headers);
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        res.status(500).json([]);
+        return jsonResponse(500, [], headers);
     }
-};
-
-export default sitemapApiHandler;
-
-export const config = {
-    runtime: "edge",
-};
+}
 
 export async function getAllUrlsFromDocsConfig(
     host: string,
@@ -131,7 +119,10 @@ function flattenSidebarNodeSlugs(nodes: SidebarNode[]): SidebarNode.Page[] {
         } else if (node.type === "section") {
             return flattenSidebarNodeSlugs(node.items);
         } else if (node.type === "apiSection") {
-            return [...node.endpoints, ...node.websockets, ...node.webhooks, node.changelog].filter(isNonNullish);
+            const current = [...node.endpoints, ...node.websockets, ...node.webhooks, node.changelog].filter(
+                isNonNullish,
+            );
+            return [...current, ...flattenSidebarNodeSlugs(node.subpackages)];
         }
         return [];
     });

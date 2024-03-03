@@ -1,4 +1,5 @@
-import { NextApiHandler, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
+import { jsonResponse } from "../../../utils/serverResponse";
 
 interface ProxyRequest {
     url: string;
@@ -26,20 +27,11 @@ interface ProxyResponseSuccess {
 
 type ProxyResponse = ProxyResponseError | ProxyResponseSuccess;
 
-const handler: NextApiHandler = async (req, res: NextApiResponse<ProxyResponse>) => {
+export const runtime = "edge";
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
     const startTime = performance.now();
     try {
-        if (req.method !== "POST") {
-            res.status(400).json({
-                type: "error",
-                body: "Only POST requests are supported",
-                status: 400,
-                time: 0,
-                size: null,
-            });
-            return;
-        }
-
         const proxyRequest = (typeof req.body === "object" ? req.body : JSON.parse(req.body)) as ProxyRequest;
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
@@ -55,7 +47,7 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<ProxyResponse>)
         const endTime = performance.now();
         const headers = response.headers;
 
-        res.status(200).json({
+        return jsonResponse<ProxyResponse>(200, {
             type: "success",
             body,
             status: response.status,
@@ -67,7 +59,8 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<ProxyResponse>)
         // eslint-disable-next-line no-console
         console.error(err);
         const endTime = performance.now();
-        res.status(500).json({
+
+        return jsonResponse<ProxyResponse>(500, {
             type: "error",
             body: "An unknown server error occured.",
             status: 500,
@@ -75,10 +68,4 @@ const handler: NextApiHandler = async (req, res: NextApiResponse<ProxyResponse>)
             size: null,
         });
     }
-};
-
-export default handler;
-
-export const config = {
-    runtime: "edge",
-};
+}

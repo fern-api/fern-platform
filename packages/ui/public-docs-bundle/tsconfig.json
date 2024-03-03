@@ -8,9 +8,26 @@
     "incremental": true,
     "noEmit": true,
     "jsx": "preserve",
-    "plugins": [{ "name": "next" }]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules"],
-  "references": [{ "path": "../../commons/core-utils" }, { "path": "../app" }]
+  "include": [
+    "./src/**/*",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../app"
+    }
+  ]
 }

@@ -89,7 +89,3 @@ function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode |
     }
     return undefined;
 }
-
-// export const config = {
-//     runtime: "edge",
-// };
