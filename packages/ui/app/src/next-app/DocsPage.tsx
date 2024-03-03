@@ -177,7 +177,7 @@ export const getDocsPageProps = async (
         return {
             type: "redirect",
             redirect: {
-                destination: "/" + resolvedPath.fullSlug,
+                destination: "/" + encodeURI(resolvedPath.fullSlug),
                 permanent: false,
             },
         };
