@@ -4163,13 +4163,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.5.11"],\
             ["@types/node", "npm:18.18.13"],\
-            ["@types/ua-parser-js", "npm:0.7.36"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:3.2.4"],\
             ["strip-ansi", "npm:7.1.0"],\
+            ["stylelint", "npm:16.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
             ["ua-parser-js", "npm:1.0.35"]\
           ],\
@@ -5134,7 +5134,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/estree", "npm:1.0.1"],\
             ["@types/estree-jsx", "npm:1.0.0"],\
             ["@types/hast", "npm:3.0.4"],\
-            ["@types/mdx", "npm:2.0.11"],\
+            ["@types/mdx", "npm:2.0.5"],\
             ["collapse-white-space", "npm:2.1.0"],\
             ["devlop", "npm:1.1.0"],\
             ["estree-util-build-jsx", "npm:3.0.1"],\
@@ -5170,7 +5170,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/@mdx-js-react-virtual-06a5948fc4/0/cache/@mdx-js-react-npm-3.0.1-1ce14f6273-1063a59726.zip/node_modules/@mdx-js/react/",\
           "packageDependencies": [\
             ["@mdx-js/react", "virtual:476f3b21d29c45437eb9675a9f53e9acbe50fc689e26a2348b52219e17c0ee5c8e1d5244895fcfe31b0d0340d21815c1a9d074aec3fd82f5d33cf9de8fa195de#npm:3.0.1"],\
-            ["@types/mdx", "npm:2.0.11"],\
+            ["@types/mdx", "npm:2.0.5"],\
             ["@types/react", "npm:18.0.20"],\
             ["react", "npm:18.2.0"]\
           ],\
@@ -7062,13 +7062,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.5"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:4.0.9", {\
-          "packageLocation": "./.yarn/cache/@types-js-yaml-npm-4.0.9-6a16d01bd2-e5e5e49b57.zip/node_modules/@types/js-yaml/",\
-          "packageDependencies": [\
-            ["@types/js-yaml", "npm:4.0.9"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["@types/jsdom", [\
@@ -7157,10 +7150,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/mdx", [\
-        ["npm:2.0.11", {\
-          "packageLocation": "./.yarn/cache/@types-mdx-npm-2.0.11-57598b217b-4199e8d58f.zip/node_modules/@types/mdx/",\
+        ["npm:2.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-mdx-npm-2.0.5-3b264b4530-1069baff0b.zip/node_modules/@types/mdx/",\
           "packageDependencies": [\
-            ["@types/mdx", "npm:2.0.11"]\
+            ["@types/mdx", "npm:2.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7392,15 +7385,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-treeify-npm-1.0.3-ef5ef3400e-777e579b30.zip/node_modules/@types/treeify/",\
           "packageDependencies": [\
             ["@types/treeify", "npm:1.0.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/ua-parser-js", [\
-        ["npm:0.7.36", {\
-          "packageLocation": "./.yarn/cache/@types-ua-parser-js-npm-0.7.36-f5ace9ead6-8c24d4dc12.zip/node_modules/@types/ua-parser-js/",\
-          "packageDependencies": [\
-            ["@types/ua-parser-js", "npm:0.7.36"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8068,6 +8052,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["acorn", "npm:8.8.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:8.9.0", {\
+          "packageLocation": "./.yarn/cache/acorn-npm-8.9.0-4ebbf0f638-25dfb94952.zip/node_modules/acorn/",\
+          "packageDependencies": [\
+            ["acorn", "npm:8.9.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["acorn-globals", [\
@@ -8095,6 +8086,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["acorn-jsx", "virtual:a50722a5a9326b6a5f12350c494c4db3aa0f4caeac45e3e9e5fe071da20014ecfe738fe2ebe2c9c98abae81a4ea86b42f56d776b3bd5ec37f9ad3670c242b242#npm:5.3.2"],\
             ["@types/acorn", null],\
             ["acorn", "npm:8.11.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/acorn",\
+            "acorn"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:c1ee8da2208095601afd6b3d193759b23c67e6125a2702755478ccc78efb4f432797d8f0064f8fe4eef2ef73923982b9e89749d582ec5206c34703b558f226a5#npm:5.3.2", {\
+          "packageLocation": "./.yarn/__virtual__/acorn-jsx-virtual-c4836acfe2/0/cache/acorn-jsx-npm-5.3.2-d7594599ea-c3d3b2a89c.zip/node_modules/acorn-jsx/",\
+          "packageDependencies": [\
+            ["acorn-jsx", "virtual:c1ee8da2208095601afd6b3d193759b23c67e6125a2702755478ccc78efb4f432797d8f0064f8fe4eef2ef73923982b9e89749d582ec5206c34703b558f226a5#npm:5.3.2"],\
+            ["@types/acorn", null],\
+            ["acorn", "npm:8.9.0"]\
           ],\
           "packagePeers": [\
             "@types/acorn",\
@@ -13823,10 +13827,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["is-reference", [\
-        ["npm:3.0.2", {\
-          "packageLocation": "./.yarn/cache/is-reference-npm-3.0.2-a164dd9cbd-ac3bf5626f.zip/node_modules/is-reference/",\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/is-reference-npm-3.0.1-6d25a4ca74-12c316d161.zip/node_modules/is-reference/",\
           "packageDependencies": [\
-            ["is-reference", "npm:3.0.2"],\
+            ["is-reference", "npm:3.0.1"],\
             ["@types/estree", "npm:1.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -15950,8 +15954,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/micromark-extension-mdxjs-npm-3.0.0-c1ee8da220-7da6f0fb0e.zip/node_modules/micromark-extension-mdxjs/",\
           "packageDependencies": [\
             ["micromark-extension-mdxjs", "npm:3.0.0"],\
-            ["acorn", "npm:8.11.3"],\
-            ["acorn-jsx", "virtual:a50722a5a9326b6a5f12350c494c4db3aa0f4caeac45e3e9e5fe071da20014ecfe738fe2ebe2c9c98abae81a4ea86b42f56d776b3bd5ec37f9ad3670c242b242#npm:5.3.2"],\
+            ["acorn", "npm:8.9.0"],\
+            ["acorn-jsx", "virtual:c1ee8da2208095601afd6b3d193759b23c67e6125a2702755478ccc78efb4f432797d8f0064f8fe4eef2ef73923982b9e89749d582ec5206c34703b558f226a5#npm:5.3.2"],\
             ["micromark-extension-mdx-expression", "npm:3.0.0"],\
             ["micromark-extension-mdx-jsx", "npm:3.0.0"],\
             ["micromark-extension-mdx-md", "npm:2.0.0"],\
@@ -17347,7 +17351,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["periscopic", "npm:3.1.0"],\
             ["@types/estree", "npm:1.0.1"],\
             ["estree-walker", "npm:3.0.3"],\
-            ["is-reference", "npm:3.0.2"]\
+            ["is-reference", "npm:3.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21829,7 +21833,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/vfile-matter-npm-3.0.1-9d8d8bf427-ced55ed7d7.zip/node_modules/vfile-matter/",\
           "packageDependencies": [\
             ["vfile-matter", "npm:3.0.1"],\
-            ["@types/js-yaml", "npm:4.0.9"],\
+            ["@types/js-yaml", "npm:4.0.5"],\
             ["is-buffer", "npm:2.0.5"],\
             ["js-yaml", "npm:4.1.0"]\
           ],\
