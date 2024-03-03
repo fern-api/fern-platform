@@ -2439,6 +2439,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.5.11
     "@types/node": ^18.7.18
+    "@types/ua-parser-js": ^0.7.39
     depcheck: ^1.4.3
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -2510,6 +2511,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^3.2.4
+    stylelint: ^16.1.0
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -5035,6 +5037,13 @@ __metadata:
   version: 1.0.3
   resolution: "@types/treeify@npm:1.0.3"
   checksum: 777e579b30a916a781e7cbad2b7a76bc5473ff7bfe7167dd6de47f80f4386df5bf3d0dc34170afb75d52e75f6ed61cc109abf2324e093c1f9ecd4e79fec58d0c
+  languageName: node
+  linkType: hard
+
+"@types/ua-parser-js@npm:^0.7.39":
+  version: 0.7.39
+  resolution: "@types/ua-parser-js@npm:0.7.39"
+  checksum: 81046605eb2815b098228743b7dfde887cc8990369f2ad56e71f1400b4cef5078481c7ca91ca3dddf2e8d4e183fe93224bfdeee13bfe034a1e62d55cfbac9e26
   languageName: node
   linkType: hard
 
