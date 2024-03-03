@@ -81,8 +81,8 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     };
 
     return (
-        <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center space-x-2 py-1">
-            <div className="flex items-center pr-4">
+        <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
+            <div className="flex items-center gap-2 pr-4">
                 {logoHref != null ? (
                     <Link href={logoHref} className="flex shrink-0 items-center">
                         {renderLogoContent()}

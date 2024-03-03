@@ -24,7 +24,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
                     type: "value",
                     label: versionName,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
-                    value: slug.join("/"),
+                    value: versionName,
                     disabled: availability == null,
                     href: "/" + slug.join("/"),
                 }))}
