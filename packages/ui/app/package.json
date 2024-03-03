@@ -48,7 +48,6 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@shikijs/transformers": "^1.1.7",
     "@types/nprogress": "^0.2.3",
-    "@vercel/speed-insights": "^1.0.7",
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
     "hast": "^1.0.0",

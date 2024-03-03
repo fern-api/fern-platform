@@ -156,4 +156,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });
 
-module.exports = withBundleAnalyzer(nextConfig);
+const { withAxiom } = require("next-axiom");
+
+module.exports = withBundleAnalyzer(withAxiom(nextConfig));

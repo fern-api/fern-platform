@@ -1,4 +1,3 @@
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
@@ -19,7 +18,6 @@ export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsP
             <ThemeProvider theme={theme}>
                 <Component {...pageProps} />
             </ThemeProvider>
-            <SpeedInsights />
         </>
     );
 }
