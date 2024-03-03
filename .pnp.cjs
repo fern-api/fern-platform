@@ -4435,7 +4435,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vercel/speed-insights", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.0.7"],\
             ["algoliasearch", "npm:4.22.1"],\
             ["classnames", "npm:2.5.1"],\
-            ["cookies-next", "npm:4.1.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["hast", "npm:1.0.0"],\
@@ -6907,15 +6906,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/cookie", [\
-        ["npm:0.6.0", {\
-          "packageLocation": "./.yarn/cache/@types-cookie-npm-0.6.0-1f4c3f48f0-5edce79957.zip/node_modules/@types/cookie/",\
-          "packageDependencies": [\
-            ["@types/cookie", "npm:0.6.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/debug", [\
         ["npm:4.1.7", {\
           "packageLocation": "./.yarn/cache/@types-debug-npm-4.1.7-f54c81f8db-0a7b89d8ed.zip/node_modules/@types/debug/",\
@@ -7196,13 +7186,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
-        ["npm:16.18.86", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.86-95bb4800a9-12d70d3a51.zip/node_modules/@types/node/",\
-          "packageDependencies": [\
-            ["@types/node", "npm:16.18.86"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:18.18.13", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-18.18.13-0af68a09ab-e36d7a0ea6.zip/node_modules/@types/node/",\
           "packageDependencies": [\
@@ -9799,27 +9782,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/convert-source-map-npm-2.0.0-7ab664dc4e-63ae9933be.zip/node_modules/convert-source-map/",\
           "packageDependencies": [\
             ["convert-source-map", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["cookie", [\
-        ["npm:0.6.0", {\
-          "packageLocation": "./.yarn/cache/cookie-npm-0.6.0-362d6a2e45-f56a7d32a0.zip/node_modules/cookie/",\
-          "packageDependencies": [\
-            ["cookie", "npm:0.6.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["cookies-next", [\
-        ["npm:4.1.1", {\
-          "packageLocation": "./.yarn/cache/cookies-next-npm-4.1.1-59f12e0396-2bdd593b77.zip/node_modules/cookies-next/",\
-          "packageDependencies": [\
-            ["cookies-next", "npm:4.1.1"],\
-            ["@types/cookie", "npm:0.6.0"],\
-            ["@types/node", "npm:16.18.86"],\
-            ["cookie", "npm:0.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
