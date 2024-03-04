@@ -93,12 +93,12 @@ const handler: NextApiHandler = async (
         const successfulRevalidations = results.filter(isSuccessResult);
         const failedRevalidations = results.filter(isFailureResult);
 
-        // return jsonResponse(200, { pathsRevalidated: urls });
-        return res.status(200).json({ successfulRevalidations, failedRevalidations });
+        return res
+            .status(failedRevalidations.length === 0 ? 200 : successfulRevalidations.length === 0 ? 500 : 207)
+            .json({ successfulRevalidations, failedRevalidations });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        // return new NextResponse(null, { status: 500 });
         return res.status(500).json({ successfulRevalidations: [], failedRevalidations: [] });
     }
 };
