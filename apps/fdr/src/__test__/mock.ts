@@ -1,4 +1,4 @@
-import { APIV1Db, DocsV1Db, DocsV1Read } from "../api";
+import { APIV1Db, DocsV1Db } from "../api";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
 import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
@@ -82,13 +82,11 @@ class MockSlackService implements SlackService {
 }
 
 class MockRevalidatorService implements RevalidatorService {
-    async revalidate(_params: {
-        definition: Pick<DocsV1Read.DocsDefinition, "apis" | "config">;
-        baseUrl: ParsedBaseUrl;
-    }): Promise<RevalidatedPaths> {
+    async revalidate(_params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPaths> {
         return {
             successfulRevalidations: [],
             failedRevalidations: [],
+            revalidationFailed: false,
         };
     }
 }

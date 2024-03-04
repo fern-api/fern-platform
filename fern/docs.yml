@@ -1,0 +1,11 @@
+instances:
+  - url: https://fdr-ete-test.docs.buildwithfern.com
+    custom-domain: https://fdr-ete-test.buildwithfern.com
+title: FDR ETE Test
+navigation:
+  # - api: API Reference
+  - page: Test
+    path: ./fdr-ete-test/test-1.mdx
+colors:
+  accentPrimary: "#ffffff"
+  background: "#000000"
