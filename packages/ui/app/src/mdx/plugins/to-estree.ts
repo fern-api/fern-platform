@@ -167,7 +167,6 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const tree = { ...(value as any) };
             tree.name = null;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const body = mdastToEstree(tree).body[0];
             if (body != null && "expression" in body) {
                 return body.expression;
@@ -239,11 +238,7 @@ export function wrapChildren(children: ElementContent[]) {
 }
 
 function mdastToEstree(node: Root) {
-    const changedTree = unified()
-        .use(rehypeRecma)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .runSync(node);
-
+    const changedTree = unified().use(rehypeRecma).runSync(node);
     return changedTree as unknown as Program;
 }
 

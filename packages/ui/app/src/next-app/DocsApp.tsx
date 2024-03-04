@@ -45,6 +45,7 @@ export const DocsApp: React.FC<App.Props> = ({
     logoV2,
     logoHeight,
     logoHref,
+    title,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
     const resolvedPath = useDeepCompareMemoize(unmemoizedResolvedPath);

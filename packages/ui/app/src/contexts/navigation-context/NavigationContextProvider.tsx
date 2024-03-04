@@ -237,7 +237,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             }}
         >
             <Head>
-                {activeTitle != null && <title>{title != null ? `${activeTitle} - ${title}` : activeTitle}</title>}
+                {activeTitle != null && <title>{title != null ? `${activeTitle} – ${title}` : activeTitle}</title>}
                 {activeDescription != null && <meta name="description" content={activeDescription} />}
                 {frontmatter?.image != null && <meta property="og:image" content={frontmatter.image} />}
             </Head>
