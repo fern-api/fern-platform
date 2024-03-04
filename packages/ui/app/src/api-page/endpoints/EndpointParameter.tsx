@@ -1,4 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import classNames from "classnames";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../util/anchor";
@@ -32,15 +35,30 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
+    const router = useRouter();
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+        setIsActive(router.asPath.includes(`${route}#${anchorId}`));
+    }, [router.asPath, anchorId, route]);
+
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
-            className="scroll-mt-header-height-padded relative flex flex-col gap-2 py-3"
+            className={classNames("scroll-mt-header-height-padded relative flex flex-col gap-2 py-3", {
+                "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
+            })}
         >
             <div className="group/anchor-container flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} />
                 <span className="inline-flex items-baseline gap-1">
-                    <MonospaceText className="t-default text-sm">{name}</MonospaceText>
+                    <MonospaceText
+                        className={classNames("t-default text-sm", {
+                            "t-accent": isActive,
+                        })}
+                    >
+                        {name}
+                    </MonospaceText>
                     <div className="t-muted text-xs">{renderTypeShorthand(shape, undefined, types)}</div>
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>

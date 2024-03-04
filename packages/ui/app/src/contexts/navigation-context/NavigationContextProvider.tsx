@@ -34,17 +34,17 @@ const setUserIsNotScrolling = debounce(
 );
 let raf: number;
 
-function startScrollTracking(route: string) {
-    if (!userIsScrolling) {
+function startScrollTracking(route: string, scrolledHere: boolean = false) {
+    if (!userIsScrolling && !scrolledHere) {
         getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
     }
-    userHasScrolled = false;
+    userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
     let lastScrollY: number | undefined;
     function step() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
-            if (lastActiveNavigatableOffsetTop == null && !userIsScrolling) {
+            if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
                 node.scrollIntoView({ behavior: "auto" });
             }
             const currentActiveNavigatableOffsetTop =
@@ -148,6 +148,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
                 setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+                startScrollTracking(`/${fullSlug}`, true);
             },
             300,
             { trailing: true },

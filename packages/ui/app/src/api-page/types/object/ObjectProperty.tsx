@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { useCallback, useMemo } from "react";
+import { useRouter } from "next/router";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { getAnchorId } from "../../../util/anchor";
@@ -29,16 +30,34 @@ export declare namespace ObjectProperty {
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
-    anchorIdParts,
+export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
+    const { route, anchorIdParts } = props;
+    const router = useRouter();
+    const anchorId = getAnchorId(anchorIdParts);
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+        setIsActive(router.asPath.includes(`${route}#${anchorId}`));
+    }, [router.asPath, anchorId, route]);
+
+    return <ObjectPropertyInternal anchorId={anchorId} isActive={isActive} {...props} />;
+};
+
+interface ObjectPropertyInternalProps extends ObjectProperty.Props {
+    anchorId: string;
+    isActive: boolean;
+}
+
+const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function ObjectPropertyInternal({
     route,
     property,
     applyErrorStyles,
     defaultExpandAll,
     types,
-}) => {
-    const anchorId = getAnchorId(anchorIdParts);
-
+    anchorIdParts,
+    anchorId,
+    isActive,
+}) {
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -85,13 +104,20 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
             data-route={anchorRoute.toLowerCase()}
             className={classNames("flex relative flex-col py-3 scroll-mt-header-height-padded gap-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
+                "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
                     <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                        <MonospaceText className="t-default text-sm">{property.key}</MonospaceText>
+                        <MonospaceText
+                            className={classNames("t-default text-sm", {
+                                "t-accent": isActive,
+                            })}
+                        >
+                            {property.key}
+                        </MonospaceText>
                     </div>
                 </div>
                 <div className="t-muted text-xs">{renderTypeShorthand(property.valueShape, undefined, types)}</div>
@@ -117,4 +143,4 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({
             )}
         </div>
     );
-};
+});
