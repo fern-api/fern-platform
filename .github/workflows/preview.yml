@@ -17,7 +17,9 @@ jobs:
       - name: Comment in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
-          message: "Deploying PR Preview..."
+          message: |
+            ## PR Preview
+            Building...
           comment_tag: pr_preview_${{ github.run_id }}
 
       - name: Install Vercel CLI
@@ -28,6 +30,14 @@ jobs:
 
       - name: Build Project Artifacts
         run: vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Comment in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            ## PR Preview
+            Deploying...
+          comment_tag: pr_preview_${{ github.run_id }}
 
       - name: Deploy Project Artifacts to Vercel
         run: |
@@ -46,10 +56,10 @@ jobs:
           docs.mercoa.com
           "
 
-          echo "### PR Preview" >> preview.txt
+          echo "## PR Preview" >> preview.txt
           for DOMAIN in $DOMAINS
           do
-              echo "- [_] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs-preview?host=$DOMAIN)" >> preview.txt
+              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs-preview?host=$DOMAIN)" >> preview.txt
           done
 
       - name: Comment URL in PR
