@@ -9,6 +9,13 @@ const nextConfig = {
     assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
     rewrites: async () => ({
         beforeFiles: [{ source: "/:prefix*/_next/:path*", destination: "/_next/:path*" }],
+        afterFiles: [
+            { source: "/_next/:path*", destination: "/_next/:path*" },
+            { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
+            { source: "/_axiom/:path*", destination: "/_axiom/:path*" },
+            { source: "/robots.txt", destination: "/api/robots.txt" },
+            { source: "/sitemap.xml", destination: "/api/sitemap.xml" },
+        ],
         fallback: [
             {
                 has: [
