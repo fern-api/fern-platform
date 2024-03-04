@@ -28,11 +28,8 @@ jobs:
         run: vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Get preview url
         run: |
-          DEPLOYMENT_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
 
           DOMAINS="
           docs.joincandidhealth.com
