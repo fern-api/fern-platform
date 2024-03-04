@@ -16,7 +16,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                 return;
             }
 
-            if (isMdxJsxFlowElement(node) && node.name === "CodeBlocks") {
+            if (isMdxJsxFlowElement(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
                 const codeBlockItems = visitCodeBlockNodes(node, highlighter);
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",

@@ -44,9 +44,12 @@ import { Tabs } from "./components/Tabs";
 
 export const JSX_COMPONENTS = {
     Availability,
-    Cards,
     Card,
+    Cards,
+    CardGroup: Cards,
+    CodeBlock,
     CodeBlocks,
+    CodeGroup: CodeBlocks, // alias is handled in rehypeFernCode
     Callout,
     Info: InfoCallout,
     Warning: WarningCallout,
@@ -57,7 +60,6 @@ export const JSX_COMPONENTS = {
     Check: CheckCallout,
     LaunchNote: LaunchNoteCallout,
     Icon: RemoteFontAwesomeIcon,
-    CodeBlock,
     MdxErrorBoundary,
     Tabs,
     AccordionGroup: Accordion,
