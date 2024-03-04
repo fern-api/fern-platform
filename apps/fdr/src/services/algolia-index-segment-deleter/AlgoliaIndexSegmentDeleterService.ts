@@ -72,7 +72,7 @@ export class AlgoliaIndexSegmentDeleterServiceImpl implements AlgoliaIndexSegmen
                 where: { id: indexSegmentId },
             });
         } catch (err) {
-            await this.app.services.slack.notifyFailedToDeleteIndexSegment({ indexSegmentId, err });
+            // await this.app.services.slack.notifyFailedToDeleteIndexSegment({ indexSegmentId, err });
         }
     }
 }
