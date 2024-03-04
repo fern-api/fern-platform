@@ -33,7 +33,7 @@
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
-    "@fontsource/ibm-plex-mono": "^4.5.13",
+    "@fontsource/ibm-plex-mono": "^5.0.12",
     "@headlessui/react": "^1.7.18",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
