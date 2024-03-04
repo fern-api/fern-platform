@@ -56,7 +56,5 @@ function fixHost(path: string, host: string | undefined) {
     }
 
     // use regex to replace ?host=docs&slug=x&slug=x with ?host=docs.devexpress.com&slug=host&slug=x&slug=x
-    const fixedPath = path.replace(/(\?host=)([^&]+)/, `$1${host}&slug=$2`);
-    console.log(path, fixedPath);
-    return fixedPath;
+    return path.replace(/(\?host=)([^&]+)/, `$1${host}&slug=$2`);
 }
