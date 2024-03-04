@@ -1,5 +1,6 @@
 import { visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
+import { kebabCase } from "lodash";
 import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Db } from "../../api";
@@ -119,7 +120,7 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     private generateUniqueIdForIndexSegment({ version, url }: { version?: DocsVersion; url: string }) {
         const parts: string[] = ["seg", url];
         if (version != null) {
-            parts.push(version.id);
+            parts.push(kebabCase(version.id));
         }
         parts.push(uuidv4());
         return parts.join("_");

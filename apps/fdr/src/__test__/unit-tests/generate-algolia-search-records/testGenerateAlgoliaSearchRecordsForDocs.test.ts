@@ -8,7 +8,9 @@ import {
 } from "@fern-api/fdr-sdk";
 import type { APIV1Write, DocsV1Write } from "../../../api";
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
+import { AlgoliaIndexSegmentManagerServiceImpl } from "../../../services/algolia-index-segment-manager";
 import { AlgoliaSearchRecordGenerator } from "../../../services/algolia/AlgoliaSearchRecordGenerator";
+import { createMockFdrApplication } from "../../mock";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
 const FIXTURES: Fixture[] = [
@@ -107,4 +109,43 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
             90_000,
         );
     }
+});
+
+describe("generateIndexSegmentsForDefinition", () => {
+    const indexSegmentManager = new AlgoliaIndexSegmentManagerServiceImpl(createMockFdrApplication({}));
+    it("should strip spaces from the version ID", () => {
+        const segments = indexSegmentManager.generateIndexSegmentsForDefinition({
+            dbDocsDefinition: {
+                type: "v3",
+                pages: {},
+                referencedApis: [],
+                files: {},
+                config: {
+                    navigation: {
+                        versions: [
+                            {
+                                version: "version with spaces",
+                                config: {
+                                    items: [],
+                                },
+                            },
+                            {
+                                version: "version with (special) chars",
+                                config: {
+                                    items: [],
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+            url: "https://example.com",
+        });
+
+        expect(segments.type).toBe("versioned");
+        if (segments.type === "versioned") {
+            expect(segments.configSegmentTuples[0]?.[1].id).toContain("version-with-spaces");
+            expect(segments.configSegmentTuples[1]?.[1].id).toContain("version-with-special-chars");
+        }
+    });
 });
