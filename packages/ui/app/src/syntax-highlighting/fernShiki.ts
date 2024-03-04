@@ -1,25 +1,21 @@
 import { Root } from "hast";
-import {
-    BundledLanguage,
-    BundledTheme,
-    getHighlighter,
-    Highlighter,
-    HighlighterGeneric,
-    SpecialLanguage,
-} from "shiki/index.mjs";
+import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
 
-const highlighter = new Map<string, HighlighterGeneric<BundledLanguage, BundledTheme>>();
-export async function getHighlighterInstance(lang: string): Promise<Highlighter> {
-    lang = parseLang(lang);
-    let h = highlighter.get("instance");
-    if (h == null) {
-        h = await getHighlighter({
+let highlighter: Highlighter;
+export async function getHighlighterInstance(language: string): Promise<Highlighter> {
+    const lang = parseLang(language);
+    if (highlighter == null) {
+        highlighter = await getHighlighter({
             langs: [lang],
             themes: [LIGHT_THEME, DARK_THEME],
         });
-        highlighter.set("instance", h);
     }
-    return h;
+
+    if (!highlighter.getLoadedLanguages().includes(lang)) {
+        await highlighter.loadLanguage(lang);
+    }
+
+    return highlighter;
 }
 
 // export function highlight(
