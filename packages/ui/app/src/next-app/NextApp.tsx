@@ -33,7 +33,7 @@ const useInterceptNextDataHref = ({
     host: string | undefined;
 }) => {
     useEffect(() => {
-        if (basePath != null && router.pageLoader?.getDataHref) {
+        if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
             const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
             // eslint-disable-next-line jest/unbound-method
             const originalGetDataHref = router.pageLoader.getDataHref;
@@ -56,5 +56,7 @@ function fixHost(path: string, host: string | undefined) {
     }
 
     // use regex to replace ?host=docs&slug=x&slug=x with ?host=docs.devexpress.com&slug=host&slug=x&slug=x
-    return path.replace(/(\?host=)([^&]+)/, `$1${host}&slug=$2`);
+    const fixedPath = path.replace(/(\?host=)([^&]+)/, `$1${host}&slug=$2`);
+    console.log(path, fixedPath);
+    return fixedPath;
 }
