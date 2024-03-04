@@ -76,7 +76,7 @@ export async function serializeMdxContent(
             return content;
         }
 
-        return await serialize(content, {
+        return await serialize(safe(content), {
             scope: {},
             mdxOptions: {
                 remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
@@ -97,4 +97,12 @@ export async function serializeMdxContent(
         console.log(content);
         return content;
     }
+}
+
+function safe(content: string): string {
+    // replace all numbers followed by < with numbers followed by {'<'}
+    // replace all numbers followed by > with numbers followed by {'>'}
+    // this is to prevent markdown from interpreting them as html tags
+
+    return content.replace(/(\d+)(<)/g, "$1{'<'}").replace(/(\d+)(>)/g, "$1{'>'}");
 }
