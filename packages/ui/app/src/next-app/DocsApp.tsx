@@ -26,6 +26,7 @@ export declare namespace App {
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
+        title: string | undefined;
     }
 }
 
@@ -65,6 +66,7 @@ export const DocsApp: React.FC<App.Props> = ({
                             resolvedPath={resolvedPath}
                             navigation={navigation}
                             basePath={baseUrl.basePath}
+                            title={title}
                         >
                             <Docs
                                 hasBackgroundImage={hasBackgroundImage}

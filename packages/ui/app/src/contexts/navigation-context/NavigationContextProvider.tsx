@@ -17,6 +17,7 @@ export declare namespace NavigationContextProvider {
         resolvedPath: ResolvedPath;
         basePath: string | undefined;
         navigation: SidebarNavigation;
+        title: string | undefined;
     }>;
 }
 
@@ -85,6 +86,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     children,
     basePath,
     navigation,
+    title,
 }) => {
     const router = useRouter();
 
@@ -235,7 +237,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             }}
         >
             <Head>
-                {activeTitle != null && <title>{activeTitle}</title>}
+                {activeTitle != null && <title>{title != null ? `${activeTitle} - ${title}` : activeTitle}</title>}
                 {activeDescription != null && <meta name="description" content={activeDescription} />}
                 {frontmatter?.image != null && <meta property="og:image" content={frontmatter.image} />}
             </Head>

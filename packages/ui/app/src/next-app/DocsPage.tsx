@@ -103,6 +103,7 @@ export function DocsPage({
                 files={files}
                 resolvedPath={resolvedPath}
                 navigation={navigation}
+                title={title}
             />
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
