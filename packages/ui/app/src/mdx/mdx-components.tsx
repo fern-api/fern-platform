@@ -36,9 +36,9 @@ import {
 } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
+import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
 import { MdxErrorBoundary } from "./components/MdxErrorBoundary";
-import { SyntaxHighlighter } from "./components/SyntaxHighlighter";
 
 export const JSX_COMPONENTS = {
     Availability,
@@ -55,7 +55,7 @@ export const JSX_COMPONENTS = {
     Check: CheckCallout,
     LaunchNote: LaunchNoteCallout,
     Icon: RemoteFontAwesomeIcon,
-    SyntaxHighlighter,
+    CodeBlock,
     MdxErrorBoundary,
 };
 

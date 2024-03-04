@@ -5,7 +5,7 @@ import {
     FernSyntaxHighlighterTokensProps,
 } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
 
-export const SyntaxHighlighter: FC<FernSyntaxHighlighterTokensProps> = (props) => (
+export const CodeBlock: FC<FernSyntaxHighlighterTokensProps> = (props) => (
     <CodeBlockWithClipboardButton code={props.tokens.code}>
         <FernSyntaxHighlighterTokens {...props} />
     </CodeBlockWithClipboardButton>

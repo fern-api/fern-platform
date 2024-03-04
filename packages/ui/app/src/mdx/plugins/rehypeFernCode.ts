@@ -28,12 +28,19 @@ export function rehypeFernCode(): (tree: Root) => void {
 
             if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
                 const codeBlockItems = visitCodeBlockNodes(node, highlighter);
-                parent?.children.splice(index, 1, {
-                    type: "mdxJsxFlowElement",
-                    name: "CodeBlocks",
-                    attributes: [toAttribute("items", JSON.stringify(codeBlockItems), valueToEstree(codeBlockItems))],
-                    children: [],
-                });
+
+                if (codeBlockItems.length === 1 && codeBlockItems[0] != null && codeBlockItems[0].title == null) {
+                    // keep the original CodeBlock if it has no title
+                } else {
+                    parent?.children.splice(index, 1, {
+                        type: "mdxJsxFlowElement",
+                        name: "CodeBlocks",
+                        attributes: [
+                            toAttribute("items", JSON.stringify(codeBlockItems), valueToEstree(codeBlockItems)),
+                        ],
+                        children: [],
+                    });
+                }
             }
         });
 
@@ -53,7 +60,7 @@ export function rehypeFernCode(): (tree: Root) => void {
 
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
-                        name: "SyntaxHighlighter",
+                        name: "CodeBlock",
                         attributes: [toAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
                         children: [],
                     });
