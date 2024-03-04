@@ -1,10 +1,11 @@
 import { Root } from "hast";
 import { visit } from "unist-util-visit";
+import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
 import { JSX_COMPONENTS } from "../mdx-components";
 import { valueToEstree } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
-const SUPPORTED_JSX_TAGS = Object.keys(JSX_COMPONENTS);
+const SUPPORTED_JSX_TAGS = [...Object.keys(JSX_COMPONENTS), ...INTRINSIC_JSX_TAGS];
 
 export function rehypeSanitizeJSX(): (tree: Root) => void {
     return function (tree: Root): void {
