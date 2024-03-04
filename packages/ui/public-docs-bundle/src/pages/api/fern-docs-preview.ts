@@ -11,7 +11,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const site = req.nextUrl.searchParams.get("site");
     const clear = req.nextUrl.searchParams.get("clear");
     if (typeof host === "string") {
-        const res = redirectResponse("/");
+        const res = redirectResponse(req.nextUrl.origin);
         res.cookies.set("_fern_docs_preview", host, {
             httpOnly: true,
             secure: false,
@@ -20,7 +20,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         });
         return res;
     } else if (typeof site === "string") {
-        const res = redirectResponse("/");
+        const res = redirectResponse(req.nextUrl.origin);
         res.cookies.set("_fern_docs_preview", `${site}.docs.buildwithfern.com`, {
             httpOnly: true,
             secure: false,
@@ -29,7 +29,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         });
         return res;
     } else if (clear === "true") {
-        const res = redirectResponse("/");
+        const res = redirectResponse(req.nextUrl.origin);
         res.cookies.delete("_fern_docs_preview");
         return res;
     }

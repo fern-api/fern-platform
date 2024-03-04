@@ -8,7 +8,14 @@ const nextConfig = {
     },
     assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
     rewrites: async () => ({
-        beforeFiles: [{ source: "/:prefix*/_next/:path*", destination: "/_next/:path*" }],
+        beforeFiles: [
+            { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
+            {
+                source: "/_next/data/:hash/:subpath/:oldhost/:path*",
+                has: [{ type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" }],
+                destination: "/_next/data/:hash/:subpath/:host/:path*",
+            },
+        ],
         afterFiles: [
             { source: "/_next/:path*", destination: "/_next/:path*" },
             { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
@@ -26,6 +33,11 @@ const nextConfig = {
                 destination: "/dynamic/:host/:path*",
             },
             {
+                has: [{ type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" }],
+                source: "/:path*",
+                destination: "/static/:host/:path*",
+            },
+            {
                 has: [
                     { type: "header", key: "x-fern-host", value: "(?<host>.*)" },
                     { type: "query", key: "error", value: "true" },
@@ -40,11 +52,6 @@ const nextConfig = {
                 ],
                 source: "/:path*",
                 destination: "/dynamic/:host/:path*",
-            },
-            {
-                has: [{ type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" }],
-                source: "/:path*",
-                destination: "/static/:host/:path*",
             },
             {
                 has: [{ type: "header", key: "x-fern-host", value: "(?<host>.*)" }],

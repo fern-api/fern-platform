@@ -6,17 +6,21 @@ env:
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets. ALGOLIA_SEARCH_INDEX }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
-on:
-  push:
-    branches-ignore:
-      - main
-    tags-ignore:
-      - "**"
+on: pull_request
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
+
+      - name: Comment in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            ## PR Preview
+            Building...
+          comment_tag: pr_preview_${{ github.run_id }}
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -27,5 +31,39 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Comment in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            ## PR Preview
+            Deploying...
+          comment_tag: pr_preview_${{ github.run_id }}
+
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
+
+          DOMAINS="
+          docs.joincandidhealth.com
+          reference.flatfile.com
+          docs.vellum.ai
+          docs.flagright.com
+          docs.propexo.com
+          docs.pier-finance.com
+          assemblyai.docs.buildwithfern.com
+          docs.hellodata.ai
+          docs.privategpt.dev
+          docs.mercoa.com
+          "
+
+          echo "## PR Preview" >> preview.txt
+          for DOMAIN in $DOMAINS
+          do
+              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs-preview?host=$DOMAIN)" >> preview.txt
+          done
+
+      - name: Comment URL in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          filePath: preview.txt
+          comment_tag: pr_preview_${{ github.run_id }}
