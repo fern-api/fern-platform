@@ -32,7 +32,7 @@ jobs:
 
       - name: Get preview url
         run: |
-          DEPLOYMENT_URL=$(vercel)
+          DEPLOYMENT_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
 
           DOMAINS="
           docs.joincandidhealth.com
