@@ -5,6 +5,7 @@ import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/g
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { FdrDao } from "../../db";
 import type { IndexSegment } from "../../services/algolia";
+import { Semaphore } from "../revalidator/Semaphore";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
@@ -24,12 +25,6 @@ export interface DocsDefinitionCache {
     }): Promise<void>;
 }
 
-/** The hostname without url scheme (e.g. docs.vellum.ai) */
-type Hostnme = string;
-
-/** The hostname without url scheme (e.g. docs.vellum.ai) */
-type Path = string;
-
 interface CachedDocsResponse {
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
@@ -38,12 +33,23 @@ interface CachedDocsResponse {
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
-    private cache: Record<Hostnme, Record<Path, CachedDocsResponse>> = {};
+    private DOCS_CACHE: Record<string, CachedDocsResponse> = {};
+    private DOCS_WRITE_MONITOR: Record<string, Semaphore> = {};
 
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
     ) {}
+
+    // allows us to block reads from writing to the cache while we are updating it
+    private getDocsWriteMonitor(hostname: string): Semaphore {
+        let monitor = this.DOCS_WRITE_MONITOR[hostname];
+        if (monitor == null) {
+            monitor = new Semaphore(1);
+            this.DOCS_WRITE_MONITOR[hostname] = monitor;
+        }
+        return monitor;
+    }
 
     public async getDocsForUrl({
         url,
@@ -54,6 +60,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
+            this.app.logger.info(`Cache HIT for ${url}`);
             if (cachedResponse.isPrivate) {
                 await this.checkUserBelongsToOrg(url, authorization);
             }
@@ -72,8 +79,14 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 },
             };
         }
+
+        this.app.logger.info(`Cache MISS for ${url}`);
         const dbResponse = await this.getDocsForUrlFromDatabase({ url });
-        this.cacheResponse({ url, cachedResponse: dbResponse });
+
+        // we don't want to cache from READ if we are currently updating the cache via WRITE
+        if (!this.getDocsWriteMonitor(url.hostname).isLocked()) {
+            this.cacheResponse({ url, cachedResponse: dbResponse });
+        }
 
         if (dbResponse.isPrivate) {
             await this.checkUserBelongsToOrg(url, authorization);
@@ -117,38 +130,27 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             dbDocsDefinition,
             indexSegments,
         });
-        // cache fern URL
-        const fernUrl = docsRegistrationInfo.fernUrl.toURL();
-        const dbResponse = await this.getDocsForUrlFromDatabase({ url: fernUrl });
-        this.cacheResponse({ url: fernUrl, cachedResponse: dbResponse });
-        // cache custom URLs
-        for (const customURL of docsRegistrationInfo.customUrls) {
-            const dbResponse = await this.getDocsForUrlFromDatabase({ url: customURL.toURL() });
-            this.cacheResponse({ url: customURL.toURL(), cachedResponse: dbResponse });
-        }
+
+        // cache fern URL + custom URLs
+        await Promise.all(
+            [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map(async (docsUrl) => {
+                // the write monitor is used to block reads from writing to the cache while we are updating it
+                // it also prevents two cache-write operations to the same hostname from happening at the same time
+                return await this.getDocsWriteMonitor(docsUrl.hostname).use(async () => {
+                    const url = docsUrl.toURL();
+                    const dbResponse = await this.getDocsForUrlFromDatabase({ url });
+                    this.cacheResponse({ url, cachedResponse: dbResponse });
+                });
+            }),
+        );
     }
 
     private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        const cacheForHost = this.cache[url.hostname];
-        if (cacheForHost == null) {
-            this.cache[url.hostname] = { [url.pathname]: cachedResponse };
-        } else {
-            cacheForHost[url.pathname] = cachedResponse;
-        }
+        this.DOCS_CACHE[url.hostname] = cachedResponse;
     }
 
     private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
-        const responsesForHost = this.cache[url.hostname] ?? {};
-        const cachedResponses = Object.entries(responsesForHost)
-            .filter(([path]) => {
-                return url.pathname.startsWith(path);
-            })
-            .sort(
-                ([, cachedResponseA], [, cachedResponseB]) =>
-                    cachedResponseB.updatedTime.getTime() - cachedResponseA.updatedTime.getTime(),
-            )
-            .map(([, cachedResponse]) => cachedResponse);
-        return cachedResponses[0];
+        return this.DOCS_CACHE[url.hostname];
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
@@ -165,7 +167,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 response: {
                     baseUrl: {
                         domain: dbDocs.domain,
-                        basePath: dbDocs.path === "" ? undefined : dbDocs.path,
+                        basePath: dbDocs.path.trim() === "" ? undefined : dbDocs.path.trim(),
                     },
                     definition,
                     lightModeEnabled: definition.config.colorsV3?.type !== "dark",

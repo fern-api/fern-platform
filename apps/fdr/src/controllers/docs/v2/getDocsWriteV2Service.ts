@@ -165,17 +165,21 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  */
 
                 // revalidate all custom urls
-                for (const baseUrl of [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls]) {
-                    const results = await app.services.revalidator.revalidate({ baseUrl, app });
-                    if (results.failedRevalidations.length === 0 && !results.revalidationFailed) {
-                        app.logger.info(`Successfully revalidated ${results.successfulRevalidations.length} paths.`);
-                    } else {
-                        await app.services.slack.notifyFailedToRevalidatePaths({
-                            domain: docsRegistrationInfo.fernUrl.getFullUrl(),
-                            paths: results,
-                        });
-                    }
-                }
+                await Promise.all(
+                    [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map(async (baseUrl) => {
+                        const results = await app.services.revalidator.revalidate({ baseUrl, app });
+                        if (results.failedRevalidations.length === 0 && !results.revalidationFailed) {
+                            app.logger.info(
+                                `Successfully revalidated ${results.successfulRevalidations.length} paths.`,
+                            );
+                        } else {
+                            await app.services.slack.notifyFailedToRevalidatePaths({
+                                domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+                                paths: results,
+                            });
+                        }
+                    }),
+                );
 
                 return res.send();
             } catch (e) {

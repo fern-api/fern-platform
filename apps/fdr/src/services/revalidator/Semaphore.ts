@@ -21,4 +21,17 @@ export class Semaphore {
             next();
         }
     }
+
+    async use<T>(fn: () => Promise<T>): Promise<T> {
+        await this.acquire();
+        try {
+            return await fn();
+        } finally {
+            this.release();
+        }
+    }
+
+    isLocked(): boolean {
+        return this.count <= 0;
+    }
 }

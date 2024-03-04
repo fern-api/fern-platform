@@ -69,16 +69,13 @@ export class DocsV2DaoImpl implements DocsV2Dao {
     }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
-        const possibleDocs = await this.prisma.docsV2.findMany({
+        const docsDomain = await this.prisma.docsV2.findFirst({
             where: {
                 domain: url.hostname,
             },
             orderBy: {
-                updatedTime: "desc",
+                updatedTime: "desc", // first item is the latest
             },
-        });
-        const docsDomain = possibleDocs.find((registeredDocs) => {
-            return url.pathname.startsWith(registeredDocs.path);
         });
         if (docsDomain == null) {
             return undefined;
@@ -151,33 +148,22 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 },
             });
 
-            // Step 4: Upsert the fern docs domain url with the docs definition + algolia index
-            await createOrUpdateDocsDefinition({
-                tx,
-                instanceId,
-                domain: docsRegistrationInfo.fernUrl.hostname,
-                path: docsRegistrationInfo.fernUrl.path ?? "",
-                orgId: docsRegistrationInfo.orgId,
-                bufferDocsDefinition,
-                indexSegmentIds,
-                isPreview: docsRegistrationInfo.isPreview,
-                authType: docsRegistrationInfo.authType,
-            });
-
-            // Step 5: Upsert custom domains with the docs definition + algolia index
-            for (const customUrl of docsRegistrationInfo.customUrls) {
-                await createOrUpdateDocsDefinition({
-                    tx,
-                    instanceId,
-                    domain: customUrl.hostname,
-                    path: customUrl.path ?? "",
-                    orgId: docsRegistrationInfo.orgId,
-                    bufferDocsDefinition,
-                    indexSegmentIds,
-                    isPreview: docsRegistrationInfo.isPreview,
-                    authType: docsRegistrationInfo.authType,
-                });
-            }
+            // Step 4: Upsert the fern docs domain + custom domain url with the docs definition + algolia index
+            await Promise.all(
+                [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map((url) =>
+                    createOrUpdateDocsDefinition({
+                        tx,
+                        instanceId,
+                        domain: url.hostname,
+                        path: url.path ?? "",
+                        orgId: docsRegistrationInfo.orgId,
+                        bufferDocsDefinition,
+                        indexSegmentIds,
+                        isPreview: docsRegistrationInfo.isPreview,
+                        authType: docsRegistrationInfo.authType,
+                    }),
+                ),
+            );
 
             return {
                 algoliaIndex: previousDocs?.algoliaIndex,
