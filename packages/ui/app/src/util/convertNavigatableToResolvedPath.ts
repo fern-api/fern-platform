@@ -1,8 +1,8 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import moment from "moment";
+import { serializeMdxContent } from "../mdx/mdx";
 import { findApiSection, isApiPage, isChangelogPage, SidebarNode, visitSidebarNodes } from "../sidebar/types";
 import { flattenApiDefinition } from "./flattenApiDefinition";
-import { serializeMdxContent } from "./mdx";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
 

@@ -11,8 +11,8 @@ import React, {
     useState,
 } from "react";
 import { buildRequestUrl } from "../../api-playground/utils";
-import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import { ResolvedEndpointPathParts } from "../../util/resolver";
 import "./EndpointUrl.scss";

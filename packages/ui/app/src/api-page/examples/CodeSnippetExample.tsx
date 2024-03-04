@@ -1,7 +1,7 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
 import { createRef, FC, useEffect, useMemo } from "react";
-import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
+import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
 

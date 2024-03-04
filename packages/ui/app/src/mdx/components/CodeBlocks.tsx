@@ -1,10 +1,10 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { useState } from "react";
-import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import {
     FernSyntaxHighlighterTokens,
     FernSyntaxHighlighterTokensProps,
-} from "../../commons/FernSyntaxHighlighterTokens";
+} from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
 
 export declare namespace CodeBlocks {
     export interface Item extends FernSyntaxHighlighterTokensProps {

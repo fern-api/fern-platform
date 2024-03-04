@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
-import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 
 export declare namespace TitledExample {
     export interface Props {

@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { createElement, ReactNode, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
+import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
-import { SerializedMdxContent } from "../../util/mdx";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

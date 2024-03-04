@@ -1,11 +1,11 @@
-import type { Expression } from "estree";
-import type { Element, ElementContent, Node, Root, RootContent, Text } from "hast";
+import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { Highlighter } from "shiki";
 import { visit } from "unist-util-visit";
-import { CodeBlocks } from "../mdx/components/CodeBlocks";
-import { getHighlighterInstance, HighlightedTokens, highlightTokens } from "./fernShiki";
+import { CodeBlocks } from "../../mdx/components/CodeBlocks";
+import { getHighlighterInstance, HighlightedTokens, highlightTokens } from "../../syntax-highlighting/fernShiki";
 import { valueToEstree } from "./to-estree";
+import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
 export function rehypeFernCode(): (tree: Root) => void {
     return async function (tree: Root): Promise<void> {
@@ -112,29 +112,6 @@ function convertToHighlighted(node: Element, highlighter: Highlighter): Highligh
     return highlightTokens(highlighter, code, lang);
 }
 
-function toAttribute(key: string, stringValue: string, expression: Expression): MdxJsxAttribute {
-    return {
-        type: "mdxJsxAttribute",
-        name: key,
-        value: {
-            type: "mdxJsxAttributeValueExpression",
-            value: stringValue,
-            data: {
-                estree: {
-                    type: "Program",
-                    body: [
-                        {
-                            type: "ExpressionStatement",
-                            expression,
-                        },
-                    ],
-                    sourceType: "module",
-                },
-            },
-        },
-    };
-}
-
 // remove leading and trailing newlines
 export function trimCode(code: string): string {
     return code.replace(/^\n+|\n+$/g, "");
@@ -148,16 +125,4 @@ export function isBlockCode(element: Element): element is Element {
         isElement(element.children[0]) &&
         element.children[0].tagName === "code"
     );
-}
-
-export function isMdxJsxFlowElement(node: Node): node is MdxJsxFlowElementHast {
-    return node.type === "mdxJsxFlowElement";
-}
-
-export function isElement(value: ElementContent | Element | Root | RootContent | null | undefined): value is Element {
-    return value ? value.type === "element" : false;
-}
-
-export function isText(value: ElementContent | Element | Root | RootContent | null | undefined): value is Text {
-    return value ? value.type === "text" : false;
 }

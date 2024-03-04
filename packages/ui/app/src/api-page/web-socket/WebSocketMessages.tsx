@@ -3,8 +3,8 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC } from "react";
-import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
-import { FernSyntaxHighlighter } from "../../commons/FernSyntaxHighlighter";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
+import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
 export interface WebSocketMessage {
     type: string;

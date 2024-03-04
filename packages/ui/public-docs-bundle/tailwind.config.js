@@ -276,6 +276,9 @@ module.exports = {
                 ".bg-tag-primary": {
                     "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
                 },
+                ".bg-tag-primary-soft": {
+                    "@apply bg-tag-primary-soft-light dark:bg-tag-primary-soft-dark": {},
+                },
                 ".bg-border-primary": {
                     "@apply bg-border-accent-muted-light dark:bg-border-accent-muted-dark": {},
                 },
@@ -316,6 +319,9 @@ module.exports = {
                 ".ring-border-primary": {
                     "@apply ring-border-accent-muted-light dark:ring-border-accent-muted-dark": {},
                 },
+                ".ring-border-primary-soft": {
+                    "@apply ring-border-primary-light-soft dark:ring-border-primary-dark-soft": {},
+                },
                 ".decoration-accent-primary": {
                     "@apply decoration-accent-primary-light dark:decoration-accent-primary-dark": {},
                 },
@@ -348,6 +354,9 @@ module.exports = {
                 },
                 ".callout-outlined-danger": {
                     "@apply bg-tag-danger-soft ring-1 ring-inset ring-border-danger-soft": {},
+                },
+                ".callout-outlined-primary": {
+                    "@apply bg-tag-primary-soft ring-1 ring-inset ring-border-primary-soft": {},
                 },
 
                 ".callout-outlined-ghost": {

@@ -1,10 +1,10 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
-import { rehypeFernCode } from "../commons/rehypeFernCode";
+import { rehypeFernCode } from "./plugins/rehypeFernCode";
+import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 
 export interface FernDocsFrontmatter {
     title?: string;
@@ -76,11 +76,11 @@ export async function serializeMdxContent(
             return content;
         }
 
-        return await serialize(safe(content), {
+        return await serialize(content, {
             scope: {},
             mdxOptions: {
                 remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
-                rehypePlugins: [rehypeFernCode, rehypeStringify],
+                rehypePlugins: [rehypeFernCode, rehypeSanitizeJSX],
                 format: "detect",
                 /**
                  * development=true is required to render MdxRemote from the client-side.
@@ -97,12 +97,4 @@ export async function serializeMdxContent(
         console.log(content);
         return content;
     }
-}
-
-function safe(content: string): string {
-    // replace all numbers followed by < with numbers followed by {'<'}
-    // replace all numbers followed by > with numbers followed by {'>'}
-    // this is to prevent markdown from interpreting them as html tags
-
-    return content.replace(/(\d+)(<)/g, "$1{'<'}").replace(/(\d+)(>)/g, "$1{'>'}");
 }

@@ -1,21 +1,22 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo } from "react";
-import { FallbackProps } from "react-error-boundary";
-import { Callout } from "./components/Callout";
+import { capturePosthogEvent } from "../../analytics/posthog";
+import { Callout } from "./Callout";
 
-export declare namespace MdxErrorBoundaryContent {
+export declare namespace MdxErrorBoundary {
     export interface Props {
         error: unknown;
+        resetErrorBoundary?: () => void;
     }
 }
 
-export const MdxErrorBoundaryContent: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
+export const MdxErrorBoundary: React.FC<MdxErrorBoundary.Props> = ({ error, resetErrorBoundary }) => {
     const router = useRouter();
 
     useEffect(() => {
         const handleRouteChange = (_route: string, options: { shallow: boolean }) => {
             if (!options.shallow) {
-                resetErrorBoundary();
+                resetErrorBoundary?.();
             }
         };
         router.events.on("routeChangeComplete", handleRouteChange);
@@ -34,9 +35,10 @@ export const MdxErrorBoundaryContent: React.FC<FallbackProps> = ({ error, resetE
         return JSON.stringify(error);
     }, [error]);
 
+    useEffect(() => capturePosthogEvent("failed_to_render_mdx", { error }), [error]);
+
     return (
-        <Callout intent="danger">
-            <h4>Failed to render</h4>
+        <Callout intent="error" title="Failed to render">
             <pre className="pre t-muted bg-tag-default mt-4 whitespace-normal rounded p-4">{stringifiedError}</pre>
         </Callout>
     );

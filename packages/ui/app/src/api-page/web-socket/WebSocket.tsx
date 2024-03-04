@@ -5,9 +5,9 @@ import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { CopyToClipboardButton } from "../../commons/CopyToClipboardButton";
 import { FernScrollArea } from "../../components/FernScrollArea";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,

@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { type SerializedMdxContent } from "./mdx";
+import { type SerializedMdxContent } from "../mdx/mdx";
 import { ResolvedRootPackage } from "./resolver";
 
 export declare namespace ResolvedPath {

@@ -2,7 +2,7 @@ import { useCopyToClipboard } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
-import { SerializedMdxContent } from "../util/mdx";
+import { SerializedMdxContent } from "../mdx/mdx";
 import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {

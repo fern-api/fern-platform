@@ -4,9 +4,9 @@ import { forwardRef, ReactNode, useMemo } from "react";
 import StyleToObject from "style-to-object";
 import { visit } from "unist-util-visit";
 import { FernScrollArea } from "../components/FernScrollArea";
+import { HastToJSX } from "../mdx/common/HastToJsx";
 import { HighlightedTokens } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
-import { HastToJSX } from "./HastToJsx";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];

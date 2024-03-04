@@ -121,6 +121,10 @@
 @layer components {
     .fa-icon {
         @apply size-4 inline-block bg-intent-default;
+
+        &.has-dark {
+            background-color: var(--fa-icon-dark);
+        }
     }
 
     .mask-grad-top-1 {

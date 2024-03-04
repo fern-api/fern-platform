@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FC, useMemo } from "react";
-import { FernSyntaxHighlighter } from "../commons/FernSyntaxHighlighter";
+import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";

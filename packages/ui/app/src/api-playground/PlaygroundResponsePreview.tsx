@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { FernSyntaxHighlighter } from "../commons/FernSyntaxHighlighter";
+import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 
 interface PlaygroundResponsePreviewProps {
     responseBody: unknown;

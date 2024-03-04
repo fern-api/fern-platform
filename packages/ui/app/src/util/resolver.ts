@@ -7,6 +7,7 @@ import {
     sortKeysByShape,
     stringifyHttpRequestExampleToCurl,
 } from "../api-page/examples/types";
+import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
 import {
     FlattenedApiDefinition,
     FlattenedApiDefinitionPackage,
@@ -15,7 +16,6 @@ import {
     FlattenedWebhookDefinition,
     FlattenedWebSocketChannel,
 } from "./flattenApiDefinition";
-import { SerializedMdxContent, serializeMdxContent } from "./mdx";
 import { titleCase } from "./titleCase";
 
 type WithDescription = { description: SerializedMdxContent | undefined };

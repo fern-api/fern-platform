@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { SerializedMdxContent } from "../util/mdx";
+import { SerializedMdxContent } from "./mdx";
 import { MdxContent } from "./MdxContent";
 
 export declare namespace Markdown {

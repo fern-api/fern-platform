@@ -1,81 +1,157 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { CheckCircledIcon, ExclamationTriangleIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import {
+    BellIcon,
+    CheckCircledIcon,
+    CheckIcon,
+    DrawingPinIcon,
+    ExclamationTriangleIcon,
+    InfoCircledIcon,
+    RocketIcon,
+    StarIcon,
+} from "@radix-ui/react-icons";
 import classNames from "classnames";
-import React from "react";
-import styles from "./Callout.module.scss";
+import { FC, PropsWithChildren, ReactElement } from "react";
 
-type Intent = "info" | "warning" | "success" | "danger";
+type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
 
 export declare namespace Callout {
     export interface Props {
         intent: string;
+        title?: string;
     }
 }
 
-function parseIntent(type: unknown): Intent {
-    if (typeof type !== "string") {
-        return "info";
-    } else if (type.toLowerCase() === "info") {
-        return "info";
-    } else if (type.toLowerCase() === "warning") {
-        return "warning";
-    } else if (type.toLowerCase() === "success") {
-        return "success";
-    } else if (type.toLowerCase() === "danger") {
-        return "danger";
-    } else {
+function parseIntent(unknownIntent: unknown): Intent {
+    if (typeof unknownIntent !== "string") {
         return "info";
     }
+
+    return unknownIntent.trim().toLowerCase() as Intent;
 }
 
-export const Callout: React.FC<React.PropsWithChildren<Callout.Props>> = ({ intent: intentRaw, children }) => {
+export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRaw, title, children }) => {
     const intent = parseIntent(intentRaw);
     return (
         <div
             className={classNames(
-                "flex space-x-3 px-4 py-0 mb-4 rounded-lg", // pb-0 to compensate for the ::after margin
+                "p-4 my-4 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
                     success: () => "callout-outlined-success",
-                    danger: () => "callout-outlined-danger",
-                    _other: () => "",
+                    error: () => "callout-outlined-danger",
+                    note: () => "callout-outlined-primary",
+                    launch: () => "callout-outlined-primary",
+                    tip: () => "callout-outlined-success",
+                    check: () => "callout-outlined-success",
+                    _other: () => "callout-outlined",
                 }),
             )}
         >
-            <div className="min-w-fit py-4">
-                {visitDiscriminatedUnion({ intent }, "intent")._visit({
-                    info: () => (
-                        <InfoCircledIcon className="text-intent-default dark:text-intent-default-dark size-5" />
-                    ),
-                    warning: () => <ExclamationTriangleIcon className="text-intent-warning size-5" />,
-                    success: () => <CheckCircledIcon className="text-intent-success size-5" />,
-                    danger: () => <ExclamationTriangleIcon className="text-intent-danger size-5" />,
-                    _other: () => null,
-                })}
-            </div>
+            <div className="flex items-start space-x-3">
+                <div className="mt-0.5 w-4">
+                    {visitDiscriminatedUnion({ intent }, "intent")._visit({
+                        info: () => <InfoCircledIcon className="text-intent-default size-5" />,
+                        warning: () => <BellIcon className="text-intent-warning size-5" />,
+                        success: () => <CheckCircledIcon className="text-intent-success size-5" />,
+                        error: () => <ExclamationTriangleIcon className="text-intent-danger size-5" />,
+                        note: () => <DrawingPinIcon className="t-accent size-5" />,
+                        launch: () => <RocketIcon className="t-accent size-5" />,
+                        tip: () => <StarIcon className="text-intent-success size-5" />,
+                        check: () => <CheckIcon className="text-intent-success size-5" />,
+                        _other: () => <InfoCircledIcon className="text-intent-default size-5" />,
+                    })}
+                </div>
 
-            <div
-                className={classNames(
-                    "text-sm leading-5 w-full after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
-                    visitDiscriminatedUnion({ intent }, "intent")._visit({
-                        info: () => "text-intent-default",
-                        warning: () => "text-intent-warning",
-                        success: () => "text-intent-success",
-                        danger: () => "text-intent-danger",
-                        _other: () => "",
-                    }),
-                )}
-            >
                 <div
                     className={classNames(
-                        styles.content,
-                        "prose-h1:first:-mt-1 prose-h2:first:-mt-1 prose-h3:first:-mt-1 prose-h4:first:-mt-1",
+                        "flex-1 text-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     )}
                 >
-                    {children}
+                    <div
+                        className={visitDiscriminatedUnion({ intent }, "intent")._visit({
+                            info: () => "text-intent-default",
+                            warning: () => "text-intent-warning",
+                            success: () => "text-intent-success",
+                            error: () => "text-intent-danger",
+                            note: () => "t-accent",
+                            launch: () => "t-accent",
+                            tip: () => "text-intent-success",
+                            check: () => "text-intent-success",
+                            _other: () => "text-intent-default",
+                        })}
+                    >
+                        <h5>{title}</h5>
+                        {children}
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
+
+// aliases
+
+export function InfoCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="info" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function WarningCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="warning" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function SuccessCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="success" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function ErrorCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="error" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function NoteCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="note" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function LaunchNoteCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="launch" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function TipCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="tip" title={title}>
+            {children}
+        </Callout>
+    );
+}
+
+export function CheckCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+    return (
+        <Callout intent="check" title={title}>
+            {children}
+        </Callout>
+    );
+}
