@@ -10,7 +10,8 @@ on: pull_request
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
