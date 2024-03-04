@@ -17,8 +17,8 @@ jobs:
       - name: Comment in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
-          message: "Deploying PR Preview _(execution **${{ github.run_id }}** / attempt **${{ github.run_attempt }}**)_"
-          comment_tag: pr_preview
+          message: "Deploying PR Preview..."
+          comment_tag: pr_preview_${{ github.run_id }}
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -47,8 +47,6 @@ jobs:
           "
 
           echo "### PR Preview" >> preview.txt
-          echo "_(execution **${{ github.run_id }}** / attempt **${{ github.run_attempt }}**)_" >> preview.txt
-          echo "" >> preview.txt
           for DOMAIN in $DOMAINS
           do
               echo "- [$DOMAIN]($DEPLOYMENT_URL?host=$DOMAIN)" >> preview.txt
@@ -58,4 +56,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
           filePath: preview.txt
-          comment_tag: pr_preview
+          comment_tag: pr_preview_${{ github.run_id }}
