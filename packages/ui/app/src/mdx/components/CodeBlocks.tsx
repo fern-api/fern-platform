@@ -1,5 +1,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { useState } from "react";
+import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -47,18 +48,20 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
         >
             <div className="bg-tag-default-soft rounded-t-[inherit]">
                 <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
-                    <Tabs.List className="flex min-h-10 overflow-x-auto">
-                        {items.map((item, idx) => (
-                            <Tabs.Trigger
-                                key={idx}
-                                value={idx.toString()}
-                                className="data-[state=active]:shadow-accent-primary-light dark:data-[state=active]:shadow-accent-primary-dark group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
-                            >
-                                <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
-                                    {item.title ?? `Untitled ${idx + 1}`}
-                                </span>
-                            </Tabs.Trigger>
-                        ))}
+                    <Tabs.List className="flex min-h-10" asChild>
+                        <HorizontalOverflowMask>
+                            {items.map((item, idx) => (
+                                <Tabs.Trigger
+                                    key={idx}
+                                    value={idx.toString()}
+                                    className="data-[state=active]:shadow-accent-primary-light dark:data-[state=active]:shadow-accent-primary-dark group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
+                                >
+                                    <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
+                                        {item.title ?? `Untitled ${idx + 1}`}
+                                    </span>
+                                </Tabs.Trigger>
+                            ))}
+                        </HorizontalOverflowMask>
                     </Tabs.List>
 
                     <CopyToClipboardButton className="ml-2 mr-1" content={items[selectedTabIndex]?.code} />

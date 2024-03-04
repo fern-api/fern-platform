@@ -1,21 +1,12 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
-import React, {
-    PropsWithChildren,
-    ReactElement,
-    useEffect,
-    useImperativeHandle,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import { ResolvedEndpointPathParts } from "../../util/resolver";
-import "./EndpointUrl.scss";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -72,59 +63,8 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         return elements;
     };
 
-    // check if overflow is visible
-    const isOverflowVisible = ref.current != null ? ref.current.scrollWidth > ref.current.clientWidth : false;
-
-    const [showLeftMask, setShowLeftMask] = useState(false);
-    const [hideRightMask, setHideRightMask] = useState(() =>
-        ref.current != null ? ref.current.scrollLeft === ref.current.scrollWidth - ref.current.clientWidth : false,
-    );
-
-    const [nonce, setNonce] = useState(0);
-
-    // force measurement on mount
-    useEffect(() => setNonce((n) => n + 1), []);
-
-    // check if overflow is visible
-    useEffect(() => {
-        const refCurrent = ref.current;
-
-        if (refCurrent == null) {
-            return;
-        }
-        const measure = () => {
-            // check if scrolled to right > 0px
-            setShowLeftMask(refCurrent.scrollLeft > 0);
-
-            // check if scrolled all the way to the right
-            setHideRightMask(refCurrent.scrollLeft === refCurrent.scrollWidth - refCurrent.clientWidth);
-        };
-
-        refCurrent.addEventListener("scroll", measure);
-
-        measure();
-        const resizeObserver = new ResizeObserver(measure);
-        resizeObserver.observe(refCurrent);
-
-        return () => {
-            refCurrent.removeEventListener("scroll", measure);
-            resizeObserver.disconnect();
-        };
-    }, [nonce]);
-
     return (
-        <div
-            ref={ref}
-            className={classNames(
-                "flex h-8 items-center gap-1 overflow-x-auto pr-2",
-                {
-                    ["url-overflow"]: isOverflowVisible,
-                    ["left-mask"]: showLeftMask,
-                    ["right-mask"]: !hideRightMask,
-                },
-                className,
-            )}
-        >
+        <div ref={ref} className={classNames("flex h-8 items-center gap-1 overflow-x-auto pr-2", className)}>
             <HttpMethodTag method={method} />
             <div className={classNames("flex items-center")}>
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
