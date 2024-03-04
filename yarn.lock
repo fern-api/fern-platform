@@ -2698,6 +2698,7 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.56.0
     hast: ^1.0.0
+    hast-util-to-estree: ^3.1.0
     hast-util-to-jsx-runtime: ^2.3.0
     hastscript: ^9.0.0
     instantsearch.js: ^4.63.0
@@ -2733,6 +2734,7 @@ __metadata:
     tinycolor2: ^1.6.0
     title: ^3.5.3
     typescript: 4.9.4
+    unified: ^11.0.4
     unist-util-visit: ^5.0.0
     vite: ^4.5.2
   languageName: unknown
@@ -9674,7 +9676,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"hast-util-to-estree@npm:^3.0.0":
+"hast-util-to-estree@npm:^3.0.0, hast-util-to-estree@npm:^3.1.0":
   version: 3.1.0
   resolution: "hast-util-to-estree@npm:3.1.0"
   dependencies:
@@ -16697,7 +16699,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"unified@npm:^11.0.0":
+"unified@npm:^11.0.0, unified@npm:^11.0.4":
   version: 11.0.4
   resolution: "unified@npm:11.0.4"
   dependencies:

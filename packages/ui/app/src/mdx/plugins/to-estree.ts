@@ -1,6 +1,9 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import type { Expression } from "estree";
-import type { Node } from "unist";
+import type { Expression, Program } from "estree";
+import { ElementContent, Root } from "hast";
+import { toEstree } from "hast-util-to-estree";
+import { h } from "hastscript";
+import { unified } from "unified";
 
 // forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
 
@@ -159,11 +162,17 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
         };
     }
     if (options.instanceAsObject || isPlainObject(value)) {
-        // if ((value as any)?.name === MDX_CHILDREN) {
-        //   const tree = { ...(value as any) }
-        //   tree.name = null
-        //   return (mdastToEstree(tree) as any).body[0].expression
-        // }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if ((value as any)?.name === MDX_CHILDREN) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const tree = { ...(value as any) };
+            tree.name = null;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const body = mdastToEstree(tree).body[0];
+            if (body != null && "expression" in body) {
+                return body.expression;
+            }
+        }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((value as any)?.type === "mdxJsxAttributeValueExpression") {
@@ -220,11 +229,24 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
 const MDX_CHILDREN = "MDX_CHILDREN";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function wrapChildren(children: Node[]) {
+export function wrapChildren(children: ElementContent[]) {
     const tree = {
         type: "mdxJsxFlowElement",
-        children,
+        children: children.map((child) => (child.type === "text" ? h("p", child.value) : child)),
         name: MDX_CHILDREN,
     };
     return tree;
+}
+
+function mdastToEstree(node: Root) {
+    const changedTree = unified()
+        .use(rehypeRecma)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .runSync(node);
+
+    return changedTree as unknown as Program;
+}
+
+function rehypeRecma() {
+    return (tree: Root) => toEstree(tree);
 }

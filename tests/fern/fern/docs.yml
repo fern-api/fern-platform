@@ -29,6 +29,8 @@ navigation:
             path: ./content/overview/home/introduction.mdx
           - page: Getting Started
             path: ./content/overview/home/getting-started.mdx
+          - page: Components
+            path: ./content/components.mdx
       - section: OpenAPI
         contents:
           - page: Importing OpenAPI

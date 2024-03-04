@@ -51,6 +51,7 @@
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
     "hast": "^1.0.0",
+    "hast-util-to-estree": "^3.1.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
@@ -80,6 +81,7 @@
     "style-to-object": "^1.0.5",
     "tinycolor2": "^1.6.0",
     "title": "^3.5.3",
+    "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

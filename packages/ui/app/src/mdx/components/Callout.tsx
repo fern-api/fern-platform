@@ -34,7 +34,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
     return (
         <div
             className={classNames(
-                "p-4 my-4 rounded-lg", // pb-0 to compensate for the ::after margin
+                "p-4 mt-3 mb-5 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",

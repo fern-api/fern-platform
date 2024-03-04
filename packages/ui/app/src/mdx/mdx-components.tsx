@@ -22,6 +22,7 @@ import {
     Tr,
     Ul,
 } from "./base-components";
+import { Accordion } from "./components/Accordion";
 import { Availability } from "./components/Availability";
 import {
     Callout,
@@ -39,6 +40,7 @@ import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
 import { MdxErrorBoundary } from "./components/MdxErrorBoundary";
+import { Tabs } from "./components/Tabs";
 
 export const JSX_COMPONENTS = {
     Availability,
@@ -57,6 +59,8 @@ export const JSX_COMPONENTS = {
     Icon: RemoteFontAwesomeIcon,
     CodeBlock,
     MdxErrorBoundary,
+    Tabs,
+    AccordionGroup: Accordion,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {

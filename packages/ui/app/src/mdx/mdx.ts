@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
+import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 
 export interface FernDocsFrontmatter {
@@ -80,7 +81,7 @@ export async function serializeMdxContent(
             scope: {},
             mdxOptions: {
                 remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
-                rehypePlugins: [rehypeFernCode, rehypeSanitizeJSX],
+                rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
                 format: "detect",
                 /**
                  * development=true is required to render MdxRemote from the client-side.
