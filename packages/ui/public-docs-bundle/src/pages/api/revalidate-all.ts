@@ -2,7 +2,6 @@ import { buildUrl } from "@fern-ui/ui";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { getAllUrlsFromDocsConfig } from "../../utils/getAllUrlsFromDocsConfig";
 import { loadWithUrl } from "../../utils/loadWithUrl";
-import { notFoundResponse } from "../../utils/serverResponse";
 import { toValidPathname } from "../../utils/toValidPathname";
 
 function getHostFromUrl(url: string | undefined): string | undefined {
@@ -55,7 +54,7 @@ const handler: NextApiHandler = async (
         // req.headers.host to make the network request
         const xFernHost = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
         if (typeof xFernHost !== "string") {
-            return notFoundResponse();
+            return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 

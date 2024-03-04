@@ -2,7 +2,6 @@
 
 import { isPlainObject } from "@fern-ui/core-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
 
 interface RequestBody {
     path: string;
@@ -42,9 +41,20 @@ function getHostFromUrl(url: string | undefined): string | undefined {
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>): Promise<unknown> => {
     if (req.method !== "POST") {
-        return new NextResponse(null, { status: 405 });
+        return res.status(405).json({
+            success: false,
+            message: "Method not allowed.",
+        });
     }
     const host = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
+
+    if (typeof host !== "string") {
+        return res.status(400).json({
+            success: false,
+            message: "Bad request: Missing or invalid host.",
+        });
+    }
+
     try {
         const parseResult = parseRequestBody(req.body);
 
