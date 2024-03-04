@@ -1,13 +1,10 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { useState } from "react";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
-import {
-    FernSyntaxHighlighterTokens,
-    FernSyntaxHighlighterTokensProps,
-} from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
+import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
 export declare namespace CodeBlocks {
-    export interface Item extends FernSyntaxHighlighterTokensProps {
+    export interface Item extends FernSyntaxHighlighterProps {
         title?: string;
     }
 
@@ -34,10 +31,10 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
                                 </span>
                             </div>
                         </div>
-                        <CopyToClipboardButton className="ml-2 mr-1" content={items[0].tokens.code} />
+                        <CopyToClipboardButton className="ml-2 mr-1" content={items[0].code} />
                     </div>
                 </div>
-                <FernSyntaxHighlighterTokens {...items[0]} className="rounded-b-[inherit]" />
+                <FernSyntaxHighlighter {...items[0]} className="rounded-b-[inherit]" />
             </div>
         );
     }
@@ -64,12 +61,12 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
                         ))}
                     </Tabs.List>
 
-                    <CopyToClipboardButton className="ml-2 mr-1" content={items[selectedTabIndex]?.tokens.code} />
+                    <CopyToClipboardButton className="ml-2 mr-1" content={items[selectedTabIndex]?.code} />
                 </div>
             </div>
             {items.map((item, idx) => (
                 <Tabs.Content value={idx.toString()} key={idx} className="rounded-t-0 rounded-b-[inherit]" asChild>
-                    <FernSyntaxHighlighterTokens {...item} />
+                    <FernSyntaxHighlighter {...item} />
                 </Tabs.Content>
             ))}
         </Tabs.Root>

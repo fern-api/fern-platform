@@ -7,7 +7,7 @@ import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
 
-interface FernSyntaxHighlighterProps {
+export interface FernSyntaxHighlighterProps {
     className?: string;
     style?: React.CSSProperties;
     id?: string;
@@ -56,7 +56,7 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
                 return;
             }
             void (async () => {
-                const highlighter = await getHighlighterInstance();
+                const highlighter = await getHighlighterInstance(language);
                 const tokens = highlightTokens(highlighter, code, language);
                 cachedHighlights.set(id ?? code, tokens);
                 setNonce((nonce) => nonce + 1);

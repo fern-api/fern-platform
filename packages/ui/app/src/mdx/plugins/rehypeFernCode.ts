@@ -1,15 +1,14 @@
 import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import type { Highlighter } from "shiki";
 import { visit } from "unist-util-visit";
 import { CodeBlocks } from "../../mdx/components/CodeBlocks";
-import { getHighlighterInstance, HighlightedTokens, highlightTokens } from "../../syntax-highlighting/fernShiki";
+import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { valueToEstree } from "./to-estree";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
 export function rehypeFernCode(): (tree: Root) => void {
     return async function (tree: Root): Promise<void> {
-        const highlighter = await getHighlighterInstance();
+        // const highlighter = await getHighlighterInstance();
 
         visit(tree, (node, index, parent) => {
             if (index == null) {
@@ -17,7 +16,7 @@ export function rehypeFernCode(): (tree: Root) => void {
             }
 
             if (isMdxJsxFlowElement(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
-                const codeBlockItems = visitCodeBlockNodes(node, highlighter);
+                const codeBlockItems = visitCodeBlockNodes(node);
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "CodeBlocks",
@@ -27,7 +26,7 @@ export function rehypeFernCode(): (tree: Root) => void {
             }
 
             if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
-                const codeBlockItems = visitCodeBlockNodes(node, highlighter);
+                const codeBlockItems = visitCodeBlockNodes(node);
 
                 if (codeBlockItems.length === 1 && codeBlockItems[0] != null && codeBlockItems[0].title == null) {
                     // keep the original CodeBlock if it has no title
@@ -52,7 +51,7 @@ export function rehypeFernCode(): (tree: Root) => void {
             if (isBlockCode(node)) {
                 const head = node.children.filter(isElement).find((child) => child.tagName === "code");
                 if (head != null) {
-                    const highlighted = convertToHighlighted(head, highlighter);
+                    const highlighted = convertToHighlightedProps(head);
 
                     if (!highlighted) {
                         return;
@@ -61,7 +60,10 @@ export function rehypeFernCode(): (tree: Root) => void {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "CodeBlock",
-                        attributes: [toAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
+                        // attributes: [toAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
+                        attributes: Object.entries(highlighted).map(([key, value]) =>
+                            toAttribute(key, JSON.stringify(value), valueToEstree(value)),
+                        ),
                         children: [],
                     });
                 }
@@ -70,7 +72,7 @@ export function rehypeFernCode(): (tree: Root) => void {
     };
 }
 
-function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast, highlighter: Highlighter) {
+function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
     const codeBlockItems: CodeBlocks.Item[] = [];
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
@@ -80,10 +82,10 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast, highlighter: Hi
             const title = jsxAttributes.find((attr) => attr.name === "title");
             visit(node, "element", (child) => {
                 if (child.tagName === "code") {
-                    const highlighted = convertToHighlighted(child, highlighter);
+                    const highlighted = convertToHighlightedProps(child);
                     if (highlighted != null) {
                         codeBlockItems.push({
-                            tokens: highlighted,
+                            ...highlighted,
                             title:
                                 typeof title?.value === "string"
                                     ? title.value
@@ -99,7 +101,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast, highlighter: Hi
     return codeBlockItems;
 }
 
-function convertToHighlighted(node: Element, highlighter: Highlighter): HighlightedTokens | undefined {
+function convertToHighlightedProps(node: Element): FernSyntaxHighlighterProps | undefined {
     const prefix = "language-";
     const code = node.children.find(isText)?.value;
 
@@ -116,7 +118,7 @@ function convertToHighlighted(node: Element, highlighter: Highlighter): Highligh
     }
 
     lang = lang.substring(prefix.length);
-    return highlightTokens(highlighter, code, lang);
+    return { code, language: lang };
 }
 
 // remove leading and trailing newlines
