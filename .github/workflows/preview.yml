@@ -29,3 +29,31 @@ jobs:
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Get preview url
+        run: |
+          DEPLOYMENT_URL=$(vercel)
+
+          DOMAINS="
+          docs.joincandidhealth.com
+          reference.flatfile.com
+          docs.vellum.ai
+          docs.flagright.com
+          docs.propexo.com
+          docs.pier-finance.com
+          assemblyai.docs.buildwithfern.com
+          docs.hellodata.ai
+          docs.privategpt.dev
+          docs.mercoa.com
+          "
+
+          echo "### PR Preview" >> preview.txt
+          for DOMAIN in $DOMAINS
+          do
+              echo "- [$DOMAIN]($DEPLOYMENT_URL?host=$DOMAIN)" >> preview.txt
+          done
+
+      - name: Comment URL in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          filePath: preview.txt
