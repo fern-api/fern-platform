@@ -35,7 +35,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     }
     const startTime = performance.now();
     try {
-        const proxyRequest = (typeof req.body === "object" ? req.body : JSON.parse(req.body)) as ProxyRequest;
+        const proxyRequest = (await req.json()) as ProxyRequest;
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
             headers: proxyRequest.headers,
