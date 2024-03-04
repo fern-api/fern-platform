@@ -6,17 +6,19 @@ env:
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets. ALGOLIA_SEARCH_INDEX }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
-on:
-  push:
-    branches-ignore:
-      - main
-    tags-ignore:
-      - "**"
+on: pull_request
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
+
+      - name: Comment in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: "Deploying PR Preview _(execution **${{ github.run_id }}** / attempt **${{ github.run_attempt }}**)_"
+          comment_tag: pr_preview
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -45,6 +47,8 @@ jobs:
           "
 
           echo "### PR Preview" >> preview.txt
+          echo "_(execution **${{ github.run_id }}** / attempt **${{ github.run_attempt }}**)_" >> preview.txt
+          echo "" >> preview.txt
           for DOMAIN in $DOMAINS
           do
               echo "- [$DOMAIN]($DEPLOYMENT_URL?host=$DOMAIN)" >> preview.txt
@@ -54,3 +58,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
           filePath: preview.txt
+          comment_tag: pr_preview
