@@ -16,9 +16,7 @@ export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAweso
         return (
             <span
                 ref={ref}
-                className={classNames(className, "fa-icon", {
-                    "has-dark": darkModeColor != null,
-                })}
+                className={classNames(className, "fa-icon")}
                 style={
                     {
                         maskImage: `url("${getIconUrl(icon)}")`,
@@ -28,9 +26,9 @@ export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAweso
                         WebkitMaskRepeat: "no-repeat",
                         WebkitMaskPosition: "center center",
                         backgroundColor: lightModeColor ?? color,
+                        "--fa-icon-dark": darkModeColor ?? color,
                         width: size != null ? `${size * 4}px` : undefined,
                         height: size != null ? `${size * 4}px` : undefined,
-                        "--fa-icon-dark": darkModeColor ?? color,
                     } as React.CSSProperties
                 }
             />

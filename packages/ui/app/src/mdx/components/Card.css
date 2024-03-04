@@ -1,0 +1,9 @@
+.card-icon,
+.card-icon > svg,
+.card-icon > .fa-icon {
+    @apply size-6;
+}
+
+.card-icon.fa-icon {
+    @apply bg-accent;
+}

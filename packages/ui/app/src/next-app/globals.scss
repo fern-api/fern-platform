@@ -122,9 +122,7 @@
     .fa-icon {
         @apply size-4 inline-block bg-intent-default;
 
-        &.has-dark {
-            background-color: var(--fa-icon-dark);
-        }
+        background-color: var(--fa-icon-dark, var(--gray-a11));
     }
 
     .mask-grad-top-1 {
@@ -713,11 +711,12 @@
         @apply border-default t-default hover:t-default border bg-white/70 dark:bg-tag-default-soft;
 
         &.interactive {
-            @apply cursor-pointer shadow-card-light hover:shadow-card-light-elevated hover:border-primary hover:transition-all;
-            @apply hover:border-primary;
+            @apply cursor-pointer shadow-card;
+            @apply hover:shadow-card-elevated hover:border-primary hover:transition-all;
+            @apply active:shadow-card-elevated active:border-primary active:transition-all;
 
             &.active {
-                @apply shadow-card-light-elevated border-primary dark:shadow-card-dark-elevated;
+                @apply shadow-card-elevated border-primary;
             }
         }
     }

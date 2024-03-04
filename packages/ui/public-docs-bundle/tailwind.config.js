@@ -380,6 +380,12 @@ module.exports = {
                 ".shadow-accent": {
                     "@apply shadow-accent-primary-light dark:shadow-accent-primary-dark": {},
                 },
+                ".shadow-card": {
+                    "@apply shadow-card-light dark:shadow-card-dark": {},
+                },
+                ".shadow-card-elevated": {
+                    "@apply shadow-card-light-elevated dark:shadow-card-dark-elevated": {},
+                },
             });
         }),
     ],
