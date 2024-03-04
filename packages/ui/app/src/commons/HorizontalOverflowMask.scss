@@ -9,7 +9,7 @@
     scrollbar-width: none; /* Firefox */
 }
 
-.fern-x-overflow:hover > * {
+.fern-x-overflow:not(.left-mask):hover > * {
     animation-name: bounce-left;
     animation-duration: 0.5s;
     animation-timing-function: ease;
