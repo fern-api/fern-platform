@@ -589,6 +589,116 @@ it("get snippets", async () => {
     );
 });
 
+it("get Go snippets", async () => {
+    // create snippets
+    await CLIENT.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "echo",
+        snippets: {
+            type: "go",
+            sdk: {
+                githubRepo: "https://github.com/acme/acme-go",
+                version: "0.0.10",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/snippets/load",
+                        method: FdrAPI.EndpointMethod.Post,
+                    },
+                    snippet: {
+                        client: "client := acmeclient.NewClient()\n",
+                    },
+                },
+            ],
+        },
+    });
+    // get snippets
+    const snippets = getAPIResponse(
+        await CLIENT.get({
+            apiId: "echo",
+            endpoint: {
+                path: "/snippets/load",
+                method: FdrAPI.EndpointMethod.Post,
+            },
+        }),
+    );
+    expect(snippets.length).toEqual(1);
+
+    const snippet = snippets[0] as FdrAPI.GoSnippet;
+    expect(snippet.sdk.githubRepo).toEqual("https://github.com/acme/acme-go");
+    expect(snippet.sdk.version).toEqual("0.0.10");
+    expect(snippet.client).toEqual("client := acmeclient.NewClient()\n");
+    // register API definition for acme org
+    const apiDefinitionResponse = getAPIResponse(
+        await CLIENT.api.v1.register.registerApiDefinition({
+            orgId: "acme",
+            apiId: "echo",
+            definition: createApiDefinition({
+                endpointId: "/snippets/load",
+                endpointMethod: "POST",
+                endpointPath: {
+                    parts: [
+                        { type: "literal", value: "/snippets" },
+                        { type: "literal", value: "/load" },
+                    ],
+                    pathParameters: [],
+                },
+                snippetsConfig: {
+                    goSdk: {
+                        githubRepo: "https://github.com/acme/acme-go",
+                    },
+                },
+            }),
+        }),
+    );
+    // register docs
+    const startDocsRegisterResponse = getAPIResponse(
+        await CLIENT.docs.v2.write.startDocsRegister({
+            orgId: "acme",
+            apiId: "echo",
+            domain: "https://acme.docs.buildwithfern.com",
+            customDomains: [],
+            filepaths: ["logo.png", "guides/guide.mdx"],
+            images: [],
+        }),
+    );
+    await CLIENT.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
+        docsDefinition: {
+            pages: {},
+            config: {
+                navigation: {
+                    items: [
+                        {
+                            type: "api",
+                            title: "Acme API",
+                            api: apiDefinitionResponse.apiDefinitionId,
+                        },
+                    ],
+                },
+                typography: {
+                    headingsFont: {
+                        name: "Syne",
+                        fontFile: fontFileId,
+                    },
+                },
+            },
+        },
+    });
+    // get docs for url
+    const docs = getAPIResponse(
+        await CLIENT.docs.v2.read.getDocsForUrl({
+            url: "https://acme.docs.buildwithfern.com",
+        }),
+    );
+    const apiDefinition = docs.definition.apis[apiDefinitionResponse.apiDefinitionId];
+    expect(apiDefinition).not.toEqual(undefined);
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.goSdk).not.toEqual(undefined);
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.goSdk?.client).toEqual(
+        "client := acmeclient.NewClient()\n",
+    );
+});
+
 it("get snippets with unregistered API", async () => {
     // create snippets
     await CLIENT.snippetsFactory.createSnippetsForSdk({
