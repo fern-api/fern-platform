@@ -27,6 +27,7 @@ export declare namespace App {
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
         title: string | undefined;
+        isApiPlaygroundEnabled: boolean;
     }
 }
 
@@ -46,6 +47,7 @@ export const DocsApp: React.FC<App.Props> = ({
     logoHeight,
     logoHref,
     title,
+    isApiPlaygroundEnabled,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
     const resolvedPath = useDeepCompareMemoize(unmemoizedResolvedPath);
@@ -82,6 +84,7 @@ export const DocsApp: React.FC<App.Props> = ({
                                 search={search}
                                 navigation={navigation}
                                 algoliaSearchIndex={algoliaSearchIndex}
+                                isApiPlaygroundEnabled={isApiPlaygroundEnabled}
                             />
                         </NavigationContextProvider>
                     </DocsContextProvider>,

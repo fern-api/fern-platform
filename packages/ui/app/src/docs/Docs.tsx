@@ -38,6 +38,7 @@ interface DocsProps {
     search: DocsV1Read.SearchInfo;
     navigation: SidebarNavigation;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
+    isApiPlaygroundEnabled: boolean;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -57,6 +58,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     logoV2,
     logoHeight,
     logoHref,
+    isApiPlaygroundEnabled,
 }) {
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
@@ -116,7 +118,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <PlaygroundContextProvider navigation={navigation.sidebarNodes}>
+            <PlaygroundContextProvider navigation={navigation.sidebarNodes} enabled={isApiPlaygroundEnabled}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     <header id="fern-header">
                         <div

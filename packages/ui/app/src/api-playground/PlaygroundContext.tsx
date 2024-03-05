@@ -50,14 +50,19 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 
 interface PlaygroundProps {
     navigation: SidebarNode[];
+    enabled: boolean;
 }
 
-export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
+export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({
+    children,
+    navigation,
+    enabled,
+}) => {
     const [apis, setApis] = useAtom(APIS);
     const { domain, basePath, selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
 
-    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(false);
+    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(enabled);
 
     useEffect(() => {
         fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/config/api-playground-enabled`, {

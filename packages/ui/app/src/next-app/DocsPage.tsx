@@ -42,6 +42,8 @@ export declare namespace DocsPage {
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
+
+        isApiPlaygroundEnabled: boolean;
     }
 }
 
@@ -65,6 +67,7 @@ export function DocsPage({
     files,
     resolvedPath,
     navigation,
+    isApiPlaygroundEnabled,
 }: DocsPage.Props): ReactElement {
     const stylesheet = renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files);
     return (
@@ -104,6 +107,7 @@ export function DocsPage({
                 resolvedPath={resolvedPath}
                 navigation={navigation}
                 title={title}
+                isApiPlaygroundEnabled={isApiPlaygroundEnabled}
             />
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
@@ -184,6 +188,16 @@ export const getDocsPageProps = async (
         };
     }
 
+    const isApiPlaygroundEnabled = await fetch(`https://${xFernHost}/api/fern-docs/config/api-playground-enabled`, {
+        headers: { "x-fern-host": xFernHost },
+    })
+        .then((r): Promise<boolean> => r.json())
+        .catch((e) => {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            return false;
+        });
+
     return {
         type: "props",
         props: JSON.parse(
@@ -208,13 +222,15 @@ export const getDocsPageProps = async (
                 files: docs.body.definition.filesV2,
                 resolvedPath,
                 navigation,
+                isApiPlaygroundEnabled,
             }),
         ),
         revalidate: 60 * 60 * 24 * 6, // 6 days
     };
 };
 
-export const getDocsPageStaticProps: GetStaticProps<DocsPage.Props> = async ({ params = {} }) => {
+export const getDocsPageStaticProps: GetStaticProps<DocsPage.Props> = async (context) => {
+    const { params = {} } = context;
     const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
     const slugArray = compact(params.slug);
 
