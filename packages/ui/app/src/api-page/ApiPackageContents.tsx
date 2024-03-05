@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { isResolvedSubpackage, ResolvedTypeDefinition, ResolvedWithApiDefinition } from "../util/resolver";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
@@ -34,38 +35,42 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     return (
         <>
             {endpoints.map((endpoint, idx) => (
-                <Endpoint
-                    key={endpoint.id}
-                    api={api}
-                    showErrors={showErrors}
-                    endpoint={endpoint}
-                    breadcrumbs={currentBreadcrumbs}
-                    isLastInApi={
-                        isLastInParentPackage &&
-                        webhooks.length === 0 &&
-                        subpackages.length === 0 &&
-                        idx === endpoints.length - 1
-                    }
-                    types={types}
-                />
+                <FernErrorBoundary type="endpoint" key={endpoint.id}>
+                    <Endpoint
+                        api={api}
+                        showErrors={showErrors}
+                        endpoint={endpoint}
+                        breadcrumbs={currentBreadcrumbs}
+                        isLastInApi={
+                            isLastInParentPackage &&
+                            webhooks.length === 0 &&
+                            subpackages.length === 0 &&
+                            idx === endpoints.length - 1
+                        }
+                        types={types}
+                    />
+                </FernErrorBoundary>
             ))}
             {websockets.map((websocket, idx) => (
-                <WebSocket
-                    key={websocket.id}
-                    api={api}
-                    websocket={websocket}
-                    isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === websockets.length - 1}
-                    types={types}
-                />
+                <FernErrorBoundary type="websocket" key={websocket.id}>
+                    <WebSocket
+                        api={api}
+                        websocket={websocket}
+                        isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === websockets.length - 1}
+                        types={types}
+                    />
+                </FernErrorBoundary>
             ))}
             {webhooks.map((webhook, idx) => (
-                <Webhook
-                    key={webhook.id}
-                    webhook={webhook}
-                    breadcrumbs={breadcrumbs}
-                    isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === webhooks.length - 1}
-                    types={types}
-                />
+                <FernErrorBoundary type="webhook" key={webhook.id}>
+                    <Webhook
+                        key={webhook.id}
+                        webhook={webhook}
+                        breadcrumbs={breadcrumbs}
+                        isLastInApi={isLastInParentPackage && subpackages.length === 0 && idx === webhooks.length - 1}
+                        types={types}
+                    />
+                </FernErrorBoundary>
             ))}
             {subpackages.map((subpackage, idx) => (
                 <ApiSubpackage

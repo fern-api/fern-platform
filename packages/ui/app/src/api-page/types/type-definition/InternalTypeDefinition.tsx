@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
+import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { getAnchorId } from "../../../util/anchor";
 import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
@@ -147,12 +148,14 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
 
     if (!isCollapsible) {
         return (
-            <FernTooltipProvider>
-                <TypeDefinitionDetails
-                    elements={collapsableContent.elements}
-                    separatorText={collapsableContent.separatorText}
-                />
-            </FernTooltipProvider>
+            <FernErrorBoundary type="type_definition">
+                <FernTooltipProvider>
+                    <TypeDefinitionDetails
+                        elements={collapsableContent.elements}
+                        separatorText={collapsableContent.separatorText}
+                    />
+                </FernTooltipProvider>
+            </FernErrorBoundary>
         );
     }
 
@@ -165,7 +168,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             ? `Hide ${collapsableContent.elementNameSingular}`
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
-    const toRet = (
+    const renderContent = () => (
         <div
             className={classNames(
                 "text-sm internal-type-definition-container",
@@ -201,5 +204,9 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         </div>
     );
 
-    return <FernTooltipProvider>{toRet}</FernTooltipProvider>;
+    return (
+        <FernErrorBoundary type="type_definition">
+            <FernTooltipProvider>{renderContent()}</FernTooltipProvider>
+        </FernErrorBoundary>
+    );
 };

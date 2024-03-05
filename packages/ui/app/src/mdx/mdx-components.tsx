@@ -1,6 +1,7 @@
 import { MDXRemoteProps } from "next-mdx-remote";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
     A,
     H1,
@@ -39,7 +40,6 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
-import { MdxErrorBoundary } from "./components/MdxErrorBoundary";
 import { Tabs } from "./components/Tabs";
 
 export const JSX_COMPONENTS = {
@@ -60,7 +60,7 @@ export const JSX_COMPONENTS = {
     Check: CheckCallout,
     LaunchNote: LaunchNoteCallout,
     Icon: RemoteFontAwesomeIcon,
-    MdxErrorBoundary,
+    MdxErrorBoundary: (props: PropsWithChildren): ReactElement => <FernErrorBoundary type="mdx" {...props} />,
     Tabs,
     AccordionGroup: Accordion,
 };

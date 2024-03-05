@@ -1,6 +1,8 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
 import { createRef, FC, useEffect, useMemo } from "react";
+import { capturePosthogEvent } from "../../analytics/posthog";
+import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
@@ -19,7 +21,7 @@ export declare namespace CodeSnippetExample {
     }
 }
 
-export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
+const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     id,
     code,
     language,
@@ -85,6 +87,14 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = ({
     );
 };
 
+export const CodeSnippetExample: FC<CodeSnippetExample.Props> = (props) => {
+    return (
+        <FernErrorBoundary type="code_snippet_example">
+            <CodeSnippetExampleInternal {...props} />
+        </FernErrorBoundary>
+    );
+};
+
 export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start = 0): (number | [number, number])[] {
     const jsonString = JSON.stringify(json, undefined, 2);
     const part = path[0];
@@ -95,7 +105,15 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
 
     const query = "$" + getQueryPart(part);
 
-    const results = jp.query(json, query);
+    let results: unknown[] = [];
+
+    try {
+        results = jp.query(json, query);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        capturePosthogEvent("jsonpath_error", { error: e, query });
+    }
 
     if (part.type === "objectFilter") {
         if (isPlainObject(json) && json[part.propertyName] === part.requiredValue) {
@@ -144,7 +162,7 @@ function jsonStringifyAndIndent(json: unknown, key: string | undefined, depth: n
 function getQueryPart(path: JsonPropertyPathPart) {
     switch (path.type) {
         case "objectProperty":
-            return "." + (path.propertyName ?? "*");
+            return path.propertyName != null ? `['${path.propertyName}']` : "[*]";
         case "listItem":
             return "[*]";
         case "objectFilter":

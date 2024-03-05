@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../util/resolver";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
@@ -30,17 +31,19 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
     types,
 }) {
     return (
-        <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
-            <InternalTypeReferenceDefinitions
-                shape={shape}
-                isCollapsible={isCollapsible}
-                applyErrorStyles={applyErrorStyles}
-                className={className}
-                anchorIdParts={anchorIdParts}
-                route={route}
-                defaultExpandAll={defaultExpandAll}
-                types={types}
-            />
-        </TypeDefinitionContextProvider>
+        <FernErrorBoundary type="type_reference_definitions">
+            <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
+                <InternalTypeReferenceDefinitions
+                    shape={shape}
+                    isCollapsible={isCollapsible}
+                    applyErrorStyles={applyErrorStyles}
+                    className={className}
+                    anchorIdParts={anchorIdParts}
+                    route={route}
+                    defaultExpandAll={defaultExpandAll}
+                    types={types}
+                />
+            </TypeDefinitionContextProvider>
+        </FernErrorBoundary>
     );
 });

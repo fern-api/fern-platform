@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -129,17 +130,19 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
                 <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
             )}
             {hasInternalTypeReference(property.valueShape, types) && (
-                <TypeDefinitionContext.Provider value={newContextValue}>
-                    <InternalTypeReferenceDefinitions
-                        shape={property.valueShape}
-                        isCollapsible
-                        applyErrorStyles={applyErrorStyles}
-                        anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
-                        types={types}
-                    />
-                </TypeDefinitionContext.Provider>
+                <FernErrorBoundary type="object_property">
+                    <TypeDefinitionContext.Provider value={newContextValue}>
+                        <InternalTypeReferenceDefinitions
+                            shape={property.valueShape}
+                            isCollapsible
+                            applyErrorStyles={applyErrorStyles}
+                            anchorIdParts={anchorIdParts}
+                            route={route}
+                            defaultExpandAll={defaultExpandAll}
+                            types={types}
+                        />
+                    </TypeDefinitionContext.Provider>
+                </FernErrorBoundary>
             )}
         </div>
     );
