@@ -66,6 +66,7 @@ const CUSTOMERS = [
     "astronomer",
     "trmlabs",
     "qdrant",
+    "elevenlabs",
 ];
 
 function isPlaygroundEnabled(domain: string) {
