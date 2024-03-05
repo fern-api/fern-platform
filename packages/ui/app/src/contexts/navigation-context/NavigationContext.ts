@@ -4,6 +4,7 @@ import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "../../sideba
 import { type ResolvedPath } from "../../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
+    domain: "",
     basePath: undefined,
     activeVersion: undefined,
     selectedSlug: "",
@@ -34,6 +35,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
 });
 
 export interface NavigationContextValue {
+    domain: string;
     basePath: string | undefined;
     activeVersion: SidebarVersionInfo | undefined;
     selectedSlug: string;

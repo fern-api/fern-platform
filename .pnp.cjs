@@ -4298,6 +4298,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
+            ["@vercel/edge-config", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:1.1.0"],\
             ["autoprefixer", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:10.4.16"],\
             ["cssnano", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:6.0.3"],\
             ["depcheck", "npm:1.4.3"],\
@@ -7757,6 +7758,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@ungap-url-search-params-npm-0.2.2-038ac53cb9-779506cca3.zip/node_modules/@ungap/url-search-params/",\
           "packageDependencies": [\
             ["@ungap/url-search-params", "npm:0.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@vercel/edge-config", [\
+        ["npm:1.1.0", {\
+          "packageLocation": "./.yarn/cache/@vercel-edge-config-npm-1.1.0-34d6944b48-ccf982fb3f.zip/node_modules/@vercel/edge-config/",\
+          "packageDependencies": [\
+            ["@vercel/edge-config", "npm:1.1.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:1.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/@vercel-edge-config-virtual-346191cc02/0/cache/@vercel-edge-config-npm-1.1.0-34d6944b48-ccf982fb3f.zip/node_modules/@vercel/edge-config/",\
+          "packageDependencies": [\
+            ["@vercel/edge-config", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:1.1.0"],\
+            ["@opentelemetry/api", null],\
+            ["@types/opentelemetry__api", null],\
+            ["@vercel/edge-config-fs", "npm:0.1.0"],\
+            ["ts-essentials", "virtual:346191cc02ed9a1da6a49ac7b9d02b07941ea68ad56db2dcdfb368c7d9f3e3417cc8d528db53237182023f90fffb784ee8d39898e00b57f00b7e4383fa648375#npm:9.4.1"]\
+          ],\
+          "packagePeers": [\
+            "@opentelemetry/api",\
+            "@types/opentelemetry__api"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@vercel/edge-config-fs", [\
+        ["npm:0.1.0", {\
+          "packageLocation": "./.yarn/cache/@vercel-edge-config-fs-npm-0.1.0-d851fd81f8-4eb27927a1.zip/node_modules/@vercel/edge-config-fs/",\
+          "packageDependencies": [\
+            ["@vercel/edge-config-fs", "npm:0.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -20928,6 +20962,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-api-utils", "virtual:9d24e6fe8b9986932d9ced83d6055e354788dbb2fbba39cefb37535e1869ba891aba6526be5c87912f1e1ca8b7a84e5f20946eb3ba2149d30d8a20b4f9bda2fd#npm:1.0.2"],\
             ["@types/typescript", null],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"]\
+          ],\
+          "packagePeers": [\
+            "@types/typescript",\
+            "typescript"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["ts-essentials", [\
+        ["npm:9.4.1", {\
+          "packageLocation": "./.yarn/cache/ts-essentials-npm-9.4.1-bae5f21c88-3a7404b885.zip/node_modules/ts-essentials/",\
+          "packageDependencies": [\
+            ["ts-essentials", "npm:9.4.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:346191cc02ed9a1da6a49ac7b9d02b07941ea68ad56db2dcdfb368c7d9f3e3417cc8d528db53237182023f90fffb784ee8d39898e00b57f00b7e4383fa648375#npm:9.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/ts-essentials-virtual-444846914d/0/cache/ts-essentials-npm-9.4.1-bae5f21c88-3a7404b885.zip/node_modules/ts-essentials/",\
+          "packageDependencies": [\
+            ["ts-essentials", "virtual:346191cc02ed9a1da6a49ac7b9d02b07941ea68ad56db2dcdfb368c7d9f3e3417cc8d528db53237182023f90fffb784ee8d39898e00b57f00b7e4383fa648375#npm:9.4.1"],\
+            ["@types/typescript", null],\
+            ["typescript", null]\
           ],\
           "packagePeers": [\
             "@types/typescript",\

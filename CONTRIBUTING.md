@@ -108,13 +108,13 @@ fern-prod-it1bn6vh9-buildwithfern.vercel.app
 To access the preview for a given customer site, use the following pattern:
 
 ```
-https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs-preview?site=proficientai
+https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs/preview?site=proficientai
 ```
 
 Or,
 
 ```
-https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs-preview?host=proficientai.docs.buildwithfern.com
+https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs/preview?host=proficientai.docs.buildwithfern.com
 ```
 
 ### Before deploying

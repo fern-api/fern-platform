@@ -2564,6 +2564,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.2.18
+    "@vercel/edge-config": ^1.1.0
     autoprefixer: ^10.4.16
     cssnano: ^6.0.3
     depcheck: ^1.4.3
@@ -5288,6 +5289,28 @@ __metadata:
   version: 0.2.2
   resolution: "@ungap/url-search-params@npm:0.2.2"
   checksum: 779506cca3d36bc291e4e6eb0484e8bd87186cbe5bb6a6d37f17a866c47069d8a3a20b9331ef0a5c96f26b4db8210cf26c6e5a1f4a6c8be3be13a619e82cb93c
+  languageName: node
+  linkType: hard
+
+"@vercel/edge-config-fs@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@vercel/edge-config-fs@npm:0.1.0"
+  checksum: 4eb27927a1c6a9d77cee4457424e208c3ff7f01e1cd0249b133804d12fd7099bd1aed6a9d9574b122d3bd59289b294a913b4df05bb69aca6091c8a020cbc2121
+  languageName: node
+  linkType: hard
+
+"@vercel/edge-config@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@vercel/edge-config@npm:1.1.0"
+  dependencies:
+    "@vercel/edge-config-fs": 0.1.0
+    ts-essentials: 9.4.1
+  peerDependencies:
+    "@opentelemetry/api": ^1.7.0
+  peerDependenciesMeta:
+    "@opentelemetry/api":
+      optional: true
+  checksum: ccf982fb3f160a5f34ddb21fcc7be0d5224c6e7e908ff2b1f3d420fc6317b535630e2049a512e14b15bbbb458fd9996852596ac9aa648e43308ef43653e66ea9
   languageName: node
   linkType: hard
 
@@ -16245,6 +16268,18 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     typescript: ">=4.2.0"
   checksum: 6375e12ba90b6cbe73f564405248da14c52aa44b62b386e1cbbb1da2640265dd33e99d3e019688dffa874e365cf596b161ccd49351e90638be825c2639697640
+  languageName: node
+  linkType: hard
+
+"ts-essentials@npm:9.4.1":
+  version: 9.4.1
+  resolution: "ts-essentials@npm:9.4.1"
+  peerDependencies:
+    typescript: ">=4.1.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 3a7404b88549a005eb19881348905bc76faec2438f1997a9cccb8ecdaaef481b88896fea91353c14435f6d4354259a1c527c438b353353c9de526a9c593ab7d0
   languageName: node
   linkType: hard
 

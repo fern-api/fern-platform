@@ -59,7 +59,7 @@ jobs:
           echo "## PR Preview" >> preview.txt
           for DOMAIN in $DOMAINS
           do
-              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs-preview?host=$DOMAIN)" >> preview.txt
+              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
           done
 
       - name: Comment URL in PR
