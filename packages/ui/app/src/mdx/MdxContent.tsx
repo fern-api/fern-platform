@@ -14,7 +14,7 @@ const COMPONENTS = { ...HTML_COMPONENTS, ...JSX_COMPONENTS };
 
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
     if (typeof mdx === "string") {
-        return <>{mdx}</>;
+        return <span className="whitespace-pre-wrap">{mdx}</span>;
     }
 
     return (
