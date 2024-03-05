@@ -60,7 +60,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
     const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch(`${basePath != null ? domain : ""}/api/fern-docs/config/api-playground-enabled`)
+        fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/config/api-playground-enabled`)
             .then((r) => r.json())
             .then(setIsPlaygroundEnabled)
             // eslint-disable-next-line no-console
