@@ -2,9 +2,8 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
@@ -53,40 +52,20 @@ interface PlaygroundProps {
     navigation: SidebarNode[];
 }
 
-const CUSTOMERS = [
-    "cloudflare",
-    "assemblyai",
-    "cohere",
-    "shipbob",
-    "hume",
-    "flagright",
-    "sayari",
-    "webflow",
-    "dapi",
-    "astronomer",
-    "trmlabs",
-    "qdrant",
-    "elevenlabs",
-];
-
-function isPlaygroundEnabled(domain: string) {
-    domain = domain.toLowerCase();
-    if (CUSTOMERS.some((customer) => domain.includes(customer))) {
-        return true;
-    }
-
-    if (["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(domain)) {
-        return true;
-    }
-
-    return process.env.NODE_ENV !== "production";
-}
-
 export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
     const [apis, setApis] = useAtom(APIS);
-    const { domain } = useDocsContext();
-    const { selectedSlug } = useNavigationContext();
+    const { domain, basePath, selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
+
+    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(false);
+
+    useEffect(() => {
+        fetch(`${basePath != null ? domain : ""}/api/fern-docs/config/api-playground-enabled`)
+            .then((r) => r.json())
+            .then(setIsPlaygroundEnabled)
+            // eslint-disable-next-line no-console
+            .catch(console.error);
+    }, [basePath, domain]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
@@ -156,7 +135,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
         [expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
     );
 
-    if (!isPlaygroundEnabled(domain)) {
+    if (!isPlaygroundEnabled) {
         return <>{children}</>;
     }
 

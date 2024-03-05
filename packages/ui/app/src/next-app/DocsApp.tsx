@@ -66,6 +66,7 @@ export const DocsApp: React.FC<App.Props> = ({
                         <NavigationContextProvider
                             resolvedPath={resolvedPath}
                             navigation={navigation}
+                            domain={baseUrl.domain}
                             basePath={baseUrl.basePath}
                             title={title}
                         >

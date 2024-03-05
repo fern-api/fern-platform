@@ -15,6 +15,7 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         resolvedPath: ResolvedPath;
+        domain: string;
         basePath: string | undefined;
         navigation: SidebarNavigation;
         title: string | undefined;
@@ -84,6 +85,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
     resolvedPath,
     children,
+    domain,
     basePath,
     navigation,
     title,
@@ -225,7 +227,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     return (
         <NavigationContext.Provider
             value={{
-                basePath,
+                domain,
+                basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                 activeNavigatable,
                 onScrollToPath,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
