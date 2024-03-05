@@ -59,16 +59,16 @@ export class RevalidatorServiceImpl implements RevalidatorService {
                 },
             );
 
-            if (res.status !== 200) {
+            if (res.status >= 400) {
                 revalidationFailed = true;
-            } else {
-                const data = res.data;
-                if (data.successfulRevalidations != null) {
-                    successfulRevalidations = data.successfulRevalidations;
-                }
-                if (data.failedRevalidations != null) {
-                    failedRevalidations = data.failedRevalidations;
-                }
+            }
+
+            const data = res.data;
+            if (data.successfulRevalidations != null) {
+                successfulRevalidations = data.successfulRevalidations;
+            }
+            if (data.failedRevalidations != null) {
+                failedRevalidations = data.failedRevalidations;
             }
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);

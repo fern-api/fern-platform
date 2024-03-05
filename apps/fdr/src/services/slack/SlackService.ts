@@ -84,10 +84,7 @@ export class SlackServiceImpl implements SlackService {
                     text: failedUrlsMessage,
                     thread_ts: ts,
                 });
-            }
-
-            // if hitting the vercel function failed somehow (such as due to timeout)
-            if (request.paths.revalidationFailed) {
+            } else if (request.paths.revalidationFailed) {
                 await this.client.chat.postMessage({
                     channel: "#engineering-notifs",
                     text: `:rotating_light: \`${request.domain}\` revalidation *completely* failed.`,
