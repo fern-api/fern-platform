@@ -54,8 +54,8 @@ function stringHasMarkdown(s: string): boolean {
         return true;
     }
 
-    // has `\n\n`, indicating paragraphs
-    if (s.includes("\n\n")) {
+    // has `\n`, indicating paragraphs
+    if (s.includes("\n")) {
         return true;
     }
 
