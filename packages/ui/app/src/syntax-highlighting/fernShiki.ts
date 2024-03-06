@@ -58,6 +58,9 @@ export function highlightTokens(highlighter: Highlighter, code: string, rawLang:
 
 // remove leading and trailing newlines
 export function trimCode(code: string): string {
+    if (code == null) {
+        return "";
+    }
     return code.replace(/^\n+|\n+$/g, "");
 }
 
@@ -91,6 +94,9 @@ export const LANGUAGES: Array<BundledLanguage | SpecialLanguage> = [
 ];
 
 function parseLang(lang: string): BundledLanguage | SpecialLanguage {
+    if (lang == null) {
+        return "txt";
+    }
     lang = lang.toLowerCase();
     if (LANGUAGES.includes(lang as BundledLanguage)) {
         return lang as BundledLanguage;

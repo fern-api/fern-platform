@@ -24,12 +24,25 @@ export function rehypeFernCode(): (tree: Root) => void {
                     children: [],
                 });
             }
+        });
+
+        visit(tree, (node, index, parent) => {
+            if (index == null) {
+                return;
+            }
 
             if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
                 const codeBlockItems = visitCodeBlockNodes(node);
 
                 if (codeBlockItems.length === 1 && codeBlockItems[0] != null && codeBlockItems[0].title == null) {
-                    // keep the original CodeBlock if it has no title
+                    parent?.children.splice(index, 1, {
+                        type: "mdxJsxFlowElement",
+                        name: "CodeBlock",
+                        attributes: Object.entries(codeBlockItems[0]).map(([key, value]) =>
+                            toAttribute(key, JSON.stringify(value), valueToEstree(value)),
+                        ),
+                        children: [],
+                    });
                 } else {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
@@ -119,11 +132,6 @@ function convertToHighlightedProps(node: Element): FernSyntaxHighlighterProps | 
 
     lang = lang.substring(prefix.length);
     return { code, language: lang };
-}
-
-// remove leading and trailing newlines
-export function trimCode(code: string): string {
-    return code.replace(/^\n+|\n+$/g, "");
 }
 
 export function isBlockCode(element: Element): element is Element {
