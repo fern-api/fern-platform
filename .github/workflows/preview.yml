@@ -47,6 +47,7 @@ jobs:
           CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]')
 
           CUSTOM_DOMAINS=$(echo $CUSTOM_DOMAINS | grep -v "buildwithfern.com" | grep -v "vercel.app")
+          echo $CUSTOM_DOMAINS
 
           echo "## PR Preview" >> preview.txt
           echo "$CUSTOM_DOMAINS" | while IFS= read -r DOMAIN; do
