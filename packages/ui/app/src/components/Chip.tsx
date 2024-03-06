@@ -26,6 +26,9 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
                         ["py-1 px-2 rounded-lg h-6"]: !small,
                     },
                 )}
+                style={{
+                    fontSize: small ? "10px" : undefined,
+                }}
                 onClick={copyToClipboard}
             >
                 <span>{name}</span>

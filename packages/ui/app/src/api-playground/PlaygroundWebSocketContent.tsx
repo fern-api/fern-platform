@@ -18,6 +18,7 @@ interface PlaygroundWebSocketContentProps {
     sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
     returnToHandshake: () => void;
     connected: boolean;
+    error: string | null;
 }
 
 export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = ({
@@ -32,6 +33,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
     startSesssion,
     returnToHandshake,
     connected,
+    error,
 }) => {
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -64,6 +66,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                         formState={formState}
                         setFormState={setFormState}
                         types={types}
+                        error={error}
                     />
                 ) : (
                     <PlaygroundWebSocketSessionForm
@@ -77,6 +80,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                         startSession={startSesssion}
                         returnToHandshake={returnToHandshake}
                         connected={connected}
+                        error={error}
                     />
                 )}
             </div>

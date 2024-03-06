@@ -26,6 +26,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 }): ReactElement => {
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
     const [webSocketMessages, setWebSocketMessages] = useState<WebSocketMessage[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     const pushWebSocketMessage = useCallback((message: WebSocketMessage) => {
         setWebSocketMessages((old) => [...old, message]);
@@ -43,6 +44,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             socket.current.close();
         }
 
+        setError(null);
         setWebSocketMessages([]);
 
         const url = buildRequestUrl(
@@ -81,8 +83,12 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             }
         };
 
-        socket.current.onclose = () => {
+        socket.current.onclose = (ev) => {
             setConnectedState("closed");
+
+            if (ev.code !== 1000) {
+                setError(ev.reason);
+            }
         };
 
         socket.current.onerror = (event) => {
@@ -159,6 +165,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                         startSesssion={startSession}
                         returnToHandshake={useCallback(() => setStep("handshake"), [])}
                         connected={connectedState === "opened"}
+                        error={error}
                     />
                 </div>
             </div>
