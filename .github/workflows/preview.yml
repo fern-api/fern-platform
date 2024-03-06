@@ -44,8 +44,9 @@ jobs:
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/$DEPLOYMENT_URL?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=true" \
-                                   -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]' | grep -v "buildwithfern.com" | grep -v "vercel.app")
+          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=true" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]')
+
+          CUSTOM_DOMAINS=$(echo $CUSTOM_DOMAINS | grep -v "buildwithfern.com" | grep -v "vercel.app")
 
           echo "## PR Preview" >> preview.txt
           for DOMAIN in $CUSTOM_DOMAINS
