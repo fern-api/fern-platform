@@ -39,7 +39,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        setIsActive(router.asPath.includes(`${route}#${anchorId}`));
+        setIsActive(router.asPath.endsWith(`${route}#${anchorId}`));
     }, [router.asPath, anchorId, route]);
 
     return (
