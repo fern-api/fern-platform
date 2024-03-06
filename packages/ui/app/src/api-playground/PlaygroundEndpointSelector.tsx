@@ -132,8 +132,8 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
                     >
                         <span className="inline-flex items-center gap-1">
                             {selectedGroup != null &&
-                                selectedGroup.breadcrumbs.length > 1 &&
-                                selectedGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                                selectedGroup.breadcrumbs.length > 0 &&
+                                selectedGroup.breadcrumbs.map((breadcrumb, idx) => (
                                     <Fragment key={idx}>
                                         <span className="t-accent shrink truncate whitespace-nowrap">{breadcrumb}</span>
                                         <SlashIcon className="text-faded" />
@@ -147,7 +147,7 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
                     </FernButton>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
-                    <DropdownMenu.Content sideOffset={4} ref={determinePlacement} className="fern-dropdown">
+                    <DropdownMenu.Content sideOffset={4} ref={determinePlacement} className="fern-dropdown rounded-xl">
                         <PlaygroundEndpointSelectorContent
                             navigation={navigation}
                             closeDropdown={closeDropdown}

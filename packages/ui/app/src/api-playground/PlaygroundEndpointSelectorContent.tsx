@@ -118,9 +118,9 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             }
             return (
                 <li key={apiGroup.id} className="gap-2">
-                    {apiGroup.breadcrumbs.length > 1 && (
-                        <div className="bg-background sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
-                            {apiGroup.breadcrumbs.slice(1).map((breadcrumb, idx) => (
+                    {apiGroup.breadcrumbs.length > 0 && (
+                        <div className="bg-background-translucent sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
+                            {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
                                     {idx > 0 && <SlashIcon className="text-faded mx-0.5 size-3" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">

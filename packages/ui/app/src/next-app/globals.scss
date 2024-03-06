@@ -726,7 +726,7 @@
     }
 
     .fern-input-focus {
-        @apply outline-tag-primary-light dark:outline-tag-primary-dark ring-border-primary outline outline-4 outline-offset-0;
+        @apply ring-border-primary ring-2 outline-none;
     }
 
     .fern-input {
