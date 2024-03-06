@@ -6,6 +6,7 @@ export declare namespace ResolvedPath {
     interface Neighbor {
         fullSlug: string;
         title: string;
+        excerpt: string | undefined;
     }
 
     interface Neighbors {

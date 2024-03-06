@@ -26,6 +26,11 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         <CustomDocsPageHeader
                             title={resolvedPath.title}
                             sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                            excerpt={
+                                typeof resolvedPath.markdown !== "string"
+                                    ? resolvedPath.markdown?.frontmatter.excerpt
+                                    : undefined
+                            }
                         />
                         {resolvedPath.markdown != null && (
                             <section>

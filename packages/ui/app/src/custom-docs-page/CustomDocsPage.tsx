@@ -20,9 +20,14 @@ export declare namespace CustomDocsPage {
 interface CustomDocsPageHeaderProps {
     sectionTitleBreadcrumbs: string[];
     title: string;
+    excerpt: string | undefined;
 }
 
-export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomDocsPageHeaderProps): ReactElement => {
+export const CustomDocsPageHeader = ({
+    sectionTitleBreadcrumbs,
+    title,
+    excerpt,
+}: CustomDocsPageHeaderProps): ReactElement => {
     return (
         <header className="mb-8">
             <div className="space-y-1">
@@ -30,6 +35,8 @@ export const CustomDocsPageHeader = ({ sectionTitleBreadcrumbs, title }: CustomD
 
                 <h1 className="my-0 inline-block leading-tight">{title}</h1>
             </div>
+
+            {excerpt != null && <p className="t-muted mt-2 text-lg leading-7">{excerpt}</p>}
         </header>
     );
 };
@@ -56,7 +63,13 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                     <CustomDocsPageHeader
                         title={resolvedPath.title}
                         sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                        excerpt={
+                            typeof resolvedPath.serializedMdxContent !== "string"
+                                ? resolvedPath.serializedMdxContent.frontmatter.excerpt
+                                : undefined
+                        }
                     />
+
                     {mdxContent}
                     <BottomNavigationButtons />
                     <div className="h-20" />

@@ -50,6 +50,7 @@
     "@types/nprogress": "^0.2.3",
     "algoliasearch": "^4.22.1",
     "classnames": "^2.5.1",
+    "gray-matter": "^4.0.3",
     "hast": "^1.0.0",
     "hast-util-to-estree": "^3.1.0",
     "hast-util-to-jsx-runtime": "^2.3.0",

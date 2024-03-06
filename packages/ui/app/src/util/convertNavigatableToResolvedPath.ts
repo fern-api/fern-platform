@@ -1,10 +1,33 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import grayMatter from "gray-matter";
 import moment from "moment";
 import { serializeMdxContent } from "../mdx/mdx";
 import { findApiSection, isApiPage, isChangelogPage, SidebarNode, visitSidebarNodes } from "../sidebar/types";
 import { flattenApiDefinition } from "./flattenApiDefinition";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
+
+function getExcerpt(node: SidebarNode.Page, pages: Record<string, DocsV1Read.PageContent>): string | undefined {
+    try {
+        const content = pages[node.id]?.markdown;
+        if (content == null) {
+            return;
+        }
+        const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
+
+        const frontmatter = content.match(frontmatterMatcher)?.[0];
+
+        if (frontmatter == null) {
+            return undefined;
+        }
+        const gm = grayMatter(frontmatter);
+        return gm.data.excerpt;
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Error occurred while parsing frontmatter", e);
+        return undefined;
+    }
+}
 
 export async function convertNavigatableToResolvedPath({
     sidebarNodes,
@@ -26,11 +49,19 @@ export async function convertNavigatableToResolvedPath({
     const neighbors = {
         prev:
             traverseState.prev != null
-                ? { fullSlug: traverseState.prev.slug.join("/"), title: traverseState.prev.title }
+                ? {
+                      fullSlug: traverseState.prev.slug.join("/"),
+                      title: traverseState.prev.title,
+                      excerpt: getExcerpt(traverseState.prev, pages),
+                  }
                 : null,
         next:
             traverseState.next != null
-                ? { fullSlug: traverseState.next.slug.join("/"), title: traverseState.next.title }
+                ? {
+                      fullSlug: traverseState.next.slug.join("/"),
+                      title: traverseState.next.title,
+                      excerpt: getExcerpt(traverseState.next, pages),
+                  }
                 : null,
     };
 
