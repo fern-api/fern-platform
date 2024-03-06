@@ -52,7 +52,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             <div
                 ref={ref}
                 className={classNames(
-                    "overflow-x-auto",
+                    "overflow-x-hidden",
                     {
                         ["fern-x-overflow"]: isOverflowVisible,
                         ["left-mask"]: showLeftMask,

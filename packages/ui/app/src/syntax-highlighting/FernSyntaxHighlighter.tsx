@@ -1,5 +1,5 @@
 import { h } from "hastscript";
-import { forwardRef, useEffect, useState, useTransition } from "react";
+import { forwardRef, useEffect, useMemo, useState, useTransition } from "react";
 import { getHighlighterInstance, HighlightedTokens, highlightTokens, trimCode } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
@@ -67,6 +67,8 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [code, id, language]);
 
-        return <FernSyntaxHighlighterTokens ref={ref} tokens={result ?? createRawTokens(code, language)} {...props} />;
+        const tokens = useMemo(() => result ?? createRawTokens(code, language), [code, language, result]);
+
+        return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...props} />;
     },
 );

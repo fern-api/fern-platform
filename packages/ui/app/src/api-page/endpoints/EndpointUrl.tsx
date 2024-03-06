@@ -64,7 +64,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     };
 
     return (
-        <div ref={ref} className={classNames("flex h-8 items-center gap-1 overflow-x-auto pr-2", className)}>
+        <div ref={ref} className={classNames("flex h-8 items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
             <div className={classNames("flex items-center")}>
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>

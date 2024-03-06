@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState, useTransition } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SerializedMdxContent } from "../../mdx/mdx";
@@ -37,11 +37,46 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     const anchorRoute = `${route}#${anchorId}`;
     const router = useRouter();
     const [isActive, setIsActive] = useState(false);
+    const [, startTransition] = useTransition();
 
     useEffect(() => {
-        setIsActive(router.asPath.includes(`${route}#${anchorId}`));
-    }, [router.asPath, anchorId, route]);
+        if (router.isReady) {
+            startTransition(() => {
+                setIsActive(router.asPath === anchorRoute);
+            });
+        }
+    }, [router.asPath, anchorId, route, router.isReady, anchorRoute]);
 
+    return (
+        <EndpointParameterInternal
+            name={name}
+            description={description}
+            anchorIdParts={anchorIdParts}
+            route={route}
+            shape={shape}
+            availability={availability}
+            types={types}
+            isActive={isActive}
+        />
+    );
+};
+
+interface EndpointParameterInternalProps extends EndpointParameter.Props {
+    isActive: boolean;
+}
+
+const EndpointParameterInternal = memo<EndpointParameterInternalProps>(function EndpointParameterInternal({
+    name,
+    description,
+    anchorIdParts,
+    route,
+    shape,
+    availability,
+    types,
+    isActive,
+}) {
+    const anchorId = getAnchorId(anchorIdParts);
+    const anchorRoute = `${route}#${anchorId}`;
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
@@ -74,4 +109,4 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
             />
         </div>
     );
-};
+});

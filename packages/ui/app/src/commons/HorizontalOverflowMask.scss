@@ -5,8 +5,10 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .fern-x-overflow {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    @apply overflow-x-auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .fern-x-overflow:not(.left-mask):hover > * {
