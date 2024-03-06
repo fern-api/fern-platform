@@ -124,13 +124,11 @@ types:
       navigation: NavigationConfig
 
       # logo
-      logoV2: optional<LogoV2>
       logoHeight: optional<Height>
       logoHref: optional<Url>
       favicon: optional<FileId>
 
       # styles
-      backgroundImage: optional<FileId>
       colorsV3: optional<ColorsConfigV3>
       navbarLinks: optional<list<NavbarLink>>
       layout: optional<DocsLayoutConfig>
@@ -141,6 +139,8 @@ types:
       js: optional<JsConfig>
 
       # deprecated
+      backgroundImage: optional<FileId>
+      logoV2: optional<LogoV2>
       logo:
         type: optional<FileId>
         availability: deprecated
@@ -156,32 +156,29 @@ types:
 
   ColorsConfigV3:
     union:
-      dark: DarkModeConfig
-      light: LightModeConfig
+      dark: ThemeConfig
+      light: ThemeConfig
       darkAndLight: DarkAndLightModeConfig
 
-  DarkModeConfig:
+  ThemeConfig:
     properties:
       logo: optional<FileId>
-      accentPrimary: RgbColor
+      backgroundImage: optional<FileId>
+      accentPrimary: RgbaColor
       background: Background
-      backgroundSecondary: optional<Background>
-
-  LightModeConfig:
-    properties:
-      logo: optional<FileId>
-      accentPrimary: RgbColor
-      background: Background
-      backgroundSecondary: optional<Background>
+      border: optional<RgbaColor>
+      sidebarBackground: optional<RgbaColor>
+      headerBackground: optional<RgbaColor>
+      cardBackground: optional<RgbaColor>
 
   DarkAndLightModeConfig:
     properties:
-      dark: DarkModeConfig
-      light: LightModeConfig
+      dark: ThemeConfig
+      light: ThemeConfig
 
   Background:
     union:
-      solid: RgbColor
+      solid: RgbaColor
       gradient: {}
 
   LogoV2:
@@ -293,11 +290,24 @@ types:
       headerHeight: optional<SizeConfig>
       searchbarPlacement: optional<SidebarOrHeaderPlacement>
       tabsPlacement: optional<SidebarOrHeaderPlacement>
+      contentAlignment: optional<ContentAlignment>
+      headerPosition: optional<HeaderPosition>
+      disableHeader: optional<boolean>
 
   SidebarOrHeaderPlacement:
     enum:
       - HEADER
       - SIDEBAR
+
+  ContentAlignment:
+    enum:
+      - CENTER
+      - LEFT
+
+  HeaderPosition:
+    enum:
+      - FIXED
+      - ABSOLUTE
 
   PageWidthSizeConfig:
     union:
@@ -376,7 +386,7 @@ types:
 
   ColorsConfig:
     properties:
-      accentPrimary: optional<RgbColor>
+      accentPrimary: optional<RgbaColor>
 
   ColorsConfigV2:
     properties:
@@ -390,18 +400,19 @@ types:
 
   ColorUnthemedConfig:
     properties:
-      color: optional<RgbColor>
+      color: optional<RgbaColor>
 
   ColorThemedConfig:
     properties:
-      dark: optional<RgbColor>
-      light: optional<RgbColor>
+      dark: optional<RgbaColor>
+      light: optional<RgbaColor>
 
-  RgbColor:
+  RgbaColor:
     properties:
       r: integer
       g: integer
       b: integer
+      a: optional<double>
 
   ApiArtifacts:
     properties:

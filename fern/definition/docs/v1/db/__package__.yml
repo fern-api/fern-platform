@@ -43,7 +43,6 @@ types:
       navigation: NavigationConfig
 
       # logo
-      logoV2: optional<docsReadV1.LogoV2>
       logoHeight: optional<docsReadV1.Height>
       logoHref: optional<docsReadV1.Url>
       favicon: optional<docsReadV1.FileId>
@@ -62,6 +61,9 @@ types:
       # deprecated
       logo:
         type: optional<docsReadV1.FileId>
+        availability: deprecated
+      logoV2:
+        type: optional<docsReadV1.LogoV2>
         availability: deprecated
       colors:
         type: optional<docsReadV1.ColorsConfig>

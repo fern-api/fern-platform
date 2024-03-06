@@ -71,6 +71,7 @@ export function generateEndpointStreamResponseExample({
             type: "stream",
             value: responseChunkExample != null ? [responseChunkExample, responseChunkExample] : [],
         },
+        responseBody: undefined,
     };
 }
 
@@ -132,6 +133,12 @@ function generateBaseEndpointExample({
         queryParameters,
         headers,
         requestBody,
+
+        name: undefined,
+        requestBodyV3: undefined,
+        responseBodyV3: undefined,
+        codeSamples: undefined,
+        description: undefined,
     };
 }
 

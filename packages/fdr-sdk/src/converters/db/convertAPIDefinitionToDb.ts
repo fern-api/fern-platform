@@ -1,5 +1,4 @@
 import { isEqual, kebabCase, startCase } from "lodash";
-import { marked } from "marked";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
@@ -28,23 +27,25 @@ export function convertAPIDefinitionToDb(
     return {
         id,
         rootPackage: {
-            endpoints: writeShape.rootPackage.endpoints.map((endpoint) =>
-                transformEndpoint({
-                    writeShape: endpoint,
-                    apiDefinition: writeShape,
-                    context,
-                    snippets: snippets,
-                }),
+            endpoints: writeShape.rootPackage.endpoints.map(
+                (endpoint) =>
+                    transformEndpoint({
+                        writeShape: endpoint,
+                        apiDefinition: writeShape,
+                        context,
+                        snippets: snippets,
+                    }) ?? [],
             ),
             webhooks:
                 writeShape.rootPackage.webhooks?.map((webhook) =>
                     transformWebhook({ writeShape: webhook, apiDefinition: writeShape }),
                 ) ?? [],
-            websockets: writeShape.rootPackage.websockets?.map((websocket) =>
-                transformWebsocket({ writeShape: websocket }),
-            ),
+            websockets:
+                writeShape.rootPackage.websockets?.map((websocket) => transformWebsocket({ writeShape: websocket })) ??
+                [],
             subpackages: writeShape.rootPackage.subpackages,
             types: writeShape.rootPackage.types,
+            pointsTo: undefined,
         },
         types: Object.fromEntries(
             Object.entries(writeShape.types).map(([typeId, typeDefinition]) => {
@@ -90,20 +91,20 @@ function transformSubpackage({
     );
     const webhooks = writeShape.webhooks?.map((webhook) => transformWebhook({ writeShape: webhook, apiDefinition }));
     const websockets = writeShape.websockets?.map((websocket) => transformWebsocket({ writeShape: websocket }));
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         subpackageId: id,
         parent: parent,
         name: writeShape.name,
         endpoints: endpoints,
-        websockets: websockets,
+        websockets: websockets ?? [],
         types: writeShape.types,
         subpackages: writeShape.subpackages,
         pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
-        htmlDescription,
-        descriptionContainsMarkdown: true,
+        // htmlDescription,
+        // descriptionContainsMarkdown: true,
         webhooks: webhooks ?? [],
     };
 }
@@ -113,7 +114,7 @@ function transformWebsocket({
 }: {
     writeShape: APIV1Write.WebSocketChannel;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.WebSocketChannel> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     return {
         urlSlug,
@@ -124,8 +125,8 @@ function transformWebsocket({
         defaultEnvironment: writeShape.defaultEnvironment,
         environments: writeShape.environments,
         description: writeShape.description,
-        htmlDescription,
-        descriptionContainsMarkdown: true,
+        // htmlDescription,
+        // descriptionContainsMarkdown: true,
         id: writeShape.id,
         name: writeShape.name,
         path: writeShape.path,
@@ -141,15 +142,15 @@ function transformWebhook({
     writeShape: APIV1Write.WebhookDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.WebhookDefinition> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
     return {
         urlSlug,
         migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
         description: writeShape.description,
-        htmlDescription,
-        descriptionContainsMarkdown: true,
+        // htmlDescription,
+        // descriptionContainsMarkdown: true,
         method: writeShape.method,
         id: writeShape.id,
         name: writeShape.name,
@@ -175,7 +176,7 @@ function transformEndpoint({
     snippets: SDKSnippetHolder;
 }): WithoutQuestionMarks<APIV1Db.DbEndpointDefinition> {
     context.registerEnvironments(writeShape.environments ?? []);
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
     return {
@@ -203,38 +204,45 @@ function transformEndpoint({
                   })
                 : undefined,
         errors: writeShape.errors ?? [],
-        errorsV2:
-            writeShape.errorsV2 != null
-                ? writeShape.errorsV2.map((errorV2) => {
-                      return {
-                          ...errorV2,
-                          name: errorV2.name != null ? titleCase(errorV2.name) : undefined,
-                      };
-                  })
-                : writeShape.errors != null
-                ? writeShape.errors.map((error) => {
-                      return {
-                          ...error,
-                          type:
-                              error.type != null
-                                  ? {
-                                        type: "alias",
-                                        value: error.type,
-                                    }
-                                  : undefined,
-                      };
-                  })
-                : undefined,
+        errorsV2: transformErrorsV2(writeShape),
         examples: getExampleEndpointCalls({
             writeShape,
             apiDefinition,
             snippets,
         }),
         description: writeShape.description,
-        htmlDescription,
+        // htmlDescription,
         authed: writeShape.auth,
-        descriptionContainsMarkdown: true,
+        // descriptionContainsMarkdown: true,
     };
+}
+
+function transformErrorsV2(writeShape: APIV1Write.EndpointDefinition): APIV1Read.ErrorDeclarationV2[] | undefined {
+    if (writeShape.errorsV2 != null) {
+        return writeShape.errorsV2.map((errorV2): APIV1Read.ErrorDeclarationV2 => {
+            return {
+                ...errorV2,
+                name: errorV2.name != null ? titleCase(errorV2.name) : undefined,
+                type: errorV2.type != null ? transformShape({ writeShape: errorV2.type }) : undefined,
+            };
+        });
+    }
+    if (writeShape.errors != null) {
+        return writeShape.errors.map((error): APIV1Read.ErrorDeclarationV2 => {
+            return {
+                name: undefined,
+                ...error,
+                type:
+                    error.type != null
+                        ? {
+                              type: "alias",
+                              value: error.type,
+                          }
+                        : undefined,
+            };
+        });
+    }
+    return undefined;
 }
 
 function convertResponseToDb({
@@ -392,39 +400,39 @@ function transformHttpRequestToDb({
 }: {
     writeShape: APIV1Write.HttpRequest;
 }): WithoutQuestionMarks<APIV1Db.DbHttpRequest> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                htmlDescription,
+                // htmlDescription,
                 type: writeShape.type,
-                descriptionContainsMarkdown: true,
+                // descriptionContainsMarkdown: true,
             };
         case "reference":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                htmlDescription,
+                // htmlDescription,
                 type: writeShape.type,
-                descriptionContainsMarkdown: true,
+                // descriptionContainsMarkdown: true,
             };
         case "fileUpload":
             return {
                 contentType: "multipart/form-data",
                 description: writeShape.description,
-                htmlDescription,
+                // htmlDescription,
                 type: writeShape.type,
-                descriptionContainsMarkdown: true,
+                // descriptionContainsMarkdown: true,
             };
         case "json":
             return {
                 contentType: writeShape.type.contentType,
                 description: writeShape.description,
-                htmlDescription,
+                // htmlDescription,
                 type: writeShape.type.shape,
-                descriptionContainsMarkdown: true,
+                // descriptionContainsMarkdown: true,
             };
         default:
             assertNever(writeShape.type);
@@ -441,12 +449,12 @@ export function transformExampleEndpointCall({
     endpointDefinition: APIV1Write.EndpointDefinition;
     snippets: SDKSnippetHolder;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         name: writeShape.name,
         description: writeShape.description,
-        htmlDescription,
-        descriptionContainsMarkdown: true,
+        // htmlDescription,
+        // descriptionContainsMarkdown: true,
         path: writeShape.path,
         pathParameters: writeShape.pathParameters,
         queryParameters: writeShape.queryParameters,
@@ -520,14 +528,14 @@ function transformTypeDefinition({
 }: {
     writeShape: APIV1Write.TypeDefinition;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.TypeDefinition> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
         availability: writeShape.availability,
-        htmlDescription,
+        // htmlDescription,
         name: writeShape.name,
         shape: transformShape({ writeShape: writeShape.shape }),
-        descriptionContainsMarkdown: true,
+        // descriptionContainsMarkdown: true,
     };
 }
 
@@ -576,14 +584,14 @@ function transformProperty({
 }: {
     writeShape: APIV1Write.ObjectProperty;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.ObjectProperty> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
         availability: writeShape.availability,
-        htmlDescription,
+        // htmlDescription,
         key: writeShape.key,
         valueType: writeShape.valueType,
-        descriptionContainsMarkdown: true,
+        // descriptionContainsMarkdown: true,
     };
 }
 
@@ -592,12 +600,12 @@ function transformEnumValue({
 }: {
     writeShape: APIV1Write.EnumValue;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.EnumValue> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
-        htmlDescription,
+        // htmlDescription,
         value: writeShape.value,
-        descriptionContainsMarkdown: true,
+        // descriptionContainsMarkdown: true,
     };
 }
 
@@ -606,12 +614,12 @@ function transformDiscriminatedVariant({
 }: {
     writeShape: APIV1Write.DiscriminatedUnionVariant;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.DiscriminatedUnionVariant> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
         availability: writeShape.availability,
-        htmlDescription,
-        descriptionContainsMarkdown: true,
+        // htmlDescription,
+        // descriptionContainsMarkdown: true,
         discriminantValue: writeShape.discriminantValue,
         additionalProperties: {
             extends: writeShape.additionalProperties.extends,
@@ -627,20 +635,20 @@ function transformUnDiscriminatedVariant({
 }: {
     writeShape: APIV1Write.UndiscriminatedUnionVariant;
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.UndiscriminatedUnionVariant> {
-    const htmlDescription = getHtmlDescription(writeShape.description);
+    // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
         availability: writeShape.availability,
-        htmlDescription,
+        // htmlDescription,
         type: writeShape.type,
         displayName: writeShape.typeName != null ? startCase(writeShape.typeName) : undefined,
-        descriptionContainsMarkdown: true,
+        // descriptionContainsMarkdown: true,
     };
 }
 
-function getHtmlDescription(description: string | undefined): string | undefined {
-    return description != null ? marked(description, { mangle: false, headerIds: false }) : undefined;
-}
+// function getHtmlDescription(description: string | undefined): string | undefined {
+//     return description != null ? marked(description, { mangle: false, headerIds: false }) : undefined;
+// }
 
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
     return Object.entries(obj) as [keyof T, T[keyof T]][];

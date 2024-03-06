@@ -9,6 +9,7 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
 it("api register", async () => {
     const apiDefinition: APIV1Write.ApiDefinition = {
         rootPackage: {
+            pointsTo: undefined,
             endpoints: [],
             subpackages: [],
             types: ["type_User"],
@@ -35,18 +36,18 @@ it("api register", async () => {
         auth: undefined,
         id: "id",
         rootPackage: {
+            pointsTo: undefined,
             endpoints: [],
             subpackages: [],
             types: ["type_User"],
             webhooks: [],
+            websockets: [],
         },
         subpackages: {},
         types: {
             type_User: {
                 availability: undefined,
                 description: "This is some ```markdown```",
-                htmlDescription: "<p>This is some <code>markdown</code></p>\n",
-                descriptionContainsMarkdown: true,
                 name: "User",
                 shape: {
                     type: "alias",

@@ -60,7 +60,7 @@ export function convertDocsDefinitionToDb({
     let logoV2 = writeShape.config.logoV2;
 
     if (logoV2 == null && logo != null) {
-        logoV2 = { dark: logo };
+        logoV2 = { dark: logo, light: undefined };
     }
 
     const colors = writeShape.config.colors;
@@ -71,7 +71,9 @@ export function convertDocsDefinitionToDb({
             accentPrimary: {
                 type: "themed",
                 dark: colors.accentPrimary,
+                light: undefined,
             },
+            background: undefined,
         };
     }
 
@@ -320,52 +322,56 @@ function transformColorsV3ForDb({
             return {
                 type: "dark",
                 accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
                 background:
                     writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
-                backgroundSecondary:
-                    writeShape.backgroundSecondary != null
-                        ? { type: "solid", ...writeShape.backgroundSecondary }
-                        : undefined,
-                logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                backgroundImage: writeShape.backgroundImage,
+                border: writeShape.border,
+                cardBackground: writeShape.cardBackground,
+                sidebarBackground: writeShape.sidebarBackground,
+                headerBackground: writeShape.headerBackground,
             };
         case "light":
             return {
                 type: "light",
                 accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
                 background:
                     writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
-                backgroundSecondary:
-                    writeShape.backgroundSecondary != null
-                        ? { type: "solid", ...writeShape.backgroundSecondary }
-                        : undefined,
-                logo: docsConfig.logoV2?.light,
+                backgroundImage: writeShape.backgroundImage,
+                border: writeShape.border,
+                cardBackground: writeShape.cardBackground,
+                sidebarBackground: writeShape.sidebarBackground,
+                headerBackground: writeShape.headerBackground,
             };
         case "darkAndLight":
             return {
                 type: "darkAndLight",
                 light: {
                     accentPrimary: writeShape.light.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                    logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
                     background:
                         writeShape.light.background != null
                             ? { type: "solid", ...writeShape.light.background }
                             : { type: "gradient" },
-                    backgroundSecondary:
-                        writeShape.light.backgroundSecondary != null
-                            ? { type: "solid", ...writeShape.light.backgroundSecondary }
-                            : undefined,
-                    logo: docsConfig.logoV2?.light,
+                    backgroundImage: writeShape.light.backgroundImage,
+                    border: writeShape.light.border,
+                    cardBackground: writeShape.light.cardBackground,
+                    sidebarBackground: writeShape.light.sidebarBackground,
+                    headerBackground: writeShape.light.headerBackground,
                 },
                 dark: {
                     accentPrimary: writeShape.dark.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
                     background:
                         writeShape.dark.background != null
                             ? { type: "solid", ...writeShape.dark.background }
                             : { type: "gradient" },
-                    backgroundSecondary:
-                        writeShape.dark.backgroundSecondary != null
-                            ? { type: "solid", ...writeShape.dark.backgroundSecondary }
-                            : undefined,
-                    logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                    backgroundImage: writeShape.dark.backgroundImage,
+                    border: writeShape.dark.border,
+                    cardBackground: writeShape.dark.cardBackground,
+                    sidebarBackground: writeShape.dark.sidebarBackground,
+                    headerBackground: writeShape.dark.headerBackground,
                 },
             };
         default:

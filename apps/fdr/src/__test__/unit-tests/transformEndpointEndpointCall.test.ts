@@ -69,14 +69,14 @@ describe("transformEndpointEndpointCall", () => {
 
         expect(transformed).toEqual({
             codeExamples: {
+                goSdk: undefined,
                 nodeAxios: "",
                 pythonSdk: undefined,
                 typescriptSdk: undefined,
             },
             codeSamples: [],
             description: undefined,
-            descriptionContainsMarkdown: true,
-            htmlDescription: undefined,
+            name: undefined,
             headers: {
                 header: true,
             },

@@ -22,6 +22,7 @@ export function convertDbAPIDefinitionToRead(
             types: dbShape.rootPackage.types,
             webhooks: dbShape.rootPackage.webhooks ?? [],
             websockets: dbShape.rootPackage.websockets ?? [],
+            pointsTo: dbShape.rootPackage.pointsTo,
         },
         types: dbShape.types,
         subpackages: Object.fromEntries(
@@ -49,10 +50,10 @@ function transformSubpackage({
         pointsTo: dbShape.pointsTo,
         urlSlug: dbShape.urlSlug,
         description: dbShape.description,
-        htmlDescription: dbShape.htmlDescription,
+        // htmlDescription: dbShape.htmlDescription,
         webhooks: dbShape.webhooks ?? [],
         websockets: dbShape.websockets ?? [],
-        descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+        // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     };
 }
 
@@ -76,28 +77,35 @@ function transformEndpoint({
         request: dbShape.request != null ? transformHttpRequest({ dbShape: dbShape.request }) : undefined,
         response: dbShape.response,
         errors: dbShape.errors ?? [],
-        errorsV2:
-            dbShape.errorsV2 ??
-            (dbShape.errors != null
-                ? dbShape.errors.map((error) => {
-                      return {
-                          ...error,
-                          type:
-                              error.type != null
-                                  ? {
-                                        type: "alias",
-                                        value: error.type,
-                                    }
-                                  : undefined,
-                      };
-                  })
-                : undefined),
+        errorsV2: transformErrorsV2(dbShape),
         examples: dbShape.examples.map((example) => convertExampleEndpointCall({ dbShape: example })),
         description: dbShape.description,
-        htmlDescription: dbShape.htmlDescription,
+        // htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
-        descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+        // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     };
+}
+
+function transformErrorsV2(dbShape: APIV1Db.DbEndpointDefinition): APIV1Read.ErrorDeclarationV2[] | undefined {
+    if (dbShape.errorsV2 != null) {
+        return dbShape.errorsV2;
+    }
+    if (dbShape.errors != null) {
+        return dbShape.errors.map((error): APIV1Read.ErrorDeclarationV2 => {
+            return {
+                name: undefined,
+                ...error,
+                type:
+                    error.type != null
+                        ? {
+                              type: "alias",
+                              value: error.type,
+                          }
+                        : undefined,
+            };
+        });
+    }
+    return undefined;
 }
 
 function transformHttpRequest({
@@ -110,25 +118,25 @@ function transformHttpRequest({
             return {
                 contentType: dbShape.contentType ?? "application/json",
                 description: dbShape.description,
-                htmlDescription: dbShape.htmlDescription,
+                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "reference":
             return {
                 contentType: dbShape.contentType ?? "application/json",
                 description: dbShape.description,
-                htmlDescription: dbShape.htmlDescription,
+                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "fileUpload":
             return {
                 contentType: dbShape.contentType ?? "multipart/form-data",
                 description: dbShape.description,
-                htmlDescription: dbShape.htmlDescription,
+                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         default:
             assertNever(dbShape.type);
@@ -143,8 +151,8 @@ export function convertExampleEndpointCall({
     return {
         name: dbShape.name,
         description: dbShape.description,
-        htmlDescription: dbShape.htmlDescription,
-        descriptionContainsMarkdown: true,
+        // htmlDescription: dbShape.htmlDescription,
+        // descriptionContainsMarkdown: true,
         path: dbShape.path,
         pathParameters: dbShape.pathParameters,
         queryParameters: dbShape.queryParameters,
