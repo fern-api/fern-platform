@@ -7,6 +7,7 @@ import Link from "next/link";
 import {
     forwardRef,
     HTMLAttributeAnchorTarget,
+    memo,
     PropsWithChildren,
     ReactElement,
     ReactNode,
@@ -65,6 +66,8 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
             children,
             elementRef,
             tooltipContent,
+            target,
+            rel,
         } = props;
         const renderLink = (child: ReactElement) => {
             const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link");
@@ -82,6 +85,8 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
                     }}
                     shallow={shallow}
                     scroll={!shallow}
+                    target={target}
+                    rel={rel}
                 >
                     {child}
                 </Link>
@@ -160,7 +165,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
     },
 );
 
-export const SidebarLink = SidebarLinkInternal;
+export const SidebarLink = memo(SidebarLinkInternal);
 
 export const SidebarSlugLink = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>(
     function SidebarSlugLink({ slug, registerScrolledToPathListener, ...props }, ref) {
