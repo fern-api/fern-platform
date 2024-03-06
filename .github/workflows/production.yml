@@ -17,9 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install jq
-        run: sudo apt-get install jq
-
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
@@ -38,11 +35,13 @@ jobs:
 
           DEPLOYMENT_URL=$(echo $DEPLOYMENT_URL | awk -F'/' '{print $3}')
 
-          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/$DEPLOYMENT_URL?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=true" \
-                                   -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]' | grep -v "buildwithfern.com" | grep -v "vercel.app")
+          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/$DEPLOYMENT_URL?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]')
 
-          for DOMAIN in $CUSTOM_DOMAINS
-          do
+
+          CUSTOM_DOMAINS=$(echo $CUSTOM_DOMAINS | grep -v "buildwithfern.com" | grep -v "vercel.app")
+
+          echo "## PR Preview" >> preview.txt
+          echo "$CUSTOM_DOMAINS" | while IFS= read -r DOMAIN; do
             curl -X POST https://${DOMAIN}/api/revalidate-all \
                  -H 'x-fern-host: ${DOMAIN}'
             echo "Revalidated: ${DOMAIN}"

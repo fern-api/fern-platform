@@ -14,9 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install jq
-        run: sudo apt-get install jq
-
       - name: Comment in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
@@ -47,14 +44,13 @@ jobs:
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=true" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]')
+          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]')
 
           CUSTOM_DOMAINS=$(echo $CUSTOM_DOMAINS | grep -v "buildwithfern.com" | grep -v "vercel.app")
 
           echo "## PR Preview" >> preview.txt
-          for DOMAIN in $CUSTOM_DOMAINS
-          do
-              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
+          echo "$CUSTOM_DOMAINS" | while IFS= read -r DOMAIN; do
+              echo "- [ ] [$DOMAIN](https://$DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
           done
 
       - name: Comment URL in PR
