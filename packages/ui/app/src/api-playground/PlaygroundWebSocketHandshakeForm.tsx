@@ -1,6 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
+import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../util/resolver";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
@@ -12,6 +13,7 @@ interface PlaygroundWebSocketHandshakeFormProps {
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     types: Record<string, ResolvedTypeDefinition>;
+    error: string | null;
 }
 
 export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFormProps> = ({
@@ -20,6 +22,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
     formState,
     setFormState,
     types,
+    error,
 }) => {
     const setHeaders = useCallback(
         (value: ((old: unknown) => unknown) | unknown) => {
@@ -53,6 +56,12 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
 
     return (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
+            {error != null && (
+                <Callout intent="error">
+                    <div className="text-base">{error}</div>
+                </Callout>
+            )}
+
             {websocket.authed && auth != null && (
                 <PlaygroundAuthorizationFormCard
                     auth={auth}

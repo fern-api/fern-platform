@@ -5,6 +5,7 @@ import { WifiOff } from "react-feather";
 import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
+import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
@@ -24,6 +25,7 @@ interface PlaygroundWebSocketSessionFormProps {
     startSession: () => void;
     returnToHandshake: () => void;
     connected: boolean;
+    error: string | null;
 }
 
 export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormProps> = ({
@@ -37,6 +39,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
     startSession,
     returnToHandshake,
     connected,
+    error,
 }) => {
     const setMessage = useCallback(
         (message: ResolvedWebSocketMessage, data: unknown) => {
@@ -104,6 +107,15 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                             <div className="flex flex-col items-center space-y-4">
                                 <WifiOff className="t-muted" size={28} />
                                 <h4 className="m-0">Websocket session is closed.</h4>
+
+                                {error != null && (
+                                    <div className="max-w-3xl">
+                                        <Callout intent="error">
+                                            <div className="text-base">{error}</div>
+                                        </Callout>
+                                    </div>
+                                )}
+
                                 <FernButtonGroup>
                                     <FernButton
                                         text="Return to handshake"
