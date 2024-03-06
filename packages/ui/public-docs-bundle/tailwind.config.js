@@ -120,6 +120,7 @@ module.exports = {
                 "tag-danger-soft": "var(--red-a2)",
 
                 "tag-default": "var(--gray-a3)",
+                "tag-default-solid": "var(--gray-3)",
                 "tag-default-hover": "var(--gray-a4)",
                 "tag-primary-light": "rgba(var(--accent-primary-light), 15%)",
                 "tag-primary-dark": "rgba(var(--accent-primary-dark), 15%)",
@@ -303,6 +304,9 @@ module.exports = {
                 },
                 ".border-danger": {
                     "@apply border-border-danger": {},
+                },
+                ".border-background": {
+                    "@apply border-background-light dark:border-background-dark": {},
                 },
                 ".outline-accent-primary": {
                     "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},

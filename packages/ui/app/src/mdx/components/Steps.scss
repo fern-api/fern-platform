@@ -1,0 +1,16 @@
+.fern-steps {
+    @apply ml-2 mb-12 border-l border-default pl-7;
+    counter-reset: step;
+}
+
+.fern-steps h3 {
+    counter-increment: step;
+
+    &:before {
+        @apply absolute size-[24px];
+        @apply bg-tag-default-solid;
+        @apply rounded-md t-muted text-base font-normal text-center -indent-px;
+        @apply ml-[-40px];
+        content: counter(step);
+    }
+}
