@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install jq
+        run: sudo apt-get install jq
+
       - name: Comment in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
