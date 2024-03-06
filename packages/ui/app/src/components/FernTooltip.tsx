@@ -1,6 +1,7 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import classNames from "classnames";
 import { FC, ReactNode } from "react";
+import { useIsReady } from "../contexts/useIsReady";
 
 interface FernTooltipProps extends Tooltip.TooltipProps, Tooltip.TooltipContentProps {
     content: ReactNode | undefined;
@@ -16,7 +17,8 @@ export const FernTooltip: FC<FernTooltipProps> = ({
     disableHoverableContent,
     ...props
 }) => {
-    if (content == null || content === "") {
+    const isReady = useIsReady();
+    if (content == null || content === "" || !isReady) {
         return <>{children}</>;
     }
     return (

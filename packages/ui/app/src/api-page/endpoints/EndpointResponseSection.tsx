@@ -24,7 +24,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     types,
 }) => {
     return (
-        <div className="flex flex-col">
+        <div>
             <ApiPageDescription className="mt-3 text-sm" description={responseBody.description} isMarkdown={true} />
             <div className="t-muted border-default border-b pb-5 text-sm leading-6">
                 {`This endpoint ${

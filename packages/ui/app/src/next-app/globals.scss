@@ -238,14 +238,8 @@
 
     .fern-sidebar-link-container {
         @apply items-stretch relative flex min-h-[36px];
-    }
-
-    .fern-sidebar-link-container[data-state="active"] {
-        @apply t-accent-aaa;
-    }
-
-    .fern-sidebar-link-container[data-state="inactive"] {
-        @apply hover:t-accent-aaa t-muted;
+        @apply data-[state=active]:t-accent-aaa;
+        @apply data-[state=inactive]:hover:t-accent-aaa data-[state=inactive]:t-muted;
     }
 
     .fern-sidebar-link-indent {

@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { useIsReady } from "../contexts/useIsReady";
 import { APIS } from "../sidebar/atom";
 import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
@@ -17,7 +17,7 @@ export declare namespace ApiPage {
 }
 
 export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showErrors }) => {
-    const { hydrated } = useNavigationContext();
+    const hydrated = useIsReady();
     const setDefinitions = useSetAtom(APIS);
     // const definition = apis[initialApi.api];
 

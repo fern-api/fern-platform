@@ -1,4 +1,4 @@
-import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,7 +8,6 @@ import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom"
 import { SidebarNavigation, SidebarNode, visitSidebarNodes } from "../../sidebar/types";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
-import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
@@ -99,11 +98,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         ),
     );
 
+    const [, anchor] = resolvedPath.fullSlug.split("#");
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
-    const resolvedRoute = getRouteForResolvedPath({
-        resolvedSlug: selectedSlug,
-        asPath: router.asPath, // do not include basepath because it is already included
-    });
+    const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
     useEffect(() => {
         startScrollTracking(resolvedRoute);
@@ -173,11 +170,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
 
-    const { value: hydrated, setTrue: hydrate } = useBooleanState(false);
-    useEffect(() => {
-        hydrate();
-    }, [hydrate, selectedSlug]);
-
     useEffect(() => {
         const handleRouteChange = (route: string, options: { shallow: boolean }) => {
             if (!options.shallow) {
@@ -233,7 +225,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 resolvedPath,
-                hydrated,
                 activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
                 selectedSlug,
                 navigation,
