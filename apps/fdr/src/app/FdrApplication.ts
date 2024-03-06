@@ -34,7 +34,7 @@ export const LOGGER = winston.createLogger({
     format: winston.format.json(),
     transports: [
         new winston.transports.Console({
-            format: winston.format.simple(),
+            format: winston.format.json(),
         }),
     ],
 });
@@ -54,7 +54,7 @@ export class FdrApplication {
             format: winston.format.json(),
             transports: [
                 new winston.transports.Console({
-                    format: winston.format.simple(),
+                    format: winston.format.json(),
                 }),
             ],
         });

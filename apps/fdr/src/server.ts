@@ -65,15 +65,3 @@ try {
 } catch (err) {
     app.logger.error("Failed to start express server", err);
 }
-
-process.on("uncaughtException", (err) => {
-    app.logger.error("Process exiting with uncauth exception", err);
-});
-
-process.on("exit", (exit) => {
-    app.logger.error("Process exiting with code", exit);
-});
-
-process.on("unhandledRejection", (reason, promise) => {
-    app.logger.error("Encountered unhandled rejected promise", reason, promise);
-});
