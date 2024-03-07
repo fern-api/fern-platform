@@ -1,18 +1,18 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { FC } from "react";
+import { ColorsConfig } from "../sidebar/types";
 
 export declare namespace BgImageGradient {
     export interface Props {
         className?: string;
-        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        colors: ColorsConfig;
         hasSpecifiedBackgroundImage: boolean;
     }
 }
 
 export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors, hasSpecifiedBackgroundImage }) => {
-    const darkBackground = colors?.type === "darkAndLight" ? colors.dark.background : colors?.background;
-    const lightBackground = colors?.type === "darkAndLight" ? colors.light.background : colors?.background;
+    const darkBackground = colors.dark?.background;
+    const lightBackground = colors.light?.background;
 
     return (
         <div

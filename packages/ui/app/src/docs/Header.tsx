@@ -8,7 +8,7 @@ import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
 import { useSearchService } from "../services/useSearchService";
 import { useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { SidebarNavigation } from "../sidebar/types";
+import { ColorsConfig, SidebarNavigation } from "../sidebar/types";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { ThemeButton } from "./ThemeButton";
 
@@ -16,10 +16,8 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        colors: ColorsConfig;
         navbarLinks: DocsV1Read.NavbarLink[];
-        logo: DocsV1Read.FileId | undefined;
-        logoV2: DocsV1Read.LogoV2 | undefined;
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
         isMobileSidebarOpen: boolean;
@@ -41,8 +39,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         closeMobileSidebar,
         showSearchBar = true,
         navigation,
-        logo,
-        logoV2,
         logoHeight,
         logoHref,
     },
@@ -80,7 +76,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     </FernLinkButton>
                 ))}
 
-                {colors?.type === "darkAndLight" && <ThemeButton className="hidden lg:flex" />}
+                {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>
         </div>
     );
@@ -98,8 +94,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             style={style}
         >
             <HeaderLogoSection
-                logo={logo}
-                logoV2={logoV2}
+                colors={colors}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
                 // tabs={navigation.tabs}
@@ -126,7 +121,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">
-                    {colors?.type === "darkAndLight" && <ThemeButton size="large" />}
+                    {colors.dark && colors.light && <ThemeButton size="large" />}
 
                     {searchService.isAvailable && (
                         <FernButton

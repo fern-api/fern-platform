@@ -18,13 +18,13 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     const containerClass =
-        "after:ring-border-default dark:bg-tag-default-soft relative mb-5 flex max-h-[400px] w-full min-w-0 max-w-full flex-col rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']";
+        "after:ring-default bg-card relative mb-5 flex max-h-[400px] w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']";
 
     if (items.length === 1 && items[0] != null) {
         return (
             <div className={containerClass}>
                 <div className="bg-tag-default-soft rounded-t-[inherit]">
-                    <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                    <div className="shadow-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
                         <div className="flex min-h-10 overflow-x-auto">
                             <div className="flex items-center px-3 py-1.5">
                                 <span className="t-muted rounded text-sm font-semibold">
@@ -47,7 +47,7 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
             defaultValue="0"
         >
             <div className="bg-tag-default-soft rounded-t-[inherit]">
-                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                <div className="shadow-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
                     <Tabs.List className="flex min-h-10" asChild>
                         <HorizontalOverflowMask>
                             {items.map((item, idx) => (

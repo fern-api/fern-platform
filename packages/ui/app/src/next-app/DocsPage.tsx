@@ -6,7 +6,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReactElement } from "react";
 import { REGISTRY_SERVICE } from "../services/registry";
-import { resolveSidebarNodes, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
+import { ColorsConfig, resolveSidebarNodes, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
 import { buildUrl } from "../util/buildUrl";
 import { convertNavigatableToResolvedPath } from "../util/convertNavigatableToResolvedPath";
 import {
@@ -27,14 +27,12 @@ export declare namespace DocsPage {
         title: string | undefined;
         favicon: string | undefined;
         backgroundImage: string | undefined;
-        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        colors: ColorsConfig;
         layout: DocsV1Read.DocsLayoutConfig | undefined;
         typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
         css: DocsV1Read.CssConfig | undefined;
         js: DocsV1Read.JsConfig | undefined;
         navbarLinks: DocsV1Read.NavbarLink[];
-        logo: DocsV1Read.FileId | undefined;
-        logoV2: DocsV1Read.LogoV2 | undefined;
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
 
@@ -58,8 +56,6 @@ export function DocsPage({
     css,
     js,
     navbarLinks,
-    logo,
-    logoV2,
     logoHeight,
     logoHref,
     search,
@@ -95,8 +91,6 @@ export function DocsPage({
                 baseUrl={baseUrl}
                 hasBackgroundImage={backgroundImage != null}
                 colors={colors}
-                logo={logo}
-                logoV2={logoV2}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
                 layout={layout}
@@ -198,33 +192,43 @@ export const getDocsPageProps = async (
             return false;
         });
 
+    const props: DocsPage.Props = {
+        baseUrl: docs.body.baseUrl,
+        layout: docs.body.definition.config.layout,
+        title: docs.body.definition.config.title,
+        favicon: docs.body.definition.config.favicon,
+        backgroundImage: docs.body.definition.config.backgroundImage,
+        colors: {
+            light:
+                docs.body.definition.config.colorsV3?.type === "light"
+                    ? docs.body.definition.config.colorsV3
+                    : docs.body.definition.config.colorsV3?.type === "darkAndLight"
+                      ? docs.body.definition.config.colorsV3.light
+                      : undefined,
+            dark:
+                docs.body.definition.config.colorsV3?.type === "dark"
+                    ? docs.body.definition.config.colorsV3
+                    : docs.body.definition.config.colorsV3?.type === "darkAndLight"
+                      ? docs.body.definition.config.colorsV3.dark
+                      : undefined,
+        },
+        typography: docs.body.definition.config.typographyV2,
+        css: docs.body.definition.config.css,
+        js: docs.body.definition.config.js,
+        navbarLinks: docs.body.definition.config.navbarLinks ?? [],
+        logoHeight: docs.body.definition.config.logoHeight,
+        logoHref: docs.body.definition.config.logoHref,
+        search: docs.body.definition.search,
+        algoliaSearchIndex: docs.body.definition.algoliaSearchIndex,
+        files: docs.body.definition.filesV2,
+        resolvedPath,
+        navigation,
+        isApiPlaygroundEnabled,
+    };
+
     return {
         type: "props",
-        props: JSON.parse(
-            JSON.stringify({
-                // docs: docs.body,
-                baseUrl: docs.body.baseUrl,
-                layout: docs.body.definition.config.layout,
-                title: docs.body.definition.config.title,
-                favicon: docs.body.definition.config.favicon,
-                backgroundImage: docs.body.definition.config.backgroundImage,
-                colors: docs.body.definition.config.colorsV3,
-                typography: docs.body.definition.config.typographyV2,
-                css: docs.body.definition.config.css,
-                js: docs.body.definition.config.js,
-                navbarLinks: docs.body.definition.config.navbarLinks ?? [],
-                logo: docs.body.definition.config.logo,
-                logoV2: docs.body.definition.config.logoV2,
-                logoHeight: docs.body.definition.config.logoHeight,
-                logoHref: docs.body.definition.config.logoHref,
-                search: docs.body.definition.search,
-                algoliaSearchIndex: docs.body.definition.algoliaSearchIndex,
-                files: docs.body.definition.filesV2,
-                resolvedPath,
-                navigation,
-                isApiPlaygroundEnabled,
-            }),
-        ),
+        props: JSON.parse(JSON.stringify(props)), // remove all undefineds
         revalidate: 60 * 60 * 24 * 6, // 6 days
     };
 };

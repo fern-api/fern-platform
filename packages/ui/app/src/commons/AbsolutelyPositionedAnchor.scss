@@ -10,17 +10,15 @@
     }
 
     .fern-anchor-icon:not(.copied) {
-        @apply bg-white text-gray-400 ring-1 ring-gray-400/30 backdrop-blur hover:ring-gray-400/60 dark:bg-white/5;
-        @apply dark:ring-gray-700/25 dark:hover:ring-white/20;
+        @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
+        // @apply dark:ring-transparent dark:hover:ring-white/20;
     }
 
     .fern-anchor-icon.copied {
-        @apply bg-tag-primary ring-border-accent-muted-light ring-1 backdrop-blur;
+        @apply bg-tag-primary ring-border-accent-muted ring-1 backdrop-blur;
 
         > svg {
             @apply t-accent size-4;
         }
-
-        @apply dark:ring-border-accent-muted-dark;
     }
 }

@@ -4061,15 +4061,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.50.12-4-gdf2d015", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.50.12-4-gdf2d015-09f61a30fd-e688367577.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.54.1-1-g293e7bf", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.54.1-1-g293e7bf-bd785366c8-4e920d88a5.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
+            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
             ["lodash", "npm:4.17.21"],\
             ["marked", "npm:5.1.2"],\
+            ["tinycolor2", "npm:1.6.0"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -4288,7 +4289,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/public-docs-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/public-docs-bundle", "workspace:packages/ui/public-docs-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
+            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
@@ -4402,7 +4403,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/app/",\
           "packageDependencies": [\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
+            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\

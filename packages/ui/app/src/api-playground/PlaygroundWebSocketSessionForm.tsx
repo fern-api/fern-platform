@@ -73,7 +73,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                 <div className="mb-4 px-4">
                                     <h5 className="t-muted m-0">{message.displayName ?? titleCase(message.type)}</h5>
                                 </div>
-                                <FernCard className="divide-border-default divide-y rounded-xl shadow-sm">
+                                <FernCard className="divide-default divide-y rounded-xl shadow-sm">
                                     <div className="p-4">
                                         <PlaygroundTypeReferenceForm
                                             id="header"
