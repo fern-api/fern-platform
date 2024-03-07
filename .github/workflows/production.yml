@@ -4,7 +4,7 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
-  ALGOLIA_SEARCH_INDEX: ${{ secrets. ALGOLIA_SEARCH_INDEX }}
+  ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
 on:
@@ -27,4 +27,27 @@ jobs:
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})"
+          echo "Deployment URL: $DEPLOYMENT_URL"
+
+          echo "Starting revalidation..."
+
+          DEPLOYMENT_URL=$(echo $DEPLOYMENT_URL | awk -F'/' '{print $3}')
+
+          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/$DEPLOYMENT_URL?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+          ALIAS_DOMAINS=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
+
+          echo "## PR Preview" > preview.txt
+
+          for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
+              curl -X POST "https://$DOMAIN/api/revalidate-all" -H 'x-fern-host: $DOMAIN'
+              echo "Revalidated: ${DOMAIN}"
+            fi
+          done
+
+          curl -X POST https://docs.buildwithfern.com/api/revalidate-all -H 'x-fern-host: docs.buildwithfern.com'
+          echo "Revalidated: docs.buildwithfern.com"
+
+          echo "Done!"
