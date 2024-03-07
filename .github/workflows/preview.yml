@@ -44,14 +44,15 @@ jobs:
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          CUSTOM_DOMAINS=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]')
+          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+          ALIAS_DOMAINS=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
 
-          CUSTOM_DOMAINS=$(echo $CUSTOM_DOMAINS | grep -v "buildwithfern.com" | grep -v "vercel.app")
-          echo $CUSTOM_DOMAINS
+          echo "## PR Preview" > preview.txt
 
-          echo "## PR Preview" >> preview.txt
-          echo "$CUSTOM_DOMAINS" | while IFS= read -r DOMAIN; do
+          for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
               echo "- [ ] [$DOMAIN](https://$DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
+            fi
           done
 
       - name: Comment URL in PR
