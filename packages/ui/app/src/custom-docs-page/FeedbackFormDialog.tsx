@@ -12,6 +12,20 @@ interface FeedbackFormDialogProps {
 
 const POPOVER_GAP = 8;
 
+const calculateAndSetModalPosition = (modal: HTMLElement, feedback: HTMLElement) => {
+    if (typeof window === "undefined") {
+        return;
+    }
+
+    const feedbackRect = feedback.getBoundingClientRect();
+
+    // stick to the top right corner of the feedback container
+    const bottom = window.innerHeight - feedbackRect.top + POPOVER_GAP;
+    const right = window.innerWidth - feedbackRect.right;
+    modal.style.bottom = `${bottom}px`;
+    modal.style.right = `${right}px`;
+};
+
 export const FeedbackFormDialog: FC<PropsWithChildren<FeedbackFormDialogProps>> = ({
     className,
     show,
@@ -19,40 +33,42 @@ export const FeedbackFormDialog: FC<PropsWithChildren<FeedbackFormDialogProps>> 
     targetRef,
     onClose,
 }) => {
-    const modalRef = useRef<HTMLDivElement>(null);
+    const modalRef = useRef<HTMLDivElement>();
     const { viewportSize } = useViewportContext();
+
     useEffect(() => {
-        let raf: number;
-        function step() {
-            const modal = modalRef.current;
-            const feedback = targetRef.current;
-            if (modal == null || feedback == null) {
-                raf = window.requestAnimationFrame(step);
-                return;
-            }
-            const feedbackRect = feedback.getBoundingClientRect();
-
-            // stick to the top right corner of the feedback container
-            const bottom = viewportSize.height - feedbackRect.top + POPOVER_GAP;
-            const right = viewportSize.width - feedbackRect.right;
-            modal.style.bottom = `${bottom}px`;
-            modal.style.right = `${right}px`;
-
-            raf = window.requestAnimationFrame(step);
+        if (!show) {
+            return;
         }
 
-        raf = window.requestAnimationFrame(step);
-        return () => {
-            window.cancelAnimationFrame(raf);
+        const handleScroll = () => {
+            if (modalRef.current && targetRef.current) {
+                calculateAndSetModalPosition(modalRef.current, targetRef.current);
+            }
         };
-    }, [targetRef, viewportSize.height, viewportSize.width]);
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [show, targetRef, viewportSize.height, viewportSize.width]);
+
+    const handleModalRef = (node: HTMLDivElement | null) => {
+        if (node) {
+            modalRef.current = node;
+            if (targetRef.current) {
+                calculateAndSetModalPosition(node, targetRef.current);
+            }
+        }
+    };
 
     return (
         <Transition as={Fragment} show={show}>
             <Dialog as="div" onClose={onClose} role="dialog">
                 <Transition.Child
                     as="div"
-                    ref={modalRef}
+                    ref={handleModalRef}
                     className={classNames(
                         "border-default fixed z-50 w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-background-dark/50",
                         className,

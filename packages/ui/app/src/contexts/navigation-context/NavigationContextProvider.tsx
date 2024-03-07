@@ -33,7 +33,8 @@ const setUserIsNotScrolling = debounce(
     250,
     { leading: false, trailing: true },
 );
-let raf: number;
+
+let resizeObserver: ResizeObserver | undefined;
 
 function startScrollTracking(route: string, scrolledHere: boolean = false) {
     if (!userIsScrolling && !scrolledHere) {
@@ -42,7 +43,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
     let lastScrollY: number | undefined;
-    function step() {
+    function handleObservation() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
             if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
@@ -72,12 +73,14 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
                 }
             }
         }
-        raf = window.requestAnimationFrame(step);
     }
     if (justNavigatedTo !== route) {
-        window.cancelAnimationFrame(raf);
         justNavigatedTo = route;
-        raf = window.requestAnimationFrame(step);
+        if (resizeObserver != null) {
+            resizeObserver.disconnect();
+        }
+        resizeObserver = new ResizeObserver(handleObservation);
+        resizeObserver.observe(document.body);
     }
 }
 
@@ -105,7 +108,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     useEffect(() => {
         startScrollTracking(resolvedRoute);
         return () => {
-            window.cancelAnimationFrame(raf);
+            if (resizeObserver != null) {
+                resizeObserver.disconnect();
+            }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
