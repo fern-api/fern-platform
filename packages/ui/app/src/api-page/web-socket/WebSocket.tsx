@@ -162,7 +162,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                         route={route}
                                     >
                                         <div className="flex flex-col">
-                                            {websocket.pathParameters.map((parameter) => (
+                                            {websocket.headers.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
