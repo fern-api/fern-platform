@@ -322,10 +322,10 @@ function transformColorsV3ForDb({
             return {
                 type: "dark",
                 accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
-                logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                logo: writeShape.logo ?? docsConfig.logoV2?.dark ?? docsConfig.logo,
                 background:
                     writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
-                backgroundImage: writeShape.backgroundImage,
+                backgroundImage: writeShape.backgroundImage ?? docsConfig.backgroundImage,
                 border: writeShape.border,
                 cardBackground: writeShape.cardBackground,
                 sidebarBackground: writeShape.sidebarBackground,
@@ -335,10 +335,10 @@ function transformColorsV3ForDb({
             return {
                 type: "light",
                 accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
-                logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                logo: writeShape.logo ?? docsConfig.logoV2?.dark ?? docsConfig.logo,
                 background:
                     writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
-                backgroundImage: writeShape.backgroundImage,
+                backgroundImage: writeShape.backgroundImage ?? docsConfig.backgroundImage,
                 border: writeShape.border,
                 cardBackground: writeShape.cardBackground,
                 sidebarBackground: writeShape.sidebarBackground,
@@ -349,12 +349,12 @@ function transformColorsV3ForDb({
                 type: "darkAndLight",
                 light: {
                     accentPrimary: writeShape.light.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
-                    logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                    logo: writeShape.light.logo ?? docsConfig.logoV2?.light ?? docsConfig.logo,
                     background:
                         writeShape.light.background != null
                             ? { type: "solid", ...writeShape.light.background }
                             : { type: "gradient" },
-                    backgroundImage: writeShape.light.backgroundImage,
+                    backgroundImage: writeShape.light.backgroundImage ?? docsConfig.backgroundImage,
                     border: writeShape.light.border,
                     cardBackground: writeShape.light.cardBackground,
                     sidebarBackground: writeShape.light.sidebarBackground,
@@ -362,12 +362,12 @@ function transformColorsV3ForDb({
                 },
                 dark: {
                     accentPrimary: writeShape.dark.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
-                    logo: docsConfig.logoV2?.dark ?? docsConfig.logo,
+                    logo: writeShape.dark.logo ?? docsConfig.logoV2?.dark ?? docsConfig.logo,
                     background:
                         writeShape.dark.background != null
                             ? { type: "solid", ...writeShape.dark.background }
                             : { type: "gradient" },
-                    backgroundImage: writeShape.dark.backgroundImage,
+                    backgroundImage: writeShape.dark.backgroundImage ?? docsConfig.backgroundImage,
                     border: writeShape.dark.border,
                     cardBackground: writeShape.dark.cardBackground,
                     sidebarBackground: writeShape.dark.sidebarBackground,
