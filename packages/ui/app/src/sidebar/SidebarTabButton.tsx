@@ -32,7 +32,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                             )}
                         >
                             <RemoteFontAwesomeIcon
-                                className="bg-text-muted group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background size-3.5"
+                                className="bg-text-muted group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background size-3.5"
                                 icon={tab.icon}
                             />
                         </div>
