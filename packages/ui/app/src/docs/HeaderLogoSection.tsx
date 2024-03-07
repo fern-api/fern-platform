@@ -4,12 +4,11 @@ import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SidebarVersionInfo } from "../sidebar/types";
+import { ColorsConfig, SidebarVersionInfo } from "../sidebar/types";
 import { VersionDropdown } from "./VersionDropdown";
 
 export interface HeaderLogoSectionProps {
-    logo: DocsV1Read.FileId | undefined;
-    logoV2: DocsV1Read.LogoV2 | undefined;
+    colors: ColorsConfig;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
 
@@ -20,8 +19,7 @@ export interface HeaderLogoSectionProps {
 }
 
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
-    logo,
-    logoV2,
+    colors,
     logoHeight,
     logoHref,
     // currentTabIndex,
@@ -35,27 +33,16 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     const imageClassName = "max-h-full object-contain";
 
     const renderLogoContent = () => {
-        if (logoV2 == null) {
-            if (logo != null) {
-                return (
-                    <FernImage
-                        src={resolveFile(logo)}
-                        className={imageClassName}
-                        height={logoImageHeight}
-                        style={{ height: logoImageHeight }}
-                        priority={true}
-                        loading="eager"
-                        quality={100}
-                    />
-                );
-            }
+        if (colors == null) {
             return null;
-        } else {
+        }
+
+        if (colors.dark != null && colors.light != null) {
             return (
                 <>
-                    {logoV2["light"] != null && (
+                    {colors.light.logo != null && (
                         <FernImage
-                            src={resolveFile(logoV2["light"])}
+                            src={resolveFile(colors.light.logo)}
                             className={classNames(imageClassName, "block dark:hidden")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
@@ -64,9 +51,9 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                             quality={100}
                         />
                     )}
-                    {logoV2["dark"] != null && (
+                    {colors.dark.logo != null && (
                         <FernImage
-                            src={resolveFile(logoV2["dark"])}
+                            src={resolveFile(colors.dark.logo)}
                             className={classNames(imageClassName, "hidden dark:block")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
@@ -76,6 +63,24 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                         />
                     )}
                 </>
+            );
+        } else {
+            const logoFile = colors.light?.logo ?? colors.dark?.logo;
+
+            if (logoFile == null) {
+                return null;
+            }
+
+            return (
+                <FernImage
+                    src={resolveFile(logoFile)}
+                    className={classNames(imageClassName, "block")}
+                    height={logoImageHeight}
+                    style={{ height: logoImageHeight }}
+                    priority={true}
+                    loading="eager"
+                    quality={100}
+                />
             );
         }
     };

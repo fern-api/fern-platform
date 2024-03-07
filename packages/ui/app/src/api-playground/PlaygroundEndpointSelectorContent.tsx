@@ -249,7 +249,7 @@ function withStream(text: ReactElement[]): ReactElement[] {
         ...text,
         <span
             key="stream"
-            className="bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark flex items-center rounded-[4px] p-0.5 font-mono text-xs uppercase leading-none"
+            className="bg-accent-primary/10 text-accent-primary flex items-center rounded-[4px] p-0.5 font-mono text-xs uppercase leading-none"
         >
             stream
         </span>,

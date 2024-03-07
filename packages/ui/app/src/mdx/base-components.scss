@@ -1,5 +1,5 @@
 code:not(.code-block) {
-    @apply font-mono border border-default rounded bg-white/70 dark:bg-tag-default-soft py-0.5 px-1;
+    @apply font-mono ring-1 ring-inset ring-default rounded bg-card py-0.5 px-1;
     @apply before:content-none after:content-none;
     @apply text-[0.875em];
 
@@ -37,8 +37,7 @@ code:not(.code-block) {
 }
 
 .fern-mdx-link {
-    @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa-light;
-    @apply dark:decoration-accent-primary-aa-dark;
+    @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa;
     @apply font-semibold;
 
     h1 &,
@@ -140,11 +139,11 @@ code:not(.code-block) {
 }
 
 [data-rmiz-modal-overlay="hidden"] {
-    @apply bg-background-light/0 dark:bg-background-dark/0;
+    @apply bg-background/0;
 }
 
 [data-rmiz-modal-overlay="visible"] {
-    @apply bg-background-light/70 dark:bg-background-dark/60 backdrop-blur;
+    @apply bg-background/70 dark:bg-background/60 backdrop-blur;
 }
 
 [data-rmiz-modal-content] {

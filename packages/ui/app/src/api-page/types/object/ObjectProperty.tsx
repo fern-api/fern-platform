@@ -38,7 +38,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        setIsActive(router.asPath.includes(`${route}#${anchorId}`));
+        setIsActive(router.asPath.endsWith(`${route}#${anchorId}`));
     }, [router.asPath, anchorId, route]);
 
     return <ObjectPropertyInternal anchorId={anchorId} isActive={isActive} {...props} />;

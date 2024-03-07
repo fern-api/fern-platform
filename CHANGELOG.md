@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 2024-03-06
+
+- New `<Steps />` mdx component based on nextra's https://nextra.site/docs/guide/built-ins/steps.
+- Fixed double-outline issue around object properties in the API Reference when they are deep-linked.
+
+# 2024-03-05
+
+- Added a error state when the Websocket connection fails in API Playground.
+- Moved the api-playground-enabled config to [vercel edge config](https://vercel.com/buildwithfern/~/stores/edge-config/ecfg_lp1z4ajavumgwe1aimfx02eh3qce/items) so that it can be toggled without a redeploy.
+
+# 2024-03-04
+
+### DevEx improvements
+
+- Enabled PR Previews [#480](https://github.com/fern-api/fern-ui/pull/480)
+
+### Improvements
+
+- Render non-markdown as whitespace-pre-wrap to preserve single new-lines and spaces.
+- Improve SEO by adding the main title as a suffix to the page title i.e. `Page Title — Fern Docs`.
+- Overflowing tabs in `<CodeBlocks/>` now use horizontal scrolling, with a hover-over bounce effect to indicate that the code is scrollable.
+
+### Bug fixes
+
+- Fixed issue with jsonparse throwing an error when a json property key contains special characters.
+- Fixed revalidate-all issues, now it returns a 200, 207, or 500 status code.
+- Fixed issues with JSX sanitization that was causing some HTML components to be removed from the rendered output.
+- Reverted server-side syntax highlighting to client-side to reduce response sizes (lambda returns 502 when response is too large).
+- Fixed broken API Playground proxy and sizing
+
+# 2024-03-03
+
+- Added `<Tabs/>` and `<Accordion/>` MDX components based on mintlify's [tabs](https://mintlify.com/docs/content/components/tabs) and [accordion](https://mintlify.com/docs/content/components/accordions).
+- Safely remove JSX from markdown descriptions that are not supported by our frontend.
+- Added outline to object properties in the API Reference when they are deep-linked
+- Fixed routing issues where nonstandard characters in the URL would cause the page to 404. (encodeUri)
+- Added integration with Axiom for logging and error tracking.
+- Bumped /api/revalidate-all timeout to 300 seconds.
+- cosmetic: Fixed version dropdown styling bug (where the dropdown was sticking to the logo)
+- Fixed broken sitemap.xml and robots.txt which was preventing SEO indexing.
+- Moved some API endpoints to Vercel Edge Functions to reduce latency and improve performance (including our home-rolled Fontawesome CDN)
+
+# 2024-03-02
+
+- Enable staging environment (xxx.docs.staging.buildwithfern.com) for testing the `main` branch on all customer sites.
+- Improved how the ToC responds to user-scrolling by using a simple querySelector to find the active heading, rather than using useIntersectionObserver. This should make the ToC more responsive and less jumpy.
+- Add error-boundary when MDX rendering fails.
+- Prevent 500 errors: error boundary doesn't work on server-side rendering, so we need to introduce a /static and /dynamic version of the same page so that when errors are caught on the server-side, the user is redirected to the client-side version of the page.
+
 # 2024-03-01
 
 - Fully removed react-markdown in favor of using next-mdx-remote to serialize all description fields. This allows us to use the same components that we already we use in markdown guides in the API reference. Also, this reduces the bundle size and improves client-side performance since all markdown-based descriptions are now compiled server-side. See [#468](https://github.com/fern-api/fern-ui/pull/468).

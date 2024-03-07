@@ -42,10 +42,10 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     useEffect(() => {
         if (router.isReady) {
             startTransition(() => {
-                setIsActive(router.asPath === anchorRoute);
+                setIsActive(router.asPath.endsWith(anchorRoute));
             });
         }
-    }, [router.asPath, anchorId, route, router.isReady, anchorRoute]);
+    }, [anchorRoute, router.asPath, router.isReady]);
 
     return (
         <EndpointParameterInternal

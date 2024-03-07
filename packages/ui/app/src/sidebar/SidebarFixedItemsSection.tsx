@@ -50,7 +50,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
         >
             {searchBar}
 
-            {/* <div className="from-background dark:from-background-dark absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" /> */}
+            {/* <div className="from-background absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" /> */}
         </div>
     );
 };

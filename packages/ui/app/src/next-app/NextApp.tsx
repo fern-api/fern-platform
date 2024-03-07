@@ -7,7 +7,12 @@ import { DocsPage } from "./DocsPage";
 import "./globals.scss";
 
 export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsPage.Props>>): ReactElement {
-    const theme = pageProps.colors?.type;
+    const theme =
+        pageProps.colors?.dark != null && pageProps.colors?.light != null
+            ? "darkAndLight"
+            : pageProps.colors?.dark != null
+              ? "dark"
+              : "light";
     useInterceptNextDataHref({
         router,
         basePath: pageProps.baseUrl?.basePath,

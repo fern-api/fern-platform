@@ -15,7 +15,7 @@ export const Accordion: FC<AccordionProps> = ({ items = [] }) => {
     return (
         <RadixAccordion.Root
             type="multiple"
-            className="ring-default divide-border-default mb-5 mt-3 divide-y rounded-lg ring-1"
+            className="ring-default divide-default mb-5 mt-3 divide-y rounded-lg ring-1"
         >
             {items.map((item, idx) => (
                 <RadixAccordion.Item

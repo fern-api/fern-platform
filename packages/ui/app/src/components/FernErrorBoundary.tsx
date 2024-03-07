@@ -5,13 +5,13 @@ import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { Callout } from "../mdx/components/Callout";
 
-declare interface FernErrorBoundaryProps {
+export declare interface FernErrorBoundaryProps {
     error: unknown;
     resetErrorBoundary?: () => void;
     type: string;
 }
 
-const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({ type, error, resetErrorBoundary }) => {
+export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({ type, error, resetErrorBoundary }) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -45,12 +45,12 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({ type, err
     );
 };
 
-const getMdxFallbackComponent = memoize(function getMdxFallbackComponent(type: string) {
-    return function MdxFallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
+const getFallbackComponent = memoize(function getFallbackComponent(type: string) {
+    return function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
         return <FernErrorBoundaryInternal error={error} resetErrorBoundary={resetErrorBoundary} type={type} />;
     };
 });
 
 export function FernErrorBoundary({ children, type }: PropsWithChildren<{ type: string }>): ReactElement {
-    return <ErrorBoundary FallbackComponent={getMdxFallbackComponent(type)}>{children}</ErrorBoundary>;
+    return <ErrorBoundary FallbackComponent={getFallbackComponent(type)}>{children}</ErrorBoundary>;
 }

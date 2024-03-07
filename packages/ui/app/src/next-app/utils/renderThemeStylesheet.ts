@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import tinycolor from "tinycolor2";
+import { ColorsConfig } from "../../sidebar/types";
 import { getBgVariables } from "./getBgVariables";
 import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
@@ -7,7 +8,7 @@ import { getLayoutVariables } from "./getLayoutVariables";
 
 export function renderThemeStylesheet(
     backgroundImage: string | undefined,
-    colorsConfig: DocsV1Read.ColorsConfigV3 | undefined,
+    colorsConfig: ColorsConfig,
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
     layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
     css: DocsV1Read.CssConfig | undefined,
@@ -21,12 +22,11 @@ export function renderThemeStylesheet(
     const cssVariables = {
         ...bg,
         ...fonts,
-        ...colors,
         ...layout,
     };
 
-    const bgColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_LIGHT]})`).toHex()}`;
-    const bgDarkColor = `#${tinycolor(`rgb(${colors[CSS_VARIABLES.BACKGROUND_DARK]})`).toHex()}`;
+    const bgColor = `#${tinycolor(`rgb(${colors.light[CSS_VARIABLES.BACKGROUND]})`).toHex()}`;
+    const bgDarkColor = `#${tinycolor(`rgb(${colors.dark[CSS_VARIABLES.BACKGROUND]})`).toHex()}`;
 
     const inlinedCss = css?.inline?.join("\n\n") ?? "";
 
@@ -35,6 +35,17 @@ export function renderThemeStylesheet(
     ${Object.entries(cssVariables)
         .map(([key, value]) => `${key}: ${value};`)
         .join("\n    ")}
+        
+    ${Object.entries(colors.light)
+        .map(([key, value]) => `${key}: ${value};`)
+        .join("\n    ")}
+}
+
+
+:is(.dark) {
+    ${Object.entries(colors.dark)
+        .map(([key, value]) => `${key}: ${value};`)
+        .join("\n        ")}
 }
 
 ${fontFaces.join("\n\n")}

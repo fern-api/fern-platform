@@ -6,18 +6,6 @@ import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../util/ResolvedPath";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
-    // const editThisPage = resolvedPath.markdown?.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl;
-    // const tableOfContents = useMemo(
-    //     () =>
-    //         resolvedPath.items.map(
-    //             (item): TableOfContentsItem => ({
-    //                 simpleString: item.dateString,
-    //                 anchorString: item.date,
-    //                 children: [],
-    //             }),
-    //         ),
-    //     [resolvedPath.items],
-    // );
     return (
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
@@ -26,6 +14,11 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         <CustomDocsPageHeader
                             title={resolvedPath.title}
                             sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                            excerpt={
+                                typeof resolvedPath.markdown !== "string"
+                                    ? resolvedPath.markdown?.frontmatter.excerpt
+                                    : undefined
+                            }
                         />
                         {resolvedPath.markdown != null && (
                             <section>
@@ -65,24 +58,6 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                     <div className="h-20" />
                 </article>
             </div>
-            {/* <aside
-                    id="right-sidebar"
-                    className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0  xl:block"
-                >
-                    <FernScrollArea viewportClassName="px-4 lg:pr-8 pb-12 pt-8">
-                        <TableOfContents tableOfContents={tableOfContents} />
-                        {editThisPage != null && (
-                            <Link
-                                href={editThisPage}
-                                target="_blank"
-                                className="t-muted hover:dark:text-text-default-dark hover:text-text-default-light my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
-                            >
-                                Edit this page
-                            </Link>
-                        )}
-                        <Feedback className="sticky top-full" />
-                    </FernScrollArea>
-                </aside> */}
         </div>
     );
 }

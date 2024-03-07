@@ -16,7 +16,7 @@ import {
     useOpenMobileSidebar,
     useOpenSearchDialog,
 } from "../sidebar/atom";
-import { SidebarNavigation } from "../sidebar/types";
+import { ColorsConfig, SidebarNavigation } from "../sidebar/types";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
@@ -28,11 +28,9 @@ const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) =>
 interface DocsProps {
     // config: DocsV1Read.DocsConfig;
     hasBackgroundImage: boolean;
-    colors: DocsV1Read.ColorsConfigV3 | undefined;
+    colors: ColorsConfig;
     navbarLinks: DocsV1Read.NavbarLink[];
     layout: DocsV1Read.DocsLayoutConfig | undefined;
-    logo: DocsV1Read.FileId | undefined;
-    logoV2: DocsV1Read.LogoV2 | undefined;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     search: DocsV1Read.SearchInfo;
@@ -54,8 +52,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     navigation,
     algoliaSearchIndex,
     navbarLinks,
-    logo,
-    logoV2,
     logoHeight,
     logoHref,
     isApiPlaygroundEnabled,
@@ -97,13 +93,26 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const renderBackground = useCallback(
         (className?: string) => (
-            <div className={classNames(className, "clipped-background")}>
-                <BgImageGradient
-                    className="h-screen opacity-60 dark:opacity-80"
-                    colors={colors}
-                    hasSpecifiedBackgroundImage={hasBackgroundImage}
-                />
-            </div>
+            <>
+                <style>
+                    {`
+                        .clipped-background {
+                            opacity: ${colors.light?.headerBackground != null ? 0 : 1};
+                        }
+
+                        :is(.dark) .clipped-background {
+                            opacity: ${colors.dark?.headerBackground != null ? 0 : 1};
+                        }
+                    `}
+                </style>
+                <div className={classNames(className, "clipped-background")}>
+                    <BgImageGradient
+                        className="h-screen opacity-60 dark:opacity-80"
+                        colors={colors}
+                        hasSpecifiedBackgroundImage={hasBackgroundImage}
+                    />
+                </div>
+            </>
         ),
         [colors, hasBackgroundImage],
     );
@@ -122,7 +131,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     <header id="fern-header">
                         <div
-                            className="border-concealed data-[border=show]:dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b backdrop-blur-lg transition-[border] lg:backdrop-blur"
+                            className="bg-header border-concealed data-[border=show]:dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b shadow-none backdrop-blur-lg transition-shadow lg:backdrop-blur"
                             data-border={
                                 isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                                     ? "show"
@@ -132,8 +141,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             {renderBackground()}
                             <Header
                                 className="max-w-page-width mx-auto"
-                                logo={logo}
-                                logoV2={logoV2}
                                 logoHeight={logoHeight}
                                 logoHref={logoHref}
                                 colors={colors}
@@ -148,8 +155,21 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     </header>
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                        <style>
+                            {`
+                                .fern-sidebar-container {
+                                    border-right-width: ${colors.light?.sidebarBackground == null ? 0 : 1}px;
+                                    border-left-width: ${colors.light?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
+                                }
+
+                                :is(.dark) .fern-sidebar-container {
+                                    border-right-width: ${colors.dark?.sidebarBackground == null ? 0 : 1}px;
+                                    border-left-width: ${colors.dark?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
+                                }
+                            `}
+                        </style>
                         <Sidebar
-                            className="w-sidebar-width mt-header-height top-header-height h-vh-minus-header sticky hidden lg:block"
+                            className="fern-sidebar-container w-sidebar-width mt-header-height top-header-height h-vh-minus-header bg-sidebar border-default sticky hidden lg:block"
                             navigation={navigation}
                             currentSlug={currentSlug}
                             registerScrolledToPathListener={registerScrolledToPathListener}

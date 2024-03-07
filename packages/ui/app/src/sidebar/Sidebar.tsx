@@ -101,7 +101,7 @@ function MobileSidebar(props: SidebarProps) {
             <Dialog onClose={closeMobileSidebar} className="top-header-height fixed inset-0">
                 <Transition.Child
                     as="div"
-                    className="bg-background-light/50 dark:bg-background-dark/50 top-header-height fixed inset-0 z-auto"
+                    className="bg-background/50 top-header-height fixed inset-0 z-auto"
                     enter="transition-opacity ease-linear duration-200"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
