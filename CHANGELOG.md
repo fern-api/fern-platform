@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 2024-03-07
+
+- Added `headers` to the WebSocket API Reference
+- Fixed revalidate-all to include all basepaths (not just the pages) so that redirects are also revalidated.
+- Fixed freezing API Playground when an onChange event is triggered by a literal.
+- Fixed `content-type` in the cURL code snippets when `multipart/form-data` provided.
+- Sort `Deprecated` and `Beta` object properties to the bottom of each object in the API Reference.
+- Revalidate all customer docs pages when a new frontend version is deployed.
+
 # 2024-03-06
 
 - New `<Steps />` mdx component based on nextra's https://nextra.site/docs/guide/built-ins/steps.
 - Fixed double-outline issue around object properties in the API Reference when they are deep-linked.
+- Added new color scheme options, including sidebar, header, and card background colors
+- Enabled `excerpt` in frontmatter to render a short description under the title of each markdown page.
 
 # 2024-03-05
 

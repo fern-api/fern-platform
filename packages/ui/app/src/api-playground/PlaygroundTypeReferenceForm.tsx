@@ -325,21 +325,16 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
                 />
             </WithLabel>
         ),
-        stringLiteral: (literal) => {
-            return (
-                <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                    <span>{literal.value ? "TRUE" : "FALSE"}</span>
-                </WithLabel>
-            );
-        },
-        booleanLiteral: (literal) => {
-            onChange(literal.value);
-            return (
-                <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                    <span>{literal.value}</span>
-                </WithLabel>
-            );
-        },
+        stringLiteral: (literal) => (
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                <span>{literal.value}</span>
+            </WithLabel>
+        ),
+        booleanLiteral: (literal) => (
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                <span>{literal.value ? "TRUE" : "FALSE"}</span>
+            </WithLabel>
+        ),
         unknown: () => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernTextarea
