@@ -51,7 +51,7 @@ jobs:
 
           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
             if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
-              echo "- [ ] [$DOMAIN](https://$DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
+              echo "- [ ] [$DOMAIN](https\://$DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
             fi
           done
 
