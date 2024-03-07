@@ -68,7 +68,7 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, va
     return (
         <>
             {internalState.length > 0 && (
-                <ul className="divide-border-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="divide-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
                         <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
                             {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">

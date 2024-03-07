@@ -326,7 +326,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             </WithLabel>
         ),
         stringLiteral: (literal) => {
-            onChange(literal.value);
             return (
                 <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                     <span>{literal.value ? "TRUE" : "FALSE"}</span>

@@ -1,4 +1,5 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { SerializeOptions } from "next-mdx-remote/dist/types";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
@@ -8,6 +9,14 @@ import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 
 export interface FernDocsFrontmatter {
+    title?: string;
+    description?: string;
+    editThisPageUrl?: string;
+    image?: string;
+    excerpt?: SerializedMdxContent;
+}
+
+export interface FernDocsFrontmatterInternal {
     title?: string;
     description?: string;
     editThisPageUrl?: string;
@@ -45,6 +54,26 @@ function stringHasMarkdown(s: string): boolean {
         return true;
     }
 
+    // has horizontal rules
+    if (s.match(/^\s+---+$/m)) {
+        return true;
+    }
+
+    // has tables
+    if (s.match(/^\s*\|.*\|.*\|.*\|/m)) {
+        return true;
+    }
+
+    // has bolded or italicized text
+    if (s.match(/\*\*|__|\*|_/)) {
+        return true;
+    }
+
+    // has strikethrough text
+    if (s.match(/~~/)) {
+        return true;
+    }
+
     // has links or images
     if (s.match(/\[.+\]\(.+\)/)) {
         return true;
@@ -62,6 +91,17 @@ function stringHasMarkdown(s: string): boolean {
 
     return false;
 }
+
+const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
+    remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
+    rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
+    format: "detect",
+    /**
+     * development=true is required to render MdxRemote from the client-side.
+     * https://github.com/hashicorp/next-mdx-remote/issues/350
+     */
+    development: process.env.NODE_ENV !== "production",
+};
 
 /**
  * Should only be invoked server-side.
@@ -83,20 +123,35 @@ export async function serializeMdxContent(
             return content;
         }
 
-        return await serialize(content, {
+        const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterInternal>(content, {
             scope: {},
-            mdxOptions: {
-                remarkPlugins: [remarkParse, remarkRehype, remarkGfm],
-                rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
-                format: "detect",
-                /**
-                 * development=true is required to render MdxRemote from the client-side.
-                 * https://github.com/hashicorp/next-mdx-remote/issues/350
-                 */
-                development: process.env.NODE_ENV !== "production",
-            },
+            mdxOptions: MDX_OPTIONS,
             parseFrontmatter: true,
         });
+
+        let excerpt: SerializedMdxContent | undefined = firstPass.frontmatter?.excerpt;
+
+        if (firstPass.frontmatter?.excerpt) {
+            try {
+                excerpt = await serialize(firstPass.frontmatter.excerpt, {
+                    scope: {},
+                    mdxOptions: MDX_OPTIONS,
+                    parseFrontmatter: false,
+                });
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(e);
+            }
+        }
+
+        return {
+            frontmatter: {
+                ...firstPass.frontmatter,
+                excerpt,
+            },
+            compiledSource: firstPass.compiledSource,
+            scope: firstPass.scope,
+        };
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);

@@ -20,7 +20,7 @@ export declare namespace CustomDocsPage {
 interface CustomDocsPageHeaderProps {
     sectionTitleBreadcrumbs: string[];
     title: string;
-    excerpt: string | undefined;
+    excerpt: SerializedMdxContent | undefined;
 }
 
 export const CustomDocsPageHeader = ({
@@ -36,7 +36,11 @@ export const CustomDocsPageHeader = ({
                 <h1 className="my-0 inline-block leading-tight">{title}</h1>
             </div>
 
-            {excerpt != null && <p className="t-muted mt-2 text-lg leading-7">{excerpt}</p>}
+            {excerpt != null && (
+                <div className="prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7">
+                    <MdxContent mdx={excerpt} />
+                </div>
+            )}
         </header>
     );
 };
@@ -85,7 +89,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                         <Link
                             href={editThisPage}
                             target="_blank"
-                            className="t-muted hover:dark:text-text-default-dark hover:text-text-default-light my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
+                            className="t-muted hover:t-default my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
                         >
                             Edit this page
                         </Link>

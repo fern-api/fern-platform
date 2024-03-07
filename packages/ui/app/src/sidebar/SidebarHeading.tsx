@@ -28,7 +28,7 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
         {toggleExpand != null && (
             <button
                 className={classNames(
-                    "t-muted flex w-6 justify-center items-center hover:bg-tag-primary-light/10 hover:dark:bg-tag-primary-dark/10 transition-colors",
+                    "t-muted flex w-6 justify-center items-center hover:bg-tag-primary/10 transition-colors",
                     {
                         "rounded-lg": depth === 0,
                     },

@@ -11,7 +11,7 @@ export const CodeBlockWithClipboardButton: React.FC<PropsWithChildren<CodeBlockW
     children,
 }) => {
     return (
-        <div className="not-prose group/cb-container dark:bg-tag-default-soft after:ring-border-default relative mb-5 flex max-h-[350px] w-full rounded-lg bg-white/70 shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']">
+        <div className="not-prose group/cb-container bg-card after:ring-default relative mb-5 flex max-h-[350px] w-full rounded-lg  shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']">
             {children}
             <CopyToClipboardButton
                 className={classNames(

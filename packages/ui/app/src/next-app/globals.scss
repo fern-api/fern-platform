@@ -1,10 +1,18 @@
 @import "@radix-ui/colors/gray-alpha.css";
-@import "@radix-ui/colors/gray.css";
-@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/mauve-alpha.css";
+@import "@radix-ui/colors/slate-alpha.css";
+@import "@radix-ui/colors/sage-alpha.css";
+@import "@radix-ui/colors/olive-alpha.css";
+@import "@radix-ui/colors/sand-alpha.css";
 @import "@radix-ui/colors/green-alpha.css";
 @import "@radix-ui/colors/red-alpha.css";
 @import "@radix-ui/colors/amber-alpha.css";
 @import "@radix-ui/colors/gray-dark-alpha.css";
+@import "@radix-ui/colors/mauve-dark-alpha.css";
+@import "@radix-ui/colors/slate-dark-alpha.css";
+@import "@radix-ui/colors/sage-dark-alpha.css";
+@import "@radix-ui/colors/olive-dark-alpha.css";
+@import "@radix-ui/colors/sand-dark-alpha.css";
 @import "@radix-ui/colors/green-dark-alpha.css";
 @import "@radix-ui/colors/red-dark-alpha.css";
 @import "@radix-ui/colors/amber-dark-alpha.css";
@@ -20,7 +28,7 @@
 
     /* 
     html.dark {
-        background-color: var(--accent-primary-dark);
+        background-color: var(--accent-primary);
     } */
 
     *,
@@ -32,13 +40,7 @@
     }
 
     ::selection {
-        @apply bg-accent-highlight-light;
-    }
-
-    :is(.dark) {
-        ::selection {
-            @apply bg-accent-highlight-dark;
-        }
+        @apply bg-accent-highlight;
     }
 
     html,
@@ -205,19 +207,19 @@
         @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;
         @apply bg-tag-default;
         @apply hover:bg-tag-default-hover transition-[background,shadow];
-        @apply ring-inset ring-border-concealed hover:ring-border-default ring-1;
+        @apply ring-inset ring-concealed hover:ring-default ring-1;
 
         .search-placeholder {
             @apply inline-flex flex-1 items-center space-x-3;
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted ring-border-concealed shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 bg-white font-mono text-xs leading-none;
-            @apply dark:shadow-card-dark dark:bg-white/5;
+            @apply t-muted ring-concealed shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
+            @apply dark:shadow-card-dark bg-card;
         }
 
         &:hover .keyboard-shortcut-hint {
-            @apply ring-border-default;
+            @apply ring-default;
         }
 
         &:disabled {
@@ -255,7 +257,7 @@
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
-        @apply border-border-concealed md:border-border-accent-muted-light md:dark:border-border-accent-muted-dark;
+        @apply border-border-concealed md:border-border-accent-muted;
     }
 
     .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
@@ -307,7 +309,7 @@
 
     .fern-segmented-control {
         @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
-        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-border-concealed;
+        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed;
 
         > .fern-button {
             @apply rounded-lg shrink min-w-0;
@@ -322,7 +324,7 @@
         @apply hover:transition-[background];
         @apply inline-flex items-center justify-center;
         @apply rounded-xl lg:rounded-lg px-3 py-1 text-sm h-9 sm:h-8;
-        @apply focus:outline-accent-primary dark:focus:outline-accent-primary-dark;
+        @apply focus:outline-accent-primary;
         @apply cursor-default;
 
         &.multiline,
@@ -446,8 +448,8 @@
         }
 
         &.disabled {
-            @apply cursor-not-allowed bg-black/20 text-text-default-light/40 hover:text-text-default-light/40;
-            @apply dark:bg-white/10 dark:text-text-default-dark/50 dark:hover:text-text-default-dark/50;
+            @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
+            @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
         }
 
         &:not(.disabled) {
@@ -457,12 +459,12 @@
                 @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
 
                 .fa-icon {
-                    @apply bg-text-default-light/60;
+                    @apply bg-text-default/60;
                 }
 
                 &:not(.primary, .success, .warning, .danger) {
                     .fa-icon {
-                        @apply dark:bg-text-default-dark/70;
+                        @apply dark:bg-text-default/70;
                     }
                 }
 
@@ -504,21 +506,18 @@
             }
 
             &.filled {
-                @apply bg-text-default-light/60 text-white;
-                @apply dark:bg-text-default-dark/60 dark:text-black;
+                @apply bg-text-default/60 t-default;
 
                 &:hover,
                 &[data-state="on"],
                 &[data-state="checked"],
                 &[data-state="open"],
                 &[data-state="opening"] {
-                    @apply bg-text-default-light/60 text-white;
-                    @apply dark:bg-text-default-dark/60 dark:text-black;
+                    @apply bg-text-default/60 t-default;
                 }
 
                 .fa-icon {
-                    @apply bg-text-default-light/60 text-white;
-                    @apply dark:bg-text-default-dark/60 dark:text-black;
+                    @apply bg-text-default/60 t-default;
                 }
 
                 &.primary {
@@ -602,8 +601,7 @@
                 }
 
                 .fa-icon {
-                    @apply bg-text-default-light/60;
-                    @apply dark:bg-text-default-dark/60;
+                    @apply bg-text-default/60;
                 }
 
                 &.primary {
@@ -710,7 +708,7 @@
     }
 
     .fern-card {
-        @apply border-default t-default hover:t-default border bg-white/70 dark:bg-tag-default-soft;
+        @apply border-default t-default hover:t-default border bg-card;
 
         &.interactive {
             @apply cursor-pointer shadow-card;
@@ -787,7 +785,7 @@
 
     .fern-input,
     .fern-textarea {
-        @apply caret-accent-primary-light dark:caret-accent-primary-dark py-2 px-2.5 text-sm;
+        @apply caret-accent-primary py-2 px-2.5 text-sm;
     }
 
     input.fern-input::-webkit-outer-spin-button,

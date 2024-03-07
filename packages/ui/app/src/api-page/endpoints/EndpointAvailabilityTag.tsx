@@ -26,8 +26,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
                     "t-accent": availability === "GenerallyAvailable",
                     "t-warning": availability === "Beta",
                     "t-danger": availability === "Deprecated",
-                    "bg-tag-primary border-border-accent-muted-light dark:border-border-accent-muted-dark":
-                        availability === "GenerallyAvailable" && !minimal,
+                    "bg-tag-primary border-border-accent-muted": availability === "GenerallyAvailable" && !minimal,
                     "bg-tag-warning border-warning": availability === "Beta" && !minimal,
                     "bg-tag-danger border-danger": availability === "Deprecated" && !minimal,
                 },

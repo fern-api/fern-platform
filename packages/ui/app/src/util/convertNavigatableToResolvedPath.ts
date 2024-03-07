@@ -1,13 +1,16 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import grayMatter from "gray-matter";
 import moment from "moment";
-import { serializeMdxContent } from "../mdx/mdx";
+import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
 import { findApiSection, isApiPage, isChangelogPage, SidebarNode, visitSidebarNodes } from "../sidebar/types";
 import { flattenApiDefinition } from "./flattenApiDefinition";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
 
-function getExcerpt(node: SidebarNode.Page, pages: Record<string, DocsV1Read.PageContent>): string | undefined {
+async function getExcerpt(
+    node: SidebarNode.Page,
+    pages: Record<string, DocsV1Read.PageContent>,
+): Promise<SerializedMdxContent | undefined> {
     try {
         const content = pages[node.id]?.markdown;
         if (content == null) {
@@ -21,7 +24,10 @@ function getExcerpt(node: SidebarNode.Page, pages: Record<string, DocsV1Read.Pag
             return undefined;
         }
         const gm = grayMatter(frontmatter);
-        return gm.data.excerpt;
+        if (gm.data.excerpt != null) {
+            return await serializeMdxContent(gm.data.excerpt, true);
+        }
+        return undefined;
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error occurred while parsing frontmatter", e);
@@ -46,24 +52,7 @@ export async function convertNavigatableToResolvedPath({
         return;
     }
 
-    const neighbors = {
-        prev:
-            traverseState.prev != null
-                ? {
-                      fullSlug: traverseState.prev.slug.join("/"),
-                      title: traverseState.prev.title,
-                      excerpt: getExcerpt(traverseState.prev, pages),
-                  }
-                : null,
-        next:
-            traverseState.next != null
-                ? {
-                      fullSlug: traverseState.next.slug.join("/"),
-                      title: traverseState.next.title,
-                      excerpt: getExcerpt(traverseState.next, pages),
-                  }
-                : null,
-    };
+    const neighbors = await getNeighbors(traverseState, pages);
 
     if (slug.join("/") !== traverseState.curr.slug.join("/")) {
         return {
@@ -127,4 +116,30 @@ export async function convertNavigatableToResolvedPath({
             neighbors,
         };
     }
+}
+
+async function getNeighbor(
+    sidebarNode: SidebarNode.Page | undefined,
+    pages: Record<string, DocsV1Read.PageContent>,
+): Promise<ResolvedPath.Neighbor | null> {
+    if (sidebarNode == null) {
+        return null;
+    }
+    const excerpt = await getExcerpt(sidebarNode, pages);
+    return {
+        fullSlug: sidebarNode.slug.join("/"),
+        title: sidebarNode.title,
+        excerpt,
+    };
+}
+
+async function getNeighbors(
+    traverseState: ReturnType<typeof visitSidebarNodes>,
+    pages: Record<string, DocsV1Read.PageContent>,
+): Promise<ResolvedPath.Neighbors> {
+    const [prev, next] = await Promise.all([
+        getNeighbor(traverseState.prev, pages),
+        getNeighbor(traverseState.next, pages),
+    ]);
+    return { prev, next };
 }

@@ -42,7 +42,7 @@ export const FernModal: FC<PropsWithChildren<FernModalProps>> = ({
                         >
                             <Dialog.Panel
                                 className={classNames(
-                                    "overflow-hidden bg-background dark:bg-background-dark align-middle shadow-xl dark:border dark:border-white/20",
+                                    "overflow-hidden bg-background align-middle shadow-xl dark:border dark:border-white/20",
                                     className,
                                 )}
                             >

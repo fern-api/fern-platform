@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { Element } from "hast";
-import { camelCase } from "lodash-es";
-import { forwardRef, ReactNode, useMemo } from "react";
+import { camelCase, isEqual } from "lodash-es";
+import { forwardRef, memo, ReactNode, useMemo } from "react";
 import StyleToObject from "style-to-object";
 import { visit } from "unist-util-visit";
 import { FernScrollArea } from "../components/FernScrollArea";
@@ -24,90 +24,131 @@ export interface FernSyntaxHighlighterContentProps {
     children?: ReactNode;
 }
 
-export interface FernSyntaxHighlighterTokensProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface FernSyntaxHighlighterTokensCodeProps {
+    tokens: HighlightedTokens;
     fontSize?: "sm" | "base" | "lg";
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
-    viewportRef?: React.RefObject<HTMLDivElement>;
-    tokens: HighlightedTokens;
 }
 
-export const FernSyntaxHighlighterTokens = forwardRef<HTMLPreElement, FernSyntaxHighlighterTokensProps>(
-    function FernSyntaxHighlighterTokens(
-        { className, style, fontSize = "base", highlightLines, highlightStyle, viewportRef, tokens },
-        ref,
-    ) {
+export interface FernSyntaxHighlighterTokensProps extends FernSyntaxHighlighterTokensCodeProps {
+    className?: string;
+    style?: React.CSSProperties;
+    viewportRef?: React.RefObject<HTMLDivElement>;
+}
+
+const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProps>(
+    function FernSyntaxHighlighterTokensCode({ fontSize = "base", highlightLines, highlightStyle, tokens }) {
         const highlightedLines = useMemo(() => flattenHighlightLines(highlightLines || []), [highlightLines]);
-
-        let preStyle = {};
-
-        visit(tokens.hast, "element", (node) => {
-            if (node.tagName === "pre") {
-                preStyle = parseStyle(node.properties.style) ?? {};
-            }
-        });
-
-        const lines: Element[] = [];
-        visit(tokens.hast, "element", (node) => {
-            if (node.tagName === "code") {
-                node.children.forEach((child) => {
-                    if (child.type === "element" && child.tagName === "span") {
-                        lines.push(child);
-                    }
-                });
-            }
-        });
+        const lines = useMemo(() => {
+            const lines: Element[] = [];
+            visit(tokens.hast, "element", (node) => {
+                if (node.tagName === "code") {
+                    node.children.forEach((child) => {
+                        if (child.type === "element" && child.tagName === "span") {
+                            lines.push(child);
+                        }
+                    });
+                }
+            });
+            return lines;
+        }, [tokens.hast]);
 
         return (
-            <pre
-                className={classNames("code-block-root not-prose", className)}
-                style={{ ...style, ...preStyle }}
-                ref={ref}
-                tabIndex={0}
+            <code
+                className={classNames("code-block", {
+                    "text-xs": fontSize === "sm",
+                    "text-sm": fontSize === "base",
+                    "text-base": fontSize === "lg",
+                })}
             >
-                <FernScrollArea viewportRef={viewportRef}>
-                    <code
-                        className={classNames("code-block", {
-                            "text-xs": fontSize === "sm",
-                            "text-sm": fontSize === "base",
-                            "text-base": fontSize === "lg",
+                <div className="code-block-inner">
+                    <table
+                        className={classNames("code-block-line-group", {
+                            "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
+                            "gutter-cli": tokens.lang === "cli" || tokens.lang === "shell" || tokens.lang === "bash",
+                            plaintext: tokens.lang === "plaintext" || tokens.lang === "text" || tokens.lang === "txt",
                         })}
                     >
-                        <div className="code-block-inner">
-                            <table
-                                className={classNames("code-block-line-group", {
-                                    "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
-                                    "gutter-cli":
-                                        tokens.lang === "cli" || tokens.lang === "shell" || tokens.lang === "bash",
-                                    plaintext:
-                                        tokens.lang === "plaintext" || tokens.lang === "text" || tokens.lang === "txt",
-                                })}
-                            >
-                                <tbody>
-                                    {lines.map((line, lineNumber) => (
-                                        <tr
-                                            className={classNames("code-block-line", {
-                                                highlight: highlightedLines.includes(lineNumber),
-                                            })}
-                                            key={lineNumber}
-                                        >
-                                            <td className="code-block-line-gutter" />
-                                            <td className="code-block-line-content">
-                                                <HastToJSX hast={line} />
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </code>
-                </FernScrollArea>
-            </pre>
+                        <colgroup>
+                            <col className="w-fit" />
+                            <col />
+                        </colgroup>
+                        <tbody>
+                            {lines.map((line, lineNumber) => (
+                                <tr
+                                    className={classNames("code-block-line", {
+                                        highlight: highlightedLines.includes(lineNumber),
+                                    })}
+                                    key={lineNumber}
+                                >
+                                    <td className="code-block-line-gutter" />
+                                    <td className="code-block-line-content">
+                                        <HastToJSX hast={line} />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </code>
+        );
+    },
+    (prevProps, nextProps) => {
+        return (
+            prevProps.tokens === nextProps.tokens &&
+            prevProps.fontSize === nextProps.fontSize &&
+            isEqual(prevProps.highlightLines, nextProps.highlightLines) &&
+            prevProps.highlightStyle === nextProps.highlightStyle
         );
     },
 );
+
+export const FernSyntaxHighlighterTokens = memo(
+    forwardRef<HTMLPreElement, FernSyntaxHighlighterTokensProps>(
+        ({ className, style, fontSize = "base", highlightLines, highlightStyle, viewportRef, tokens }, ref) => {
+            const preStyle = useMemo(() => {
+                let preStyle = {};
+
+                visit(tokens.hast, "element", (node) => {
+                    if (node.tagName === "pre") {
+                        preStyle = parseStyle(node.properties.style) ?? {};
+                    }
+                });
+                return preStyle;
+            }, [tokens.hast]);
+
+            return (
+                <pre
+                    className={classNames("code-block-root not-prose", className)}
+                    style={{ ...style, ...preStyle }}
+                    ref={ref}
+                    tabIndex={0}
+                >
+                    <FernScrollArea viewportRef={viewportRef}>
+                        <FernSyntaxHighlighterTokensCode
+                            tokens={tokens}
+                            fontSize={fontSize}
+                            highlightLines={highlightLines}
+                            highlightStyle={highlightStyle}
+                        />
+                    </FernScrollArea>
+                </pre>
+            );
+        },
+    ),
+    (prevProps, nextProps) => {
+        return (
+            prevProps.tokens === nextProps.tokens &&
+            prevProps.className === nextProps.className &&
+            isEqual(prevProps.style, nextProps.style) &&
+            prevProps.fontSize === nextProps.fontSize &&
+            isEqual(prevProps.highlightLines, nextProps.highlightLines) &&
+            prevProps.highlightStyle === nextProps.highlightStyle
+        );
+    },
+);
+FernSyntaxHighlighterTokens.displayName = "FernSyntaxHighlighterTokens";
 
 function flattenHighlightLines(highlightLines: HighlightLine[]): number[] {
     return highlightLines.flatMap((lineNumber) => {

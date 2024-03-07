@@ -155,6 +155,30 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     </div>
                                 }
                             >
+                                {websocket.headers.length > 0 && (
+                                    <EndpointSection
+                                        title="Headers"
+                                        anchorIdParts={["request", "headers"]}
+                                        route={route}
+                                    >
+                                        <div className="flex flex-col">
+                                            {websocket.headers.map((parameter) => (
+                                                <div className="flex flex-col" key={parameter.key}>
+                                                    <TypeComponentSeparator />
+                                                    <EndpointParameter
+                                                        name={parameter.key}
+                                                        shape={parameter.valueShape}
+                                                        anchorIdParts={["request", "headers", parameter.key]}
+                                                        route={route}
+                                                        description={parameter.description}
+                                                        availability={parameter.availability}
+                                                        types={types}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </EndpointSection>
+                                )}
                                 {websocket.pathParameters.length > 0 && (
                                     <EndpointSection
                                         title="Path parameters"
@@ -348,9 +372,9 @@ function CardedSection({
         <section
             {...props}
             data-route={anchorRoute}
-            className="border-default divide-border-default -mx-4 divide-y rounded-xl border shadow-xl shadow-black/5 dark:shadow-white/[0.03]"
+            className="border-default divide-default -mx-4 divide-y rounded-xl border"
         >
-            <div className="space-y-4 rounded-t-[inherit] bg-black/[0.03] p-4 last:rounded-b-[inherit] dark:bg-white/5">
+            <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">
