@@ -7,4 +7,21 @@ jobs:
     steps:
       - name: Testing
         run: |
-          curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.alias[]'
+          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+          echo "DEPLOYMENT INFO:"
+          echo $DEPLOYMENT_INFO
+
+          echo "---------------------------------"
+          echo "ALIASES:"
+          ALIASES=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
+          echo $ALIASES
+
+          echo "---------------------------------"
+          echo "ALIAS FILTERED:"
+          CUSTOM_DOMAINS=$(echo $ALIASES | grep -v "buildwithfern.com" | grep -v "vercel.app")
+          echo $CUSTOM_DOMAINS
+
+          echo "---------------------------------"
+          echo "$CUSTOM_DOMAINS" | while IFS= read -r DOMAIN; do
+              echo "- [ ] [$DOMAIN](https://$DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)"
+          done
