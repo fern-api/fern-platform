@@ -16,12 +16,8 @@ jobs:
           ALIASES=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
           echo $ALIASES
 
-          echo "---------------------------------"
-          echo "ALIAS FILTERED:"
-          CUSTOM_DOMAINS=$(echo $ALIASES | grep -v "buildwithfern.com" | grep -v "vercel.app")
-          echo $CUSTOM_DOMAINS
-
-          echo "---------------------------------"
-          echo "$CUSTOM_DOMAINS" | while IFS= read -r DOMAIN; do
+          for DOMAIN in ${ALIASES[@]}; do
+            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
               echo "- [ ] [$DOMAIN](https://$DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)"
+            fi
           done
