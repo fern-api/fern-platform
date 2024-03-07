@@ -31,9 +31,10 @@ export async function getAllUrlsFromDocsConfig(
         )
     ).flatMap((nodes) => nodes);
 
-    const flattenedSidebarNodes = flattenSidebarNodeSlugs(sidebarNodes);
+    const ROOT_NODE = { slug: basePath == null ? [] : basePath.split("/").filter((t) => t.length > 0) };
+    const flattenedSidebarNodes = [ROOT_NODE, ...flattenSidebarNodeSlugs(sidebarNodes)];
 
-    return flattenedSidebarNodes.map((node) => buildUrl({ host, pathname: node.slug.join("/") }));
+    return Array.from(new Set(flattenedSidebarNodes.map((node) => buildUrl({ host, pathname: node.slug.join("/") }))));
 }
 
 interface FlattenedNavigationConfig {
@@ -60,17 +61,17 @@ function flattenNavigationConfig(nav: DocsV1Read.NavigationConfig, parentSlugs: 
     return [{ slug: parentSlugs, items: nav.items }];
 }
 
-function flattenSidebarNodeSlugs(nodes: SidebarNode[]): SidebarNode.Page[] {
+function flattenSidebarNodeSlugs(nodes: SidebarNode[]): { slug: string[] }[] {
     return nodes.flatMap((node) => {
         if (node.type === "pageGroup") {
-            return node.pages.filter(isPage);
+            return [{ slug: node.slug }, ...node.pages.filter(isPage)];
         } else if (node.type === "section") {
-            return flattenSidebarNodeSlugs(node.items);
+            return [{ slug: node.slug }, ...flattenSidebarNodeSlugs(node.items)];
         } else if (node.type === "apiSection") {
             const current = [...node.endpoints, ...node.websockets, ...node.webhooks, node.changelog].filter(
                 isNonNullish,
             );
-            return [...current, ...flattenSidebarNodeSlugs(node.subpackages)];
+            return [{ slug: node.slug }, ...current, ...flattenSidebarNodeSlugs(node.subpackages)];
         }
         return [];
     });
