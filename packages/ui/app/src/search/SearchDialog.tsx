@@ -54,7 +54,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
             >
                 <Transition.Child
                     as="div"
-                    className="bg-background-light/50 dark:bg-background-dark/50 fixed inset-0 z-0 backdrop-blur-sm"
+                    className="bg-background/50 fixed inset-0 z-0 backdrop-blur-sm"
                     enter="transition-opacity ease-linear duration-200"
                     enterFrom="opacity-0 backdrop-blur-none"
                     enterTo="opacity-100 backdrop-blur-sm"

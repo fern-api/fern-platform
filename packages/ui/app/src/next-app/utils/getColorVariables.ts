@@ -63,6 +63,7 @@ export const CSS_VARIABLES = {
     GRAYSCALE_10: "--grayscale-a10",
     GRAYSCALE_11: "--grayscale-a11",
     GRAYSCALE_12: "--grayscale-a12",
+    BODY_TEXT: "--body-text",
 } as const;
 
 function isRgbColor(color: unknown): color is DocsV1Read.RgbaColor {
@@ -194,6 +195,7 @@ export function getColorVariables(colorsV3: ColorsConfig): {
             [CSS_VARIABLES.HEADER_BACKGROUND]: headerBackgroundLight?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.BORDER]: borderLight?.toRgbString() ?? "var(--grayscale-a5)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderLight?.toRgbString() ?? "var(--grayscale-a3)",
+            [CSS_VARIABLES.BODY_TEXT]: "0, 0, 0",
         },
         dark: {
             [CSS_VARIABLES.GRAYSCALE_1]: getRadixGrayVar(radixGrayscaleDark, 1),
@@ -220,6 +222,7 @@ export function getColorVariables(colorsV3: ColorsConfig): {
             [CSS_VARIABLES.HEADER_BACKGROUND]: headerBackgroundDark?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a5)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderDark?.toRgbString() ?? "var(--grayscale-a3)",
+            [CSS_VARIABLES.BODY_TEXT]: "255, 255, 255",
         },
     };
 }

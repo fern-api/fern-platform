@@ -89,7 +89,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                         <Link
                             href={editThisPage}
                             target="_blank"
-                            className="t-muted hover:dark:text-text-default-dark hover:text-text-default-light my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
+                            className="t-muted hover:t-default my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
                         >
                             Edit this page
                         </Link>

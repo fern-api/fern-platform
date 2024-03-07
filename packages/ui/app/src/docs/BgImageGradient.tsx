@@ -18,7 +18,7 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors, 
         <div
             className={classNames(
                 className,
-                "fixed inset-0 -z-10 bg-background dark:bg-background-dark pointer-events-none overscroll-y-none",
+                "fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none",
                 {
                     "from-accent-primary/10 bg-gradient-to-b to-transparent":
                         lightBackground?.type === "gradient" && !hasSpecifiedBackgroundImage,

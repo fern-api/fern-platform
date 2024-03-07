@@ -40,13 +40,7 @@
     }
 
     ::selection {
-        @apply bg-accent-highlight-light;
-    }
-
-    :is(.dark) {
-        ::selection {
-            @apply bg-accent-highlight-dark;
-        }
+        @apply bg-accent-highlight;
     }
 
     html,
@@ -454,8 +448,8 @@
         }
 
         &.disabled {
-            @apply cursor-not-allowed bg-black/20 text-text-default-light/40 hover:text-text-default-light/40;
-            @apply dark:bg-white/10 dark:text-text-default-dark/50 dark:hover:text-text-default-dark/50;
+            @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
+            @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
         }
 
         &:not(.disabled) {
@@ -465,12 +459,12 @@
                 @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
 
                 .fa-icon {
-                    @apply bg-text-default-light/60;
+                    @apply bg-text-default/60;
                 }
 
                 &:not(.primary, .success, .warning, .danger) {
                     .fa-icon {
-                        @apply dark:bg-text-default-dark/70;
+                        @apply dark:bg-text-default/70;
                     }
                 }
 
@@ -512,21 +506,18 @@
             }
 
             &.filled {
-                @apply bg-text-default-light/60 text-white;
-                @apply dark:bg-text-default-dark/60 dark:text-black;
+                @apply bg-text-default/60 t-default;
 
                 &:hover,
                 &[data-state="on"],
                 &[data-state="checked"],
                 &[data-state="open"],
                 &[data-state="opening"] {
-                    @apply bg-text-default-light/60 text-white;
-                    @apply dark:bg-text-default-dark/60 dark:text-black;
+                    @apply bg-text-default/60 t-default;
                 }
 
                 .fa-icon {
-                    @apply bg-text-default-light/60 text-white;
-                    @apply dark:bg-text-default-dark/60 dark:text-black;
+                    @apply bg-text-default/60 t-default;
                 }
 
                 &.primary {
@@ -610,8 +601,7 @@
                 }
 
                 .fa-icon {
-                    @apply bg-text-default-light/60;
-                    @apply dark:bg-text-default-dark/60;
+                    @apply bg-text-default/60;
                 }
 
                 &.primary {

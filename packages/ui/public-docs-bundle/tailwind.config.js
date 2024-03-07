@@ -44,31 +44,14 @@ module.exports = {
             },
 
             colors: {
-                // TODO: collapse these into a single color
                 "accent-primary": withOpacity("--accent-primary"),
-                "accent-primary-light": withOpacity("--accent-primary"),
-                "accent-primary-dark": withOpacity("--accent-primary"),
                 "accent-primary-aa": withOpacity("--accent-primary-aa"),
-                "accent-primary-aa-light": withOpacity("--accent-primary-aa"),
-                "accent-primary-aa-dark": withOpacity("--accent-primary-aa"),
                 "accent-primary-aaa": withOpacity("--accent-primary-aaa"),
-                "accent-primary-aaa-light": withOpacity("--accent-primary-aaa"),
-                "accent-primary-aaa-dark": withOpacity("--accent-primary-aaa"),
                 "accent-primary-tinted": withOpacity("--accent-primary-tinted"),
-                "accent-primary-light-tinted": withOpacity("--accent-primary-tinted"),
-                "accent-primary-dark-tinted": withOpacity("--accent-primary-tinted"),
                 "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
-                "accent-primary-light-contrast": withOpacity("--accent-primary-contrast"),
-                "accent-primary-dark-contrast": withOpacity("--accent-primary-contrast"),
                 "accent-highlight": "rgba(var(--accent-primary), 20%)",
-                "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
-                "accent-highlight-dark": "rgba(var(--accent-primary), 20%)",
                 "accent-highlight-faded": "rgba(var(--accent-primary), 10%)",
-                "accent-highlight-faded-light": "rgba(var(--accent-primary), 10%)",
-                "accent-highlight-faded-dark": "rgba(var(--accent-primary), 10%)",
                 background: withOpacity("--background"),
-                "background-light": withOpacity("--background"),
-                "background-dark": withOpacity("--background"),
 
                 "method-get": "#49A68C",
                 "method-post": "#487FAB",
@@ -121,21 +104,18 @@ module.exports = {
                 "border-danger": "var(--red-a8)",
 
                 "border-default-soft": "var(--grayscale-a6)",
-                "border-primary-light-soft": "rgba(var(--accent-primary), 30%)",
-                "border-primary-dark-soft": "rgba(var(--accent-primary), 30%)",
+                "border-primary-soft": "rgba(var(--accent-primary), 30%)",
                 "border-warning-soft": "var(--amber-a6)",
                 "border-success-soft": "var(--green-a6)",
                 "border-danger-soft": "var(--red-a6)",
 
-                "text-default-dark": "#FFFFFF",
-                "text-default-light": "#000000",
+                "text-default": withOpacity("--body-text"),
                 "text-muted": "var(--grayscale-a11)",
                 "text-disabled": "var(--grayscale-a10)",
                 faded: "var(--grayscale-a9)",
 
                 "tag-default-soft": "var(--grayscale-a2)",
-                "tag-primary-soft-light": "rgba(var(--accent-primary), 10%)",
-                "tag-primary-soft-dark": "rgba(var(--accent-primary), 10%)",
+                "tag-primary-soft": "rgba(var(--accent-primary), 10%)",
                 "tag-warning-soft": "var(--amber-a2)",
                 "tag-success-soft": "var(--green-a2)",
                 "tag-danger-soft": "var(--red-a2)",
@@ -143,8 +123,7 @@ module.exports = {
                 "tag-default": "var(--grayscale-a3)",
                 "tag-default-solid": "var(--grayscale-3)",
                 "tag-default-hover": "var(--grayscale-a4)",
-                "tag-primary-light": "rgba(var(--accent-primary), 15%)",
-                "tag-primary-dark": "rgba(var(--accent-primary), 15%)",
+                "tag-primary": "rgba(var(--accent-primary), 15%)",
                 "tag-warning": "var(--amber-a3)",
                 "tag-success": "var(--green-a3)",
                 "tag-danger": "var(--red-a3)",
@@ -238,22 +217,19 @@ module.exports = {
             addComponents({
                 // Text
                 ".t-default": {
-                    "@apply text-text-default-light dark:text-text-default-dark": {},
+                    "@apply text-text-default": {},
                 },
                 ".t-muted": {
                     "@apply text-text-muted dark:text-text-muted dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]": {},
                 },
-                ".text-accent-primary": {
-                    "@apply text-accent-primary-light dark:text-accent-primary-dark": {},
-                },
                 ".t-accent": {
-                    "@apply text-accent-primary-aa-light dark:text-accent-primary-aa-dark": {},
+                    "@apply text-accent-primary-aa": {},
                 },
                 ".t-accent-aaa": {
-                    "@apply text-accent-primary-aaa-light dark:text-accent-primary-aaa-dark": {},
+                    "@apply text-accent-primary-aaa": {},
                 },
                 ".t-accent-contrast": {
-                    "@apply text-accent-primary-light-contrast dark:text-accent-primary-dark-contrast": {},
+                    "@apply text-accent-primary-contrast": {},
                 },
                 ".t-success": {
                     "@apply text-intent-success": {},
@@ -269,7 +245,7 @@ module.exports = {
                 //     "@apply bg-background-light dark:bg-background-dark": {},
                 // },
                 ".bg-background-translucent": {
-                    "@apply bg-background-light/70 dark:bg-background-dark/70": {},
+                    "@apply bg-background/70": {},
                 },
                 ".bg-sidebar": {
                     "@apply bg-sidebar-background": {},
@@ -281,42 +257,33 @@ module.exports = {
                     "@apply bg-card-background": {},
                 },
                 ".bg-accent": {
-                    "@apply bg-accent-primary-light dark:bg-accent-primary-dark": {},
+                    "@apply bg-accent-primary": {},
                 },
                 ".bg-accent-muted": {
-                    "@apply bg-accent-primary-light/70 dark:bg-accent-primary-dark/70": {},
+                    "@apply bg-accent-primary/70": {},
                 },
                 ".bg-accent-aa": {
-                    "@apply bg-accent-primary-aa-light dark:bg-accent-primary-aa-dark": {},
+                    "@apply bg-accent-primary-aa": {},
                 },
                 ".bg-accent-aaa": {
-                    "@apply bg-accent-primary-aaa-light dark:bg-accent-primary-aaa-dark": {},
+                    "@apply bg-accent-primary-aaa": {},
                 },
                 ".bg-accent-contrast": {
-                    "@apply bg-accent-primary-light-contrast dark:bg-accent-primary-dark-contrast": {},
+                    "@apply bg-accent-primary-contrast": {},
                 },
                 ".bg-accent-tinted": {
-                    "@apply bg-accent-primary-light-tinted dark:bg-accent-primary-dark-tinted": {},
+                    "@apply bg-accent-primary-tinted": {},
                 },
                 ".bg-accent-highlight": {
-                    "@apply bg-accent-primary-light/20 dark:bg-accent-primary-dark/20": {},
+                    "@apply bg-accent-primary/20": {},
                 },
                 ".bg-accent-highlight-faded": {
-                    "@apply bg-accent-primary-light/10 dark:bg-accent-primary-dark/10": {},
-                },
-                ".bg-tag-primary": {
-                    "@apply bg-tag-primary-light dark:bg-tag-primary-dark": {},
-                },
-                ".bg-tag-primary-soft": {
-                    "@apply bg-tag-primary-soft-light dark:bg-tag-primary-soft-dark": {},
+                    "@apply bg-accent-primary/10": {},
                 },
                 ".bg-border-primary": {
                     "@apply bg-border-accent-muted": {},
                 },
                 // Border
-                ".border-accent-primary": {
-                    "@apply border-accent-primary-light dark:border-accent-primary-dark": {},
-                },
                 ".border-primary": {
                     "@apply border-border-accent-muted": {},
                 },
@@ -335,17 +302,8 @@ module.exports = {
                 ".border-danger": {
                     "@apply border-border-danger": {},
                 },
-                ".border-background": {
-                    "@apply border-background-light dark:border-background-dark": {},
-                },
                 ".divide-default": {
                     "@apply divide-border-default": {},
-                },
-                ".outline-accent-primary": {
-                    "@apply outline-accent-primary-light dark:outline-accent-primary-dark": {},
-                },
-                ".outline-tag-primary": {
-                    "@apply outline-tag-primary-light dark:outline-tag-primary-dark": {},
                 },
                 ".ring-default": {
                     "@apply ring-border-default": {},
@@ -353,17 +311,8 @@ module.exports = {
                 ".ring-concealed": {
                     "@apply ring-border-concealed": {},
                 },
-                ".ring-accent-primary": {
-                    "@apply ring-accent-primary-light dark:ring-accent-primary-dark": {},
-                },
                 ".ring-border-primary": {
                     "@apply ring-border-accent-muted": {},
-                },
-                ".ring-border-primary-soft": {
-                    "@apply ring-border-primary-light-soft dark:ring-border-primary-dark-soft": {},
-                },
-                ".decoration-accent-primary": {
-                    "@apply decoration-accent-primary-light dark:decoration-accent-primary-dark": {},
                 },
                 ".animate-popover": {
                     "@apply data-[side=top]:animate-slide-down-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade":
@@ -415,13 +364,13 @@ module.exports = {
                     "@apply shadow-border-default": {},
                 },
                 ".shadow-tag-primary": {
-                    "@apply shadow-tag-primary-light dark:shadow-tag-primary-dark": {},
+                    "@apply shadow-tag-primary": {},
                 },
                 ".shadow-border-primary": {
-                    "@apply shadow-border-accent-muted-light dark:shadow-border-accent-muted-dark": {},
+                    "@apply shadow-border-accent-muted": {},
                 },
                 ".shadow-accent": {
-                    "@apply shadow-accent-primary-light dark:shadow-accent-primary-dark": {},
+                    "@apply shadow-accent-primary": {},
                 },
                 ".shadow-card": {
                     "@apply shadow-card-light dark:shadow-card-dark": {},

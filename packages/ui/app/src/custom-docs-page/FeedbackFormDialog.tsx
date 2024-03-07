@@ -54,7 +54,7 @@ export const FeedbackFormDialog: FC<PropsWithChildren<FeedbackFormDialogProps>> 
                     as="div"
                     ref={modalRef}
                     className={classNames(
-                        "border-default fixed z-50 w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-background-dark/50",
+                        "border-default fixed z-50 w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-background/50",
                         className,
                     )}
                     enter="transition-all origin-bottom-right"

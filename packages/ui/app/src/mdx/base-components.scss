@@ -139,11 +139,11 @@ code:not(.code-block) {
 }
 
 [data-rmiz-modal-overlay="hidden"] {
-    @apply bg-background-light/0 dark:bg-background-dark/0;
+    @apply bg-background/0;
 }
 
 [data-rmiz-modal-overlay="visible"] {
-    @apply bg-background-light/70 dark:bg-background-dark/60 backdrop-blur;
+    @apply bg-background/70 dark:bg-background/60 backdrop-blur;
 }
 
 [data-rmiz-modal-content] {

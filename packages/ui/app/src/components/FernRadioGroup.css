@@ -19,7 +19,7 @@
 }
 
 .fern-radio-item:focus {
-    @apply outline outline-4 outline-offset-0 outline-tag-primary-light dark:outline-tag-primary-dark;
+    @apply outline outline-4 outline-offset-0 outline-tag-primary;
 }
 
 .fern-radio-indicator {
@@ -27,6 +27,6 @@
 }
 
 .fern-radio-indicator:after {
-    @apply bg-background dark:bg-background-dark absolute size-2 rounded;
+    @apply bg-background absolute size-2 rounded;
     content: "";
 }
