@@ -25,7 +25,7 @@
 }
 
 .code-block-line-gutter {
-    @apply text-faded p-0 w-0 align-top;
+    @apply text-faded p-0 align-top w-0;
     counter-increment: code-block-line;
 }
 
