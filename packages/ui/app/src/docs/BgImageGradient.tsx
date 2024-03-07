@@ -20,9 +20,9 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors, 
                 className,
                 "fixed inset-0 -z-10 bg-background dark:bg-background-dark pointer-events-none overscroll-y-none",
                 {
-                    "from-accent-primary-light/10 bg-gradient-to-b to-transparent":
+                    "from-accent-primary/10 bg-gradient-to-b to-transparent":
                         lightBackground?.type === "gradient" && !hasSpecifiedBackgroundImage,
-                    "dark:from-accent-primary-dark/5 dark:bg-gradient-to-b dark:to-transparent":
+                    "dark:bg-gradient-to-b dark:to-transparent":
                         darkBackground?.type === "gradient" && !hasSpecifiedBackgroundImage,
                     "dark:from-transparent": darkBackground?.type === "solid" && !hasSpecifiedBackgroundImage,
                 },

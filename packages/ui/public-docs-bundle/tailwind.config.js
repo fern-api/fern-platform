@@ -35,8 +35,8 @@ module.exports = {
                 "8xl": "88rem",
             },
             boxShadow: {
-                header: "0px 4px 24px 0px rgba(var(--accent-primary-light), 10%)",
-                "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary-dark), 10%)",
+                header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+                "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.1), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
@@ -45,20 +45,28 @@ module.exports = {
 
             colors: {
                 // TODO: collapse these into a single color
+                "accent-primary": withOpacity("--accent-primary"),
                 "accent-primary-light": withOpacity("--accent-primary"),
                 "accent-primary-dark": withOpacity("--accent-primary"),
-                "accent-primary-aa-light": withOpacity("--accent-primary-aa-"),
+                "accent-primary-aa": withOpacity("--accent-primary-aa"),
+                "accent-primary-aa-light": withOpacity("--accent-primary-aa"),
                 "accent-primary-aa-dark": withOpacity("--accent-primary-aa"),
-                "accent-primary-aaa-light": withOpacity("--accent-primary-aaa-"),
+                "accent-primary-aaa": withOpacity("--accent-primary-aaa"),
+                "accent-primary-aaa-light": withOpacity("--accent-primary-aaa"),
                 "accent-primary-aaa-dark": withOpacity("--accent-primary-aaa"),
-                "accent-primary-light-tinted": withOpacity("--accent-primary--tinted"),
+                "accent-primary-tinted": withOpacity("--accent-primary-tinted"),
+                "accent-primary-light-tinted": withOpacity("--accent-primary-tinted"),
                 "accent-primary-dark-tinted": withOpacity("--accent-primary-tinted"),
+                "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
                 "accent-primary-light-contrast": withOpacity("--accent-primary-contrast"),
                 "accent-primary-dark-contrast": withOpacity("--accent-primary-contrast"),
+                "accent-highlight": "rgba(var(--accent-primary), 20%)",
                 "accent-highlight-light": "rgba(var(--accent-primary), 20%)",
                 "accent-highlight-dark": "rgba(var(--accent-primary), 20%)",
+                "accent-highlight-faded": "rgba(var(--accent-primary), 10%)",
                 "accent-highlight-faded-light": "rgba(var(--accent-primary), 10%)",
                 "accent-highlight-faded-dark": "rgba(var(--accent-primary), 10%)",
+                background: withOpacity("--background"),
                 "background-light": withOpacity("--background"),
                 "background-dark": withOpacity("--background"),
 
@@ -257,9 +265,9 @@ module.exports = {
                     "@apply text-intent-danger": {},
                 },
                 // Background
-                ".bg-background": {
-                    "@apply bg-background-light dark:bg-background-dark": {},
-                },
+                // ".bg-background": {
+                //     "@apply bg-background-light dark:bg-background-dark": {},
+                // },
                 ".bg-background-translucent": {
                     "@apply bg-background-light/70 dark:bg-background-dark/70": {},
                 },
