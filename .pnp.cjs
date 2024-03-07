@@ -4407,7 +4407,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
-            ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
             ["@radix-ui/colors", "npm:3.0.0"],\
             ["@radix-ui/react-accordion", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.1.2"],\
@@ -4535,15 +4534,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@floating-ui-utils-npm-0.2.1-5ad70234fc-9ed4380653.zip/node_modules/@floating-ui/utils/",\
           "packageDependencies": [\
             ["@floating-ui/utils", "npm:0.2.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fontsource/ibm-plex-mono", [\
-        ["npm:4.5.13", {\
-          "packageLocation": "./.yarn/cache/@fontsource-ibm-plex-mono-npm-4.5.13-80f69c13fa-f927619557.zip/node_modules/@fontsource/ibm-plex-mono/",\
-          "packageDependencies": [\
-            ["@fontsource/ibm-plex-mono", "npm:4.5.13"]\
           ],\
           "linkType": "HARD"\
         }]\

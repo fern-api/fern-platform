@@ -2667,7 +2667,6 @@ __metadata:
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
-    "@fontsource/ibm-plex-mono": ^4.5.13
     "@headlessui/react": ^1.7.18
     "@radix-ui/colors": ^3.0.0
     "@radix-ui/react-accordion": ^1.1.2
@@ -2776,13 +2775,6 @@ __metadata:
   version: 0.2.1
   resolution: "@floating-ui/utils@npm:0.2.1"
   checksum: 9ed4380653c7c217cd6f66ae51f20fdce433730dbc77f95b5abfb5a808f5fdb029c6ae249b4e0490a816f2453aa6e586d9a873cd157fdba4690f65628efc6e06
-  languageName: node
-  linkType: hard
-
-"@fontsource/ibm-plex-mono@npm:^4.5.13":
-  version: 4.5.13
-  resolution: "@fontsource/ibm-plex-mono@npm:4.5.13"
-  checksum: f9276195578ba8f90f10499c9430e1fee9bd6b101b55fdb3a6f23e57ada8a290f363ec450c1966d0413e9111b2b6e081f58e3428dd764f2a9ccb81648ffbbc85
   languageName: node
   linkType: hard
 
