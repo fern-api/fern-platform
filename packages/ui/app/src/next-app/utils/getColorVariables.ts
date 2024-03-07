@@ -105,8 +105,8 @@ export function getColorVariables(colorsV3: ColorsConfig): {
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
 
-    const radixGrayscaleLight = getClosestGrayColor(tinycolor(backgroundColorLight), "light");
-    const radixGrayscaleDark = getClosestGrayColor(tinycolor(backgroundColorDark), "dark");
+    const radixGrayscaleLight = getClosestGrayColor(tinycolor(backgroundColorLight));
+    const radixGrayscaleDark = getClosestGrayColor(tinycolor(backgroundColorDark));
 
     const accentPrimaryLightUi = increaseForegroundContrast(
         getColor(colorsV3, "accentPrimary", "light"),
@@ -284,37 +284,126 @@ function getRadixGrayVar(gray: RadixGray, scale: number): string {
     return `var(--${gray}-a${scale})`;
 }
 
-const DARK_GRAY_COLOR_SAMPLES: Record<RadixGray, tinycolor.Instance> = {
-    gray: tinycolor(gray.gray6),
-    mauve: tinycolor(mauve.mauve6),
-    slate: tinycolor(slate.slate6),
-    sage: tinycolor(sage.sage6),
-    olive: tinycolor(olive.olive6),
-    sand: tinycolor(sand.sand6),
-};
+// const DARK_GRAY_COLOR_SAMPLES: Record<RadixGray, tinycolor.Instance> = {
+//     gray: tinycolor(gray.gray6),
+//     mauve: tinycolor(mauve.mauve6),
+//     slate: tinycolor(slate.slate6),
+//     sage: tinycolor(sage.sage6),
+//     olive: tinycolor(olive.olive6),
+//     sand: tinycolor(sand.sand6),
+// };
 
-const LIGHT_GRAY_COLOR_SAMPLES: Record<RadixGray, tinycolor.Instance> = {
-    gray: tinycolor(gray.gray3),
-    mauve: tinycolor(mauve.mauve3),
-    slate: tinycolor(slate.slate3),
-    sage: tinycolor(sage.sage3),
-    olive: tinycolor(olive.olive3),
-    sand: tinycolor(sand.sand3),
-};
+// const LIGHT_GRAY_COLOR_SAMPLES: Record<RadixGray, tinycolor.Instance> = {
+//     gray: tinycolor(gray.gray3),
+//     mauve: tinycolor(mauve.mauve3),
+//     slate: tinycolor(slate.slate3),
+//     sage: tinycolor(sage.sage3),
+//     olive: tinycolor(olive.olive3),
+//     sand: tinycolor(sand.sand3),
+// };
 
-const GRAY_COLOR_SAMPLES: Record<"light" | "dark", Record<RadixGray, tinycolor.Instance>> = {
-    light: LIGHT_GRAY_COLOR_SAMPLES,
-    dark: DARK_GRAY_COLOR_SAMPLES,
-};
+// const GRAY_COLOR_SAMPLES: Record<"light" | "dark", Record<RadixGray, tinycolor.Instance>> = {
+//     light: LIGHT_GRAY_COLOR_SAMPLES,
+//     dark: DARK_GRAY_COLOR_SAMPLES,
+// };
 
-function getClosestGrayColor(color: tinycolor.Instance, theme: "light" | "dark"): RadixGray {
+const GRAY_COLORS = {
+    gray: {
+        1: tinycolor(gray.gray1),
+        2: tinycolor(gray.gray2),
+        3: tinycolor(gray.gray3),
+        4: tinycolor(gray.gray4),
+        5: tinycolor(gray.gray5),
+        6: tinycolor(gray.gray6),
+        7: tinycolor(gray.gray7),
+        8: tinycolor(gray.gray8),
+        9: tinycolor(gray.gray9),
+        10: tinycolor(gray.gray10),
+        11: tinycolor(gray.gray11),
+        12: tinycolor(gray.gray12),
+    },
+    mauve: {
+        1: tinycolor(mauve.mauve1),
+        2: tinycolor(mauve.mauve2),
+        3: tinycolor(mauve.mauve3),
+        4: tinycolor(mauve.mauve4),
+        5: tinycolor(mauve.mauve5),
+        6: tinycolor(mauve.mauve6),
+        7: tinycolor(mauve.mauve7),
+        8: tinycolor(mauve.mauve8),
+        9: tinycolor(mauve.mauve9),
+        10: tinycolor(mauve.mauve10),
+        11: tinycolor(mauve.mauve11),
+        12: tinycolor(mauve.mauve12),
+    },
+    slate: {
+        1: tinycolor(slate.slate1),
+        2: tinycolor(slate.slate2),
+        3: tinycolor(slate.slate3),
+        4: tinycolor(slate.slate4),
+        5: tinycolor(slate.slate5),
+        6: tinycolor(slate.slate6),
+        7: tinycolor(slate.slate7),
+        8: tinycolor(slate.slate8),
+        9: tinycolor(slate.slate9),
+        10: tinycolor(slate.slate10),
+        11: tinycolor(slate.slate11),
+        12: tinycolor(slate.slate12),
+    },
+    sage: {
+        1: tinycolor(sage.sage1),
+        2: tinycolor(sage.sage2),
+        3: tinycolor(sage.sage3),
+        4: tinycolor(sage.sage4),
+        5: tinycolor(sage.sage5),
+        6: tinycolor(sage.sage6),
+        7: tinycolor(sage.sage7),
+        8: tinycolor(sage.sage8),
+        9: tinycolor(sage.sage9),
+        10: tinycolor(sage.sage10),
+        11: tinycolor(sage.sage11),
+        12: tinycolor(sage.sage12),
+    },
+    olive: {
+        1: tinycolor(olive.olive1),
+        2: tinycolor(olive.olive2),
+        3: tinycolor(olive.olive3),
+        4: tinycolor(olive.olive4),
+        5: tinycolor(olive.olive5),
+        6: tinycolor(olive.olive6),
+        7: tinycolor(olive.olive7),
+        8: tinycolor(olive.olive8),
+        9: tinycolor(olive.olive9),
+        10: tinycolor(olive.olive10),
+        11: tinycolor(olive.olive11),
+        12: tinycolor(olive.olive12),
+    },
+    sand: {
+        1: tinycolor(sand.sand1),
+        2: tinycolor(sand.sand2),
+        3: tinycolor(sand.sand3),
+        4: tinycolor(sand.sand4),
+        5: tinycolor(sand.sand5),
+        6: tinycolor(sand.sand6),
+        7: tinycolor(sand.sand7),
+        8: tinycolor(sand.sand8),
+        9: tinycolor(sand.sand9),
+        10: tinycolor(sand.sand10),
+        11: tinycolor(sand.sand11),
+        12: tinycolor(sand.sand12),
+    },
+} as const;
+
+function getClosestGrayColor(color: tinycolor.Instance): RadixGray {
     let closestColor: RadixGray = "gray";
     let closestDistance = Infinity;
-    for (const [gray, sampleColor] of Object.entries(GRAY_COLOR_SAMPLES[theme])) {
-        const distance = getColorDistance(color, sampleColor);
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            closestColor = gray as RadixGray;
+    for (const [gray, sampleColorGroup] of Object.entries(GRAY_COLORS)) {
+        for (const [, sampleColor] of Object.entries(sampleColorGroup)) {
+            const distance = getColorDistance(color, sampleColor);
+            if (distance < closestDistance) {
+                closestColor = gray as RadixGray;
+                closestDistance = distance;
+            }
         }
     }
     return closestColor;
