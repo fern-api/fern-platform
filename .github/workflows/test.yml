@@ -1,0 +1,10 @@
+name: Testing
+on: pull_request
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Testing
+        run: |
+          curl -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}"
