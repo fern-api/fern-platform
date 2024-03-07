@@ -35,7 +35,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
                     "bg-tag-danger-soft": type === "warning",
                 })}
             >
-                <div className="shadow-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0]">
                     {typeof title === "string" ? (
                         <div
                             className={classNames("text-xs uppercase px-1", {

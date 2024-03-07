@@ -3,13 +3,13 @@ import { type SerializedMdxContent } from "../mdx/mdx";
 import { ResolvedRootPackage } from "./resolver";
 
 export declare namespace ResolvedPath {
-    interface Neighbor {
+    export interface Neighbor {
         fullSlug: string;
         title: string;
-        excerpt: string | undefined;
+        excerpt: SerializedMdxContent | undefined;
     }
 
-    interface Neighbors {
+    export interface Neighbors {
         prev: Neighbor | null;
         next: Neighbor | null;
     }

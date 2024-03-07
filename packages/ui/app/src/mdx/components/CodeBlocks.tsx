@@ -24,7 +24,7 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
         return (
             <div className={containerClass}>
                 <div className="bg-tag-default-soft rounded-t-[inherit]">
-                    <div className="shadow-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                    <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
                         <div className="flex min-h-10 overflow-x-auto">
                             <div className="flex items-center px-3 py-1.5">
                                 <span className="t-muted rounded text-sm font-semibold">
@@ -47,7 +47,7 @@ export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = (
             defaultValue="0"
         >
             <div className="bg-tag-default-soft rounded-t-[inherit]">
-                <div className="shadow-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
                     <Tabs.List className="flex min-h-10" asChild>
                         <HorizontalOverflowMask>
                             {items.map((item, idx) => (

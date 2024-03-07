@@ -131,7 +131,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <Tabs.Root asChild={true} value={contentType} onValueChange={setContentType}>
                     <FernCard className="-mx-4 rounded-xl shadow-sm">
                         <div className="bg-tag-default-soft rounded-t-[inherit]">
-                            <div className="shadow-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.1)]">
+                            <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
                                 <Tabs.List className="flex min-h-10 overflow-x-auto px-4 font-mono">
                                     <div className="mr-2 flex items-center">
                                         <span className="t-muted text-xs font-semibold">Content-Type:</span>
