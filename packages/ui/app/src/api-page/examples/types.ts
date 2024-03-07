@@ -55,7 +55,9 @@ export function endpointExampleToHttpRequestExample(
 
     let body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined = requestBody;
 
-    if (body != null) {
+    headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
+
+    if (body != null && headers["Content-Type"] == null) {
         if (body.type === "json") {
             headers["Content-Type"] = "application/json";
         } else if (body.type === "form") {
