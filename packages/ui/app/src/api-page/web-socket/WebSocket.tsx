@@ -348,9 +348,9 @@ function CardedSection({
         <section
             {...props}
             data-route={anchorRoute}
-            className="border-default divide-border-default -mx-4 divide-y rounded-xl border shadow-xl shadow-black/5 dark:shadow-white/[0.03]"
+            className="border-default divide-default -mx-4 divide-y rounded-xl border"
         >
-            <div className="space-y-4 rounded-t-[inherit] bg-black/[0.03] p-4 last:rounded-b-[inherit] dark:bg-white/5">
+            <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">

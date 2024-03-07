@@ -23,7 +23,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
     return (
         <Accordion.Root
             type="multiple"
-            className="divide-border-default relative z-0 table h-full w-full table-fixed divide-y"
+            className="divide-default relative z-0 table h-full w-full table-fixed divide-y"
         >
             {messages.length === 0 && (
                 <div className="absolute inset-0 flex h-full w-full items-center justify-center">
@@ -35,11 +35,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
             )}
             {messages.map((message, index) => {
                 return (
-                    <Accordion.Item
-                        value={index.toString()}
-                        key={index}
-                        className={classNames("group relative px-px last:pb-px")}
-                    >
+                    <Accordion.Item value={index.toString()} key={index} className={classNames("group relative")}>
                         <Accordion.Trigger
                             className={classNames(
                                 "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background group-data-[state=closed]:rounded-[inherit] transition-[border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]",
@@ -99,13 +95,14 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                         </Accordion.Content>
                         <div
                             className={classNames(
-                                "group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
+                                "mx-px group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
                                 {
                                     "group-focus-within:ring-border-success":
                                         message.origin === APIV1Read.WebSocketMessageOrigin.Client,
                                     "group-focus-within:ring-border-primary":
                                         message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-                                    "group-focus-within:ring-border-default": message.origin == null,
+                                    "group-focus-within:ring-default": message.origin == null,
+                                    "mb-px rounded-b-xl": index === messages.length - 1,
                                 },
                             )}
                         />

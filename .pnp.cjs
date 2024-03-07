@@ -4061,15 +4061,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.50.12-4-gdf2d015", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.50.12-4-gdf2d015-09f61a30fd-e688367577.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.54.1-1-g293e7bf", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.54.1-1-g293e7bf-bd785366c8-4e920d88a5.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
+            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
             ["lodash", "npm:4.17.21"],\
             ["marked", "npm:5.1.2"],\
+            ["tinycolor2", "npm:1.6.0"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -4288,7 +4289,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/public-docs-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/public-docs-bundle", "workspace:packages/ui/public-docs-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
+            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
@@ -4402,11 +4403,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/app/",\
           "packageDependencies": [\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@fern-api/fdr-sdk", "npm:0.50.12-4-gdf2d015"],\
+            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\
-            ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@headlessui/react", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.7.18"],\
             ["@radix-ui/colors", "npm:3.0.0"],\
             ["@radix-ui/react-accordion", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:1.1.2"],\
@@ -4534,15 +4534,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@floating-ui-utils-npm-0.2.1-5ad70234fc-9ed4380653.zip/node_modules/@floating-ui/utils/",\
           "packageDependencies": [\
             ["@floating-ui/utils", "npm:0.2.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fontsource/ibm-plex-mono", [\
-        ["npm:4.5.13", {\
-          "packageLocation": "./.yarn/cache/@fontsource-ibm-plex-mono-npm-4.5.13-80f69c13fa-f927619557.zip/node_modules/@fontsource/ibm-plex-mono/",\
-          "packageDependencies": [\
-            ["@fontsource/ibm-plex-mono", "npm:4.5.13"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -45,7 +45,7 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
     return (
         <>
             {valueAsList.length > 0 && (
-                <ul className="divide-border-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="divide-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {valueAsList.map((item, idx) => (
                         <li
                             key={idx}

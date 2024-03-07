@@ -1,13 +1,12 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
-import "@fontsource/ibm-plex-mono";
 import { useEffect } from "react";
 import { initializePosthog } from "../analytics/posthog";
 import { CONTEXTS } from "../contexts";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { Docs } from "../docs/Docs";
-import { SidebarNavigation } from "../sidebar/types";
+import { ColorsConfig, SidebarNavigation } from "../sidebar/types";
 import type { ResolvedPath } from "../util/ResolvedPath";
 
 export declare namespace App {
@@ -15,11 +14,9 @@ export declare namespace App {
         baseUrl: DocsV2Read.BaseUrl;
         navigation: SidebarNavigation;
         hasBackgroundImage: boolean;
-        colors: DocsV1Read.ColorsConfigV3 | undefined;
+        colors: ColorsConfig;
         navbarLinks: DocsV1Read.NavbarLink[];
         layout: DocsV1Read.DocsLayoutConfig | undefined;
-        logo: DocsV1Read.FileId | undefined;
-        logoV2: DocsV1Read.LogoV2 | undefined;
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
         search: DocsV1Read.SearchInfo;
@@ -42,8 +39,6 @@ export const DocsApp: React.FC<App.Props> = ({
     colors,
     layout,
     navbarLinks,
-    logo,
-    logoV2,
     logoHeight,
     logoHref,
     title,
@@ -77,8 +72,6 @@ export const DocsApp: React.FC<App.Props> = ({
                                 colors={colors}
                                 layout={layout}
                                 navbarLinks={navbarLinks}
-                                logo={logo}
-                                logoV2={logoV2}
                                 logoHeight={logoHeight}
                                 logoHref={logoHref}
                                 search={search}

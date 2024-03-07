@@ -27,12 +27,12 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     <div className="min-w-fit">
                         <div
                             className={classNames(
-                                "flex size-6 items-center border border-default justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-accent-muted-light group-hover/tab-button:dark:border-border-accent-muted-dark",
-                                "bg-tag-default group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:border-transparent",
+                                "flex size-6 items-center border border-default justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:border-border-accent-muted",
+                                "bg-card group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:border-transparent",
                             )}
                         >
                             <RemoteFontAwesomeIcon
-                                className="bg-text-muted group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-accent-contrast size-3.5"
+                                className="bg-text-muted group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background size-3.5"
                                 icon={tab.icon}
                             />
                         </div>

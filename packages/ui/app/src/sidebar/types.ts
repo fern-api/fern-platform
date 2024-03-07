@@ -3,6 +3,11 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
+export interface ColorsConfig {
+    light: DocsV1Read.ThemeConfig | undefined;
+    dark: DocsV1Read.ThemeConfig | undefined;
+}
+
 export interface SidebarVersionInfo {
     id: string;
     slug: string[];
