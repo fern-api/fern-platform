@@ -668,6 +668,7 @@ export function dereferenceObjectProperties(
         return sortBy(
             [...directProperties],
             (property) => unwrapReference(property.valueShape, types).type === "optional",
+            (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         );
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
@@ -680,6 +681,7 @@ export function dereferenceObjectProperties(
     return sortBy(
         [...directProperties, ...filteredExtendedProperties],
         (property) => unwrapReference(property.valueShape, types).type === "optional",
+        (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         (property) => property.key,
     );
 }
