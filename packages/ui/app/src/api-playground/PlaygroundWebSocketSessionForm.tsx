@@ -5,6 +5,7 @@ import { WifiOff } from "react-feather";
 import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
+import { FernScrollArea } from "../components/FernScrollArea";
 import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
@@ -76,7 +77,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                 <FernCard className="divide-default divide-y rounded-xl shadow-sm">
                                     <div className="p-4">
                                         <PlaygroundTypeReferenceForm
-                                            id="header"
+                                            id={message.type}
                                             shape={message.body}
                                             onChange={(data) => setMessage(message, data)}
                                             value={formState?.messages[message.type]}
@@ -156,7 +157,9 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                             <span className="font-mono text-sm">{connected ? "Connected" : "Not connected"}</span>
                         </span>
                     </div>
-                    <WebSocketMessages messages={messages} />
+                    <FernScrollArea className="flex-1 rounded-b-[inherit]">
+                        <WebSocketMessages messages={messages} />
+                    </FernScrollArea>
                 </FernCard>
             </div>
         </HorizontalSplitPane>
