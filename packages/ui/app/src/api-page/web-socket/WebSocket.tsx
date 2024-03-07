@@ -155,6 +155,30 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     </div>
                                 }
                             >
+                                {websocket.headers.length > 0 && (
+                                    <EndpointSection
+                                        title="Headers"
+                                        anchorIdParts={["request", "headers"]}
+                                        route={route}
+                                    >
+                                        <div className="flex flex-col">
+                                            {websocket.pathParameters.map((parameter) => (
+                                                <div className="flex flex-col" key={parameter.key}>
+                                                    <TypeComponentSeparator />
+                                                    <EndpointParameter
+                                                        name={parameter.key}
+                                                        shape={parameter.valueShape}
+                                                        anchorIdParts={["request", "headers", parameter.key]}
+                                                        route={route}
+                                                        description={parameter.description}
+                                                        availability={parameter.availability}
+                                                        types={types}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </EndpointSection>
+                                )}
                                 {websocket.pathParameters.length > 0 && (
                                     <EndpointSection
                                         title="Path parameters"
