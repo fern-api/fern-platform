@@ -4,6 +4,7 @@ import { AuthType } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
+import { IndexSegment } from "../../../services/algolia";
 import { type S3FileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
@@ -153,7 +154,18 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
                 })();
 
-                await uploadToAlgolia(app, docsRegistrationInfo, dbDocsDefinition, apiDefinitionsById);
+                const indexSegments = await uploadToAlgolia(
+                    app,
+                    docsRegistrationInfo,
+                    dbDocsDefinition,
+                    apiDefinitionsById,
+                );
+
+                await app.docsDefinitionCache.storeDocsForUrl({
+                    docsRegistrationInfo,
+                    dbDocsDefinition,
+                    indexSegments,
+                });
 
                 // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
                 delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
@@ -199,17 +211,17 @@ async function uploadToAlgolia(
     docsRegistrationInfo: DocsRegistrationInfo,
     dbDocsDefinition: WithoutQuestionMarks<DocsDefinitionDb.V3>,
     apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
-): Promise<void> {
+): Promise<IndexSegment[]> {
     // TODO: make sure to store private docs index into user-restricted algolia index
     // see https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
     if (docsRegistrationInfo.authType !== AuthType.PUBLIC) {
-        return;
+        return [];
     }
 
     // skip algolia step for preview
-    // if (docsRegistrationInfo.isPreview) {
-    //     return;
-    // }
+    if (docsRegistrationInfo.isPreview) {
+        return [];
+    }
 
     app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
     const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
@@ -233,9 +245,6 @@ async function uploadToAlgolia(
     await app.services.algolia.uploadSearchRecords(searchRecords);
 
     app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
-    await app.docsDefinitionCache.storeDocsForUrl({
-        docsRegistrationInfo,
-        dbDocsDefinition,
-        indexSegments: newIndexSegments,
-    });
+
+    return newIndexSegments;
 }
