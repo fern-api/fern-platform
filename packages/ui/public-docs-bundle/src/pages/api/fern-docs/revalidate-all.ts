@@ -1,8 +1,8 @@
 import { buildUrl } from "@fern-ui/ui";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { getAllUrlsFromDocsConfig } from "../../utils/getAllUrlsFromDocsConfig";
-import { loadWithUrl } from "../../utils/loadWithUrl";
-import { toValidPathname } from "../../utils/toValidPathname";
+import { getAllUrlsFromDocsConfig } from "../../../utils/getAllUrlsFromDocsConfig";
+import { loadWithUrl } from "../../../utils/loadWithUrl";
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 function getHostFromUrl(url: string | undefined): string | undefined {
     if (url == null) {
