@@ -68,7 +68,13 @@ export async function getPrivateDocsPageProps(
     if (!user.isAuthenticated) {
         // Clear the token if it's invalid, then redirect to `/` to reset the login flow
         res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
-        return { type: "notFound", notFound: true };
+        return {
+            type: "redirect",
+            redirect: {
+                destination: `/${slug.join("/")}`,
+                permanent: false,
+            },
+        };
     }
 
     const registryService = getRegistryServiceWithToken(token);
