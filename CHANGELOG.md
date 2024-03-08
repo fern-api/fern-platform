@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed freezing API Playground when an onChange event is triggered by a literal.
 - Fixed `content-type` in the cURL code snippets when `multipart/form-data` provided.
 - Sort `Deprecated` and `Beta` object properties to the bottom of each object in the API Reference.
-- Revalidate all customer docs pages when a new frontend version is deployed.
+- devex: Added CI integration to revalidate all customer docs pages when a new frontend version is deployed.
 
 # 2024-03-06
 

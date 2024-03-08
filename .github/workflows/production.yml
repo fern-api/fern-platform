@@ -42,12 +42,12 @@ jobs:
 
           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
             if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
-              curl -X POST "https://$DOMAIN/api/revalidate-all" -H 'x-fern-host: $DOMAIN'
-              echo "Revalidated: ${DOMAIN}"
+              curl -s -X POST "https://$DOMAIN/api/revalidate-all" -H "x-fern-host: $DOMAIN"
+              echo "Revalidated: $DOMAIN"
             fi
           done
 
-          curl -X POST https://docs.buildwithfern.com/api/revalidate-all -H 'x-fern-host: docs.buildwithfern.com'
+          curl -s -X POST https://docs.buildwithfern.com/api/revalidate-all -H "x-fern-host: docs.buildwithfern.com"
           echo "Revalidated: docs.buildwithfern.com"
 
           echo "Done!"
