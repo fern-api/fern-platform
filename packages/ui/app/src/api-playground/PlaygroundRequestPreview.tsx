@@ -7,7 +7,7 @@ import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils"
 
 interface PlaygroundRequestPreviewProps {
     auth: APIV1Read.ApiAuth | null | undefined;
-    endpoint: ResolvedEndpointDefinition | undefined;
+    endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
     requestType: "curl" | "javascript" | "python";
 }
@@ -35,6 +35,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
             language={requestType === "curl" ? "bash" : requestType}
             code={code}
             fontSize="sm"
+            id={endpoint.id}
         />
     );
 };

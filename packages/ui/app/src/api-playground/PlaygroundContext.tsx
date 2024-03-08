@@ -65,25 +65,31 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
     const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(enabled);
 
     useEffect(() => {
-        fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/config/api-playground-enabled`, {
-            headers: { "x-fern-host": domain },
-        })
-            .then((r) => r.json())
-            .then(setIsPlaygroundEnabled)
-            // eslint-disable-next-line no-console
-            .catch(console.error);
-    }, [basePath, domain]);
+        if (!isPlaygroundEnabled) {
+            fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/config/api-playground-enabled`, {
+                headers: { "x-fern-host": domain },
+            })
+                .then((r) => r.json())
+                .then(setIsPlaygroundEnabled)
+                // eslint-disable-next-line no-console
+                .catch(console.error);
+        }
+    }, [basePath, domain, isPlaygroundEnabled]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
-    const [playgroundHeight] = usePlaygroundHeight();
+    const [playgroundHeight, setPlaygroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
-        return setPlaygroundOpen(true);
-    }, [setPlaygroundOpen]);
+        setPlaygroundHeight((currentHeight) => {
+            const halfWindowHeight = window.innerHeight / 2;
+            return currentHeight < halfWindowHeight ? halfWindowHeight : currentHeight;
+        });
+        setPlaygroundOpen(true);
+    }, [setPlaygroundHeight, setPlaygroundOpen]);
     const collapsePlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
 
     const setSelectionStateAndOpen = useCallback(
@@ -148,10 +154,12 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
         return <>{children}</>;
     }
 
+    const hasPlayground = Object.keys(apis).length > 0;
+
     return (
         <PlaygroundContext.Provider
             value={{
-                hasPlayground: Object.keys(apis).length > 0,
+                hasPlayground,
                 selectionState,
                 setSelectionStateAndOpen,
                 expandPlayground,
@@ -160,7 +168,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
         >
             {children}
             <PlaygroundDrawer navigation={navigation} apis={flattenedApis} />
-            {isPlaygroundOpen && <div style={{ height: playgroundHeight }} />}
+            {isPlaygroundOpen && hasPlayground && <div style={{ height: playgroundHeight }} />}
         </PlaygroundContext.Provider>
     );
 };
