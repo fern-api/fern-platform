@@ -77,7 +77,7 @@ export async function getPrivateDocsPageProps(
         };
     }
 
-    const registryService = getRegistryServiceWithToken(token);
+    const registryService = getRegistryServiceWithToken(`workos_${token}`);
 
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
