@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jsonResponse } from "../../utils/serverResponse";
+import { jsonResponse } from "../../../utils/serverResponse";
 
 interface ProxyRequest {
     url: string;

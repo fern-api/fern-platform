@@ -90,7 +90,9 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
         async (newSelectionState: PlaygroundSelectionState) => {
             let matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
-                const r = await fetch("/api/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api);
+                const r = await fetch(
+                    "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
+                );
 
                 const data: ResolvedRootPackage | null = await r.json();
 
