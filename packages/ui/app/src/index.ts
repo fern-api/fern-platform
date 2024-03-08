@@ -4,6 +4,7 @@ export { getNotFoundPageStaticProps, NotFoundPage } from "./next-app/NotFoundPag
 export { REGISTRY_SERVICE } from "./services/registry";
 export * from "./sidebar/types";
 export { buildUrl } from "./util/buildUrl";
+export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
 export * from "./util/fern";
 export * from "./util/flattenApiDefinition";
 export * from "./util/resolver";
