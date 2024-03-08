@@ -1,9 +1,9 @@
 import { buildUrl } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
-import { getAllUrlsFromDocsConfig } from "../../utils/getAllUrlsFromDocsConfig";
-import { loadWithUrl } from "../../utils/loadWithUrl";
-import { jsonResponse } from "../../utils/serverResponse";
-import { toValidPathname } from "../../utils/toValidPathname";
+import { getAllUrlsFromDocsConfig } from "../../../utils/getAllUrlsFromDocsConfig";
+import { loadWithUrl } from "../../../utils/loadWithUrl";
+import { jsonResponse } from "../../../utils/serverResponse";
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 export const runtime = "edge";
 

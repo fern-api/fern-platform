@@ -45,7 +45,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 method: endpoint.method,
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
-            const response = await fetch("/api/proxy", {
+            const response = await fetch("/api/fern-docs/proxy", {
                 method: "POST",
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: JSON.stringify({

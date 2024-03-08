@@ -24,7 +24,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         ? "http://localhost:3000"
         : `https://${hostWithoutTrailingSlash}`;
 
-    const sitemapResponse = await fetch(`${hostnameAndProtocol}/api/sitemap`, {
+    const sitemapResponse = await fetch(`${hostnameAndProtocol}/api/fern-docs/sitemap`, {
         headers: { "x-fern-host": xFernHost },
     });
 
