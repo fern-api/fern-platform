@@ -3,8 +3,7 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { atom, useAtom } from "jotai";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
@@ -67,7 +66,7 @@ const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
     messages: {},
 };
 
-export const PLAYGROUND_HEIGHT_ATOM = atomWithStorage<number>("api-playground-height", 400);
+export const PLAYGROUND_HEIGHT_ATOM = atom<number>(0);
 
 export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>] {
     const { layout } = useDocsContext();
@@ -416,7 +415,7 @@ export function getInitialEndpointRequestFormStateWithExample(
         headers: exampleCall.headers,
         pathParameters: exampleCall.pathParameters,
         queryParameters: exampleCall.queryParameters,
-        body: exampleCall.requestBody,
+        body: exampleCall.requestBody?.value,
     };
 }
 

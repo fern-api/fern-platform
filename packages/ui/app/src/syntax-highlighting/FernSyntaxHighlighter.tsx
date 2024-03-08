@@ -1,6 +1,6 @@
 import { h } from "hastscript";
 import { forwardRef, useEffect, useMemo, useState, useTransition } from "react";
-import { getHighlighterInstance, HighlightedTokens, highlightTokens, trimCode } from "./fernShiki";
+import { HighlightedTokens, highlightTokens, trimCode, useHighlighterInstance } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
 
@@ -49,26 +49,23 @@ function createRawTokens(code: string, lang: string): HighlightedTokens {
 
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>(
     function FernSyntaxHighlighter({ id, code, language, ...props }, ref) {
-        const [, setNonce] = useState<number>(0);
+        const highlighter = useHighlighterInstance(language);
         const [, startTransition] = useTransition();
-        const result = cachedHighlights.get(id ?? code);
+        const [result, setResult] = useState(() => cachedHighlights.get(id ?? code) ?? createRawTokens(code, language));
+
         useEffect(() => {
-            if (result != null) {
-                return;
-            }
-            void (async () => {
-                const highlighter = await getHighlighterInstance(language);
-                const tokens = highlightTokens(highlighter, code, language);
-                cachedHighlights.set(id ?? code, tokens);
+            if (highlighter == null) {
+                setResult(createRawTokens(code, language));
+            } else {
                 startTransition(() => {
-                    setNonce((nonce) => nonce + 1);
+                    const tokens = highlightTokens(highlighter, code, language);
+                    cachedHighlights.set(id ?? code, tokens);
+                    setResult(tokens);
                 });
-            })();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [code, id, language]);
+            }
+        }, [highlighter, code, language, id]);
 
         const tokens = useMemo(() => result ?? createRawTokens(code, language), [code, language, result]);
-
         return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...props} />;
     },
 );
