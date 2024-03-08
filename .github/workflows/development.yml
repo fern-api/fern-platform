@@ -6,6 +6,9 @@ env:
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
+  WORKOS_API_KEY: ${{ secrets.WORKOS_STAGING_API_KEY }}
+  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_STAGING_CLIENT_ID }}
+  JWT_SECRET_KEY: ${{ secrets.DEV_JWT_SECRET_KEY }}
 on:
   push:
     branches:
