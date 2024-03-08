@@ -274,7 +274,9 @@ export function stringifyCurl(
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
 
-    headers["Content-Type"] = contentType ?? "application/json";
+    if (endpoint.method !== "GET") {
+        headers["Content-Type"] = contentType ?? "application/json";
+    }
 
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,

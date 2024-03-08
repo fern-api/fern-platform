@@ -55,7 +55,9 @@ export function endpointExampleToHttpRequestExample(
 
     let body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined = requestBody;
 
-    headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
+    if (endpoint.requestBody[0]?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
+    }
 
     if (body != null && headers["Content-Type"] == null) {
         if (body.type === "json") {
@@ -73,10 +75,14 @@ export function endpointExampleToHttpRequestExample(
         method: endpoint.method,
         url,
         urlQueries: example.queryParameters,
-        headers,
+        headers: JSON.parse(JSON.stringify(headers)),
         basicAuth,
         body,
     };
+}
+
+function requiresUrlEncode(str: string): boolean {
+    return encodeURIComponent(str) !== str;
 }
 
 export function stringifyHttpRequestExampleToCurl({
@@ -103,11 +109,14 @@ export function stringifyHttpRequestExampleToCurl({
         .join("");
     const basicAuthString = basicAuth != null ? ` \\\n     -u "${basicAuth.username}:${basicAuth.password}"` : "";
 
-    // GET requests don't have a body, so `-d` is used to pass query parameters
+    // GET requests don't have a body, so `--data-urlencode` is used to pass query parameters
     const urlQueriesGetString =
         method === "GET"
             ? toUrlEncoded(urlQueries)
-                  .map(([key, value]) => ` \\\n     -d ${key.includes("[") ? `"${key}"` : key}=${value}`)
+                  .map(
+                      ([key, value]) =>
+                          ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`,
+                  )
                   .join("")
             : "";
 
