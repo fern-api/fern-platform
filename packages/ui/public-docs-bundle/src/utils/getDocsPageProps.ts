@@ -178,7 +178,7 @@ async function convertDocsToDocsPageProps({
         .then((r): Promise<boolean> => r.json())
         .catch((e) => {
             // eslint-disable-next-line no-console
-            console.error(e);
+            console.error("Failed to check if API Playground is enabled", e);
             return false;
         });
 

@@ -15,7 +15,7 @@ const nextConfig = {
         const PATH_STAR = "/:path*";
         return {
             beforeFiles: [
-                { source: "/_fern/_next/:path*", destination: "/_next/:path*" },
+                { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
                 {
                     source: "/_next/data/:hash/:subpath/:oldhost/:path*",
                     has: [HAS_FERN_DOCS_PREVIEW],
@@ -23,6 +23,9 @@ const nextConfig = {
                 },
             ],
             afterFiles: [
+                { source: "/_next/:path*", destination: "/_next/:path*" },
+                { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
+                { source: "/_axiom/:path*", destination: "/_axiom/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
 

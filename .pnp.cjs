@@ -4320,7 +4320,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["eslint", "npm:8.56.0"],\
-            ["iron-session", "npm:8.0.1"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jose", "npm:5.2.3"],\
             ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.1.1"],\
@@ -9817,15 +9816,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["cookie", [\
-        ["npm:0.6.0", {\
-          "packageLocation": "./.yarn/cache/cookie-npm-0.6.0-362d6a2e45-f56a7d32a0.zip/node_modules/cookie/",\
-          "packageDependencies": [\
-            ["cookie", "npm:0.6.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["copy-anything", [\
         ["npm:2.0.6", {\
           "packageLocation": "./.yarn/cache/copy-anything-npm-2.0.6-1cede50956-7318dc00ca.zip/node_modules/copy-anything/",\
@@ -13449,27 +13439,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ip-npm-1.1.8-abea558b72-a2ade53eb3.zip/node_modules/ip/",\
           "packageDependencies": [\
             ["ip", "npm:1.1.8"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["iron-session", [\
-        ["npm:8.0.1", {\
-          "packageLocation": "./.yarn/cache/iron-session-npm-8.0.1-0ad27a38b1-41aa640d41.zip/node_modules/iron-session/",\
-          "packageDependencies": [\
-            ["iron-session", "npm:8.0.1"],\
-            ["cookie", "npm:0.6.0"],\
-            ["iron-webcrypto", "npm:1.0.0"],\
-            ["uncrypto", "npm:0.1.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["iron-webcrypto", [\
-        ["npm:1.0.0", {\
-          "packageLocation": "./.yarn/cache/iron-webcrypto-npm-1.0.0-655e8df8dc-bbd96cbbfe.zip/node_modules/iron-webcrypto/",\
-          "packageDependencies": [\
-            ["iron-webcrypto", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21456,15 +21425,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["has-bigints", "npm:1.0.2"],\
             ["has-symbols", "npm:1.0.3"],\
             ["which-boxed-primitive", "npm:1.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["uncrypto", [\
-        ["npm:0.1.3", {\
-          "packageLocation": "./.yarn/cache/uncrypto-npm-0.1.3-3f3076a8ff-07160e0880.zip/node_modules/uncrypto/",\
-          "packageDependencies": [\
-            ["uncrypto", "npm:0.1.3"]\
           ],\
           "linkType": "HARD"\
         }]\
