@@ -6,7 +6,7 @@ const nextConfig = {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
     },
-    assetPrefix: process.env.CDN_URI != null ? new URL("/_fern", process.env.CDN_URI).href : "/_fern",
+    assetPrefix: process.env.CDN_URI != null ? new URL("/", process.env.CDN_URI).href : undefined,
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
         const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
@@ -15,7 +15,13 @@ const nextConfig = {
         const PATH_STAR = "/:path*";
         return {
             beforeFiles: [
+                // { source: "/:prefix*/_fern/_next/:path*", destination: "/_fern/_next/:path*" },
                 { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
+                {
+                    source: "/_next/data/:hash/static/:host/:path*",
+                    has: [HAS_FERN_TOKEN],
+                    destination: "/_next/data/:hash/dynamic/:host/:path*",
+                },
                 {
                     source: "/_next/data/:hash/:subpath/:oldhost/:path*",
                     has: [HAS_FERN_DOCS_PREVIEW],
