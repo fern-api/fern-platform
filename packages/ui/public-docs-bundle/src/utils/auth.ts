@@ -39,12 +39,12 @@ export function getWorkOSClientId(): string {
 
 export function getAuthorizationUrl(
     options: Omit<AuthorizationURLOptions, "provider" | "clientId" | "redirectUri"> = {},
+    xFernHost: string,
 ): string {
-    const redirectUri = process.env.WORKOS_REDIRECT_URI;
-
-    if (!redirectUri) {
-        throw new Error("WORKOS_REDIRECT_URI is not set");
-    }
+    const redirectUri =
+        process.env.NODE_ENV === "development"
+            ? "http://localhost:3000/api/fern-docs/auth/callback"
+            : `https://${xFernHost}/api/fern-docs/auth/callback`;
 
     const authorizationUrl = workos.sso.getAuthorizationUrl({
         ...options,

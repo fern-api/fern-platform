@@ -7,7 +7,10 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
-    const authorizationUrl = getAuthorizationUrl({ organization: await maybeGetWorkosOrganization(xFernHost) });
+    const authorizationUrl = getAuthorizationUrl(
+        { organization: await maybeGetWorkosOrganization(xFernHost) },
+        xFernHost,
+    );
     return { destination: authorizationUrl, permanent: false };
 }
 
