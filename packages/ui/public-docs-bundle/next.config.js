@@ -11,9 +11,11 @@ const nextConfig = {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
         const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
         const HAS_HOST = { type: "host", value: "(?<host>.*)" };
+        const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
+        const PATH_STAR = "/:path*";
         return {
             beforeFiles: [
-                { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
+                { source: "/_fern/_next/:path*", destination: "/_next/:path*" },
                 {
                     source: "/_next/data/:hash/:subpath/:oldhost/:path*",
                     has: [HAS_FERN_DOCS_PREVIEW],
@@ -21,9 +23,6 @@ const nextConfig = {
                 },
             ],
             afterFiles: [
-                { source: "/_next/:path*", destination: "/_next/:path*" },
-                { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
-                { source: "/_axiom/:path*", destination: "/_axiom/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
 
@@ -32,48 +31,48 @@ const nextConfig = {
             ],
             fallback: [
                 {
-                    has: [HAS_FERN_DOCS_PREVIEW, { type: "cookie", key: "fern_token" }],
-                    source: "/:path*",
+                    has: [HAS_FERN_DOCS_PREVIEW, HAS_FERN_TOKEN],
+                    source: PATH_STAR,
                     destination: "/dynamic/:host/:path*",
                 },
                 {
-                    has: [HAS_X_FERN_HOST, { type: "cookie", key: "fern_token" }],
-                    source: "/:path*",
+                    has: [HAS_X_FERN_HOST, HAS_FERN_TOKEN],
+                    source: PATH_STAR,
                     destination: "/dynamic/:host/:path*",
                 },
                 {
-                    has: [HAS_HOST, { type: "cookie", key: "fern_token" }],
-                    source: "/:path*",
+                    has: [HAS_HOST, HAS_FERN_TOKEN],
+                    source: PATH_STAR,
                     destination: "/dynamic/:host/:path*",
                 },
                 {
                     has: [HAS_FERN_DOCS_PREVIEW, { type: "query", key: "error", value: "true" }],
-                    source: "/:path*",
+                    source: PATH_STAR,
                     destination: "/dynamic/:host/:path*",
                 },
                 {
-                    has: [HAS_FERN_DOCS_PREVIEW],
-                    source: "/:path*",
-                    destination: "/static/:host/:path*",
-                },
-                {
                     has: [HAS_X_FERN_HOST, { type: "query", key: "error", value: "true" }],
-                    source: "/:path*",
+                    source: PATH_STAR,
                     destination: "/dynamic/:host/:path*",
                 },
                 {
                     has: [HAS_HOST, { type: "query", key: "error", value: "true" }],
-                    source: "/:path*",
+                    source: PATH_STAR,
                     destination: "/dynamic/:host/:path*",
                 },
                 {
+                    has: [HAS_FERN_DOCS_PREVIEW],
+                    source: PATH_STAR,
+                    destination: "/static/:host/:path*",
+                },
+                {
                     has: [HAS_X_FERN_HOST],
-                    source: "/:path*",
+                    source: PATH_STAR,
                     destination: "/static/:host/:path*",
                 },
                 {
                     has: [HAS_HOST],
-                    source: "/:path*",
+                    source: PATH_STAR,
                     destination: "/static/:host/:path*",
                 },
             ],

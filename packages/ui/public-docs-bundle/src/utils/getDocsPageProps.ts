@@ -39,7 +39,8 @@ export async function getDocsPageProps(
     const url = buildUrl({ host: xFernHost, pathname });
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
     if (!docs.ok) {
-        if (docs.error.error === "UnauthorizedError") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if ((docs.error as any).content.statusCode === 401) {
             return {
                 type: "redirect",
                 redirect: await getUnauthenticatedRedirect(xFernHost),
@@ -67,7 +68,7 @@ export async function getPrivateDocsPageProps(
 
     if (!user.isAuthenticated) {
         // Clear the token if it's invalid, then redirect to `/` to reset the login flow
-        res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
+        res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
         return {
             type: "redirect",
             redirect: {
@@ -83,7 +84,7 @@ export async function getPrivateDocsPageProps(
     const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
 
     if (!docs.ok) {
-        res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
+        res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
 
         if (docs.error.error === "UnauthorizedError") {
             return {
