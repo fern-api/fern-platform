@@ -1,3 +1,4 @@
+import { usePrevious } from "@fern-ui/react-commons";
 import { h } from "hastscript";
 import { atom, useAtom } from "jotai";
 import { isEqual } from "lodash-es";
@@ -57,6 +58,7 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
         const cacheKey = id ?? code;
         const [cachedHighlights, setCachedHighlights] = useAtom(CACHED_HIGHLIGHTS_ATOM);
         const [tokens, setTokens] = useState(() => cachedHighlights[cacheKey] ?? createRawTokens(code, language));
+        const previousCode = usePrevious(code);
 
         useEffect(() => {
             if (highlighter != null) {
@@ -70,8 +72,12 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
                         return tokens;
                     });
                 });
+            } else if (code !== previousCode) {
+                startTransition(() => {
+                    setTokens(createRawTokens(code, language));
+                });
             }
-        }, [highlighter, code, language, setCachedHighlights, cacheKey]);
+        }, [highlighter, code, language, setCachedHighlights, cacheKey, previousCode]);
 
         return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...props} />;
     },
