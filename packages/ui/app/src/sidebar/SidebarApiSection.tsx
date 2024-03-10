@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isEqual, last, sortBy } from "lodash-es";
@@ -9,6 +9,7 @@ import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 import { isApiPage, SidebarNode } from "./types";
