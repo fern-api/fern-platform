@@ -7,6 +7,9 @@ env:
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
+  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+  JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
 on:
   push:
     tags:

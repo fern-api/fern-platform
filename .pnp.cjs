@@ -4076,6 +4076,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@fern-api/venus-api-sdk", [\
+        ["npm:0.1.0", {\
+          "packageLocation": "./.yarn/cache/@fern-api-venus-api-sdk-npm-0.1.0-f63cfaba55-c53b173c52.zip/node_modules/@fern-api/venus-api-sdk/",\
+          "packageDependencies": [\
+            ["@fern-api/venus-api-sdk", "npm:0.1.0"],\
+            ["@types/url-join", "npm:4.0.1"],\
+            ["axios", "npm:0.27.2"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@fern-fern/fern-cloud-sdk", [\
         ["npm:0.0.257", {\
           "packageLocation": "./.yarn/cache/@fern-fern-fern-cloud-sdk-npm-0.0.257-8e7c6ad970-9580e71a47.zip/node_modules/@fern-fern/fern-cloud-sdk/",\
@@ -4290,6 +4303,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-ui/public-docs-bundle", "workspace:packages/ui/public-docs-bundle"],\
             ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
+            ["@fern-api/venus-api-sdk", "npm:0.1.0"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
             ["@next/bundle-analyzer", "npm:14.0.3"],\
@@ -4300,12 +4314,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["@vercel/edge-config", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:1.1.0"],\
+            ["@workos-inc/node", "npm:6.1.0"],\
             ["autoprefixer", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:10.4.16"],\
             ["cssnano", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:6.0.3"],\
             ["depcheck", "npm:1.4.3"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
+            ["jose", "npm:5.2.3"],\
             ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.1.1"],\
             ["next-axiom", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.18.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -7860,6 +7876,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@vue-shared-npm-3.2.33-a558400141-0083c9555b.zip/node_modules/@vue/shared/",\
           "packageDependencies": [\
             ["@vue/shared", "npm:3.2.33"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@workos-inc/node", [\
+        ["npm:6.1.0", {\
+          "packageLocation": "./.yarn/cache/@workos-inc-node-npm-6.1.0-1a8d4e8d9d-fe9ff90835.zip/node_modules/@workos-inc/node/",\
+          "packageDependencies": [\
+            ["@workos-inc/node", "npm:6.1.0"],\
+            ["pluralize", "npm:8.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14632,6 +14658,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["jose", [\
+        ["npm:5.2.3", {\
+          "packageLocation": "./.yarn/cache/jose-npm-5.2.3-11c452707f-7c41025d3e.zip/node_modules/jose/",\
+          "packageDependencies": [\
+            ["jose", "npm:5.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["jotai", [\
         ["npm:2.6.0", {\
           "packageLocation": "./.yarn/cache/jotai-npm-2.6.0-dc8e6aef45-6e9ee39770.zip/node_modules/jotai/",\
@@ -17372,6 +17407,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["please-upgrade-node", "npm:3.2.0"],\
             ["semver-compare", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["pluralize", [\
+        ["npm:8.0.0", {\
+          "packageLocation": "./.yarn/cache/pluralize-npm-8.0.0-f5f044ed52-08931d4a6a.zip/node_modules/pluralize/",\
+          "packageDependencies": [\
+            ["pluralize", "npm:8.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

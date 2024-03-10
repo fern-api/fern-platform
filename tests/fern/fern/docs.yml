@@ -1,5 +1,7 @@
 instances:
-  - url: test-fern2.docs.dev.buildwithfern.com/docs
+  # - url: test-fern2.docs.dev.buildwithfern.com/docs
+  - url: test-fern3.docs.dev.buildwithfern.com
+    private: true
 
 title: Fern | Documentation
 
