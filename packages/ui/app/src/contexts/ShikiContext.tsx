@@ -1,41 +1,58 @@
-import { noop } from "lodash-es";
-import { createContext, Dispatch, ReactElement, SetStateAction, useContext, useEffect, useState } from "react";
+import { getLoadableValue, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { createContext, ReactElement, useContext, useEffect, useMemo, useState } from "react";
 import { Highlighter } from "shiki/index.mjs";
 import { getHighlighterInstance, parseLang } from "../syntax-highlighting/fernShiki";
 
-const ShikiContext = createContext<[Highlighter | undefined, Dispatch<SetStateAction<Highlighter | undefined>>]>([
-    undefined,
-    noop,
-]);
+interface ShikiContextValue {
+    value: Loadable<Highlighter>;
+    loadLanguage: (language: string) => Promise<void>;
+}
+
+const ShikiContext = createContext<ShikiContextValue>({
+    value: notStartedLoading(),
+    loadLanguage: () => Promise.resolve(),
+});
 
 export function ShikiContextProvider({ children }: { children: React.ReactNode }): ReactElement {
-    const highlighterState = useState<Highlighter>();
-    const setHighlighter = highlighterState[1];
+    const [instance, setHighlighter] = useState<Loadable<Highlighter>>(notStartedLoading());
 
     useEffect(() => {
+        setHighlighter(loading());
         void (async () => {
-            setHighlighter(await getHighlighterInstance("plaintext"));
+            setHighlighter(loaded(await getHighlighterInstance("plaintext")));
         })();
     }, [setHighlighter]);
 
-    return <ShikiContext.Provider value={highlighterState}>{children}</ShikiContext.Provider>;
+    const loadLanguage = useMemo(
+        () => async (language: string) => {
+            const newInstance = await getHighlighterInstance(language);
+            setHighlighter(loaded(newInstance));
+        },
+        [],
+    );
+
+    const value = useMemo<ShikiContextValue>(
+        () => ({
+            value: instance,
+            loadLanguage,
+        }),
+        [instance, loadLanguage],
+    );
+
+    return <ShikiContext.Provider value={value}>{children}</ShikiContext.Provider>;
 }
 
 export function useHighlighterInstance(language: string): Highlighter | undefined {
-    const [highlighterInstance, setHighlighterInstance] = useContext(ShikiContext);
-    const [hasLanguage, setHasLanguage] = useState(
-        () => highlighterInstance?.getLoadedLanguages().includes(parseLang(language)) ?? false,
-    );
+    const { value: loadableHighlight, loadLanguage } = useContext(ShikiContext);
+    const highlighterInstance = getLoadableValue(loadableHighlight);
+    const hasLanguage = highlighterInstance?.getLoadedLanguages().includes(parseLang(language)) ?? false;
     useEffect(() => {
         if (hasLanguage) {
             return;
         }
         void (async () => {
-            // getHighlighterInstance actually returns the same highlighter instance
-            // so we also need to setHasLanguage(true) to trigger a re-render
-            setHighlighterInstance(await getHighlighterInstance(language));
-            setHasLanguage(true);
+            await loadLanguage(language);
         })();
-    }, [hasLanguage, language, setHighlighterInstance]);
+    }, [hasLanguage, language, loadLanguage]);
     return hasLanguage ? highlighterInstance : undefined;
 }

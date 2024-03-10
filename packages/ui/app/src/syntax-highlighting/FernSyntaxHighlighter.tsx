@@ -2,7 +2,7 @@ import { usePrevious } from "@fern-ui/react-commons";
 import { h } from "hastscript";
 import { atom, useAtom } from "jotai";
 import { isEqual } from "lodash-es";
-import { forwardRef, useEffect, useState, useTransition } from "react";
+import { forwardRef, useEffect } from "react";
 import { useHighlighterInstance } from "../contexts/ShikiContext";
 import { HighlightedTokens, highlightTokens, trimCode } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
@@ -54,30 +54,25 @@ function createRawTokens(code: string, lang: string): HighlightedTokens {
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>(
     function FernSyntaxHighlighter({ id, code, language, ...props }, ref) {
         const highlighter = useHighlighterInstance(language);
-        const [, startTransition] = useTransition();
         const cacheKey = id ?? code;
         const [cachedHighlights, setCachedHighlights] = useAtom(CACHED_HIGHLIGHTS_ATOM);
-        const [tokens, setTokens] = useState(() => cachedHighlights[cacheKey] ?? createRawTokens(code, language));
         const previousCode = usePrevious(code);
 
         useEffect(() => {
             if (highlighter != null) {
-                startTransition(() => {
+                setCachedHighlights((prevCache) => {
                     const tokens = highlightTokens(highlighter, code, language);
-                    setTokens((prevTokens) => {
-                        if (prevTokens != null && !isEqual(prevTokens, tokens)) {
-                            return prevTokens;
-                        }
-                        setCachedHighlights((prevCache) => ({ ...prevCache, [cacheKey]: tokens }));
-                        return tokens;
-                    });
+                    if (prevCache[cacheKey] != null && isEqual(prevCache[cacheKey], tokens)) {
+                        return prevCache;
+                    }
+                    return { ...prevCache, [cacheKey]: tokens };
                 });
             } else if (code !== previousCode) {
-                startTransition(() => {
-                    setTokens(createRawTokens(code, language));
-                });
+                setCachedHighlights((prevCache) => ({ ...prevCache, [cacheKey]: createRawTokens(code, language) }));
             }
         }, [highlighter, code, language, setCachedHighlights, cacheKey, previousCode]);
+
+        const tokens = cachedHighlights[cacheKey] ?? createRawTokens(code, language);
 
         return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...props} />;
     },
