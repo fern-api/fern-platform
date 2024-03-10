@@ -1,6 +1,9 @@
 import { h } from "hastscript";
-import { forwardRef, useEffect, useMemo, useState, useTransition } from "react";
-import { HighlightedTokens, highlightTokens, trimCode, useHighlighterInstance } from "./fernShiki";
+import { atom, useAtom } from "jotai";
+import { isEqual } from "lodash-es";
+import { forwardRef, useEffect, useState, useTransition } from "react";
+import { useHighlighterInstance } from "../contexts/ShikiContext";
+import { HighlightedTokens, highlightTokens, trimCode } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
 
@@ -19,7 +22,7 @@ export interface FernSyntaxHighlighterProps {
     viewportRef?: React.RefObject<HTMLDivElement>;
 }
 
-const cachedHighlights = new Map<string, HighlightedTokens>();
+const CACHED_HIGHLIGHTS_ATOM = atom<Record<string, HighlightedTokens>>({});
 
 function createRawTokens(code: string, lang: string): HighlightedTokens {
     code = trimCode(code);
@@ -51,21 +54,25 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
     function FernSyntaxHighlighter({ id, code, language, ...props }, ref) {
         const highlighter = useHighlighterInstance(language);
         const [, startTransition] = useTransition();
-        const [result, setResult] = useState(() => cachedHighlights.get(id ?? code) ?? createRawTokens(code, language));
+        const cacheKey = id ?? code;
+        const [cachedHighlights, setCachedHighlights] = useAtom(CACHED_HIGHLIGHTS_ATOM);
+        const [tokens, setTokens] = useState(() => cachedHighlights[cacheKey] ?? createRawTokens(code, language));
 
         useEffect(() => {
-            if (highlighter == null) {
-                setResult(createRawTokens(code, language));
-            } else {
+            if (highlighter != null) {
                 startTransition(() => {
                     const tokens = highlightTokens(highlighter, code, language);
-                    cachedHighlights.set(id ?? code, tokens);
-                    setResult(tokens);
+                    setTokens((prevTokens) => {
+                        if (prevTokens != null && !isEqual(prevTokens, tokens)) {
+                            return prevTokens;
+                        }
+                        setCachedHighlights((prevCache) => ({ ...prevCache, [cacheKey]: tokens }));
+                        return tokens;
+                    });
                 });
             }
-        }, [highlighter, code, language, id]);
+        }, [highlighter, code, language, setCachedHighlights, cacheKey]);
 
-        const tokens = useMemo(() => result ?? createRawTokens(code, language), [code, language, result]);
         return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...props} />;
     },
 );

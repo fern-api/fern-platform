@@ -1,6 +1,4 @@
-import { getLoadableValue, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { Root } from "hast";
-import { useEffect, useState } from "react";
 import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
 
 let highlighter: Highlighter;
@@ -18,22 +16,6 @@ export async function getHighlighterInstance(language: string): Promise<Highligh
     }
 
     return highlighter;
-}
-
-export function useHighlighterInstance(language: string): Highlighter | undefined {
-    const [highlighter, setHighlighter] = useState<Loadable<Highlighter>>(notStartedLoading());
-    const highlighterInstance = getLoadableValue(highlighter);
-    const hasLanguage = highlighterInstance?.getLoadedLanguages().includes(parseLang(language)) ?? false;
-    useEffect(() => {
-        if (hasLanguage) {
-            return;
-        }
-        setHighlighter(loading());
-        void (async () => {
-            setHighlighter(loaded(await getHighlighterInstance(language)));
-        })();
-    }, [hasLanguage, highlighter, language]);
-    return hasLanguage ? highlighterInstance : undefined;
 }
 
 // export function highlight(
@@ -111,7 +93,7 @@ export const LANGUAGES: Array<BundledLanguage | SpecialLanguage> = [
     "sql",
 ];
 
-function parseLang(lang: string): BundledLanguage | SpecialLanguage {
+export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
     if (lang == null) {
         return "txt";
     }
