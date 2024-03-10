@@ -1,6 +1,6 @@
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { sortBy } from "lodash-es";
-import { FC, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { Markdown } from "../mdx/Markdown";
@@ -19,14 +19,8 @@ interface PlaygroundEnumFormProps {
     disabled?: boolean;
 }
 
-export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({
-    enumValues,
-    onChange,
-    value,
-    id,
-    onFocus,
-    disabled,
-}) => {
+export const PlaygroundEnumForm = memo<PlaygroundEnumFormProps>((props) => {
+    const { enumValues, onChange, value, id, onFocus, disabled } = props;
     const options = useMemo(
         () =>
             sortBy(enumValues, "value").map(
@@ -82,4 +76,6 @@ export const PlaygroundEnumForm: FC<PlaygroundEnumFormProps> = ({
             />
         </FernDropdown>
     );
-};
+});
+
+PlaygroundEnumForm.displayName = "PlaygroundEnumForm";

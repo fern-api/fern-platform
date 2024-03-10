@@ -1,6 +1,6 @@
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
-import { FC, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
@@ -21,14 +21,8 @@ interface PlaygroundUniscriminatedUnionFormProps {
     disabled?: boolean;
 }
 
-export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnionFormProps> = ({
-    undiscriminatedUnion,
-    onChange,
-    value,
-    id,
-    types,
-    disabled,
-}) => {
+export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUnionFormProps>((props) => {
+    const { undiscriminatedUnion, onChange, value, id, types, disabled } = props;
     const [internalSelectedVariant, setInternalSelectedVariant] = useState<number>(() => {
         return Math.max(
             undiscriminatedUnion.variants.findIndex((variant) => matchesTypeReference(variant.shape, value, types)),
@@ -113,4 +107,6 @@ export const PlaygroundUniscriminatedUnionForm: FC<PlaygroundUniscriminatedUnion
             )}
         </div>
     );
-};
+});
+
+PlaygroundUniscriminatedUnionForm.displayName = "PlaygroundUniscriminatedUnionForm";

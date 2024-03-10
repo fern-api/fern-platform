@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
-import { FC, ReactElement, useCallback } from "react";
+import { memo, ReactElement, useCallback } from "react";
 import { FernInput } from "../components/FernInput";
 import { FernNumericInput } from "../components/FernNumericInput";
 import { FernSwitch } from "../components/FernSwitch";
@@ -105,15 +105,8 @@ interface PlaygroundTypeReferenceFormProps {
 //     );
 // };
 
-export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> = ({
-    id,
-    property,
-    shape,
-    onChange,
-    value,
-    types,
-    disabled,
-}) => {
+export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
+    const { id, property, shape, onChange, value, types, disabled } = props;
     const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
         onChange(undefined);
@@ -359,4 +352,6 @@ export const PlaygroundTypeReferenceForm: FC<PlaygroundTypeReferenceFormProps> =
             />
         ),
     });
-};
+});
+
+PlaygroundTypeReferenceForm.displayName = "PlaygroundTypeReferenceForm";

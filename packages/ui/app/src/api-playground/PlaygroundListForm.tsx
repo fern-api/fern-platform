@@ -1,6 +1,6 @@
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { FC, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { FernButton } from "../components/FernButton";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
@@ -14,7 +14,7 @@ interface PlaygroundListFormProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onChange, value, id, types }) => {
+export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, onChange, value, id, types }) => {
     const appendItem = useCallback(() => {
         onChange((oldValue: unknown) => {
             const oldArray = Array.isArray(oldValue) ? oldValue : [];
@@ -122,4 +122,6 @@ export const PlaygroundListForm: FC<PlaygroundListFormProps> = ({ itemShape, onC
             )}
         </>
     );
-};
+});
+
+PlaygroundListForm.displayName = "PlaygroundListForm";

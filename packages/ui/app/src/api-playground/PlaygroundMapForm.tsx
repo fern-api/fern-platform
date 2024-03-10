@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
-import { FC, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../util/resolver";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
@@ -30,7 +30,8 @@ function fromKeyValuePairs(keyValuePairs: Array<{ key: unknown; value: unknown }
     }, {});
 }
 
-export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, valueShape, onChange, value, types }) => {
+export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
+    const { id, keyShape, valueShape, onChange, value, types } = props;
     const [internalState, setInternalState] = useState<Array<{ key: unknown; value: unknown }>>(() =>
         toKeyValuePairs(value),
     );
@@ -132,4 +133,6 @@ export const PlaygroundMapForm: FC<PlaygroundMapFormProps> = ({ id, keyShape, va
             )}
         </>
     );
-};
+});
+
+PlaygroundMapForm.displayName = "PlaygroundMapForm";
