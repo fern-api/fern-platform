@@ -1,9 +1,9 @@
-import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback } from "react";
+import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
