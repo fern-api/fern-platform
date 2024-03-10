@@ -37,7 +37,7 @@
     "format": "prettier --check \"**/*.{ts,js}\"",
     "format:fix": "prettier --write \"**/*.{ts,js}\"",
     "lint": "eslint --max-warnings 0 src --ext .ts",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "packageManager": "yarn@1.22.19"
 }

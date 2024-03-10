@@ -158,11 +158,14 @@ export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTa
     };
 }
 
-export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationItem): DocsV1Db.NavigationItem {
+export function transformNavigationItemForDb(
+    writeShape: DocsV1Write.NavigationItem,
+): WithoutQuestionMarks<DocsV1Db.NavigationItem> {
     switch (writeShape.type) {
         case "api":
             return {
                 ...writeShape,
+                fullSlug: writeShape.fullSlug,
                 urlSlug: kebabCase(writeShape.title),
                 artifacts:
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
@@ -179,6 +182,7 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                               })),
                               pageId: writeShape.changelog.pageId,
                               urlSlug: writeShape.changelog.urlSlug,
+                              fullSlug: writeShape.fullSlug,
                           }
                         : undefined,
             };
@@ -188,6 +192,7 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                 id: writeShape.id,
                 title: writeShape.title,
                 urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                fullSlug: writeShape.fullSlug,
             };
         case "section":
             return {
@@ -197,6 +202,7 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                 collapsed: writeShape.collapsed ?? false,
                 items: writeShape.items.map((item) => transformNavigationItemForDb(item)),
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
+                fullSlug: writeShape.fullSlug,
             };
         case "link":
             return {

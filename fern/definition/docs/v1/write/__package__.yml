@@ -301,6 +301,7 @@ types:
       title: string
       id: PageId
       urlSlugOverride: optional<string>
+      fullSlug: optional<list<string>>
 
   LinkMetadata:
     properties:
@@ -315,6 +316,7 @@ types:
       skipUrlSlug: optional<boolean>
       showErrors: optional<boolean>
       changelog: optional<ChangelogSection>
+      fullSlug: optional<list<string>>
 
   ChangelogSection:
     properties:
@@ -329,6 +331,7 @@ types:
           Optional mdx content to display at the top of the changelog section. The title and description will be parsed from the frontmatter and replace the config-defined values.
       items: list<ChangelogItem>
       urlSlug: string
+      fullSlug: optional<list<string>>
 
   ChangelogItem:
     properties:
@@ -342,6 +345,7 @@ types:
       urlSlugOverride: optional<string>
       collapsed: optional<boolean>
       skipUrlSlug: optional<boolean>
+      fullSlug: optional<list<string>>
 
   ColorsConfig:
     properties:

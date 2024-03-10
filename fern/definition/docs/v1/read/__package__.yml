@@ -332,6 +332,7 @@ types:
       id: PageId
       title: string
       urlSlug: string
+      fullSlug: optional<list<string>>
 
   LinkMetadata:
     properties:
@@ -362,6 +363,7 @@ types:
       artifacts: optional<ApiArtifacts>
       showErrors: boolean
       changelog: optional<ChangelogSection>
+      fullSlug: optional<list<string>>
 
   ChangelogSection:
     properties:
@@ -370,6 +372,7 @@ types:
       pageId: optional<PageId>
       items: list<ChangelogItem>
       urlSlug: string
+      fullSlug: optional<list<string>>
 
   ChangelogItem:
     properties:
@@ -383,6 +386,7 @@ types:
       urlSlug: string
       skipUrlSlug: boolean
       collapsed: boolean
+      fullSlug: optional<list<string>>
 
   ColorsConfig:
     properties:
