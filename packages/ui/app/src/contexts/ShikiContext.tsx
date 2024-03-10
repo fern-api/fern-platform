@@ -23,13 +23,18 @@ export function ShikiContextProvider({ children }: { children: React.ReactNode }
 
 export function useHighlighterInstance(language: string): Highlighter | undefined {
     const [highlighterInstance, setHighlighterInstance] = useContext(ShikiContext);
-    const hasLanguage = highlighterInstance?.getLoadedLanguages().includes(parseLang(language)) ?? false;
+    const [hasLanguage, setHasLanguage] = useState(
+        () => highlighterInstance?.getLoadedLanguages().includes(parseLang(language)) ?? false,
+    );
     useEffect(() => {
         if (hasLanguage) {
             return;
         }
         void (async () => {
+            // getHighlighterInstance actually returns the same highlighter instance
+            // so we also need to setHasLanguage(true) to trigger a re-render
             setHighlighterInstance(await getHighlighterInstance(language));
+            setHasLanguage(true);
         })();
     }, [hasLanguage, language, setHighlighterInstance]);
     return hasLanguage ? highlighterInstance : undefined;
