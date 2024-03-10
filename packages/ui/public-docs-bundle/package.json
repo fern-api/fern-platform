@@ -38,7 +38,7 @@
     "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.54.1-1-g293e7bf",
+    "@fern-api/fdr-sdk": "0.55.0-2-gd14a0f0",
     "@fern-api/venus-api-sdk": "^0.1.0",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",

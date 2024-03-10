@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.54.1-1-g293e7bf":
-  version: 0.54.1-1-g293e7bf
-  resolution: "@fern-api/fdr-sdk@npm:0.54.1-1-g293e7bf"
+"@fern-api/fdr-sdk@npm:0.55.0-2-gd14a0f0":
+  version: 0.55.0-2-gd14a0f0
+  resolution: "@fern-api/fdr-sdk@npm:0.55.0-2-gd14a0f0"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2356,7 +2356,7 @@ __metadata:
     marked: ^5.1.0
     tinycolor2: ^1.6.0
     url-join: 4.0.1
-  checksum: 4e920d88a59bc3488848e5969b57850e578025167d60df0df6e2dbded8463b532c55b25a00eb7229730be18aa822698f3afdadb867fc619892c1345250346558
+  checksum: bd449dfbf002bd35f6a54b56bdbce740f0851137b3beb710d8156848955e15caf643bf55ee4a5a129463732edacf5e79c5ebfaa2953422eac37446bed3f0159b
   languageName: node
   linkType: hard
 
@@ -2567,7 +2567,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/public-docs-bundle@workspace:packages/ui/public-docs-bundle"
   dependencies:
-    "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
+    "@fern-api/fdr-sdk": 0.55.0-2-gd14a0f0
     "@fern-api/venus-api-sdk": ^0.1.0
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/ui": "workspace:*"
@@ -2678,7 +2678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
-    "@fern-api/fdr-sdk": 0.54.1-1-g293e7bf
+    "@fern-api/fdr-sdk": 0.55.0-2-gd14a0f0
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
