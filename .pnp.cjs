@@ -4061,10 +4061,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.54.1-1-g293e7bf", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.54.1-1-g293e7bf-bd785366c8-4e920d88a5.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.55.0-2-gd14a0f0", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.55.0-2-gd14a0f0-3a11dfce91-bd449dfbf0.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
+            ["@fern-api/fdr-sdk", "npm:0.55.0-2-gd14a0f0"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
@@ -4302,7 +4302,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/public-docs-bundle/",\
           "packageDependencies": [\
             ["@fern-ui/public-docs-bundle", "workspace:packages/ui/public-docs-bundle"],\
-            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
+            ["@fern-api/fdr-sdk", "npm:0.55.0-2-gd14a0f0"],\
             ["@fern-api/venus-api-sdk", "npm:0.1.0"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
@@ -4419,7 +4419,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/app/",\
           "packageDependencies": [\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
-            ["@fern-api/fdr-sdk", "npm:0.54.1-1-g293e7bf"],\
+            ["@fern-api/fdr-sdk", "npm:0.55.0-2-gd14a0f0"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-ui/react-commons", "workspace:packages/commons/react/react-commons"],\

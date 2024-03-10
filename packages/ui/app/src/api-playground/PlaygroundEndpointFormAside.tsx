@@ -1,4 +1,3 @@
-import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -21,6 +20,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
+import { joinUrlSlugs } from "../util/slug";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {

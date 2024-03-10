@@ -1,4 +1,3 @@
-import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { range } from "lodash-es";
@@ -16,6 +15,7 @@ import {
 } from "react";
 import { FernTooltip } from "../components/FernTooltip";
 import { getRouteNodeWithAnchor } from "../util/anchor";
+import { joinUrlSlugs } from "../util/slug";
 import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
