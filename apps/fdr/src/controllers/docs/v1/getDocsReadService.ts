@@ -215,7 +215,8 @@ function getSearchInfoFromDocs({
         unversioned: () => {
             const indexSegment = activeIndexSegments[0];
             if (indexSegment == null) {
-                throw new Error("index segment is null");
+                /* preview docs do not have algolia index segments, and should return with an undefined index */
+                return { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined };
             }
             const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
                 indexSegment.id,
