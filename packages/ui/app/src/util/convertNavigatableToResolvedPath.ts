@@ -106,6 +106,29 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
+        if (
+            pageContent.markdown.includes("EndpointRequestSnippet") ||
+            pageContent.markdown.includes("EndpointResponseSnippet")
+        ) {
+            const resolvedApis = Object.fromEntries(
+                await Promise.all(
+                    Object.entries(apis).map(async ([apiName, api]) => {
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
+                        return [apiName, await resolveApiDefinition(flattenedApiDefinition)];
+                    }),
+                ),
+            );
+            return {
+                type: "custom-markdown-page",
+                fullSlug: traverseState.curr.slug.join("/"),
+                title: traverseState.curr.title,
+                sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
+                serializedMdxContent: await serializeMdxContent(pageContent.markdown, true),
+                editThisPageUrl: pageContent.editThisPageUrl ?? null,
+                neighbors,
+                apis: resolvedApis,
+            };
+        }
         return {
             type: "custom-markdown-page",
             fullSlug: traverseState.curr.slug.join("/"),
@@ -114,6 +137,7 @@ export async function convertNavigatableToResolvedPath({
             serializedMdxContent: await serializeMdxContent(pageContent.markdown, true),
             editThisPageUrl: pageContent.editThisPageUrl ?? null,
             neighbors,
+            apis: {},
         };
     }
 }

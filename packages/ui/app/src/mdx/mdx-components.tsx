@@ -40,7 +40,7 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
-import { RequestSnippet } from "./components/RequestSnippet";
+import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
 import { Tabs } from "./components/Tabs";
 
@@ -68,7 +68,8 @@ export const JSX_COMPONENTS = {
     Tabs,
     AccordionGroup: Accordion,
     Steps,
-    RequestSnippet,
+    EndpointRequestSnippet,
+    EndpointResponseSnippet,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
