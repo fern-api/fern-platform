@@ -434,6 +434,16 @@ function transformHttpRequestToDb({
                 type: writeShape.type.shape,
                 // descriptionContainsMarkdown: true,
             };
+        case "bytes":
+            return {
+                contentType: "application/octet-stream",
+                description: writeShape.description,
+                type: {
+                    type: "bytes",
+                    isOptional: writeShape.type.isOptional,
+                    contentType: writeShape.type.contentType,
+                },
+            };
         default:
             assertNever(writeShape.type);
     }

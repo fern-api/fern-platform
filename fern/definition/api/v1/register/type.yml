@@ -117,3 +117,39 @@ types:
     union:
       booleanLiteral: boolean
       stringLiteral: string
+
+  FileUploadRequest:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      name: string
+      properties: list<FileUploadRequestProperty>
+
+  BytesRequest:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      isOptional: boolean
+      contentType: optional<string>
+
+  FileUploadRequestProperty:
+    union:
+      file: FileProperty
+      bodyProperty: ObjectProperty
+
+  FileProperty:
+    union:
+      file: FilePropertySingle
+      fileArray: FilePropertyArray
+
+  FilePropertySingle:
+    properties:
+      key: PropertyKey
+      isOptional: boolean
+
+  FilePropertyArray:
+    properties:
+      key: PropertyKey
+      isOptional: boolean

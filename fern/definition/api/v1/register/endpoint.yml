@@ -92,7 +92,10 @@ types:
         # deprecated, the CLI will use json instead
         type: type.TypeReference
       json: JsonRequestBody
-      fileUpload: {}
+      fileUpload:
+        type: optional<type.FileUploadRequest>
+        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
+      bytes: type.BytesRequest
 
   JsonRequestBody:
     properties:

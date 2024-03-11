@@ -29,8 +29,57 @@ export function generateHttpRequestBodyExample(
         case "json":
             return generateHttpJsonRequestBodyExample(type.shape, resolveTypeById);
         case "fileUpload":
-            return "<filename>";
+            return generateFileUploadRequestBodyExample(type.value, resolveTypeById);
+        case "bytes": {
+            if (type.isOptional) {
+                return undefined;
+            }
+            const content = btoa("Hello world!");
+            if (type.contentType != null) {
+                return `data:${type.contentType};base64,${content}`;
+            } else {
+                return content;
+            }
+        }
     }
+}
+
+function generateFileUploadRequestBodyExample(
+    fileUploadRequest: APIV1Write.FileUploadRequest | undefined,
+    resolveTypeById: ResolveTypeById,
+) {
+    if (fileUploadRequest == null) {
+        return "<filename>"; // old (deprecated) behavior
+    }
+
+    const example: Record<string, unknown> = {};
+    fileUploadRequest.properties.forEach((property) => {
+        switch (property.type) {
+            case "file": {
+                if (property.value.isOptional) {
+                    break;
+                }
+                if (property.value.type === "fileArray") {
+                    example[property.value.key] = ["<filename1>", "<filename2>"];
+                } else {
+                    example[property.value.key] = "<filename1>";
+                }
+                break;
+            }
+            case "bodyProperty": {
+                example[property.key] = generateExampleFromTypeReference(
+                    property.valueType,
+                    resolveTypeById,
+                    true,
+                    new Set(),
+                    0,
+                );
+                break;
+            }
+        }
+    });
+
+    return example;
 }
 
 function generateHttpJsonRequestBodyExample(

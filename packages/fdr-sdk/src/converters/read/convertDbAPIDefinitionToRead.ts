@@ -138,6 +138,12 @@ function transformHttpRequest({
                 type: dbShape.type,
                 // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
+        case "bytes":
+            return {
+                contentType: dbShape.contentType ?? "application/octet-stream",
+                description: dbShape.description,
+                type: dbShape.type,
+            };
         default:
             assertNever(dbShape.type);
     }
