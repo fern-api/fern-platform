@@ -4460,7 +4460,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["hastscript", "npm:9.0.0"],\
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
-            ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
+            ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.7.0"],\
             ["jsonpath", "npm:1.1.1"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mdast-util-mdx-jsx", "npm:3.1.0"],\
@@ -14668,17 +14668,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["jotai", [\
-        ["npm:2.6.0", {\
-          "packageLocation": "./.yarn/cache/jotai-npm-2.6.0-dc8e6aef45-6e9ee39770.zip/node_modules/jotai/",\
+        ["npm:2.7.0", {\
+          "packageLocation": "./.yarn/cache/jotai-npm-2.7.0-43b1e9593f-04bf13ca05.zip/node_modules/jotai/",\
           "packageDependencies": [\
-            ["jotai", "npm:2.6.0"]\
+            ["jotai", "npm:2.7.0"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0", {\
-          "packageLocation": "./.yarn/__virtual__/jotai-virtual-cc67c173a4/0/cache/jotai-npm-2.6.0-dc8e6aef45-6e9ee39770.zip/node_modules/jotai/",\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/jotai-virtual-002eec70c9/0/cache/jotai-npm-2.7.0-43b1e9593f-04bf13ca05.zip/node_modules/jotai/",\
           "packageDependencies": [\
-            ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.6.0"],\
+            ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.7.0"],\
             ["@types/react", "npm:18.0.20"],\
             ["react", "npm:18.2.0"]\
           ],\
