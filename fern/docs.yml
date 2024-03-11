@@ -1,0 +1,22 @@
+instances:
+  - url: https://fern-internal.docs.buildwithfern.com
+    private: true
+title: Fern Internal Docs
+navigation:
+  - page: Home
+    path: ./docs/pages/welcome.mdx
+
+colors:
+  accentPrimary:
+    dark: "#ADFF8C"
+    light: "#418326"
+  background:
+    dark: "#000000"
+    light: "#FFFFFF"
+
+logo:
+  light: ./docs/images/logo-green.png
+  dark: ./docs/images/logo-white.png
+  height: 30
+
+favicon: ./docs/images/favicon.ico
