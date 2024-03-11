@@ -2,7 +2,8 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
-import { Fragment, memo, useCallback } from "react";
+import { Fragment, memo, useCallback, useMemo } from "react";
+import { FernCollapse } from "../components/FernCollapse";
 import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
@@ -37,6 +38,20 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
     const expanded = checkExpanded(slug);
 
+    const children = useMemo(
+        () => (
+            <FernCollapse isOpen={expanded} unmount={false}>
+                <SidebarSection
+                    slug={slug}
+                    navigationItems={navigationItems}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    depth={depth + 1}
+                />
+            </FernCollapse>
+        ),
+        [expanded, navigationItems, registerScrolledToPathListener, slug, depth],
+    );
+
     return (
         <SidebarSlugLink
             className={className}
@@ -47,13 +62,7 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
-            <SidebarSection
-                className={classNames("expandable", { hidden: !expanded })}
-                slug={slug}
-                navigationItems={navigationItems}
-                registerScrolledToPathListener={registerScrolledToPathListener}
-                depth={depth + 1}
-            />
+            {children}
         </SidebarSlugLink>
     );
 };

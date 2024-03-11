@@ -196,6 +196,7 @@ module.exports = {
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
+                collapse: "cubic-bezier(0.87,0,0.13,1)",
             },
             animation: {
                 "slide-down-and-fade": "slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",

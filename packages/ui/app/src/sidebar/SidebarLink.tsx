@@ -47,153 +47,156 @@ type SidebarLinkProps = PropsWithChildren<
     }
 >;
 
-const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>(
-    function SidebarSlugLinkContent(props, ref) {
-        const {
-            icon,
-            className,
-            linkClassName: linkClassNameProp,
-            title,
-            onClick,
-            shallow,
-            href,
-            selected,
-            showIndicator,
-            depth = 0,
-            toggleExpand,
-            expanded = false,
-            rightElement,
-            children,
-            elementRef,
-            tooltipContent,
-            target,
-            rel,
-        } = props;
-        const renderLink = (child: ReactElement) => {
-            const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link");
+const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((props, ref) => {
+    const {
+        icon,
+        className,
+        linkClassName: linkClassNameProp,
+        title,
+        onClick,
+        shallow,
+        href,
+        selected,
+        showIndicator,
+        depth = 0,
+        toggleExpand,
+        expanded = false,
+        rightElement,
+        children,
+        elementRef,
+        tooltipContent,
+        target,
+        rel,
+    } = props;
+    const renderLink = (child: ReactElement) => {
+        const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link");
 
-            return href != null ? (
-                <Link
-                    href={href}
-                    className={linkClassName}
-                    onClick={(e) => {
-                        onClick?.(e);
-                        toggleExpand?.();
-                        if (shallow && typeof href === "string") {
-                            getRouteNodeWithAnchor(href)?.node?.scrollIntoView({ behavior: "auto" });
-                        }
-                    }}
-                    shallow={shallow}
-                    scroll={!shallow}
-                    target={target}
-                    rel={rel}
-                >
-                    {child}
-                </Link>
-            ) : (
-                <button
-                    className={linkClassName}
-                    onClick={(e) => {
-                        onClick?.(e);
-                        toggleExpand?.();
-                    }}
-                    ref={ref}
-                >
-                    {child}
-                </button>
-            );
-        };
-
-        const withTooltip = (content: ReactNode) => {
-            if (tooltipContent == null) {
-                return content;
-            }
-
-            return (
-                <FernTooltip content={tooltipContent} side="right">
-                    {content}
-                </FernTooltip>
-            );
-        };
-
-        const expandButton = (toggleExpand != null || expanded) && (
-            <span
-                className="fern-sidebar-link-expand opacity-60 transition-opacity group-hover:opacity-100 lg:group-hover/sidebar:opacity-100"
-                data-state={showIndicator ? "active" : "inactive"}
+        return href != null ? (
+            <Link
+                href={href}
+                className={linkClassName}
+                onClick={(e) => {
+                    onClick?.(e);
+                    toggleExpand?.();
+                    if (shallow && typeof href === "string") {
+                        getRouteNodeWithAnchor(href)?.node?.scrollIntoView({ behavior: "auto" });
+                    }
+                }}
+                shallow={shallow}
+                scroll={!shallow}
+                target={target}
+                rel={rel}
             >
-                <ChevronDownIcon
-                    className={classNames("transition-transform size-5 lg:size-icon", {
-                        "-rotate-90": !expanded,
-                        "rotate-0": expanded,
-                    })}
-                />
-            </span>
+                {child}
+            </Link>
+        ) : (
+            <button
+                className={linkClassName}
+                onClick={(e) => {
+                    onClick?.(e);
+                    toggleExpand?.();
+                }}
+                ref={ref}
+            >
+                {child}
+            </button>
         );
+    };
+
+    const withTooltip = (content: ReactNode) => {
+        if (tooltipContent == null) {
+            return content;
+        }
 
         return (
-            <li ref={elementRef} className="fern-sidebar-item">
-                <div
-                    className={classNames("fern-sidebar-link-container group", className)}
-                    data-state={selected ? "active" : "inactive"}
-                >
-                    {withTooltip(
-                        renderLink(
-                            <>
-                                {range(0, depth).map((i) => (
-                                    <div
-                                        key={i}
-                                        className={classNames(
-                                            "fern-sidebar-link-indent",
-                                            "transition-transform group-hover/sidebar:opacity-100 transition-opacity ease-out",
-                                        )}
-                                    />
-                                ))}
-                                {expandButton}
-                                <span className="fern-sidebar-link-content">
-                                    {icon != null && <span className="mr-2">{icon}</span>}
-                                    <span className="fern-sidebar-link-text">{title}</span>
-                                    {rightElement}
-                                </span>
-                                {expandButton}
-                            </>,
-                        ),
-                    )}
-                </div>
-                {children}
-            </li>
+            <FernTooltip content={tooltipContent} side="right">
+                {content}
+            </FernTooltip>
         );
-    },
-);
+    };
+
+    const expandButton = (toggleExpand != null || expanded) && (
+        <span
+            className="fern-sidebar-link-expand opacity-60 transition-opacity group-hover:opacity-100 lg:group-hover/sidebar:opacity-100"
+            data-state={showIndicator ? "active" : "inactive"}
+        >
+            <ChevronDownIcon
+                className={classNames("transition-transform size-5 lg:size-icon", {
+                    "-rotate-90": !expanded,
+                    "rotate-0": expanded,
+                })}
+            />
+        </span>
+    );
+
+    return (
+        <li ref={elementRef} className="fern-sidebar-item">
+            <div
+                className={classNames("fern-sidebar-link-container group", className)}
+                data-state={selected ? "active" : "inactive"}
+            >
+                {withTooltip(
+                    renderLink(
+                        <>
+                            {range(0, depth).map((i) => (
+                                <div
+                                    key={i}
+                                    className={classNames(
+                                        "fern-sidebar-link-indent",
+                                        "transition-transform group-hover/sidebar:opacity-100 transition-opacity ease-out",
+                                    )}
+                                />
+                            ))}
+                            {expandButton}
+                            <span className="fern-sidebar-link-content">
+                                {icon != null && <span className="mr-2">{icon}</span>}
+                                <span className="fern-sidebar-link-text">{title}</span>
+                                {rightElement}
+                            </span>
+                            {expandButton}
+                        </>,
+                    ),
+                )}
+            </div>
+            {children}
+        </li>
+    );
+});
+
+SidebarLinkInternal.displayName = "SidebarLink";
 
 export const SidebarLink = memo(SidebarLinkInternal);
 
-export const SidebarSlugLink = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>(
-    function SidebarSlugLink({ slug, registerScrolledToPathListener, ...props }, ref) {
-        const elementRef = useRef<HTMLLIElement>(null);
-        const isMobileSidebarOpen = useIsMobileSidebarOpen();
+const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>((props, ref) => {
+    const { slug, registerScrolledToPathListener, ...innerProps } = props;
+    const elementRef = useRef<HTMLLIElement>(null);
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
-        useEffect(() => {
-            if (slug == null) {
-                return undefined;
-            }
-            return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
-                elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
-            });
-        }, [slug, registerScrolledToPathListener]);
+    useEffect(() => {
+        if (slug == null) {
+            return undefined;
+        }
+        return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
+            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
+        });
+    }, [slug, registerScrolledToPathListener]);
 
-        useEffect(() => {
-            if (isMobileSidebarOpen && props.selected) {
-                elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
-            }
-        }, [isMobileSidebarOpen, props.selected]);
+    useEffect(() => {
+        if (isMobileSidebarOpen && props.selected) {
+            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
+        }
+    }, [isMobileSidebarOpen, props.selected]);
 
-        return (
-            <SidebarLink
-                {...props}
-                ref={ref}
-                elementRef={elementRef}
-                href={slug != null ? `/${slug.join("/")}` : undefined}
-            />
-        );
-    },
-);
+    return (
+        <SidebarLink
+            {...innerProps}
+            ref={ref}
+            elementRef={elementRef}
+            href={slug != null ? `/${slug.join("/")}` : undefined}
+        />
+    );
+});
+
+SidebarSlugLinkInternal.displayName = "SidebarSlugLink";
+
+export const SidebarSlugLink = memo(SidebarSlugLinkInternal);
