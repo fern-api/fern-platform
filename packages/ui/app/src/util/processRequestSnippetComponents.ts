@@ -1,4 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { flattenApiDefinition } from "./flattenApiDefinition";
+import { resolveApiDefinition, ResolvedEndpointDefinition, ResolvedRootPackage } from "./resolver";
 
 const REQUEST_SNIPPET = "<RequestSnippet";
 const ENDPOINT_PARAMETER: RegExp = /endpoint="([^"]+)"/;
@@ -9,13 +11,13 @@ interface Substitution {
     requestSnippetDefinition: string;
 }
 
-export function processRequestSnippetComponents({
+export async function processRequestSnippetComponents({
     content,
     apis,
 }: {
     content: string;
     apis: Record<string, APIV1Read.ApiDefinition>;
-}): string {
+}): Promise<string> {
     let index = -1;
 
     const transformedContent = content;
@@ -37,18 +39,18 @@ export function processRequestSnippetComponents({
         const method = endpoint[0];
         const path = endpoint[1];
 
-        const endpointDefinition = getEndpointDefinition({ apis, method, path });
+        const endpointDefinition = await getEndpointDefinition({ apis, method, path });
         if (endpointDefinition == null) {
             continue;
         }
 
-        const updatedRequestSnippet = `<RequestSnippet method="${endpointDefinition.method}" path="${JSON.stringify(endpointDefinition)}">`;
+        const updatedRequestSnippet = `<RequestSnippet method="${endpointDefinition.method}" path=${JSON.stringify(endpointDefinition.path)}>`;
     }
 
     return content;
 }
 
-function getEndpointDefinition({
+async function getEndpointDefinition({
     apis,
     method,
     path,
@@ -56,9 +58,11 @@ function getEndpointDefinition({
     apis: Record<string, APIV1Read.ApiDefinition>;
     method: string;
     path: string;
-}): APIV1Read.EndpointDefinition | undefined {
+}): Promise<ResolvedEndpointDefinition | undefined> {
     for (const api of Object.values(apis)) {
-        const endpoint = findEndpoint({ api, method, path });
+        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
+        const resolvedApi = await resolveApiDefinition(flattenedApiDefinition);
+        const endpoint = findEndpoint({ api: resolvedApi, method, path });
         if (endpoint != null) {
             return endpoint;
         }
@@ -71,11 +75,11 @@ function findEndpoint({
     method,
     path,
 }: {
-    api: APIV1Read.ApiDefinition;
+    api: ResolvedRootPackage;
     method: string;
     path: string;
-}): APIV1Read.EndpointDefinition | undefined {
-    for (const endpoint of api.rootPackage.endpoints) {
+}): ResolvedEndpointDefinition | undefined {
+    for (const endpoint of api.endpoints) {
         if (getPathFromEndpoint(endpoint) === path && endpoint.method === method) {
             return endpoint;
         }
@@ -92,14 +96,14 @@ function findEndpoint({
     return undefined;
 }
 
-function getPathFromEndpoint(endpoint: APIV1Read.EndpointDefinition): string {
+function getPathFromEndpoint(endpoint: ResolvedEndpointDefinition): string {
     const parts: string[] = [];
-    for (const part of endpoint.path.parts) {
+    for (const part of endpoint.path) {
         if (part.type === "literal") {
             parts.push(part.value);
         }
         if (part.type === "pathParameter") {
-            parts.push(`{${part.value}}`);
+            parts.push(`{${part.key}}`);
         }
     }
     return parts.join("/");
