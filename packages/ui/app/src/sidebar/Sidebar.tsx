@@ -59,7 +59,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             <FernScrollArea
                 className="group/sidebar"
                 viewportClassName="px-4 pb-12"
-                aria-orientation="vertical"
+                scrollbars="vertical"
                 viewportRef={scrollRef}
             >
                 <SearchSidebar searchService={searchService}>

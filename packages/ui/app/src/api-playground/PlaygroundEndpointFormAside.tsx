@@ -145,6 +145,7 @@ export function PlaygroundEndpointFormAside({
                 className="min-h-0 shrink"
                 viewportClassName="py-6 pr-2 mask-grad-top"
                 type="scroll"
+                scrollbars="vertical"
             >
                 <FernButtonGroup className="mb-6 p-1">
                     <FernButton onClick={resetWithExample} size="small" variant="minimal">
