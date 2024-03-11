@@ -35,6 +35,64 @@ async function getExcerpt(
     }
 }
 
+function findEndpoint({
+    api,
+    method,
+    path,
+}: {
+    api: APIV1Read.ApiDefinition;
+    method: string;
+    path: string;
+}): APIV1Read.EndpointDefinition | undefined {
+    for (const endpoint of api.rootPackage.endpoints) {
+        if (getPathFromEndpoint(endpoint) === path && endpoint.method === method) {
+            return endpoint;
+        }
+    }
+
+    for (const [_, subpackage] of Object.entries(api.subpackages)) {
+        for (const endpoint of subpackage.endpoints) {
+            if (getPathFromEndpoint(endpoint) === path && endpoint.method === method) {
+                return endpoint;
+            }
+        }
+    }
+
+    return undefined;
+}
+
+function getPathFromEndpoint(endpoint: APIV1Read.EndpointDefinition): string {
+    return endpoint.path.parts.join("/");
+}
+
+interface RequestSnippet {
+    method: string;
+    endpointPath: string;
+}
+
+function parseRequestSnippet(page: string): RequestSnippet | undefined {
+    // const regex = /endpoint="([A-Z]+) ([^"]+)"/;
+    // const match = page.match(regex);
+    // if (match) {
+    //     const method = match[1];
+    //     const endpointPath = match[2];
+    //     if (method == null || endpointPath == null) {
+    //         return undefined;
+    //     }
+    //     return {
+    //         method,
+    //         endpointPath,
+    //     };
+    // }
+
+    return {
+        method: "POST",
+        endpointPath: "/v3/pet",
+    };
+
+    // return undefined;
+}
+
 export async function convertNavigatableToResolvedPath({
     sidebarNodes,
     slug,
@@ -106,6 +164,22 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
+        let testResult = null;
+        const response = parseRequestSnippet(pageContent.markdown);
+
+        if (response != null) {
+            const { method, endpointPath } = response;
+            for (const [_, api] of Object.entries(apis)) {
+                const result = findEndpoint({ api, method, path: endpointPath });
+                if (result) {
+                    const apiSection = findApiSection(result.id, sidebarNodes);
+                    if (apiSection != null) {
+                        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug);
+                        testResult = await resolveApiDefinition(flattenedApiDefinition);
+                    }
+                }
+            }
+        }
         return {
             type: "custom-markdown-page",
             fullSlug: traverseState.curr.slug.join("/"),
@@ -114,6 +188,7 @@ export async function convertNavigatableToResolvedPath({
             serializedMdxContent: await serializeMdxContent(pageContent.markdown, true),
             editThisPageUrl: pageContent.editThisPageUrl ?? null,
             neighbors,
+            test: testResult,
         };
     }
 }

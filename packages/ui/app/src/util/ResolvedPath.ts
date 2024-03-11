@@ -43,6 +43,7 @@ export declare namespace ResolvedPath {
         serializedMdxContent: SerializedMdxContent;
         editThisPageUrl: string | null;
         neighbors: Neighbors;
+        test: ResolvedRootPackage | null;
     }
 
     interface ApiPage {

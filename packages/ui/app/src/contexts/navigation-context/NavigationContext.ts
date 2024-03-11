@@ -22,6 +22,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             prev: null,
             next: null,
         },
+        test: null,
     },
     hydrated: false,
     navigation: {
