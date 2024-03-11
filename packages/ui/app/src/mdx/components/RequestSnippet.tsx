@@ -122,28 +122,31 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     }
 
     return (
-        <CodeSnippetExample
-            title={
-                <EndpointUrlWithOverflow
-                    path={endpoint.path}
-                    method={method}
-                    environment={endpoint.defaultEnvironment?.baseUrl}
-                />
-            }
-            type="primary"
-            actions={
-                clients.length > 1 ? (
-                    <CodeExampleClientDropdown
-                        clients={clients}
-                        onClickClient={setSelectedClient}
-                        selectedClient={selectedClient}
+        <div className="mb-5 mt-3">
+            <CodeSnippetExample
+                title={
+                    <EndpointUrlWithOverflow
+                        path={endpoint.path}
+                        method={method}
+                        environment={endpoint.defaultEnvironment?.baseUrl}
                     />
-                ) : undefined
-            }
-            code={selectedClient.code}
-            language={selectedClient.language}
-            json={EMPTY_OBJECT}
-        />
+                }
+                type="primary"
+                actions={
+                    clients.length > 1 ? (
+                        <CodeExampleClientDropdown
+                            clients={clients}
+                            onClickClient={setSelectedClient}
+                            selectedClient={selectedClient}
+                        />
+                    ) : undefined
+                }
+                code={selectedClient.code}
+                language={selectedClient.language}
+                json={EMPTY_OBJECT}
+                scrollAreaStyle={{ maxHeight: "500px" }}
+            />
+        </div>
     );
 };
 
@@ -199,13 +202,16 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     const responseJsonString = JSON.stringify(responseJson, null, 2);
 
     return (
-        <CodeSnippetExample
-            title="Response"
-            type="primary"
-            // actions={undefined}
-            code={responseJsonString}
-            language="json"
-            json={responseJson}
-        />
+        <div className="mb-5 mt-3">
+            <CodeSnippetExample
+                title="Response"
+                type="primary"
+                // actions={undefined}
+                code={responseJsonString}
+                language="json"
+                json={responseJson}
+                scrollAreaStyle={{ maxHeight: "500px" }}
+            />
+        </div>
     );
 };

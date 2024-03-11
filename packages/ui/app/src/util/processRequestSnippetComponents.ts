@@ -107,7 +107,7 @@ function getPathFromEndpoint1(endpoint: ResolvedEndpointDefinition): string {
             parts.push(`{${part.key}}`);
         }
     }
-    return `/${parts.join("/")}`;
+    return parts.join("");
 }
 
 function getPathFromEndpoint2(endpoint: ResolvedEndpointDefinition): string {
@@ -120,5 +120,5 @@ function getPathFromEndpoint2(endpoint: ResolvedEndpointDefinition): string {
             parts.push(`:${part.key}`);
         }
     }
-    return `/${parts.join("/")}`;
+    return parts.join("");
 }
