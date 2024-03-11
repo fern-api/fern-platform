@@ -13,6 +13,9 @@ import { ResolvedEndpointDefinition } from "../../util/resolver";
 
 export declare namespace RequestSnippet {
     export interface Props {
+        endpoint: string;
+    }
+    export interface InternalProps {
         path: string;
         method: APIV1Read.HttpMethod;
     }
@@ -57,7 +60,40 @@ function useSelectedClient(
     return [selectedClient, handleClickClient];
 }
 
-export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({ path, method }) => {
+function extractEndpointPathAndMethod(endpoint: string): [APIV1Read.HttpMethod | undefined, string | undefined] {
+    const [maybeMethod, path] = endpoint.split(" ");
+
+    // parse method into APIV1Read.HttpMethod
+    let method: APIV1Read.HttpMethod | undefined;
+
+    if (maybeMethod != null) {
+        method = maybeMethod.toUpperCase() as APIV1Read.HttpMethod;
+    }
+
+    // ensure that method is a valid HTTP method
+    if (!Object.values(APIV1Read.HttpMethod).includes(method as APIV1Read.HttpMethod)) {
+        return [undefined, undefined];
+    }
+
+    return [method, path];
+}
+
+export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
+    endpoint: endpointLocator,
+}) => {
+    const [method, path] = extractEndpointPathAndMethod(endpointLocator);
+
+    if (method == null || path == null) {
+        return null;
+    }
+
+    return <EndpointRequestSnippetInternal method={method} path={path} />;
+};
+
+const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
+    method,
+    path,
+}) => {
     const { resolvedPath } = useNavigationContext();
 
     const endpoint = useMemo(() => {
@@ -111,7 +147,22 @@ export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSni
     );
 };
 
-export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({ path, method }) => {
+export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
+    endpoint: endpointLocator,
+}) => {
+    const [method, path] = extractEndpointPathAndMethod(endpointLocator);
+
+    if (method == null || path == null) {
+        return null;
+    }
+
+    return <EndpointResponseSnippetInternal method={method} path={path} />;
+};
+
+const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
+    path,
+    method,
+}) => {
     const { resolvedPath } = useNavigationContext();
 
     const endpoint = useMemo(() => {
