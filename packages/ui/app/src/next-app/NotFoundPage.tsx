@@ -29,7 +29,7 @@ export const getNotFoundPageStaticProps: GetStaticProps<NotFoundPage.Props> = as
     });
 
     if (!docs.ok) {
-        return { redirect: { destination: "/", permanent: false } };
+        return { props: { basePath: null } };
     }
 
     const basePath = docs.body.baseUrl.basePath ?? null;

@@ -107,7 +107,13 @@ export function DocsPage({
                 </Script>
             ))}
             {js?.files.map((file) => (
-                <Script key={file.fileId} src={files[file.fileId]?.url} strategy={file.strategy} />
+                <Script
+                    key={file.fileId}
+                    src={files[file.fileId]?.url}
+                    strategy={file.strategy}
+                    type="module"
+                    crossOrigin="anonymous"
+                />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
         </>
