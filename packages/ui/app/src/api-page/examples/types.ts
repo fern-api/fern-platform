@@ -53,7 +53,7 @@ export function endpointExampleToHttpRequestExample(
         });
     }
 
-    let body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined = requestBody;
+    const body: ResolvedExampleEndpointRequest | null | undefined = requestBody;
 
     if (endpoint.requestBody[0]?.contentType != null) {
         headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
@@ -64,10 +64,6 @@ export function endpointExampleToHttpRequestExample(
             headers["Content-Type"] = "application/json";
         } else if (body.type === "form") {
             headers["Content-Type"] = "multipart/form-data";
-        }
-    } else {
-        if (endpoint.requestBody[0]?.shape.type === "fileUpload") {
-            body = { type: "file" };
         }
     }
 
