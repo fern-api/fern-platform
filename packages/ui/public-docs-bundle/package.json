@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-ui.git",
+    "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/public-docs-bundle"
   },
   "private": true,
