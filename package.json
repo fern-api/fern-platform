@@ -1,7 +1,7 @@
 {
   "name": "fern-ui",
   "description": "Fern UI",
-  "repository": "https://github.com/fern-api/fern-ui",
+  "repository": "https://github.com/fern-api/fern-platform",
   "author": "Birch Solutions, Inc.",
   "private": true,
   "workspaces": [
