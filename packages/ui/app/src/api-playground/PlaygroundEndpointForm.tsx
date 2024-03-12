@@ -1,5 +1,7 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
+import { FernInput } from "../components/FernInput";
 import { Callout } from "../mdx/components/Callout";
 import {
     dereferenceObjectProperties,
@@ -8,7 +10,8 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
+import { titleCase } from "../util/titleCase";
+import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "./types";
 
@@ -82,51 +85,75 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         [setBody],
     );
 
-    // const setBodyFormData = useCallback(
-    //     (
-    //         value:
-    //             | ((
-    //                   old: Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
-    //               ) => Record<string, PlaygroundFormStateBody.FormDataEntryValue>)
-    //             | Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
-    //     ) => {
-    //         setBody((old) => {
-    //             return {
-    //                 type: "form-data",
-    //                 value:
-    //                     typeof value === "function"
-    //                         ? value(old?.type === "form-data" ? old.value : {})
-    //                         : value,
-    //             };
-    //         });
-    //     },
-    //     [setBody],
-    // );
+    const setBodyFormData = useCallback(
+        (
+            value:
+                | ((
+                      old: Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
+                  ) => Record<string, PlaygroundFormStateBody.FormDataEntryValue>)
+                | Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
+        ) => {
+            setBody((old) => {
+                return {
+                    type: "form-data",
+                    value: typeof value === "function" ? value(old?.type === "form-data" ? old.value : {}) : value,
+                };
+            });
+        },
+        [setBody],
+    );
 
-    // const handleFileChange = useCallback(
-    //     (event: React.ChangeEvent<HTMLInputElement>) => {
-    //         const file = event.target.files?.[0];
-    //         if (file == null) {
-    //             setFormState((state) => ({
-    //                 ...state,
-    //                 body: {
-    //                     type: "multipart/form-data",
-    //                 },
-    //             }));
-    //             return;
-    //         }
+    const setFormDataEntry = useCallback(
+        (
+            key: string,
+            value:
+                | PlaygroundFormStateBody.FormDataEntryValue
+                | undefined
+                | ((
+                      old: PlaygroundFormStateBody.FormDataEntryValue | undefined,
+                  ) => PlaygroundFormStateBody.FormDataEntryValue | undefined),
+        ) => {
+            setBodyFormData((old) => {
+                const newValue = typeof value === "function" ? value(old[key] ?? undefined) : value;
+                if (newValue == null) {
+                    // delete the key
+                    const { [key]: _, ...rest } = old;
+                    return rest;
+                }
+                return { ...old, [key]: newValue };
+            });
+        },
+        [setBodyFormData],
+    );
 
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             setFormState((state) => ({
-    //                 ...state,
-    //                 body: reader.result,
-    //             }));
-    //         };
-    //         reader.readAsDataURL(file);
-    //     },
-    //     [setFormState],
-    // );
+    const handleFormDataFileChange = useCallback(
+        (key: string, event: React.ChangeEvent<HTMLInputElement>) => {
+            const type =
+                endpoint.requestBody[0]?.shape.type === "fileUpload"
+                    ? endpoint.requestBody[0]?.shape.value?.properties.find((p) => p.key === key)?.type
+                    : undefined;
+            const file = event.target.files?.[0];
+            if (file == null) {
+                setFormDataEntry(key, undefined);
+                return;
+            } else {
+                setFormDataEntry(
+                    key,
+                    type === "fileArray"
+                        ? { type: "fileArray", value: Array.from(event.target.files ?? []) }
+                        : { type: "file", value: file },
+                );
+            }
+        },
+        [endpoint.requestBody, setFormDataEntry],
+    );
+
+    const handleFormDataJsonChange = useCallback(
+        (key: string, value: unknown) => {
+            setFormDataEntry(key, value == null ? undefined : { type: "json", value });
+        },
+        [setFormDataEntry],
+    );
 
     return (
         <div className="col-span-2 space-y-8 pb-20">
@@ -183,16 +210,73 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
             {endpoint.requestBody[0] != null &&
                 visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
-                    fileUpload: () => (
-                        <div>
-                            <div className="mb-4 px-4">
-                                <h5 className="t-muted m-0">Body</h5>
+                    fileUpload: (fileUpload) => {
+                        const fileUploadFormValue = formState?.body?.type === "form-data" ? formState?.body.value : {};
+                        return fileUpload.value == null ? (
+                            <div>
+                                <div className="mb-4 px-4">
+                                    <h5 className="t-muted m-0">Body</h5>
+                                </div>
+                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <Callout intent="warning">
+                                        Generated API Reference is missing file upload metadata. Please upgrade the Fern
+                                        CLI to 0.19.7 or greater.
+                                    </Callout>
+                                </FernCard>
                             </div>
-                            <FernCard className="rounded-xl p-4 shadow-sm">
-                                <Callout intent="warning">File upload is not yet supported.</Callout>
-                            </FernCard>
-                        </div>
-                    ),
+                        ) : (
+                            <div className="min-w-0 flex-1 shrink">
+                                <div className="mb-4 px-4">
+                                    <h5 className="t-muted m-0">{titleCase(fileUpload.value.name)}</h5>
+                                </div>
+                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <ul className="list-none space-y-8">
+                                        {fileUpload.value.properties.map((property) =>
+                                            visitDiscriminatedUnion(property, "type")._visit({
+                                                file: () => (
+                                                    <li key={property.key}>
+                                                        <label className="mb-2 block" htmlFor={property.key}>
+                                                            {property.key}
+                                                        </label>
+                                                        <FernInput
+                                                            type="file"
+                                                            id={property.key}
+                                                            onChange={(e) => handleFormDataFileChange(property.key, e)}
+                                                        />
+                                                    </li>
+                                                ),
+                                                fileArray: () => (
+                                                    <li key={property.key}>
+                                                        <label className="mb-2 block" htmlFor={property.key}>
+                                                            {property.key}
+                                                        </label>
+                                                        <FernInput
+                                                            type="file"
+                                                            id={property.key}
+                                                            onChange={(e) => handleFormDataFileChange(property.key, e)}
+                                                            multiple={true}
+                                                        />
+                                                    </li>
+                                                ),
+                                                bodyProperty: (bodyProperty) => (
+                                                    <li key={property.key}>
+                                                        <PlaygroundObjectPropertyForm
+                                                            id={bodyProperty.key}
+                                                            property={bodyProperty}
+                                                            onChange={handleFormDataJsonChange}
+                                                            value={fileUploadFormValue[property.key]?.value}
+                                                            types={types}
+                                                        />
+                                                    </li>
+                                                ),
+                                                _other: () => null,
+                                            }),
+                                        )}
+                                    </ul>
+                                </FernCard>
+                            </div>
+                        );
+                    },
                     bytes: () => (
                         <div>
                             <div className="mb-4 px-4">

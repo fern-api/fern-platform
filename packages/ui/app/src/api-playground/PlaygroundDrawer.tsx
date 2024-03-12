@@ -424,12 +424,19 @@ export function getInitialEndpointRequestFormStateWithExample(
                       value: mapValues(
                           exampleCall.requestBody.value,
                           (exampleValue): PlaygroundFormStateBody.FormDataEntryValue =>
-                              exampleValue.type === "filename"
+                              exampleValue.type === "file"
                                   ? { type: "file", value: undefined }
-                                  : { type: "json", value: exampleValue.value },
+                                  : exampleValue.type === "fileArray"
+                                    ? { type: "fileArray", value: [] }
+                                    : { type: "json", value: exampleValue.value },
                       ),
                   }
-                : { type: "json", value: exampleCall.requestBody?.value },
+                : exampleCall.requestBody?.type === "stream"
+                  ? {
+                        type: "octet-stream",
+                        value: undefined,
+                    }
+                  : { type: "json", value: exampleCall.requestBody?.value },
     };
 }
 

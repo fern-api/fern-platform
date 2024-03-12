@@ -128,12 +128,14 @@ export function stringifyHttpRequestExampleToCurl({
                               visitDiscriminatedUnion(value, "type")._visit({
                                   json: ({ value }) =>
                                       ` \\\n     -F '${key}=${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
-                                  filename: ({ value }) => ` \\\n     -F ${key}=@${value}`,
+                                  file: ({ fileName }) => ` \\\n     -F ${key}=@${fileName}`,
+                                  fileArray: ({ fileNames }) =>
+                                      fileNames.map((fileName) => ` \\\n     -F ${key}[]=@${fileName}`).join(""),
                                   _other: () => "",
                               }),
                           )
                           .join(""),
-                  stream: () => " \\\n     --data-binary @<filename>.xyz",
+                  stream: ({ fileName }) => ` \\\n     --data-binary @${fileName}`,
                   _other: () => "",
               });
 

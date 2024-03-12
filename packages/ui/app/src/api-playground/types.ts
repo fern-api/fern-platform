@@ -1,3 +1,6 @@
+import { assertNever } from "@fern-ui/core-utils";
+import { ResolvedFormValue } from "../util/resolver";
+
 interface PlaygroundRequestFormAuthBearerAuth {
     type: "bearerAuth";
     token: string;
@@ -52,6 +55,45 @@ export declare namespace PlaygroundFormStateBody {
     export interface OctetStream {
         type: "octet-stream";
         value: File | undefined;
+    }
+}
+
+export const FormDataEntryValue = {
+    isFile: (
+        value: PlaygroundFormStateBody.FormDataEntryValue,
+    ): value is PlaygroundFormStateBody.FormDataEntryValueFile => value.type === "file",
+    isFileArray: (
+        value: PlaygroundFormStateBody.FormDataEntryValue,
+    ): value is PlaygroundFormStateBody.FormDataEntryValueFileArray => value.type === "fileArray",
+    isJson: (
+        value: PlaygroundFormStateBody.FormDataEntryValue,
+    ): value is PlaygroundFormStateBody.FormDataEntryValueJson => value.type === "json",
+};
+
+export function convertFormDataEntryValueToResolvedExampleEndpointRequest(
+    value: PlaygroundFormStateBody.FormDataEntryValue,
+): ResolvedFormValue | undefined {
+    switch (value.type) {
+        case "file":
+            if (value.value == null) {
+                return undefined;
+            }
+            return {
+                type: "file",
+                fileName: value.value?.name,
+            };
+        case "fileArray":
+            return {
+                type: "fileArray",
+                fileNames: value.value.map((file) => file.name),
+            };
+        case "json":
+            return {
+                type: "json",
+                value: value.value,
+            };
+        default:
+            assertNever(value);
     }
 }
 
