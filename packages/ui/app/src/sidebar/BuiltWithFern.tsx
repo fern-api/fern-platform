@@ -1,22 +1,19 @@
 import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import Link from "next/link";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FernLogo } from "./FernLogo";
 
 export declare namespace BuiltWithFern {
     export interface Props {
         className?: string;
+        isWhiteLabeled: boolean;
     }
 }
 
-export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
+export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className, isWhiteLabeled }) => {
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
-    const { domain } = useDocsContext();
-
-    // TODO: move this to venus
-    if (domain.toLowerCase().includes("polytomic")) {
+    if (isWhiteLabeled) {
         return null;
     }
 

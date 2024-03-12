@@ -193,6 +193,16 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             </FernCard>
                         </div>
                     ),
+                    bytes: () => (
+                        <div>
+                            <div className="mb-4 px-4">
+                                <h5 className="t-muted m-0">Body</h5>
+                            </div>
+                            <FernCard className="rounded-xl p-4 shadow-sm">
+                                <Callout intent="warning">File upload is not yet supported.</Callout>
+                            </FernCard>
+                        </div>
+                    ),
                     typeShape: (shape) => {
                         shape = unwrapReference(shape, types);
 

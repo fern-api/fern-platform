@@ -185,15 +185,15 @@ export function sortKeysByShape(
         string: () => obj,
         boolean: () => obj,
         object: (object) => {
-            const p = dereferenceObjectProperties(object, types);
+            const objectProperties = dereferenceObjectProperties(object, types);
             return isPlainObject(obj)
                 ? mapValues(
                       sortKeysBy(
                           obj,
-                          p.map((p) => p.key),
+                          objectProperties.map((p) => p.key),
                       ),
                       (value, key) => {
-                          const property = p.find((p) => p.key === key);
+                          const property = objectProperties.find((p) => p.key === key);
                           if (property == null) {
                               return value;
                           }
@@ -244,7 +244,30 @@ export function sortKeysByShape(
         stringLiteral: () => obj,
         unknown: () => obj,
         reference: ({ typeId }) => sortKeysByShape(obj, types[typeId], types),
-        fileUpload: () => obj,
+        fileUpload: ({ value }) => {
+            if (value == null || !isPlainObject(obj)) {
+                return obj;
+            }
+
+            return mapValues(
+                sortKeysBy(
+                    obj,
+                    value.properties.map((p) => p.key),
+                ),
+                (v, key) => {
+                    const property = value.properties.find((p) => p.key === key);
+
+                    if (property == null) {
+                        return v;
+                    }
+
+                    if (property.type === "bodyProperty") {
+                        return sortKeysByShape(v, property.valueShape, types);
+                    }
+                },
+            );
+        },
+        bytes: () => obj,
         fileDownload: () => obj,
         streamCondition: () => obj,
         streamingText: () => obj,

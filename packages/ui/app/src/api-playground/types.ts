@@ -48,9 +48,17 @@ export declare namespace PlaygroundFormStateBody {
         type: "form-data";
         value: Record<string, FormDataEntryValue>;
     }
+
+    export interface OctetStream {
+        type: "octet-stream";
+        value: File | undefined;
+    }
 }
 
-export type PlaygroundFormStateBody = JsonVariant | PlaygroundFormStateBody.FormData;
+export type PlaygroundFormStateBody =
+    | JsonVariant
+    | PlaygroundFormStateBody.FormData
+    | PlaygroundFormStateBody.OctetStream;
 
 export interface PlaygroundEndpointRequestFormState {
     type: "endpoint";
@@ -99,7 +107,12 @@ export declare namespace ProxyRequest {
         value: Record<string, SerializableFormDataEntryValue>;
     }
 
-    export type SerializableBody = JsonVariant | SerializableFormData;
+    export interface SerializableOctetStream {
+        type: "octet-stream";
+        value: SerializableFile | undefined;
+    }
+
+    export type SerializableBody = JsonVariant | SerializableFormData | SerializableOctetStream;
 }
 
 export interface ProxyRequest {

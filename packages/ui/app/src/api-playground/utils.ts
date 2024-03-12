@@ -397,18 +397,14 @@ export function getDefaultValuesForBody(
     if (requestShape == null) {
         return undefined;
     }
-
-    switch (requestShape.type) {
-        case "fileUpload":
-            return { type: "form-data", value: {} };
-        case "object":
-            return {
-                type: "json",
-                value: getDefaultValueForObjectProperties(requestShape.properties, types),
-            };
-        default:
-            return { type: "json", value: getDefaultValueForType(requestShape, types) };
-    }
+    return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
+        fileUpload: () => ({ type: "form-data", value: {} }),
+        bytes: () => ({ type: "octet-stream", value: undefined }),
+        typeShape: (typeShape) => ({
+            type: "json",
+            value: getDefaultValueForType(typeShape, types),
+        }),
+    });
 }
 
 export function getDefaultValueForType(
@@ -495,7 +491,16 @@ export function hasRequiredFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: () => true,
+        fileUpload: (fileUpload) =>
+            fileUpload.value?.properties.some((property) =>
+                visitDiscriminatedUnion(property, "type")._visit<boolean>({
+                    file: (file) => !file.isOptional,
+                    fileArray: (fileArray) => !fileArray.isOptional,
+                    bodyProperty: (bodyProperty) => hasRequiredFields(bodyProperty.valueShape, types),
+                    _other: () => false,
+                }),
+            ) ?? true,
+        bytes: (bytes) => !bytes.isOptional,
         typeShape: (shape) =>
             visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
                 string: () => true,
@@ -532,7 +537,16 @@ export function hasOptionalFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: () => false,
+        fileUpload: (fileUpload) =>
+            fileUpload.value?.properties.some((property) =>
+                visitDiscriminatedUnion(property, "type")._visit<boolean>({
+                    file: (file) => file.isOptional,
+                    fileArray: (fileArray) => fileArray.isOptional,
+                    bodyProperty: (bodyProperty) => hasOptionalFields(bodyProperty.valueShape, types),
+                    _other: () => false,
+                }),
+            ) ?? false,
+        bytes: (bytes) => bytes.isOptional,
         typeShape: (shape) =>
             visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
                 string: () => false,

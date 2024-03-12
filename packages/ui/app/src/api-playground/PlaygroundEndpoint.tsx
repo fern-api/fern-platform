@@ -188,6 +188,8 @@ async function serializeFormStateBody(
             }
             return { type: "form-data", value: formDataValue };
         }
+        case "octet-stream":
+            return { type: "octet-stream", value: await serializeFile(body.value) };
         default:
             assertNever(body);
     }
