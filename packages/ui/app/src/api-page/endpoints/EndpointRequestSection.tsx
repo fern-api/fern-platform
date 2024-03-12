@@ -1,11 +1,13 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import classNames from "classnames";
 import { ReactNode } from "react";
 import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
@@ -30,7 +32,11 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     return (
         <div className="flex flex-col">
             <ApiPageDescription className="mt-3 text-sm" description={requestBody.description} isMarkdown={true} />
-            <div className="t-muted border-default border-b pb-5 text-sm leading-6">
+            <div
+                className={classNames("t-muted pb-5 text-sm leading-6", {
+                    "border-default border-b": requestBody.shape.type !== "fileUpload",
+                })}
+            >
                 {`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
                     fileUpload: (fileUpload) => {
                         if (fileUpload.value == null) {
@@ -50,44 +56,49 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             </div>
             {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
                 fileUpload: (fileUpload) =>
-                    fileUpload.value?.properties.map((p) =>
-                        visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
-                            file: (file) => (
-                                <EndpointParameterContent
-                                    key={file.key}
-                                    name={file.key}
-                                    description={undefined}
-                                    typeShorthand={file.isOptional ? "optional file" : "file"}
-                                    anchorIdParts={[...anchorIdParts, file.key]}
-                                    route={route}
-                                    availability={undefined}
-                                />
-                            ),
-                            fileArray: (fileArray) => (
-                                <EndpointParameterContent
-                                    key={fileArray.key}
-                                    name={fileArray.key}
-                                    description={undefined}
-                                    typeShorthand={fileArray.isOptional ? "optional list of files" : "list of files"}
-                                    anchorIdParts={[...anchorIdParts, fileArray.key]}
-                                    route={route}
-                                    availability={undefined}
-                                />
-                            ),
-                            bodyProperty: (bodyProperty) => (
-                                <EndpointParameter
-                                    name={bodyProperty.key}
-                                    description={bodyProperty.description}
-                                    shape={bodyProperty.valueShape}
-                                    anchorIdParts={[...anchorIdParts, bodyProperty.key]}
-                                    route={route}
-                                    availability={bodyProperty.availability}
-                                    types={types}
-                                />
-                            ),
-                            _other: () => null,
-                        }),
-                    ),
+                    fileUpload.value?.properties.map((p) => (
+                        <>
+                            <TypeComponentSeparator />
+                            {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
+                                file: (file) => (
+                                    <EndpointParameterContent
+                                        key={file.key}
+                                        name={file.key}
+                                        description={undefined}
+                                        typeShorthand={file.isOptional ? "optional file" : "file"}
+                                        anchorIdParts={[...anchorIdParts, file.key]}
+                                        route={route}
+                                        availability={undefined}
+                                    />
+                                ),
+                                fileArray: (fileArray) => (
+                                    <EndpointParameterContent
+                                        key={fileArray.key}
+                                        name={fileArray.key}
+                                        description={undefined}
+                                        typeShorthand={
+                                            fileArray.isOptional ? "optional list of files" : "list of files"
+                                        }
+                                        anchorIdParts={[...anchorIdParts, fileArray.key]}
+                                        route={route}
+                                        availability={undefined}
+                                    />
+                                ),
+                                bodyProperty: (bodyProperty) => (
+                                    <EndpointParameter
+                                        name={bodyProperty.key}
+                                        description={bodyProperty.description}
+                                        shape={bodyProperty.valueShape}
+                                        anchorIdParts={[...anchorIdParts, bodyProperty.key]}
+                                        route={route}
+                                        availability={bodyProperty.availability}
+                                        types={types}
+                                    />
+                                ),
+                                _other: () => null,
+                            })}
+                        </>
+                    )),
                 bytes: () => null,
                 typeShape: (typeShape) => (
                     <TypeReferenceDefinitions
