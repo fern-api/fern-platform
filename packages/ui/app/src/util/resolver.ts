@@ -963,6 +963,7 @@ export declare namespace ResolvedExampleEndpointRequest {
 
     interface Stream {
         type: "stream";
+        value: unknown[];
     }
 }
 
