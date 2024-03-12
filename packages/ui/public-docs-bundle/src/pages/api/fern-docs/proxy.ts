@@ -45,6 +45,14 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
             }
             return formData;
         }
+        case "octet-stream": {
+            if (body.value == null) {
+                return undefined;
+            }
+            const base64 = body.value.dataUrl;
+            const blob = await (await fetch(base64)).blob();
+            return new File([blob], body.value.name, { type: body.value.type });
+        }
         default:
             assertNever(body);
     }
