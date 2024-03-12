@@ -2,7 +2,7 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
@@ -85,20 +85,16 @@ interface PlaygroundObjectPropertiesFormProps {
     disabled?: boolean;
 }
 
-export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormProps> = ({
-    id,
-    properties,
-    onChange,
-    value,
-    indent = false,
-    types,
-    disabled,
-}) => {
+export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFormProps>((props) => {
+    const { id, properties, onChange, value, indent = false, types, disabled } = props;
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
             onChange((oldValue: unknown) => {
                 const oldObject = castToRecord(oldValue);
-                return { ...oldObject, [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue };
+                return {
+                    ...oldObject,
+                    [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue,
+                };
             });
         },
         [onChange],
@@ -214,7 +210,9 @@ export const PlaygroundObjectPropertiesForm: FC<PlaygroundObjectPropertiesFormPr
             )}
         </div>
     );
-};
+});
+
+PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
 
 function shouldShowProperty(shape: ResolvedObjectProperty["valueShape"], value: unknown): boolean {
     return shape.type !== "optional" || value !== undefined;

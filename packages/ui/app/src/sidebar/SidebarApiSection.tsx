@@ -1,14 +1,16 @@
-import { APIV1Read, DocsV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isEqual, last, sortBy } from "lodash-es";
 import moment from "moment";
-import { memo, ReactElement, ReactNode, useCallback } from "react";
+import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { FernCollapse } from "../components/FernCollapse";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 import { isApiPage, SidebarNode } from "./types";
@@ -203,6 +205,21 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
     const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
     const expanded = checkExpanded(slug);
 
+    const children = useMemo(
+        () => (
+            <FernCollapse isOpen={expanded} unmount={false}>
+                <InnerSidebarApiSection
+                    slug={slug}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    depth={depth + 1}
+                    artifacts={artifacts}
+                    apiSection={apiSection}
+                />
+            </FernCollapse>
+        ),
+        [apiSection, artifacts, depth, expanded, registerScrolledToPathListener, slug],
+    );
+
     return (
         <SidebarSlugLink
             className={className}
@@ -213,14 +230,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
         >
-            <InnerSidebarApiSection
-                className={classNames("expandable", { hidden: !expanded })}
-                slug={slug}
-                registerScrolledToPathListener={registerScrolledToPathListener}
-                depth={depth + 1}
-                artifacts={artifacts}
-                apiSection={apiSection}
-            />
+            {children}
         </SidebarSlugLink>
     );
 };

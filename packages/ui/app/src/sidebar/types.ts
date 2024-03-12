@@ -110,6 +110,7 @@ async function resolveSidebarNodeApiSection(
     if (subpackage == null) {
         return;
     }
+    // the parentSlug comes from the parent package, ignoring all pointsTo rewriting
     const slug = package_ != null && isSubpackage(package_) ? [...parentSlugs, package_.urlSlug] : parentSlugs;
     const endpointsPromise = subpackage.endpoints.map(
         async (endpoint): Promise<SidebarNode.EndpointPage> => ({
@@ -201,7 +202,7 @@ export async function resolveSidebarNodes(
                 if (lastSidebarNode != null && lastSidebarNode.type === "pageGroup") {
                     lastSidebarNode.pages.push({
                         ...page,
-                        slug: [...parentSlugs, page.urlSlug],
+                        slug: page.fullSlug ?? [...parentSlugs, page.urlSlug],
                         type: "page",
                         description: undefined,
                     });
@@ -212,7 +213,7 @@ export async function resolveSidebarNodes(
                         pages: [
                             {
                                 ...page,
-                                slug: [...parentSlugs, page.urlSlug],
+                                slug: page.fullSlug ?? [...parentSlugs, page.urlSlug],
                                 type: "page",
                                 description: undefined,
                             },
@@ -223,7 +224,8 @@ export async function resolveSidebarNodes(
             api: async (api) => {
                 const definition = apis[api.api];
                 if (definition != null) {
-                    const definitionSlug = api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug];
+                    const definitionSlug =
+                        api.fullSlug ?? (api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug]);
                     const resolved = await resolveSidebarNodeApiSection(
                         api.api,
                         api.api,
@@ -254,7 +256,7 @@ export async function resolveSidebarNodes(
                                       title: api.changelog.title ?? "Changelog",
                                       description: api.changelog.description,
                                       pageId: api.changelog.pageId,
-                                      slug: [...definitionSlug, api.changelog.urlSlug],
+                                      slug: api.changelog.fullSlug ?? [...definitionSlug, api.changelog.urlSlug],
                                       items: api.changelog.items.map((item) => ({
                                           date: item.date,
                                           pageId: item.pageId,
@@ -265,11 +267,13 @@ export async function resolveSidebarNodes(
                 }
             },
             section: async (section) => {
-                const sectionSlug = section.skipUrlSlug ? parentSlugs : [...parentSlugs, section.urlSlug];
+                const sectionSlug =
+                    section.fullSlug ?? (section.skipUrlSlug ? parentSlugs : [...parentSlugs, section.urlSlug]);
                 sidebarNodes.push({
                     type: "section",
                     title: section.title,
                     slug: sectionSlug,
+                    // if section.fullSlug is defined, the child slugs will be built from that, rather than from inherited parentSlugs
                     items: await resolveSidebarNodes(section.items, apis, sectionSlug),
                 });
             },

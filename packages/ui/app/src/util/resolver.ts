@@ -497,7 +497,49 @@ function resolveRequestBodyShape(
             description: undefined,
             availability: undefined,
         }),
-        fileUpload: (fileUpload) => Promise.resolve(fileUpload),
+        fileUpload: async (fileUpload) => ({
+            type: "fileUpload",
+            value:
+                fileUpload.value != null
+                    ? {
+                          description: await serializeMdxContent(fileUpload.value.description),
+                          availability: fileUpload.value.availability,
+                          name: fileUpload.value.name,
+                          properties: await Promise.all(
+                              fileUpload.value.properties.map(
+                                  async (property): Promise<ResolvedFileUploadRequestProperty> => {
+                                      switch (property.type) {
+                                          case "file": {
+                                              return {
+                                                  type: property.value.type,
+                                                  key: property.value.key,
+                                                  // TODO: support description and availability
+                                                  description: undefined,
+                                                  availability: undefined,
+                                                  isOptional: property.value.isOptional,
+                                              };
+                                          }
+                                          case "bodyProperty": {
+                                              const [description, valueShape] = await Promise.all([
+                                                  serializeMdxContent(property.description),
+                                                  resolveTypeReference(property.valueType, types),
+                                              ]);
+                                              return {
+                                                  type: "bodyProperty",
+                                                  key: property.key,
+                                                  description,
+                                                  availability: property.availability,
+                                                  valueShape,
+                                              };
+                                          }
+                                      }
+                                  },
+                              ),
+                          ),
+                      }
+                    : undefined,
+        }),
+        bytes: (bytes) => Promise.resolve(bytes),
         reference: (reference) => resolveTypeReference(reference.value, types),
         _other: () => Promise.resolve({ type: "unknown" }),
     });
@@ -668,6 +710,7 @@ export function dereferenceObjectProperties(
         return sortBy(
             [...directProperties],
             (property) => unwrapReference(property.valueShape, types).type === "optional",
+            (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         );
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
@@ -680,6 +723,7 @@ export function dereferenceObjectProperties(
     return sortBy(
         [...directProperties, ...filteredExtendedProperties],
         (property) => unwrapReference(property.valueShape, types).type === "optional",
+        (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         (property) => property.key,
     );
 }
@@ -901,7 +945,10 @@ export interface ResolvedExampleEndpointCall {
     snippets: ResolvedCodeSnippet[];
 }
 
-export type ResolvedExampleEndpointRequest = ResolvedExampleEndpointRequest.Json | ResolvedExampleEndpointRequest.Form;
+export type ResolvedExampleEndpointRequest =
+    | ResolvedExampleEndpointRequest.Json
+    | ResolvedExampleEndpointRequest.Form
+    | ResolvedExampleEndpointRequest.Stream;
 
 export declare namespace ResolvedExampleEndpointRequest {
     interface Json {
@@ -912,6 +959,11 @@ export declare namespace ResolvedExampleEndpointRequest {
     interface Form {
         type: "form";
         value: Record<string, ResolvedFormValue>;
+    }
+
+    interface Stream {
+        type: "stream";
+        value: unknown[];
     }
 }
 
@@ -1278,10 +1330,32 @@ export interface ResolvedReferenceShape {
     typeId: string;
 }
 
-export type ResolvedHttpRequestBodyShape = APIV1Read.HttpRequestBodyShape.FileUpload | ResolvedTypeShape;
+export declare namespace ResolvedFileUploadRequestProperty {
+    interface BodyProperty extends ResolvedObjectProperty {
+        type: "bodyProperty";
+    }
+}
+
+export type ResolvedFileUploadRequestProperty = APIV1Read.FileProperty | ResolvedFileUploadRequestProperty.BodyProperty;
+
+export interface ResolvedFileUploadRequest extends WithDescription, WithAvailability {
+    name: string;
+    properties: ResolvedFileUploadRequestProperty[];
+}
+
+export interface ResolvedFileUpload {
+    type: "fileUpload";
+    value: ResolvedFileUploadRequest | undefined;
+}
+
+export type ResolvedHttpRequestBodyShape =
+    | ResolvedFileUpload
+    | APIV1Read.HttpRequestBodyShape.Bytes
+    | ResolvedTypeShape;
 
 interface ResolvedHttpRequestBodyShapeVisitor<T> {
-    fileUpload: (shape: APIV1Read.HttpRequestBodyShape.FileUpload) => T;
+    fileUpload: (shape: ResolvedFileUpload) => T;
+    bytes: (shape: APIV1Read.BytesRequest) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
 
@@ -1291,6 +1365,8 @@ export function visitResolvedHttpRequestBodyShape<T>(
 ): T {
     if (shape.type === "fileUpload") {
         return visitor.fileUpload(shape);
+    } else if (shape.type === "bytes") {
+        return visitor.bytes(shape);
     } else {
         return visitor.typeShape(shape);
     }

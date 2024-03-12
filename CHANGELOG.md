@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 2024-03-07
+
+- Added `headers` to the WebSocket API Reference
+- Fixed revalidate-all to include all basepaths (not just the pages) so that redirects are also revalidated.
+- Fixed freezing API Playground when an onChange event is triggered by a literal.
+- Fixed `content-type` in the cURL code snippets when `multipart/form-data` provided.
+- Sort `Deprecated` and `Beta` object properties to the bottom of each object in the API Reference.
+- devex: Added CI integration to revalidate all customer docs pages when a new frontend version is deployed.
+
 # 2024-03-06
 
 - New `<Steps />` mdx component based on nextra's https://nextra.site/docs/guide/built-ins/steps.
 - Fixed double-outline issue around object properties in the API Reference when they are deep-linked.
+- Added new color scheme options, including sidebar, header, and card background colors
+- Enabled `excerpt` in frontmatter to render a short description under the title of each markdown page.
 
 # 2024-03-05
 
@@ -19,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### DevEx improvements
 
-- Enabled PR Previews [#480](https://github.com/fern-api/fern-ui/pull/480)
+- Enabled PR Previews [#480](https://github.com/fern-api/fern-platform/pull/480)
 
 ### Improvements
 
@@ -56,26 +67,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 # 2024-03-01
 
-- Fully removed react-markdown in favor of using next-mdx-remote to serialize all description fields. This allows us to use the same components that we already we use in markdown guides in the API reference. Also, this reduces the bundle size and improves client-side performance since all markdown-based descriptions are now compiled server-side. See [#468](https://github.com/fern-api/fern-ui/pull/468).
+- Fully removed react-markdown in favor of using next-mdx-remote to serialize all description fields. This allows us to use the same components that we already we use in markdown guides in the API reference. Also, this reduces the bundle size and improves client-side performance since all markdown-based descriptions are now compiled server-side. See [#468](https://github.com/fern-api/fern-platform/pull/468).
 
 # 2024-02-29
 
-- API Playground now supports WebSocket. See [#470](https://github.com/fern-api/fern-ui/pull/470)
+- API Playground now supports WebSocket. See [#470](https://github.com/fern-api/fern-platform/pull/470)
 
 # 2024-02-28
 
-- Fixed [scrolling issue in mobile](https://github.com/fern-api/fern-ui/commit/a0dbc6195c3de6c2145dce32baf1826bb6b99c25).
+- Fixed [scrolling issue in mobile](https://github.com/fern-api/fern-platform/commit/a0dbc6195c3de6c2145dce32baf1826bb6b99c25).
 - Fixed random navigation regressions due to major shiki-related refactor.
 
 # 2024-02-27
 
 - Resolved issues with shiki syntax highlighter causing the page to crash on some code samples because the server-generated HAST was too large. Switching to client-side rendering for code samples to avoid this issue.
 - Resolved issues with scrolling navigation issues due to updated code sample rendering. There's still an outstanding bug with scrolling on mobile, which is currently jumpy and still being investigated.
-- Added Changelog Page under API sections. See [#469](https://github.com/fern-api/fern-ui/pull/469)
+- Added Changelog Page under API sections. See [#469](https://github.com/fern-api/fern-platform/pull/469)
 
 # 2024-02-26
 
-- Replaced `react-syntax-highlighter` with [`shiki`](https://shiki.style/) for better performance syntax highlighting. See [#463](https://github.com/fern-api/fern-ui/pull/463) for more details.
+- Replaced `react-syntax-highlighter` with [`shiki`](https://shiki.style/) for better performance syntax highlighting. See [#463](https://github.com/fern-api/fern-platform/pull/463) for more details.
 
 # 2024-02-23
 

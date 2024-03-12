@@ -4,8 +4,11 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
-  ALGOLIA_SEARCH_INDEX: ${{ secrets. ALGOLIA_SEARCH_INDEX }}
+  ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
+  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+  JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
 on: pull_request
 jobs:
   deploy:
@@ -42,24 +45,17 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: |
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
+          echo "Deployment URL: $DEPLOYMENT_URL"
 
-          DOMAINS="
-          docs.joincandidhealth.com
-          reference.flatfile.com
-          docs.vellum.ai
-          docs.flagright.com
-          docs.propexo.com
-          docs.pier-finance.com
-          assemblyai.docs.buildwithfern.com
-          docs.hellodata.ai
-          docs.privategpt.dev
-          docs.mercoa.com
-          "
+          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+          ALIAS_DOMAINS=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
 
-          echo "## PR Preview" >> preview.txt
-          for DOMAIN in $DOMAINS
-          do
+          echo "## PR Preview" > preview.txt
+
+          for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
               echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
+            fi
           done
 
       - name: Comment URL in PR

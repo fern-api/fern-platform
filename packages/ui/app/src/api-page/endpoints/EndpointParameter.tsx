@@ -1,14 +1,13 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { memo, useEffect, useState, useTransition } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
@@ -22,6 +21,15 @@ export declare namespace EndpointParameter {
         availability: APIV1Read.Availability | null | undefined;
         types: Record<string, ResolvedTypeDefinition>;
     }
+
+    export interface ContentProps {
+        name: string;
+        description: SerializedMdxContent | undefined;
+        typeShorthand: string;
+        anchorIdParts: string[];
+        route: string;
+        availability: APIV1Read.Availability | null | undefined;
+    }
 }
 
 export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
@@ -33,55 +41,42 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     availability,
     types,
 }) => {
-    const anchorId = getAnchorId(anchorIdParts);
-    const anchorRoute = `${route}#${anchorId}`;
-    const router = useRouter();
-    const [isActive, setIsActive] = useState(false);
-    const [, startTransition] = useTransition();
-
-    useEffect(() => {
-        if (router.isReady) {
-            startTransition(() => {
-                setIsActive(router.asPath.endsWith(anchorRoute));
-            });
-        }
-    }, [anchorRoute, router.asPath, router.isReady]);
-
     return (
-        <EndpointParameterInternal
+        <EndpointParameterContent
             name={name}
             description={description}
+            typeShorthand={renderTypeShorthand(shape, undefined, types)}
             anchorIdParts={anchorIdParts}
             route={route}
-            shape={shape}
             availability={availability}
-            types={types}
-            isActive={isActive}
         />
     );
 };
 
-interface EndpointParameterInternalProps extends EndpointParameter.Props {
-    isActive: boolean;
-}
-
-const EndpointParameterInternal = memo<EndpointParameterInternalProps>(function EndpointParameterInternal({
+export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.ContentProps>> = ({
     name,
-    description,
     anchorIdParts,
     route,
-    shape,
     availability,
-    types,
-    isActive,
-}) {
+    description,
+    typeShorthand,
+    children,
+}) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
+    const router = useRouter();
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+        setIsActive(router.asPath.endsWith(`${route}#${anchorId}`));
+    }, [router.asPath, anchorId, route]);
+
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
             className={classNames("scroll-mt-header-height-padded relative flex flex-col gap-2 py-3", {
-                "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
+                "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":
+                    isActive,
             })}
         >
             <div className="group/anchor-container flex items-center">
@@ -94,19 +89,12 @@ const EndpointParameterInternal = memo<EndpointParameterInternalProps>(function 
                     >
                         {name}
                     </MonospaceText>
-                    <div className="t-muted text-xs">{renderTypeShorthand(shape, undefined, types)}</div>
+                    <div className="t-muted text-xs">{typeShorthand}</div>
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </div>
             <ApiPageDescription isMarkdown={true} description={description} className="!t-muted text-sm" />
-            <TypeReferenceDefinitions
-                shape={shape}
-                isCollapsible
-                anchorIdParts={anchorIdParts}
-                applyErrorStyles={false}
-                route={route}
-                types={types}
-            />
+            {children}
         </div>
     );
-});
+};

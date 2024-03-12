@@ -27,6 +27,82 @@ export const HTMLTableOfContents: React.FC<TableOfContents.HTMLProps> = ({ class
 let anchorJustSet = false;
 let anchorJustSetTimeout: number;
 
+function TableOfContentsItem({
+    text,
+    anchorString,
+    items,
+    anchorInView,
+}: {
+    text: string;
+    anchorString: string;
+    items: TableOfContentsItem[];
+    anchorInView?: string;
+}) {
+    return (
+        <li>
+            {text.length > 0 && (
+                <Link
+                    className={classNames(
+                        "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline hover:transition hover:no-underline",
+                        {
+                            "t-muted": anchorInView !== anchorString,
+                            "t-accent-aaa": anchorInView === anchorString,
+                        },
+                    )}
+                    href={`#${anchorString}`}
+                >
+                    {text}
+                </Link>
+            )}
+            {items.length > 0 && <TableOfContentsList headings={items} indent={true} anchorInView={anchorInView} />}
+        </li>
+    );
+}
+
+function TableOfContentsList({
+    headings,
+    indent,
+    rootClassName,
+    rootStyle,
+    anchorInView,
+}: {
+    headings: TableOfContentsItem[];
+    indent?: boolean;
+    rootClassName?: string;
+    rootStyle?: CSSProperties;
+    anchorInView?: string | undefined;
+}) {
+    if (headings.length === 0) {
+        return null;
+    }
+    return (
+        <ul
+            className={classNames("list-none", {
+                "pl-4": indent,
+                [rootClassName ?? ""]: !indent,
+                "pt-3 pb-4 border-b border-default": !indent,
+            })}
+            style={!indent ? rootStyle : undefined}
+        >
+            {headings.map(({ simpleString: text, anchorString, children }, index) => {
+                if (text.length === 0 && children.length === 0) {
+                    // don't render empty headings
+                    return null;
+                }
+                return (
+                    <TableOfContentsItem
+                        key={index}
+                        text={text}
+                        anchorString={anchorString}
+                        items={children}
+                        anchorInView={anchorInView}
+                    />
+                );
+            })}
+        </ul>
+    );
+}
+
 export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
     const router = useRouter();
 
@@ -95,52 +171,18 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
         };
     }, [allAnchors, tableOfContents]);
 
-    const renderList = (headings: TableOfContentsItem[], indent?: boolean) => {
-        if (headings.length === 0) {
-            return null;
-        }
-        return (
-            <ul
-                className={classNames("list-none", {
-                    "pl-4": indent,
-                    [className ?? ""]: !indent,
-                    "pt-3 pb-4 border-b border-default": !indent,
-                })}
-                style={style}
-            >
-                {headings.map(({ simpleString: text, anchorString, children }, index) => {
-                    if (text.length === 0 && children.length === 0) {
-                        // don't render empty headings
-                        return null;
-                    }
-                    return (
-                        <li key={index}>
-                            {text.length > 0 && (
-                                <Link
-                                    className={classNames(
-                                        "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline hover:transition hover:no-underline",
-                                        {
-                                            "t-muted": anchorInView !== anchorString,
-                                            "t-default": anchorInView === anchorString,
-                                        },
-                                    )}
-                                    href={`#${anchorString}`}
-                                >
-                                    {text}
-                                </Link>
-                            )}
-                            {children.length > 0 && renderList(children, true)}
-                        </li>
-                    );
-                })}
-            </ul>
-        );
-    };
-
     return (
         <>
             {tableOfContents.length > 0 && <h6 className="m-0">On this page</h6>}
-            {renderList(tableOfContents)}
+            {tableOfContents.length > 0 && (
+                <TableOfContentsList
+                    headings={tableOfContents}
+                    indent={false}
+                    anchorInView={anchorInView}
+                    rootClassName={className}
+                    rootStyle={style}
+                />
+            )}
         </>
     );
 };

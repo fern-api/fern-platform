@@ -43,6 +43,8 @@ export declare namespace ResolvedPath {
         serializedMdxContent: SerializedMdxContent;
         editThisPageUrl: string | null;
         neighbors: Neighbors;
+        // TODO: downselect apis to only the fields we need
+        apis: Record<string, ResolvedRootPackage>;
     }
 
     interface ApiPage {

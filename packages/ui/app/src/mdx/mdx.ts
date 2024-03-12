@@ -54,6 +54,26 @@ function stringHasMarkdown(s: string): boolean {
         return true;
     }
 
+    // has horizontal rules
+    if (s.match(/^\s+---+$/m)) {
+        return true;
+    }
+
+    // has tables
+    if (s.match(/^\s*\|.*\|.*\|.*\|/m)) {
+        return true;
+    }
+
+    // has bolded or italicized text
+    if (s.match(/\*\*|__|\*|_/)) {
+        return true;
+    }
+
+    // has strikethrough text
+    if (s.match(/~~/)) {
+        return true;
+    }
+
     // has links or images
     if (s.match(/\[.+\]\(.+\)/)) {
         return true;

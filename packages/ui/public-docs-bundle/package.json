@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-ui.git",
+    "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/public-docs-bundle"
   },
   "private": true,
@@ -38,14 +38,16 @@
     "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.54.1-1-g293e7bf",
+    "@fern-api/fdr-sdk": "0.57.0-1-ge86efe6",
+    "@fern-api/venus-api-sdk": "^0.1.0",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@tailwindcss/forms": "^0.5.7",
     "@vercel/edge-config": "^1.1.0",
+    "@workos-inc/node": "^6.1.0",
     "cssnano": "^6.0.3",
+    "jose": "^5.2.3",
     "next": "^14.1.1",
-    "next-axiom": "0",
     "postcss-import": "^16.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

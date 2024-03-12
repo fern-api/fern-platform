@@ -1,5 +1,3 @@
-import type { NavigatableDocsNode } from "@fern-api/fdr-sdk";
-
 /**
  * Joins the given URL slugs with a `/`. Ignores empty ones.
  */
@@ -16,30 +14,6 @@ export function joinUrlSlugs(...parts: string[]): string {
  */
 export function splitFullSlugIntoParts(fullSlug: string): string[] {
     return fullSlug.split("/").map(decodeURIComponent);
-}
-
-type GetFullSlugForNavigatableOpts = {
-    omitDefault?: boolean;
-    basePath: string | undefined;
-};
-
-export function getFullSlugForNavigatable(
-    node: NavigatableDocsNode | undefined,
-    opts: GetFullSlugForNavigatableOpts,
-): string {
-    if (node == null) {
-        return "";
-    }
-    const { omitDefault = false, basePath } = opts ?? {};
-    const basePathSlug = basePath != null && basePath.trim().length > 1 ? basePath.trim().slice(1) : undefined;
-    const parts: string[] = basePathSlug != null ? [basePathSlug] : [];
-    if (node.context.type === "versioned-tabbed" || node.context.type === "versioned-untabbed") {
-        if (node.context.version.info.index !== 0 || !omitDefault) {
-            parts.push(node.context.version.info.slug);
-        }
-    }
-    parts.push(node.leadingSlug);
-    return joinUrlSlugs(...parts);
 }
 
 export function getSlugFromUrl({ pathname, basePath }: { pathname: string; basePath: string | undefined }): string {

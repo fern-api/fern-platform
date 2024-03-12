@@ -1,12 +1,12 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import classNames from "classnames";
 import { useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useViewportContext } from "../../contexts/viewport-context/useViewportContext";
+import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
@@ -37,8 +37,6 @@ const PADDING_BOTTOM = 40;
 const LINE_HEIGHT = 19.5;
 const MOBILE_MAX_LINES = 20;
 const CONTENT_PADDING = 16 + TITLED_EXAMPLE_PADDING;
-
-const fernLanguageAtom = atomWithStorage<string>("fern-language-id", "curl");
 
 const ERROR_ANCHOR_PREFIX = "response.error.";
 
@@ -119,7 +117,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody[0]?.contentType);
     const clients = useMemo(() => generateCodeExamples(examples), [examples]);
-    const [selectedLanguage, setSelectedLanguage] = useAtom(fernLanguageAtom);
+    const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -138,12 +136,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     );
 
     const requestJson = selectedClient.exampleCall.requestBody?.value;
-    const requestCodeSnippet = selectedClient.code;
     const responseJson = selectedClient.exampleCall.responseBody?.value;
     // const responseHast = selectedClient.exampleCall.responseHast;
     const responseCodeSnippet = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);
 
-    const selectedExampleClientLineCount = requestCodeSnippet.split("\n").length;
+    const selectedExampleClientLineCount = selectedClient.code.split("\n").length;
 
     const selectorHeight =
         (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
@@ -283,11 +280,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 clients={clients}
                                 selectedClient={selectedClient}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
-                                requestCodeSnippet={requestCodeSnippet}
-                                requestCode={selectedClient.code}
+                                requestCodeSnippet={selectedClient.code}
                                 requestCurlJson={requestJson}
                                 responseCodeSnippet={responseCodeSnippet}
-                                // responseHast={responseHast}
                                 responseJson={responseJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}

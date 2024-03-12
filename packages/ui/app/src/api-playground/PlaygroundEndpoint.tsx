@@ -1,10 +1,11 @@
-import { APIV1Read, joinUrlSlugs } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
+import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
@@ -45,7 +46,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 method: endpoint.method,
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
-            const response = await fetch("/api/proxy", {
+            const response = await fetch("/api/fern-docs/proxy", {
                 method: "POST",
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: JSON.stringify({

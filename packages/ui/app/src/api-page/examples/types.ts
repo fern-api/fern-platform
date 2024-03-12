@@ -22,7 +22,7 @@ export interface HttpRequestExample {
         username: string;
         password: string;
     };
-    body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined;
+    body: ResolvedExampleEndpointRequest | null | undefined;
 }
 
 export function endpointExampleToHttpRequestExample(
@@ -53,17 +53,17 @@ export function endpointExampleToHttpRequestExample(
         });
     }
 
-    let body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined = requestBody;
+    const body: ResolvedExampleEndpointRequest | null | undefined = requestBody;
 
-    if (body != null) {
+    if (endpoint.requestBody[0]?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
+    }
+
+    if (body != null && headers["Content-Type"] == null) {
         if (body.type === "json") {
             headers["Content-Type"] = "application/json";
         } else if (body.type === "form") {
             headers["Content-Type"] = "multipart/form-data";
-        }
-    } else {
-        if (endpoint.requestBody[0]?.shape.type === "fileUpload") {
-            body = { type: "file" };
         }
     }
 
@@ -71,10 +71,14 @@ export function endpointExampleToHttpRequestExample(
         method: endpoint.method,
         url,
         urlQueries: example.queryParameters,
-        headers,
+        headers: JSON.parse(JSON.stringify(headers)),
         basicAuth,
         body,
     };
+}
+
+function requiresUrlEncode(str: string): boolean {
+    return encodeURIComponent(str) !== str;
 }
 
 export function stringifyHttpRequestExampleToCurl({
@@ -101,11 +105,14 @@ export function stringifyHttpRequestExampleToCurl({
         .join("");
     const basicAuthString = basicAuth != null ? ` \\\n     -u "${basicAuth.username}:${basicAuth.password}"` : "";
 
-    // GET requests don't have a body, so `-d` is used to pass query parameters
+    // GET requests don't have a body, so `--data-urlencode` is used to pass query parameters
     const urlQueriesGetString =
         method === "GET"
             ? toUrlEncoded(urlQueries)
-                  .map(([key, value]) => ` \\\n     -d ${key.includes("[") ? `"${key}"` : key}=${value}`)
+                  .map(
+                      ([key, value]) =>
+                          ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`,
+                  )
                   .join("")
             : "";
 
@@ -126,7 +133,7 @@ export function stringifyHttpRequestExampleToCurl({
                               }),
                           )
                           .join(""),
-                  file: () => " \\\n     -d @filename",
+                  stream: () => " \\\n     --data-binary @<filename>.xyz",
                   _other: () => "",
               });
 
@@ -174,15 +181,15 @@ export function sortKeysByShape(
         string: () => obj,
         boolean: () => obj,
         object: (object) => {
-            const p = dereferenceObjectProperties(object, types);
+            const objectProperties = dereferenceObjectProperties(object, types);
             return isPlainObject(obj)
                 ? mapValues(
                       sortKeysBy(
                           obj,
-                          p.map((p) => p.key),
+                          objectProperties.map((p) => p.key),
                       ),
                       (value, key) => {
-                          const property = p.find((p) => p.key === key);
+                          const property = objectProperties.find((p) => p.key === key);
                           if (property == null) {
                               return value;
                           }
@@ -233,7 +240,30 @@ export function sortKeysByShape(
         stringLiteral: () => obj,
         unknown: () => obj,
         reference: ({ typeId }) => sortKeysByShape(obj, types[typeId], types),
-        fileUpload: () => obj,
+        fileUpload: ({ value }) => {
+            if (value == null || !isPlainObject(obj)) {
+                return obj;
+            }
+
+            return mapValues(
+                sortKeysBy(
+                    obj,
+                    value.properties.map((p) => p.key),
+                ),
+                (v, key) => {
+                    const property = value.properties.find((p) => p.key === key);
+
+                    if (property == null) {
+                        return v;
+                    }
+
+                    if (property.type === "bodyProperty") {
+                        return sortKeysByShape(v, property.valueShape, types);
+                    }
+                },
+            );
+        },
+        bytes: () => obj,
         fileDownload: () => obj,
         streamCondition: () => obj,
         streamingText: () => obj,

@@ -321,5 +321,6 @@ function shouldShowExpandCollapse(
         fileDownload: () => false,
         streamingText: () => false,
         streamCondition: () => false,
+        bytes: () => false,
     });
 }

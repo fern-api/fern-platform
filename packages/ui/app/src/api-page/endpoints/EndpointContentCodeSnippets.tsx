@@ -18,7 +18,6 @@ export declare namespace EndpointContentCodeSnippets {
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
         requestCodeSnippet: string;
-        requestCode: string;
         // requestHast: Root;
         requestCurlJson: unknown;
         responseCodeSnippet: string;
@@ -41,7 +40,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     selectedClient,
     onClickClient,
     requestCodeSnippet,
-    requestCode,
     requestCurlJson,
     responseCodeSnippet,
     // responseHast,
@@ -88,7 +86,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                copyToClipboardText={() => requestCodeSnippet}
+                // copyToClipboardText={() => requestCodeSnippet}
                 actions={
                     <>
                         <PlaygroundButton
@@ -108,7 +106,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={requestCode}
+                code={requestCodeSnippet}
                 language={selectedClient.language === "curl" ? "bash" : selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
@@ -124,8 +122,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
-                    copyToClipboardText={() => responseCodeSnippet}
-                    code={JSON.stringify(example.responseBody.value, undefined, 2)}
+                    code={responseCodeSnippet}
                     language="json"
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={responseJson}

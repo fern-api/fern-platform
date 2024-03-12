@@ -22,6 +22,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
             prev: null,
             next: null,
         },
+        apis: {},
     },
     navigation: {
         sidebarNodes: [],

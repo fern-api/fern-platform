@@ -1,4 +1,6 @@
 import { Root } from "hast";
+import { h } from "hastscript";
+import { useCallback } from "react";
 import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
 
 let highlighter: Highlighter;
@@ -16,6 +18,10 @@ export async function getHighlighterInstance(language: string): Promise<Highligh
     }
 
     return highlighter;
+}
+
+function hasLanguage(lang: string): boolean {
+    return highlighter?.getLoadedLanguages().includes(parseLang(lang));
 }
 
 // export function highlight(
@@ -93,7 +99,7 @@ export const LANGUAGES: Array<BundledLanguage | SpecialLanguage> = [
     "sql",
 ];
 
-function parseLang(lang: string): BundledLanguage | SpecialLanguage {
+export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
     if (lang == null) {
         return "txt";
     }
@@ -108,4 +114,62 @@ function parseLang(lang: string): BundledLanguage | SpecialLanguage {
         return "bash";
     }
     return "txt";
+}
+
+type HighlightCallback = (code: string, language: string, cb: (tokens: HighlightedTokens) => void) => void;
+
+/**
+ * useHighlightTokens is a hook that wraps around highlightTokens to safely handle async highlighting.
+ * Provided a code and language, it will first check if the language has already been loaded. If it hasn't,
+ * it will call the cb() with unhighlighted tokens, and then asynchronously load the language and call the cb() again.
+ *
+ * the cb() function should be used to set the state of the component that will render the highlighted code. i.e.
+ *
+ * ```tsx
+ * const { code, lang } = props;
+ * const highlightTokens = useHighlightTokens();
+ * const [tokens, setTokens] = useState<HighlightedTokens>(() => createRawTokens(code, lang));
+ * useEffect(() => {
+ *      highlightTokens(code, lang, setTokens);
+ * }, [code, lang, setTokens]);
+ *
+ * // render the tokens
+ * ```
+ */
+export function useHighlightTokens(): HighlightCallback {
+    return useCallback<HighlightCallback>((code, language, cb) => {
+        if (!hasLanguage(language)) {
+            cb(createRawTokens(code, language));
+        }
+        void (async () => {
+            const highlighter = await getHighlighterInstance(language);
+            cb(highlightTokens(highlighter, code, language));
+        })();
+    }, []);
+}
+
+export function createRawTokens(code: string, lang: string): HighlightedTokens {
+    code = trimCode(code);
+
+    return {
+        code,
+        lang,
+        hast: {
+            type: "root",
+            children: [
+                h("pre", [
+                    h(
+                        "code",
+                        code
+                            .split("\n")
+                            .flatMap((line, idx) =>
+                                idx === 0
+                                    ? [h("span", { class: "line" }, line)]
+                                    : ["\n", h("span", { class: "line" }, line)],
+                            ),
+                    ),
+                ]),
+            ],
+        },
+    };
 }

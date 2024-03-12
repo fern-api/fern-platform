@@ -1,4 +1,3 @@
-import { joinUrlSlugs } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -21,6 +20,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
+import { joinUrlSlugs } from "../util/slug";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -145,6 +145,7 @@ export function PlaygroundEndpointFormAside({
                 className="min-h-0 shrink"
                 viewportClassName="py-6 pr-2 mask-grad-top"
                 type="scroll"
+                scrollbars="vertical"
             >
                 <FernButtonGroup className="mb-6 p-1">
                     <FernButton onClick={resetWithExample} size="small" variant="minimal">
@@ -196,6 +197,7 @@ export function PlaygroundEndpointFormAside({
                     {endpoint.requestBody[0] != null &&
                         visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
                             fileUpload: () => null,
+                            bytes: () => null,
                             typeShape: (shape) => {
                                 shape = unwrapReference(shape, types);
 

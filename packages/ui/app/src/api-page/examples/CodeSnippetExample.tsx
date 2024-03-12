@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
-import { createRef, FC, useEffect, useMemo } from "react";
+import { createRef, FC, useCallback, useEffect, useMemo } from "react";
 import { capturePosthogEvent } from "../../analytics/posthog";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
@@ -8,12 +8,12 @@ import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
 
 export declare namespace CodeSnippetExample {
-    export interface Props extends TitledExample.Props {
+    export interface Props extends Omit<TitledExample.Props, "copyToClipboardText"> {
         // hast: Root;
         id?: string;
         code: string;
         language: string;
-        hoveredPropertyPath: JsonPropertyPath | undefined;
+        hoveredPropertyPath?: JsonPropertyPath | undefined;
         json: unknown;
         jsonStartLine?: number;
         scrollAreaStyle?: React.CSSProperties;
@@ -71,7 +71,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     }, [requestHighlightLines, viewportRef]);
 
     return (
-        <TitledExample {...props}>
+        <TitledExample copyToClipboardText={useCallback(() => code, [code])} {...props}>
             <FernSyntaxHighlighter
                 id={id}
                 className="rounded-t-0 rounded-b-[inherit]"

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-ui.git",
+    "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/app"
   },
   "private": true,
@@ -29,7 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.54.1-1-g293e7bf",
+    "@fern-api/fdr-sdk": "0.57.0-1-ge86efe6",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
@@ -55,7 +55,7 @@
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
-    "jotai": "^2.6.0",
+    "jotai": "^2.7.0",
     "jsonpath": "^1.1.1",
     "lodash-es": "^4.17.21",
     "mdast-util-mdx-jsx": "^3.1.0",
