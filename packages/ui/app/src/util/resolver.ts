@@ -1347,7 +1347,7 @@ export type ResolvedHttpRequestBodyShape =
 
 interface ResolvedHttpRequestBodyShapeVisitor<T> {
     fileUpload: (shape: ResolvedFileUpload) => T;
-    bytesRequest: (shape: APIV1Read.BytesRequest) => T;
+    bytes: (shape: APIV1Read.BytesRequest) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
 
@@ -1358,7 +1358,7 @@ export function visitResolvedHttpRequestBodyShape<T>(
     if (shape.type === "fileUpload") {
         return visitor.fileUpload(shape);
     } else if (shape.type === "bytes") {
-        return visitor.bytesRequest(shape);
+        return visitor.bytes(shape);
     } else {
         return visitor.typeShape(shape);
     }

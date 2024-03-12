@@ -44,8 +44,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         ) as APIV1Read.FilePropertySingle[];
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
-                    bytesRequest: (bytesRequest) =>
-                        `binary data${bytesRequest.contentType != null ? ` of type ${bytesRequest.contentType}` : ""}`,
+                    bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
                     typeShape: (typeShape) => renderTypeShorthand(typeShape, { withArticle: true }, types),
                 })}.`}
             </div>
@@ -89,7 +88,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                             _other: () => null,
                         }),
                     ),
-                bytesRequest: () => null,
+                bytes: () => null,
                 typeShape: (typeShape) => (
                     <TypeReferenceDefinitions
                         shape={typeShape}
