@@ -27,9 +27,12 @@ export const getNotFoundPageStaticProps: GetStaticProps<NotFoundPage.Props> = as
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
         url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: host ?? "", pathname }),
     });
-    const basePath = docs.ok ? docs.body.baseUrl.basePath : undefined;
-    return {
-        props: { basePath: basePath ?? null },
-        revalidate: 60,
-    };
+
+    if (!docs.ok) {
+        return { redirect: { destination: "/", permanent: false } };
+    }
+
+    const basePath = docs.body.baseUrl.basePath;
+
+    return { redirect: { destination: basePath ?? "/", permanent: false } };
 };
