@@ -22,7 +22,7 @@ export interface HttpRequestExample {
         username: string;
         password: string;
     };
-    body: ResolvedExampleEndpointRequest | { type: "file" } | null | undefined;
+    body: ResolvedExampleEndpointRequest | null | undefined;
 }
 
 export function endpointExampleToHttpRequestExample(
@@ -133,7 +133,7 @@ export function stringifyHttpRequestExampleToCurl({
                               }),
                           )
                           .join(""),
-                  file: () => " \\\n     -d @filename",
+                  stream: () => " \\\n     --data-binary @<filename>.xyz",
                   _other: () => "",
               });
 
