@@ -4,6 +4,7 @@ import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { atom, useAtom } from "jotai";
+import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
@@ -27,6 +28,7 @@ import { PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorC
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
+    PlaygroundFormStateBody,
     PlaygroundRequestFormAuth,
     PlaygroundWebSocketRequestFormState,
 } from "./types";
@@ -415,7 +417,19 @@ export function getInitialEndpointRequestFormStateWithExample(
         headers: exampleCall.headers,
         pathParameters: exampleCall.pathParameters,
         queryParameters: exampleCall.queryParameters,
-        body: exampleCall.requestBody?.value,
+        body:
+            exampleCall.requestBody?.type === "form"
+                ? {
+                      type: "form-data",
+                      value: mapValues(
+                          exampleCall.requestBody.value,
+                          (exampleValue): PlaygroundFormStateBody.FormDataEntryValue =>
+                              exampleValue.type === "filename"
+                                  ? { type: "file", value: undefined }
+                                  : { type: "json", value: exampleValue.value },
+                      ),
+                  }
+                : { type: "json", value: exampleCall.requestBody?.value },
     };
 }
 

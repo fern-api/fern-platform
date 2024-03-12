@@ -13,7 +13,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody, PlaygroundRequestFormState } from "./types";
 
 export function unknownToString(value: unknown): string {
     if (typeof value === "string") {
@@ -177,6 +177,10 @@ function buildRedactedHeaders(
         }
     });
 
+    if (formState.type === "endpoint" && formState.body != null) {
+        headers["Content-Type"] = formState.body.type === "form-data" ? "multipart/form-data" : "application/json";
+    }
+
     const requestBody = endpoint.requestBody[0];
     if (requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
@@ -215,19 +219,23 @@ function buildRedactedHeaders(
 export function buildUnredactedHeaders(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState | undefined,
+    formState: PlaygroundRequestFormState,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
     if (endpoint == null) {
         return headers;
     }
     endpoint.headers.forEach((header) => {
-        if (formState?.headers[header.key] != null) {
+        if (formState.headers[header.key] != null) {
             headers[header.key] = unknownToString(formState.headers[header.key]);
         }
     });
 
     const requestBody = endpoint.requestBody[0];
+
+    if (formState.type === "endpoint" && formState.body != null) {
+        headers["Content-Type"] = formState.body.type === "form-data" ? "multipart/form-data" : "application/json";
+    }
 
     if (requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
@@ -385,15 +393,21 @@ export function matchesTypeReference(
 export function getDefaultValuesForBody(
     requestShape: ResolvedHttpRequestBodyShape | undefined,
     types: Record<string, ResolvedTypeDefinition>,
-): unknown {
+): PlaygroundFormStateBody | undefined {
     if (requestShape == null) {
-        return {};
-    } else if (requestShape.type === "fileUpload") {
-        return null;
-    } else if (requestShape.type === "object") {
-        return getDefaultValueForObjectProperties(dereferenceObjectProperties(requestShape, types), types);
-    } else {
-        return getDefaultValueForType(requestShape, types);
+        return undefined;
+    }
+
+    switch (requestShape.type) {
+        case "fileUpload":
+            return { type: "form-data", value: {} };
+        case "object":
+            return {
+                type: "json",
+                value: getDefaultValueForObjectProperties(requestShape.properties, types),
+            };
+        default:
+            return { type: "json", value: getDefaultValueForType(requestShape, types) };
     }
 }
 

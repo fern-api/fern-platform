@@ -15,7 +15,7 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { PlaygroundEndpointRequestFormState, ResponsePayload } from "./types";
+import { PlaygroundEndpointRequestFormState, ProxyResponse } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
@@ -26,7 +26,7 @@ interface PlaygroundEndpointContentProps {
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
-    response: Loadable<ResponsePayload>;
+    response: Loadable<ProxyResponse.Success>;
     sendRequest: () => void;
     types: Record<string, ResolvedTypeDefinition>;
 }
@@ -179,13 +179,14 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                 "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
                                                 {
                                                     ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                                                        response.value.status >= 200 && response.value.status < 300,
+                                                        response.value.response.status >= 200 &&
+                                                        response.value.response.status < 300,
                                                     ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                                                        response.value.status > 300,
+                                                        response.value.response.status > 300,
                                                 },
                                             )}
                                         >
-                                            status: {response.value.status}
+                                            status: {response.value.response.status}
                                         </span>
                                         <span
                                             className={
@@ -210,7 +211,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     loading: () => <div />,
                                     loaded: (response) => (
                                         <CopyToClipboardButton
-                                            content={() => JSON.stringify(response.body, null, 2)}
+                                            content={() => JSON.stringify(response.response.body, null, 2)}
                                             className="-mr-2"
                                         />
                                     ),
@@ -226,7 +227,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     ) : (
                                         <div className="flex flex-1 items-center justify-center">Loading...</div>
                                     ),
-                                loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                                loaded: (response) => (
+                                    <PlaygroundResponsePreview responseBody={response.response.body} />
+                                ),
                                 failed: () => <span>Failed</span>,
                             })}
                         </FernCard>

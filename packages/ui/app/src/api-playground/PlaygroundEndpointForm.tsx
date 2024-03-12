@@ -10,7 +10,7 @@ import {
 } from "../util/resolver";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { PlaygroundEndpointRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "./types";
 
 interface PlaygroundEndpointFormProps {
     endpoint: ResolvedEndpointDefinition;
@@ -56,7 +56,12 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     );
 
     const setBody = useCallback(
-        (value: ((old: unknown) => unknown) | unknown) => {
+        (
+            value:
+                | ((old: PlaygroundFormStateBody | undefined) => PlaygroundFormStateBody | undefined)
+                | PlaygroundFormStateBody
+                | undefined,
+        ) => {
             setFormState((state) => ({
                 ...state,
                 body: typeof value === "function" ? value(state.body) : value,
@@ -64,6 +69,64 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         },
         [setFormState],
     );
+
+    const setBodyJson = useCallback(
+        (value: ((old: unknown) => unknown) | unknown) => {
+            setBody((old) => {
+                return {
+                    type: "json",
+                    value: typeof value === "function" ? value(old?.type === "json" ? old.value : undefined) : value,
+                };
+            });
+        },
+        [setBody],
+    );
+
+    // const setBodyFormData = useCallback(
+    //     (
+    //         value:
+    //             | ((
+    //                   old: Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
+    //               ) => Record<string, PlaygroundFormStateBody.FormDataEntryValue>)
+    //             | Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
+    //     ) => {
+    //         setBody((old) => {
+    //             return {
+    //                 type: "form-data",
+    //                 value:
+    //                     typeof value === "function"
+    //                         ? value(old?.type === "form-data" ? old.value : {})
+    //                         : value,
+    //             };
+    //         });
+    //     },
+    //     [setBody],
+    // );
+
+    // const handleFileChange = useCallback(
+    //     (event: React.ChangeEvent<HTMLInputElement>) => {
+    //         const file = event.target.files?.[0];
+    //         if (file == null) {
+    //             setFormState((state) => ({
+    //                 ...state,
+    //                 body: {
+    //                     type: "multipart/form-data",
+    //                 },
+    //             }));
+    //             return;
+    //         }
+
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             setFormState((state) => ({
+    //                 ...state,
+    //                 body: reader.result,
+    //             }));
+    //         };
+    //         reader.readAsDataURL(file);
+    //     },
+    //     [setFormState],
+    // );
 
     return (
         <div className="col-span-2 space-y-8 pb-20">
@@ -143,7 +206,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                         <PlaygroundObjectPropertiesForm
                                             id="body"
                                             properties={dereferenceObjectProperties(shape, types)}
-                                            onChange={setBody}
+                                            onChange={setBodyJson}
                                             value={formState?.body}
                                             types={types}
                                         />
@@ -160,7 +223,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                         <PlaygroundTypeReferenceForm
                                             id="body"
                                             shape={shape.shape}
-                                            onChange={setBody}
+                                            onChange={setBodyJson}
                                             value={formState?.body}
                                             onlyRequired
                                             types={types}
@@ -179,7 +242,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     <PlaygroundTypeReferenceForm
                                         id="body"
                                         shape={shape}
-                                        onChange={setBody}
+                                        onChange={setBodyJson}
                                         value={formState?.body}
                                         onlyRequired
                                         types={types}
