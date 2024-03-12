@@ -32,7 +32,7 @@ export const getNotFoundPageStaticProps: GetStaticProps<NotFoundPage.Props> = as
         return { redirect: { destination: "/", permanent: false } };
     }
 
-    const basePath = docs.body.baseUrl.basePath;
+    const basePath = docs.body.baseUrl.basePath ?? null;
 
-    return { redirect: { destination: basePath ?? "/", permanent: false } };
+    return { props: { basePath } };
 };
