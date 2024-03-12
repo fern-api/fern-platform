@@ -945,7 +945,10 @@ export interface ResolvedExampleEndpointCall {
     snippets: ResolvedCodeSnippet[];
 }
 
-export type ResolvedExampleEndpointRequest = ResolvedExampleEndpointRequest.Json | ResolvedExampleEndpointRequest.Form;
+export type ResolvedExampleEndpointRequest =
+    | ResolvedExampleEndpointRequest.Json
+    | ResolvedExampleEndpointRequest.Form
+    | ResolvedExampleEndpointRequest.Stream;
 
 export declare namespace ResolvedExampleEndpointRequest {
     interface Json {
@@ -956,6 +959,11 @@ export declare namespace ResolvedExampleEndpointRequest {
     interface Form {
         type: "form";
         value: Record<string, ResolvedFormValue>;
+    }
+
+    interface Stream {
+        type: "stream";
+        value: unknown[];
     }
 }
 

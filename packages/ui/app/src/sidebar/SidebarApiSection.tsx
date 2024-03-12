@@ -6,7 +6,6 @@ import moment from "moment";
 import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { FernCollapse } from "../components/FernCollapse";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -207,15 +206,14 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
 
     const children = useMemo(
         () => (
-            <FernCollapse isOpen={expanded} unmount={false}>
-                <InnerSidebarApiSection
-                    slug={slug}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    depth={depth + 1}
-                    artifacts={artifacts}
-                    apiSection={apiSection}
-                />
-            </FernCollapse>
+            <InnerSidebarApiSection
+                className={classNames("expandable", { hidden: !expanded })}
+                slug={slug}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                depth={depth + 1}
+                artifacts={artifacts}
+                apiSection={apiSection}
+            />
         ),
         [apiSection, artifacts, depth, expanded, registerScrolledToPathListener, slug],
     );

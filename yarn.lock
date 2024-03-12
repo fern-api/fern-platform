@@ -2588,7 +2588,6 @@ __metadata:
     jest: ^29.7.0
     jose: ^5.2.3
     next: ^14.1.1
-    next-axiom: 0
     organize-imports-cli: ^0.10.0
     postcss: ^8.4.33
     postcss-import: ^16.0.0
@@ -12893,17 +12892,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"next-axiom@npm:0":
-  version: 0.18.1
-  resolution: "next-axiom@npm:0.18.1"
-  dependencies:
-    whatwg-fetch: ^3.6.2
-  peerDependencies:
-    next: ">=12.1.4"
-  checksum: 1e23345715942468e171722f69dbb1d307e0629b6b88c50afdd127a49745286558beb09f653917dcfd2ded41897eba1c699c9d95586826c9bf520fd7beb19954
-  languageName: node
-  linkType: hard
-
 "next-mdx-remote@npm:^4.4.1":
   version: 4.4.1
   resolution: "next-mdx-remote@npm:4.4.1"
@@ -17092,13 +17080,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     iconv-lite: 0.6.3
   checksum: 7087810c410aa9b689cbd6af8773341a53cdc1f3aae2a882c163bd5522ec8ca4cdfc269aef417a5792f411807d5d77d50df4c24e3abb00bb60192858a40cc675
-  languageName: node
-  linkType: hard
-
-"whatwg-fetch@npm:^3.6.2":
-  version: 3.6.20
-  resolution: "whatwg-fetch@npm:3.6.20"
-  checksum: c58851ea2c4efe5c2235f13450f426824cf0253c1d45da28f45900290ae602a20aff2ab43346f16ec58917d5562e159cd691efa368354b2e82918c2146a519c5
   languageName: node
   linkType: hard
 

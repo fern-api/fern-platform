@@ -33,8 +33,13 @@ export function rehypeFernCode(): (tree: Root) => void {
 
             if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
                 const codeBlockItems = visitCodeBlockNodes(node);
-
-                if (codeBlockItems.length === 1 && codeBlockItems[0] != null && codeBlockItems[0].title == null) {
+                if (codeBlockItems.length === 0) {
+                    parent?.children.splice(index, 1);
+                } else if (
+                    codeBlockItems.length === 1 &&
+                    codeBlockItems[0] != null &&
+                    codeBlockItems[0].title == null
+                ) {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "CodeBlock",
@@ -67,6 +72,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                     const highlighted = convertToHighlightedProps(head);
 
                     if (!highlighted) {
+                        parent?.children.splice(index, 1);
                         return;
                     }
 
@@ -118,7 +124,7 @@ function convertToHighlightedProps(node: Element): FernSyntaxHighlighterProps | 
     const prefix = "language-";
     const code = node.children.find(isText)?.value;
 
-    if (code == null) {
+    if (code == null || code.length === 0) {
         return;
     }
 
