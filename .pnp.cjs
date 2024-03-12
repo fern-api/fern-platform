@@ -4323,7 +4323,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jose", "npm:5.2.3"],\
             ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.1.1"],\
-            ["next-axiom", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.18.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["postcss", "npm:8.4.31"],\
             ["postcss-import", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:16.0.0"],\
@@ -16657,29 +16656,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["next-axiom", [\
-        ["npm:0.18.1", {\
-          "packageLocation": "./.yarn/cache/next-axiom-npm-0.18.1-c5931df65c-1e23345715.zip/node_modules/next-axiom/",\
-          "packageDependencies": [\
-            ["next-axiom", "npm:0.18.1"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.18.1", {\
-          "packageLocation": "./.yarn/__virtual__/next-axiom-virtual-bd51dffc02/0/cache/next-axiom-npm-0.18.1-c5931df65c-1e23345715.zip/node_modules/next-axiom/",\
-          "packageDependencies": [\
-            ["next-axiom", "virtual:5468f8421a4cb12dc44b4e3a031a211209537278ecf2763e0286bc13fd7c6ba57c5b5a43e6f64f6416e367f53aef96012b48d928329edae13e27b89cbe83316c#npm:0.18.1"],\
-            ["@types/next", null],\
-            ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.1.1"],\
-            ["whatwg-fetch", "npm:3.6.20"]\
-          ],\
-          "packagePeers": [\
-            "@types/next",\
-            "next"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["next-mdx-remote", [\
         ["npm:4.4.1", {\
           "packageLocation": "./.yarn/cache/next-mdx-remote-npm-4.4.1-2a17ed923a-95cd77d03a.zip/node_modules/next-mdx-remote/",\
@@ -21972,15 +21948,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["whatwg-encoding", "npm:2.0.0"],\
             ["iconv-lite", "npm:0.6.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["whatwg-fetch", [\
-        ["npm:3.6.20", {\
-          "packageLocation": "./.yarn/cache/whatwg-fetch-npm-3.6.20-a6f79b98c4-c58851ea2c.zip/node_modules/whatwg-fetch/",\
-          "packageDependencies": [\
-            ["whatwg-fetch", "npm:3.6.20"]\
           ],\
           "linkType": "HARD"\
         }]\

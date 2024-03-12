@@ -63,7 +63,6 @@ const nextConfig = {
             afterFiles: [
                 { source: "/_next/:path*", destination: "/_next/:path*" },
                 { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
-                { source: "/_axiom/:path*", destination: "/_axiom/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
 
@@ -113,6 +112,4 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });
 
-const { withAxiom } = require("next-axiom");
-
-module.exports = withBundleAnalyzer(withAxiom(nextConfig));
+module.exports = withBundleAnalyzer(nextConfig);
