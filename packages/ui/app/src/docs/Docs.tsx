@@ -37,6 +37,7 @@ interface DocsProps {
     navigation: SidebarNavigation;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
     isApiPlaygroundEnabled: boolean;
+    isWhiteLabeled: boolean;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -55,6 +56,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     logoHeight,
     logoHref,
     isApiPlaygroundEnabled,
+    isWhiteLabeled,
 }) {
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
@@ -177,6 +179,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             algoliaSearchIndex={algoliaSearchIndex}
                             navbarLinks={navbarLinks}
                             showSearchBar={layout?.searchbarPlacement !== "HEADER"}
+                            isWhiteLabeled={isWhiteLabeled}
                         />
 
                         <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>

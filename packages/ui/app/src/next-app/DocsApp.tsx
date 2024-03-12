@@ -25,6 +25,7 @@ export declare namespace App {
         resolvedPath: ResolvedPath;
         title: string | undefined;
         isApiPlaygroundEnabled: boolean;
+        isWhiteLabeled: boolean;
     }
 }
 
@@ -43,6 +44,7 @@ export const DocsApp: React.FC<App.Props> = ({
     logoHref,
     title,
     isApiPlaygroundEnabled,
+    isWhiteLabeled,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
     const resolvedPath = useDeepCompareMemoize(unmemoizedResolvedPath);
@@ -78,6 +80,7 @@ export const DocsApp: React.FC<App.Props> = ({
                                 navigation={navigation}
                                 algoliaSearchIndex={algoliaSearchIndex}
                                 isApiPlaygroundEnabled={isApiPlaygroundEnabled}
+                                isWhiteLabeled={isWhiteLabeled}
                             />
                         </NavigationContextProvider>
                     </DocsContextProvider>,

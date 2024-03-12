@@ -185,6 +185,16 @@ async function convertDocsToDocsPageProps({
             return false;
         });
 
+    const isWhiteLabeled = await fetch(`https://${xFernHost}/api/fern-docs/config/whitelabeled`, {
+        headers: { "x-fern-host": xFernHost },
+    })
+        .then((r): Promise<boolean> => r.json())
+        .catch((e) => {
+            // eslint-disable-next-line no-console
+            console.error("Failed to check if API Playground is enabled", e);
+            return false;
+        });
+
     const props: DocsPage.Props = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -217,6 +227,7 @@ async function convertDocsToDocsPageProps({
         resolvedPath,
         navigation,
         isApiPlaygroundEnabled,
+        isWhiteLabeled,
     };
 
     return {
