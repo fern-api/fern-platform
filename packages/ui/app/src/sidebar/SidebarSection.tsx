@@ -3,7 +3,6 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
-import { FernCollapse } from "../components/FernCollapse";
 import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
@@ -40,14 +39,13 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
 
     const children = useMemo(
         () => (
-            <FernCollapse isOpen={expanded} unmount={false}>
-                <SidebarSection
-                    slug={slug}
-                    navigationItems={navigationItems}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    depth={depth + 1}
-                />
-            </FernCollapse>
+            <SidebarSection
+                className={classNames("expandable", { hidden: !expanded })}
+                slug={slug}
+                navigationItems={navigationItems}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                depth={depth + 1}
+            />
         ),
         [expanded, navigationItems, registerScrolledToPathListener, slug, depth],
     );
