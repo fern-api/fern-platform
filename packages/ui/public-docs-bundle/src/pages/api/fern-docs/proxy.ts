@@ -62,7 +62,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
-    const startTime = new Date();
+    const startTime = Date.now();
     try {
         const proxyRequest = (await req.json()) as ProxyRequest;
         const response = await fetch(proxyRequest.url, {
@@ -76,7 +76,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         } catch (_e) {
             // Ignore
         }
-        const endTime = new Date();
+        const endTime = Date.now();
         const headers = response.headers;
 
         return jsonResponse<ProxyResponse>(200, {
@@ -91,18 +91,18 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
                 url: response.url,
                 body,
             },
-            time: endTime.getTime() - startTime.getTime(),
+            time: endTime - startTime,
             size: headers.get("Content-Length"),
         });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        const endTime = new Date();
+        const endTime = Date.now();
 
         return jsonResponse<ProxyResponse>(500, {
             error: true,
             status: 500,
-            time: endTime.getTime() - startTime.getTime(),
+            time: endTime - startTime,
             size: null,
         });
     }
