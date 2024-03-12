@@ -37,6 +37,7 @@ export declare namespace DocsPage {
         resolvedPath: ResolvedPath;
 
         isApiPlaygroundEnabled: boolean;
+        isWhiteLabeled: boolean;
     }
 }
 
@@ -59,6 +60,7 @@ export function DocsPage({
     resolvedPath,
     navigation,
     isApiPlaygroundEnabled,
+    isWhiteLabeled,
 }: DocsPage.Props): ReactElement {
     const stylesheet = renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files);
     return (
@@ -97,6 +99,7 @@ export function DocsPage({
                 navigation={navigation}
                 title={title}
                 isApiPlaygroundEnabled={isApiPlaygroundEnabled}
+                isWhiteLabeled={isWhiteLabeled}
             />
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>

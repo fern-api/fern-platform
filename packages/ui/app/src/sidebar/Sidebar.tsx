@@ -24,6 +24,7 @@ export interface SidebarProps {
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
     showSearchBar?: boolean;
+    isWhiteLabeled: boolean;
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
@@ -34,6 +35,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     algoliaSearchIndex,
     navbarLinks,
     showSearchBar,
+    isWhiteLabeled,
 }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
@@ -86,7 +88,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
                 </SearchSidebar>
-                <BuiltWithFern />
+                <BuiltWithFern isWhiteLabeled={isWhiteLabeled} />
             </FernScrollArea>
         </nav>
     );
