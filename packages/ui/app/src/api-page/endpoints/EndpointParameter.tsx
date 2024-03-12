@@ -1,14 +1,13 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
@@ -22,6 +21,15 @@ export declare namespace EndpointParameter {
         availability: APIV1Read.Availability | null | undefined;
         types: Record<string, ResolvedTypeDefinition>;
     }
+
+    export interface ContentProps {
+        name: string;
+        description: SerializedMdxContent | undefined;
+        typeShorthand: string;
+        anchorIdParts: string[];
+        route: string;
+        availability: APIV1Read.Availability | null | undefined;
+    }
 }
 
 export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
@@ -32,6 +40,27 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
     shape,
     availability,
     types,
+}) => {
+    return (
+        <EndpointParameterContent
+            name={name}
+            description={description}
+            typeShorthand={renderTypeShorthand(shape, undefined, types)}
+            anchorIdParts={anchorIdParts}
+            route={route}
+            availability={availability}
+        />
+    );
+};
+
+export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.ContentProps>> = ({
+    name,
+    anchorIdParts,
+    route,
+    availability,
+    description,
+    typeShorthand,
+    children,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
@@ -59,19 +88,12 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                     >
                         {name}
                     </MonospaceText>
-                    <div className="t-muted text-xs">{renderTypeShorthand(shape, undefined, types)}</div>
+                    <div className="t-muted text-xs">{typeShorthand}</div>
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </div>
             <ApiPageDescription isMarkdown={true} description={description} className="!t-muted text-sm" />
-            <TypeReferenceDefinitions
-                shape={shape}
-                isCollapsible
-                anchorIdParts={anchorIdParts}
-                applyErrorStyles={false}
-                route={route}
-                types={types}
-            />
+            {children}
         </div>
     );
 };

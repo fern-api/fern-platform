@@ -502,7 +502,7 @@ function resolveRequestBodyShape(
             value:
                 fileUpload.value != null
                     ? {
-                          description: fileUpload.value.description,
+                          description: await serializeMdxContent(fileUpload.value.description),
                           availability: fileUpload.value.availability,
                           name: fileUpload.value.name,
                           properties: await Promise.all(
@@ -513,16 +513,23 @@ function resolveRequestBodyShape(
                                               return {
                                                   type: property.value.type,
                                                   key: property.value.key,
+                                                  // TODO: support description and availability
+                                                  description: undefined,
+                                                  availability: undefined,
                                                   isOptional: property.value.isOptional,
                                               };
                                           }
                                           case "bodyProperty": {
+                                              const [description, valueShape] = await Promise.all([
+                                                  serializeMdxContent(property.description),
+                                                  resolveTypeReference(property.valueType, types),
+                                              ]);
                                               return {
                                                   type: "bodyProperty",
                                                   key: property.key,
-                                                  description: property.description,
+                                                  description,
                                                   availability: property.availability,
-                                                  valueShape: await resolveTypeReference(property.valueType, types),
+                                                  valueShape,
                                               };
                                           }
                                       }
