@@ -4443,6 +4443,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
             ["@types/nprogress", "npm:0.2.3"],\
+            ["@types/numeral", "npm:2.0.5"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
             ["@types/react-test-renderer", "npm:18.0.7"],\
@@ -4469,6 +4470,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-themes", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:0.2.1"],\
             ["node-html-parser", "npm:6.1.12"],\
             ["nprogress", "npm:0.2.0"],\
+            ["numeral", "npm:2.0.6"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["posthog-js", "npm:1.81.1"],\
             ["prettier", "npm:3.2.4"],\
@@ -7208,6 +7210,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-nprogress-npm-0.2.3-028144a215-2bd96ba116.zip/node_modules/@types/nprogress/",\
           "packageDependencies": [\
             ["@types/nprogress", "npm:0.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/numeral", [\
+        ["npm:2.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-numeral-npm-2.0.5-5ee1a717c4-0ec9d19524.zip/node_modules/@types/numeral/",\
+          "packageDependencies": [\
+            ["@types/numeral", "npm:2.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16874,6 +16885,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["nth-check", "npm:2.1.1"],\
             ["boolbase", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["numeral", [\
+        ["npm:2.0.6", {\
+          "packageLocation": "./.yarn/cache/numeral-npm-2.0.6-2c27ceaa3c-89f0111165.zip/node_modules/numeral/",\
+          "packageDependencies": [\
+            ["numeral", "npm:2.0.6"]\
           ],\
           "linkType": "HARD"\
         }]\

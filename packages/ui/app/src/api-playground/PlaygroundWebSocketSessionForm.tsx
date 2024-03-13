@@ -9,7 +9,7 @@ import { FernScrollArea } from "../components/FernScrollArea";
 import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 

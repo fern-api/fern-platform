@@ -1,7 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
-import { FernInput } from "../components/FernInput";
 import { Callout } from "../mdx/components/Callout";
 import {
     dereferenceObjectProperties,
@@ -11,8 +10,9 @@ import {
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
-import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./PlaygroundObjectPropertyForm";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
+import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";
+import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "./types";
 
 interface PlaygroundEndpointFormProps {
@@ -127,21 +127,18 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     );
 
     const handleFormDataFileChange = useCallback(
-        (key: string, event: React.ChangeEvent<HTMLInputElement>) => {
+        (key: string, files: ReadonlyArray<File> | undefined) => {
             const type =
                 endpoint.requestBody[0]?.shape.type === "fileUpload"
                     ? endpoint.requestBody[0]?.shape.value?.properties.find((p) => p.key === key)?.type
                     : undefined;
-            const file = event.target.files?.[0];
-            if (file == null) {
+            if (files == null || files.length === 0) {
                 setFormDataEntry(key, undefined);
                 return;
             } else {
                 setFormDataEntry(
                     key,
-                    type === "fileArray"
-                        ? { type: "fileArray", value: Array.from(event.target.files ?? []) }
-                        : { type: "file", value: file },
+                    type === "fileArray" ? { type: "fileArray", value: files } : { type: "file", value: files[0] },
                 );
             }
         },
@@ -233,31 +230,48 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     <ul className="list-none space-y-8">
                                         {fileUpload.value.properties.map((property) =>
                                             visitDiscriminatedUnion(property, "type")._visit({
-                                                file: () => (
-                                                    <li key={property.key}>
-                                                        <label className="mb-2 block" htmlFor={property.key}>
-                                                            {property.key}
-                                                        </label>
-                                                        <FernInput
-                                                            type="file"
-                                                            id={property.key}
-                                                            onChange={(e) => handleFormDataFileChange(property.key, e)}
-                                                        />
-                                                    </li>
-                                                ),
-                                                fileArray: () => (
-                                                    <li key={property.key}>
-                                                        <label className="mb-2 block" htmlFor={property.key}>
-                                                            {property.key}
-                                                        </label>
-                                                        <FernInput
-                                                            type="file"
-                                                            id={property.key}
-                                                            onChange={(e) => handleFormDataFileChange(property.key, e)}
-                                                            multiple={true}
-                                                        />
-                                                    </li>
-                                                ),
+                                                file: (file) => {
+                                                    const currentValue = fileUploadFormValue[property.key];
+                                                    return (
+                                                        <li key={property.key}>
+                                                            <PlaygroundFileUploadForm
+                                                                id={property.key}
+                                                                propertyKey={property.key}
+                                                                property={file}
+                                                                onValueChange={(files) =>
+                                                                    handleFormDataFileChange(property.key, files)
+                                                                }
+                                                                value={
+                                                                    currentValue?.type === "file"
+                                                                        ? currentValue.value != null
+                                                                            ? [currentValue.value]
+                                                                            : undefined
+                                                                        : undefined
+                                                                }
+                                                            />
+                                                        </li>
+                                                    );
+                                                },
+                                                fileArray: (fileArray) => {
+                                                    const currentValue = fileUploadFormValue[property.key];
+                                                    return (
+                                                        <li key={property.key}>
+                                                            <PlaygroundFileUploadForm
+                                                                id={property.key}
+                                                                propertyKey={property.key}
+                                                                property={fileArray}
+                                                                onValueChange={(files) =>
+                                                                    handleFormDataFileChange(property.key, files)
+                                                                }
+                                                                value={
+                                                                    currentValue?.type === "fileArray"
+                                                                        ? currentValue.value
+                                                                        : undefined
+                                                                }
+                                                            />
+                                                        </li>
+                                                    );
+                                                },
                                                 bodyProperty: (bodyProperty) => (
                                                     <li key={property.key}>
                                                         <PlaygroundObjectPropertyForm
@@ -283,7 +297,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <h5 className="t-muted m-0">Body</h5>
                             </div>
                             <FernCard className="rounded-xl p-4 shadow-sm">
-                                <Callout intent="warning">File upload is not yet supported.</Callout>
+                                <Callout intent="warning">Direct file upload is not yet supported.</Callout>
                             </FernCard>
                         </div>
                     ),

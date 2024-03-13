@@ -18,8 +18,8 @@ import {
 } from "./flattenApiDefinition";
 import { titleCase } from "./titleCase";
 
-type WithDescription = { description: SerializedMdxContent | undefined };
-type WithAvailability = { availability: APIV1Read.Availability | undefined };
+export type WithDescription = { description: SerializedMdxContent | undefined };
+export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,

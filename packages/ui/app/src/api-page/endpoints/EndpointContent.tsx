@@ -135,7 +135,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setSelectedLanguage],
     );
 
-    const requestJson = selectedClient.exampleCall.requestBody?.value;
+    const requestJson =
+        selectedClient.exampleCall.requestBody?.type === "json"
+            ? selectedClient.exampleCall.requestBody.value
+            : undefined;
     const responseJson = selectedClient.exampleCall.responseBody?.value;
     // const responseHast = selectedClient.exampleCall.responseHast;
     const responseCodeSnippet = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);

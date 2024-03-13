@@ -37,7 +37,7 @@ export declare namespace PlaygroundFormStateBody {
 
     interface FormDataEntryValueFileArray {
         type: "fileArray";
-        value: File[];
+        value: ReadonlyArray<File>;
     }
 
     interface FormDataEntryValueJson {

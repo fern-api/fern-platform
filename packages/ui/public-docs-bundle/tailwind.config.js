@@ -40,7 +40,7 @@ module.exports = {
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.1), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
-                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.1), 0 2px 24px rgba(221, 243, 255,.07)",
+                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.1), 0 2px 24px rgba(221, 243, 255,.1)",
             },
 
             colors: {

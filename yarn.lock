@@ -2702,6 +2702,7 @@ __metadata:
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/nprogress": ^0.2.3
+    "@types/numeral": ^2.0.5
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.2.18
     "@types/react-test-renderer": ^18.0.7
@@ -2728,6 +2729,7 @@ __metadata:
     next-themes: ^0.2.1
     node-html-parser: ^6.1.12
     nprogress: ^0.2.0
+    numeral: ^2.0.6
     organize-imports-cli: ^0.10.0
     posthog-js: ^1.81.1
     prettier: ^3.2.4
@@ -4881,6 +4883,13 @@ __metadata:
   version: 0.2.3
   resolution: "@types/nprogress@npm:0.2.3"
   checksum: 2bd96ba1167f548e8f898ae8a790b6501a5422217621c9b8ea75962f3e8473f0e371058b79d83e04e80a6bfee2d66fc6612cdb28296648007b35d3c2a6d64e5c
+  languageName: node
+  linkType: hard
+
+"@types/numeral@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@types/numeral@npm:2.0.5"
+  checksum: 0ec9d195248da1865bae5f1939bf93d2464fd2ddc5171444266c66092efb7335031852005842ec4449e1ae5742cd9717cc3af117d6f8cd6e51f083bc08f35239
   languageName: node
   linkType: hard
 
@@ -13119,6 +13128,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     boolbase: ^1.0.0
   checksum: 5afc3dafcd1573b08877ca8e6148c52abd565f1d06b1eb08caf982e3fa289a82f2cae697ffb55b5021e146d60443f1590a5d6b944844e944714a5b549675bcd3
+  languageName: node
+  linkType: hard
+
+"numeral@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "numeral@npm:2.0.6"
+  checksum: 89f011116539692bf53fde380adeb0579623d00f782703c71c0062d4a8686770c404a041ff4eef454de53925a9f75bba1fa52726057b13d40473f707730b07c2
   languageName: node
   linkType: hard
 

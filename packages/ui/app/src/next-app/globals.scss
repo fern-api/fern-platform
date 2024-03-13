@@ -189,7 +189,7 @@
         @apply relative z-50;
         @apply animate-popover;
         @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];
+        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur will-change-[opacity,transform];
         @apply shadow-xl;
 
         .fern-dropdown-item {
@@ -718,6 +718,10 @@
             &.active {
                 @apply shadow-card-elevated border-primary;
             }
+        }
+
+        &.elevated {
+            @apply shadow-card-elevated border-primary transition-all;
         }
     }
 
