@@ -3,7 +3,9 @@ import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
+import { renderToString } from "react-dom/server";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { MdxContent } from "../../mdx/MdxContent";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
 import { SidebarNavigation, SidebarNode, visitSidebarNodes } from "../../sidebar/types";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
@@ -267,7 +269,25 @@ function convertToDescription(
     page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
-    return frontmatter?.description ?? page?.description ?? undefined;
+    const description = frontmatter?.description ?? page?.description ?? undefined;
+
+    if (description == null) {
+        return;
+    }
+
+    if (typeof description === "string") {
+        return description;
+    }
+
+    const mdxContent = <MdxContent mdx={description} />;
+
+    try {
+        return renderToString(mdxContent);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Error rendering MDX to string", e);
+        return undefined;
+    }
 }
 
 const resolveActiveSidebarNode = memoize(
