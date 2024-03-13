@@ -315,7 +315,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             id="body"
                                             properties={dereferenceObjectProperties(shape, types)}
                                             onChange={setBodyJson}
-                                            value={formState?.body}
+                                            value={formState?.body?.value}
                                             types={types}
                                         />
                                     </FernCard>
@@ -332,7 +332,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                             id="body"
                                             shape={shape.shape}
                                             onChange={setBodyJson}
-                                            value={formState?.body}
+                                            value={formState?.body?.value}
                                             onlyRequired
                                             types={types}
                                         />
