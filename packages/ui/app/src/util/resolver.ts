@@ -18,8 +18,8 @@ import {
 } from "./flattenApiDefinition";
 import { titleCase } from "./titleCase";
 
-type WithDescription = { description: SerializedMdxContent | undefined };
-type WithAvailability = { availability: APIV1Read.Availability | undefined };
+export type WithDescription = { description: SerializedMdxContent | undefined };
+export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,
@@ -963,7 +963,7 @@ export declare namespace ResolvedExampleEndpointRequest {
 
     interface Stream {
         type: "stream";
-        value: unknown[];
+        fileName: string;
     }
 }
 
@@ -985,7 +985,7 @@ function resolveExampleEndpointRequest(
             value: mapValues(form.value, (v) =>
                 visitDiscriminatedUnion(v, "type")._visit<ResolvedFormValue>({
                     json: (value) => ({ type: "json", value: value.value }),
-                    filename: (value) => ({ type: "filename", value: value.value }),
+                    filename: (value) => ({ type: "file", fileName: value.value }),
                     _other: () => ({ type: "json", value: undefined }), // TODO: handle other types
                 }),
             ),
@@ -994,7 +994,7 @@ function resolveExampleEndpointRequest(
     });
 }
 
-export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.Filename;
+export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.File | ResolvedFormValue.FileArray;
 
 export declare namespace ResolvedFormValue {
     interface Json {
@@ -1002,9 +1002,14 @@ export declare namespace ResolvedFormValue {
         value: unknown | undefined;
     }
 
-    interface Filename {
-        type: "filename";
-        value: string;
+    interface File {
+        type: "file";
+        fileName: string;
+    }
+
+    interface FileArray {
+        type: "fileArray";
+        fileNames: string[];
     }
 }
 

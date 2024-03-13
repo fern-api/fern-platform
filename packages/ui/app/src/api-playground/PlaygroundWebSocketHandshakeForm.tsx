@@ -3,8 +3,8 @@ import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../util/resolver";
+import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
-import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketHandshakeFormProps {

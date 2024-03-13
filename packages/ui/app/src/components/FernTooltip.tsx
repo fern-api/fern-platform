@@ -33,7 +33,7 @@ export const FernTooltip: FC<FernTooltipProps> = ({
                     sideOffset={6}
                     {...props}
                     className={classNames(
-                        "animate-popover border-default bg-background max-w-xs rounded-lg border p-2 text-xs leading-none will-change-[transform,opacity] shadow-sm",
+                        "animate-popover border-default bg-background-translucent backdrop-blur max-w-xs rounded-lg border p-2 text-xs leading-none will-change-[transform,opacity] shadow-sm",
                         props.className,
                     )}
                 >

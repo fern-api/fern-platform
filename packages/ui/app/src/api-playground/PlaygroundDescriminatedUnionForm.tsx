@@ -6,7 +6,7 @@ import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
 import { dereferenceObjectProperties, ResolvedDiscriminatedUnionShape, ResolvedTypeDefinition } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
-import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
+import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
