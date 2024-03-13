@@ -351,7 +351,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                         id="body"
                                         shape={shape}
                                         onChange={setBodyJson}
-                                        value={formState?.body}
+                                        value={formState?.body?.value}
                                         onlyRequired
                                         types={types}
                                     />
