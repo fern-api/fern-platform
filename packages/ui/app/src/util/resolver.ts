@@ -994,7 +994,7 @@ function resolveExampleEndpointRequest(
     });
 }
 
-export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.File | ResolvedFormValue.MultipleFiles;
+export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.SingleFile | ResolvedFormValue.MultipleFiles;
 
 export declare namespace ResolvedFormValue {
     interface Json {
@@ -1002,12 +1002,12 @@ export declare namespace ResolvedFormValue {
         value: unknown | undefined;
     }
 
-    interface File {
+    interface SingleFile {
         type: "file";
         fileName: string;
     }
 
-    interface FileArray {
+    interface MultipleFiles {
         type: "fileArray";
         fileNames: string[];
     }
