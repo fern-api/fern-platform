@@ -11,7 +11,7 @@ import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltip } from "../components/FernTooltip";
-import { isEndpointPage, SidebarNode } from "../sidebar/types";
+import { SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -76,7 +76,7 @@ function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.A
     return (
         group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
         endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
-        (isEndpointPage(endpoint) && endpoint.method.toLowerCase().includes(query.toLowerCase()))
+        (SidebarNode.isEndpointPage(endpoint) && endpoint.method.toLowerCase().includes(query.toLowerCase()))
     );
 }
 

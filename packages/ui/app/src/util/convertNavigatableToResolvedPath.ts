@@ -2,7 +2,8 @@ import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
-import { findApiSection, isApiPage, isChangelogPage, SidebarNode, visitSidebarNodes } from "../sidebar/types";
+import { SidebarNode } from "../sidebar/types";
+import { findApiSection, visitSidebarNodes } from "../sidebar/visitor";
 import { flattenApiDefinition } from "./flattenApiDefinition";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
@@ -61,7 +62,7 @@ export async function convertNavigatableToResolvedPath({
         };
     }
 
-    if (isApiPage(traverseState.curr)) {
+    if (SidebarNode.isApiPage(traverseState.curr)) {
         const api = apis[traverseState.curr.api];
         const apiSection = findApiSection(traverseState.curr.api, sidebarNodes);
         if (api == null || apiSection == null) {
@@ -79,7 +80,7 @@ export async function convertNavigatableToResolvedPath({
             showErrors: apiSection.showErrors,
             neighbors,
         };
-    } else if (isChangelogPage(traverseState.curr)) {
+    } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
         return {
             type: "changelog-page",

@@ -2,11 +2,10 @@ import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-ui/core-utils";
 import {
     buildUrl,
-    isPage,
     isUnversionedTabbedNavigationConfig,
     isVersionedNavigationConfig,
     resolveSidebarNodes,
-    type SidebarNode,
+    SidebarNodeRaw,
 } from "@fern-ui/ui";
 
 export async function getAllUrlsFromDocsConfig(
@@ -25,11 +24,7 @@ export async function getAllUrlsFromDocsConfig(
             : [],
     );
 
-    const sidebarNodes = (
-        await Promise.all(
-            flattenedNavigationConfig.map(async ({ slug, items }) => await resolveSidebarNodes(items, apis, slug)),
-        )
-    ).flatMap((nodes) => nodes);
+    const sidebarNodes = flattenedNavigationConfig.flatMap(({ slug, items }) => resolveSidebarNodes(items, apis, slug));
 
     const ROOT_NODE = { slug: basePath == null ? [] : basePath.split("/").filter((t) => t.length > 0) };
     const flattenedSidebarNodes = [ROOT_NODE, ...flattenSidebarNodeSlugs(sidebarNodes)];
@@ -61,10 +56,10 @@ function flattenNavigationConfig(nav: DocsV1Read.NavigationConfig, parentSlugs: 
     return [{ slug: parentSlugs, items: nav.items }];
 }
 
-function flattenSidebarNodeSlugs(nodes: SidebarNode[]): { slug: string[] }[] {
+function flattenSidebarNodeSlugs(nodes: SidebarNodeRaw[]): { slug: string[] }[] {
     return nodes.flatMap((node) => {
         if (node.type === "pageGroup") {
-            return [{ slug: node.slug }, ...node.pages.filter(isPage)];
+            return [{ slug: node.slug }, ...node.pages.filter(SidebarNodeRaw.isPage)];
         } else if (node.type === "section") {
             return [{ slug: node.slug }, ...flattenSidebarNodeSlugs(node.items)];
         } else if (node.type === "apiSection") {

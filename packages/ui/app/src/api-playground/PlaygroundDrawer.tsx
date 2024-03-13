@@ -28,7 +28,7 @@ import { PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorC
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
-    PlaygroundFormStateBody,
+    PlaygroundFormDataEntryValue,
     PlaygroundRequestFormAuth,
     PlaygroundWebSocketRequestFormState,
 } from "./types";
@@ -423,7 +423,7 @@ export function getInitialEndpointRequestFormStateWithExample(
                       type: "form-data",
                       value: mapValues(
                           exampleCall.requestBody.value,
-                          (exampleValue): PlaygroundFormStateBody.FormDataEntryValue =>
+                          (exampleValue): PlaygroundFormDataEntryValue =>
                               exampleValue.type === "file"
                                   ? { type: "file", value: undefined }
                                   : exampleValue.type === "fileArray"

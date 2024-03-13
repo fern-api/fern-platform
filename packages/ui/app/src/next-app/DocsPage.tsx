@@ -3,7 +3,9 @@ import { Redirect } from "next";
 import Head from "next/head";
 import Script from "next/script";
 import { ReactElement } from "react";
-import { ColorsConfig, resolveSidebarNodes, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
+import { resolveSidebarNodes } from "../sidebar/resolver";
+import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
+import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
 import {
     isUnversionedTabbedNavigationConfig,
     isUnversionedUntabbedNavigationConfig,
@@ -263,7 +265,8 @@ export async function getNavigation(
         currentNavigationItems = nav.items;
     }
 
-    const sidebarNodes = await resolveSidebarNodes(currentNavigationItems, apis, slug);
+    const rawSidebarNodes = resolveSidebarNodes(currentNavigationItems, apis, slug);
+    const sidebarNodes = await Promise.all(rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)));
 
     return {
         currentTabIndex,

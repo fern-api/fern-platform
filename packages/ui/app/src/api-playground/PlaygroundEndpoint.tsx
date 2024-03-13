@@ -10,7 +10,14 @@ import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import type { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody, ProxyRequest, ProxyResponse } from "./types";
+import type {
+    PlaygroundEndpointRequestFormState,
+    PlaygroundFormStateBody,
+    ProxyRequest,
+    ProxyResponse,
+    SerializableFile,
+    SerializableFormDataEntryValue,
+} from "./types";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface PlaygroundEndpointProps {
@@ -164,7 +171,7 @@ async function serializeFormStateBody(
         case "json":
             return { type: "json", value: body.value };
         case "form-data": {
-            const formDataValue: Record<string, ProxyRequest.SerializableFormDataEntryValue> = {};
+            const formDataValue: Record<string, SerializableFormDataEntryValue> = {};
             for (const [key, value] of Object.entries(body.value)) {
                 switch (value.type) {
                     case "file":
@@ -204,7 +211,7 @@ function blobToDataURL(blob: Blob) {
     });
 }
 
-async function serializeFile(file: File | undefined): Promise<ProxyRequest.SerializableFile | undefined> {
+async function serializeFile(file: File | undefined): Promise<SerializableFile | undefined> {
     if (file == null) {
         return undefined;
     }

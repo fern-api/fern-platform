@@ -12,7 +12,7 @@ import { useNavigationContext } from "../contexts/navigation-context";
 import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
-import { isApiPage, SidebarNode } from "./types";
+import { SidebarNode } from "./types";
 
 export interface SidebarApiSectionProps {
     className?: string;
@@ -64,7 +64,9 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
     const { selectedSlug } = useCollapseSidebar();
     const { activeNavigatable } = useNavigationContext();
     const shallow =
-        activeNavigatable != null && isApiPage(activeNavigatable) && activeNavigatable.api === apiSection.api;
+        activeNavigatable != null &&
+        SidebarNode.isApiPage(activeNavigatable) &&
+        activeNavigatable.api === apiSection.api;
     const renderArtifacts = () => {
         if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
             return null;
