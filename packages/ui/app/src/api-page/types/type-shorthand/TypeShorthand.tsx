@@ -1,9 +1,25 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactNode } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../util/resolver";
 
 export interface TypeShorthandOptions {
     plural?: boolean;
     withArticle?: boolean;
+}
+
+export function renderTypeShorthandWithRequired(
+    shape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): ReactNode {
+    const typeShorthand = renderTypeShorthand(shape, undefined, types);
+    if (shape.type === "optional") {
+        return typeShorthand;
+    }
+    return (
+        <>
+            <span className="text-intent-danger">required</span> {typeShorthand}
+        </>
+    );
 }
 
 export function renderTypeShorthand(
@@ -26,7 +42,10 @@ export function renderTypeShorthand(
         date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
 
         // referenced shapes
-        object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
+        object: (o) =>
+            plural
+                ? `${o.name != null ? o.name + " " : ""} objects`
+                : `${o.name != null ? maybeWithArticle("a", `${o.name} object`) : maybeWithArticle("an", "object")}`,
         undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
         discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
         enum: () => (plural ? "enums" : maybeWithArticle("an", "enum")),
@@ -37,25 +56,19 @@ export function renderTypeShorthand(
         list: (list) =>
             `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(
                 list.shape,
-                {
-                    plural: true,
-                },
+                { plural: true },
                 types,
             )}`,
         set: (set) =>
             `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${renderTypeShorthand(
                 set.shape,
-                {
-                    plural: true,
-                },
+                { plural: true },
                 types,
             )}`,
         map: (map) =>
             `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${renderTypeShorthand(
                 map.keyShape,
-                {
-                    plural: true,
-                },
+                { plural: true },
                 types,
             )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
 
