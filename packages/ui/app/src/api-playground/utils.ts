@@ -16,9 +16,9 @@ import {
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import {
-    convertFormDataEntryValueToResolvedExampleEndpointRequest,
-    FormDataEntryValue,
+    convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
     PlaygroundEndpointRequestFormState,
+    PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
     PlaygroundRequestFormState,
 } from "./types";
@@ -227,8 +227,8 @@ ${buildRequests({})}`;
 ${buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
         "form-data": ({ value }) => {
             const singleFiles = Object.entries(value)
-                .filter((entry): entry is [string, PlaygroundFormStateBody.FormDataEntryValueFile] =>
-                    FormDataEntryValue.isFile(entry[1]),
+                .filter((entry): entry is [string, PlaygroundFormDataEntryValue.SingleFile] =>
+                    PlaygroundFormDataEntryValue.isSingleFile(entry[1]),
                 )
                 .map(([k, v]) => {
                     if (v.value == null) {
@@ -238,8 +238,8 @@ ${buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
                 })
                 .filter(isNonNullish);
             const fileArrays = Object.entries(value)
-                .filter((entry): entry is [string, PlaygroundFormStateBody.FormDataEntryValueFileArray] =>
-                    FormDataEntryValue.isFileArray(entry[1]),
+                .filter((entry): entry is [string, PlaygroundFormDataEntryValue.MultipleFiles] =>
+                    PlaygroundFormDataEntryValue.isMultipleFiles(entry[1]),
                 )
                 .map(([k, v]) => {
                     const fileStrings = v.value.map((file) => `('${file.name}', open('${file.name}', 'rb'))`);
@@ -254,8 +254,8 @@ ${buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
             const files = fileEntries.length > 0 ? `{\n${indentAfter(fileEntries, 2)}\n}` : undefined;
 
             const dataEntries = Object.entries(value)
-                .filter((entry): entry is [string, PlaygroundFormStateBody.FormDataEntryValueJson] =>
-                    FormDataEntryValue.isJson(entry[1]),
+                .filter((entry): entry is [string, PlaygroundFormDataEntryValue.Json] =>
+                    PlaygroundFormDataEntryValue.isJson(entry[1]),
                 )
                 .map(([k, v]) =>
                     v.value == null
@@ -401,7 +401,7 @@ export function stringifyCurl(
                       "form-data": ({ value }): ResolvedExampleEndpointRequest.Form | undefined => {
                           const newValue: Record<string, ResolvedFormValue> = {};
                           for (const [key, v] of Object.entries(value)) {
-                              const convertedV = convertFormDataEntryValueToResolvedExampleEndpointRequest(v);
+                              const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(v);
                               if (convertedV != null) {
                                   newValue[key] = convertedV;
                               }

@@ -13,7 +13,7 @@ import { titleCase } from "../util/titleCase";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
-import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "./types";
+import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue, PlaygroundFormStateBody } from "./types";
 
 interface PlaygroundEndpointFormProps {
     endpoint: ResolvedEndpointDefinition;
@@ -88,10 +88,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     const setBodyFormData = useCallback(
         (
             value:
-                | ((
-                      old: Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
-                  ) => Record<string, PlaygroundFormStateBody.FormDataEntryValue>)
-                | Record<string, PlaygroundFormStateBody.FormDataEntryValue>,
+                | ((old: Record<string, PlaygroundFormDataEntryValue>) => Record<string, PlaygroundFormDataEntryValue>)
+                | Record<string, PlaygroundFormDataEntryValue>,
         ) => {
             setBody((old) => {
                 return {
@@ -107,11 +105,9 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         (
             key: string,
             value:
-                | PlaygroundFormStateBody.FormDataEntryValue
+                | PlaygroundFormDataEntryValue
                 | undefined
-                | ((
-                      old: PlaygroundFormStateBody.FormDataEntryValue | undefined,
-                  ) => PlaygroundFormStateBody.FormDataEntryValue | undefined),
+                | ((old: PlaygroundFormDataEntryValue | undefined) => PlaygroundFormDataEntryValue | undefined),
         ) => {
             setBodyFormData((old) => {
                 const newValue = typeof value === "function" ? value(old[key] ?? undefined) : value;

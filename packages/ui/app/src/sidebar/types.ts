@@ -1,5 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 
@@ -75,7 +76,7 @@ export declare namespace SidebarNode {
         id: string;
         slug: string[];
         title: string;
-        description: string | undefined;
+        description: SerializedMdxContent | undefined;
     }
 
     export interface Link {
@@ -119,7 +120,7 @@ async function resolveSidebarNodeApiSection(
             id: endpoint.id,
             slug: [...slug, endpoint.urlSlug],
             title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-            description: endpoint.description,
+            description: await serializeMdxContent(endpoint.description),
             method: endpoint.method,
             stream: endpoint.response?.type.type === "stream",
         }),
@@ -131,7 +132,7 @@ async function resolveSidebarNodeApiSection(
             id: websocket.id,
             slug: [...slug, websocket.urlSlug],
             title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
-            description: websocket.description,
+            description: await serializeMdxContent(websocket.description),
         }),
     );
     const webhooksPromise = subpackage.webhooks.map(
@@ -141,7 +142,7 @@ async function resolveSidebarNodeApiSection(
             id: webhook.id,
             slug: [...slug, webhook.urlSlug],
             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-            description: webhook.description,
+            description: await serializeMdxContent(webhook.description),
         }),
     );
     const subpackagesPromise = subpackage.subpackages.map((innerSubpackageId) =>
@@ -254,7 +255,7 @@ export async function resolveSidebarNodes(
                                       pageType: "changelog",
                                       id: api.changelog.urlSlug,
                                       title: api.changelog.title ?? "Changelog",
-                                      description: api.changelog.description,
+                                      description: await serializeMdxContent(api.changelog.description),
                                       pageId: api.changelog.pageId,
                                       slug: api.changelog.fullSlug ?? [...definitionSlug, api.changelog.urlSlug],
                                       items: api.changelog.items.map((item) => ({

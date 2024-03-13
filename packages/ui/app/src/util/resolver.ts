@@ -994,7 +994,7 @@ function resolveExampleEndpointRequest(
     });
 }
 
-export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.File | ResolvedFormValue.FileArray;
+export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.File | ResolvedFormValue.MultipleFiles;
 
 export declare namespace ResolvedFormValue {
     interface Json {
