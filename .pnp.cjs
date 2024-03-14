@@ -4482,6 +4482,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-intersection-observer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:9.4.3"],\
             ["react-medium-image-zoom", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10"],\
             ["react-test-renderer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:18.2.0"],\
+            ["remark-gemoji", "npm:8.0.0"],\
             ["remark-gfm", "npm:4.0.0"],\
             ["remark-parse", "npm:11.0.0"],\
             ["remark-rehype", "npm:11.1.0"],\
@@ -12460,6 +12461,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["gemoji", [\
+        ["npm:8.1.0", {\
+          "packageLocation": "./.yarn/cache/gemoji-npm-8.1.0-db1e0f43b8-89ef0708e7.zip/node_modules/gemoji/",\
+          "packageDependencies": [\
+            ["gemoji", "npm:8.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["gensync", [\
         ["npm:1.0.0-beta.2", {\
           "packageLocation": "./.yarn/cache/gensync-npm-1.0.0-beta.2-224666d72f-a7437e58c6.zip/node_modules/gensync/",\
@@ -19211,6 +19221,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["regjsparser", "npm:0.9.1"],\
             ["jsesc", "npm:0.5.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["remark-gemoji", [\
+        ["npm:8.0.0", {\
+          "packageLocation": "./.yarn/cache/remark-gemoji-npm-8.0.0-b5634d5c62-244689a678.zip/node_modules/remark-gemoji/",\
+          "packageDependencies": [\
+            ["remark-gemoji", "npm:8.0.0"],\
+            ["@types/mdast", "npm:4.0.3"],\
+            ["gemoji", "npm:8.1.0"],\
+            ["mdast-util-find-and-replace", "npm:3.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

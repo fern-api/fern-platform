@@ -2741,6 +2741,7 @@ __metadata:
     react-intersection-observer: ^9.4.3
     react-medium-image-zoom: ^5.1.10
     react-test-renderer: ^18.2.0
+    remark-gemoji: ^8.0.0
     remark-gfm: ^4.0.0
     remark-parse: ^11.0.0
     remark-rehype: ^11.1.0
@@ -9257,6 +9258,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"gemoji@npm:^8.0.0":
+  version: 8.1.0
+  resolution: "gemoji@npm:8.1.0"
+  checksum: 89ef0708e77bbb938c3f87af8263e9e42891fb15b0f5d78e5d3b204a3430e82f8931a2459c912562f46cacb2addc9e8570857f1a3304d4307ebff7c32b126373
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -14730,6 +14738,17 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     regjsparser: bin/parser
   checksum: 5e1b76afe8f1d03c3beaf9e0d935dd467589c3625f6d65fb8ffa14f224d783a0fed4bf49c2c1b8211043ef92b6117313419edf055a098ed8342e340586741afc
+  languageName: node
+  linkType: hard
+
+"remark-gemoji@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "remark-gemoji@npm:8.0.0"
+  dependencies:
+    "@types/mdast": ^4.0.0
+    gemoji: ^8.0.0
+    mdast-util-find-and-replace: ^3.0.0
+  checksum: 244689a678f1e06e1306620b85e3029beccc659df6c966084da70bdbc09988013357ed04e5b38ce21c316cd5b8b01420fa38ac9be62f943ab3bb532372cdc8dc
   languageName: node
   linkType: hard
 
