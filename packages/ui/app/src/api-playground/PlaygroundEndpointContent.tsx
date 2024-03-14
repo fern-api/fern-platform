@@ -86,6 +86,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         auth: typeof newState === "function" ? newState(oldState.auth) : newState,
                                     }))
                                 }
+                                disabled={false}
                             />
                         )}
 

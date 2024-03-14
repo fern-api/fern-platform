@@ -302,7 +302,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                     </section>
                     <aside className="max-w-content-width">
                         {example != null && example.messages.length > 0 && (
-                            <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height flex flex-col gap-6 py-8">
+                            <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height sticky flex flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     type={"primary"}

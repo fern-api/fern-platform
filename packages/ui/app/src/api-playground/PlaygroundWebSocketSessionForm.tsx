@@ -1,19 +1,19 @@
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { WifiOff } from "react-feather";
 import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernButton } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
+import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundWebSocketSessionFormProps {
+    auth: APIV1Read.ApiAuth | null | undefined;
     websocket: ResolvedWebSocketChannel;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
@@ -24,12 +24,12 @@ interface PlaygroundWebSocketSessionFormProps {
     messages: WebSocketMessage[];
     sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
     startSession: () => void;
-    returnToHandshake: () => void;
     connected: boolean;
     error: string | null;
 }
 
 export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormProps> = ({
+    auth,
     websocket,
     formState,
     setFormState,
@@ -37,8 +37,6 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
     scrollAreaHeight,
     messages,
     sendMessage,
-    startSession,
-    returnToHandshake,
     connected,
     error,
 }) => {
@@ -62,11 +60,19 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
             rightClassName="pl-1"
         >
             <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
-                <div
-                    className={classNames("col-span-2 space-y-8 pb-20", {
-                        "opacity-50 pointer-events-none": !connected,
-                    })}
-                >
+                <div className="space-y-8">
+                    <PlaygroundWebSocketHandshakeForm
+                        auth={auth}
+                        websocket={websocket}
+                        formState={formState}
+                        setFormState={setFormState}
+                        types={types}
+                        error={error}
+                        disabled={connected}
+                    />
+
+                    <hr />
+
                     {websocket.messages
                         .filter((message) => message.origin === "client")
                         .map((message) => (
@@ -82,7 +88,6 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                             onChange={(data) => setMessage(message, data)}
                                             value={formState?.messages[message.type]}
                                             types={types}
-                                            disabled={!connected}
                                         />
                                     </div>
 
@@ -94,43 +99,12 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                             onClick={() => {
                                                 sendMessage(message, formState?.messages[message.type]);
                                             }}
-                                            disabled={!connected}
                                         />
                                     </div>
                                 </FernCard>
                             </div>
                         ))}
                 </div>
-
-                {!connected && (
-                    <div className="absolute inset-0">
-                        <div className="flex h-full w-full items-center justify-center">
-                            <div className="flex flex-col items-center space-y-4">
-                                <WifiOff className="t-muted" size={28} />
-                                <h4 className="m-0">Websocket session is closed.</h4>
-
-                                {error != null && (
-                                    <div className="max-w-3xl">
-                                        <Callout intent="error">
-                                            <div className="text-base">{error}</div>
-                                        </Callout>
-                                    </div>
-                                )}
-
-                                <FernButtonGroup>
-                                    <FernButton
-                                        text="Return to handshake"
-                                        icon={<ArrowLeftIcon />}
-                                        intent="primary"
-                                        variant="outlined"
-                                        onClick={returnToHandshake}
-                                    />
-                                    <FernButton text="Restart session" intent="primary" onClick={startSession} />
-                                </FernButtonGroup>
-                            </div>
-                        </div>
-                    </div>
-                )}
             </div>
 
             <div className="sticky inset-0 flex py-6 pr-6" style={{ height: scrollAreaHeight }}>
