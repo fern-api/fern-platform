@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  endpoint: endpoint.yml
+  type: type.yml
+  rootCommons: ../../../commons.yml
+  commons: commons.yml
+  webhook: webhook.yml
+  websocket: websocket.yml
+
+service:
+  base-path: /registry/api
+  auth: false
+  audiences:
+    - read
+  endpoints:
+    getApi:
+      method: GET
+      path: /load/{apiDefinitionId}
+      path-parameters:
+        apiDefinitionId: rootCommons.ApiDefinitionId
+      response: ApiDefinition
+      errors:
+        - ApiDoesNotExistError
+
+types:
+  ApiDefinition:
+    properties:
+      id: rootCommons.ApiDefinitionId
+      rootPackage: ApiDefinitionPackage
+      types: map<type.TypeId, type.TypeDefinition>
+      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+      auth: optional<ApiAuth>
+      hasMultipleBaseUrls:
+        type: optional<boolean>
+        docs: |
+          If empty, assume false. 
+          Whether or not endpoints are being served at different 
+          base urls (i.e. https://a.com and https://b.com)
+
+  ApiDefinitionPackage:
+    properties:
+      endpoints: list<endpoint.EndpointDefinition>
+      websockets: list<websocket.WebSocketChannel>
+      webhooks: list<webhook.WebhookDefinition>
+      types: list<type.TypeId>
+      subpackages: list<SubpackageId>
+      pointsTo:
+        docs: |
+          if present, this package should be replaced with the provided subpackage
+          in the docs navigation.
+        type: optional<SubpackageId>
+
+  ApiDefinitionSubpackage:
+    extends:
+      - commons.WithDescription
+      - ApiDefinitionPackage
+    properties:
+      parent: optional<SubpackageId>
+      subpackageId: SubpackageId
+      name: string
+      urlSlug: string
+
+  SubpackageId: string
+
+  ApiAuth:
+    union:
+      bearerAuth: BearerAuth
+      basicAuth: BasicAuth
+      header: HeaderAuth
+
+  BasicAuth:
+    properties:
+      usernameName: optional<string>
+      passwordName: optional<string>
+
+  BearerAuth:
+    properties:
+      tokenName: optional<string>
+
+  HeaderAuth:
+    properties:
+      nameOverride: optional<string>
+      headerWireValue: string
+
+errors:
+  ApiDoesNotExistError:
+    status-code: 404

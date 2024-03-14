@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  endpoint: endpoint.yml
+  type: type.yml
+  rootCommons: ../../../commons.yml
+  commons: commons.yml
+  webhook: webhook.yml
+  websocket: websocket.yml
+
+service:
+  auth: true
+  base-path: /registry/api
+  audiences:
+    - write
+  endpoints:
+    registerApiDefinition:
+      path: /register
+      method: POST
+      request:
+        name: RegisterApiDefinitionRequest
+        body:
+          properties:
+            orgId: rootCommons.OrgId
+            apiId: rootCommons.ApiId
+            definition: ApiDefinition
+      response: RegisterApiDefinitionResponse
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UserNotInOrgError
+
+types:
+  RegisterApiDefinitionResponse:
+    properties:
+      apiDefinitionId: rootCommons.ApiDefinitionId
+
+  ApiDefinition:
+    properties:
+      rootPackage: ApiDefinitionPackage
+      types: map<type.TypeId, type.TypeDefinition>
+      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+      auth: optional<ApiAuth>
+      globalHeaders: optional<list<endpoint.Header>>
+      snippetsConfiguration: optional<SnippetsConfig>
+
+  SnippetsConfig:
+    properties:
+      typescriptSdk: optional<TypescriptPackage>
+      pythonSdk: optional<PythonPackage>
+      goSdk: optional<GoModule>
+      javaSdk: optional<JavaCoordinate>
+
+  TypescriptPackage:
+    properties:
+      package: string
+
+  PythonPackage:
+    properties:
+      package: string
+
+  GoModule:
+    properties:
+      githubRepo: string
+
+  JavaCoordinate:
+    properties:
+      coordinate: string
+
+  ApiDefinitionPackage:
+    properties:
+      endpoints: list<endpoint.EndpointDefinition>
+      websockets: optional<list<websocket.WebSocketChannel>>
+      webhooks: optional<list<webhook.WebhookDefinition>>
+      types: list<type.TypeId>
+      subpackages: list<SubpackageId>
+      pointsTo:
+        docs: |
+          if present, this package should be replaced with the provided subpackage
+          in the docs navigation.
+        type: optional<SubpackageId>
+
+  ApiDefinitionSubpackage:
+    extends:
+      - ApiDefinitionPackage
+      - commons.WithDescription
+    properties:
+      subpackageId: SubpackageId
+      name: string
+
+  SubpackageId: string
+
+  ApiAuth:
+    union:
+      bearerAuth: BearerAuth
+      basicAuth: BasicAuth
+      header: HeaderAuth
+
+  BasicAuth:
+    properties:
+      usernameName: optional<string>
+      passwordName: optional<string>
+
+  BearerAuth:
+    properties:
+      tokenName: optional<string>
+
+  HeaderAuth:
+    properties:
+      nameOverride: optional<string>
+      headerWireValue: string
+
+  EndpointExampleGenerationErrorBody:
+    properties:
+      endpointId: string
+
+errors:
+  EndpointExampleGenerationError:
+    status-code: 500
+    type: EndpointExampleGenerationErrorBody

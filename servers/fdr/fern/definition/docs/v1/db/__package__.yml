@@ -1,0 +1,158 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+  apiReadV1: ../../../api/v1/read/__package__.yml
+  apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
+  docsReadV1: ../read/__package__.yml
+
+types:
+  DocsDefinitionDb:
+    union:
+      v1: DocsDefinitionDbV1
+      v2: DocsDefinitionDbV2
+      v3: DocsDefinitionDbV3
+
+  DocsDefinitionDbV1:
+    properties:
+      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<docsReadV1.FileId, DbFileInfo>
+      config: DocsDbConfig
+      colors: optional<docsReadV1.ColorsConfig>
+
+  DocsDefinitionDbV2:
+    properties:
+      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<docsReadV1.FileId, DbFileInfo>
+      config: DocsDbConfig
+      colors: optional<docsReadV1.ColorsConfig>
+      typography: optional<docsReadV1.DocsTypographyConfig>
+
+  DocsDefinitionDbV3:
+    properties:
+      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      referencedApis: set<rootCommons.ApiDefinitionId>
+      files: map<docsReadV1.FileId, DbFileInfoV2>
+      config: DocsDbConfig
+
+  DocsDbConfig:
+    properties:
+      title: optional<string>
+      navigation: NavigationConfig
+
+      # logo
+      logoHeight: optional<docsReadV1.Height>
+      logoHref: optional<docsReadV1.Url>
+      favicon: optional<docsReadV1.FileId>
+
+      # styles
+      backgroundImage: optional<docsReadV1.FileId>
+      colorsV3: optional<docsReadV1.ColorsConfigV3>
+      navbarLinks: optional<list<docsReadV1.NavbarLink>>
+      layout: optional<docsReadV1.DocsLayoutConfig>
+      typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
+
+      # css and js
+      css: optional<docsReadV1.CssConfig>
+      js: optional<docsReadV1.JsConfig>
+
+      # deprecated
+      logo:
+        type: optional<docsReadV1.FileId>
+        availability: deprecated
+      logoV2:
+        type: optional<docsReadV1.LogoV2>
+        availability: deprecated
+      colors:
+        type: optional<docsReadV1.ColorsConfig>
+        availability: deprecated
+      colorsV2:
+        type: optional<docsReadV1.ColorsConfigV2>
+        availability: deprecated
+      typography:
+        type: optional<docsReadV1.DocsTypographyConfig>
+        availability: deprecated
+
+  DbFileInfoV2:
+    union:
+      s3Key: DbFileInfo
+      image: DbImageFileInfo
+
+  DbFileInfo:
+    properties:
+      s3Key: string
+
+  DbImageFileInfo:
+    properties:
+      s3Key: string
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
+  NavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedNavigationConfig
+      - VersionedNavigationConfig
+
+  UnversionedNavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedTabbedNavigationConfig
+      - UnversionedUntabbedNavigationConfig
+
+  UnversionedTabbedNavigationConfig:
+    properties:
+      tabs: list<NavigationTab>
+
+  NavigationTab:
+    properties:
+      title: string
+      icon: string
+      items: list<NavigationItem>
+      urlSlug: string
+
+  UnversionedUntabbedNavigationConfig:
+    properties:
+      items: list<NavigationItem>
+
+  VersionedNavigationConfig:
+    properties:
+      versions: list<VersionedNavigationConfigData>
+
+  VersionedNavigationConfigData:
+    properties:
+      version: string
+      urlSlug: optional<string>
+      availability: optional<docsReadV1.VersionAvailability>
+      config: UnversionedNavigationConfig
+
+  NavigationItem:
+    union:
+      page: docsReadV1.PageMetadata
+      api: ApiSection
+      section: DocsSection
+      link: docsReadV1.LinkMetadata
+
+  ApiSection:
+    properties:
+      title: string
+      api: rootCommons.ApiDefinitionId
+      urlSlug: string
+      skipUrlSlug: boolean
+      artifacts: optional<docsReadV1.ApiArtifacts>
+      showErrors: optional<boolean>
+      changelog: optional<docsReadV1.ChangelogSection>
+      fullSlug: optional<list<string>>
+
+  DocsSection:
+    properties:
+      title: string
+      items: list<NavigationItem>
+      urlSlug: string
+      skipUrlSlug: boolean
+      collapsed: boolean
+      fullSlug: optional<list<string>>

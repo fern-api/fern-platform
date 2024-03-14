@@ -1,0 +1,217 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  type: type.yml
+  commons: commons.yml
+
+types:
+  EnvironmentId: string
+
+  EndpointId: string
+
+  EndpointDefinition:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      auth: optional<boolean>
+      defaultEnvironment: optional<EnvironmentId>
+      environments: optional<list<Environment>>
+      method: HttpMethod
+      id: EndpointId
+      name: optional<string>
+      path: EndpointPath
+      queryParameters: list<QueryParameter>
+      headers: list<Header>
+      request: optional<HttpRequest>
+      response: optional<HttpResponse>
+      errors: optional<list<ErrorDeclaration>>
+      errorsV2: optional<list<ErrorDeclarationV2>>
+      examples: list<ExampleEndpointCall>
+
+  Environment:
+    properties:
+      id: EnvironmentId
+      baseUrl: string
+
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+
+  EndpointPath:
+    properties:
+      parts: list<EndpointPathPart>
+      pathParameters: list<PathParameter>
+
+  EndpointPathPart:
+    union:
+      literal: string
+      pathParameter: PathParameterKey
+
+  PathParameter:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: PathParameterKey
+      type: type.TypeReference
+
+  PathParameterKey: string
+
+  QueryParameter:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: string
+      type: type.TypeReference
+
+  Header:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: string
+      type: type.TypeReference
+
+  HttpRequest:
+    extends: commons.WithDescription
+    properties:
+      type: HttpRequestBodyShape
+
+  HttpRequestBodyShape:
+    union:
+      object:
+        # deprecated, the CLI will use json instead
+        type: type.ObjectType
+      reference:
+        # deprecated, the CLI will use json instead
+        type: type.TypeReference
+      json: JsonRequestBody
+      fileUpload:
+        type: optional<type.FileUploadRequest>
+        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
+      bytes: type.BytesRequest
+
+  JsonRequestBody:
+    properties:
+      contentType: string
+      shape: JsonBodyShape
+
+  JsonBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+
+  HttpResponse:
+    extends: commons.WithDescription
+    properties:
+      type: HttpResponseBodyShape
+
+  ErrorDeclaration:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      type: optional<type.TypeReference>
+      statusCode: integer
+
+  ErrorDeclarationV2:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      type: optional<type.TypeShape>
+      statusCode: integer
+      name: optional<string>
+
+  HttpResponseBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+      fileDownload: {}
+      streamingText: {}
+      stream: StreamResponseV2
+
+      # deprecated
+      streamCondition:
+        type: StreamConditionResponse
+        docs: |
+          A response that can either be streaming or REST
+
+  StreamResponseV2:
+    properties:
+      shape: JsonBodyShape
+
+  StreamConditionResponse:
+    availability: deprecated
+    properties:
+      response: NonStreamResponse
+      streamResponse: StreamResponse
+      streamCondition: StreamCondition
+
+  NonStreamResponse:
+    availability: deprecated
+    properties:
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+
+  StreamResponse:
+    availability: deprecated
+    properties:
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+
+  StreamCondition:
+    availability: deprecated
+    union:
+      booleanRequestProperty: type.PropertyKey
+
+  # examples
+  ExampleEndpointCall:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      path: string
+      pathParameters: map<PathParameterKey, unknown>
+      queryParameters: map<string, unknown>
+      headers: map<string, unknown>
+      requestBody:
+        type: unknown
+        availability: deprecated
+      requestBodyV3: optional<ExampleEndpointRequest>
+      responseStatusCode: integer
+      responseBody:
+        type: unknown
+        availability: deprecated
+      responseBodyV3: optional<ExampleEndpointResponse>
+      codeSamples: optional<list<CustomCodeSample>>
+
+  CustomCodeSample:
+    docs: Hand-written code samples
+    extends: commons.WithDescription
+    properties:
+      language: string
+      code: string
+      name: optional<string>
+      install: optional<string>
+
+  ExampleEndpointRequest:
+    union:
+      json: unknown
+      form: map<string, FormValue>
+
+  FormValue:
+    union:
+      json: unknown
+      filename: string
+
+  ExampleEndpointResponse:
+    union:
+      json: unknown
+      filename: string
+      stream: list<unknown>

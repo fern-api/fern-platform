@@ -1,0 +1,117 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+  v1DocsWrite: ../../v1/write/__package__.yml
+
+service:
+  base-path: /v2/registry/docs
+  auth: false
+  audiences:
+    - write
+  endpoints:
+    startDocsRegister:
+      auth: true
+      path: /v2/init
+      request:
+        name: StartDocsRegisterRequestV2
+        body:
+          properties:
+            domain:
+              type: string
+              docs: A `buildwithfern.com` url
+            customDomains: list<string>
+            authConfig: optional<AuthConfig>
+            orgId: rootCommons.OrgId
+            apiId:
+              type: rootCommons.ApiId
+              availability: deprecated
+            filepaths:
+              type: list<v1DocsWrite.FilePath>
+              docs: Relative filepath from docs folder.
+            images: optional<list<ImageFilePath>>
+      response: v1DocsWrite.StartDocsRegisterResponse
+      errors:
+        - InvalidDomainError
+        - InvalidCustomDomainError
+
+    startDocsPreviewRegister:
+      auth: true
+      path: /preview/init
+      request:
+        name: StartDocsPreviewRegisterRequestV2
+        body:
+          properties:
+            orgId: rootCommons.OrgId
+            authConfig: optional<AuthConfig>
+            filepaths:
+              type: list<v1DocsWrite.FilePath>
+              docs: Relative filepath from docs folder.
+            images: optional<list<ImageFilePath>>
+      response: StartDocsPreviewRegisterResponse
+      errors:
+        - InvalidDomainError
+
+    finishDocsRegister:
+      auth: true
+      method: POST
+      path: /register/{docsRegistrationId}
+      path-parameters:
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      request:
+        name: RegisterDocsRequest
+        body:
+          properties:
+            docsDefinition: v1DocsWrite.DocsDefinition
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UserNotInOrgError
+        - v1DocsWrite.DocsRegistrationIdNotFound
+types:
+  ImageFilePath:
+    properties:
+      filePath: v1DocsWrite.FilePath
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
+  StartDocsPreviewRegisterResponse:
+    extends: v1DocsWrite.StartDocsRegisterResponse
+    properties:
+      previewUrl: string
+
+  InvalidDomainErrorBody:
+    properties:
+      requiredDomainSuffix:
+        type: string
+        docs: Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)
+
+  InvliadCustomDomainErrorBody:
+    properties:
+      overlappingDomains: list<OverlappingCustomDomains>
+
+  OverlappingCustomDomains: list<string>
+
+  AuthConfig:
+    union:
+      public: PublicAuthConfig
+      private: PrivateAuthConfig
+
+  PublicAuthConfig:
+    docs: Allow anyone to access the docs.
+    properties: {}
+
+  PrivateAuthConfig:
+    docs: Use SSO to authenticate users before they can access the docs.
+    properties:
+      authType: literal<"sso">
+
+errors:
+  InvalidDomainError:
+    status-code: 400
+    # type: InvalidDomainErrorBody
+
+  InvalidCustomDomainError:
+    status-code: 400
+    # type: InvalidCustomDomainErrorBody
