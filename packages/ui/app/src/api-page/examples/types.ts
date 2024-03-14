@@ -123,13 +123,13 @@ export function stringifyHttpRequestExampleToCurl({
                   json: ({ value }) =>
                       value == null
                           ? ""
-                          : ` \\\n     -d "${typeof value === "string" ? value.replace(/"/g, '\\"') : JSON.stringify(value, null, 2).replace(/"/g, '\\"')}"`,
+                          : ` \\\n     -d ${typeof value === "string" ? `"${value.replace(/"/g, '\\"')}"` : `'${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`}`,
                   form: ({ value }) =>
                       Object.entries(value)
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
                                   json: ({ value }) =>
-                                      ` \\\n     -F ${key}="${typeof value === "string" ? value.replace(/"/g, '\\"') : JSON.stringify(value, null, 2).replace(/"/g, '\\"')}"`,
+                                      ` \\\n     -F ${key}=${typeof value === "string" ? `"${value.replace(/"/g, '\\"')}"` : `'${JSON.stringify(value, null, 2).replace(/"/g, "\\'")}'`}`,
                                   file: ({ fileName }) =>
                                       ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                   fileArray: ({ fileNames }) =>
@@ -143,8 +143,12 @@ export function stringifyHttpRequestExampleToCurl({
                               }),
                           )
                           .join(""),
-                  stream: ({ fileName }) =>
-                      ` \\\n     --data-binary @${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
+                  stream: ({ fileName }) => {
+                      if (fileName == null) {
+                          return "";
+                      }
+                      return ` \\\n     --data-binary @${fileName.includes(" ") ? `"${fileName}"` : fileName}`;
+                  },
                   _other: () => "",
               });
 
