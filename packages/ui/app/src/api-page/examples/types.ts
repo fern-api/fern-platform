@@ -143,8 +143,12 @@ export function stringifyHttpRequestExampleToCurl({
                               }),
                           )
                           .join(""),
-                  stream: ({ fileName }) =>
-                      ` \\\n     --data-binary @${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
+                  stream: ({ fileName }) => {
+                      if (fileName == null) {
+                          return "";
+                      }
+                      return ` \\\n     --data-binary @${fileName.includes(" ") ? `"${fileName}"` : fileName}`;
+                  },
                   _other: () => "",
               });
 
