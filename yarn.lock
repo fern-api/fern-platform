@@ -2738,7 +2738,7 @@ __metadata:
     react-error-boundary: ^4.0.10
     react-feather: ^2.0.10
     react-instantsearch-hooks-web: ^6.45.0
-    react-intersection-observer: ^9.4.3
+    react-intersection-observer: ^9.8.1
     react-medium-image-zoom: ^5.1.10
     react-test-renderer: ^18.2.0
     remark-gemoji: ^8.0.0
@@ -14410,12 +14410,16 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-intersection-observer@npm:^9.4.3":
-  version: 9.4.3
-  resolution: "react-intersection-observer@npm:9.4.3"
+"react-intersection-observer@npm:^9.8.1":
+  version: 9.8.1
+  resolution: "react-intersection-observer@npm:9.8.1"
   peerDependencies:
     react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: ac31c6c76ce72019a1fb50fe6b53ef6429d98b9e9b937f92d16635ef8586392c7058bb61526a8fe6bea6ce36c006015fe2d8893bac43eda6157b9e6b17ad9b68
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 0aec6f3fb51bdcbf0131c8e8b9a6b0c89b835608c908d3236e675db58fa2ddc7128f7b1e7c0761fc5b36384cfdf5edef0f5c3651f900220f6b92a992794700ca
   languageName: node
   linkType: hard
 
