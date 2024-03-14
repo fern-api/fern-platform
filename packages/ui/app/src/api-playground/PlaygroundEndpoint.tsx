@@ -44,6 +44,7 @@ function executeProxy(req: ProxyRequest): Promise<ProxyResponseWithMetadata> {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(req),
+        mode: "no-cors",
     }).then(async (response): Promise<ProxyResponseWithMetadata> => {
         const proxyTime = performance.now() - startTime;
         return {

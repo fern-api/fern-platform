@@ -68,6 +68,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
         if (!isPlaygroundEnabled) {
             fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/config/api-playground-enabled`, {
                 headers: { "x-fern-host": domain },
+                mode: "no-cors",
             })
                 .then((r) => r.json())
                 .then(setIsPlaygroundEnabled)
@@ -98,6 +99,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
             if (matchedPackage == null) {
                 const r = await fetch(
                     "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
+                    { mode: "no-cors" },
                 );
 
                 const data: ResolvedRootPackage | null = await r.json();
