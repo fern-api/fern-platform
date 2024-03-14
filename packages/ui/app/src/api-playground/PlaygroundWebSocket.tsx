@@ -1,9 +1,10 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { usePrevious } from "@fern-ui/react-commons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
-import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
+import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundWebSocketRequestFormState } from "./types";
@@ -25,14 +26,19 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     types,
 }): ReactElement => {
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
-    const [webSocketMessages, setWebSocketMessages] = useState<WebSocketMessage[]>([]);
+    const { messages, pushMessage } = useWebsocketMessages(websocket.id);
     const [error, setError] = useState<string | null>(null);
 
-    const pushWebSocketMessage = useCallback((message: WebSocketMessage) => {
-        setWebSocketMessages((old) => [...old, message]);
-    }, []);
-
     const socket = useRef<WebSocket | null>(null);
+
+    // close the socket when the websocket changes
+    const prevWebsocket = usePrevious(websocket);
+    useEffect(() => {
+        if (prevWebsocket.id !== websocket.id) {
+            socket.current?.close();
+            setError(null);
+        }
+    }, [prevWebsocket.id, websocket.id]);
 
     // auto-destroy the socket when the component is unmounted
     useEffect(() => () => socket.current?.close(), []);
@@ -45,7 +51,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             }
 
             setError(null);
-            setWebSocketMessages([]);
 
             const url = buildRequestUrl(
                 websocket.defaultEnvironment?.baseUrl,
@@ -74,7 +79,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                     setConnectedState("opened");
                     resolve(true);
                 } else if (data.type === "data") {
-                    pushWebSocketMessage({
+                    pushMessage({
                         type: "received",
                         data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,
                         origin: "server",
@@ -101,7 +106,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
         formState.headers,
         formState.pathParameters,
         formState.queryParameters,
-        pushWebSocketMessage,
+        pushMessage,
         websocket.defaultEnvironment?.baseUrl,
         websocket.path,
     ]);
@@ -111,7 +116,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             const isConnected = await startSession();
             if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
                 socket.current.send(JSON.stringify(data));
-                pushWebSocketMessage({
+                pushMessage({
                     type: message.type,
                     data,
                     origin: "client",
@@ -119,7 +124,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                 });
             }
         },
-        [pushWebSocketMessage, startSession],
+        [pushMessage, startSession],
     );
 
     return (
@@ -161,7 +166,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                         websocket={websocket}
                         formState={formState}
                         setFormState={setFormState}
-                        messages={webSocketMessages}
+                        messages={messages}
                         types={types}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
