@@ -111,7 +111,7 @@ export function stringifyHttpRequestExampleToCurl({
             ? toUrlEncoded(urlQueries)
                   .map(
                       ([key, value]) =>
-                          ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`,
+                          ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `'${key}'` : key}=${value.includes(" ") ? `'${value}'` : value}`,
                   )
                   .join("")
             : "";
@@ -127,15 +127,22 @@ export function stringifyHttpRequestExampleToCurl({
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
                                   json: ({ value }) =>
-                                      ` \\\n     -F '${key}=${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
-                                  file: ({ fileName }) => ` \\\n     -F ${key}=@${fileName}`,
+                                      ` \\\n     -F ${key}='${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
+                                  file: ({ fileName }) =>
+                                      ` \\\n     -F ${key}=@${fileName.includes(" ") ? `'${fileName}'` : fileName}`,
                                   fileArray: ({ fileNames }) =>
-                                      fileNames.map((fileName) => ` \\\n     -F ${key}[]=@${fileName}`).join(""),
+                                      fileNames
+                                          .map(
+                                              (fileName) =>
+                                                  ` \\\n     -F '${key}[]'=@${fileName.includes(" ") ? `'${fileName}'` : fileName}`,
+                                          )
+                                          .join(""),
                                   _other: () => "",
                               }),
                           )
                           .join(""),
-                  stream: ({ fileName }) => ` \\\n     --data-binary @${fileName}`,
+                  stream: ({ fileName }) =>
+                      ` \\\n     --data-binary @${fileName.includes(" ") ? `'${fileName}'` : fileName}`,
                   _other: () => "",
               });
 

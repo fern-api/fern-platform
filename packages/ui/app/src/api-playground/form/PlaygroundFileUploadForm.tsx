@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Cross1Icon, FileIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import numeral from "numeral";
@@ -10,13 +9,14 @@ import { WithLabelInternal } from "../WithLabel";
 export interface PlaygroundFileUploadFormProps {
     id: string;
     propertyKey: string;
-    property: APIV1Read.FileProperty;
+    type: "file" | "fileArray";
+    isOptional?: boolean;
     onValueChange: (value: ReadonlyArray<File> | undefined) => void;
     value: ReadonlyArray<File> | undefined;
 }
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
-    ({ id, propertyKey, property, onValueChange, value }) => {
+    ({ id, propertyKey, type, isOptional, onValueChange, value }) => {
         const [drag, setDrag] = useState(false);
         const dragOver: DragEventHandler<HTMLElement> = (e) => {
             e.preventDefault();
@@ -55,8 +55,8 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 propertyKey={propertyKey}
                 value={value}
                 onRemove={handleRemove}
-                isRequired={!property.isOptional}
-                typeShorthand={property.type === "file" ? "file" : "multiple files"}
+                isRequired={!isOptional}
+                typeShorthand={type === "file" ? "file" : "multiple files"}
                 availability={undefined}
                 description={undefined}
             >
@@ -98,7 +98,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                     </div>
 
                                     <FernButtonGroup className="-mr-2">
-                                        {property.type === "file" && (
+                                        {type === "file" && (
                                             <FernButton
                                                 text="Change"
                                                 onClick={() => ref.current?.click()}
@@ -120,7 +120,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                     </FernButtonGroup>
                                 </div>
                             ))}
-                            {property.type === "fileArray" && (
+                            {type === "fileArray" && (
                                 <div className="flex justify-end px-4 py-2">
                                     <FernButton
                                         onClick={() => ref.current?.click()}
