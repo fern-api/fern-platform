@@ -67,7 +67,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         const proxyRequest = (await req.json()) as ProxyRequest;
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
-            headers: new Headers(proxyRequest.headers),
+            headers: new Headers(await decryptHeaders(proxyRequest.headers)),
             body: await buildRequestBody(proxyRequest.body),
         });
         let body = await response.text();
@@ -106,4 +106,42 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             size: null,
         });
     }
+}
+
+function getPrivateKey(): string {
+    const key = process.env.API_PLAYGROUND_PRIVATE_KEY;
+    if (key == null) {
+        throw new Error("API_PLAYGROUND_PRIVATE_KEY is not set");
+    }
+
+    return key;
+}
+
+async function decryptHeader(value: string): Promise<string> {
+    if (value.startsWith("fern_")) {
+        value = value.slice("fern_".length);
+
+        const JSEncrypt = (await import("jsencrypt")).default;
+        const encrypt = new JSEncrypt();
+        encrypt.setPrivateKey(getPrivateKey());
+        const decrypted = encrypt.decrypt(value);
+
+        if (!decrypted) {
+            throw new Error("Failed to decrypt header");
+        }
+
+        value = decrypted;
+    } else if (value.toLowerCase().startsWith("bearer ")) {
+        value = "Bearer " + (await decryptHeader(value.slice("Bearer ".length)));
+    } else if (value.toLowerCase().startsWith("basic ")) {
+        value = "Basic " + (await decryptHeader(value.slice("Basic ".length)));
+    }
+
+    return value;
+}
+
+async function decryptHeaders(headers: Record<string, string>): Promise<Record<string, string>> {
+    return Object.fromEntries(
+        await Promise.all(Object.entries(headers).map(async ([key, value]) => [key, await decryptHeader(value)])),
+    );
 }

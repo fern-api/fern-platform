@@ -56,6 +56,7 @@
     "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
     "jotai": "^2.7.0",
+    "jsencrypt": "^3.3.2",
     "jsonpath": "^1.1.1",
     "lodash-es": "^4.17.21",
     "mdast-util-mdx-jsx": "^3.1.0",

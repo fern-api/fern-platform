@@ -3,7 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
+import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { Key } from "react-feather";
 import { FernButton } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
@@ -11,12 +11,19 @@ import { FernInput } from "../components/FernInput";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
-
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
     value: PlaygroundRequestFormAuth | undefined;
     onChange: (newAuthValue: PlaygroundRequestFormAuth) => void;
     disabled: boolean;
+}
+
+function getPublicKey() {
+    const publicKey = process.env.NEXT_PUBLIC_API_PLAYGROUND_PUBLIC_KEY;
+    if (!publicKey) {
+        throw new Error("NEXT_PUBLIC_API_PLAYGROUND_PUBLIC_KEY is not set");
+    }
+    return publicKey;
 }
 
 function BearerAuthForm({
@@ -255,13 +262,27 @@ interface PlaygroundAuthorizationFormCardProps {
     disabled: boolean;
 }
 
+const AUTH_TEXT = "Securely authenticate with your API key to send a real request";
+const SECURITY_HELPER = "API keys are encrypted and stored securely in your browser";
+
 export function PlaygroundAuthorizationFormCard({
     auth,
     authState,
     setAuthorization,
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
-    const isOpen = useBooleanState(false);
+    const { value: isOpen, setFalse: close, toggleValue: toggleOpen } = useBooleanState(false);
+
+    const [unencryptedAuthorization, setUnencryptedAuthorization] = useState<PlaygroundRequestFormAuth | undefined>(
+        undefined,
+    );
+
+    const encryptAndClose = useCallback(async () => {
+        if (unencryptedAuthorization != null) {
+            setAuthorization(await encryptAuthorization(unencryptedAuthorization));
+        }
+        close();
+    }, [close, setAuthorization, unencryptedAuthorization]);
 
     return (
         <div>
@@ -271,15 +292,15 @@ export function PlaygroundAuthorizationFormCard({
                     size="large"
                     intent="success"
                     variant="outlined"
-                    text="Authenticate with your API key to send a real request"
+                    text={AUTH_TEXT}
                     icon={<Key />}
                     rightIcon={
                         <span className="bg-tag-success text-intent-success flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
-                            Connect
+                            Connected
                         </span>
                     }
-                    onClick={isOpen.toggleValue}
-                    active={isOpen.value}
+                    onClick={toggleOpen}
+                    active={isOpen}
                 />
             ) : (
                 <FernButton
@@ -287,28 +308,29 @@ export function PlaygroundAuthorizationFormCard({
                     size="large"
                     intent="danger"
                     variant="outlined"
-                    text="Authenticate with your API key to send a real request"
+                    text={AUTH_TEXT}
                     icon={<Key />}
                     rightIcon={
                         <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
                             Connect
                         </span>
                     }
-                    onClick={isOpen.toggleValue}
-                    active={isOpen.value}
+                    onClick={toggleOpen}
+                    active={isOpen}
                 />
             )}
-            <FernCollapse isOpen={isOpen.value}>
+            <FernCollapse isOpen={isOpen}>
                 <div className="pt-4">
                     <div className="fern-dropdown">
                         <PlaygroundAuthorizationForm
                             auth={auth}
-                            value={authState}
-                            onChange={setAuthorization}
+                            value={unencryptedAuthorization}
+                            onChange={setUnencryptedAuthorization}
                             disabled={disabled}
                         />
-                        <div className="flex justify-end p-4 pt-2">
-                            <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                        <div className="flex items-center justify-between gap-2 p-4 pt-2">
+                            <div className="t-muted text-xs">{SECURITY_HELPER}</div>
+                            <FernButton text="Encrypt & Save" intent="primary" onClick={encryptAndClose} />
                         </div>
                     </div>
                 </div>
@@ -330,5 +352,66 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundRequestFormAuth 
             !isEmpty(authState.password.trim()),
         header: (header) => authState.type === "header" && !isEmpty(authState.headers[header.headerWireValue]?.trim()),
         _other: () => false,
+    });
+}
+
+async function encryptAuthorization(auth: PlaygroundRequestFormAuth): Promise<PlaygroundRequestFormAuth> {
+    const JSEncrypt = (await import("jsencrypt")).default;
+    const encrypt = new JSEncrypt();
+    encrypt.setPublicKey(getPublicKey());
+
+    function encryptAuthorizationHeader(auth: string): string | boolean {
+        if (auth.toLowerCase().startsWith("bearer ")) {
+            const token = encrypt.encrypt(auth.slice(7));
+            if (!token) {
+                return false;
+            }
+            return `Bearer fern_${token}`;
+        } else if (auth.toLowerCase().startsWith("basic ")) {
+            const token = encrypt.encrypt(auth.slice(6));
+            if (!token) {
+                return false;
+            }
+            return `Basic fern_${token}`;
+        }
+        return `fern_${encrypt.encrypt(auth)}`;
+    }
+
+    return visitDiscriminatedUnion(auth, "type")._visit<PlaygroundRequestFormAuth>({
+        bearerAuth: (bearerAuth) => {
+            const token = encrypt.encrypt(bearerAuth.token);
+            if (!token) {
+                throw new Error("Failed to encrypt token");
+            }
+            return { type: "bearerAuth", token: `fern_${token}` };
+        },
+        header: (header) => {
+            const headers = Object.fromEntries(
+                Object.entries(header.headers)
+                    .map(([key, value]) => [
+                        key,
+                        key.toLowerCase() === "authorization"
+                            ? encryptAuthorizationHeader(value)
+                            : `fern_${encrypt.encrypt(value)}`,
+                    ])
+                    .filter(([, value]) => value),
+            );
+            return { type: "header", headers };
+        },
+        basicAuth: (basicAuth) => {
+            const username = encrypt.encrypt(basicAuth.username);
+            const password = encrypt.encrypt(basicAuth.password);
+            if (!username || !password) {
+                throw new Error("Failed to encrypt username or password");
+            }
+            return {
+                type: "basicAuth",
+                username: `fern_${username}`,
+                password: `fern_${password}`,
+            };
+        },
+        _other: () => {
+            throw new Error("Unknown authorization type");
+        },
     });
 }

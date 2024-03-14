@@ -152,11 +152,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 <CopyToClipboardButton
                                     content={() =>
                                         requestType === "curl"
-                                            ? stringifyCurl(auth, endpoint, formState, false)
+                                            ? stringifyCurl(auth, endpoint, formState)
                                             : requestType === "javascript"
-                                              ? stringifyFetch(auth, endpoint, formState, false)
+                                              ? stringifyFetch(auth, endpoint, formState)
                                               : requestType === "python"
-                                                ? stringifyPythonRequests(auth, endpoint, formState, false)
+                                                ? stringifyPythonRequests(auth, endpoint, formState)
                                                 : ""
                                     }
                                     className="-mr-2"

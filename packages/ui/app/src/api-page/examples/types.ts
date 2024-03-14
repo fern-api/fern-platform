@@ -284,6 +284,9 @@ export function sortKeysByShape(
 }
 function toUrlEncoded(urlQueries: Record<string, unknown>): Array<[string, string]> {
     return Object.entries(urlQueries).flatMap(([key, value]): [string, string][] => {
+        if (value == null) {
+            return [];
+        }
         if (Array.isArray(value)) {
             return value.map((v) => [`${key}[]`, unknownToString(v)]);
         }

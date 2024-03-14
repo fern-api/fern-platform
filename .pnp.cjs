@@ -4322,6 +4322,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jose", "npm:5.2.3"],\
+            ["jsencrypt", "npm:3.3.2"],\
             ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.1.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["postcss", "npm:8.4.31"],\
@@ -4461,6 +4462,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["instantsearch.js", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:4.63.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
             ["jotai", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:2.7.0"],\
+            ["jsencrypt", "npm:3.3.2"],\
             ["jsonpath", "npm:1.1.1"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mdast-util-mdx-jsx", "npm:3.1.0"],\
@@ -14790,6 +14792,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/canvas",\
             "canvas"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["jsencrypt", [\
+        ["npm:3.3.2", {\
+          "packageLocation": "./.yarn/cache/jsencrypt-npm-3.3.2-86a4f18498-b78e896dc1.zip/node_modules/jsencrypt/",\
+          "packageDependencies": [\
+            ["jsencrypt", "npm:3.3.2"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isEmpty, mapValues, noop } from "lodash-es";
-import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
+import { isEmpty, mapValues, noop, snakeCase } from "lodash-es";
+import { HttpRequestExample, stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
 import {
     dereferenceObjectProperties,
     ResolvedEndpointDefinition,
@@ -102,18 +102,34 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
         .join("\n");
 }
 
+function stringifyFetchHeaders(headers: Record<string, string>, basicAuth: HttpRequestExample["basicAuth"]): string {
+    // this is similar to JSON.stringify(headers, undefined, 2), except if it detects that a value has an environment variable,
+    // such as $TOKEN, it will replace the string with ${process.env.TOKEN}
+
+    const entries: string[] = [];
+
+    for (const [key, value] of Object.entries(headers)) {
+        entries.push(
+            `  "${key}": ${value.includes("$") ? `\`${value.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)/, "${process.env.$1}")}\`` : `"${value}"`}`,
+        );
+    }
+
+    if (basicAuth != null) {
+        entries.push('  "Authorization": `Basic ${btoa(`${process.env.USERNAME}:${process.env.PASSWORD}`)}`');
+    }
+
+    return `{\n${entries.join(",\n")}\n}`;
+}
+
 export function stringifyFetch(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
 ): string {
     if (endpoint == null) {
         return "";
     }
-    const headers = redacted
-        ? buildRedactedHeaders(auth, endpoint, formState)
-        : buildUnredactedHeaders(auth, endpoint, formState);
+    const [headers, basicAuth] = buildRedactedHeaders(auth, endpoint, formState);
 
     function buildFetch(body: string | undefined) {
         if (endpoint == null) {
@@ -124,7 +140,7 @@ export function stringifyFetch(
             .join("")})
 const response = fetch("${buildEndpointUrl(endpoint, formState)}", {
   method: "${endpoint.method}",
-  headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
+  headers: ${indentAfter(stringifyFetchHeaders(headers, basicAuth), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
 });
 
 const body = await response.json();
@@ -178,19 +194,31 @@ ${buildFetch("formData")}`;
     });
 }
 
+function stringifyPythonRequestHeaders(headers: Record<string, string>): string {
+    // this is similar to JSON.stringify(headers, undefined, 2), except if it detects that a value has an environment variable,
+    // such as $TOKEN, it will replace the string with ${process.env.TOKEN}
+
+    const entries: string[] = [];
+
+    for (const [key, value] of Object.entries(headers)) {
+        entries.push(
+            `  "${key}": ${value.includes("$") ? `f"${value.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)/, '{os.environ["$1"]}')}"` : `"${value}"`}`,
+        );
+    }
+
+    return `{\n${entries.join(",\n")}\n}`;
+}
+
 export function stringifyPythonRequests(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
 ): string {
     if (endpoint == null) {
         return "";
     }
 
-    const headers = redacted
-        ? buildRedactedHeaders(auth, endpoint, formState)
-        : buildUnredactedHeaders(auth, endpoint, formState);
+    const [headers, basicAuth] = buildRedactedHeaders(auth, endpoint, formState);
 
     const imports = ["requests"];
 
@@ -207,9 +235,9 @@ export function stringifyPythonRequests(
         return `# ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
 response = requests.${endpoint.method.toLowerCase()}(
   "${buildEndpointUrl(endpoint, formState)}",
-  headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
+  headers=${indentAfter(stringifyPythonRequestHeaders(headers), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
       data != null ? `\n  data=${indentAfter(data, 2, 0)},` : ""
-  }${files != null ? `\n  files=${indentAfter(files, 2, 0)},` : ""}
+  }${files != null ? `\n  files=${indentAfter(files, 2, 0)},` : ""}${basicAuth != null ? '\n  auth=(os.environ["USERNAME"], os.environ["PASSWORD"]),' : ""}
 )
 
 print(response.json())`;
@@ -298,36 +326,42 @@ function buildRedactedHeaders(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     formState: PlaygroundRequestFormState,
-): Record<string, string> {
+): [Record<string, string>, HttpRequestExample["basicAuth"]] {
     const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
+    let basicAuth: HttpRequestExample["basicAuth"] = undefined;
 
     if (auth != null && endpoint.authed && formState.auth != null) {
         visitDiscriminatedUnion(formState.auth, "type")._visit({
-            bearerAuth: (bearerAuth) => {
+            bearerAuth: () => {
                 if (auth.type === "bearerAuth") {
-                    headers["Authorization"] = `Bearer ${obfuscateSecret(bearerAuth.token)}`;
+                    headers["Authorization"] = "Bearer $TOKEN";
                 }
             },
             header: (header) => {
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        if (auth.headerWireValue === "Authorization") {
-                            headers[auth.headerWireValue] = value.includes(":")
-                                ? `Basic ${obfuscateSecret(value)}`
-                                : `Bearer ${obfuscateSecret(value)}`;
+                        if (auth.headerWireValue.toLowerCase() === "authorization") {
+                            if (value.toLowerCase().startsWith("basic")) {
+                                basicAuth = {
+                                    username: "$USERNAME",
+                                    password: "$PASSWORD",
+                                };
+                            } else if (value.toLowerCase().startsWith("bearer")) {
+                                headers[auth.headerWireValue] = "Bearer $TOKEN";
+                            }
                         } else {
-                            headers[auth.headerWireValue] = obfuscateSecret(value);
+                            headers[auth.headerWireValue] = `$${snakeCase(auth.headerWireValue).toUpperCase()}`;
                         }
                     }
                 }
             },
-            basicAuth: (basicAuth) => {
-                // is this right?
+            basicAuth: () => {
                 if (auth.type === "basicAuth") {
-                    headers["Authorization"] = `Basic ${btoa(
-                        `${basicAuth.username}:${obfuscateSecret(basicAuth.password)}`,
-                    )}`;
+                    basicAuth = {
+                        username: "$USERNAME",
+                        password: "$PASSWORD",
+                    };
                 }
             },
             _other: noop,
@@ -339,7 +373,7 @@ function buildRedactedHeaders(
         headers["Content-Type"] = requestBody.contentType;
     }
 
-    return headers;
+    return [headers, basicAuth];
 }
 
 export function buildUnredactedHeaders(
@@ -360,11 +394,7 @@ export function buildUnredactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        if (auth.headerWireValue === "Authorization") {
-                            headers[auth.headerWireValue] = value.includes(":") ? `Basic ${value}` : `Bearer ${value}`;
-                        } else {
-                            headers[auth.headerWireValue] = value;
-                        }
+                        headers[auth.headerWireValue] = value;
                     }
                 }
             },
@@ -389,20 +419,18 @@ export function stringifyCurl(
     auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
 ): string {
     if (endpoint == null) {
         return "";
     }
-    const headers = redacted
-        ? buildRedactedHeaders(auth, endpoint, formState)
-        : buildUnredactedHeaders(auth, endpoint, formState);
+    const [headers, basicAuth] = buildRedactedHeaders(auth, endpoint, formState);
 
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,
         url: buildRequestUrl(endpoint?.defaultEnvironment?.baseUrl, endpoint?.path, formState?.pathParameters),
         urlQueries: formState.queryParameters,
         headers,
+        basicAuth,
         body:
             formState.body == null
                 ? undefined
