@@ -42,10 +42,7 @@ export function renderTypeShorthand(
         date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
 
         // referenced shapes
-        object: (o) =>
-            plural
-                ? `${o.name != null ? o.name + " " : ""} objects`
-                : `${o.name != null ? maybeWithArticle("a", `${o.name} object`) : maybeWithArticle("an", "object")}`,
+        object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
         undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
         discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
         enum: () => (plural ? "enums" : maybeWithArticle("an", "enum")),
