@@ -111,7 +111,7 @@ export function stringifyHttpRequestExampleToCurl({
             ? toUrlEncoded(urlQueries)
                   .map(
                       ([key, value]) =>
-                          ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `'${key}'` : key}=${value.includes(" ") ? `'${value}'` : value}`,
+                          ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`,
                   )
                   .join("")
             : "";
@@ -121,20 +121,22 @@ export function stringifyHttpRequestExampleToCurl({
             ? ""
             : visitDiscriminatedUnion(body, "type")._visit({
                   json: ({ value }) =>
-                      value == null ? "" : ` \\\n     -d '${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
+                      value == null
+                          ? ""
+                          : ` \\\n     -d "${typeof value === "string" ? value.replace(/"/g, '\\"') : JSON.stringify(value, null, 2).replace(/"/g, '\\"')}"`,
                   form: ({ value }) =>
                       Object.entries(value)
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
                                   json: ({ value }) =>
-                                      ` \\\n     -F ${key}='${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
+                                      ` \\\n     -F ${key}="${JSON.stringify(value, null, 2).replace(/"/g, '\\"')}"`,
                                   file: ({ fileName }) =>
-                                      ` \\\n     -F ${key}=@${fileName.includes(" ") ? `'${fileName}'` : fileName}`,
+                                      ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                   fileArray: ({ fileNames }) =>
                                       fileNames
                                           .map(
                                               (fileName) =>
-                                                  ` \\\n     -F '${key}[]'=@${fileName.includes(" ") ? `'${fileName}'` : fileName}`,
+                                                  ` \\\n     -F "${key}[]"=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                           )
                                           .join(""),
                                   _other: () => "",
@@ -142,7 +144,7 @@ export function stringifyHttpRequestExampleToCurl({
                           )
                           .join(""),
                   stream: ({ fileName }) =>
-                      ` \\\n     --data-binary @${fileName.includes(" ") ? `'${fileName}'` : fileName}`,
+                      ` \\\n     --data-binary @${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                   _other: () => "",
               });
 
