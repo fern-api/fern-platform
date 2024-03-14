@@ -1,7 +1,7 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { SerializeOptions } from "next-mdx-remote/dist/types";
 import { serialize } from "next-mdx-remote/serialize";
-import remarkEmoji from "remark-emoji";
+import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -29,7 +29,7 @@ export interface FernDocsFrontmatterInternal {
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
-    remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkEmoji],
+    remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkGemoji],
     rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
     format: "detect",
     /**
