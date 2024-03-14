@@ -105,6 +105,7 @@ const nextConfig = {
                 port: "",
             },
         ],
+        path: "https://app.buildwithfern.com/_next/image",
     },
 };
 
