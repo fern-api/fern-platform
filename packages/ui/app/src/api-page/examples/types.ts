@@ -129,7 +129,7 @@ export function stringifyHttpRequestExampleToCurl({
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
                                   json: ({ value }) =>
-                                      ` \\\n     -F ${key}="${JSON.stringify(value, null, 2).replace(/"/g, '\\"')}"`,
+                                      ` \\\n     -F ${key}="${typeof value === "string" ? value.replace(/"/g, '\\"') : JSON.stringify(value, null, 2).replace(/"/g, '\\"')}"`,
                                   file: ({ fileName }) =>
                                       ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                   fileArray: ({ fileNames }) =>
