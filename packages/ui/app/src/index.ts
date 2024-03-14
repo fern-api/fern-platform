@@ -1,3 +1,4 @@
+export { Stream } from "./api-playground/Stream";
 export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
 export * from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";

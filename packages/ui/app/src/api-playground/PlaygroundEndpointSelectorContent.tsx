@@ -6,6 +6,7 @@ import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { forwardRef, Fragment, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { withStream } from "../commons/withStream";
 import { Chip } from "../components/Chip";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
@@ -242,16 +243,4 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
             <span key={idx}>{part}</span>
         ),
     );
-}
-
-function withStream(text: ReactElement[]): ReactElement[] {
-    return [
-        ...text,
-        <span
-            key="stream"
-            className="bg-accent-primary/10 text-accent-primary flex items-center rounded-[4px] p-0.5 font-mono text-xs uppercase leading-none"
-        >
-            stream
-        </span>,
-    ];
 }
