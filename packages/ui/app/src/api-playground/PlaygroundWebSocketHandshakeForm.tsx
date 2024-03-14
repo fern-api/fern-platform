@@ -64,19 +64,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                 </Callout>
             )}
 
-            {websocket.authed && auth != null && (
-                <PlaygroundAuthorizationFormCard
-                    auth={auth}
-                    authState={formState?.auth}
-                    setAuthorization={(newState) =>
-                        setFormState((oldState) => ({
-                            ...oldState,
-                            auth: typeof newState === "function" ? newState(oldState.auth) : newState,
-                        }))
-                    }
-                    disabled={disabled}
-                />
-            )}
+            {websocket.authed && auth != null && <PlaygroundAuthorizationFormCard auth={auth} disabled={disabled} />}
 
             <div className="col-span-2 space-y-8">
                 {websocket.headers.length > 0 && (

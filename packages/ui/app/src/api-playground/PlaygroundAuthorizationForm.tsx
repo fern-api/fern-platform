@@ -2,8 +2,9 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
+import { atom, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
+import { FC, ReactElement, useCallback, useState } from "react";
 import { Key } from "react-feather";
 import { FernButton } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
@@ -257,21 +258,27 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
 
 interface PlaygroundAuthorizationFormCardProps {
     auth: APIV1Read.ApiAuth;
-    authState: PlaygroundRequestFormAuth | undefined;
-    setAuthorization: Dispatch<SetStateAction<PlaygroundRequestFormAuth | undefined>>;
     disabled: boolean;
 }
 
 const AUTH_TEXT = "Securely authenticate with your API key to send a real request";
 const SECURITY_HELPER = "API keys are encrypted and stored securely in your browser";
 
+export interface PlaygroundRequestFormAuthValue {
+    bearerAuth?: PlaygroundRequestFormAuth.BearerAuth;
+    header?: PlaygroundRequestFormAuth.Header;
+    basicAuth?: PlaygroundRequestFormAuth.BasicAuth;
+}
+
+export const ENCRYPTED_AUTHORIZATION_FORM = atom<PlaygroundRequestFormAuthValue>({});
+
 export function PlaygroundAuthorizationFormCard({
     auth,
-    authState,
-    setAuthorization,
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const { value: isOpen, setFalse: close, toggleValue: toggleOpen } = useBooleanState(false);
+
+    const setEncryptedAuthorization = useSetAtom(ENCRYPTED_AUTHORIZATION_FORM);
 
     const [unencryptedAuthorization, setUnencryptedAuthorization] = useState<PlaygroundRequestFormAuth | undefined>(
         undefined,
@@ -279,14 +286,18 @@ export function PlaygroundAuthorizationFormCard({
 
     const encryptAndClose = useCallback(async () => {
         if (unencryptedAuthorization != null) {
-            setAuthorization(await encryptAuthorization(unencryptedAuthorization));
+            const encrypted = await encryptAuthorization(unencryptedAuthorization);
+            setEncryptedAuthorization((old) => ({
+                ...old,
+                [auth.type]: encrypted,
+            }));
         }
         close();
-    }, [close, setAuthorization, unencryptedAuthorization]);
+    }, [auth.type, close, setEncryptedAuthorization, unencryptedAuthorization]);
 
     return (
         <div>
-            {isAuthed(auth, authState) ? (
+            {isAuthed(auth, unencryptedAuthorization) ? (
                 <FernButton
                     className="w-full text-left"
                     size="large"

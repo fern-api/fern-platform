@@ -77,17 +77,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 >
                     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
                         {endpoint.authed && auth != null && (
-                            <PlaygroundAuthorizationFormCard
-                                auth={auth}
-                                authState={formState?.auth}
-                                setAuthorization={(newState) =>
-                                    setFormState((oldState) => ({
-                                        ...oldState,
-                                        auth: typeof newState === "function" ? newState(oldState.auth) : newState,
-                                    }))
-                                }
-                                disabled={false}
-                            />
+                            <PlaygroundAuthorizationFormCard auth={auth} disabled={false} />
                         )}
 
                         <div className="grid grid-cols-3 gap-4">
