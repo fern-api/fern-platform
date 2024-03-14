@@ -4482,6 +4482,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-intersection-observer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:9.4.3"],\
             ["react-medium-image-zoom", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.1.10"],\
             ["react-test-renderer", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:18.2.0"],\
+            ["remark-emoji", "npm:4.0.1"],\
             ["remark-gfm", "npm:4.0.0"],\
             ["remark-parse", "npm:11.0.0"],\
             ["remark-rehype", "npm:11.1.0"],\
@@ -10729,6 +10730,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["emojilib", [\
+        ["npm:2.4.0", {\
+          "packageLocation": "./.yarn/cache/emojilib-npm-2.4.0-52421bcae3-ea241c342a.zip/node_modules/emojilib/",\
+          "packageDependencies": [\
+            ["emojilib", "npm:2.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["emoticon", [\
+        ["npm:4.0.1", {\
+          "packageLocation": "./.yarn/cache/emoticon-npm-4.0.1-4f2bc95a4c-991ab64219.zip/node_modules/emoticon/",\
+          "packageDependencies": [\
+            ["emoticon", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["encoding", [\
         ["npm:0.1.13", {\
           "packageLocation": "./.yarn/cache/encoding-npm-0.1.13-82a1837d30-bb98632f8f.zip/node_modules/encoding/",\
@@ -16731,6 +16750,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["node-emoji", [\
+        ["npm:2.1.3", {\
+          "packageLocation": "./.yarn/cache/node-emoji-npm-2.1.3-eb6ecb442b-9ae5a1fb12.zip/node_modules/node-emoji/",\
+          "packageDependencies": [\
+            ["node-emoji", "npm:2.1.3"],\
+            ["@sindresorhus/is", "npm:4.6.0"],\
+            ["char-regex", "npm:1.0.2"],\
+            ["emojilib", "npm:2.4.0"],\
+            ["skin-tone", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["node-gyp", [\
         ["npm:9.0.0", {\
           "packageLocation": "./.yarn/unplugged/node-gyp-npm-9.0.0-0eccfca4d1/node_modules/node-gyp/",\
@@ -19215,6 +19247,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["remark-emoji", [\
+        ["npm:4.0.1", {\
+          "packageLocation": "./.yarn/cache/remark-emoji-npm-4.0.1-2ecd0bf376-2c02d8c0b6.zip/node_modules/remark-emoji/",\
+          "packageDependencies": [\
+            ["remark-emoji", "npm:4.0.1"],\
+            ["@types/mdast", "npm:4.0.3"],\
+            ["emoticon", "npm:4.0.1"],\
+            ["mdast-util-find-and-replace", "npm:3.0.1"],\
+            ["node-emoji", "npm:2.1.3"],\
+            ["unified", "npm:11.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["remark-gfm", [\
         ["npm:4.0.0", {\
           "packageLocation": "./.yarn/cache/remark-gfm-npm-4.0.0-8bb699e315-84bea84e38.zip/node_modules/remark-gfm/",\
@@ -19861,6 +19907,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/sisteransi-npm-1.0.5-af60cc0cfa-aba6438f46.zip/node_modules/sisteransi/",\
           "packageDependencies": [\
             ["sisteransi", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["skin-tone", [\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/skin-tone-npm-2.0.0-43a2069845-19de157586.zip/node_modules/skin-tone/",\
+          "packageDependencies": [\
+            ["skin-tone", "npm:2.0.0"],\
+            ["unicode-emoji-modifier-base", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21448,6 +21504,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/unicode-canonical-property-names-ecmascript-npm-2.0.0-d2d8554a14-39be078afd.zip/node_modules/unicode-canonical-property-names-ecmascript/",\
           "packageDependencies": [\
             ["unicode-canonical-property-names-ecmascript", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["unicode-emoji-modifier-base", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/unicode-emoji-modifier-base-npm-1.0.0-ef42b85868-6e1521d35f.zip/node_modules/unicode-emoji-modifier-base/",\
+          "packageDependencies": [\
+            ["unicode-emoji-modifier-base", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
