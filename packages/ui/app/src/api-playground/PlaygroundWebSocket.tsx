@@ -32,69 +32,71 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
         setWebSocketMessages((old) => [...old, message]);
     }, []);
 
-    const [step, setStep] = useState<"handshake" | "session">("handshake");
-
     const socket = useRef<WebSocket | null>(null);
 
     // auto-destroy the socket when the component is unmounted
     useEffect(() => () => socket.current?.close(), []);
 
-    const startSession = useCallback(() => {
-        if (socket.current != null && socket.current.readyState !== WebSocket.CLOSED) {
-            socket.current.close();
-        }
+    const startSession = useCallback(async () => {
+        return new Promise<boolean>((resolve) => {
+            if (socket.current != null && socket.current.readyState !== WebSocket.CLOSED) {
+                resolve(true);
+                return;
+            }
 
-        setError(null);
-        setWebSocketMessages([]);
+            setError(null);
+            setWebSocketMessages([]);
 
-        const url = buildRequestUrl(
-            websocket.defaultEnvironment?.baseUrl,
-            websocket.path,
-            formState.pathParameters,
-            formState.queryParameters,
-        );
-
-        setConnectedState("opening");
-
-        socket.current = new WebSocket("wss://fern-websocket-worker.danny-312.workers.dev/ws");
-
-        socket.current.onopen = () => {
-            socket.current?.send(
-                JSON.stringify({
-                    type: "handshake",
-                    url,
-                    headers: formState.headers,
-                }),
+            const url = buildRequestUrl(
+                websocket.defaultEnvironment?.baseUrl,
+                websocket.path,
+                formState.pathParameters,
+                formState.queryParameters,
             );
-        };
 
-        socket.current.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data.type === "handshake" && data.status === "connected") {
-                setConnectedState("opened");
-                setStep("session");
-            } else if (data.type === "data") {
-                pushWebSocketMessage({
-                    type: "received",
-                    data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,
-                    origin: "server",
-                    displayName: undefined,
-                });
-            }
-        };
+            setConnectedState("opening");
 
-        socket.current.onclose = (ev) => {
-            setConnectedState("closed");
+            socket.current = new WebSocket("wss://fern-websocket-worker.danny-312.workers.dev/ws");
 
-            if (ev.code !== 1000) {
-                setError(ev.reason);
-            }
-        };
+            socket.current.onopen = () => {
+                socket.current?.send(
+                    JSON.stringify({
+                        type: "handshake",
+                        url,
+                        headers: formState.headers,
+                    }),
+                );
+            };
 
-        socket.current.onerror = (event) => {
-            // eslint-disable-next-line no-console
-            console.error(event);
-        };
+            socket.current.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.type === "handshake" && data.status === "connected") {
+                    setConnectedState("opened");
+                    resolve(true);
+                } else if (data.type === "data") {
+                    pushWebSocketMessage({
+                        type: "received",
+                        data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,
+                        origin: "server",
+                        displayName: undefined,
+                    });
+                }
+            };
+
+            socket.current.onclose = (ev) => {
+                setConnectedState("closed");
+                resolve(false);
+
+                if (ev.code !== 1000) {
+                    setError(ev.reason);
+                }
+            };
+
+            socket.current.onerror = (event) => {
+                // eslint-disable-next-line no-console
+                console.error(event);
+            };
+        });
     }, [
         formState.headers,
         formState.pathParameters,
@@ -105,8 +107,9 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     ]);
 
     const handleSendMessage = useCallback(
-        (message: ResolvedWebSocketMessage, data: unknown) => {
-            if (socket.current != null && socket.current.readyState === WebSocket.OPEN) {
+        async (message: ResolvedWebSocketMessage, data: unknown) => {
+            const isConnected = await startSession();
+            if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
                 socket.current.send(JSON.stringify(data));
                 pushWebSocketMessage({
                     type: message.type,
@@ -116,7 +119,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                 });
             }
         },
-        [pushWebSocketMessage],
+        [pushWebSocketMessage, startSession],
     );
 
     return (
@@ -160,10 +163,8 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                         setFormState={setFormState}
                         messages={webSocketMessages}
                         types={types}
-                        step={step}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
-                        returnToHandshake={useCallback(() => setStep("handshake"), [])}
                         connected={connectedState === "opened"}
                         error={error}
                     />

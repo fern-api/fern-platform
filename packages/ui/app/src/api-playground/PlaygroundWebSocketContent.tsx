@@ -2,7 +2,6 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
-import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
@@ -13,10 +12,8 @@ interface PlaygroundWebSocketContentProps {
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     messages: WebSocketMessage[];
     types: Record<string, ResolvedTypeDefinition>;
-    step: "handshake" | "session";
     startSesssion: () => void;
     sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
-    returnToHandshake: () => void;
     connected: boolean;
     error: string | null;
 }
@@ -27,11 +24,9 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
     formState,
     setFormState,
     types,
-    step,
     messages,
     sendMessage,
     startSesssion,
-    returnToHandshake,
     connected,
     error,
 }) => {
@@ -59,30 +54,19 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                 ref={scrollAreaRef}
                 className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
-                {step === "handshake" ? (
-                    <PlaygroundWebSocketHandshakeForm
-                        auth={auth}
-                        websocket={websocket}
-                        formState={formState}
-                        setFormState={setFormState}
-                        types={types}
-                        error={error}
-                    />
-                ) : (
-                    <PlaygroundWebSocketSessionForm
-                        websocket={websocket}
-                        formState={formState}
-                        types={types}
-                        scrollAreaHeight={scrollAreaHeight}
-                        messages={messages}
-                        setFormState={setFormState}
-                        sendMessage={sendMessage}
-                        startSession={startSesssion}
-                        returnToHandshake={returnToHandshake}
-                        connected={connected}
-                        error={error}
-                    />
-                )}
+                <PlaygroundWebSocketSessionForm
+                    auth={auth}
+                    websocket={websocket}
+                    formState={formState}
+                    types={types}
+                    scrollAreaHeight={scrollAreaHeight}
+                    messages={messages}
+                    setFormState={setFormState}
+                    sendMessage={sendMessage}
+                    startSession={startSesssion}
+                    connected={connected}
+                    error={error}
+                />
             </div>
         </div>
     );

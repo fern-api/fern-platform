@@ -14,6 +14,7 @@ interface PlaygroundWebSocketHandshakeFormProps {
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     types: Record<string, ResolvedTypeDefinition>;
     error: string | null;
+    disabled: boolean;
 }
 
 export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFormProps> = ({
@@ -23,6 +24,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
     setFormState,
     types,
     error,
+    disabled,
 }) => {
     const setHeaders = useCallback(
         (value: ((old: unknown) => unknown) | unknown) => {
@@ -55,7 +57,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
     );
 
     return (
-        <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
+        <>
             {error != null && (
                 <Callout intent="error">
                     <div className="text-base">{error}</div>
@@ -72,6 +74,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                             auth: typeof newState === "function" ? newState(oldState.auth) : newState,
                         }))
                     }
+                    disabled={disabled}
                 />
             )}
 
@@ -88,6 +91,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                                 onChange={setHeaders}
                                 value={formState?.headers}
                                 types={types}
+                                disabled={disabled}
                             />
                         </FernCard>
                     </div>
@@ -105,6 +109,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                                 onChange={setPathParameters}
                                 value={formState?.pathParameters}
                                 types={types}
+                                disabled={disabled}
                             />
                         </FernCard>
                     </div>
@@ -122,11 +127,12 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                                 onChange={setQueryParameters}
                                 value={formState?.queryParameters}
                                 types={types}
+                                disabled={disabled}
                             />
                         </FernCard>
                     </div>
                 )}
             </div>
-        </div>
+        </>
     );
 };
