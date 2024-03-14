@@ -60,7 +60,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
             rightClassName="pl-1"
         >
             <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
-                <div className="space-y-8 pb-20">
+                <div className="space-y-8">
                     <PlaygroundWebSocketHandshakeForm
                         auth={auth}
                         websocket={websocket}

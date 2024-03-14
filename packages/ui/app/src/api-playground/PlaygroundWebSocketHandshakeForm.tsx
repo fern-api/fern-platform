@@ -78,7 +78,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                 />
             )}
 
-            <div className="col-span-2 space-y-8 pb-20">
+            <div className="col-span-2 space-y-8">
                 {websocket.headers.length > 0 && (
                     <div>
                         <div className="mb-4 px-4">
