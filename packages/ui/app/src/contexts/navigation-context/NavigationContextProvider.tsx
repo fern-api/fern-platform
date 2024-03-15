@@ -1,4 +1,4 @@
-import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
+import { useBooleanState, useEventCallback, useWhyDidYouUpdate } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -183,6 +183,12 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         hydrate();
     }, [hydrate, selectedSlug]);
 
+    useWhyDidYouUpdate("NavigationContextProvider", {
+        closeMobileSidebar,
+        closeSearchDialog,
+        navigateToPath,
+        events: router.events,
+    });
     useEffect(() => {
         const handleRouteChange = (route: string, options: { shallow: boolean }) => {
             if (!options.shallow) {

@@ -3,7 +3,7 @@ import { createStore, Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
-import { PropsWithChildren, ReactElement, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { initializePosthog } from "../analytics/posthog";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
@@ -15,10 +15,13 @@ import "./globals.scss";
 
 const store = createStore();
 
-export const DEFAULT_CONTEXTS = [
-    ({ children }: PropsWithChildren): ReactElement => <JotaiProvider store={store}>{children}</JotaiProvider>,
-    ({ children }: PropsWithChildren): ReactElement => <ViewportContextProvider>{children}</ViewportContextProvider>,
-];
+function withDefaultContexts(children: ReactElement): ReactElement {
+    return (
+        <JotaiProvider store={store}>
+            <ViewportContextProvider>{children}</ViewportContextProvider>
+        </JotaiProvider>
+    );
+}
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
     const files = useDeepCompareMemoize(pageProps.files);
@@ -61,44 +64,33 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     if (pageProps.baseUrl == null) {
-        return DEFAULT_CONTEXTS.reduceRight(
-            (children, Context) => <Context>{children}</Context>,
-            <Component {...newPageProps} />,
-        );
+        return withDefaultContexts(<Component {...newPageProps} />);
     }
 
-    const contexts = [
-        ...DEFAULT_CONTEXTS,
-        ({ children }: PropsWithChildren): ReactElement => (
-            <FeatureFlagContext.Provider value={featureFlags}>{children}</FeatureFlagContext.Provider>
-        ),
-        ({ children }: PropsWithChildren): ReactElement => <ThemeProvider theme={theme}>{children}</ThemeProvider>,
-        ({ children }: PropsWithChildren): ReactElement => (
-            <DocsContextProvider
-                files={files}
-                layout={layout}
-                baseUrl={baseUrl}
-                colors={colors}
-                typography={typography}
-                css={css}
-            >
-                {children}
-            </DocsContextProvider>
-        ),
-        ({ children }: PropsWithChildren): ReactElement => (
-            <NavigationContextProvider
-                resolvedPath={pageProps.resolvedPath} // this changes between pages
-                navigation={navigation}
-                domain={baseUrl.domain}
-                basePath={baseUrl.basePath}
-                title={pageProps.title}
-            >
-                {children}
-            </NavigationContextProvider>
-        ),
-    ];
-
-    return contexts.reduceRight((children, Context) => <Context>{children}</Context>, <Component {...newPageProps} />);
+    return withDefaultContexts(
+        <FeatureFlagContext.Provider value={featureFlags}>
+            <ThemeProvider theme={theme}>
+                <DocsContextProvider
+                    files={files}
+                    layout={layout}
+                    baseUrl={baseUrl}
+                    colors={colors}
+                    typography={typography}
+                    css={css}
+                >
+                    <NavigationContextProvider
+                        resolvedPath={pageProps.resolvedPath} // this changes between pages
+                        navigation={navigation}
+                        domain={baseUrl.domain}
+                        basePath={baseUrl.basePath}
+                        title={pageProps.title}
+                    >
+                        <Component {...newPageProps} />
+                    </NavigationContextProvider>
+                </DocsContextProvider>
+            </ThemeProvider>
+        </FeatureFlagContext.Provider>,
+    );
 }
 
 // hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813
