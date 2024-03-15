@@ -5,6 +5,7 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
@@ -106,6 +107,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
+    const { domain } = useDocsContext();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
     // const [, startTransition] = useTransition();
 
@@ -152,10 +154,9 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     });
                 }
             } else {
-                const origin = window?.location?.origin;
                 const [res, stream] = await executeProxyStream({
                     ...req,
-                    streamTerminator: origin != null && origin.includes("perplexity") ? "data: " : "\n",
+                    streamTerminator: domain.includes("perplexity") ? "data: " : "\n",
                 });
                 for await (const item of stream) {
                     setResponse((lastValue) =>
