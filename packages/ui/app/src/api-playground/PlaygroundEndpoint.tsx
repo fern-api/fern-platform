@@ -92,7 +92,7 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
                     time: d.time,
                 };
             },
-            terminator: req.streamTerminator ?? "\n",
+            terminator: "\n",
         });
         return [response, stream];
     });
