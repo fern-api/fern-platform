@@ -161,16 +161,16 @@ export function useHighlightTokens(): HighlightCallback {
 }
 
 export function useHighlighter(lang: string): Highlighter | undefined {
-    const [languageLoaded, setHasLanguage] = useState<boolean>(() => hasLanguage(lang));
+    const [, setNonce] = useState(0);
     useEffect(() => {
         if (!hasLanguage(lang)) {
             void (async () => {
                 await getHighlighterInstance(lang);
-                setHasLanguage(hasLanguage(lang));
+                setNonce((n) => n + 1);
             })();
         }
     }, [lang]);
-    return languageLoaded ? highlighter : undefined;
+    return hasLanguage(lang) ? highlighter : undefined;
 }
 
 export function createRawTokens(code: string, lang: string): HighlightedTokens {
