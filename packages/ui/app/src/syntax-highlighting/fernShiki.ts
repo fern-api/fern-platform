@@ -1,27 +1,39 @@
 import { Root } from "hast";
 import { h } from "hastscript";
+import { memoize } from "lodash-es";
 import { useCallback, useEffect, useState } from "react";
 import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
 
+let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;
-export async function getHighlighterInstance(language: string): Promise<Highlighter> {
+
+// only call this once per language
+export const getHighlighterInstance = memoize(async (language: string): Promise<Highlighter> => {
     const lang = parseLang(language);
-    if (highlighter == null) {
-        highlighter = await getHighlighter({
+
+    if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.debug("Loading language:", lang);
+    }
+
+    if (highlighterPromise == null) {
+        highlighterPromise = getHighlighter({
             langs: [lang],
             themes: [LIGHT_THEME, DARK_THEME],
         });
     }
+
+    highlighter = await highlighterPromise;
 
     if (!highlighter.getLoadedLanguages().includes(lang)) {
         await highlighter.loadLanguage(lang);
     }
 
     return highlighter;
-}
+});
 
 function hasLanguage(lang: string): boolean {
-    return highlighter?.getLoadedLanguages().includes(parseLang(lang));
+    return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;
 }
 
 // export function highlight(
@@ -149,19 +161,16 @@ export function useHighlightTokens(): HighlightCallback {
 }
 
 export function useHighlighter(lang: string): Highlighter | undefined {
-    const [highlighterInstance, setHighlighter] = useState<Highlighter | undefined>(() =>
-        hasLanguage(lang) ? highlighter : undefined,
-    );
+    const [languageLoaded, setHasLanguage] = useState<boolean>(() => hasLanguage(lang));
     useEffect(() => {
-        if (highlighter == null || !hasLanguage(lang)) {
-            setHighlighter(undefined);
+        if (!hasLanguage(lang)) {
             void (async () => {
-                highlighter = await getHighlighterInstance(lang);
-                setHighlighter(highlighter);
+                await getHighlighterInstance(lang);
+                setHasLanguage(hasLanguage(lang));
             })();
         }
     }, [lang]);
-    return hasLanguage(lang) ? highlighterInstance : undefined;
+    return languageLoaded ? highlighter : undefined;
 }
 
 export function createRawTokens(code: string, lang: string): HighlightedTokens {
