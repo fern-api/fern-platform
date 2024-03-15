@@ -31,19 +31,9 @@ export class Stream<T> implements AsyncIterable<T> {
 
             while ((terminatorIndex = previous.indexOf(this.terminator)) >= 0) {
                 const line = previous.slice(0, terminatorIndex).trimEnd();
-<<<<<<< Updated upstream
-                if (this.parse != null) {
-                    const message = await this.parse(JSON.parse(line));
-                    yield message;
-                } else {
-                    yield line as T;
-                }
-                previous = previous.slice(terminatorIndex + 1);
-=======
                 const message = await this.parse(JSON.parse(line));
                 yield message;
                 previous = previous.slice(terminatorIndex + this.terminator.length);
->>>>>>> Stashed changes
             }
         }
     }
