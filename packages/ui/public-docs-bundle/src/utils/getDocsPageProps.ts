@@ -4,6 +4,7 @@ import { buildUrl, convertNavigatableToResolvedPath, DocsPage, DocsPageResult, g
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
@@ -175,25 +176,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const isApiPlaygroundEnabled = await fetch(`https://${xFernHost}/api/fern-docs/config/api-playground-enabled`, {
-        headers: { "x-fern-host": xFernHost },
-    })
-        .then((r): Promise<boolean> => r.json())
-        .catch((e) => {
-            // eslint-disable-next-line no-console
-            console.error("Failed to check if API Playground is enabled", e);
-            return false;
-        });
-
-    const isWhiteLabeled = await fetch(`https://${xFernHost}/api/fern-docs/config/whitelabeled`, {
-        headers: { "x-fern-host": xFernHost },
-    })
-        .then((r): Promise<boolean> => r.json())
-        .catch((e) => {
-            // eslint-disable-next-line no-console
-            console.error("Failed to check if API Playground is enabled", e);
-            return false;
-        });
+    const featureFlags = await getFeatureFlags(xFernHost);
 
     const props: DocsPage.Props = {
         baseUrl: docs.baseUrl,
@@ -226,8 +209,7 @@ async function convertDocsToDocsPageProps({
         files: docs.definition.filesV2,
         resolvedPath,
         navigation,
-        isApiPlaygroundEnabled,
-        isWhiteLabeled,
+        featureFlags,
     };
 
     return {

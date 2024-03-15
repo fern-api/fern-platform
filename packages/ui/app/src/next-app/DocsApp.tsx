@@ -10,8 +10,6 @@ export declare namespace App {
         logoHref: DocsV1Read.Url | undefined;
         search: DocsV1Read.SearchInfo;
         algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
-        isApiPlaygroundEnabled: boolean;
-        isWhiteLabeled: boolean;
     }
 }
 
@@ -22,8 +20,6 @@ export const DocsApp: React.FC<App.Props> = ({
     navbarLinks,
     logoHeight,
     logoHref,
-    isApiPlaygroundEnabled,
-    isWhiteLabeled,
 }) => {
     const search = useDeepCompareMemoize(unmemoizedSearch);
     return (
@@ -36,8 +32,6 @@ export const DocsApp: React.FC<App.Props> = ({
                     logoHref={logoHref}
                     search={search}
                     algoliaSearchIndex={algoliaSearchIndex}
-                    isApiPlaygroundEnabled={isApiPlaygroundEnabled}
-                    isWhiteLabeled={isWhiteLabeled}
                 />
             </div>
         </div>

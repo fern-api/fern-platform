@@ -28,7 +28,6 @@ export interface SidebarProps {
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     showSearchBar?: boolean;
-    isWhiteLabeled: boolean;
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
@@ -41,7 +40,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     logoHeight,
     logoHref,
     showSearchBar,
-    isWhiteLabeled,
 }) {
     const { layout } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -102,7 +100,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                     </CollapseSidebarProvider>
                     <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                 </SearchSidebar>
-                <BuiltWithFern isWhiteLabeled={isWhiteLabeled} />
+                <BuiltWithFern />
             </FernScrollArea>
         </nav>
     );

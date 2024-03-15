@@ -1,15 +1,27 @@
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
+import { createStore, Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { initializePosthog } from "../analytics/posthog";
-import { CONTEXTS } from "../contexts";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
+import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
+import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
 import "./globals.scss";
+
+const store = createStore();
+
+function withDefaultContexts(children: ReactElement): ReactElement {
+    return (
+        <JotaiProvider store={store}>
+            <ViewportContextProvider>{children}</ViewportContextProvider>
+        </JotaiProvider>
+    );
+}
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
     const files = useDeepCompareMemoize(pageProps.files);
@@ -18,9 +30,21 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     const typography = useDeepCompareMemoize(pageProps.typography);
     const css = useDeepCompareMemoize(pageProps.css);
     const baseUrl = useDeepCompareMemoize(pageProps.baseUrl);
-    const resolvedPath = useDeepCompareMemoize(pageProps.resolvedPath);
     const navigation = useDeepCompareMemoize(pageProps.navigation);
-    const title = useDeepCompareMemoize(pageProps.title);
+    const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
+
+    // we're memoizing the props to avoid re-rendering the entire app when the props change
+    const newPageProps: DocsPage.Props = {
+        ...pageProps,
+        files,
+        layout,
+        colors,
+        typography,
+        css,
+        baseUrl,
+        navigation,
+        featureFlags,
+    };
 
     useEffect(() => {
         initializePosthog();
@@ -40,33 +64,33 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     if (pageProps.baseUrl == null) {
-        return CONTEXTS.reduceRight((children, Context) => <Context>{children}</Context>, <Component {...pageProps} />);
+        return withDefaultContexts(<Component {...newPageProps} />);
     }
 
-    const app = (
-        <ThemeProvider theme={theme}>
-            <DocsContextProvider
-                files={files}
-                layout={layout}
-                baseUrl={baseUrl}
-                colors={colors}
-                typography={typography}
-                css={css}
-            >
-                <NavigationContextProvider
-                    resolvedPath={resolvedPath}
-                    navigation={navigation}
-                    domain={baseUrl.domain}
-                    basePath={baseUrl.basePath}
-                    title={title}
+    return withDefaultContexts(
+        <FeatureFlagContext.Provider value={featureFlags}>
+            <ThemeProvider theme={theme}>
+                <DocsContextProvider
+                    files={files}
+                    layout={layout}
+                    baseUrl={baseUrl}
+                    colors={colors}
+                    typography={typography}
+                    css={css}
                 >
-                    <Component {...pageProps} />
-                </NavigationContextProvider>
-            </DocsContextProvider>
-        </ThemeProvider>
+                    <NavigationContextProvider
+                        resolvedPath={pageProps.resolvedPath} // this changes between pages
+                        navigation={navigation}
+                        domain={baseUrl.domain}
+                        basePath={baseUrl.basePath}
+                        title={pageProps.title}
+                    >
+                        <Component {...newPageProps} />
+                    </NavigationContextProvider>
+                </DocsContextProvider>
+            </ThemeProvider>
+        </FeatureFlagContext.Provider>,
     );
-
-    return CONTEXTS.reduceRight((children, Context) => <Context>{children}</Context>, app);
 }
 
 // hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813

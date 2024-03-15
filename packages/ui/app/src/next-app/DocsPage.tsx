@@ -4,6 +4,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReactElement, useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -39,8 +40,7 @@ export declare namespace DocsPage {
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
 
-        isApiPlaygroundEnabled: boolean;
-        isWhiteLabeled: boolean;
+        featureFlags: FeatureFlags;
     }
 }
 
@@ -48,19 +48,12 @@ export function DocsPage({
     title,
     favicon,
     backgroundImage,
-    // colors,
-    // typography,
-    // layout,
-    // css,
     js,
     navbarLinks,
     logoHeight,
     logoHref,
     search,
     algoliaSearchIndex,
-    // files,
-    isApiPlaygroundEnabled,
-    isWhiteLabeled,
 }: DocsPage.Props): ReactElement {
     const { colors, typography, layout, css, files } = useDocsContext();
     const stylesheet = useMemo(
@@ -95,8 +88,6 @@ export function DocsPage({
                 navbarLinks={navbarLinks}
                 search={search}
                 algoliaSearchIndex={algoliaSearchIndex}
-                isApiPlaygroundEnabled={isApiPlaygroundEnabled}
-                isWhiteLabeled={isWhiteLabeled}
             />
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
