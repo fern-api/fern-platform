@@ -565,7 +565,19 @@ function resolveResponseBodyShape(
             streamingText: (streamingText) => streamingText,
             streamCondition: (streamCondition) => streamCondition,
             reference: (reference) => resolveTypeReference(reference.value, types),
-            stream: () => ({ type: "unknown" }), // TODO: IMPLEMENT
+            stream: async (stream) => {
+                if (stream.shape.type === "reference") {
+                    return resolveTypeReference(stream.shape.value, types);
+                }
+                return {
+                    type: "object",
+                    name: undefined,
+                    extends: stream.shape.extends,
+                    properties: await resolveObjectProperties(stream.shape, types),
+                    description: undefined,
+                    availability: undefined,
+                };
+            },
             _other: () => ({ type: "unknown" }),
         }),
     );
