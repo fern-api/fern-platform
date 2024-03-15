@@ -283,6 +283,7 @@ export function sortKeysByShape(
         streamCondition: () => obj,
         streamingText: () => obj,
         alias: ({ shape }) => sortKeysByShape(obj, shape, types),
+        stream: () => obj,
         _other: () => obj,
     });
 }
