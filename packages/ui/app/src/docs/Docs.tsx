@@ -13,12 +13,10 @@ import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
 import { HeaderContainer } from "./HeaderContainer";
-import { NextNProgress } from "./NProgress";
 
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 interface DocsProps {
-    hasBackgroundImage: boolean;
     navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
@@ -31,7 +29,6 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
-    hasBackgroundImage,
     search,
     algoliaSearchIndex,
     navbarLinks,
@@ -76,15 +73,13 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <>
-            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-            <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
+            <BgImageGradient colors={colors} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
             <PlaygroundContextProvider navigation={navigation.sidebarNodes}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                         <HeaderContainer
-                            hasBackgroundImage={hasBackgroundImage}
                             isMobileSidebarOpen={isMobileSidebarOpen}
                             navbarLinks={navbarLinks}
                             logoHeight={logoHeight}

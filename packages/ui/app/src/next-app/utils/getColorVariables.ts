@@ -64,6 +64,7 @@ export const CSS_VARIABLES = {
     GRAYSCALE_11: "--grayscale-a11",
     GRAYSCALE_12: "--grayscale-a12",
     BODY_TEXT: "--body-text",
+    BACKGROUND_IMAGE: "--docs-background-image",
 } as const;
 
 function isRgbColor(color: unknown): color is DocsV1Read.RgbaColor {
@@ -98,9 +99,12 @@ function getColor2(
     return undefined;
 }
 
-export function getColorVariables(colorsV3: ColorsConfig): {
-    light: Record<string, string>;
-    dark: Record<string, string>;
+export function getColorVariables(
+    colorsV3: ColorsConfig,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+): {
+    light: Record<string, string | undefined>;
+    dark: Record<string, string | undefined>;
 } {
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
@@ -196,6 +200,7 @@ export function getColorVariables(colorsV3: ColorsConfig): {
             [CSS_VARIABLES.BORDER]: borderLight?.toRgbString() ?? "var(--grayscale-a5)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderLight?.toRgbString() ?? "var(--grayscale-a3)",
             [CSS_VARIABLES.BODY_TEXT]: "0, 0, 0",
+            [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(colorsV3.light?.backgroundImage, files),
         },
         dark: {
             [CSS_VARIABLES.GRAYSCALE_1]: getRadixGrayVar(radixGrayscaleDark, 1),
@@ -223,8 +228,23 @@ export function getColorVariables(colorsV3: ColorsConfig): {
             [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a5)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderDark?.toRgbString() ?? "var(--grayscale-a3)",
             [CSS_VARIABLES.BODY_TEXT]: "255, 255, 255",
+            [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(colorsV3.dark?.backgroundImage, files),
         },
     };
+}
+
+function getBackgroundImage(
+    id: string | undefined,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+): string | undefined {
+    if (id == null) {
+        return undefined;
+    }
+    const url = files[id]?.url;
+    if (url == null) {
+        return undefined;
+    }
+    return `url(${url})`;
 }
 
 export function increaseForegroundContrast(

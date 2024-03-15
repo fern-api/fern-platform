@@ -9,7 +9,6 @@ import { Header } from "./Header";
 import { useIsScrolled } from "./useIsScrolled";
 
 interface HeaderContainerProps {
-    hasBackgroundImage: boolean;
     isMobileSidebarOpen: boolean;
     navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
@@ -17,7 +16,6 @@ interface HeaderContainerProps {
 }
 
 export const HeaderContainer: FC<HeaderContainerProps> = ({
-    hasBackgroundImage,
     isMobileSidebarOpen,
     navbarLinks,
     logoHeight,
@@ -44,15 +42,11 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({
                     `}
                 </style>
                 <div className={classNames(className, "clipped-background")}>
-                    <BgImageGradient
-                        className="h-screen opacity-60 dark:opacity-80"
-                        colors={colors}
-                        hasSpecifiedBackgroundImage={hasBackgroundImage}
-                    />
+                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" colors={colors} />
                 </div>
             </>
         ),
-        [colors, hasBackgroundImage],
+        [colors],
     );
     return (
         <header id="fern-header">

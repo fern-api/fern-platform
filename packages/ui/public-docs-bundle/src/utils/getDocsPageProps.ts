@@ -183,7 +183,6 @@ async function convertDocsToDocsPageProps({
         layout: docs.definition.config.layout,
         title: docs.definition.config.title,
         favicon: docs.definition.config.favicon,
-        backgroundImage: docs.definition.config.backgroundImage,
         colors: {
             light:
                 docs.definition.config.colorsV3?.type === "light"

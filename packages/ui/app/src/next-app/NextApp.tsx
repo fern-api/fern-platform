@@ -9,6 +9,7 @@ import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvide
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
+import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
 import "./globals.scss";
@@ -18,7 +19,10 @@ const store = createStore();
 function withDefaultContexts(children: ReactElement): ReactElement {
     return (
         <JotaiProvider store={store}>
-            <ViewportContextProvider>{children}</ViewportContextProvider>
+            <ViewportContextProvider>
+                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                {children}
+            </ViewportContextProvider>
         </JotaiProvider>
     );
 }
