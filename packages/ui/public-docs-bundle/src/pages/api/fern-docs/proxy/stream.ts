@@ -16,10 +16,10 @@ const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) 
             body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body.value) : undefined,
         });
         if (response.body != null) {
-            const stream = new Stream({
+            const stream = new Stream<string>({
                 stream: response.body,
-                parse: async (i) => JSON.stringify(i) + "\n",
-                terminator: "\n",
+                parse: undefined,
+                terminator: "\n", // TODO: This should be passed in via API Reference
             });
             res.writeHead(response.status, undefined, {
                 "Content-Type": response.headers.get("Content-Type") ?? "application/json",

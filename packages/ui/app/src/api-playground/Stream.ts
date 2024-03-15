@@ -1,6 +1,6 @@
 export class Stream<T> implements AsyncIterable<T> {
     private stream: ReadableStream;
-    private parse: (val: unknown) => Promise<T>;
+    private parse: ((val: unknown) => Promise<T>) | undefined;
     private terminator: string;
 
     constructor({
@@ -9,7 +9,7 @@ export class Stream<T> implements AsyncIterable<T> {
         terminator,
     }: {
         stream: ReadableStream;
-        parse: (val: unknown) => Promise<T>;
+        parse: ((val: unknown) => Promise<T>) | undefined;
         terminator: string;
     }) {
         this.stream = stream;
@@ -31,8 +31,12 @@ export class Stream<T> implements AsyncIterable<T> {
 
             while ((terminatorIndex = previous.indexOf(this.terminator)) >= 0) {
                 const line = previous.slice(0, terminatorIndex).trimEnd();
-                const message = await this.parse(JSON.parse(line));
-                yield message;
+                if (this.parse != null) {
+                    const message = await this.parse(JSON.parse(line));
+                    yield message;
+                } else {
+                    yield line as T;
+                }
                 previous = previous.slice(terminatorIndex + 1);
             }
         }
