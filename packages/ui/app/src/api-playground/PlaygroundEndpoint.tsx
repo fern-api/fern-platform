@@ -185,7 +185,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
         }
-    }, [auth, endpoint, formState]);
+    }, [auth, domain, endpoint, formState]);
 
     return (
         <FernTooltipProvider>
