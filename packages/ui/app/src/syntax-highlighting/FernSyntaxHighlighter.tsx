@@ -36,10 +36,18 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
     // //     });
     // // }, [highlight, code, language, setCachedHighlights, cacheKey, previousCode]);
 
-    const tokens = useMemo(
-        () => (highlighter == null ? createRawTokens(code, language) : highlightTokens(highlighter, code, language)),
-        [code, highlighter, language],
-    );
+    const tokens = useMemo(() => {
+        if (highlighter == null) {
+            return createRawTokens(code, language);
+        }
+        try {
+            return highlightTokens(highlighter, code, language);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            return createRawTokens(code, language);
+        }
+    }, [code, highlighter, language]);
 
     return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...innerProps} />;
 });

@@ -154,13 +154,14 @@ export function useHighlighter(lang: string): Highlighter | undefined {
     );
     useEffect(() => {
         if (highlighter == null || !hasLanguage(lang)) {
+            setHighlighter(undefined);
             void (async () => {
                 highlighter = await getHighlighterInstance(lang);
                 setHighlighter(highlighter);
             })();
         }
     }, [lang]);
-    return highlighterInstance;
+    return hasLanguage(lang) ? highlighterInstance : undefined;
 }
 
 export function createRawTokens(code: string, lang: string): HighlightedTokens {
