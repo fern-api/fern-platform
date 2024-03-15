@@ -6,6 +6,7 @@ import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernScrollArea } from "../../components/FernScrollArea";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import {
@@ -46,6 +47,7 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
 };
 
 const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, types }) => {
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
 
@@ -104,7 +106,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
         >
             <article
                 className={classNames("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !isLastInApi,
+                    "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
                 })}
             >
                 <header className="space-y-2.5 pt-8">

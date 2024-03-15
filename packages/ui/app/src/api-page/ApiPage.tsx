@@ -1,7 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
@@ -45,7 +44,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showEr
 
             {isApiScrollingDisabled && (
                 <div className="max-w-content-width md:max-w-endpoint-width mx-4 md:mx-6 lg:mx-8">
-                    <BottomNavigationButtons showPrev={true} />
+                    {/* <BottomNavigationButtons showPrev={true} /> */}
                 </div>
             )}
 
