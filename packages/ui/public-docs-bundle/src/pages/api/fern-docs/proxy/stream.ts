@@ -1,7 +1,7 @@
 import { ProxyRequest, Stream } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 
-export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
+const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
     try {
         if (req.method !== "POST") {
             res.status(400).end();
@@ -9,10 +9,11 @@ export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<
         }
 
         const proxyRequest = (typeof req.body === "object" ? req.body : JSON.parse(req.body)) as ProxyRequest;
+        const startTime = Date.now();
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
             headers: proxyRequest.headers,
-            body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body) : undefined,
+            body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body.value) : undefined,
         });
         if (response.body != null) {
             const stream = new Stream({
@@ -26,7 +27,8 @@ export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<
             });
             res.flushHeaders();
             for await (const chunk of stream) {
-                res.write(chunk);
+                const endTime = Date.now();
+                res.write(JSON.stringify({ data: chunk, time: endTime - startTime }) + "\n");
             }
             res.end();
         } else {
@@ -38,3 +40,5 @@ export const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<
         res.status(500).end();
     }
 };
+
+export default proxyApiHandler;

@@ -1,6 +1,6 @@
 import { Root } from "hast";
 import { h } from "hastscript";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
 
 let highlighter: Highlighter;
@@ -146,6 +146,21 @@ export function useHighlightTokens(): HighlightCallback {
             cb(highlightTokens(highlighter, code, language));
         })();
     }, []);
+}
+
+export function useHighlighter(lang: string): Highlighter | undefined {
+    const [highlighterInstance, setHighlighter] = useState<Highlighter | undefined>(() =>
+        hasLanguage(lang) ? highlighter : undefined,
+    );
+    useEffect(() => {
+        if (highlighter == null || !hasLanguage(lang)) {
+            void (async () => {
+                highlighter = await getHighlighterInstance(lang);
+                setHighlighter(highlighter);
+            })();
+        }
+    }, [lang]);
+    return highlighterInstance;
 }
 
 export function createRawTokens(code: string, lang: string): HighlightedTokens {

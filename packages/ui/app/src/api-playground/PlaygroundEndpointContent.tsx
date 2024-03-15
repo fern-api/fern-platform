@@ -15,7 +15,8 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { PlaygroundEndpointRequestFormState, ProxyResponse } from "./types";
+import { PlaygroundEndpointRequestFormState } from "./types";
+import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
@@ -26,7 +27,7 @@ interface PlaygroundEndpointContentProps {
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
-    response: Loadable<ProxyResponse.Success>;
+    response: Loadable<PlaygroundResponse>;
     sendRequest: () => void;
     types: Record<string, ResolvedTypeDefinition>;
 }
@@ -196,7 +197,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         >
                                             time: {round(response.value.time, 2)}ms
                                         </span>
-                                        {!isEmpty(response.value.size) && (
+                                        {response.value.type === "json" && !isEmpty(response.value.size) && (
                                             <span
                                                 className={
                                                     "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
@@ -212,7 +213,13 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     loading: () => <div />,
                                     loaded: (response) => (
                                         <CopyToClipboardButton
-                                            content={() => JSON.stringify(response.response.body, null, 2)}
+                                            content={() =>
+                                                response.type === "json"
+                                                    ? JSON.stringify(response.response.body, null, 2)
+                                                    : response.response.body
+                                                          .map((chunk) => JSON.stringify(chunk))
+                                                          .join("\n")
+                                            }
                                             className="-mr-2"
                                         />
                                     ),
@@ -229,7 +236,10 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         <div className="flex flex-1 items-center justify-center">Loading...</div>
                                     ),
                                 loaded: (response) => (
-                                    <PlaygroundResponsePreview responseBody={response.response.body} />
+                                    <PlaygroundResponsePreview
+                                        responseBody={response.response.body}
+                                        type={response.type}
+                                    />
                                 ),
                                 failed: () => <span>Failed</span>,
                             })}

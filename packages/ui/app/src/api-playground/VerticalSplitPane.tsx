@@ -63,7 +63,7 @@ export function VerticalSplitPane({
             >
                 <div className="bg-border-primary group-active:bg-accent relative z-10 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
             </div>
-            <div className={classNames(belowClassName, "flex-1")}>{below}</div>
+            <div className={classNames(belowClassName, "flex-1 shrink min-h-0")}>{below}</div>
         </div>
     );
 }
