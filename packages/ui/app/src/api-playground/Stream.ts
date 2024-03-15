@@ -1,13 +1,23 @@
-export class Stream implements AsyncIterable<string> {
+export class Stream<T> implements AsyncIterable<T> {
     private stream: ReadableStream;
+    private parse: ((val: unknown) => Promise<T>) | undefined;
     private terminator: string;
 
-    constructor({ stream, terminator }: { stream: ReadableStream; terminator: string }) {
+    constructor({
+        stream,
+        parse,
+        terminator,
+    }: {
+        stream: ReadableStream;
+        parse: ((val: unknown) => Promise<T>) | undefined;
+        terminator: string;
+    }) {
         this.stream = stream;
+        this.parse = parse;
         this.terminator = terminator;
     }
 
-    private async *iterMessages(): AsyncGenerator<string, void> {
+    private async *iterMessages(): AsyncGenerator<T, void> {
         let previous = "";
         const reader = this.stream.getReader();
         while (true) {
@@ -21,13 +31,18 @@ export class Stream implements AsyncIterable<string> {
 
             while ((terminatorIndex = previous.indexOf(this.terminator)) >= 0) {
                 const line = previous.slice(0, terminatorIndex).trimEnd();
-                yield line;
+                if (this.parse != null) {
+                    const message = await this.parse(JSON.parse(line));
+                    yield message;
+                } else {
+                    yield line as T;
+                }
                 previous = previous.slice(terminatorIndex + 1);
             }
         }
     }
 
-    async *[Symbol.asyncIterator](): AsyncIterator<string, void, unknown> {
+    async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
         for await (const message of this.iterMessages()) {
             yield message;
         }
