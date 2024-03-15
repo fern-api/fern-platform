@@ -8,7 +8,11 @@
     "packages/**",
     "!packages/**/lib",
     "!packages/**/dist",
-    "!packages/**/generated"
+    "!packages/**/generated",
+    "servers/**",
+    "!servers/**/lib",
+    "!servers/**/dist",
+    "!servers/**/generated"
   ],
   "scripts": {
     "clean": "yarn workspace @fern-ui/compile-root run clean",
@@ -35,7 +39,8 @@
     "root-package:fix": "yarn root-package:check --fix",
     "docs:dev": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-prod",
     "docs-dev:dev": "yarn workspace @fern-ui/public-docs-bundle run dev:fern-dev",
-    "docs:build": "yarn workspace @fern-ui/public-docs-bundle run build:fern-prod"
+    "docs:build": "yarn workspace @fern-ui/public-docs-bundle run build:fern-prod",
+    "fdr:generate": "fern generate --api fdr --local"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",

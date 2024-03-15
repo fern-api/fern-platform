@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-platform.git",
+    "url": "https://github.com/fern-api/fern-ui.git",
     "directory": "packages/commons/loadable"
   },
   "private": true,
@@ -40,6 +40,6 @@
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "stylelint": "^16.1.0",
-    "typescript": "4.9.4"
+    "typescript": "5.2.2"
   }
 }

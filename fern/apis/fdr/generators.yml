@@ -1,0 +1,35 @@
+default-group: local
+
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-express
+        version: 0.7.1-3-g2c246524
+        output:
+          location: local-file-system
+          path: ../../../servers/fdr/src/api/generated
+        config:
+          noSerdeLayer: true
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.7.2
+        output:
+          location: local-file-system
+          path: ../../../packages/fdr-sdk/src/client/generated
+        config:
+          noSerdeLayer: true
+          outputSourceFiles: true
+          neverThrowErrors: true
+          timeoutInSeconds: infinity
+  fiddle:
+    audiences:
+      - fiddle
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.5.10-rc12-1-g4718c24
+        output:
+          location: maven
+          url: maven.buildwithfern.com
+          coordinate: com.fern.fern:fern-definition-registry
+        config:
+          wrapped-aliases: true
+          enable-forward-compatible-enums: true

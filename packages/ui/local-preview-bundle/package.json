@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-platform.git",
+    "url": "https://github.com/fern-api/fern-ui.git",
     "directory": "packages/ui/local-preview-bundle"
   },
   "private": true,
@@ -60,6 +60,6 @@
     "sass": "^1.70.0",
     "stylelint": "^16.1.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "4.9.4"
+    "typescript": "5.2.2"
   }
 }

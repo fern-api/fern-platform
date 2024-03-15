@@ -1,12 +1,2 @@
-# Mac
-.DS_Store
-
-# node
-node_modules/
-tsconfig.tsbuildinfo
-build/
-
-dist/
-
-.turbo
-.turbo-cookie
+# Generated code
+api/generated
