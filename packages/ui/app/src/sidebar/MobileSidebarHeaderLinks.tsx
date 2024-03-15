@@ -41,7 +41,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
     }
     return (
         <div
-            className={classNames("border-concealed -mx-4 list-none border-b p-4", {
+            className={classNames("border-concealed list-none -mx-4 border-t p-4 mt-4", {
                 "lg:hidden": layout?.disableHeader !== true,
             })}
         >
@@ -57,11 +57,8 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                             <ArrowRightIcon className="!size-5" />
                         ) : undefined
                     }
-                    className={classNames("w-full text-left lg:hidden", {
-                        "mt-1":
-                            navbarLink.type === "primary" ||
-                            navbarLink.type === "secondary" ||
-                            navbarLink.type === "filled",
+                    className={classNames("w-full lg:hidden", {
+                        "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
                     })}
                     variant={
                         navbarLink.type === "primary"
