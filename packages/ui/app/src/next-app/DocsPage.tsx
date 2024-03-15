@@ -2,7 +2,8 @@ import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { Redirect } from "next";
 import Head from "next/head";
 import Script from "next/script";
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -44,27 +45,28 @@ export declare namespace DocsPage {
 }
 
 export function DocsPage({
-    baseUrl,
     title,
     favicon,
     backgroundImage,
-    colors,
-    typography,
-    layout,
-    css,
+    // colors,
+    // typography,
+    // layout,
+    // css,
     js,
     navbarLinks,
     logoHeight,
     logoHref,
     search,
     algoliaSearchIndex,
-    files,
-    resolvedPath,
-    navigation,
+    // files,
     isApiPlaygroundEnabled,
     isWhiteLabeled,
 }: DocsPage.Props): ReactElement {
-    const stylesheet = renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files);
+    const { colors, typography, layout, css, files } = useDocsContext();
+    const stylesheet = useMemo(
+        () => renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files),
+        [backgroundImage, colors, css, files, layout, typography],
+    );
     return (
         <>
             {/* 
@@ -87,19 +89,12 @@ export function DocsPage({
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
             </Head>
             <DocsApp
-                baseUrl={baseUrl}
                 hasBackgroundImage={backgroundImage != null}
-                colors={colors}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
-                layout={layout}
                 navbarLinks={navbarLinks}
                 search={search}
                 algoliaSearchIndex={algoliaSearchIndex}
-                files={files}
-                resolvedPath={resolvedPath}
-                navigation={navigation}
-                title={title}
                 isApiPlaygroundEnabled={isApiPlaygroundEnabled}
                 isWhiteLabeled={isWhiteLabeled}
             />

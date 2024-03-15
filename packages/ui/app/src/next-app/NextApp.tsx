@@ -1,30 +1,72 @@
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
+import { initializePosthog } from "../analytics/posthog";
+import { CONTEXTS } from "../contexts";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
+import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
 import "./globals.scss";
 
-export function NextApp({ Component, pageProps, router }: AppProps<Partial<DocsPage.Props>>): ReactElement {
+export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
+    const files = useDeepCompareMemoize(pageProps.files);
+    const layout = useDeepCompareMemoize(pageProps.layout);
+    const colors = useDeepCompareMemoize(pageProps.colors);
+    const typography = useDeepCompareMemoize(pageProps.typography);
+    const css = useDeepCompareMemoize(pageProps.css);
+    const baseUrl = useDeepCompareMemoize(pageProps.baseUrl);
+    const resolvedPath = useDeepCompareMemoize(pageProps.resolvedPath);
+    const navigation = useDeepCompareMemoize(pageProps.navigation);
+    const title = useDeepCompareMemoize(pageProps.title);
+
+    useEffect(() => {
+        initializePosthog();
+    }, []);
+
     const theme =
         pageProps.colors?.dark != null && pageProps.colors?.light != null
             ? "darkAndLight"
             : pageProps.colors?.dark != null
               ? "dark"
               : "light";
+
     useInterceptNextDataHref({
         router,
         basePath: pageProps.baseUrl?.basePath,
         host: pageProps.baseUrl?.domain,
     });
-    return (
-        <>
-            <ThemeProvider theme={theme}>
-                <Component {...pageProps} />
-            </ThemeProvider>
-        </>
+
+    if (pageProps.baseUrl == null) {
+        return CONTEXTS.reduceRight((children, Context) => <Context>{children}</Context>, <Component {...pageProps} />);
+    }
+
+    const app = (
+        <ThemeProvider theme={theme}>
+            <DocsContextProvider
+                files={files}
+                layout={layout}
+                baseUrl={baseUrl}
+                colors={colors}
+                typography={typography}
+                css={css}
+            >
+                <NavigationContextProvider
+                    resolvedPath={resolvedPath}
+                    navigation={navigation}
+                    domain={baseUrl.domain}
+                    basePath={baseUrl.basePath}
+                    title={title}
+                >
+                    <Component {...pageProps} />
+                </NavigationContextProvider>
+            </DocsContextProvider>
+        </ThemeProvider>
     );
+
+    return CONTEXTS.reduceRight((children, Context) => <Context>{children}</Context>, app);
 }
 
 // hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813

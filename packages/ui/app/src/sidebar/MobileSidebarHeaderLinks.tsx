@@ -4,6 +4,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernButton";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;
@@ -34,11 +35,16 @@ interface MobileSidebarHeaderLinksProps {
 }
 
 export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLinksProps): ReactElement | null {
+    const { layout } = useDocsContext();
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
     }
     return (
-        <div className="border-concealed -mx-4 list-none border-b p-4 lg:hidden">
+        <div
+            className={classNames("border-concealed list-none -mx-4 border-t p-4 mt-4", {
+                "lg:hidden": layout?.disableHeader !== true,
+            })}
+        >
             {navbarLinks?.map((navbarLink, idx) => (
                 <FernLinkButton
                     key={idx}
@@ -51,11 +57,8 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                             <ArrowRightIcon className="!size-5" />
                         ) : undefined
                     }
-                    className={classNames("w-full text-left lg:hidden", {
-                        "mt-1":
-                            navbarLink.type === "primary" ||
-                            navbarLink.type === "secondary" ||
-                            navbarLink.type === "filled",
+                    className={classNames("w-full lg:hidden", {
+                        "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
                     })}
                     variant={
                         navbarLink.type === "primary"

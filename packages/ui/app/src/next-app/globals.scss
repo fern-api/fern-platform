@@ -124,6 +124,10 @@
     hr {
         @apply border-default;
     }
+
+    .fern-main {
+        @apply relative w-full min-w-0 flex-1 mt-header-height;
+    }
 }
 
 @layer components {

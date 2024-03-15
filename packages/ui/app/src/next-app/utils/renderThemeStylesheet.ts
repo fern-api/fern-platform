@@ -17,7 +17,7 @@ export function renderThemeStylesheet(
     const bg = getBgVariables(backgroundImage, files);
     const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(typography, files);
     const colors = getColorVariables(colorsConfig);
-    const layout = getLayoutVariables(layoutConfig);
+    const { root: layout, "max-lg": layoutMaxLg } = getLayoutVariables(layoutConfig);
 
     const cssVariables = {
         ...bg,
@@ -39,6 +39,14 @@ export function renderThemeStylesheet(
     ${Object.entries(colors.light)
         .map(([key, value]) => `${key}: ${value};`)
         .join("\n    ")}
+}
+
+@media (max-width: 1024px) {
+    :root {
+        ${Object.entries(layoutMaxLg)
+            .map(([key, value]) => `${key}: ${value};`)
+            .join("\n        ")}
+    }
 }
 
 

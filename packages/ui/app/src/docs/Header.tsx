@@ -4,11 +4,12 @@ import classNames from "classnames";
 import { useAtomValue } from "jotai";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
 import { useSearchService } from "../services/useSearchService";
 import { useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { ColorsConfig, SidebarNavigation } from "../sidebar/types";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { ThemeButton } from "./ThemeButton";
 
@@ -16,7 +17,6 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        colors: ColorsConfig;
         navbarLinks: DocsV1Read.NavbarLink[];
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
@@ -24,7 +24,6 @@ export declare namespace Header {
         openMobileSidebar: () => void;
         closeMobileSidebar: () => void;
         showSearchBar?: boolean;
-        navigation: SidebarNavigation;
     }
 }
 
@@ -32,18 +31,18 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     {
         className,
         style,
-        colors,
         navbarLinks,
         isMobileSidebarOpen,
         openMobileSidebar,
         closeMobileSidebar,
         showSearchBar = true,
-        navigation,
         logoHeight,
         logoHref,
     },
     ref,
 ) {
+    const { colors } = useDocsContext();
+    const { navigation } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const searchService = useSearchService();
@@ -94,7 +93,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             style={style}
         >
             <HeaderLogoSection
-                colors={colors}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
                 // tabs={navigation.tabs}
