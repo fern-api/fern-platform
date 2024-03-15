@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useFeatureFlags } from "../FeatureFlagContext";
 import { NavigationContext, type NavigationContextValue } from "./NavigationContext";
 
 export function useNavigationContext(): NavigationContextValue {
@@ -6,6 +7,7 @@ export function useNavigationContext(): NavigationContextValue {
 }
 
 export function useShouldHideFromSsg(slug: string): boolean {
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const { selectedSlug, resolvedPath, hydrated } = useNavigationContext();
-    return selectedSlug !== slug && (resolvedPath.type !== "api-page" || !hydrated);
+    return selectedSlug !== slug && (resolvedPath.type !== "api-page" || !hydrated || isApiScrollingDisabled);
 }

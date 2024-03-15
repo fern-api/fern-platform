@@ -24,8 +24,6 @@ interface DocsProps {
     logoHref: DocsV1Read.Url | undefined;
     search: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
-    isApiPlaygroundEnabled: boolean;
-    isWhiteLabeled: boolean;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -39,8 +37,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     navbarLinks,
     logoHeight,
     logoHref,
-    isApiPlaygroundEnabled,
-    isWhiteLabeled,
 }) {
     const { layout, colors } = useDocsContext();
     const { registerScrolledToPathListener, selectedSlug, navigation } = useNavigationContext();
@@ -84,7 +80,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <PlaygroundContextProvider navigation={navigation.sidebarNodes} enabled={isApiPlaygroundEnabled}>
+            <PlaygroundContextProvider navigation={navigation.sidebarNodes}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                     {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                         <HeaderContainer
@@ -125,7 +121,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             logoHeight={logoHeight}
                             logoHref={logoHref}
                             showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
-                            isWhiteLabeled={isWhiteLabeled}
                         />
                         {layout?.disableHeader && <div className="w-sidebar-width hidden lg:block" />}
 

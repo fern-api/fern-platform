@@ -1,19 +1,21 @@
 import { useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import Link from "next/link";
+import { useContext } from "react";
+import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { FernLogo } from "./FernLogo";
 
 export declare namespace BuiltWithFern {
     export interface Props {
         className?: string;
-        isWhiteLabeled: boolean;
     }
 }
 
-export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className, isWhiteLabeled }) => {
+export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
+    const { isWhitelabeled } = useContext(FeatureFlagContext);
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
-    if (isWhiteLabeled) {
+    if (isWhitelabeled) {
         return null;
     }
 
