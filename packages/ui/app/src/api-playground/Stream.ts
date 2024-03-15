@@ -37,7 +37,7 @@ export class Stream<T> implements AsyncIterable<T> {
                 } else {
                     yield line as T;
                 }
-                previous = previous.slice(terminatorIndex + 1);
+                previous = previous.slice(terminatorIndex + this.terminator.length);
             }
         }
     }
