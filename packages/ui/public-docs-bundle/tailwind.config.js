@@ -17,6 +17,7 @@ module.exports = {
                 "content-width": "var(--spacing-content-width)",
                 "endpoint-width": "calc(var(--spacing-content-width) * 2 + 3rem)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
+                "header-height-real": "var(--spacing-header-height-real)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",

@@ -4,11 +4,10 @@ import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { ColorsConfig, SidebarVersionInfo } from "../sidebar/types";
+import { SidebarVersionInfo } from "../sidebar/types";
 import { VersionDropdown } from "./VersionDropdown";
 
 export interface HeaderLogoSectionProps {
-    colors: ColorsConfig;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
 
@@ -19,7 +18,6 @@ export interface HeaderLogoSectionProps {
 }
 
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
-    colors,
     logoHeight,
     logoHref,
     // currentTabIndex,
@@ -27,7 +25,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     currentVersionIndex,
     versions,
 }) => {
-    const { resolveFile } = useDocsContext();
+    const { colors, resolveFile } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
     const imageClassName = "max-h-full object-contain";

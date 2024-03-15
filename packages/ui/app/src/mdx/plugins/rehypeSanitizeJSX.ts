@@ -5,9 +5,8 @@ import { JSX_COMPONENTS } from "../mdx-components";
 import { valueToEstree } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
-const SUPPORTED_JSX_TAGS = [...Object.keys(JSX_COMPONENTS), ...INTRINSIC_JSX_TAGS];
-
 export function rehypeSanitizeJSX(): (tree: Root) => void {
+    const SUPPORTED_JSX_TAGS = [...Object.keys(JSX_COMPONENTS), ...INTRINSIC_JSX_TAGS];
     return function (tree: Root): void {
         visit(tree, (node, index, parent) => {
             if (index == null) {
