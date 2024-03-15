@@ -91,7 +91,7 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
                     time: d.time,
                 };
             },
-            terminator: "\n",
+            terminator: req.streamTerminator ?? "\n",
         });
         return [response, stream];
     });
@@ -160,7 +160,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     });
                 }
             } else {
-                const [res, stream] = await executeProxyStream(req);
+                const origin = window?.location?.origin;
+                const [res, stream] = await executeProxyStream({
+                    ...req,
+                    streamTerminator: origin != null && origin.includes("perplexity") ? "data: " : "\n",
+                });
                 for await (const item of stream) {
                     setResponse((lastValue) =>
                         loaded({

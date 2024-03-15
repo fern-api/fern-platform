@@ -21,6 +21,7 @@ export interface ProxyRequest {
     headers: Record<string, string>;
     body: ProxyRequest.SerializableBody | undefined;
     stream?: boolean;
+    streamTerminator?: string;
 }
 
 export declare namespace ProxyResponse {
