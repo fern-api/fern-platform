@@ -12,6 +12,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                mono: "var(--typography-code-font-family)",
+            },
             spacing: {
                 "page-width": "var(--spacing-page-width)",
                 "content-width": "var(--spacing-content-width)",
