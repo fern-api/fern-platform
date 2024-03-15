@@ -4,7 +4,6 @@ import { Docs } from "../docs/Docs";
 
 export declare namespace App {
     export interface Props {
-        hasBackgroundImage: boolean;
         navbarLinks: DocsV1Read.NavbarLink[];
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
@@ -14,7 +13,6 @@ export declare namespace App {
 }
 
 export const DocsApp: React.FC<App.Props> = ({
-    hasBackgroundImage,
     search: unmemoizedSearch,
     algoliaSearchIndex,
     navbarLinks,
@@ -26,7 +24,6 @@ export const DocsApp: React.FC<App.Props> = ({
         <div className="flex min-h-screen flex-1">
             <div className="w-full">
                 <Docs
-                    hasBackgroundImage={hasBackgroundImage}
                     navbarLinks={navbarLinks}
                     logoHeight={logoHeight}
                     logoHref={logoHref}

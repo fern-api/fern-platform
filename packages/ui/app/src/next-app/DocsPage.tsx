@@ -25,7 +25,7 @@ export declare namespace DocsPage {
 
         title: string | undefined;
         favicon: string | undefined;
-        backgroundImage: string | undefined;
+        // backgroundImage: string | undefined;
         colors: ColorsConfig;
         layout: DocsV1Read.DocsLayoutConfig | undefined;
         typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
@@ -47,7 +47,6 @@ export declare namespace DocsPage {
 export function DocsPage({
     title,
     favicon,
-    backgroundImage,
     js,
     navbarLinks,
     logoHeight,
@@ -57,8 +56,8 @@ export function DocsPage({
 }: DocsPage.Props): ReactElement {
     const { colors, typography, layout, css, files } = useDocsContext();
     const stylesheet = useMemo(
-        () => renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files),
-        [backgroundImage, colors, css, files, layout, typography],
+        () => renderThemeStylesheet(colors, typography, layout, css, files),
+        [colors, css, files, layout, typography],
     );
     return (
         <>
@@ -82,7 +81,6 @@ export function DocsPage({
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
             </Head>
             <DocsApp
-                hasBackgroundImage={backgroundImage != null}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
                 navbarLinks={navbarLinks}
