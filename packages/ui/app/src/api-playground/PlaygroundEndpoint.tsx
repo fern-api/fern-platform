@@ -87,7 +87,7 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
             parse: async (i) => {
                 const d = i as { data: string; time: number };
                 return {
-                    data: tryParse(d.data),
+                    data: JSON.parse(d.data),
                     time: d.time,
                 };
             },
@@ -95,14 +95,6 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
         });
         return [response, stream];
     });
-}
-
-function tryParse(data: string): unknown {
-    try {
-        return JSON.parse(data);
-    } catch {
-        return data;
-    }
 }
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({

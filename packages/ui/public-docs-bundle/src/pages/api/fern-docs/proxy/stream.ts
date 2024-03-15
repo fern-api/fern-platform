@@ -18,7 +18,7 @@ const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) 
         if (response.body != null) {
             const stream = new Stream<string>({
                 stream: response.body,
-                parse: undefined,
+                parse: async (i) => JSON.stringify(i) + "\n",
                 terminator: proxyRequest.streamTerminator ?? "\n",
             });
             res.writeHead(response.status, undefined, {
