@@ -49,7 +49,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     return (
         <button
             className={classNames(
-                "space flex flex-col items-start px-3 hover:bg-tag-default-soft hover:transition-[background] py-3",
+                "space flex flex-col items-start px-3 hover:bg-tag-default-soft transition-colors py-3",
                 {
                     "bg-tag-default-soft": isSelected,
                 },

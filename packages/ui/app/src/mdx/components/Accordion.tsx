@@ -56,7 +56,7 @@ const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], router })
                     className="scroll-mt-header-height-padded first:rounded-t-[inherit] last:rounded-b-[inherit]"
                     id={getSlugFromText(item.title)}
                 >
-                    <RadixAccordion.Trigger className="hover:bg-tag-default group flex w-full items-center gap-3 rounded-[inherit] p-4 hover:transition-all data-[state=open]:rounded-b-none">
+                    <RadixAccordion.Trigger className="hover:bg-tag-default group flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors data-[state=open]:rounded-b-none">
                         <ChevronRightIcon className="t-muted ease-shift duration-400 size-4 transition-transform group-data-[state=open]:rotate-90" />
                         <h6 className="t-default m-0 -mb-px flex max-w-max whitespace-nowrap text-base leading-6">
                             {item.title}

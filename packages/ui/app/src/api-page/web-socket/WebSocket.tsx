@@ -141,7 +141,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                 }
                                 route={route}
                                 headingElement={
-                                    <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 hover:transition-[background]">
+                                    <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
                                         <EndpointUrlWithOverflow
                                             path={websocket.path}
                                             method="GET"
