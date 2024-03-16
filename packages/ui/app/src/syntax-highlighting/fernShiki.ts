@@ -2,7 +2,14 @@ import { Root } from "hast";
 import { h } from "hastscript";
 import { memoize } from "lodash-es";
 import { useCallback, useEffect, useState } from "react";
-import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
+import {
+    BundledLanguage,
+    bundledLanguages,
+    BundledTheme,
+    getHighlighter,
+    Highlighter,
+    SpecialLanguage,
+} from "shiki/index.mjs";
 
 let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;
@@ -84,39 +91,15 @@ export function trimCode(code: string): string {
 
 export const LIGHT_THEME: BundledTheme = "min-light";
 export const DARK_THEME: BundledTheme = "material-theme-darker";
-export const LANGUAGES: Array<BundledLanguage | SpecialLanguage> = [
-    "bash",
-    "c#",
-    "csharp",
-    "css",
-    "docker",
-    "dockerfile",
-    "go",
-    "java",
-    "javascript",
-    "js",
-    "json",
-    "kotlin",
-    "plaintext",
-    "python",
-    "ruby",
-    "shell",
-    "text",
-    "ts",
-    "typescript",
-    "txt",
-    "xml",
-    "yaml",
-    "yml",
-    "sql",
-];
 
 export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
+    lang = lang.trim();
+
     if (lang == null) {
         return "txt";
     }
     lang = lang.toLowerCase();
-    if (LANGUAGES.includes(lang as BundledLanguage)) {
+    if (Object.keys(bundledLanguages).includes(lang as BundledLanguage)) {
         return lang as BundledLanguage;
     }
     if (lang === "golang") {
