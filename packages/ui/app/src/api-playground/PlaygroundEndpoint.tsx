@@ -5,11 +5,13 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
+import { Stream } from "./Stream";
 import type {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormStateBody,
@@ -18,6 +20,7 @@ import type {
     SerializableFile,
     SerializableFormDataEntryValue,
 } from "./types";
+import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface PlaygroundEndpointProps {
@@ -63,6 +66,38 @@ function executeProxy(req: ProxyRequest): Promise<ProxyResponseWithMetadata> {
     });
 }
 
+interface ResponseChunk {
+    data: unknown;
+    time: number;
+}
+
+function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<ResponseChunk>]> {
+    return fetch("/api/fern-docs/proxy/stream", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+        mode: "no-cors",
+    }).then(async (response): Promise<[Response, Stream<ResponseChunk>]> => {
+        if (response.body == null) {
+            throw new Error("Response body is null");
+        }
+        const stream = new Stream<ResponseChunk>({
+            stream: response.body,
+            parse: async (i) => {
+                const d = i as { data: string; time: number };
+                return {
+                    data: JSON.parse(d.data),
+                    time: d.time,
+                };
+            },
+            terminator: "\n",
+        });
+        return [response, stream];
+    });
+}
+
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     auth,
     endpoint,
@@ -72,7 +107,9 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
-    const [response, setResponse] = useState<Loadable<ProxyResponse.Success>>(notStartedLoading());
+    const { domain } = useDocsContext();
+    const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
+    // const [, startTransition] = useTransition();
 
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
@@ -86,33 +123,56 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 method: endpoint.method,
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
-            const loadedResponse = await executeProxy({
+            const req = {
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(auth, endpoint, formState),
                 body: await serializeFormStateBody(formState.body),
-            });
-            if (!loadedResponse.result.error) {
-                setResponse(loaded(loadedResponse.result));
-                capturePosthogEvent("api_playground_request_received", {
-                    endpointId: endpoint.id,
-                    endpointName: endpoint.name,
-                    method: endpoint.method,
-                    docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
-                    response: {
-                        status: loadedResponse.result.response.status,
-                        statusText: loadedResponse.result.response.statusText,
-                        time: loadedResponse.result.time,
-                        size: loadedResponse.result.size,
-                    },
-                    proxy: {
-                        ok: loadedResponse.metadata.ok,
-                        status: loadedResponse.metadata.status,
-                        statusText: loadedResponse.metadata.statusText,
-                        type: loadedResponse.metadata.type,
-                        time: loadedResponse.time,
-                    },
+            };
+            if (!endpoint.id.endsWith("_stream")) {
+                const loadedResponse = await executeProxy(req);
+                if (!loadedResponse.result.error) {
+                    setResponse(loaded({ type: "json", ...loadedResponse.result }));
+                    capturePosthogEvent("api_playground_request_received", {
+                        endpointId: endpoint.id,
+                        endpointName: endpoint.name,
+                        method: endpoint.method,
+                        docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+                        response: {
+                            status: loadedResponse.result.response.status,
+                            statusText: loadedResponse.result.response.statusText,
+                            time: loadedResponse.result.time,
+                            size: loadedResponse.result.size,
+                        },
+                        proxy: {
+                            ok: loadedResponse.metadata.ok,
+                            status: loadedResponse.metadata.status,
+                            statusText: loadedResponse.metadata.statusText,
+                            type: loadedResponse.metadata.type,
+                            time: loadedResponse.time,
+                        },
+                    });
+                }
+            } else {
+                const [res, stream] = await executeProxyStream({
+                    ...req,
+                    streamTerminator: domain.includes("perplexity") ? "data: " : "\n",
                 });
+                for await (const item of stream) {
+                    setResponse((lastValue) =>
+                        loaded({
+                            type: "stream",
+                            response: {
+                                status: res.status,
+                                body:
+                                    lastValue.type === "loaded" && lastValue.value.type === "stream"
+                                        ? [...lastValue.value.response.body, item.data]
+                                        : [item.data],
+                            },
+                            time: item.time,
+                        }),
+                    );
+                }
             }
         } catch (e) {
             // eslint-disable-next-line no-console
@@ -125,7 +185,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
         }
-    }, [auth, endpoint, formState]);
+    }, [auth, domain, endpoint, formState]);
 
     return (
         <FernTooltipProvider>

@@ -1,26 +1,23 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import tinycolor from "tinycolor2";
 import { ColorsConfig } from "../../sidebar/types";
-import { getBgVariables } from "./getBgVariables";
 import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
 import { getLayoutVariables } from "./getLayoutVariables";
 
 export function renderThemeStylesheet(
-    backgroundImage: string | undefined,
     colorsConfig: ColorsConfig,
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
     layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
     css: DocsV1Read.CssConfig | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): string {
-    const bg = getBgVariables(backgroundImage, files);
+    // const bg = getBgVariables(backgroundImage, files);
     const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(typography, files);
-    const colors = getColorVariables(colorsConfig);
-    const layout = getLayoutVariables(layoutConfig);
+    const colors = getColorVariables(colorsConfig, files);
+    const { root: layout, "max-lg": layoutMaxLg } = getLayoutVariables(layoutConfig);
 
     const cssVariables = {
-        ...bg,
         ...fonts,
         ...layout,
     };
@@ -37,13 +34,23 @@ export function renderThemeStylesheet(
         .join("\n    ")}
         
     ${Object.entries(colors.light)
+        .filter(([, value]) => value != null)
         .map(([key, value]) => `${key}: ${value};`)
         .join("\n    ")}
+}
+
+@media (max-width: 1024px) {
+    :root {
+        ${Object.entries(layoutMaxLg)
+            .map(([key, value]) => `${key}: ${value};`)
+            .join("\n        ")}
+    }
 }
 
 
 :is(.dark) {
     ${Object.entries(colors.dark)
+        .filter(([, value]) => value != null)
         .map(([key, value]) => `${key}: ${value};`)
         .join("\n        ")}
 }

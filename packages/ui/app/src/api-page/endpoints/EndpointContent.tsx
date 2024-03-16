@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useViewportContext } from "../../contexts/viewport-context/useViewportContext";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
@@ -216,7 +217,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                     <div>
-                        <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
+                        {endpoint.id.endsWith("_stream") ? (
+                            withStream(<h1 className="my-0 inline leading-tight">{endpoint.title}</h1>)
+                        ) : (
+                            <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
+                        )}
                         {endpoint.availability != null && (
                             <span className="relative">
                                 <EndpointAvailabilityTag

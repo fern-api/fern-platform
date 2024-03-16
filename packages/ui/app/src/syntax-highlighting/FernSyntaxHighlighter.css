@@ -8,7 +8,8 @@
     @apply shrink min-h-0;
 }
 
-.code-block {
+.code-block,
+.code-block.text-xs {
     @apply font-mono leading-relaxed;
 }
 

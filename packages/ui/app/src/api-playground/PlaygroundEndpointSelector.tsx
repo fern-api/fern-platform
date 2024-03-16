@@ -7,6 +7,7 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import classNames from "classnames";
 import { noop } from "lodash-es";
 import { FC, Fragment, useCallback, useMemo, useRef } from "react";
+import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
 import { SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
@@ -141,7 +142,11 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
                                 ))}
 
                             <span className="whitespace-nowrap font-semibold">
-                                {selectedEndpoint?.title ?? placeholderText ?? "Select an endpoint"}
+                                {selectedEndpoint != null
+                                    ? selectedEndpoint.id.endsWith("_stream")
+                                        ? withStream(selectedEndpoint.title)
+                                        : selectedEndpoint.title
+                                    : placeholderText ?? "Select an endpoint"}
                             </span>
                         </span>
                     </FernButton>

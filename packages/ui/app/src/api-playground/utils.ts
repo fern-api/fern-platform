@@ -136,7 +136,7 @@ console.log(body);`;
     }
 
     return visitDiscriminatedUnion(formState.body, "type")._visit<string>({
-        "octet-stream": () => buildFetch(undefined), // TODO: implement this
+        "octet-stream": () => buildFetch('document.querySelector("input[type=file]").files[0]'), // TODO: implement this
         json: ({ value }) =>
             buildFetch(
                 value != null ? indentAfter(`JSON.stringify(${JSON.stringify(value, undefined, 2)})`, 2, 0) : undefined,
@@ -275,9 +275,9 @@ ${buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
 
 ${buildRequests({ data, files })}`;
         },
-        "octet-stream": () => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
+        "octet-stream": (f) => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
 
-${buildRequests({})}`, // TODO: implement this
+${buildRequests({ data: f.value != null ? `open('${f.value?.name}', 'rb').read()` : undefined })}`,
         _other: () => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
 
 ${buildRequests({})}`,
@@ -312,7 +312,13 @@ function buildRedactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = obfuscateSecret(value);
+                        if (auth.headerWireValue === "Authorization") {
+                            headers[auth.headerWireValue] = value.includes(":")
+                                ? `Basic ${obfuscateSecret(value)}`
+                                : `Bearer ${obfuscateSecret(value)}`;
+                        } else {
+                            headers[auth.headerWireValue] = obfuscateSecret(value);
+                        }
                     }
                 }
             },
@@ -354,7 +360,11 @@ export function buildUnredactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = value;
+                        if (auth.headerWireValue === "Authorization") {
+                            headers[auth.headerWireValue] = value.includes(":") ? `Basic ${value}` : `Bearer ${value}`;
+                        } else {
+                            headers[auth.headerWireValue] = value;
+                        }
                     }
                 }
             },

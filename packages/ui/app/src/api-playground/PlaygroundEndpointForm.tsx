@@ -85,6 +85,21 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         [setBody],
     );
 
+    const setBodyOctetStream = useCallback(
+        (value: ((old: File | undefined) => File | undefined) | File | undefined) => {
+            setBody((old) => {
+                return {
+                    type: "octet-stream",
+                    value:
+                        typeof value === "function"
+                            ? value(old?.type === "octet-stream" ? old.value : undefined)
+                            : value,
+                };
+            });
+        },
+        [setBody],
+    );
+
     const setBodyFormData = useCallback(
         (
             value:
@@ -231,9 +246,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                     return (
                                                         <li key={property.key}>
                                                             <PlaygroundFileUploadForm
-                                                                id={property.key}
+                                                                id={`body.${property.key}`}
                                                                 propertyKey={property.key}
-                                                                property={file}
+                                                                type={file.type}
+                                                                isOptional={file.isOptional}
                                                                 onValueChange={(files) =>
                                                                     handleFormDataFileChange(property.key, files)
                                                                 }
@@ -253,9 +269,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                     return (
                                                         <li key={property.key}>
                                                             <PlaygroundFileUploadForm
-                                                                id={property.key}
+                                                                id={`body.${property.key}`}
                                                                 propertyKey={property.key}
-                                                                property={fileArray}
+                                                                type={fileArray.type}
+                                                                isOptional={fileArray.isOptional}
                                                                 onValueChange={(files) =>
                                                                     handleFormDataFileChange(property.key, files)
                                                                 }
@@ -271,7 +288,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                 bodyProperty: (bodyProperty) => (
                                                     <li key={property.key}>
                                                         <PlaygroundObjectPropertyForm
-                                                            id={bodyProperty.key}
+                                                            id="body"
                                                             property={bodyProperty}
                                                             onChange={handleFormDataJsonChange}
                                                             value={fileUploadFormValue[property.key]?.value}
@@ -287,13 +304,24 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             </div>
                         );
                     },
-                    bytes: () => (
+                    bytes: (bytes) => (
                         <div>
                             <div className="mb-4 px-4">
                                 <h5 className="t-muted m-0">Body</h5>
                             </div>
                             <FernCard className="rounded-xl p-4 shadow-sm">
-                                <Callout intent="warning">Direct file upload is not yet supported.</Callout>
+                                <PlaygroundFileUploadForm
+                                    id="body"
+                                    propertyKey="body"
+                                    isOptional={bytes.isOptional}
+                                    type="file"
+                                    onValueChange={(files) => setBodyOctetStream(files?.[0])}
+                                    value={
+                                        formState?.body?.type === "octet-stream" && formState.body.value != null
+                                            ? [formState.body.value]
+                                            : undefined
+                                    }
+                                />
                             </FernCard>
                         </div>
                     ),

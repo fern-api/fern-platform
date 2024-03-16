@@ -40,6 +40,7 @@ import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
 import { CodeBlock } from "./components/CodeBlock";
 import { CodeBlocks } from "./components/CodeBlocks";
+import { Frame } from "./components/Frame";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
 import { Tabs } from "./components/Tabs";
@@ -70,6 +71,7 @@ export const JSX_COMPONENTS = {
     Steps,
     EndpointRequestSnippet,
     EndpointResponseSnippet,
+    Frame,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
