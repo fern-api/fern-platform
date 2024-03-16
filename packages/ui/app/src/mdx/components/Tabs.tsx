@@ -27,7 +27,7 @@ export const Tabs: FC<TabsProps> = ({ tabs }) => {
 
     return (
         <RadixTabs.Root value={activeTab} onValueChange={setActiveTab}>
-            <RadixTabs.List className="border-default mb-6 mt-5 flex gap-4 border-b">
+            <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b">
                 {tabs.map((tab, idx) => (
                     <RadixTabs.Trigger key={idx} value={idx.toString()} asChild>
                         <h6

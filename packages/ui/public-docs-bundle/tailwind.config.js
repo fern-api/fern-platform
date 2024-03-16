@@ -76,6 +76,8 @@ module.exports = {
                 "intent-success-lightened": "var(--green-a12)",
                 "intent-danger": "var(--red-a11)",
                 "intent-danger-lightened": "var(--red-a12)",
+                "intent-info": "var(--blue-a11)",
+                "intent-info-lightened": "var(--blue-a12)",
 
                 "background-primary": {
                     light: "rgb(3, 7, 18)",
@@ -106,12 +108,14 @@ module.exports = {
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",
                 "border-danger": "var(--red-a8)",
+                "border-info": "var(--blue-a8)",
 
                 "border-default-soft": "var(--grayscale-a6)",
                 "border-primary-soft": "rgba(var(--accent-primary), 30%)",
                 "border-warning-soft": "var(--amber-a6)",
                 "border-success-soft": "var(--green-a6)",
                 "border-danger-soft": "var(--red-a6)",
+                "border-info-soft": "var(--blue-a6)",
 
                 "text-default": withOpacity("--body-text"),
                 "text-muted": "var(--grayscale-a11)",
@@ -123,6 +127,7 @@ module.exports = {
                 "tag-warning-soft": "var(--amber-a2)",
                 "tag-success-soft": "var(--green-a2)",
                 "tag-danger-soft": "var(--red-a2)",
+                "tag-info-soft": "var(--blue-a2)",
 
                 "tag-default": "var(--grayscale-a3)",
                 "tag-default-solid": "var(--grayscale-3)",
@@ -131,6 +136,7 @@ module.exports = {
                 "tag-warning": "var(--amber-a3)",
                 "tag-success": "var(--green-a3)",
                 "tag-danger": "var(--red-a3)",
+                "tag-info": "var(--blue-a3)",
             },
             typography: {
                 DEFAULT: {
@@ -150,6 +156,9 @@ module.exports = {
                 sm: {
                     css: {
                         color: "var(--grayscale-a11)",
+                        p: {
+                            marginTop: "0.25rem",
+                        },
                     },
                 },
                 invert: {
@@ -355,6 +364,9 @@ module.exports = {
                 },
                 ".callout-outlined-primary": {
                     "@apply bg-tag-primary-soft ring-1 ring-inset ring-border-primary-soft": {},
+                },
+                ".callout-outlined-info": {
+                    "@apply bg-tag-info-soft ring-1 ring-inset ring-border-info-soft": {},
                 },
 
                 ".callout-outlined-ghost": {

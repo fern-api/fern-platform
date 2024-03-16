@@ -1,0 +1,9 @@
+.callout-icon,
+.callout-icon > svg,
+.callout-icon > .fa-icon {
+    @apply size-5;
+}
+
+.callout-icon.fa-icon {
+    @apply bg-accent;
+}
