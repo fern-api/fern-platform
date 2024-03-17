@@ -17,6 +17,7 @@ import {
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernCard } from "../components/FernCard";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
@@ -251,16 +252,29 @@ function isImgElement(element: ReactNode): element is ReactElement<ImgProps> {
 }
 
 export const Img: FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest }) => {
+    const { files } = useDocsContext();
+    let parsedSrc = src;
+    if (isUUID(src as string)) {
+        const file = files[src as string];
+        if (file != null && file.url != null) {
+            parsedSrc = file.url;
+        }
+    }
     const mounted = useMounted();
     if (!mounted || disableZoom) {
-        return <img {...rest} className={classNames(className, "max-w-full")} src={src} alt={alt} />;
+        return <img {...rest} className={classNames(className, "max-w-full")} src={parsedSrc} alt={alt} />;
     }
     return (
         <Zoom>
-            <img {...rest} className={classNames(className, "max-w-full")} src={src} alt={alt} />
+            <img {...rest} className={classNames(className, "max-w-full")} src={parsedSrc} alt={alt} />
         </Zoom>
     );
 };
+
+function isUUID(value: string): boolean {
+    const UUID_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    return UUID_REGEX.test(value);
+}
 
 export function getSlugFromText(text: string): string {
     return text.toLowerCase().replace(/\W/g, "-").replace(/-+/g, "-");
