@@ -9,7 +9,7 @@ export function useNavigationContext(): NavigationContextValue {
 
 export function useShouldHideFromSsg(slug: string): boolean {
     const { isApiScrollingDisabled } = useFeatureFlags();
-    const { selectedSlug, resolvedPath } = useNavigationContext();
+    const { selectedSlug } = useNavigationContext();
     const hydrated = useIsReady();
-    return selectedSlug !== slug && (resolvedPath.type !== "api-page" || !hydrated || isApiScrollingDisabled);
+    return selectedSlug !== slug && (!hydrated || isApiScrollingDisabled);
 }

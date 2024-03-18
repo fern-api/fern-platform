@@ -39,6 +39,7 @@ const setUserIsNotScrolling = debounce(
 );
 
 let resizeObserver: ResizeObserver | undefined;
+let lastScrollY: number | undefined;
 
 function startScrollTracking(route: string, scrolledHere: boolean = false) {
     if (!userIsScrolling && !scrolledHere) {
@@ -46,7 +47,6 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
-    let lastScrollY: number | undefined;
     function handleObservation() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
@@ -57,23 +57,19 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
                 node.getBoundingClientRect().top + document.documentElement.scrollTop;
             if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
                 lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                lastScrollY = window.scrollY;
             } else {
                 if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
                     const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
                     const newScrollY = lastScrollY - diff;
                     if (!userHasScrolled) {
                         node.scrollIntoView({ behavior: "auto" });
-                        lastScrollY = window.scrollY;
                     } else {
                         window.scrollTo(0, newScrollY);
                         lastScrollY = newScrollY;
                     }
-                    // console.log(3, resolvedRoute);
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
                 } else {
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                    lastScrollY = window.scrollY;
                 }
             }
         }
@@ -125,6 +121,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         const handleUserTriggeredScroll = () => {
+            lastScrollY = window.scrollY;
             userHasScrolled = true;
             userIsScrolling = true;
             setUserIsNotScrolling();
