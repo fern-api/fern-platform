@@ -1,8 +1,22 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { sortBy } from "lodash-es";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 import { SidebarNodeRaw } from "./types";
+
+function toApiType(apiType: APIV1Read.ApiNavigationConfigItem["type"]): SidebarNodeRaw.ApiPage["apiType"] {
+    switch (apiType) {
+        case "endpointId":
+            return "endpoint";
+        case "websocketId":
+            return "websocket";
+        case "webhookId":
+            return "webhook";
+        case "subpackage":
+            return "subpackage";
+    }
+}
 
 function resolveSidebarNodeRawApiSection(
     api: FdrAPI.ApiId,
@@ -12,6 +26,7 @@ function resolveSidebarNodeRawApiSection(
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     showErrors: boolean,
     parentSlugs: string[],
+    navigation: APIV1Read.ApiNavigationConfigRoot | APIV1Read.ApiNavigationConfigSubpackage | undefined,
 ): SidebarNodeRaw.ApiSection | undefined {
     let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
     while (subpackage?.pointsTo != null) {
@@ -25,6 +40,7 @@ function resolveSidebarNodeRawApiSection(
     const endpoints = subpackage.endpoints.map(
         (endpoint): SidebarNodeRaw.EndpointPage => ({
             type: "page",
+            apiType: "endpoint",
             api,
             id: endpoint.id,
             slug: [...slug, endpoint.urlSlug],
@@ -35,8 +51,9 @@ function resolveSidebarNodeRawApiSection(
         }),
     );
     const websockets = subpackage.websockets.map(
-        (websocket): SidebarNodeRaw.ApiPage => ({
+        (websocket): SidebarNodeRaw.WebSocketPage => ({
             type: "page",
+            apiType: "websocket",
             api,
             id: websocket.id,
             slug: [...slug, websocket.urlSlug],
@@ -45,8 +62,9 @@ function resolveSidebarNodeRawApiSection(
         }),
     );
     const webhooks = subpackage.webhooks.map(
-        (webhook): SidebarNodeRaw.ApiPage => ({
+        (webhook): SidebarNodeRaw.WebhookPage => ({
             type: "page",
+            apiType: "webhook",
             api,
             id: webhook.id,
             slug: [...slug, webhook.urlSlug],
@@ -54,6 +72,7 @@ function resolveSidebarNodeRawApiSection(
             description: webhook.description,
         }),
     );
+
     const subpackages = subpackage.subpackages
         .map((innerSubpackageId) =>
             resolveSidebarNodeRawApiSection(
@@ -64,11 +83,28 @@ function resolveSidebarNodeRawApiSection(
                 subpackagesMap,
                 showErrors,
                 slug,
+                navigation?.items
+                    .filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
+                    .find((item) => item.subpackageId === innerSubpackageId),
             ),
         )
-        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.ApiSection[];
+        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackagePage[];
 
-    if (endpoints.length === 0 && websockets.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
+    // default sort
+    let items: SidebarNodeRaw.ApiPage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
+
+    if (navigation?.items != null) {
+        items = sortBy(items, (page) => {
+            const index = navigation.items.findIndex(
+                (item) =>
+                    toApiType(item.type) === page.apiType &&
+                    (item.type === "subpackage" ? item.subpackageId === page.id : item.value === page.id),
+            );
+            return index === -1 ? Infinity : index;
+        });
+    }
+
+    if (items.length === 0) {
         return;
     }
 
@@ -78,10 +114,7 @@ function resolveSidebarNodeRawApiSection(
         id,
         title,
         slug,
-        endpoints,
-        webhooks,
-        websockets,
-        subpackages,
+        items,
         showErrors,
         artifacts: undefined,
         changelog: undefined,
@@ -137,6 +170,7 @@ export function resolveSidebarNodes(
                         definition.subpackages,
                         api.showErrors,
                         definitionSlug,
+                        definition.navigation,
                     );
                     SidebarNodeRaws.push({
                         type: "apiSection",
@@ -144,10 +178,7 @@ export function resolveSidebarNodes(
                         id: api.api,
                         title: api.title,
                         slug: definitionSlug,
-                        endpoints: resolved?.endpoints ?? [],
-                        webhooks: resolved?.webhooks ?? [],
-                        websockets: resolved?.websockets ?? [],
-                        subpackages: resolved?.subpackages ?? [],
+                        items: resolved?.items ?? [],
                         artifacts: api.artifacts,
                         showErrors: api.showErrors,
                         changelog:
