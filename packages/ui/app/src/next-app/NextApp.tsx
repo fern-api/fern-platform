@@ -8,6 +8,7 @@ import { initializePosthog } from "../analytics/posthog";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
+import { IsReadyProvider } from "../contexts/useIsReady";
 import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
@@ -18,12 +19,14 @@ const store = createStore();
 
 function withDefaultContexts(children: ReactElement): ReactElement {
     return (
-        <JotaiProvider store={store}>
-            <ViewportContextProvider>
-                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                {children}
-            </ViewportContextProvider>
-        </JotaiProvider>
+        <IsReadyProvider>
+            <JotaiProvider store={store}>
+                <ViewportContextProvider>
+                    <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                    {children}
+                </ViewportContextProvider>
+            </JotaiProvider>
+        </IsReadyProvider>
     );
 }
 
