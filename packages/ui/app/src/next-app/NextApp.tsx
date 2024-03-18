@@ -53,9 +53,9 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     useEffect(() => {
         initializePosthog();
-        if (!router.isPreview) {
-            initializeDatadog();
-        }
+        // if (!router.isPreview) {
+        initializeDatadog();
+        // }
     }, [router.isPreview]);
 
     const theme =
