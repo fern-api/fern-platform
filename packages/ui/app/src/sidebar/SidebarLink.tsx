@@ -11,7 +11,7 @@ import {
     ReactElement,
     ReactNode,
     useEffect,
-    useRef,
+    useRef
 } from "react";
 import { FernTooltip } from "../components/FernTooltip";
 import { getRouteNodeWithAnchor } from "../util/anchor";

@@ -10,7 +10,7 @@ import {
     useEffect,
     useImperativeHandle,
     useRef,
-    useState,
+    useState
 } from "react";
 import { FernButton } from "./FernButton";
 

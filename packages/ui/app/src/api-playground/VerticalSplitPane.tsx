@@ -7,7 +7,7 @@ import {
     ReactElement,
     useCallback,
     useRef,
-    useState,
+    useState
 } from "react";
 import { useHorizontalSplitPane, useVerticalSplitPane } from "./useSplitPlane";
 

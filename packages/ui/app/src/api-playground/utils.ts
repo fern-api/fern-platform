@@ -13,14 +13,14 @@ import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     unwrapReference,
-    visitResolvedHttpRequestBodyShape,
+    visitResolvedHttpRequestBodyShape
 } from "../util/resolver";
 import {
     convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
-    PlaygroundRequestFormState,
+    PlaygroundRequestFormState
 } from "./types";
 
 export function unknownToString(value: unknown): string {

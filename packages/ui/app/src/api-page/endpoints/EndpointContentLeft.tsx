@@ -10,7 +10,7 @@ import {
     ResolvedError,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
-    ResolvedTypeDefinition,
+    ResolvedTypeDefinition
 } from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";

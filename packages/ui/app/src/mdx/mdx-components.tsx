@@ -21,7 +21,7 @@ import {
     Th,
     Thead,
     Tr,
-    Ul,
+    Ul
 } from "./base-components";
 import { Accordion } from "./components/Accordion";
 import { Availability } from "./components/Availability";
@@ -34,7 +34,7 @@ import {
     NoteCallout,
     SuccessCallout,
     TipCallout,
-    WarningCallout,
+    WarningCallout
 } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";

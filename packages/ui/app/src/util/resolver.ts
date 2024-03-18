@@ -5,7 +5,7 @@ import { mapValues, pick, sortBy } from "lodash-es";
 import {
     endpointExampleToHttpRequestExample,
     sortKeysByShape,
-    stringifyHttpRequestExampleToCurl,
+    stringifyHttpRequestExampleToCurl
 } from "../api-page/examples/types";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
 import {
@@ -14,7 +14,7 @@ import {
     FlattenedEndpointDefinition,
     FlattenedSubpackage,
     FlattenedWebhookDefinition,
-    FlattenedWebSocketChannel,
+    FlattenedWebSocketChannel
 } from "./flattenApiDefinition";
 import { titleCase } from "./titleCase";
 

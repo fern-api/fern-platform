@@ -18,7 +18,7 @@ import type {
     ProxyRequest,
     ProxyResponse,
     SerializableFile,
-    SerializableFormDataEntryValue,
+    SerializableFormDataEntryValue
 } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";

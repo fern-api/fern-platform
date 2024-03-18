@@ -12,7 +12,7 @@ import {
     ImgHTMLAttributes,
     isValidElement,
     ReactElement,
-    ReactNode,
+    ReactNode
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";

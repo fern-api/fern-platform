@@ -13,13 +13,13 @@ import {
     isEndpoint,
     isWebSocket,
     ResolvedApiDefinition,
-    ResolvedRootPackage,
+    ResolvedRootPackage
 } from "../util/resolver";
 import {
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,
     PlaygroundSelectionState,
-    usePlaygroundHeight,
+    usePlaygroundHeight
 } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 

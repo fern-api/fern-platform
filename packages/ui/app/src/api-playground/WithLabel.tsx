@@ -11,7 +11,7 @@ import {
     ResolvedTypeDefinition,
     unwrapOptional,
     WithAvailability,
-    WithDescription,
+    WithDescription
 } from "../util/resolver";
 import { shouldRenderInline } from "./utils";
 
