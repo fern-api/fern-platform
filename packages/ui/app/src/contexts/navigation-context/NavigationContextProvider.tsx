@@ -47,6 +47,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
+    lastScrollY = window.scrollY;
     function handleObservation() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
