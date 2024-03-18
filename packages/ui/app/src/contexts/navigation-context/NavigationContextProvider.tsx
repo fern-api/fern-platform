@@ -1,4 +1,4 @@
-import { useBooleanState, useEventCallback } from "@fern-ui/react-commons";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -12,7 +12,6 @@ import { visitSidebarNodes } from "../../sidebar/visitor";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
 import { useFeatureFlags } from "../FeatureFlagContext";
-import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
@@ -38,7 +37,9 @@ const setUserIsNotScrolling = debounce(
     250,
     { leading: false, trailing: true },
 );
-let raf: number;
+
+let resizeObserver: ResizeObserver | undefined;
+let lastScrollY: number | undefined;
 
 function startScrollTracking(route: string, scrolledHere: boolean = false) {
     if (!userIsScrolling && !scrolledHere) {
@@ -46,8 +47,8 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
-    let lastScrollY: number | undefined;
-    function step() {
+    lastScrollY = window.scrollY;
+    function handleObservation() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
             if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
@@ -57,32 +58,30 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
                 node.getBoundingClientRect().top + document.documentElement.scrollTop;
             if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
                 lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                lastScrollY = window.scrollY;
             } else {
                 if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
                     const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
                     const newScrollY = lastScrollY - diff;
                     if (!userHasScrolled) {
                         node.scrollIntoView({ behavior: "auto" });
-                        lastScrollY = window.scrollY;
                     } else {
                         window.scrollTo(0, newScrollY);
                         lastScrollY = newScrollY;
                     }
-                    // console.log(3, resolvedRoute);
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
                 } else {
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-                    lastScrollY = window.scrollY;
                 }
             }
         }
-        raf = window.requestAnimationFrame(step);
     }
     if (justNavigatedTo !== route) {
-        window.cancelAnimationFrame(raf);
         justNavigatedTo = route;
-        raf = window.requestAnimationFrame(step);
+        if (resizeObserver != null) {
+            resizeObserver.disconnect();
+        }
+        resizeObserver = new ResizeObserver(handleObservation);
+        resizeObserver.observe(document.body);
     }
 }
 
@@ -104,16 +103,16 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         ),
     );
 
+    const [, anchor] = resolvedPath.fullSlug.split("#");
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
-    const resolvedRoute = getRouteForResolvedPath({
-        resolvedSlug: selectedSlug,
-        asPath: router.asPath, // do not include basepath because it is already included
-    });
+    const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
     useEffect(() => {
         startScrollTracking(resolvedRoute);
         return () => {
-            window.cancelAnimationFrame(raf);
+            if (resizeObserver != null) {
+                resizeObserver.disconnect();
+            }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -123,6 +122,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         const handleUserTriggeredScroll = () => {
+            lastScrollY = window.scrollY;
             userHasScrolled = true;
             userIsScrolling = true;
             setUserIsNotScrolling();
@@ -177,11 +177,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
-
-    const { value: hydrated, setTrue: hydrate } = useBooleanState(false);
-    useEffect(() => {
-        hydrate();
-    }, [hydrate, selectedSlug]);
 
     useEffect(() => {
         const handleRouteChange = (route: string, options: { shallow: boolean }) => {
@@ -238,7 +233,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 resolvedPath,
-                hydrated,
                 activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
                 selectedSlug,
                 navigation,

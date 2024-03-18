@@ -61,9 +61,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     anchorIdParts={["request", "path"]}
                     route={"/" + endpoint.slug.join("/")}
                 >
-                    <div className="flex flex-col">
+                    <div>
                         {endpoint.pathParameters.map((parameter) => (
-                            <div className="flex flex-col" key={parameter.key}>
+                            <div key={parameter.key}>
                                 <TypeComponentSeparator />
                                 <EndpointParameter
                                     name={parameter.key}
@@ -85,9 +85,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     anchorIdParts={["request", "header"]}
                     route={"/" + endpoint.slug.join("/")}
                 >
-                    <div className="flex flex-col">
+                    <div>
                         {endpoint.headers.map((parameter) => (
-                            <div className="flex flex-col" key={parameter.key}>
+                            <div key={parameter.key}>
                                 <TypeComponentSeparator />
                                 <EndpointParameter
                                     name={parameter.key}
@@ -109,9 +109,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     anchorIdParts={["request", "query"]}
                     route={"/" + endpoint.slug.join("/")}
                 >
-                    <div className="flex flex-col">
+                    <div>
                         {endpoint.queryParameters.map((parameter) => (
-                            <div className="flex flex-col" key={parameter.key}>
+                            <div key={parameter.key}>
                                 <TypeComponentSeparator />
                                 <EndpointParameter
                                     name={parameter.key}
