@@ -1,43 +1,27 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import classNames from "classnames";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import { memo, useCallback, useEffect, useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useCreateSearchService, useSearchService } from "../services/useSearchService";
-import {
-    useCloseMobileSidebar,
-    useIsMobileSidebarOpen,
-    useMessageHandler,
-    useOpenMobileSidebar,
-    useOpenSearchDialog,
-} from "../sidebar/atom";
-import { ColorsConfig, SidebarNavigation } from "../sidebar/types";
+import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
 import { BgImageGradient } from "./BgImageGradient";
 import { DocsMainContent } from "./DocsMainContent";
-import { Header } from "./Header";
-import { NextNProgress } from "./NProgress";
-import { useIsScrolled } from "./useIsScrolled";
+import { HeaderContainer } from "./HeaderContainer";
 
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 interface DocsProps {
-    // config: DocsV1Read.DocsConfig;
-    hasBackgroundImage: boolean;
-    colors: ColorsConfig;
     navbarLinks: DocsV1Read.NavbarLink[];
-    layout: DocsV1Read.DocsLayoutConfig | undefined;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     search: DocsV1Read.SearchInfo;
-    navigation: SidebarNavigation;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
-    isApiPlaygroundEnabled: boolean;
-    isWhiteLabeled: boolean;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -45,22 +29,15 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
-    // config,
-    hasBackgroundImage,
-    colors,
-    layout,
     search,
-    navigation,
     algoliaSearchIndex,
     navbarLinks,
     logoHeight,
     logoHref,
-    isApiPlaygroundEnabled,
-    isWhiteLabeled,
 }) {
-    const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
+    const { layout, colors } = useDocsContext();
+    const { registerScrolledToPathListener, selectedSlug, navigation } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
-    const { layoutBreakpoint } = useViewportContext();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
@@ -90,71 +67,25 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     }, [setTheme, theme, themes]);
 
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
-    const openMobileSidebar = useOpenMobileSidebar();
-    const closeMobileSidebar = useCloseMobileSidebar();
-
-    const renderBackground = useCallback(
-        (className?: string) => (
-            <>
-                <style>
-                    {`
-                        .clipped-background {
-                            opacity: ${colors.light?.headerBackground != null ? 0 : 1};
-                        }
-
-                        :is(.dark) .clipped-background {
-                            opacity: ${colors.dark?.headerBackground != null ? 0 : 1};
-                        }
-                    `}
-                </style>
-                <div className={classNames(className, "clipped-background")}>
-                    <BgImageGradient
-                        className="h-screen opacity-60 dark:opacity-80"
-                        colors={colors}
-                        hasSpecifiedBackgroundImage={hasBackgroundImage}
-                    />
-                </div>
-            </>
-        ),
-        [colors, hasBackgroundImage],
-    );
-
-    const isScrolled = useIsScrolled();
 
     const currentSlug = useMemo(() => selectedSlug?.split("/") ?? [], [selectedSlug]);
+    const { layoutBreakpoint } = useViewportContext();
 
     return (
         <>
-            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-            <BgImageGradient colors={colors} hasSpecifiedBackgroundImage={hasBackgroundImage} />
+            <BgImageGradient colors={colors} />
             {searchService.isAvailable && <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />}
 
-            <PlaygroundContextProvider navigation={navigation.sidebarNodes} enabled={isApiPlaygroundEnabled}>
+            <PlaygroundContextProvider navigation={navigation.sidebarNodes}>
                 <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
-                    <header id="fern-header">
-                        <div
-                            className="bg-header border-concealed data-[border=show]:dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b shadow-none backdrop-blur-lg transition-shadow lg:backdrop-blur"
-                            data-border={
-                                isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
-                                    ? "show"
-                                    : "hide"
-                            }
-                        >
-                            {renderBackground()}
-                            <Header
-                                className="max-w-page-width mx-auto"
-                                logoHeight={logoHeight}
-                                logoHref={logoHref}
-                                colors={colors}
-                                navbarLinks={navbarLinks}
-                                isMobileSidebarOpen={isMobileSidebarOpen}
-                                openMobileSidebar={openMobileSidebar}
-                                closeMobileSidebar={closeMobileSidebar}
-                                showSearchBar={layout?.searchbarPlacement === "HEADER"}
-                                navigation={navigation}
-                            />
-                        </div>
-                    </header>
+                    {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
+                        <HeaderContainer
+                            isMobileSidebarOpen={isMobileSidebarOpen}
+                            navbarLinks={navbarLinks}
+                            logoHeight={logoHeight}
+                            logoHref={logoHref}
+                        />
+                    )}
 
                     <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
                         <style>
@@ -171,18 +102,24 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             `}
                         </style>
                         <Sidebar
-                            className="fern-sidebar-container w-sidebar-width mt-header-height top-header-height h-vh-minus-header bg-sidebar border-default sticky hidden lg:block"
+                            className={
+                                layout?.disableHeader !== true
+                                    ? "fern-sidebar-container w-sidebar-width mt-header-height top-header-height h-vh-minus-header bg-sidebar border-concealed sticky hidden lg:block"
+                                    : "fern-sidebar-container w-sidebar-width h-vh-minus-header bg-sidebar border-concealed fixed hidden lg:block"
+                            }
                             navigation={navigation}
                             currentSlug={currentSlug}
                             registerScrolledToPathListener={registerScrolledToPathListener}
                             searchInfo={search}
                             algoliaSearchIndex={algoliaSearchIndex}
                             navbarLinks={navbarLinks}
-                            showSearchBar={layout?.searchbarPlacement !== "HEADER"}
-                            isWhiteLabeled={isWhiteLabeled}
+                            logoHeight={logoHeight}
+                            logoHref={logoHref}
+                            showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
                         />
+                        {layout?.disableHeader && <div className="w-sidebar-width hidden lg:block" />}
 
-                        <main className={classNames("relative flex w-full min-w-0 flex-1 flex-col pt-header-height")}>
+                        <main className="fern-main">
                             <DocsMainContent />
                         </main>
                     </div>

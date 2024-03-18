@@ -322,5 +322,8 @@ function shouldShowExpandCollapse(
         streamingText: () => false,
         streamCondition: () => false,
         bytes: () => false,
+        stream: (stream) => {
+            return shouldShowExpandCollapse(stream.value, types, depth);
+        },
     });
 }

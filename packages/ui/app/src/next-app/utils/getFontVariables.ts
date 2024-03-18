@@ -15,9 +15,9 @@ function getFontExtension(url: string): string {
 }
 
 const BODY_FONT_FALLBACK =
-    "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif";
+    "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif";
 
-const MONO_FONT_FALLBACK = "Menlo, Monaco, monospace";
+const MONO_FONT_FALLBACK = "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace";
 
 function generateFontFace(
     variant: DocsV1Read.CustomFontConfigVariant,

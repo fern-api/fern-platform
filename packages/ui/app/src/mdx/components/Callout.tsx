@@ -10,7 +10,8 @@ import {
     StarIcon,
 } from "@radix-ui/react-icons";
 import classNames from "classnames";
-import { FC, PropsWithChildren, ReactElement } from "react";
+import { FC, isValidElement, PropsWithChildren, ReactElement } from "react";
+import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
 
@@ -18,6 +19,7 @@ export declare namespace Callout {
     export interface Props {
         intent: string;
         title?: string;
+        icon?: unknown;
     }
 }
 
@@ -29,18 +31,18 @@ function parseIntent(unknownIntent: unknown): Intent {
     return unknownIntent.trim().toLowerCase() as Intent;
 }
 
-export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRaw, title, children }) => {
+export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRaw, title, children, icon }) => {
     const intent = parseIntent(intentRaw);
     return (
         <div
             className={classNames(
-                "p-4 mt-3 mb-5 rounded-lg", // pb-0 to compensate for the ::after margin
+                "p-4 mt-4 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
                     success: () => "callout-outlined-success",
                     error: () => "callout-outlined-danger",
-                    note: () => "callout-outlined-primary",
+                    note: () => "callout-outlined-info",
                     launch: () => "callout-outlined-primary",
                     tip: () => "callout-outlined-success",
                     check: () => "callout-outlined-success",
@@ -50,22 +52,38 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
         >
             <div className="flex items-start space-x-3">
                 <div className="mt-0.5 w-4">
-                    {visitDiscriminatedUnion({ intent }, "intent")._visit({
-                        info: () => <InfoCircledIcon className="text-intent-default size-5" />,
-                        warning: () => <BellIcon className="text-intent-warning size-5" />,
-                        success: () => <CheckCircledIcon className="text-intent-success size-5" />,
-                        error: () => <ExclamationTriangleIcon className="text-intent-danger size-5" />,
-                        note: () => <DrawingPinIcon className="t-accent size-5" />,
-                        launch: () => <RocketIcon className="t-accent size-5" />,
-                        tip: () => <StarIcon className="text-intent-success size-5" />,
-                        check: () => <CheckIcon className="text-intent-success size-5" />,
-                        _other: () => <InfoCircledIcon className="text-intent-default size-5" />,
-                    })}
+                    {typeof icon === "string" ? (
+                        <RemoteFontAwesomeIcon
+                            className={classNames("card-icon size-5", {
+                                "bg-intent-default": intent === "info",
+                                "bg-intent-warning": intent === "warning",
+                                "bg-intent-success": intent === "success",
+                                "bg-intent-danger": intent === "error",
+                                "bg-intent-info": intent === "note",
+                                "bg-accent": intent === "launch",
+                            })}
+                            icon={icon}
+                        />
+                    ) : isValidElement(icon) ? (
+                        <span className="callout-icon">{icon}</span>
+                    ) : (
+                        visitDiscriminatedUnion({ intent }, "intent")._visit({
+                            info: () => <InfoCircledIcon className="text-intent-default size-5" />,
+                            warning: () => <BellIcon className="text-intent-warning size-5" />,
+                            success: () => <CheckCircledIcon className="text-intent-success size-5" />,
+                            error: () => <ExclamationTriangleIcon className="text-intent-danger size-5" />,
+                            note: () => <DrawingPinIcon className="text-intent-info size-5" />,
+                            launch: () => <RocketIcon className="t-accent size-5" />,
+                            tip: () => <StarIcon className="text-intent-success size-5" />,
+                            check: () => <CheckIcon className="text-intent-success size-5" />,
+                            _other: () => <InfoCircledIcon className="text-intent-default size-5" />,
+                        })
+                    )}
                 </div>
 
                 <div
                     className={classNames(
-                        "flex-1 text-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
+                        "flex-1 prose-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     )}
                 >
                     <div
@@ -74,14 +92,14 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                             warning: () => "text-intent-warning",
                             success: () => "text-intent-success",
                             error: () => "text-intent-danger",
-                            note: () => "t-accent",
+                            note: () => "text-intent-info",
                             launch: () => "t-accent",
                             tip: () => "text-intent-success",
                             check: () => "text-intent-success",
                             _other: () => "text-intent-default",
                         })}
                     >
-                        <h5>{title}</h5>
+                        <h5 className="leading-snug">{title}</h5>
                         {children}
                     </div>
                 </div>

@@ -4,11 +4,10 @@ import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { ColorsConfig, SidebarVersionInfo } from "../sidebar/types";
+import { SidebarVersionInfo } from "../sidebar/types";
 import { VersionDropdown } from "./VersionDropdown";
 
 export interface HeaderLogoSectionProps {
-    colors: ColorsConfig;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
 
@@ -19,7 +18,6 @@ export interface HeaderLogoSectionProps {
 }
 
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
-    colors,
     logoHeight,
     logoHref,
     // currentTabIndex,
@@ -27,7 +25,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
     currentVersionIndex,
     versions,
 }) => {
-    const { resolveFile } = useDocsContext();
+    const { colors, resolveFile } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
     const imageClassName = "max-h-full object-contain";
@@ -89,26 +87,12 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
         <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
             <div className="flex items-center gap-2 pr-4">
                 {logoHref != null ? (
-                    <Link href={logoHref} className="flex shrink-0 items-center">
+                    <Link href={logoHref} className="fern-logo-container">
                         {renderLogoContent()}
                     </Link>
                 ) : (
-                    <div className="flex shrink-0 items-center">{renderLogoContent()}</div>
+                    <div className="fern-logo-container">{renderLogoContent()}</div>
                 )}
-                {/* {tabs.length > 1 && (
-                <div style={{ marginBottom: -1 * logoImageHeight * 0.125 }}>
-                    <span
-                        className="t-accent tracking-tight"
-                        style={{
-                            fontSize: logoImageHeight,
-                            lineHeight: `${logoImageHeight * 0.875}px`,
-                            fontFamily: "var(--typography-heading-font-family)",
-                        }}
-                    >
-                        {tabs[currentTabIndex ?? 0]?.title}
-                    </span>
-                </div>
-            )} */}
                 {versions.length > 1 && (
                     <div>
                         <VersionDropdown currentVersionIndex={currentVersionIndex} versions={versions} />

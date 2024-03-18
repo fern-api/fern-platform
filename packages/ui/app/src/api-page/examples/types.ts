@@ -121,21 +121,34 @@ export function stringifyHttpRequestExampleToCurl({
             ? ""
             : visitDiscriminatedUnion(body, "type")._visit({
                   json: ({ value }) =>
-                      value == null ? "" : ` \\\n     -d '${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
+                      value == null
+                          ? ""
+                          : ` \\\n     -d ${typeof value === "string" ? `"${value.replace(/"/g, '\\"')}"` : `'${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`}`,
                   form: ({ value }) =>
                       Object.entries(value)
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
                                   json: ({ value }) =>
-                                      ` \\\n     -F '${key}=${JSON.stringify(value, null, 2).replace(/'/g, "\\'")}'`,
-                                  file: ({ fileName }) => ` \\\n     -F ${key}=@${fileName}`,
+                                      ` \\\n     -F ${key}=${typeof value === "string" ? `"${value.replace(/"/g, '\\"')}"` : `'${JSON.stringify(value, null, 2).replace(/"/g, "\\'")}'`}`,
+                                  file: ({ fileName }) =>
+                                      ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                   fileArray: ({ fileNames }) =>
-                                      fileNames.map((fileName) => ` \\\n     -F ${key}[]=@${fileName}`).join(""),
+                                      fileNames
+                                          .map(
+                                              (fileName) =>
+                                                  ` \\\n     -F "${key}[]"=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
+                                          )
+                                          .join(""),
                                   _other: () => "",
                               }),
                           )
                           .join(""),
-                  stream: ({ fileName }) => ` \\\n     --data-binary @${fileName}`,
+                  stream: ({ fileName }) => {
+                      if (fileName == null) {
+                          return "";
+                      }
+                      return ` \\\n     --data-binary @${fileName.includes(" ") ? `"${fileName}"` : fileName}`;
+                  },
                   _other: () => "",
               });
 
@@ -270,6 +283,7 @@ export function sortKeysByShape(
         streamCondition: () => obj,
         streamingText: () => obj,
         alias: ({ shape }) => sortKeysByShape(obj, shape, types),
+        stream: () => obj,
         _other: () => obj,
     });
 }

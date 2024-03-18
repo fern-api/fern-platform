@@ -1,8 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Dialog, Transition } from "@headlessui/react";
+import classNames from "classnames";
 import { Fragment, memo, useRef } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
@@ -23,8 +25,9 @@ export interface SidebarProps {
     searchInfo: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
+    logoHeight: DocsV1Read.Height | undefined;
+    logoHref: DocsV1Read.Url | undefined;
     showSearchBar?: boolean;
-    isWhiteLabeled: boolean;
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
@@ -34,9 +37,11 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     searchInfo,
     algoliaSearchIndex,
     navbarLinks,
+    logoHeight,
+    logoHref,
     showSearchBar,
-    isWhiteLabeled,
 }) {
+    const { layout } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
     const { layoutBreakpoint } = useViewportContext();
@@ -57,15 +62,19 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     };
 
     return (
-        <nav className="h-full w-full lg:pl-1" aria-label="secondary">
+        <nav
+            className={classNames("h-full w-full", {
+                "lg:pl-1": layout?.disableHeader !== true,
+            })}
+            aria-label="secondary"
+        >
             <FernScrollArea
                 className="group/sidebar"
-                viewportClassName="px-4 pb-12"
+                viewportClassName={classNames("px-4 pb-12")}
                 scrollbars="vertical"
                 viewportRef={scrollRef}
             >
                 <SearchSidebar searchService={searchService}>
-                    <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                     <SidebarFixedItemsSection
                         className="z-10 -mx-4 lg:sticky lg:top-0"
                         searchInfo={searchInfo}
@@ -74,6 +83,8 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         }
                         showSearchBar={showSearchBar}
+                        logoHeight={logoHeight}
+                        logoHref={logoHref}
                     />
                     {renderTabs()}
                     <CollapseSidebarProvider>
@@ -87,8 +98,9 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             />
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
+                    <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
                 </SearchSidebar>
-                <BuiltWithFern isWhiteLabeled={isWhiteLabeled} />
+                <BuiltWithFern />
             </FernScrollArea>
         </nav>
     );

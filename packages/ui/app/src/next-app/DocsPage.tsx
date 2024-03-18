@@ -2,7 +2,9 @@ import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { Redirect } from "next";
 import Head from "next/head";
 import Script from "next/script";
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -23,7 +25,7 @@ export declare namespace DocsPage {
 
         title: string | undefined;
         favicon: string | undefined;
-        backgroundImage: string | undefined;
+        // backgroundImage: string | undefined;
         colors: ColorsConfig;
         layout: DocsV1Read.DocsLayoutConfig | undefined;
         typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
@@ -38,33 +40,25 @@ export declare namespace DocsPage {
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
 
-        isApiPlaygroundEnabled: boolean;
-        isWhiteLabeled: boolean;
+        featureFlags: FeatureFlags;
     }
 }
 
 export function DocsPage({
-    baseUrl,
     title,
     favicon,
-    backgroundImage,
-    colors,
-    typography,
-    layout,
-    css,
     js,
     navbarLinks,
     logoHeight,
     logoHref,
     search,
     algoliaSearchIndex,
-    files,
-    resolvedPath,
-    navigation,
-    isApiPlaygroundEnabled,
-    isWhiteLabeled,
 }: DocsPage.Props): ReactElement {
-    const stylesheet = renderThemeStylesheet(backgroundImage, colors, typography, layout, css, files);
+    const { colors, typography, layout, css, files } = useDocsContext();
+    const stylesheet = useMemo(
+        () => renderThemeStylesheet(colors, typography, layout, css, files),
+        [colors, css, files, layout, typography],
+    );
     return (
         <>
             {/* 
@@ -87,21 +81,11 @@ export function DocsPage({
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
             </Head>
             <DocsApp
-                baseUrl={baseUrl}
-                hasBackgroundImage={backgroundImage != null}
-                colors={colors}
                 logoHeight={logoHeight}
                 logoHref={logoHref}
-                layout={layout}
                 navbarLinks={navbarLinks}
                 search={search}
                 algoliaSearchIndex={algoliaSearchIndex}
-                files={files}
-                resolvedPath={resolvedPath}
-                navigation={navigation}
-                title={title}
-                isApiPlaygroundEnabled={isApiPlaygroundEnabled}
-                isWhiteLabeled={isWhiteLabeled}
             />
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>

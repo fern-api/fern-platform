@@ -1,7 +1,8 @@
+import { FC } from "react";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { BottomNavigationButton } from "./BottomNavigationButton";
 
-export const BottomNavigationButtons: React.FC = () => {
+export const BottomNavigationButtons: FC<{ showPrev?: boolean }> = ({ showPrev = false }) => {
     const { resolvedPath } = useNavigationContext();
     if (resolvedPath.type === "redirect") {
         return null;
@@ -13,16 +14,9 @@ export const BottomNavigationButtons: React.FC = () => {
     }
 
     return (
-        <div>
-            {/* <div className="flex justify-between py-10">
-                {leftNeighbor != null ? (
-                    <BottomNavigationButton docsNode={leftNeighbor} direction="previous" />
-                ) : (
-                    <div />
-                )}
-                {rightNeighbor != null ? <BottomNavigationButton docsNode={rightNeighbor} direction="next" /> : <div />}
-            </div> */}
-            {rightNeighbor != null && <BottomNavigationButton neighbor={rightNeighbor} />}
+        <div className="flex gap-6">
+            {showPrev && leftNeighbor != null && <BottomNavigationButton neighbor={leftNeighbor} dir="prev" />}
+            {rightNeighbor != null && <BottomNavigationButton neighbor={rightNeighbor} dir="next" />}
         </div>
     );
 };

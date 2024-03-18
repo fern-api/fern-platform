@@ -24,7 +24,7 @@ interface SidebarSlugLinkProps {
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
-    title?: string;
+    title?: ReactNode;
     shallow?: boolean;
     selected?: boolean;
     showIndicator?: boolean;

@@ -7,9 +7,14 @@ const CSS_VARIABLES = {
     SPACING_SIDEBAR_WIDTH: "--spacing-sidebar-width",
     SPACING_HEADER_HEIGHT: "--spacing-header-height",
     SPACING_HEADER_HEIGHT_PADDED: "--spacing-header-height-padded",
+    SPACING_HEADER_HEIGHT_REAL: "--spacing-header-height-real",
 };
 
-export function getLayoutVariables(layout: DocsV1Read.DocsLayoutConfig | undefined): Record<string, string> {
+type Breakpoint = "root" | "max-lg";
+
+export function getLayoutVariables(
+    layout: DocsV1Read.DocsLayoutConfig | undefined,
+): Record<Breakpoint, Record<string, string>> {
     const pageWidth =
         layout?.pageWidth == null
             ? "88rem"
@@ -57,10 +62,17 @@ export function getLayoutVariables(layout: DocsV1Read.DocsLayoutConfig | undefin
               });
 
     return {
-        [CSS_VARIABLES.SPACING_PAGE_WIDTH]: pageWidth,
-        [CSS_VARIABLES.SPACING_CONTENT_WIDTH]: contentWidth,
-        [CSS_VARIABLES.SPACING_SIDEBAR_WIDTH]: sidebarWidth,
-        [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: headerHeight,
-        [CSS_VARIABLES.SPACING_HEADER_HEIGHT_PADDED]: headerHeightPadded,
+        root: {
+            [CSS_VARIABLES.SPACING_PAGE_WIDTH]: pageWidth,
+            [CSS_VARIABLES.SPACING_CONTENT_WIDTH]: contentWidth,
+            [CSS_VARIABLES.SPACING_SIDEBAR_WIDTH]: sidebarWidth,
+            [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: layout?.disableHeader ? "0px" : headerHeight,
+            [CSS_VARIABLES.SPACING_HEADER_HEIGHT_PADDED]: layout?.disableHeader ? "1rem" : headerHeightPadded,
+            [CSS_VARIABLES.SPACING_HEADER_HEIGHT_REAL]: headerHeight,
+        },
+        "max-lg": {
+            [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: headerHeight,
+            [CSS_VARIABLES.SPACING_HEADER_HEIGHT_PADDED]: headerHeightPadded,
+        },
     };
 }

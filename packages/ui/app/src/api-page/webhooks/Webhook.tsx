@@ -1,3 +1,4 @@
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { joinUrlSlugs } from "../../util/slug";
@@ -17,6 +18,7 @@ export declare namespace Webhook {
 export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi, types }) => {
     const fullSlug = joinUrlSlugs(...webhook.slug);
     const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const route = `/${fullSlug}`;
 
     // TODO: merge this with the Endpoint component
@@ -30,7 +32,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastI
                 webhook={webhook}
                 breadcrumbs={breadcrumbs}
                 setContainerRef={setTargetRef}
-                hideBottomSeparator={isLastInApi}
+                hideBottomSeparator={isLastInApi || isApiScrollingDisabled}
                 route={route}
                 types={types}
             />

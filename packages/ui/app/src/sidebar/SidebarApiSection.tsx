@@ -6,6 +6,7 @@ import moment from "moment";
 import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { withStream } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -101,7 +102,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     key={joinUrlSlugs(...endpoint.slug)}
                     slug={endpoint.slug}
                     shallow={shallow}
-                    title={endpoint.title}
+                    title={endpoint.id.endsWith("_stream") ? withStream(endpoint.title) : endpoint.title}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     selected={isEqual(endpoint.slug, selectedSlug)}
                     depth={Math.max(0, depth - 1)}

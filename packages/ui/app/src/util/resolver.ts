@@ -565,7 +565,25 @@ function resolveResponseBodyShape(
             streamingText: (streamingText) => streamingText,
             streamCondition: (streamCondition) => streamCondition,
             reference: (reference) => resolveTypeReference(reference.value, types),
-            stream: () => ({ type: "unknown" }), // TODO: IMPLEMENT
+            stream: async (stream) => {
+                if (stream.shape.type === "reference") {
+                    return {
+                        type: "stream",
+                        value: await resolveTypeReference(stream.shape.value, types),
+                    };
+                }
+                return {
+                    type: "stream",
+                    value: {
+                        type: "object",
+                        name: undefined,
+                        extends: stream.shape.extends,
+                        properties: await resolveObjectProperties(stream.shape, types),
+                        description: undefined,
+                        availability: undefined,
+                    },
+                };
+            },
             _other: () => ({ type: "unknown" }),
         }),
     );
@@ -1377,16 +1395,23 @@ export function visitResolvedHttpRequestBodyShape<T>(
     }
 }
 
+export interface ResolvedStreamShape {
+    type: "stream";
+    value: ResolvedTypeShape;
+}
+
 export type ResolvedHttpResponseBodyShape =
     | APIV1Read.HttpResponseBodyShape.FileDownload
     | APIV1Read.HttpResponseBodyShape.StreamingText
     | APIV1Read.HttpResponseBodyShape.StreamCondition
+    | ResolvedStreamShape
     | ResolvedTypeShape;
 
 interface ResolvedHttpResponseBodyShapeVisitor<T> {
     fileDownload: (shape: APIV1Read.HttpResponseBodyShape.FileDownload) => T;
     streamingText: (shape: APIV1Read.HttpResponseBodyShape.StreamingText) => T;
     streamCondition: (shape: APIV1Read.HttpResponseBodyShape.StreamCondition) => T;
+    stream: (shape: ResolvedStreamShape) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
 
@@ -1401,6 +1426,8 @@ export function visitResolvedHttpResponseBodyShape<T>(
             return visitor.streamingText(shape);
         case "streamCondition":
             return visitor.streamCondition(shape);
+        case "stream":
+            return visitor.stream(shape);
         default:
             return visitor.typeShape(shape);
     }

@@ -1,0 +1,9 @@
+.fern-background {
+    @apply fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none;
+
+    background-image: var(--docs-background-image);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}

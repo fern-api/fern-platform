@@ -11,6 +11,7 @@ import { SidebarNavigation, SidebarNode } from "../../sidebar/types";
 import { visitSidebarNodes } from "../../sidebar/visitor";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
+import { useFeatureFlags } from "../FeatureFlagContext";
 import { getRouteForResolvedPath } from "./getRouteForResolvedPath";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
@@ -93,6 +94,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     navigation,
     title,
 }) => {
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
@@ -148,7 +150,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
-                if (fullSlug === selectedSlug || justNavigatedTo != null) {
+                if (fullSlug === selectedSlug || justNavigatedTo != null || isApiScrollingDisabled) {
                     return;
                 }
                 justScrolledTo = `/${fullSlug}`;
