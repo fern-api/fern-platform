@@ -3486,7 +3486,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/local-preview-bundle@workspace:packages/ui/local-preview-bundle"
   dependencies:
-    "@fern-ui/public-docs-bundle": "workspace:*"
     "@fern-ui/ui": "workspace:*"
     "@next/bundle-analyzer": ^14.0.3
     "@tailwindcss/forms": ^0.5.7
@@ -3517,7 +3516,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/public-docs-bundle@workspace:*, @fern-ui/public-docs-bundle@workspace:packages/ui/public-docs-bundle":
+"@fern-ui/public-docs-bundle@workspace:packages/ui/public-docs-bundle":
   version: 0.0.0-use.local
   resolution: "@fern-ui/public-docs-bundle@workspace:packages/ui/public-docs-bundle"
   dependencies:
