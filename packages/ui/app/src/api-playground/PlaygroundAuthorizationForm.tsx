@@ -16,12 +16,14 @@ interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
     value: PlaygroundRequestFormAuth | undefined;
     onChange: (newAuthValue: PlaygroundRequestFormAuth) => void;
+    disabled: boolean;
 }
 
 function BearerAuthForm({
     bearerAuth,
     value,
     onChange,
+    disabled,
 }: { bearerAuth: APIV1Read.BearerAuth } & Omit<PlaygroundAuthorizationFormProps, "auth">) {
     const handleChange = useCallback(
         (newValue: string) =>
@@ -65,12 +67,13 @@ function BearerAuthForm({
                                 variant="minimal"
                             />
                         }
+                        disabled={disabled}
                     />
                 )}
             </div>
 
             <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen}
+                isOpen={isSecretsModalOpen && !disabled}
                 onClose={closeSecretsModal}
                 selectSecret={handleSelectSecret}
             />
@@ -82,6 +85,7 @@ function BasicAuthForm({
     basicAuth,
     value,
     onChange,
+    disabled,
 }: { basicAuth: APIV1Read.BasicAuth } & Omit<PlaygroundAuthorizationFormProps, "auth">) {
     const handleChangeUsername = useCallback(
         (newValue: string) =>
@@ -126,6 +130,7 @@ function BasicAuthForm({
                         value={value?.type === "basicAuth" ? value.username : ""}
                         leftIcon={<PersonIcon className="size-4" />}
                         rightElement={<span className="t-muted text-xs">{"string"}</span>}
+                        disabled={disabled}
                     />
                 </div>
             </li>
@@ -146,12 +151,13 @@ function BasicAuthForm({
                                 variant="minimal"
                             />
                         }
+                        disabled={disabled}
                     />
                 </div>
             </li>
 
             <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen}
+                isOpen={isSecretsModalOpen && !disabled}
                 onClose={closeSecretsModal}
                 selectSecret={handleSelectSecret}
             />
@@ -163,6 +169,7 @@ function HeaderAuthForm({
     header,
     value,
     onChange,
+    disabled,
 }: { header: APIV1Read.HeaderAuth } & Omit<PlaygroundAuthorizationFormProps, "auth">) {
     const handleChange = useCallback(
         (newValue: string) =>
@@ -204,11 +211,12 @@ function HeaderAuthForm({
                             variant="minimal"
                         />
                     }
+                    disabled={disabled}
                 />
             </div>
 
             <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen}
+                isOpen={isSecretsModalOpen && !disabled}
                 onClose={closeSecretsModal}
                 selectSecret={handleSelectSecret}
             />
@@ -216,15 +224,24 @@ function HeaderAuthForm({
     );
 }
 
-export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({ auth, value, onChange }) => {
+export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({
+    auth,
+    value,
+    onChange,
+    disabled,
+}) => {
     return (
         <ul className="list-none px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
                 bearerAuth: (bearerAuth) => (
-                    <BearerAuthForm bearerAuth={bearerAuth} value={value} onChange={onChange} />
+                    <BearerAuthForm bearerAuth={bearerAuth} value={value} onChange={onChange} disabled={disabled} />
                 ),
-                basicAuth: (basicAuth) => <BasicAuthForm basicAuth={basicAuth} value={value} onChange={onChange} />,
-                header: (header) => <HeaderAuthForm header={header} value={value} onChange={onChange} />,
+                basicAuth: (basicAuth) => (
+                    <BasicAuthForm basicAuth={basicAuth} value={value} onChange={onChange} disabled={disabled} />
+                ),
+                header: (header) => (
+                    <HeaderAuthForm header={header} value={value} onChange={onChange} disabled={disabled} />
+                ),
                 _other: () => null,
             })}
         </ul>
@@ -235,12 +252,14 @@ interface PlaygroundAuthorizationFormCardProps {
     auth: APIV1Read.ApiAuth;
     authState: PlaygroundRequestFormAuth | undefined;
     setAuthorization: Dispatch<SetStateAction<PlaygroundRequestFormAuth | undefined>>;
+    disabled: boolean;
 }
 
 export function PlaygroundAuthorizationFormCard({
     auth,
     authState,
     setAuthorization,
+    disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
 
@@ -282,7 +301,12 @@ export function PlaygroundAuthorizationFormCard({
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown">
-                        <PlaygroundAuthorizationForm auth={auth} value={authState} onChange={setAuthorization} />
+                        <PlaygroundAuthorizationForm
+                            auth={auth}
+                            value={authState}
+                            onChange={setAuthorization}
+                            disabled={disabled}
+                        />
                         <div className="flex justify-end p-4 pt-2">
                             <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
                         </div>

@@ -3,14 +3,14 @@ import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
-import { FernButton } from "../components/FernButton";
-import { FernDropdown } from "../components/FernDropdown";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../util/resolver";
+import { renderTypeShorthandWithRequired } from "../../api-page/types/type-shorthand/TypeShorthand";
+import { FernButton } from "../../components/FernButton";
+import { FernDropdown } from "../../components/FernDropdown";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../util/resolver";
+import { castToRecord, getDefaultValueForType, isExpandable } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { castToRecord, getDefaultValueForType, isExpandable } from "./utils";
 
-const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 
@@ -116,7 +116,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                 type: "value",
                 value: property.key,
                 label: property.key,
-                helperText: renderTypeShorthand(property.valueShape, undefined, types),
+                helperText: renderTypeShorthandWithRequired(property.valueShape, types),
                 labelClassName: "font-mono",
                 tooltip:
                     property.description != null ? (

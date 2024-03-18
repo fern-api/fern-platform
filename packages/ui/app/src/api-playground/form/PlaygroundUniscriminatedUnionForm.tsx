@@ -1,16 +1,12 @@
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo, useState } from "react";
-import { FernButton } from "../components/FernButton";
-import { FernDropdown } from "../components/FernDropdown";
-import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../util/resolver";
+import { FernButton } from "../../components/FernButton";
+import { FernDropdown } from "../../components/FernDropdown";
+import { FernSegmentedControl } from "../../components/FernSegmentedControl";
+import { Markdown } from "../../mdx/Markdown";
+import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../util/resolver";
+import { getDefaultValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { getDefaultValueForType, matchesTypeReference } from "./utils";
-
-const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
-    ssr: true,
-});
 
 interface PlaygroundUniscriminatedUnionFormProps {
     undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;

@@ -1,14 +1,14 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthandWithRequired } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
@@ -25,7 +25,7 @@ export declare namespace EndpointParameter {
     export interface ContentProps {
         name: string;
         description: SerializedMdxContent | undefined;
-        typeShorthand: string;
+        typeShorthand: ReactNode;
         anchorIdParts: string[];
         route: string;
         availability: APIV1Read.Availability | null | undefined;
@@ -45,7 +45,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
         <EndpointParameterContent
             name={name}
             description={description}
-            typeShorthand={renderTypeShorthand(shape, undefined, types)}
+            typeShorthand={renderTypeShorthandWithRequired(shape, types)}
             anchorIdParts={anchorIdParts}
             route={route}
             availability={availability}

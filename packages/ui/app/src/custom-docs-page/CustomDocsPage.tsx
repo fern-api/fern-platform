@@ -1,4 +1,6 @@
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
@@ -46,11 +48,12 @@ export const CustomDocsPageHeader = ({
 };
 
 export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath }) => {
+    const router = useRouter();
     const mdxContent = <MdxContent mdx={resolvedPath.serializedMdxContent} />;
     let mdxString: string = "";
 
     try {
-        mdxString = renderToString(mdxContent);
+        mdxString = renderToString(<RouterContext.Provider value={router}>{mdxContent}</RouterContext.Provider>);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error rendering MDX to string", e);

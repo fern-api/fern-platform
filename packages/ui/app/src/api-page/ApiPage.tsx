@@ -1,6 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useIsReady } from "../contexts/useIsReady";
 import { APIS } from "../sidebar/atom";
 import { ResolvedRootPackage } from "../util/resolver";
@@ -18,6 +19,7 @@ export declare namespace ApiPage {
 
 export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showErrors }) => {
     const hydrated = useIsReady();
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const setDefinitions = useSetAtom(APIS);
     // const definition = apis[initialApi.api];
 
@@ -40,7 +42,11 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showEr
                 anchorIdParts={[]}
             />
 
-            <div className="px-4">{/* <BottomNavigationButtons /> */}</div>
+            {isApiScrollingDisabled && (
+                <div className="max-w-content-width md:max-w-endpoint-width mx-4 md:mx-6 lg:mx-8">
+                    {/* <BottomNavigationButtons showPrev={true} /> */}
+                </div>
+            )}
 
             {/* anchor links should get additional padding to scroll to on initial load */}
             {!hydrated && <div className="h-full" />}

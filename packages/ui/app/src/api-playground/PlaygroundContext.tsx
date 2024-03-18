@@ -4,6 +4,7 @@ import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { FeatureFlags, useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import { SidebarNode } from "../sidebar/types";
@@ -50,27 +51,24 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 
 interface PlaygroundProps {
     navigation: SidebarNode[];
-    enabled: boolean;
 }
 
-export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({
-    children,
-    navigation,
-    enabled,
-}) => {
+export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
+    const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
     const { domain, basePath, selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
 
-    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(enabled);
+    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(isApiPlaygroundEnabled);
 
     useEffect(() => {
         if (!isPlaygroundEnabled) {
-            fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/config/api-playground-enabled`, {
+            fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/feature-flags`, {
                 headers: { "x-fern-host": domain },
+                mode: "no-cors",
             })
                 .then((r) => r.json())
-                .then(setIsPlaygroundEnabled)
+                .then((data: FeatureFlags) => setIsPlaygroundEnabled(data.isApiPlaygroundEnabled))
                 // eslint-disable-next-line no-console
                 .catch(console.error);
         }
@@ -98,6 +96,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
             if (matchedPackage == null) {
                 const r = await fetch(
                     "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
+                    { mode: "no-cors" },
                 );
 
                 const data: ResolvedRootPackage | null = await r.json();

@@ -14,6 +14,7 @@ export function ThemeProvider({ theme, children }: PropsWithChildren<ThemeProvid
             themes={theme === "darkAndLight" || theme == null ? ["dark", "light"] : [theme]}
             enableColorScheme={true}
             attribute="class"
+            disableTransitionOnChange={true}
         >
             {children}
         </NextThemeProvider>

@@ -71,7 +71,7 @@ const handler: NextApiHandler = async (
         }
 
         const urls = await getAllUrlsFromDocsConfig(
-            docs.baseUrl.domain,
+            xFernHost,
             docs.baseUrl.basePath,
             docs.definition.config,
             docs.definition.apis,

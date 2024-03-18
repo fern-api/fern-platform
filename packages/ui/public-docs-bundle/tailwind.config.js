@@ -12,11 +12,15 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                mono: "var(--typography-code-font-family)",
+            },
             spacing: {
                 "page-width": "var(--spacing-page-width)",
                 "content-width": "var(--spacing-content-width)",
                 "endpoint-width": "calc(var(--spacing-content-width) * 2 + 3rem)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
+                "header-height-real": "var(--spacing-header-height-real)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
@@ -40,7 +44,7 @@ module.exports = {
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.1), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
-                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.1), 0 2px 24px rgba(221, 243, 255,.07)",
+                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.1), 0 2px 24px rgba(221, 243, 255,.1)",
             },
 
             colors: {
@@ -72,6 +76,8 @@ module.exports = {
                 "intent-success-lightened": "var(--green-a12)",
                 "intent-danger": "var(--red-a11)",
                 "intent-danger-lightened": "var(--red-a12)",
+                "intent-info": "var(--blue-a11)",
+                "intent-info-lightened": "var(--blue-a12)",
 
                 "background-primary": {
                     light: "rgb(3, 7, 18)",
@@ -102,12 +108,14 @@ module.exports = {
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",
                 "border-danger": "var(--red-a8)",
+                "border-info": "var(--blue-a8)",
 
                 "border-default-soft": "var(--grayscale-a6)",
                 "border-primary-soft": "rgba(var(--accent-primary), 30%)",
                 "border-warning-soft": "var(--amber-a6)",
                 "border-success-soft": "var(--green-a6)",
                 "border-danger-soft": "var(--red-a6)",
+                "border-info-soft": "var(--blue-a6)",
 
                 "text-default": withOpacity("--body-text"),
                 "text-muted": "var(--grayscale-a11)",
@@ -119,6 +127,7 @@ module.exports = {
                 "tag-warning-soft": "var(--amber-a2)",
                 "tag-success-soft": "var(--green-a2)",
                 "tag-danger-soft": "var(--red-a2)",
+                "tag-info-soft": "var(--blue-a2)",
 
                 "tag-default": "var(--grayscale-a3)",
                 "tag-default-solid": "var(--grayscale-3)",
@@ -127,6 +136,7 @@ module.exports = {
                 "tag-warning": "var(--amber-a3)",
                 "tag-success": "var(--green-a3)",
                 "tag-danger": "var(--red-a3)",
+                "tag-info": "var(--blue-a3)",
             },
             typography: {
                 DEFAULT: {
@@ -135,15 +145,20 @@ module.exports = {
                         maxWidth: "var(--spacing-content-width)",
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
-                        "--tw-prose-hr": "var(--grayscale-a5)",
+                        "--tw-prose-hr": "var(--border)",
                         "--tw-prose-body": "inherit",
                         "--tw-prose-headings": "inherit",
                         "--tw-prose-pre-bg": "initial",
+                        "--tw-prose-th-borders": "var(--border)",
+                        "--tw-prose-td-borders": "var(--border)",
                     },
                 },
                 sm: {
                     css: {
                         color: "var(--grayscale-a11)",
+                        p: {
+                            marginTop: "0.25rem",
+                        },
                     },
                 },
                 invert: {
@@ -151,10 +166,12 @@ module.exports = {
                         color: "#ffffff",
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
-                        "--tw-prose-hr": "var(--grayscale-a5)",
+                        "--tw-prose-hr": "var(--border)",
                         "--tw-prose-invert-body": "inherit",
                         "--tw-prose-invert-headings": "inherit",
                         "--tw-prose-pre-bg": "initial",
+                        "--tw-prose-invert-th-borders": "var(--border)",
+                        "--tw-prose-invert-td-borders": "var(--border)",
                     },
                 },
                 "invert-sm": {
@@ -347,6 +364,9 @@ module.exports = {
                 },
                 ".callout-outlined-primary": {
                     "@apply bg-tag-primary-soft ring-1 ring-inset ring-border-primary-soft": {},
+                },
+                ".callout-outlined-info": {
+                    "@apply bg-tag-info-soft ring-1 ring-inset ring-border-info-soft": {},
                 },
 
                 ".callout-outlined-ghost": {

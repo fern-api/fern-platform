@@ -1,10 +1,10 @@
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { sortBy } from "lodash-es";
 import { memo, useMemo } from "react";
-import { FernButton } from "../components/FernButton";
-import { FernDropdown } from "../components/FernDropdown";
-import { Markdown } from "../mdx/Markdown";
-import { ResolvedEnumValue } from "../util/resolver";
+import { FernButton } from "../../components/FernButton";
+import { FernDropdown } from "../../components/FernDropdown";
+import { Markdown } from "../../mdx/Markdown";
+import { ResolvedEnumValue } from "../../util/resolver";
 
 // const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
 //     ssr: true,

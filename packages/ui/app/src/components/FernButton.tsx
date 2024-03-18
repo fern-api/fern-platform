@@ -208,11 +208,7 @@ function getButtonClassName({
     children,
 }: PropsWithChildren<FernButtonSharedProps>) {
     children = children ?? text;
-    return classNames(className, "fern-button", variant, {
-        small: size === "small",
-        normal: size === "normal",
-        large: size === "large",
-        [size]: size !== "normal",
+    return classNames(className, "fern-button", variant, size, {
         [intent]: intent !== "none",
         disabled,
         active,

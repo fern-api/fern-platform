@@ -1,10 +1,10 @@
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { memo, useCallback } from "react";
-import { FernButton } from "../components/FernButton";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../util/resolver";
+import { FernButton } from "../../components/FernButton";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
+import { getDefaultValueForType, shouldRenderInline } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
-import { getDefaultValueForType, shouldRenderInline } from "./utils";
 
 interface PlaygroundListFormProps {
     itemShape: ResolvedTypeShape;

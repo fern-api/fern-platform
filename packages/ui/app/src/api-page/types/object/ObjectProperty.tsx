@@ -18,7 +18,7 @@ import {
     hasInternalTypeReference,
     InternalTypeReferenceDefinitions,
 } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
+import { renderTypeShorthandWithRequired } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
@@ -121,7 +121,7 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
                         {property.key}
                     </MonospaceText>
                 </div>
-                <span className="t-muted text-xs">{renderTypeShorthand(property.valueShape, undefined, types)}</span>
+                <div className="t-muted text-xs">{renderTypeShorthandWithRequired(property.valueShape, types)}</div>
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}

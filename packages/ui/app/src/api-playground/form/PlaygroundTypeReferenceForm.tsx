@@ -1,25 +1,25 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { memo, ReactElement, useCallback } from "react";
-import { FernInput } from "../components/FernInput";
-import { FernNumericInput } from "../components/FernNumericInput";
-import { FernSwitch } from "../components/FernSwitch";
-import { FernTextarea } from "../components/FernTextarea";
+import { FernInput } from "../../components/FernInput";
+import { FernNumericInput } from "../../components/FernNumericInput";
+import { FernSwitch } from "../../components/FernSwitch";
+import { FernTextarea } from "../../components/FernTextarea";
 import {
     dereferenceObjectProperties,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     unwrapReference,
-} from "../util/resolver";
-import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
-import { FOCUSED_PARAMETER_ATOM } from "./PlaygroundEndpointFormAside";
+} from "../../util/resolver";
+import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
+import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormAside";
+import { WithLabel } from "../WithLabel";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
-import { WithLabel } from "./WithLabel";
 
 interface PlaygroundTypeReferenceFormProps {
     id: string;

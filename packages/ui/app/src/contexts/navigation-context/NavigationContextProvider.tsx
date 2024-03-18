@@ -3,11 +3,15 @@ import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
+import { renderToString } from "react-dom/server";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { MdxContent } from "../../mdx/MdxContent";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { SidebarNavigation, SidebarNode, visitSidebarNodes } from "../../sidebar/types";
+import { SidebarNavigation, SidebarNode } from "../../sidebar/types";
+import { visitSidebarNodes } from "../../sidebar/visitor";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
+import { useFeatureFlags } from "../FeatureFlagContext";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
@@ -92,6 +96,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     navigation,
     title,
 }) => {
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
@@ -147,7 +152,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
-                if (fullSlug === selectedSlug || justNavigatedTo != null) {
+                if (fullSlug === selectedSlug || justNavigatedTo != null || isApiScrollingDisabled) {
                     return;
                 }
                 justScrolledTo = `/${fullSlug}`;
@@ -263,7 +268,25 @@ function convertToDescription(
     page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
-    return frontmatter?.description ?? page?.description ?? undefined;
+    const description = frontmatter?.description ?? page?.description ?? undefined;
+
+    if (description == null) {
+        return;
+    }
+
+    if (typeof description === "string") {
+        return description;
+    }
+
+    const mdxContent = <MdxContent mdx={description} />;
+
+    try {
+        return renderToString(mdxContent);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Error rendering MDX to string", e);
+        return undefined;
+    }
 }
 
 const resolveActiveSidebarNode = memoize(

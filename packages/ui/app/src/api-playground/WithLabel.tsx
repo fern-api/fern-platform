@@ -1,10 +1,18 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { Cross1Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../components/FernButton";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../util/resolver";
+import { FernTooltip } from "../components/FernTooltip";
+import { Markdown } from "../mdx/Markdown";
+import {
+    ResolvedObjectProperty,
+    ResolvedTypeDefinition,
+    unwrapOptional,
+    WithAvailability,
+    WithDescription,
+} from "../util/resolver";
 import { shouldRenderInline } from "./utils";
 
 interface WithLabelProps {
@@ -28,6 +36,52 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
     }
     const valueShape = unwrapOptional(property.valueShape, types);
     const renderInline = shouldRenderInline(valueShape, types);
+
+    return (
+        <WithLabelInternal
+            propertyKey={property.key}
+            htmlFor={htmlFor}
+            value={value}
+            onRemove={onRemove}
+            availability={property.availability}
+            description={property.description}
+            renderInline={renderInline}
+            isRequired={property.valueShape.type !== "optional"}
+            isList={valueShape.type === "list"}
+            isBoolean={valueShape.type === "boolean"}
+            typeShorthand={renderTypeShorthand(valueShape, undefined, types)}
+        >
+            {children}
+        </WithLabelInternal>
+    );
+};
+
+interface WithLabelInternalProps extends WithAvailability, WithDescription {
+    propertyKey: string;
+    htmlFor?: string;
+    value: unknown;
+    onRemove: () => void;
+    renderInline?: boolean;
+    isRequired: boolean;
+    typeShorthand: string;
+    isList?: boolean;
+    isBoolean?: boolean;
+}
+
+export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = ({
+    propertyKey,
+    htmlFor,
+    value,
+    onRemove,
+    children,
+    availability,
+    description,
+    renderInline = false,
+    isRequired,
+    isList,
+    isBoolean,
+    typeShorthand,
+}) => {
     return (
         <div
             className={classNames({
@@ -37,17 +91,24 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
         >
             <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
                 <label className="inline-flex items-baseline gap-2 truncate" htmlFor={htmlFor}>
-                    <span className={classNames("font-mono text-sm")}>{property.key}</span>
+                    <span className={classNames("font-mono text-sm")}>{propertyKey}</span>
 
-                    {property.availability != null && (
-                        <EndpointAvailabilityTag availability={property.availability} minimal={true} />
+                    {description != null && (
+                        <FernTooltip
+                            content={<Markdown mdx={description} className="prose-sm text-xs" />}
+                            delayDuration={0}
+                        >
+                            <QuestionMarkCircledIcon className="t-muted size-4 self-center" />
+                        </FernTooltip>
                     )}
+
+                    {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                     <span className="whitespace-nowrap text-xs">
-                        {property.valueShape.type !== "optional" && <span className="t-danger">required </span>}
-                        <span className="t-muted">{renderTypeShorthand(property.valueShape, undefined, types)}</span>
+                        {isRequired && <span className="t-danger">required </span>}
+                        <span className="t-muted">{typeShorthand}</span>
                     </span>
 
-                    {valueShape.type === "list" && Array.isArray(value) && value.length > 0 && (
+                    {isList && Array.isArray(value) && value.length > 0 && (
                         <span className="t-muted whitespace-nowrap text-xs">
                             ({value.length} {value.length === 1 ? "item" : "items"})
                         </span>
@@ -56,7 +117,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
 
                 {!renderInline && (
                     <span className="inline-flex min-w-0 shrink items-center gap-1">
-                        {property.valueShape.type === "optional" && (
+                        {!isRequired && (
                             <FernButton
                                 icon={<Cross1Icon />}
                                 size="small"
@@ -71,14 +132,14 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
 
             <div
                 className={classNames("flex", {
-                    "flex-1 shrink min-w-0": valueShape.type !== "boolean",
+                    "flex-1 shrink min-w-0": !isBoolean,
                 })}
             >
                 {children}
 
                 {renderInline && (
                     <span className="inline-flex min-w-0 shrink items-center gap-1">
-                        {property.valueShape.type === "optional" && (
+                        {!isRequired && (
                             <FernButton
                                 icon={<Cross1Icon />}
                                 size="small"

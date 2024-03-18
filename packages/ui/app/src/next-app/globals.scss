@@ -7,6 +7,7 @@
 @import "@radix-ui/colors/green-alpha.css";
 @import "@radix-ui/colors/red-alpha.css";
 @import "@radix-ui/colors/amber-alpha.css";
+@import "@radix-ui/colors/blue-alpha.css";
 @import "@radix-ui/colors/gray-dark-alpha.css";
 @import "@radix-ui/colors/mauve-dark-alpha.css";
 @import "@radix-ui/colors/slate-dark-alpha.css";
@@ -16,6 +17,7 @@
 @import "@radix-ui/colors/green-dark-alpha.css";
 @import "@radix-ui/colors/red-dark-alpha.css";
 @import "@radix-ui/colors/amber-dark-alpha.css";
+@import "@radix-ui/colors/blue-dark-alpha.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -36,7 +38,8 @@
     *::after {
         box-sizing: inherit;
 
-        @apply focus:outline-accent-primary focus-visible:outline-accent-primary;
+        @apply outline-transparent;
+        @apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted;
     }
 
     ::selection {
@@ -120,6 +123,14 @@
     input[type="search"]::-webkit-search-cancel-button {
         display: none;
     }
+
+    hr {
+        @apply border-default;
+    }
+
+    .fern-main {
+        @apply relative w-full min-w-0 flex-1 mt-header-height;
+    }
 }
 
 @layer components {
@@ -189,7 +200,7 @@
         @apply relative z-50;
         @apply animate-popover;
         @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur-xl will-change-[opacity,transform];
+        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur will-change-[opacity,transform];
         @apply shadow-xl;
 
         .fern-dropdown-item {
@@ -269,7 +280,7 @@
     }
 
     .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
-        @apply hover:bg-tag-default hover:transition-colors;
+        @apply hover:bg-tag-default transition-colors;
     }
 
     .fern-sidebar-link-content {
@@ -315,10 +326,9 @@
     }
 
     .fern-button {
-        @apply hover:transition-[background];
+        @apply transition-[background];
         @apply inline-flex items-center justify-center;
         @apply rounded-xl lg:rounded-lg px-3 py-1 text-sm h-9 sm:h-8;
-        @apply focus:outline-accent-primary;
         @apply cursor-default;
 
         &.multiline,
@@ -706,12 +716,16 @@
 
         &.interactive {
             @apply cursor-pointer shadow-card;
-            @apply hover:shadow-card-elevated hover:border-primary hover:transition-all;
-            @apply active:shadow-card-elevated active:border-primary active:transition-all;
+            @apply hover:shadow-card-elevated hover:border-primary transition-all;
+            @apply active:shadow-card-elevated active:border-primary;
 
             &.active {
                 @apply shadow-card-elevated border-primary;
             }
+        }
+
+        &.elevated {
+            @apply shadow-card-elevated border-primary transition-all;
         }
     }
 

@@ -15,7 +15,8 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { PlaygroundEndpointRequestFormState, ResponsePayload } from "./types";
+import { PlaygroundEndpointRequestFormState } from "./types";
+import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
@@ -26,7 +27,7 @@ interface PlaygroundEndpointContentProps {
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
-    response: Loadable<ResponsePayload>;
+    response: Loadable<PlaygroundResponse>;
     sendRequest: () => void;
     types: Record<string, ResolvedTypeDefinition>;
 }
@@ -86,6 +87,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         auth: typeof newState === "function" ? newState(oldState.auth) : newState,
                                     }))
                                 }
+                                disabled={false}
                             />
                         )}
 
@@ -179,13 +181,14 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                 "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
                                                 {
                                                     ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                                                        response.value.status >= 200 && response.value.status < 300,
+                                                        response.value.response.status >= 200 &&
+                                                        response.value.response.status < 300,
                                                     ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                                                        response.value.status > 300,
+                                                        response.value.response.status > 300,
                                                 },
                                             )}
                                         >
-                                            status: {response.value.status}
+                                            status: {response.value.response.status}
                                         </span>
                                         <span
                                             className={
@@ -194,7 +197,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         >
                                             time: {round(response.value.time, 2)}ms
                                         </span>
-                                        {!isEmpty(response.value.size) && (
+                                        {response.value.type === "json" && !isEmpty(response.value.size) && (
                                             <span
                                                 className={
                                                     "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
@@ -210,7 +213,13 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     loading: () => <div />,
                                     loaded: (response) => (
                                         <CopyToClipboardButton
-                                            content={() => JSON.stringify(response.body, null, 2)}
+                                            content={() =>
+                                                response.type === "json"
+                                                    ? JSON.stringify(response.response.body, null, 2)
+                                                    : response.response.body
+                                                          .map((chunk) => JSON.stringify(chunk))
+                                                          .join("\n")
+                                            }
                                             className="-mr-2"
                                         />
                                     ),
@@ -226,7 +235,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     ) : (
                                         <div className="flex flex-1 items-center justify-center">Loading...</div>
                                     ),
-                                loaded: (response) => <PlaygroundResponsePreview responseBody={response.body} />,
+                                loaded: (response) => (
+                                    <PlaygroundResponsePreview
+                                        responseBody={response.response.body}
+                                        type={response.type}
+                                    />
+                                ),
                                 failed: () => <span>Failed</span>,
                             })}
                         </FernCard>

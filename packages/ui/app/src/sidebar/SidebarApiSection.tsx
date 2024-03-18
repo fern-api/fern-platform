@@ -6,14 +6,14 @@ import moment from "moment";
 import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { FernCollapse } from "../components/FernCollapse";
+import { withStream } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
-import { isApiPage, SidebarNode } from "./types";
+import { SidebarNode } from "./types";
 
 export interface SidebarApiSectionProps {
     className?: string;
@@ -65,7 +65,9 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
     const { selectedSlug } = useCollapseSidebar();
     const { activeNavigatable } = useNavigationContext();
     const shallow =
-        activeNavigatable != null && isApiPage(activeNavigatable) && activeNavigatable.api === apiSection.api;
+        activeNavigatable != null &&
+        SidebarNode.isApiPage(activeNavigatable) &&
+        activeNavigatable.api === apiSection.api;
     const renderArtifacts = () => {
         if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
             return null;
@@ -100,7 +102,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     key={joinUrlSlugs(...endpoint.slug)}
                     slug={endpoint.slug}
                     shallow={shallow}
-                    title={endpoint.title}
+                    title={endpoint.id.endsWith("_stream") ? withStream(endpoint.title) : endpoint.title}
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     selected={isEqual(endpoint.slug, selectedSlug)}
                     depth={Math.max(0, depth - 1)}
@@ -207,15 +209,14 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
 
     const children = useMemo(
         () => (
-            <FernCollapse isOpen={expanded} unmount={false}>
-                <InnerSidebarApiSection
-                    slug={slug}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    depth={depth + 1}
-                    artifacts={artifacts}
-                    apiSection={apiSection}
-                />
-            </FernCollapse>
+            <InnerSidebarApiSection
+                className={classNames("expandable", { hidden: !expanded })}
+                slug={slug}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                depth={depth + 1}
+                artifacts={artifacts}
+                apiSection={apiSection}
+            />
         ),
         [apiSection, artifacts, depth, expanded, registerScrolledToPathListener, slug],
     );

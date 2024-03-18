@@ -18,8 +18,8 @@ import {
 } from "./flattenApiDefinition";
 import { titleCase } from "./titleCase";
 
-type WithDescription = { description: SerializedMdxContent | undefined };
-type WithAvailability = { availability: APIV1Read.Availability | undefined };
+export type WithDescription = { description: SerializedMdxContent | undefined };
+export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,
@@ -565,7 +565,25 @@ function resolveResponseBodyShape(
             streamingText: (streamingText) => streamingText,
             streamCondition: (streamCondition) => streamCondition,
             reference: (reference) => resolveTypeReference(reference.value, types),
-            stream: () => ({ type: "unknown" }), // TODO: IMPLEMENT
+            stream: async (stream) => {
+                if (stream.shape.type === "reference") {
+                    return {
+                        type: "stream",
+                        value: await resolveTypeReference(stream.shape.value, types),
+                    };
+                }
+                return {
+                    type: "stream",
+                    value: {
+                        type: "object",
+                        name: undefined,
+                        extends: stream.shape.extends,
+                        properties: await resolveObjectProperties(stream.shape, types),
+                        description: undefined,
+                        availability: undefined,
+                    },
+                };
+            },
             _other: () => ({ type: "unknown" }),
         }),
     );
@@ -963,7 +981,7 @@ export declare namespace ResolvedExampleEndpointRequest {
 
     interface Stream {
         type: "stream";
-        value: unknown[];
+        fileName: string;
     }
 }
 
@@ -985,7 +1003,7 @@ function resolveExampleEndpointRequest(
             value: mapValues(form.value, (v) =>
                 visitDiscriminatedUnion(v, "type")._visit<ResolvedFormValue>({
                     json: (value) => ({ type: "json", value: value.value }),
-                    filename: (value) => ({ type: "filename", value: value.value }),
+                    filename: (value) => ({ type: "file", fileName: value.value }),
                     _other: () => ({ type: "json", value: undefined }), // TODO: handle other types
                 }),
             ),
@@ -994,7 +1012,7 @@ function resolveExampleEndpointRequest(
     });
 }
 
-export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.Filename;
+export type ResolvedFormValue = ResolvedFormValue.Json | ResolvedFormValue.SingleFile | ResolvedFormValue.MultipleFiles;
 
 export declare namespace ResolvedFormValue {
     interface Json {
@@ -1002,9 +1020,14 @@ export declare namespace ResolvedFormValue {
         value: unknown | undefined;
     }
 
-    interface Filename {
-        type: "filename";
-        value: string;
+    interface SingleFile {
+        type: "file";
+        fileName: string;
+    }
+
+    interface MultipleFiles {
+        type: "fileArray";
+        fileNames: string[];
     }
 }
 
@@ -1372,16 +1395,23 @@ export function visitResolvedHttpRequestBodyShape<T>(
     }
 }
 
+export interface ResolvedStreamShape {
+    type: "stream";
+    value: ResolvedTypeShape;
+}
+
 export type ResolvedHttpResponseBodyShape =
     | APIV1Read.HttpResponseBodyShape.FileDownload
     | APIV1Read.HttpResponseBodyShape.StreamingText
     | APIV1Read.HttpResponseBodyShape.StreamCondition
+    | ResolvedStreamShape
     | ResolvedTypeShape;
 
 interface ResolvedHttpResponseBodyShapeVisitor<T> {
     fileDownload: (shape: APIV1Read.HttpResponseBodyShape.FileDownload) => T;
     streamingText: (shape: APIV1Read.HttpResponseBodyShape.StreamingText) => T;
     streamCondition: (shape: APIV1Read.HttpResponseBodyShape.StreamCondition) => T;
+    stream: (shape: ResolvedStreamShape) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
 
@@ -1396,6 +1426,8 @@ export function visitResolvedHttpResponseBodyShape<T>(
             return visitor.streamingText(shape);
         case "streamCondition":
             return visitor.streamCondition(shape);
+        case "stream":
+            return visitor.stream(shape);
         default:
             return visitor.typeShape(shape);
     }

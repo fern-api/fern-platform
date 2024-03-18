@@ -2,7 +2,18 @@ import { useMounted } from "@fern-ui/react-commons";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import classNames from "classnames";
 import Link from "next/link";
-import React, { AnchorHTMLAttributes, DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes, ReactNode } from "react";
+import {
+    AnchorHTMLAttributes,
+    Children,
+    cloneElement,
+    ComponentProps,
+    DetailedHTMLProps,
+    FC,
+    ImgHTMLAttributes,
+    isValidElement,
+    ReactElement,
+    ReactNode,
+} from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernCard } from "../components/FernCard";
@@ -10,7 +21,7 @@ import { useNavigationContext } from "../contexts/navigation-context";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
 
-export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, ...rest }) => {
+export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     return (
         <FernCard className="fern-table not-prose">
             <table {...rest} className={classNames(className)} />
@@ -18,23 +29,23 @@ export const Table: React.FC<HTMLAttributes<HTMLTableElement>> = ({ className, .
     );
 };
 
-export const Thead: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ className, ...rest }) => {
+export const Thead: FC<ComponentProps<"thead">> = ({ className, ...rest }) => {
     return <thead {...rest} className={classNames(className)} />;
 };
 
-export const Tbody: React.FC<HTMLAttributes<HTMLTableSectionElement>> = ({ className, ...rest }) => {
+export const Tbody: FC<ComponentProps<"tbody">> = ({ className, ...rest }) => {
     return <tbody {...rest} className={classNames(className)} />;
 };
 
-export const Tr: React.FC<HTMLAttributes<HTMLTableRowElement>> = ({ className, ...rest }) => {
+export const Tr: FC<ComponentProps<"tr">> = ({ className, ...rest }) => {
     return <tr {...rest} className={classNames(className)} />;
 };
 
-export const Th: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, ...rest }) => {
+export const Th: FC<ComponentProps<"th">> = ({ className, ...rest }) => {
     return <th {...rest} className={classNames(className, "text-left truncate p-3")} />;
 };
 
-export const Td: React.FC<HTMLAttributes<HTMLTableCellElement>> = ({ className, children, ...rest }) => {
+export const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) => {
     const childrenAsString = onlyText(children);
     return (
         <td
@@ -61,7 +72,7 @@ const flatten = (
 ): any => {
     return typeof child === "string"
         ? text + child
-        : React.Children.toArray((child as React.ReactElement).props.children).reduce(flatten, text);
+        : Children.toArray((child as ReactElement).props.children).reduce(flatten, text);
 };
 
 /**
@@ -74,8 +85,8 @@ export function useCurrentPathname(): string {
     return `/${resolvedPath.fullSlug}`;
 }
 
-export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    const children = React.Children.toArray(rest.children);
+export const H1: FC<ComponentProps<"h1">> = ({ className, ...rest }) => {
+    const children = Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
 
@@ -91,8 +102,8 @@ export const H1: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    const children = React.Children.toArray(rest.children);
+export const H2: FC<ComponentProps<"h2">> = ({ className, ...rest }) => {
+    const children = Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
     return (
@@ -107,8 +118,8 @@ export const H2: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    const children = React.Children.toArray(rest.children);
+export const H3: FC<ComponentProps<"h3">> = ({ className, ...rest }) => {
+    const children = Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
     return (
@@ -123,8 +134,8 @@ export const H3: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    const children = React.Children.toArray(rest.children);
+export const H4: FC<ComponentProps<"h4">> = ({ className, ...rest }) => {
+    const children = Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
     return (
@@ -139,8 +150,8 @@ export const H4: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    const children = React.Children.toArray(rest.children);
+export const H5: FC<ComponentProps<"h5">> = ({ className, ...rest }) => {
+    const children = Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
     return (
@@ -155,8 +166,8 @@ export const H5: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ...rest }) => {
-    const children = React.Children.toArray(rest.children);
+export const H6: FC<ComponentProps<"h6">> = ({ className, ...rest }) => {
+    const children = Children.toArray(rest.children);
     const text = children.reduce(flatten, "");
     const slug = getSlugFromText(text);
     return (
@@ -171,56 +182,41 @@ export const H6: React.FC<HTMLAttributes<HTMLHeadingElement>> = ({ className, ..
     );
 };
 
-export const P: React.FC<{ variant: "api" | "markdown" } & HTMLAttributes<HTMLParagraphElement>> = ({
-    variant,
-    className,
-    ...rest
-}) => {
+export const P: FC<{ variant: "api" | "markdown" } & ComponentProps<"p">> = ({ variant, className, ...rest }) => {
     return <p {...rest} />;
 };
 
-export const Strong: React.FC<HTMLAttributes<unknown>> = ({ className, ...rest }) => {
+export const Strong: FC<ComponentProps<"strong">> = ({ className, ...rest }) => {
     return <strong {...rest} className={classNames(className, "font-semibold")} />;
 };
 
-export const Ol: React.FC<HTMLAttributes<HTMLOListElement>> = ({ className, ...rest }) => {
+export const Ol: FC<ComponentProps<"ol">> = ({ className, ...rest }) => {
     return <ol {...rest} className={classNames(className, "list-outside list-decimal space-y-2 mb-3")} />;
 };
 
-export const Ul: React.FC<DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement>> = ({
-    className,
-    ...rest
-}) => {
+export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
     return <ul {...rest} className={classNames(className, "list-outside list-disc space-y-2 mb-3")} />;
 };
 
-export const Li: React.FC<DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>> = ({
-    className,
-    ...rest
-}) => {
+export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
     return <li {...rest} className={classNames(className, "marker:text-inherit")} />;
 };
 
-const RelativePathAnchor: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
-    className,
-    children,
-    href,
-    ...rest
-}) => {
+const RelativePathAnchor: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
     const { resolvedPath } = useNavigationContext();
     const classNamesCombined = classNames("fern-mdx-link", className);
     const newHref = href != null ? `/${resolvedPath.fullSlug}/${href}` : undefined;
 
     return (
         <Link className={classNamesCombined} href={newHref ?? "#"} {...rest}>
-            {React.isValidElement(children) && isImgElement(children)
-                ? React.cloneElement<ImgProps>(children, { disableZoom: true })
+            {isValidElement(children) && isImgElement(children)
+                ? cloneElement<ImgProps>(children, { disableZoom: true })
                 : children}
         </Link>
     );
 };
 
-export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
+export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
     const isExternalUrl = href?.startsWith("http") || href?.startsWith("mailto:") || href?.startsWith("tel:");
 
     if (!isExternalUrl && href != null && !href.startsWith("/")) {
@@ -233,12 +229,12 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
 
     const classNamesCombined = classNames("fern-mdx-link", className);
 
-    const hideExternalLinkIcon = React.isValidElement(children) && (children.type === "img" || children.type === Img);
+    const hideExternalLinkIcon = isValidElement(children) && (children.type === "img" || children.type === Img);
 
     return (
         <Link className={classNamesCombined} href={href ?? "#"} target={isExternalUrl ? "_blank" : undefined} {...rest}>
-            {React.isValidElement(children) && isImgElement(children)
-                ? React.cloneElement<ImgProps>(children, { disableZoom: true })
+            {isValidElement(children) && isImgElement(children)
+                ? cloneElement<ImgProps>(children, { disableZoom: true })
                 : children}
 
             {isExternalUrl && !hideExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
@@ -246,15 +242,15 @@ export const A: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className
     );
 };
 
-interface ImgProps extends DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
+interface ImgProps extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
     disableZoom?: boolean;
 }
 
-function isImgElement(element: ReactNode): element is React.ReactElement<ImgProps> {
-    return React.isValidElement(element) && element.type === Img;
+function isImgElement(element: ReactNode): element is ReactElement<ImgProps> {
+    return isValidElement(element) && element.type === Img;
 }
 
-export const Img: React.FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest }) => {
+export const Img: FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest }) => {
     const mounted = useMounted();
     if (!mounted || disableZoom) {
         return <img {...rest} className={classNames(className, "max-w-full")} src={src} alt={alt} />;

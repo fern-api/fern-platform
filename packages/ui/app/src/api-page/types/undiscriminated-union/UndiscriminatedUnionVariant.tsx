@@ -15,7 +15,7 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
+import { renderTypeShorthandWithRequired } from "../type-shorthand/TypeShorthand";
 
 type IconInfo = {
     content: string;
@@ -118,7 +118,9 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                                 : unionVariant.displayName}
                         </span>
                     )}
-                    <span className="t-muted text-xs">{renderTypeShorthand(unionVariant.shape, undefined, types)}</span>
+                    <span className="t-muted text-xs">
+                        {renderTypeShorthandWithRequired(unionVariant.shape, types)}
+                    </span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
                     )}

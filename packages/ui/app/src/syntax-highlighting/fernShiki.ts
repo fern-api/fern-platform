@@ -1,27 +1,46 @@
 import { Root } from "hast";
 import { h } from "hastscript";
-import { useCallback } from "react";
-import { BundledLanguage, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki/index.mjs";
+import { memoize } from "lodash-es";
+import { useCallback, useEffect, useState } from "react";
+import {
+    BundledLanguage,
+    bundledLanguages,
+    BundledTheme,
+    getHighlighter,
+    Highlighter,
+    SpecialLanguage,
+} from "shiki/index.mjs";
 
+let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;
-export async function getHighlighterInstance(language: string): Promise<Highlighter> {
+
+// only call this once per language
+export const getHighlighterInstance = memoize(async (language: string): Promise<Highlighter> => {
     const lang = parseLang(language);
-    if (highlighter == null) {
-        highlighter = await getHighlighter({
+
+    if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.debug("Loading language:", lang);
+    }
+
+    if (highlighterPromise == null) {
+        highlighterPromise = getHighlighter({
             langs: [lang],
             themes: [LIGHT_THEME, DARK_THEME],
         });
     }
+
+    highlighter = await highlighterPromise;
 
     if (!highlighter.getLoadedLanguages().includes(lang)) {
         await highlighter.loadLanguage(lang);
     }
 
     return highlighter;
-}
+});
 
 function hasLanguage(lang: string): boolean {
-    return highlighter?.getLoadedLanguages().includes(parseLang(lang));
+    return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;
 }
 
 // export function highlight(
@@ -72,39 +91,15 @@ export function trimCode(code: string): string {
 
 export const LIGHT_THEME: BundledTheme = "min-light";
 export const DARK_THEME: BundledTheme = "material-theme-darker";
-export const LANGUAGES: Array<BundledLanguage | SpecialLanguage> = [
-    "bash",
-    "c#",
-    "csharp",
-    "css",
-    "docker",
-    "dockerfile",
-    "go",
-    "java",
-    "javascript",
-    "js",
-    "json",
-    "kotlin",
-    "plaintext",
-    "python",
-    "ruby",
-    "shell",
-    "text",
-    "ts",
-    "typescript",
-    "txt",
-    "xml",
-    "yaml",
-    "yml",
-    "sql",
-];
 
 export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
+    lang = lang.trim();
+
     if (lang == null) {
         return "txt";
     }
     lang = lang.toLowerCase();
-    if (LANGUAGES.includes(lang as BundledLanguage)) {
+    if (Object.keys(bundledLanguages).includes(lang as BundledLanguage)) {
         return lang as BundledLanguage;
     }
     if (lang === "golang") {
@@ -146,6 +141,19 @@ export function useHighlightTokens(): HighlightCallback {
             cb(highlightTokens(highlighter, code, language));
         })();
     }, []);
+}
+
+export function useHighlighter(lang: string): Highlighter | undefined {
+    const [, setNonce] = useState(0);
+    useEffect(() => {
+        if (!hasLanguage(lang)) {
+            void (async () => {
+                await getHighlighterInstance(lang);
+                setNonce((n) => n + 1);
+            })();
+        }
+    }, [lang]);
+    return hasLanguage(lang) ? highlighter : undefined;
 }
 
 export function createRawTokens(code: string, lang: string): HighlightedTokens {

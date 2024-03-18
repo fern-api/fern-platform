@@ -1,3 +1,4 @@
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -16,6 +17,7 @@ export declare namespace Endpoint {
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, breadcrumbs, isLastInApi, types }) => {
     const { resolvedPath } = useNavigationContext();
+    const { isApiScrollingDisabled } = useFeatureFlags();
 
     const { setTargetRef } = useApiPageCenterElement({ slug: endpoint.slug.join("/") });
 
@@ -33,7 +35,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, 
             endpoint={endpoint}
             breadcrumbs={breadcrumbs}
             setContainerRef={setTargetRef}
-            hideBottomSeparator={isLastInApi}
+            hideBottomSeparator={isLastInApi || isApiScrollingDisabled}
             isInViewport={resolvedPath.fullSlug === endpoint.slug.join("/")}
             types={types}
         />

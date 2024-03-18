@@ -1,11 +1,13 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isEmpty, noop } from "lodash-es";
+import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
 import {
     dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
+    ResolvedExampleEndpointRequest,
+    ResolvedFormValue,
     ResolvedHttpRequestBodyShape,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
@@ -13,7 +15,13 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
+import {
+    convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
+    PlaygroundEndpointRequestFormState,
+    PlaygroundFormDataEntryValue,
+    PlaygroundFormStateBody,
+    PlaygroundRequestFormState,
+} from "./types";
 
 export function unknownToString(value: unknown): string {
     if (typeof value === "string") {
@@ -106,23 +114,68 @@ export function stringifyFetch(
     const headers = redacted
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
-    const requestBody = endpoint.requestBody[0];
-    return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
-        .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
-        .join("")})
+
+    function buildFetch(body: string | undefined) {
+        if (endpoint == null) {
+            return "";
+        }
+        return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
+            .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
+            .join("")})
 const response = fetch("${buildEndpointUrl(endpoint, formState)}", {
   method: "${endpoint.method}",
-  headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
-      requestBody?.contentType === "application/json" &&
-      !isEmpty(formState.body) &&
-      requestBody.shape.type !== "fileUpload"
-          ? `\n  body: JSON.stringify(${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)}),`
-          : ""
-  }
+  headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
 });
 
 const body = await response.json();
 console.log(body);`;
+    }
+
+    if (formState.body == null) {
+        return buildFetch(undefined);
+    }
+
+    return visitDiscriminatedUnion(formState.body, "type")._visit<string>({
+        "octet-stream": () => buildFetch('document.querySelector("input[type=file]").files[0]'), // TODO: implement this
+        json: ({ value }) =>
+            buildFetch(
+                value != null ? indentAfter(`JSON.stringify(${JSON.stringify(value, undefined, 2)})`, 2, 0) : undefined,
+            ),
+        "form-data": ({ value }) => {
+            const file = Object.entries(value)
+                .filter(([, v]) => v.type === "file")
+                .map(([k]) => {
+                    return `const ${k}File = document.getElementById("${k}").files[0];
+formData.append("${k}", ${k}File);`;
+                })
+                .join("\n\n");
+
+            const fileArrays = Object.entries(value)
+                .filter(([, v]) => v.type === "fileArray")
+                .map(([k]) => {
+                    return `const ${k}Files = document.getElementById("${k}").files;
+${k}Files.forEach((file) => {
+  formData.append("${k}", file);
+});`;
+                })
+                .join("\n\n");
+
+            const jsons = Object.entries(value)
+                .filter(([, v]) => v.type === "json")
+                .map(([k, v]) => {
+                    return `formData.append("${k}", ${indentAfter(`JSON.stringify(${JSON.stringify(v.value, undefined, 2)})`, 2, 0)});`;
+                })
+                .join("\n\n");
+
+            const appendStatements = [file, fileArrays, jsons].filter((v) => v.length > 0).join("\n\n");
+
+            return `// Create a new FormData instance
+const formData = new FormData();${appendStatements.length > 0 ? "\n\n" + appendStatements : ""}
+
+${buildFetch("formData")}`;
+        },
+        _other: () => buildFetch(undefined),
+    });
 }
 
 export function stringifyPythonRequests(
@@ -134,25 +187,101 @@ export function stringifyPythonRequests(
     if (endpoint == null) {
         return "";
     }
+
     const headers = redacted
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
-    const requestBody = endpoint.requestBody[0];
-    return `import requests
 
-# ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
+    const imports = ["requests"];
+
+    interface PythonRequestParams {
+        json?: string;
+        data?: string;
+        files?: string;
+    }
+
+    function buildRequests({ json, data, files }: PythonRequestParams) {
+        if (endpoint == null) {
+            return "";
+        }
+        return `# ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
 response = requests.${endpoint.method.toLowerCase()}(
   "${buildEndpointUrl(endpoint, formState)}",
-  headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${
-      requestBody?.contentType === "application/json" &&
-      !isEmpty(formState.body) &&
-      requestBody.shape.type !== "fileUpload"
-          ? `\n  json=${indentAfter(JSON.stringify(formState.body, undefined, 2), 2, 0)},`
-          : ""
-  }
+  headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
+      data != null ? `\n  data=${indentAfter(data, 2, 0)},` : ""
+  }${files != null ? `\n  files=${indentAfter(files, 2, 0)},` : ""}
 )
 
 print(response.json())`;
+    }
+
+    if (formState.body == null) {
+        return `${imports.map((pkg) => `import ${pkg}`).join("\n")}
+
+${buildRequests({})}`;
+    }
+
+    return visitDiscriminatedUnion(formState.body, "type")._visit<string>({
+        json: ({ value }) => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
+
+${buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
+        "form-data": ({ value }) => {
+            const singleFiles = Object.entries(value)
+                .filter((entry): entry is [string, PlaygroundFormDataEntryValue.SingleFile] =>
+                    PlaygroundFormDataEntryValue.isSingleFile(entry[1]),
+                )
+                .map(([k, v]) => {
+                    if (v.value == null) {
+                        return undefined;
+                    }
+                    return `'${k}': ('${v.value.name}', open('${v.value.name}', 'rb')),`;
+                })
+                .filter(isNonNullish);
+            const fileArrays = Object.entries(value)
+                .filter((entry): entry is [string, PlaygroundFormDataEntryValue.MultipleFiles] =>
+                    PlaygroundFormDataEntryValue.isMultipleFiles(entry[1]),
+                )
+                .map(([k, v]) => {
+                    const fileStrings = v.value.map((file) => `('${file.name}', open('${file.name}', 'rb'))`);
+                    if (fileStrings.length === 0) {
+                        return;
+                    }
+                    return `'${k}': [${fileStrings.length === 0 ? fileStrings[0] : indentAfter(`\n${fileStrings.join(",\n")},\n`, 2, 0)}],`;
+                })
+                .filter(isNonNullish);
+
+            const fileEntries = [...singleFiles, ...fileArrays].join("\n");
+            const files = fileEntries.length > 0 ? `{\n${indentAfter(fileEntries, 2)}\n}` : undefined;
+
+            const dataEntries = Object.entries(value)
+                .filter((entry): entry is [string, PlaygroundFormDataEntryValue.Json] =>
+                    PlaygroundFormDataEntryValue.isJson(entry[1]),
+                )
+                .map(([k, v]) =>
+                    v.value == null
+                        ? undefined
+                        : `'${k}': json.dumps(${indentAfter(JSON.stringify(v.value, undefined, 2), 2, 0)}),`,
+                )
+                .filter(isNonNullish)
+                .join("\n");
+
+            const data = dataEntries.length > 0 ? `{\n${indentAfter(dataEntries, 2)}\n}` : undefined;
+
+            if (data != null) {
+                imports.push("json");
+            }
+
+            return `${imports.map((pkg) => `import ${pkg}`).join("\n")}
+
+${buildRequests({ data, files })}`;
+        },
+        "octet-stream": (f) => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
+
+${buildRequests({ data: f.value != null ? `open('${f.value?.name}', 'rb').read()` : undefined })}`,
+        _other: () => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
+
+${buildRequests({})}`,
+    });
 }
 
 export function obfuscateSecret(secret: string): string {
@@ -170,17 +299,7 @@ function buildRedactedHeaders(
     endpoint: ResolvedEndpointDefinition,
     formState: PlaygroundRequestFormState,
 ): Record<string, string> {
-    const headers: Record<string, string> = {};
-    endpoint.headers.forEach((header) => {
-        if (formState.headers[header.key] != null) {
-            headers[header.key] = unknownToString(formState.headers[header.key]);
-        }
-    });
-
-    const requestBody = endpoint.requestBody[0];
-    if (requestBody?.contentType != null) {
-        headers["Content-Type"] = requestBody.contentType;
-    }
+    const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
 
     if (auth != null && endpoint.authed && formState.auth != null) {
         visitDiscriminatedUnion(formState.auth, "type")._visit({
@@ -193,7 +312,13 @@ function buildRedactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = obfuscateSecret(value);
+                        if (auth.headerWireValue === "Authorization") {
+                            headers[auth.headerWireValue] = value.includes(":")
+                                ? `Basic ${obfuscateSecret(value)}`
+                                : `Bearer ${obfuscateSecret(value)}`;
+                        } else {
+                            headers[auth.headerWireValue] = obfuscateSecret(value);
+                        }
                     }
                 }
             },
@@ -209,29 +334,20 @@ function buildRedactedHeaders(
         });
     }
 
+    const requestBody = endpoint.requestBody[0];
+    if (endpoint.method !== "GET" && requestBody?.contentType != null) {
+        headers["Content-Type"] = requestBody.contentType;
+    }
+
     return headers;
 }
 
 export function buildUnredactedHeaders(
     auth: APIV1Read.ApiAuth | null | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState | undefined,
+    endpoint: ResolvedEndpointDefinition,
+    formState: PlaygroundRequestFormState,
 ): Record<string, string> {
-    const headers: Record<string, string> = {};
-    if (endpoint == null) {
-        return headers;
-    }
-    endpoint.headers.forEach((header) => {
-        if (formState?.headers[header.key] != null) {
-            headers[header.key] = unknownToString(formState.headers[header.key]);
-        }
-    });
-
-    const requestBody = endpoint.requestBody[0];
-
-    if (requestBody?.contentType != null) {
-        headers["Content-Type"] = requestBody.contentType;
-    }
+    const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
 
     if (auth != null && endpoint.authed && formState?.auth != null) {
         visitDiscriminatedUnion(formState?.auth, "type")._visit({
@@ -244,7 +360,11 @@ export function buildUnredactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = value;
+                        if (auth.headerWireValue === "Authorization") {
+                            headers[auth.headerWireValue] = value.includes(":") ? `Basic ${value}` : `Bearer ${value}`;
+                        } else {
+                            headers[auth.headerWireValue] = value;
+                        }
                     }
                 }
             },
@@ -257,6 +377,11 @@ export function buildUnredactedHeaders(
         });
     }
 
+    const requestBody = endpoint.requestBody[0];
+    if (endpoint.method !== "GET" && requestBody?.contentType != null) {
+        headers["Content-Type"] = requestBody.contentType;
+    }
+
     return headers;
 }
 
@@ -265,7 +390,6 @@ export function stringifyCurl(
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
     redacted = true,
-    contentType?: string,
 ): string {
     if (endpoint == null) {
         return "";
@@ -274,16 +398,33 @@ export function stringifyCurl(
         ? buildRedactedHeaders(auth, endpoint, formState)
         : buildUnredactedHeaders(auth, endpoint, formState);
 
-    if (endpoint.method !== "GET") {
-        headers["Content-Type"] = contentType ?? "application/json";
-    }
-
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,
         url: buildRequestUrl(endpoint?.defaultEnvironment?.baseUrl, endpoint?.path, formState?.pathParameters),
         urlQueries: formState.queryParameters,
         headers,
-        body: { type: "json", value: formState.body },
+        body:
+            formState.body == null
+                ? undefined
+                : visitDiscriminatedUnion(formState.body, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
+                      json: ({ value }) => ({ type: "json", value }),
+                      "form-data": ({ value }): ResolvedExampleEndpointRequest.Form | undefined => {
+                          const newValue: Record<string, ResolvedFormValue> = {};
+                          for (const [key, v] of Object.entries(value)) {
+                              const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(v);
+                              if (convertedV != null) {
+                                  newValue[key] = convertedV;
+                              }
+                          }
+                          if (isEmpty(newValue)) {
+                              return undefined;
+                          }
+                          return { type: "form", value: newValue };
+                      },
+                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Stream | undefined =>
+                          value != null ? { type: "stream", fileName: value.name } : undefined,
+                      _other: () => undefined,
+                  }),
     });
 }
 
@@ -385,14 +526,17 @@ export function matchesTypeReference(
 export function getDefaultValuesForBody(
     requestShape: ResolvedHttpRequestBodyShape | undefined,
     types: Record<string, ResolvedTypeDefinition>,
-): unknown {
+): PlaygroundFormStateBody | undefined {
     if (requestShape == null) {
         return undefined;
     }
-    return visitResolvedHttpRequestBodyShape(requestShape, {
-        fileUpload: () => null,
-        bytes: () => null,
-        typeShape: (typeShape) => getDefaultValueForType(typeShape, types),
+    return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
+        fileUpload: () => ({ type: "form-data", value: {} }),
+        bytes: () => ({ type: "octet-stream", value: undefined }),
+        typeShape: (typeShape) => ({
+            type: "json",
+            value: getDefaultValueForType(typeShape, types),
+        }),
     });
 }
 

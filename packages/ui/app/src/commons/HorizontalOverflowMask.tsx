@@ -8,9 +8,6 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(parentRef, () => ref.current!);
 
-        // check if overflow is visible
-        const isOverflowVisible = ref.current != null ? ref.current.scrollWidth > ref.current.clientWidth : false;
-
         const [showLeftMask, setShowLeftMask] = useState(false);
         const [hideRightMask, setHideRightMask] = useState(() =>
             ref.current != null ? ref.current.scrollLeft === ref.current.scrollWidth - ref.current.clientWidth : false,
@@ -52,9 +49,8 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             <div
                 ref={ref}
                 className={classNames(
-                    "overflow-x-hidden",
+                    "fern-x-overflow",
                     {
-                        ["fern-x-overflow"]: isOverflowVisible,
                         ["left-mask"]: showLeftMask,
                         ["right-mask"]: !hideRightMask,
                     },

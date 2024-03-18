@@ -1,45 +1,74 @@
-import { NextRequest, NextResponse } from "next/server";
+import { assertNever } from "@fern-ui/core-utils";
+import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
+import { NextResponse, type NextRequest } from "next/server";
 import { jsonResponse } from "../../../utils/serverResponse";
 
-interface ProxyRequest {
-    url: string;
-    method: string;
-    headers: Record<string, string>;
-    body: unknown | undefined;
-}
-
-interface ProxyResponseError {
-    type: "error";
-    body: unknown;
-    status: number;
-    time: number;
-    size: string | null;
-}
-
-interface ProxyResponseSuccess {
-    type: "success";
-    body: unknown;
-    status: number;
-    time: number;
-    size: string | null;
-    headers: Record<string, string>;
-}
-
-type ProxyResponse = ProxyResponseError | ProxyResponseSuccess;
-
 export const runtime = "edge";
+
+async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
+    if (body == null) {
+        return undefined;
+    }
+
+    switch (body.type) {
+        case "json":
+            return JSON.stringify(body.value);
+        case "form-data": {
+            const formData = new FormData();
+            for (const [key, value] of Object.entries(body.value)) {
+                switch (value.type) {
+                    case "file":
+                        if (value.value != null) {
+                            const base64 = value.value.dataUrl;
+                            const blob = await (await fetch(base64)).blob();
+                            const file = new File([blob], value.value.name, { type: value.value.type });
+                            formData.append(key, file);
+                        }
+                        break;
+                    case "fileArray": {
+                        const files = await Promise.all(
+                            value.value.map(async (serializedFile) => {
+                                const base64 = serializedFile.dataUrl;
+                                const blob = await (await fetch(base64)).blob();
+                                return new File([blob], serializedFile.name, { type: serializedFile.type });
+                            }),
+                        );
+                        files.forEach((file) => formData.append(key, file, file.name));
+                        break;
+                    }
+                    case "json":
+                        formData.append(key, JSON.stringify(value.value));
+                        break;
+                    default:
+                        assertNever(value);
+                }
+            }
+            return formData;
+        }
+        case "octet-stream": {
+            if (body.value == null) {
+                return undefined;
+            }
+            const base64 = body.value.dataUrl;
+            const blob = await (await fetch(base64)).blob();
+            return new File([blob], body.value.name, { type: body.value.type });
+        }
+        default:
+            assertNever(body);
+    }
+}
 
 export default async function POST(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
-    const startTime = performance.now();
+    const startTime = Date.now();
     try {
         const proxyRequest = (await req.json()) as ProxyRequest;
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
-            headers: proxyRequest.headers,
-            body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body) : undefined,
+            headers: new Headers(proxyRequest.headers),
+            body: await buildRequestBody(proxyRequest.body),
         });
         let body = await response.text();
         try {
@@ -47,25 +76,31 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         } catch (_e) {
             // Ignore
         }
-        const endTime = performance.now();
+        const endTime = Date.now();
         const headers = response.headers;
 
         return jsonResponse<ProxyResponse>(200, {
-            type: "success",
-            body,
-            status: response.status,
+            error: false,
+            response: {
+                headers: Object.fromEntries(headers.entries()),
+                ok: response.ok,
+                redirected: response.redirected,
+                status: response.status,
+                statusText: response.statusText,
+                type: response.type,
+                url: response.url,
+                body,
+            },
             time: endTime - startTime,
             size: headers.get("Content-Length"),
-            headers: Object.fromEntries(headers.entries()),
         });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        const endTime = performance.now();
+        const endTime = Date.now();
 
         return jsonResponse<ProxyResponse>(500, {
-            type: "error",
-            body: "An unknown server error occured.",
+            error: true,
             status: 500,
             time: endTime - startTime,
             size: null,
