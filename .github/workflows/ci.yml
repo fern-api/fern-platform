@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Check root package
-        run: yarn root-package:check
+      - name: Compile
+        run: yarn compile
 
       - name: Check dependencies
         run: yarn depcheck
