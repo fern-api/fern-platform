@@ -41,6 +41,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     defaultExpandAll={defaultExpandAll}
                     applyErrorStyles={false}
                     types={types}
+                    isResponse={true}
                 />
             )}
         </div>
