@@ -69,6 +69,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
             name: undefined,
             description: undefined,
             availability: undefined,
+            defaultsTo: undefined,
         };
     }, [publishMessages, types]);
 
@@ -79,6 +80,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
             name: undefined,
             description: undefined,
             availability: undefined,
+            defaultsTo: undefined,
         };
     }, [subscribeMessages, types]);
 
@@ -405,6 +407,7 @@ function flattenWebSocketShape(
                 {
                     description: message.description,
                     availability: message.availability,
+                    defaultsTo: undefined,
                     displayName: message.displayName ?? message.type,
                     shape: message.body,
                 },
