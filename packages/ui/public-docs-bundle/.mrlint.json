@@ -2,10 +2,14 @@
   "type": "next-app",
   "private": true,
   "environment": {
-    "environments": ["fern-dev", "fern-prod"],
+    "environments": [
+      "fern-dev",
+      "fern-prod"
+    ],
     "variables": [
       "NEXT_PUBLIC_FDR_ORIGIN",
       "NEXT_PUBLIC_POSTHOG_API_KEY",
+      "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
       "NEXT_PUBLIC_ALGOLIA_APP_ID",
       "NEXT_PUBLIC_ALGOLIA_API_KEY",
       "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX",
@@ -14,7 +18,14 @@
   },
   "rules": {
     "depcheck": {
-      "ignores": ["@types/react", "@types/react-dom", "autoprefixer", "postcss", "postcss-import", "cssnano"]
+      "ignores": [
+        "@types/react",
+        "@types/react-dom",
+        "autoprefixer",
+        "postcss",
+        "postcss-import",
+        "cssnano"
+      ]
     }
   }
 }
