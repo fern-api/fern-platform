@@ -2135,6 +2135,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@datadog/browser-core@npm:5.12.0":
+  version: 5.12.0
+  resolution: "@datadog/browser-core@npm:5.12.0"
+  checksum: 49f60eb9cf385d3d2a3a2bf3190cefe4b99af49c53c2556c3ac88eb1ed6d4454e82d8f3f16aeda13271624759d658199050d0c9313f5561a81cd69cf8215e920
+  languageName: node
+  linkType: hard
+
+"@datadog/browser-logs@npm:^5.12.0":
+  version: 5.12.0
+  resolution: "@datadog/browser-logs@npm:5.12.0"
+  dependencies:
+    "@datadog/browser-core": 5.12.0
+  peerDependencies:
+    "@datadog/browser-rum": 5.12.0
+  peerDependenciesMeta:
+    "@datadog/browser-rum":
+      optional: true
+  checksum: e5654292967d14b93472b0b4a607225d97f8babca39e17d070e2527de19177898c9773cd050436a5aa9d950c78d242781e8932c849fbdebf39303add1745fa5c
+  languageName: node
+  linkType: hard
+
 "@esbuild/android-arm64@npm:0.18.20":
   version: 0.18.20
   resolution: "@esbuild/android-arm64@npm:0.18.20"
@@ -2677,6 +2698,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-ui/ui@workspace:packages/ui/app"
   dependencies:
+    "@datadog/browser-logs": ^5.12.0
     "@fern-api/fdr-sdk": 0.57.0-1-ge86efe6
     "@fern-ui/core-utils": "workspace:*"
     "@fern-ui/loadable": "workspace:*"
