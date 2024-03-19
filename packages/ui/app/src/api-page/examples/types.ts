@@ -26,7 +26,6 @@ export interface HttpRequestExample {
 }
 
 export function endpointExampleToHttpRequestExample(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     requestBody: ResolvedExampleEndpointRequest | null | undefined,
@@ -38,8 +37,8 @@ export function endpointExampleToHttpRequestExample(
 
     let basicAuth: { username: string; password: string } | undefined;
 
-    if (auth != null && endpoint.authed) {
-        visitDiscriminatedUnion(auth, "type")._visit({
+    if (endpoint.auth != null) {
+        visitDiscriminatedUnion(endpoint.auth, "type")._visit({
             basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
                 basicAuth = { username: `<${usernameName}>`, password: `<${passwordName}>` };
             },

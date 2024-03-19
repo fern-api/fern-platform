@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
@@ -6,7 +5,6 @@ import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketContentProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     websocket: ResolvedWebSocketChannel;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
@@ -19,7 +17,6 @@ interface PlaygroundWebSocketContentProps {
 }
 
 export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = ({
-    auth,
     websocket,
     formState,
     setFormState,
@@ -55,7 +52,6 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                 className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
                 <PlaygroundWebSocketSessionForm
-                    auth={auth}
                     websocket={websocket}
                     formState={formState}
                     types={types}

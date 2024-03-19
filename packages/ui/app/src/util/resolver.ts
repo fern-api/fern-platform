@@ -83,7 +83,7 @@ async function resolveApiDefinitionPackage(
         ),
     );
     const websocketsPromise = Promise.all(
-        package_.websockets.map((websocket) => resolveWebsocketChannel(websocket, types)),
+        package_.websockets.map((websocket) => resolveWebsocketChannel(auth, websocket, types)),
     );
     const webhooksPromise = Promise.all(
         package_.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes)),
@@ -151,7 +151,7 @@ async function resolveSubpackage(
 }
 
 async function resolveEndpointDefinition(
-    auth: APIV1Read.ApiAuth | undefined,
+    rootAuth: APIV1Read.ApiAuth | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     apiPackageId: FdrAPI.ApiDefinitionId,
     endpoint: FlattenedEndpointDefinition,
@@ -245,7 +245,7 @@ async function resolveEndpointDefinition(
         return { shape, description, availability: undefined };
     }
 
-    const [pathParameters, queryParameters, headers, errors, description, requestBody, responseBody] =
+    const [pathParameters, queryParameters, rawHeaders, errors, description, requestBody, responseBody] =
         await Promise.all([
             pathParametersPromise,
             queryParametersPromise,
@@ -281,12 +281,14 @@ async function resolveEndpointDefinition(
         }
     });
 
+    const { auth, headers } = mergeAuthAndHeaders(endpoint.authed, rootAuth, rawHeaders);
+
     const toRet: ResolvedEndpointDefinition = {
         name: endpoint.name,
         id: endpoint.id,
         slug: endpoint.slug,
         description,
-        authed: endpoint.authed,
+        auth,
         availability: endpoint.availability,
         apiSectionId,
         apiPackageId,
@@ -330,14 +332,51 @@ async function resolveEndpointDefinition(
             //     responseBody != null
             //         ? highlight(highlighter, JSON.stringify(responseBody.value, undefined, 2), "json")
             //         : undefined,
-            snippets: resolveCodeSnippets(endpoint.authed ? auth : undefined, toRet, example, requestBody),
+            snippets: resolveCodeSnippets(toRet, example, requestBody),
         };
     });
 
     return toRet;
 }
 
+interface MergedAuthAndHeaders {
+    auth: APIV1Read.ApiAuth | undefined;
+    headers: ResolvedObjectProperty[];
+}
+
+// HACKHACK: this handles the case where FernIR is unable to interpret the security scheme for AsyncAPI
+// and that we direct users to specify the websocket bindings instead.
+function mergeAuthAndHeaders(
+    authed: boolean,
+    auth: APIV1Read.ApiAuth | undefined,
+    headers: ResolvedObjectProperty[],
+): MergedAuthAndHeaders {
+    if (authed && auth != null) {
+        return { auth, headers };
+    }
+
+    const filteredHeaders: ResolvedObjectProperty[] = [];
+
+    for (const header of headers) {
+        if (
+            header.key.toLowerCase() === "authorization" ||
+            header.key.toLowerCase().includes("api-key") ||
+            header.key.toLowerCase().includes("apikey")
+        ) {
+            auth = {
+                type: "header",
+                headerWireValue: header.key,
+            };
+            continue;
+        }
+        filteredHeaders.push(header);
+    }
+
+    return { auth, headers: filteredHeaders };
+}
+
 async function resolveWebsocketChannel(
+    rootAuth: APIV1Read.ApiAuth | undefined,
     websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
 ): Promise<Promise<ResolvedWebSocketChannel>> {
@@ -395,15 +434,17 @@ async function resolveWebsocketChannel(
             };
         }),
     );
-    const [pathParameters, headers, queryParameters, messages] = await Promise.all([
+    const [pathParameters, rawHeaders, queryParameters, messages] = await Promise.all([
         pathParametersPromise,
         headersPromise,
         queryParametersPromise,
         messagesPromise,
     ]);
 
+    const { auth, headers } = mergeAuthAndHeaders(websocket.authed, rootAuth, rawHeaders);
+
     return {
-        authed: websocket.authed,
+        auth,
         environments: websocket.environments,
         id: websocket.id,
         description: websocket.description,
@@ -997,7 +1038,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     apiSectionId: FdrAPI.ApiDefinitionId;
     apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
     slug: string[];
-    authed: boolean;
+    auth: APIV1Read.ApiAuth | undefined;
     availability: APIV1Read.Availability | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
@@ -1151,7 +1192,6 @@ export interface ResolvedCodeSnippet {
 }
 
 function resolveCodeSnippets(
-    auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     requestBody: ResolvedExampleEndpointRequest | undefined,
@@ -1160,7 +1200,7 @@ function resolveCodeSnippets(
     let toRet: ResolvedCodeSnippet[] = [];
 
     const curlCode = stringifyHttpRequestExampleToCurl(
-        endpointExampleToHttpRequestExample(auth, endpoint, example, requestBody),
+        endpointExampleToHttpRequestExample(endpoint, example, requestBody),
     );
 
     toRet.push({
@@ -1285,7 +1325,7 @@ export interface ResolvedWebSocketChannel {
     name: string | undefined;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
-    authed: boolean;
+    auth: APIV1Read.ApiAuth | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     path: ResolvedEndpointPathParts[];

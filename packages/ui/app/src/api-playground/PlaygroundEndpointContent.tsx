@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import cn from "clsx";
 import { useAtom } from "jotai";
@@ -21,7 +20,6 @@ import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils"
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundEndpointContentProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
@@ -35,7 +33,6 @@ interface PlaygroundEndpointContentProps {
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
 
 export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
-    auth,
     endpoint,
     formState,
     setFormState,
@@ -77,9 +74,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     rightClassName="pl-1"
                 >
                     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
-                        {endpoint.authed && auth != null && (
+                        {endpoint.auth != null && (
                             <PlaygroundAuthorizationFormCard
-                                auth={auth}
+                                auth={endpoint.auth}
                                 authState={formState?.auth}
                                 setAuthorization={(newState) =>
                                     setFormState((oldState) => ({
@@ -153,18 +150,17 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 <CopyToClipboardButton
                                     content={() =>
                                         requestType === "curl"
-                                            ? stringifyCurl(auth, endpoint, formState, false)
+                                            ? stringifyCurl(endpoint, formState, false)
                                             : requestType === "javascript"
-                                              ? stringifyFetch(auth, endpoint, formState, false)
+                                              ? stringifyFetch(endpoint, formState, false)
                                               : requestType === "python"
-                                                ? stringifyPythonRequests(auth, endpoint, formState, false)
+                                                ? stringifyPythonRequests(endpoint, formState, false)
                                                 : ""
                                     }
                                     className="-mr-2"
                                 />
                             </div>
                             <PlaygroundRequestPreview
-                                auth={auth}
                                 endpoint={endpoint}
                                 formState={formState}
                                 requestType={requestType}

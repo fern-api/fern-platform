@@ -118,7 +118,9 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                                 : unionVariant.displayName}
                         </span>
                     )}
-                    {renderTypeShorthand(unionVariant.shape, { nullable: contextValue.isResponse }, types)}
+                    <span className="t-muted inline-flex items-baseline gap-2 text-xs">
+                        {renderTypeShorthand(unionVariant.shape, { nullable: contextValue.isResponse }, types)}
+                    </span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
                     )}
