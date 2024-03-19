@@ -88,7 +88,7 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
             parse: async (i) => {
                 const d = i as { data: string; time: number };
                 return {
-                    data: JSON.parse(d.data),
+                    data: d.data,
                     time: d.time,
                 };
             },
