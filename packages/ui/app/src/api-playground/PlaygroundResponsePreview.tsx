@@ -10,7 +10,9 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
     const responseJson = useMemo(
         () =>
             type === "stream" && Array.isArray(responseBody)
-                ? responseBody.map((chunk) => JSON.stringify(chunk)).join("\n")
+                ? responseBody
+                      .map((chunk) => (typeof chunk !== "string" ? JSON.stringify(chunk) : chunk.trim()))
+                      .join("\n")
                 : JSON.stringify(responseBody, null, 2),
         [responseBody, type],
     );
