@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { ReactElement, useCallback } from "react";
 import {
     ResolvedTypeDefinition,
@@ -104,7 +104,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
 
     return (
         <div
-            className={classNames("flex flex-col py-3", {
+            className={cn("flex flex-col py-3", {
                 "px-3": !isRootTypeDefinition,
             })}
         >

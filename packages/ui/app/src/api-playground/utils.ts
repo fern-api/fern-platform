@@ -360,11 +360,7 @@ export function buildUnredactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        if (auth.headerWireValue === "Authorization") {
-                            headers[auth.headerWireValue] = value.includes(":") ? `Basic ${value}` : `Bearer ${value}`;
-                        } else {
-                            headers[auth.headerWireValue] = value;
-                        }
+                        headers[auth.headerWireValue] = value;
                     }
                 }
             },
@@ -712,6 +708,7 @@ export function hasOptionalFields(
 }
 
 export const ENUM_RADIO_BREAKPOINT = 5;
+
 export function shouldRenderInline(
     typeReference: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,

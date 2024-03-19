@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
@@ -69,7 +69,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
             name: undefined,
             description: undefined,
             availability: undefined,
-            defaultsTo: undefined,
         };
     }, [publishMessages, types]);
 
@@ -80,7 +79,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
             name: undefined,
             description: undefined,
             availability: undefined,
-            defaultsTo: undefined,
         };
     }, [subscribeMessages, types]);
 
@@ -107,7 +105,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
             data-route={route.toLowerCase()}
         >
             <article
-                className={classNames("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
                 })}
             >
@@ -407,7 +405,6 @@ function flattenWebSocketShape(
                 {
                     description: message.description,
                     availability: message.availability,
-                    defaultsTo: undefined,
                     displayName: message.displayName ?? message.type,
                     shape: message.body,
                 },

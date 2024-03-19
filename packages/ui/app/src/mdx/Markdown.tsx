@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import React from "react";
 import { SerializedMdxContent } from "./mdx";
 import { MdxContent } from "./MdxContent";
@@ -18,7 +18,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ mdx, notP
 
     return (
         <article
-            className={classNames(className, "break-words max-w-none", {
+            className={cn(className, "break-words max-w-none", {
                 ["prose dark:prose-invert"]: !notProse,
             })}
         >

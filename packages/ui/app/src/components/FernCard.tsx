@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import Link, { LinkProps } from "next/link";
 import { DetailedHTMLProps, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
 
@@ -9,7 +9,7 @@ interface FernCardProps {
 export const FernLinkCard = forwardRef<HTMLAnchorElement, PropsWithChildren<FernCardProps & LinkProps>>(
     function FernLinkCard({ children, className, ...props }, ref) {
         return (
-            <Link className={classNames("fern-card interactive", className)} {...props} ref={ref}>
+            <Link className={cn("fern-card interactive", className)} {...props} ref={ref}>
                 {children}
             </Link>
         );
@@ -20,7 +20,7 @@ export const FernCard = forwardRef<HTMLDivElement, DetailedHTMLProps<HTMLAttribu
     function FernCard({ children, className, ...props }, ref) {
         return (
             <div
-                className={classNames(
+                className={cn(
                     "fern-card",
                     {
                         interactive: props.onClick != null || props.onClickCapture != null,

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import Link from "next/link";
 import {
     ButtonHTMLAttributes,
@@ -163,7 +163,7 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
 ) {
     return (
         <FernTooltipProvider>
-            <span ref={ref} className={classNames(className, "fern-button-group")} {...props}>
+            <span ref={ref} className={cn(className, "fern-button-group")} {...props}>
                 {children}
             </span>
         </FernTooltipProvider>
@@ -181,7 +181,7 @@ function renderButtonContent(
             {children && (
                 <span
                     ref={buttonTextRef}
-                    className={classNames("fern-button-text", {
+                    className={cn("fern-button-text", {
                         "font-mono tracking-tight": mono,
                     })}
                 >
@@ -208,7 +208,7 @@ function getButtonClassName({
     children,
 }: PropsWithChildren<FernButtonSharedProps>) {
     children = children ?? text;
-    return classNames(className, "fern-button", variant, size, {
+    return cn(className, "fern-button", variant, size, {
         [intent]: intent !== "none",
         disabled,
         active,

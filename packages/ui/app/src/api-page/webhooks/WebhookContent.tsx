@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import React, { useCallback } from "react";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -46,7 +46,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     return (
         <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
             <div
-                className={classNames(
+                className={cn(
                     "scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
                     {
                         "border-default border-b mb-px pb-20": !hideBottomSeparator,
@@ -113,7 +113,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     </div>
                 </div>
                 <div
-                    className={classNames(
+                    className={cn(
                         "max-w-content-width",
                         "flex-1 sticky self-start top-header-height",
                         // the py-10 is the same as the 40px below

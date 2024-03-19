@@ -1,5 +1,5 @@
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { memo, useCallback } from "react";
 import { FernButton } from "../../components/FernButton";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
@@ -49,7 +49,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                     {valueAsList.map((item, idx) => (
                         <li
                             key={idx}
-                            className={classNames("min-h-12 w-full space-y-2", {
+                            className={cn("min-h-12 w-full space-y-2", {
                                 "py-2": renderInline,
                                 "pt-2 pb-4": !renderInline,
                             })}

@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, useCallback } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
@@ -41,7 +41,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({
                         }
                     `}
                 </style>
-                <div className={classNames(className, "clipped-background")}>
+                <div className={cn(className, "clipped-background")}>
                     <BgImageGradient className="h-screen opacity-60 dark:opacity-80" colors={colors} />
                 </div>
             </>

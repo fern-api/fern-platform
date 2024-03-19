@@ -1,5 +1,5 @@
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC } from "react";
 import { FernButton } from "./FernButton";
 import { FernDropdown } from "./FernDropdown";
@@ -24,7 +24,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
 }) => (
     <FernTooltipProvider>
         <ToggleGroup.Root
-            className={classNames("fern-segmented-control", className)}
+            className={cn("fern-segmented-control", className)}
             type="single"
             value={value}
             onValueChange={onValueChange}

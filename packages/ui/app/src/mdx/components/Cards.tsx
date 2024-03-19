@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, type PropsWithChildren } from "react";
 
 export declare namespace Cards {
@@ -10,7 +10,7 @@ export declare namespace Cards {
 export const Cards: FC<PropsWithChildren<Cards.Props>> = ({ children, cols = 2 }) => {
     return (
         <div
-            className={classNames("grid gap-4 sm:gap-6 mb-6 mt-4", {
+            className={cn("grid gap-4 sm:gap-6 mb-6 mt-4", {
                 "grid-cols-1": cols <= 1,
                 "grid-cols-1 sm:grid-cols-2": cols === 2,
                 "grid-cols-1 sm:grid-cols-2 md:grid-cols-3": cols === 3,

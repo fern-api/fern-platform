@@ -1,6 +1,6 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { CopyIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { Check } from "react-feather";
 import { FernButton } from "../components/FernButton";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
@@ -39,7 +39,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                     copyToClipboard?.();
                 }) ?? (
                     <FernButton
-                        className={classNames("group", className)}
+                        className={cn("group", className)}
                         disabled={copyToClipboard == null}
                         onClickCapture={(e) => {
                             onClick?.(e);

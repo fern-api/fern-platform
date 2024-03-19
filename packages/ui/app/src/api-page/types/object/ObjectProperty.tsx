@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
@@ -103,7 +103,7 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
-            className={classNames("py-3 scroll-mt-header-height-padded space-y-2", {
+            className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
@@ -112,7 +112,7 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
                 <div className="group/anchor-container relative inline-flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
                     <MonospaceText
-                        className={classNames("t-default text-sm", {
+                        className={cn("t-default text-sm", {
                             "t-accent": isActive,
                         })}
                         onMouseEnter={onMouseEnterPropertyName}

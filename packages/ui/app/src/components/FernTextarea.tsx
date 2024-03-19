@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { DetailedHTMLProps, forwardRef, InputHTMLAttributes, useEffect, useImperativeHandle, useRef } from "react";
 
 interface FernTextareaProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
@@ -20,7 +20,7 @@ export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(f
     };
     useAutosizeTextArea(inputRef.current, props.value ?? "", minLines);
     return (
-        <div className={classNames("fern-textarea-group", className)}>
+        <div className={cn("fern-textarea-group", className)}>
             <textarea {...props} ref={inputRef} className="fern-textarea" onChange={handleChange} />
         </div>
     );

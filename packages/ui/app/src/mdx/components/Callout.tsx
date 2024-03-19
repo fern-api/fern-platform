@@ -9,7 +9,7 @@ import {
     RocketIcon,
     StarIcon,
 } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, isValidElement, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 
@@ -35,7 +35,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
     const intent = parseIntent(intentRaw);
     return (
         <div
-            className={classNames(
+            className={cn(
                 "p-4 mt-4 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
@@ -54,7 +54,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                 <div className="mt-0.5 w-4">
                     {typeof icon === "string" ? (
                         <RemoteFontAwesomeIcon
-                            className={classNames("card-icon size-5", {
+                            className={cn("card-icon size-5", {
                                 "bg-intent-default": intent === "info",
                                 "bg-intent-warning": intent === "warning",
                                 "bg-intent-success": intent === "success",
@@ -82,7 +82,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                 </div>
 
                 <div
-                    className={classNames(
+                    className={cn(
                         "flex-1 prose-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     )}
                 >

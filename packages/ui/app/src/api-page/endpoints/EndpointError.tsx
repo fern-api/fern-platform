@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
 import {
@@ -48,7 +48,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
 }) {
     return (
         <button
-            className={classNames(
+            className={cn(
                 "space flex flex-col items-start px-3 hover:bg-tag-default-soft transition-colors py-3",
                 {
                     "bg-tag-default-soft": isSelected,

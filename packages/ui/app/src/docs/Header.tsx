@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
 import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
@@ -83,7 +83,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     return (
         <nav
             aria-label="primary"
-            className={classNames(
+            className={cn(
                 "flex justify-between items-center shrink-0 px-4 md:px-6 lg:px-8 shrink-0",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-full",
@@ -103,7 +103,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             {showSearchBar && (
                 <div
-                    className={classNames("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
+                    className={cn("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
                         invisible: isSearchBoxMounted,
                     })}
                 >
@@ -112,7 +112,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             )}
 
             <div
-                className={classNames("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
+                className={cn("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
                     "flex-1": showSearchBar,
                 })}
             >

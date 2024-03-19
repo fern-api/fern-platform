@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { parse } from "node-html-parser";
@@ -42,7 +42,7 @@ function TableOfContentsItem({
         <li>
             {text.length > 0 && (
                 <Link
-                    className={classNames(
+                    className={cn(
                         "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 transition-all",
                         {
                             "t-muted": anchorInView !== anchorString,
@@ -77,7 +77,7 @@ function TableOfContentsList({
     }
     return (
         <ul
-            className={classNames("list-none", {
+            className={cn("list-none", {
                 "pl-4": indent,
                 [rootClassName ?? ""]: !indent,
                 "pt-3 pb-4 border-b border-default": !indent,

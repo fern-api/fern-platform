@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import dynamic from "next/dynamic";
 import { SerializedMdxContent } from "../mdx/mdx";
 
@@ -20,7 +20,7 @@ export const ApiPageDescription: React.FC<ApiPageDescription.Props> = ({ classNa
     }
     return (
         <Markdown
-            className={classNames(
+            className={cn(
                 className,
                 className?.includes("text-sm") ? "prose-sm dark:prose-invert-sm" : "prose dark:prose-invert",
             )}

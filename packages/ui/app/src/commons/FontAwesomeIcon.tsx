@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { forwardRef } from "react";
 
 export declare namespace RemoteFontAwesomeIcon {
@@ -16,7 +16,7 @@ export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAweso
         return (
             <span
                 ref={ref}
-                className={classNames(className, "fa-icon")}
+                className={cn(className, "fa-icon")}
                 style={
                     {
                         maskImage: `url("${getIconUrl(icon)}")`,

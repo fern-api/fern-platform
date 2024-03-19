@@ -18,11 +18,13 @@ export function renderTypeShorthandRoot(
         <span className="t-muted inline-flex items-baseline gap-2 text-xs">
             <span>{typeShorthand}</span>
             {shape.type === "optional" ? (
-                <span>{isResponse ? "Nullable" : "Optional"}</span>
+                <span>{isResponse ? "Optional" : "Optional"}</span>
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {shape.defaultsTo !== undefined && <span>{renderDefaultTo(shape.defaultsTo)}</span>}
+            {shape.type === "optional" && shape.defaultsTo !== undefined && (
+                <span>{renderDefaultTo(shape.defaultsTo)}</span>
+            )}
         </span>
     );
 }
@@ -62,7 +64,7 @@ export function renderTypeShorthand(
 
         // containing shapes
         optional: (optional) =>
-            `${maybeWithArticle("an", nullable ? "nullable" : "optional")} ${renderTypeShorthand(optional.shape, { plural }, types)}`,
+            `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(optional.shape, { plural }, types)}`,
         list: (list) =>
             `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(
                 list.shape,

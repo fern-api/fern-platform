@@ -1,7 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { forwardRef, Fragment, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
@@ -199,12 +199,9 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         useImperativeHandle(ref, () => menuRef.current!);
 
         return (
-            <div
-                className={classNames("min-w-[300px] overflow-hidden rounded-xl flex flex-col", className)}
-                ref={menuRef}
-            >
+            <div className={cn("min-w-[300px] overflow-hidden rounded-xl flex flex-col", className)} ref={menuRef}>
                 <div
-                    className={classNames("relative z-20 px-1 pt-1", {
+                    className={cn("relative z-20 px-1 pt-1", {
                         "pb-1": renderedListItems.length === 0,
                         "pb-0": renderedListItems.length > 0,
                     })}

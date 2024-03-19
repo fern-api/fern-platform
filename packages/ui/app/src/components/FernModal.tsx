@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, Fragment, PropsWithChildren, ReactElement } from "react";
 
 interface FernModalProps {
@@ -41,7 +41,7 @@ export const FernModal: FC<PropsWithChildren<FernModalProps>> = ({
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel
-                                className={classNames(
+                                className={cn(
                                     "overflow-hidden bg-background align-middle shadow-xl dark:border dark:border-white/20",
                                     className,
                                 )}

@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
 import { joinUrlSlugs } from "../util/slug";
@@ -40,7 +40,7 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     const children = useMemo(
         () => (
             <SidebarSection
-                className={classNames("expandable", { hidden: !expanded })}
+                className={cn("expandable", { hidden: !expanded })}
                 slug={slug}
                 navigationItems={navigationItems}
                 registerScrolledToPathListener={registerScrolledToPathListener}
@@ -79,7 +79,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
     }
 
     return (
-        <ul className={classNames(className, "fern-sidebar-group")}>
+        <ul className={cn(className, "fern-sidebar-group")}>
             {navigationItems.map((navigationItem, idx) =>
                 visitDiscriminatedUnion(navigationItem, "type")._visit({
                     pageGroup: ({ pages }) => (
@@ -88,7 +88,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                 page.type === "page" ? (
                                     <SidebarSlugLink
                                         key={page.id}
-                                        className={classNames({
+                                        className={cn({
                                             "mt-6": topLevel && pageIdx === 0,
                                         })}
                                         slug={page.slug}
@@ -100,7 +100,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                 ) : (
                                     <SidebarLink
                                         key={pageIdx}
-                                        className={classNames({
+                                        className={cn({
                                             "mt-6": topLevel && pageIdx === 0,
                                         })}
                                         depth={Math.max(depth - 1, 0)}
@@ -119,7 +119,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                             return (
                                 <li key={sectionSlug}>
                                     <SidebarHeading
-                                        className={classNames({
+                                        className={cn({
                                             "mt-6": topLevel,
                                         })}
                                         depth={depth}
@@ -137,7 +137,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                             return (
                                 <ExpandableSidebarSection
                                     key={sectionSlug}
-                                    className={classNames({
+                                    className={cn({
                                         "mt-6": topLevel,
                                     })}
                                     title={section.title}
@@ -153,7 +153,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                         depth === 0 ? (
                             <li key={apiSection.id}>
                                 <SidebarHeading
-                                    className={classNames({
+                                    className={cn({
                                         "mt-6": topLevel,
                                     })}
                                     depth={depth}
