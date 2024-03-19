@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import React, { PropsWithChildren, useEffect, useImperativeHandle, useRef, useState } from "react";
 import "./HorizontalOverflowMask.scss";
 
@@ -48,7 +48,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
         return (
             <div
                 ref={ref}
-                className={classNames(
+                className={cn(
                     "fern-x-overflow",
                     {
                         ["left-mask"]: showLeftMask,

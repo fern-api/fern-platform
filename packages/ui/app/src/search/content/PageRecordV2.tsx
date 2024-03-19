@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
 import type { PageSearchRecordV2 } from "../types";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
@@ -15,7 +15,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <span
-                    className={classNames("line-clamp-1 text-sm text-start", {
+                    className={cn("line-clamp-1 text-sm text-start", {
                         "t-default": !isHovered,
                         "t-accent-contrast": isHovered,
                     })}
@@ -23,7 +23,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                     {hit.title}
                 </span>
                 <div
-                    className={classNames("text-sm tracking-wide", {
+                    className={cn("text-sm tracking-wide", {
                         "t-muted": !isHovered,
                         "t-accent-contrast": isHovered,
                     })}
@@ -33,7 +33,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
             </div>
             <div className="flex items-center justify-between">
                 <span
-                    className={classNames("line-clamp-1 text-start text-xs", {
+                    className={cn("line-clamp-1 text-start text-xs", {
                         "t-accent-contrast": isHovered,
                         "t-muted": !isHovered,
                     })}
@@ -42,7 +42,7 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                 </span>
 
                 <CornerDownLeft
-                    className={classNames("size-3", {
+                    className={cn("size-3", {
                         "t-accent-contrast": isHovered,
                         "t-muted": !isHovered,
                     })}

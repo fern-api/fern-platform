@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Dialog, Transition } from "@headlessui/react";
-import classNames from "classnames";
+import cn from "clsx";
 import { Fragment, memo, useRef } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
@@ -63,14 +63,14 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
 
     return (
         <nav
-            className={classNames("h-full w-full", {
+            className={cn("h-full w-full", {
                 "lg:pl-1": layout?.disableHeader !== true,
             })}
             aria-label="secondary"
         >
             <FernScrollArea
                 className="group/sidebar"
-                viewportClassName={classNames("px-4 pb-12")}
+                viewportClassName={cn("px-4 pb-12")}
                 scrollbars="vertical"
                 viewportRef={scrollRef}
             >

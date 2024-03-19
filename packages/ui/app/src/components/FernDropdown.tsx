@@ -1,6 +1,6 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import Link from "next/link";
 import { PropsWithChildren, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { FernScrollArea } from "./FernScrollArea";
@@ -159,14 +159,14 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
                         <Link
                             ref={option.value === value ? activeRef : undefined}
                             href={option.href}
-                            className={classNames("fern-dropdown-item", option.className)}
+                            className={cn("fern-dropdown-item", option.className)}
                         >
                             {renderButtonContent()}
                         </Link>
                     ) : (
                         <button
                             ref={option.value === value ? activeRef : undefined}
-                            className={classNames("fern-dropdown-item", option.className)}
+                            className={cn("fern-dropdown-item", option.className)}
                         >
                             {renderButtonContent()}
                         </button>

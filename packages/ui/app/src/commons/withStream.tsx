@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { ReactNode } from "react";
 
 export function withStream(text: ReactNode): ReactNode {
@@ -6,7 +6,7 @@ export function withStream(text: ReactNode): ReactNode {
         <span className="inline-flex items-baseline gap-2">
             <span>{text}</span>
             <span
-                className={classNames(
+                className={cn(
                     "uppercase font-mono flex items-center text-xs leading-none bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary dark:text-accent-primary-dark p-0.5 rounded-[4px]",
                 )}
             >

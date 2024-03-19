@@ -1,6 +1,6 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";
@@ -141,7 +141,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
     return (
         <div
-            className={classNames("flex-1 shrink min-w-0", {
+            className={cn("flex-1 shrink min-w-0", {
                 "border-border-default-soft border-l pl-4": indent,
             })}
         >

@@ -1,5 +1,5 @@
 import { Cross1Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
@@ -84,14 +84,14 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
 }) => {
     return (
         <div
-            className={classNames({
+            className={cn({
                 "flex gap-2": renderInline,
                 "space-y-2": !renderInline,
             })}
         >
             <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
                 <label className="inline-flex items-baseline gap-2 truncate" htmlFor={htmlFor}>
-                    <span className={classNames("font-mono text-sm")}>{propertyKey}</span>
+                    <span className={cn("font-mono text-sm")}>{propertyKey}</span>
 
                     {description != null && (
                         <FernTooltip
@@ -131,7 +131,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
             </div>
 
             <div
-                className={classNames("flex", {
+                className={cn("flex", {
                     "flex-1 shrink min-w-0": !isBoolean,
                 })}
             >

@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
-import classNames from "classnames";
+import cn from "clsx";
 import { useRouter } from "next/router";
 import { memo, ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
@@ -170,7 +170,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
 
     const renderContent = () => (
         <div
-            className={classNames(
+            className={cn(
                 "text-sm internal-type-definition-container",
                 collapsableContent.elementNameSingular === "enum value" ? "enum-container" : undefined,
             )}

@@ -1,7 +1,7 @@
 import { useCopyToClipboard, useMounted } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import { Link1Icon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { Fragment, memo } from "react";
@@ -53,7 +53,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
                 href={href}
                 shallow={true}
                 replace={true}
-                className={classNames({
+                className={cn({
                     "-ml-10": !smallGap,
                     "-ml-8": smallGap,
                 })}

@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
-import classNames from "classnames";
+import cn from "clsx";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -60,7 +60,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                     enterTo="opacity-100 backdrop-blur-sm"
                 />
                 <Dialog.Panel
-                    className={classNames(
+                    className={cn(
                         "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
                         {
                             "mt-4": fromHeader,

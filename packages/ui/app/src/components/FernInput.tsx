@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { DetailedHTMLProps, forwardRef, InputHTMLAttributes } from "react";
 
 export interface FernInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
@@ -14,11 +14,11 @@ export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(function F
     ref,
 ) {
     return (
-        <div className={classNames("fern-input-group", className)}>
+        <div className={cn("fern-input-group", className)}>
             {leftIcon && <span className="fern-input-icon">{leftIcon}</span>}
             <input
                 ref={ref}
-                className={classNames("fern-input", inputClassName)}
+                className={cn("fern-input", inputClassName)}
                 value={value}
                 onChange={(e) => {
                     onChange?.(e);

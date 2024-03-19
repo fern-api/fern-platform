@@ -1,5 +1,5 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
-import classNames from "classnames";
+import cn from "clsx";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
@@ -76,7 +76,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     }, []);
 
     return (
-        <div className={classNames("mt-12", className)} ref={ref}>
+        <div className={cn("mt-12", className)} ref={ref}>
             {!sent ? (
                 <div className="flex items-center justify-start gap-2">
                     <span className="t-muted text-xs">Was this page helpful?</span>

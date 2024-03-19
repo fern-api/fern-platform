@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import {
     Children,
     DetailedHTMLProps,
@@ -44,8 +44,8 @@ export function VerticalSplitPane({
 
     if (below == null) {
         return (
-            <div className={classNames("flex flex-col justify-stretch", className)} {...props}>
-                <div className={classNames(aboveClassName, "flex-1")} style={{ height: "100%" }}>
+            <div className={cn("flex flex-col justify-stretch", className)} {...props}>
+                <div className={cn(aboveClassName, "flex-1")} style={{ height: "100%" }}>
                     {above}
                 </div>
             </div>
@@ -53,8 +53,8 @@ export function VerticalSplitPane({
     }
 
     return (
-        <div ref={ref} className={classNames("flex flex-col justify-stretch", className)} {...props}>
-            <div style={{ height: `${aboveHeightPercent * 100}%` }} className={classNames(aboveClassName, "shrink-0")}>
+        <div ref={ref} className={cn("flex flex-col justify-stretch", className)} {...props}>
+            <div style={{ height: `${aboveHeightPercent * 100}%` }} className={cn(aboveClassName, "shrink-0")}>
                 {above}
             </div>
             <div
@@ -63,7 +63,7 @@ export function VerticalSplitPane({
             >
                 <div className="bg-border-primary group-active:bg-accent relative z-10 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
             </div>
-            <div className={classNames(belowClassName, "flex-1 shrink min-h-0")}>{below}</div>
+            <div className={cn(belowClassName, "flex-1 shrink min-h-0")}>{below}</div>
         </div>
     );
 }
@@ -112,8 +112,8 @@ export function HorizontalSplitPane({
     }
 
     return (
-        <div ref={ref} className={classNames("flex justify-stretch shrink", className)} {...props}>
-            <div style={{ width: `${leftHeightPercent * 100}%` }} className={classNames(leftClassName, "shrink-0")}>
+        <div ref={ref} className={cn("flex justify-stretch shrink", className)} {...props}>
+            <div style={{ width: `${leftHeightPercent * 100}%` }} className={cn(leftClassName, "shrink-0")}>
                 {left}
             </div>
             <div
@@ -123,7 +123,7 @@ export function HorizontalSplitPane({
             >
                 <div className="bg-border-primary group-active:bg-accent relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />
             </div>
-            <div className={classNames(rightClassName, "flex-1 shrink min-w-0 relative")}>{right}</div>
+            <div className={cn(rightClassName, "flex-1 shrink min-w-0 relative")}>{right}</div>
         </div>
     );
 }

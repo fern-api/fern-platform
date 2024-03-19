@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import classNames from "classnames";
+import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
 import { FernButton } from "../components/FernButton";
@@ -112,7 +112,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                     <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
                         <span className="t-muted text-xs uppercase">Messages</span>
                         <span
-                            className={classNames("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
+                            className={cn("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
                                 "bg-tag-primary text-accent": connected,
                                 "bg-tag-danger text-intent-danger": !connected,
                             })}
@@ -122,7 +122,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                     <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
                                 )}
                                 <span
-                                    className={classNames("relative inline-flex size-2 rounded-full", {
+                                    className={cn("relative inline-flex size-2 rounded-full", {
                                         "bg-accent": connected,
                                         "bg-border-danger": !connected,
                                     })}

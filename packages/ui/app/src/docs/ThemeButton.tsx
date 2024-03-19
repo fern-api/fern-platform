@@ -1,5 +1,5 @@
 import { useMounted } from "@fern-ui/react-commons";
-import classNames from "classnames";
+import cn from "clsx";
 import { useTheme } from "next-themes";
 import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
 import { FernButton, FernButtonProps } from "../components/FernButton";
@@ -19,7 +19,7 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className, ...props }
     return (
         <FernButton
             {...props}
-            className={classNames("group !ml-3", className)}
+            className={cn("group !ml-3", className)}
             onClick={() => {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
             }}

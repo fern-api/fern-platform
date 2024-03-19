@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import classNames from "classnames";
+import cn from "clsx";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
@@ -41,7 +41,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                     {colors.light.logo != null && (
                         <FernImage
                             src={resolveFile(colors.light.logo)}
-                            className={classNames(imageClassName, "block dark:hidden")}
+                            className={cn(imageClassName, "block dark:hidden")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
                             priority={true}
@@ -52,7 +52,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
                     {colors.dark.logo != null && (
                         <FernImage
                             src={resolveFile(colors.dark.logo)}
-                            className={classNames(imageClassName, "hidden dark:block")}
+                            className={cn(imageClassName, "hidden dark:block")}
                             height={logoImageHeight}
                             style={{ height: logoImageHeight }}
                             priority={true}
@@ -72,7 +72,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
             return (
                 <FernImage
                     src={resolveFile(logoFile)}
-                    className={classNames(imageClassName, "block")}
+                    className={cn(imageClassName, "block")}
                     height={logoImageHeight}
                     style={{ height: logoImageHeight }}
                     priority={true}

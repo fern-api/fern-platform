@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import classNames from "classnames";
+import cn from "clsx";
 import { useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -58,7 +58,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 
     return (
         <div
-            className={classNames(
+            className={cn(
                 "flex flex-col px-4 lg:backdrop-blur",
                 {
                     "lg:pt-4": !header,

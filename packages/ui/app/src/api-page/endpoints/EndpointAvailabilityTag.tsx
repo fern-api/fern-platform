@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import classNames from "classnames";
+import cn from "clsx";
 import React, { memo } from "react";
 import { getEndpointAvailabilityLabel } from "../../util/endpoint";
 
@@ -18,7 +18,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
 }) {
     return (
         <span
-            className={classNames(
+            className={cn(
                 "rounded-full text-xs",
                 {
                     "border px-1.5 py-0.5": !minimal,
