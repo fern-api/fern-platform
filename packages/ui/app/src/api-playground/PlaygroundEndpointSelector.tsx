@@ -3,7 +3,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import cn from "clsx";
-import { noop } from "lodash-es";
 import { FC, Fragment, useCallback, useMemo, useRef } from "react";
 import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
