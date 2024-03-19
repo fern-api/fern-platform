@@ -9,7 +9,9 @@
 }
 
 .code-block,
-.code-block.text-xs {
+.code-block.text-sm,
+.code-block.text-xs,
+.code-block.text-base {
     @apply font-mono leading-relaxed;
 }
 
@@ -52,7 +54,11 @@
 }
 
 .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
-    opacity: 0.33;
+    @apply blur-[1.5px] opacity-40 dark:opacity-50 transition-[filter];
+}
+
+.code-block:hover .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
+    @apply blur-0 opacity-100 dark:opacity-100;
 }
 
 .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
