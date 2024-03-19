@@ -4,7 +4,7 @@ import {
     REGISTRY_SERVICE,
     resolveApiDefinition,
     type ResolvedRootPackage,
-    type SidebarNode
+    type SidebarNode,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 
