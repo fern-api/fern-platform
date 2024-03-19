@@ -95,7 +95,11 @@ export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): Rea
     const slug = getSlugFromChildren(props.children);
     return createElement(
         `h${level}`,
-        { id: slug, ...props },
+        {
+            id: slug,
+            ...props,
+            className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
+        },
         <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />,
         <span>{props.children}</span>,
     );
