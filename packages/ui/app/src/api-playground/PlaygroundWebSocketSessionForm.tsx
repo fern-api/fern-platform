@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
@@ -13,7 +12,6 @@ import { PlaygroundWebSocketRequestFormState } from "./types";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundWebSocketSessionFormProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     websocket: ResolvedWebSocketChannel;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
@@ -29,7 +27,6 @@ interface PlaygroundWebSocketSessionFormProps {
 }
 
 export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormProps> = ({
-    auth,
     websocket,
     formState,
     setFormState,
@@ -62,7 +59,6 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
             <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
                 <div className="space-y-8">
                     <PlaygroundWebSocketHandshakeForm
-                        auth={auth}
                         websocket={websocket}
                         formState={formState}
                         setFormState={setFormState}

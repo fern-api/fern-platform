@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
@@ -11,7 +10,6 @@ import { PlaygroundWebSocketRequestFormState } from "./types";
 import { buildRequestUrl } from "./utils";
 
 interface PlaygroundWebSocketProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     websocket: ResolvedWebSocketChannel;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
@@ -19,7 +17,6 @@ interface PlaygroundWebSocketProps {
 }
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
-    auth,
     websocket,
     formState,
     setFormState,
@@ -162,7 +159,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">
                     <PlaygroundWebSocketContent
-                        auth={auth}
                         websocket={websocket}
                         formState={formState}
                         setFormState={setFormState}

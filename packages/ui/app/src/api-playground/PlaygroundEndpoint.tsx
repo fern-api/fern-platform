@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
@@ -23,7 +22,6 @@ import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface PlaygroundEndpointProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
@@ -98,7 +96,6 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
 }
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
-    auth,
     endpoint,
     formState,
     setFormState,
@@ -124,7 +121,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
             const req = {
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
-                headers: buildUnredactedHeaders(auth, endpoint, formState),
+                headers: buildUnredactedHeaders(endpoint, formState),
                 body: await serializeFormStateBody(formState.body),
             };
             if (!endpoint.id.endsWith("_stream")) {
@@ -180,7 +177,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
         }
-    }, [auth, endpoint, formState]);
+    }, [endpoint, formState]);
 
     return (
         <FernTooltipProvider>
@@ -200,7 +197,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">
                     <PlaygroundEndpointContent
-                        auth={auth}
                         endpoint={endpoint}
                         formState={formState}
                         setFormState={setFormState}
