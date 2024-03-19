@@ -2,15 +2,11 @@
     @apply fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none;
 }
 
-.fern-background.fern-background-image,
+:not(.dark) .fern-background.fern-background-image,
 :is(.dark) .fern-background.fern-background-image-dark {
     background-image: var(--docs-background-image);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-}
-
-:is(.dark) .fern-background.fern-background-image:not(.fern-background-image-dark) {
-    background-image: unset;
 }
