@@ -26,6 +26,7 @@ import {
 } from "./base-components";
 import { Accordion } from "./components/Accordion";
 import { Availability } from "./components/Availability";
+import { Bleed } from "./components/Bleed";
 import {
     Callout,
     CheckCallout,
@@ -73,6 +74,7 @@ export const JSX_COMPONENTS = {
     EndpointRequestSnippet,
     EndpointResponseSnippet,
     Frame,
+    Bleed,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
