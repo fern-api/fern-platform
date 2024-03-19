@@ -29,7 +29,7 @@
     "eslint-config-custom": "*",
     "jest": "^29.7.0",
     "tsconfig": "*",
-    "typescript": "5.2.2"
+    "typescript": "4.9.4"
   },
   "scripts": {
     "build": "tsc --build",

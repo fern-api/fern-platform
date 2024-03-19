@@ -3340,21 +3340,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fdr-sdk@npm:0.57.0-1-ge86efe6":
-  version: 0.57.0-1-ge86efe6
-  resolution: "@fern-api/fdr-sdk@npm:0.57.0-1-ge86efe6"
-  dependencies:
-    "@ungap/url-search-params": 0.2.2
-    axios: 0.27.2
-    js-base64: 3.7.2
-    lodash: ^4.17.21
-    marked: ^5.1.0
-    tinycolor2: ^1.6.0
-    url-join: 4.0.1
-  checksum: 067852d5a786f8fcc5f84e04f0ee22d9b6e48c7fce6749bee3eeb8c4cb206f7b81fb107c5a884a090eb2bd063a5636f502dc5de87ac8e3174c89ef4cf15d828f
-  languageName: node
-  linkType: hard
-
 "@fern-api/fdr-sdk@npm:0.60.0-1-g4795d27":
   version: 0.60.0-1-g4795d27
   resolution: "@fern-api/fdr-sdk@npm:0.60.0-1-g4795d27"
@@ -3392,7 +3377,7 @@ __metadata:
     marked: ^5.1.0
     tinycolor2: ^1.6.0
     tsconfig: "*"
-    typescript: 5.2.2
+    typescript: 4.9.4
     url-join: 4.0.1
   languageName: unknown
   linkType: soft
@@ -11783,7 +11768,7 @@ env-cmd@toddbluhm/env-cmd:
     source-map-support: ^0.5.21
     ts-jest: ^27.1.4
     ts-node: ^10.9.1
-    typescript: 5.2.2
+    typescript: 4.9.4
   bin:
     fdr-deploy: bin/fdr-deploy.js
   languageName: unknown
@@ -11798,7 +11783,7 @@ env-cmd@toddbluhm/env-cmd:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
-    "@fern-api/fdr-sdk": 0.57.0-1-ge86efe6
+    "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
     "@fern-api/venus-api-sdk": ^0.1.0
     "@prisma/client": 4.15.0
     "@slack/web-api": ^6.9.0
@@ -11837,7 +11822,7 @@ env-cmd@toddbluhm/env-cmd:
     path-resolver: "*"
     prisma: 4.15.0
     tsconfig: "*"
-    typescript: 5.2.2
+    typescript: 4.9.4
     uuid: ^9.0.0
     winston: ^3.10.0
   languageName: unknown
@@ -20545,16 +20530,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.2.2":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 7912821dac4d962d315c36800fe387cdc0a6298dba7ec171b350b4a6e988b51d7b8f051317786db1094bd7431d526b648aba7da8236607febb26cf5b871d2d3c
-  languageName: node
-  linkType: hard
-
 "typescript@patch:typescript@4.9.4#~builtin<compat/typescript>":
   version: 4.9.4
   resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"
@@ -20562,16 +20537,6 @@ env-cmd@toddbluhm/env-cmd:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 2160f7ad975c59b2f5816817d3916be1d156c5688a7517602b3b640c5015e740f4ba933996ac85371d68f7bbdd41602150fb8b68334122ac637fdb5418085e7a
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@5.2.2#~builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=14eedb"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
   languageName: node
   linkType: hard
 
