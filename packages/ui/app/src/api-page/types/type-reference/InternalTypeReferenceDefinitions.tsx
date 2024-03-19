@@ -52,7 +52,6 @@ export function hasInternalTypeReference(
                     type: "unknown",
                     description: undefined,
                     availability: undefined,
-                    defaultsTo: undefined,
                 },
                 types,
             ),
