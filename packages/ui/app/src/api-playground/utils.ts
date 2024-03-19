@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
@@ -103,7 +102,6 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
 }
 
 export function stringifyFetch(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
     redacted = true,
@@ -111,9 +109,7 @@ export function stringifyFetch(
     if (endpoint == null) {
         return "";
     }
-    const headers = redacted
-        ? buildRedactedHeaders(auth, endpoint, formState)
-        : buildUnredactedHeaders(auth, endpoint, formState);
+    const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
 
     function buildFetch(body: string | undefined) {
         if (endpoint == null) {
@@ -179,7 +175,6 @@ ${buildFetch("formData")}`;
 }
 
 export function stringifyPythonRequests(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
     redacted = true,
@@ -188,9 +183,7 @@ export function stringifyPythonRequests(
         return "";
     }
 
-    const headers = redacted
-        ? buildRedactedHeaders(auth, endpoint, formState)
-        : buildUnredactedHeaders(auth, endpoint, formState);
+    const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
 
     const imports = ["requests"];
 
@@ -295,13 +288,13 @@ export function obfuscateSecret(secret: string): string {
 }
 
 function buildRedactedHeaders(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     formState: PlaygroundRequestFormState,
 ): Record<string, string> {
     const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
 
-    if (auth != null && endpoint.authed && formState.auth != null) {
+    if (endpoint.auth != null && formState.auth != null) {
+        const { auth } = endpoint;
         visitDiscriminatedUnion(formState.auth, "type")._visit({
             bearerAuth: (bearerAuth) => {
                 if (auth.type === "bearerAuth") {
@@ -343,13 +336,13 @@ function buildRedactedHeaders(
 }
 
 export function buildUnredactedHeaders(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition,
     formState: PlaygroundRequestFormState,
 ): Record<string, string> {
     const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
 
-    if (auth != null && endpoint.authed && formState?.auth != null) {
+    if (endpoint.auth != null && formState?.auth != null) {
+        const { auth } = endpoint;
         visitDiscriminatedUnion(formState?.auth, "type")._visit({
             bearerAuth: (bearerAuth) => {
                 if (auth.type === "bearerAuth") {
@@ -382,7 +375,6 @@ export function buildUnredactedHeaders(
 }
 
 export function stringifyCurl(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundEndpointRequestFormState,
     redacted = true,
@@ -390,9 +382,7 @@ export function stringifyCurl(
     if (endpoint == null) {
         return "";
     }
-    const headers = redacted
-        ? buildRedactedHeaders(auth, endpoint, formState)
-        : buildUnredactedHeaders(auth, endpoint, formState);
+    const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
 
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,

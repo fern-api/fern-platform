@@ -71,8 +71,6 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                         disabled={connected}
                     />
 
-                    <hr />
-
                     {websocket.messages
                         .filter((message) => message.origin === "client")
                         .map((message) => (

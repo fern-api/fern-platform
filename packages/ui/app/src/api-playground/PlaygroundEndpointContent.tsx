@@ -77,9 +77,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     rightClassName="pl-1"
                 >
                     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
-                        {endpoint.authed && auth != null && (
+                        {endpoint.auth != null && (
                             <PlaygroundAuthorizationFormCard
-                                auth={auth}
+                                auth={endpoint.auth}
                                 authState={formState?.auth}
                                 setAuthorization={(newState) =>
                                     setFormState((oldState) => ({
@@ -153,11 +153,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 <CopyToClipboardButton
                                     content={() =>
                                         requestType === "curl"
-                                            ? stringifyCurl(auth, endpoint, formState, false)
+                                            ? stringifyCurl(endpoint, formState, false)
                                             : requestType === "javascript"
-                                              ? stringifyFetch(auth, endpoint, formState, false)
+                                              ? stringifyFetch(endpoint, formState, false)
                                               : requestType === "python"
-                                                ? stringifyPythonRequests(auth, endpoint, formState, false)
+                                                ? stringifyPythonRequests(endpoint, formState, false)
                                                 : ""
                                     }
                                     className="-mr-2"
