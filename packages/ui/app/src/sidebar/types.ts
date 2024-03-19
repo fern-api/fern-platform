@@ -52,10 +52,11 @@ export declare namespace SidebarNodeRaw {
         id: string;
         title: string;
         slug: string[];
-        items: ApiPage[];
+        items: ApiPageOrSubpackage[];
         artifacts: DocsV1Read.ApiArtifacts | undefined;
         showErrors: boolean;
         changelog: ChangelogPage | undefined;
+        description: string | undefined;
     }
 
     export interface Section {
@@ -96,11 +97,13 @@ export declare namespace SidebarNodeRaw {
         stream?: boolean;
     }
 
-    export interface SubpackagePage extends ApiSection {
+    export interface SubpackageSection extends ApiSection {
         apiType: "subpackage";
     }
 
-    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage | SubpackagePage;
+    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
+
+    export type ApiPageOrSubpackage = ApiPage | SubpackageSection;
 }
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
@@ -112,9 +115,10 @@ export declare namespace SidebarNode {
 
     export interface ChangelogPage extends Page, Omit<SidebarNodeRaw.ChangelogPage, keyof Page> {}
 
-    export interface ApiSection extends Omit<SidebarNodeRaw.ApiSection, "items" | "changelog"> {
-        items: ApiPage[];
+    export interface ApiSection extends Omit<SidebarNodeRaw.ApiSection, "items" | "changelog" | "description"> {
+        items: ApiPageOrSubpackage[];
         changelog: ChangelogPage | undefined;
+        description: SerializedMdxContent | undefined;
     }
 
     export interface Section extends Omit<SidebarNodeRaw.Section, "items"> {
@@ -125,14 +129,39 @@ export declare namespace SidebarNode {
         description: SerializedMdxContent | undefined;
     }
 
-    export interface ApiPage extends Page, Omit<SidebarNodeRaw.ApiPage, keyof Page> {}
+    // export interface ApiPage extends Page, Omit<SidebarNodeRaw.ApiPage, keyof Page> {}
 
-    export interface EndpointPage extends ApiPage, Omit<SidebarNodeRaw.EndpointPage, keyof ApiPage> {}
+    // export interface EndpointPage extends ApiPage, Omit<SidebarNodeRaw.EndpointPage, keyof ApiPage> {}
+
+    export interface WebSocketPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "websocket";
+    }
+
+    export interface WebhookPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "webhook";
+    }
+
+    export interface EndpointPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "endpoint";
+        method: APIV1Read.HttpMethod;
+        stream?: boolean;
+    }
+
+    export interface SubpackageSection extends ApiSection {
+        apiType: "subpackage";
+    }
+
+    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
+
+    export type ApiPageOrSubpackage = ApiPage | SubpackageSection;
 }
 
 export const SidebarNode = {
     isPage: (node: SidebarNode.Page | SidebarNodeRaw.Link): node is SidebarNode.Page => node.type === "page",
-    isApiPage: (node: SidebarNode.Page): node is SidebarNode.ApiPage => node.type === "page" && "api" in node,
+    isApiPage: (node: SidebarNode.Page | SidebarNode.ApiSection): node is SidebarNode.ApiPage => "apiType" in node,
     isChangelogPage: (node: SidebarNode.Page): node is SidebarNode.ChangelogPage =>
         node.type === "page" && (node as SidebarNode.ChangelogPage).pageType === "changelog",
     isEndpointPage: (node: SidebarNode.Page): node is SidebarNode.EndpointPage =>

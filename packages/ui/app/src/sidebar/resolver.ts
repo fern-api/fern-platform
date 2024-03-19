@@ -5,7 +5,7 @@ import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 import { SidebarNodeRaw } from "./types";
 
-function toApiType(apiType: APIV1Read.ApiNavigationConfigItem["type"]): SidebarNodeRaw.ApiPage["apiType"] {
+function toApiType(apiType: APIV1Read.ApiNavigationConfigItem["type"]): SidebarNodeRaw.ApiPageOrSubpackage["apiType"] {
     switch (apiType) {
         case "endpointId":
             return "endpoint";
@@ -88,10 +88,10 @@ function resolveSidebarNodeRawApiSection(
                     .find((item) => item.subpackageId === innerSubpackageId),
             ),
         )
-        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackagePage[];
+        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackageSection[];
 
     // default sort
-    let items: SidebarNodeRaw.ApiPage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
+    let items: SidebarNodeRaw.ApiPageOrSubpackage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
 
     if (navigation?.items != null) {
         items = sortBy(items, (page) => {
@@ -118,6 +118,7 @@ function resolveSidebarNodeRawApiSection(
         showErrors,
         artifacts: undefined,
         changelog: undefined,
+        description: undefined, // TODO: add description here
     };
 }
 
@@ -197,6 +198,7 @@ export function resolveSidebarNodes(
                                       })),
                                   }
                                 : undefined,
+                        description: undefined, // TODO: add description here
                     });
                 }
             },

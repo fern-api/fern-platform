@@ -26,16 +26,13 @@ async function serializeApiSectionDescriptionMdx(
 ): Promise<SidebarNode.ApiSection> {
     return {
         ...apiSection,
-        endpoints: await Promise.all(
-            apiSection.endpoints.map((page) => serializePageDescriptionMdx<SidebarNode.EndpointPage>(page)),
+        items: await Promise.all(
+            apiSection.items.map((page) =>
+                page.type === "page"
+                    ? serializePageDescriptionMdx<SidebarNode.ApiPage>(page)
+                    : (serializeApiSectionDescriptionMdx(page) as Promise<SidebarNode.SubpackageSection>),
+            ),
         ),
-        webhooks: await Promise.all(
-            apiSection.webhooks.map((page) => serializePageDescriptionMdx<SidebarNode.ApiPage>(page)),
-        ),
-        websockets: await Promise.all(
-            apiSection.websockets.map((page) => serializePageDescriptionMdx<SidebarNode.ApiPage>(page)),
-        ),
-        subpackages: await Promise.all(apiSection.subpackages.map(serializeApiSectionDescriptionMdx)),
         changelog: apiSection.changelog
             ? await serializePageDescriptionMdx<SidebarNode.ChangelogPage>(apiSection.changelog)
             : undefined,

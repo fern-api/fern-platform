@@ -72,7 +72,7 @@ function visitNode(
         apiSection: (apiSection) => {
             const apiSectionBreadcrumbs = [...sectionTitleBreadcrumbs, apiSection.title];
             if (matchSlug(slug, apiSection.slug) && slug.length < apiSection.slug.length) {
-                traverseState.curr = apiSection.endpoints[0] ?? apiSection.websockets[0] ?? apiSection.webhooks[0];
+                traverseState.curr = apiSection.items[0]?.type === "page" ? apiSection.items[0] : undefined;
                 traverseState.sectionTitleBreadcrumbs = apiSectionBreadcrumbs;
             }
 
@@ -83,31 +83,17 @@ function visitNode(
                 }
             }
 
-            for (const endpoint of apiSection.endpoints) {
-                traverseState = visitPage(endpoint, slug, traverseState, apiSectionBreadcrumbs);
-                if (traverseState.next != null) {
-                    return traverseState;
-                }
-            }
-
-            for (const websocket of apiSection.websockets) {
-                traverseState = visitPage(websocket, slug, traverseState, apiSectionBreadcrumbs);
-                if (traverseState.next != null) {
-                    return traverseState;
-                }
-            }
-
-            for (const webhook of apiSection.webhooks) {
-                traverseState = visitPage(webhook, slug, traverseState, apiSectionBreadcrumbs);
-                if (traverseState.next != null) {
-                    return traverseState;
-                }
-            }
-
-            for (const subpackage of apiSection.subpackages) {
-                traverseState = visitNode(subpackage, slug, traverseState, apiSectionBreadcrumbs);
-                if (traverseState.next != null) {
-                    return traverseState;
+            for (const apiPage of apiSection.items) {
+                if (apiPage.type === "page") {
+                    traverseState = visitPage(apiPage, slug, traverseState, apiSectionBreadcrumbs);
+                    if (traverseState.next != null) {
+                        return traverseState;
+                    }
+                } else {
+                    traverseState = visitNode(apiPage, slug, traverseState, apiSectionBreadcrumbs);
+                    if (traverseState.next != null) {
+                        return traverseState;
+                    }
                 }
             }
 
