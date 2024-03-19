@@ -217,8 +217,6 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                 response.type === "json"
                                                     ? JSON.stringify(response.response.body, null, 2)
                                                     : response.response.body
-                                                          .map((chunk) => JSON.stringify(chunk))
-                                                          .join("\n")
                                             }
                                             className="-mr-2"
                                         />
@@ -235,12 +233,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     ) : (
                                         <div className="flex flex-1 items-center justify-center">Loading...</div>
                                     ),
-                                loaded: (response) => (
-                                    <PlaygroundResponsePreview
-                                        responseBody={response.response.body}
-                                        type={response.type}
-                                    />
-                                ),
+                                loaded: (response) => <PlaygroundResponsePreview response={response} />,
                                 failed: () => <span>Failed</span>,
                             })}
                         </FernCard>

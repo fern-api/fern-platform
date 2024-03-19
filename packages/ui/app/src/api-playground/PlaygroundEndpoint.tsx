@@ -5,7 +5,6 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
@@ -67,7 +66,7 @@ function executeProxy(req: ProxyRequest): Promise<ProxyResponseWithMetadata> {
 }
 
 interface ResponseChunk {
-    data: unknown;
+    data: string;
     time: number;
 }
 
@@ -107,7 +106,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
-    const { domain } = useDocsContext();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
     // const [, startTransition] = useTransition();
 
@@ -154,20 +152,17 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     });
                 }
             } else {
-                const [res, stream] = await executeProxyStream({
-                    ...req,
-                    streamTerminator: domain.includes("perplexity") ? "data: " : "\n",
-                });
+                const [res, stream] = await executeProxyStream(req);
                 for await (const item of stream) {
                     setResponse((lastValue) =>
                         loaded({
                             type: "stream",
                             response: {
                                 status: res.status,
-                                body:
-                                    lastValue.type === "loaded" && lastValue.value.type === "stream"
-                                        ? [...lastValue.value.response.body, item.data]
-                                        : [item.data],
+                                body: (lastValue.type === "loaded" && lastValue.value.type === "stream"
+                                    ? lastValue.value.response.body + item.data
+                                    : item.data
+                                ).replace("\r\n\r\n", "\n"),
                             },
                             time: item.time,
                         }),
@@ -185,7 +180,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
         }
-    }, [auth, domain, endpoint, formState]);
+    }, [auth, endpoint, formState]);
 
     return (
         <FernTooltipProvider>
