@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
+import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
@@ -76,6 +77,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     return withDefaultContexts(
         <FeatureFlagContext.Provider value={featureFlags}>
+            <DatadogInit />
             <ThemeProvider theme={theme}>
                 <DocsContextProvider
                     files={files}
