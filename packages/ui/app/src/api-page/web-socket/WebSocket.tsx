@@ -15,7 +15,7 @@ import {
     ResolvedUndiscriminatedUnionShapeVariant,
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
-    unwrapReference
+    unwrapReference,
 } from "../../util/resolver";
 import { joinUrlSlugs } from "../../util/slug";
 import { ApiPageDescription } from "../ApiPageDescription";

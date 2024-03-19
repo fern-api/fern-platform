@@ -10,7 +10,7 @@ import {
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
-    ResolvedTypeShape
+    ResolvedTypeShape,
 } from "../../util/resolver";
 
 export interface HttpRequestExample {

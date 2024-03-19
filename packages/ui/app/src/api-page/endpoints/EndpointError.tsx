@@ -8,7 +8,7 @@ import {
     ResolvedError,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-    unwrapReference
+    unwrapReference,
 } from "../../util/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";

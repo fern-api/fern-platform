@@ -11,7 +11,7 @@ import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } 
 import {
     isUnversionedTabbedNavigationConfig,
     isUnversionedUntabbedNavigationConfig,
-    isVersionedNavigationConfig
+    isVersionedNavigationConfig,
 } from "../util/fern";
 import { type ResolvedPath } from "../util/ResolvedPath";
 import { DocsApp } from "./DocsApp";

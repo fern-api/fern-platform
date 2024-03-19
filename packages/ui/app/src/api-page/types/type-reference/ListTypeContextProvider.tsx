@@ -2,7 +2,7 @@ import { PropsWithChildren, useCallback } from "react";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext
+    useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 
 export const ListTypeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {

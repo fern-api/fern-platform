@@ -10,7 +10,7 @@ import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-    unwrapReference
+    unwrapReference,
 } from "../../util/resolver";
 import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
 import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormAside";

@@ -5,7 +5,7 @@ import {
     isUnversionedTabbedNavigationConfig,
     isVersionedNavigationConfig,
     resolveSidebarNodes,
-    SidebarNodeRaw,
+    SidebarNodeRaw
 } from "@fern-ui/ui";
 
 export async function getAllUrlsFromDocsConfig(

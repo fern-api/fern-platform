@@ -8,7 +8,7 @@ import {
     forwardRef,
     PropsWithChildren,
     ReactNode,
-    useRef
+    useRef,
 } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";

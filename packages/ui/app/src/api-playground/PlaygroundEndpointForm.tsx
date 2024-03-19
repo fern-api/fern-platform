@@ -7,7 +7,7 @@ import {
     ResolvedEndpointDefinition,
     ResolvedTypeDefinition,
     unwrapReference,
-    visitResolvedHttpRequestBodyShape
+    visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";

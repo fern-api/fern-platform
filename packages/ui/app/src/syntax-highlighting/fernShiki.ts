@@ -8,7 +8,7 @@ import {
     BundledTheme,
     getHighlighter,
     Highlighter,
-    SpecialLanguage
+    SpecialLanguage,
 } from "shiki/index.mjs";
 
 let highlighterPromise: Promise<Highlighter>;
