@@ -1,6 +1,11 @@
 import { ProxyRequest, Stream } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 
+export const config = {
+    supportsResponseStreaming: true,
+    maxDuration: 300, // 5 minutes
+};
+
 const proxyApiHandler: NextApiHandler = async (req, res: NextApiResponse<void>) => {
     try {
         if (req.method !== "POST") {

@@ -3789,6 +3789,72 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@datadog/browser-core", [\
+        ["npm:5.12.0", {\
+          "packageLocation": "./.yarn/cache/@datadog-browser-core-npm-5.12.0-86895cc7d1-49f60eb9cf.zip/node_modules/@datadog/browser-core/",\
+          "packageDependencies": [\
+            ["@datadog/browser-core", "npm:5.12.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@datadog/browser-logs", [\
+        ["npm:5.12.0", {\
+          "packageLocation": "./.yarn/cache/@datadog-browser-logs-npm-5.12.0-ccae3aeccf-e565429296.zip/node_modules/@datadog/browser-logs/",\
+          "packageDependencies": [\
+            ["@datadog/browser-logs", "npm:5.12.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0", {\
+          "packageLocation": "./.yarn/__virtual__/@datadog-browser-logs-virtual-50fbdcbaec/0/cache/@datadog-browser-logs-npm-5.12.0-ccae3aeccf-e565429296.zip/node_modules/@datadog/browser-logs/",\
+          "packageDependencies": [\
+            ["@datadog/browser-logs", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0"],\
+            ["@datadog/browser-core", "npm:5.12.0"],\
+            ["@datadog/browser-rum", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0"],\
+            ["@types/datadog__browser-rum", null]\
+          ],\
+          "packagePeers": [\
+            "@datadog/browser-rum",\
+            "@types/datadog__browser-rum"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@datadog/browser-rum", [\
+        ["npm:5.12.0", {\
+          "packageLocation": "./.yarn/cache/@datadog-browser-rum-npm-5.12.0-4330bd83b4-3481d8df3b.zip/node_modules/@datadog/browser-rum/",\
+          "packageDependencies": [\
+            ["@datadog/browser-rum", "npm:5.12.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0", {\
+          "packageLocation": "./.yarn/__virtual__/@datadog-browser-rum-virtual-ddd3c41cf2/0/cache/@datadog-browser-rum-npm-5.12.0-4330bd83b4-3481d8df3b.zip/node_modules/@datadog/browser-rum/",\
+          "packageDependencies": [\
+            ["@datadog/browser-rum", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0"],\
+            ["@datadog/browser-core", "npm:5.12.0"],\
+            ["@datadog/browser-logs", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0"],\
+            ["@datadog/browser-rum-core", "npm:5.12.0"],\
+            ["@types/datadog__browser-logs", null]\
+          ],\
+          "packagePeers": [\
+            "@datadog/browser-logs",\
+            "@types/datadog__browser-logs"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@datadog/browser-rum-core", [\
+        ["npm:5.12.0", {\
+          "packageLocation": "./.yarn/cache/@datadog-browser-rum-core-npm-5.12.0-23ace6fc2a-e341726d6f.zip/node_modules/@datadog/browser-rum-core/",\
+          "packageDependencies": [\
+            ["@datadog/browser-rum-core", "npm:5.12.0"],\
+            ["@datadog/browser-core", "npm:5.12.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@esbuild/android-arm", [\
         ["npm:0.18.20", {\
           "packageLocation": "./.yarn/unplugged/@esbuild-android-arm-npm-0.18.20-a30c33e9ed/node_modules/@esbuild/android-arm/",\
@@ -4418,6 +4484,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/app/",\
           "packageDependencies": [\
             ["@fern-ui/ui", "workspace:packages/ui/app"],\
+            ["@datadog/browser-logs", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0"],\
+            ["@datadog/browser-rum", "virtual:78e90867e46510db2994cf6ed805ab4ba701c55b6d7a2c33f6cc04865dc082c172bef019989477dda8bc6824512d13cb3bcb74ef12bd113a2f6bdcd291ad70f1#npm:5.12.0"],\
             ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
             ["@fern-ui/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-ui/loadable", "workspace:packages/commons/loadable"],\
