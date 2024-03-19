@@ -24,6 +24,8 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors }
                 "dark:bg-gradient-to-b dark:to-transparent":
                     darkBackground?.type === "gradient" && darkBackgroundImage == null,
                 "dark:from-transparent": darkBackground?.type === "solid" && darkBackgroundImage == null,
+                "fern-background-image": lightBackgroundImage != null,
+                "fern-background-image-dark": darkBackgroundImage != null,
             })}
         />
     );
