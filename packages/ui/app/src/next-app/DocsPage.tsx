@@ -1,4 +1,5 @@
 import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Redirect } from "next";
 import Head from "next/head";
 import Script from "next/script";
@@ -237,6 +238,26 @@ export async function getNavigation(
         const matchedTab = nav.tabs[currentTabIndex];
 
         if (matchedTab == null) {
+            for (let i = 0; i < nav.tabs.length; i++) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const currentTab = nav.tabs[i]!;
+
+                if (containsMatchingFullSlug(currentTab.items, slugArray.join("/"))) {
+                    const rawSidebarNodes = resolveSidebarNodes(currentTab.items, apis, [...slug, currentTab.urlSlug]);
+                    const sidebarNodes = await Promise.all(
+                        rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
+                    );
+
+                    return {
+                        currentTabIndex: i,
+                        tabs,
+                        currentVersionIndex,
+                        versions,
+                        sidebarNodes,
+                        slug,
+                    };
+                }
+            }
             return undefined;
         }
 
@@ -260,4 +281,20 @@ export async function getNavigation(
         sidebarNodes,
         slug,
     };
+}
+
+function containsMatchingFullSlug(items: DocsV1Read.NavigationItem[], fullSlug: string): boolean {
+    return items.some((item) =>
+        visitDiscriminatedUnion(item, "type")._visit({
+            page: (page) => page.fullSlug != null && page.fullSlug.join("/") === fullSlug,
+            api: (api) => api.fullSlug != null && api.fullSlug.join("/") === fullSlug,
+            section: (section) =>
+                // first check if any of the items in the section match the full slug
+                containsMatchingFullSlug(section.items, fullSlug) ||
+                // then check if the section itself matches the full slug
+                (section.fullSlug != null && section.fullSlug.join("/") === fullSlug),
+            link: () => false,
+            _other: () => false,
+        }),
+    );
 }
