@@ -8,8 +8,14 @@ export function parseResolvedUrl(resolvedUrl: string): string {
     return match?.[2] ?? resolvedUrl;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res, resolvedUrl }) => {
-    if (res.statusCode >= 500 && res.statusCode < 600 && req.url != null && resolvedUrl.startsWith("/static")) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, resolvedUrl, query }) => {
+    if (
+        res.statusCode >= 500 &&
+        res.statusCode < 600 &&
+        req.url != null &&
+        resolvedUrl.startsWith("/static") &&
+        query.error !== "true"
+    ) {
         const url = parseResolvedUrl(resolvedUrl);
         return {
             redirect: {
