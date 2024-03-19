@@ -88,6 +88,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     route={route}
                                     defaultExpandAll={defaultExpandAll}
                                     types={types}
+                                    isResponse={true}
                                 />
                             </div>
                         )}

@@ -2,7 +2,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
+import { memo, ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
@@ -38,14 +38,14 @@ interface CollapsibleContent {
     separatorText?: string;
 }
 
-export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
+export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(function InternalTypeDefinition({
     typeShape,
     isCollapsible,
     anchorIdParts,
     route,
     defaultExpandAll = false,
     types,
-}) => {
+}) {
     const router = useRouter();
 
     const collapsableContent = useMemo(
@@ -209,4 +209,4 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
             <FernTooltipProvider>{renderContent()}</FernTooltipProvider>
         </FernErrorBoundary>
     );
-};
+});

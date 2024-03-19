@@ -8,7 +8,7 @@ import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
-import { renderTypeShorthandWithRequired } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
@@ -45,7 +45,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
         <EndpointParameterContent
             name={name}
             description={description}
-            typeShorthand={renderTypeShorthandWithRequired(shape, types)}
+            typeShorthand={renderTypeShorthandRoot(shape, types)}
             anchorIdParts={anchorIdParts}
             route={route}
             availability={availability}
@@ -81,7 +81,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
         >
             <div className="group/anchor-container flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} />
-                <span className="inline-flex items-baseline gap-1">
+                <span className="inline-flex items-baseline gap-2">
                     <MonospaceText
                         className={classNames("t-default text-sm", {
                             "t-accent": isActive,
@@ -89,7 +89,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                     >
                         {name}
                     </MonospaceText>
-                    <div className="t-muted text-xs">{typeShorthand}</div>
+                    {typeShorthand}
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </div>

@@ -16,6 +16,7 @@ export declare namespace TypeReferenceDefinitions {
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
+        isResponse?: boolean;
     }
 }
 
@@ -29,10 +30,11 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
     route,
     defaultExpandAll = false,
     types,
+    isResponse,
 }) {
     return (
         <FernErrorBoundary type="type_reference_definitions">
-            <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
+            <TypeDefinitionContextProvider onHoverProperty={onHoverProperty} isResponse={isResponse}>
                 <InternalTypeReferenceDefinitions
                     shape={shape}
                     isCollapsible={isCollapsible}

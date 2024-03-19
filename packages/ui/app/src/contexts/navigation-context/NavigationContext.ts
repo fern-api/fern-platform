@@ -24,7 +24,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
         apis: {},
     },
-    hydrated: false,
     navigation: {
         sidebarNodes: [],
         versions: [],
@@ -44,6 +43,5 @@ export interface NavigationContextValue {
     onScrollToPath: (slug: string) => void;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
-    hydrated: boolean;
     navigation: SidebarNavigation;
 }

@@ -16,6 +16,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
+        isResponse?: boolean;
     }
 }
 
@@ -45,7 +46,16 @@ export function hasInternalTypeReference(
         stringLiteral: () => false,
         unknown: () => false,
         _other: () => false,
-        reference: (reference) => hasInternalTypeReference(types[reference.typeId] ?? { type: "unknown" }, types),
+        reference: (reference) =>
+            hasInternalTypeReference(
+                types[reference.typeId] ?? {
+                    type: "unknown",
+                    description: undefined,
+                    availability: undefined,
+                    defaultsTo: undefined,
+                },
+                types,
+            ),
         alias: (alias) => hasInternalTypeReference(alias.shape, types),
     });
 }
