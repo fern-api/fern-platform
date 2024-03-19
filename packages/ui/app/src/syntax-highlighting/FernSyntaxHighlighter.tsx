@@ -16,25 +16,12 @@ export interface FernSyntaxHighlighterProps {
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
     viewportRef?: React.RefObject<HTMLDivElement>;
+    maxLines?: number;
 }
-
-// const CACHED_HIGHLIGHTS_ATOM = atom<Record<string, HighlightedTokens>>({});
 
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>((props, ref) => {
     const { id, code, language, ...innerProps } = props;
     const highlighter = useHighlighter(language);
-    // const cacheKey = id ?? code;
-    // const [cachedHighlights, setCachedHighlights] = useAtom(CACHED_HIGHLIGHTS_ATOM);
-    // const previousCode = usePrevious(code);
-
-    // // useEffect(() => {
-    // //     setCachedHighlights((prevCache) => {
-    // //         if (prevCache[cacheKey] != null && isEqual(prevCache[cacheKey], tokens)) {
-    // //             return prevCache;
-    // //         }
-    // //         return { ...prevCache, [cacheKey]: tokens };
-    // //     });
-    // // }, [highlight, code, language, setCachedHighlights, cacheKey, previousCode]);
 
     const tokens = useMemo(() => {
         if (highlighter == null) {

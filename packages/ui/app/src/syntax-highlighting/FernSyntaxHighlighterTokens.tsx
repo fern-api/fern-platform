@@ -35,6 +35,7 @@ export interface FernSyntaxHighlighterTokensProps extends FernSyntaxHighlighterT
     className?: string;
     style?: React.CSSProperties;
     viewportRef?: React.RefObject<HTMLDivElement>;
+    maxLines?: number;
 }
 
 const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProps>(
@@ -106,7 +107,10 @@ const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProp
 
 export const FernSyntaxHighlighterTokens = memo(
     forwardRef<HTMLPreElement, FernSyntaxHighlighterTokensProps>(
-        ({ className, style, fontSize = "base", highlightLines, highlightStyle, viewportRef, tokens }, ref) => {
+        (
+            { className, style, fontSize = "base", highlightLines, highlightStyle, viewportRef, tokens, maxLines },
+            ref,
+        ) => {
             const preStyle = useMemo(() => {
                 let preStyle = {};
 
@@ -125,7 +129,12 @@ export const FernSyntaxHighlighterTokens = memo(
                     ref={ref}
                     tabIndex={0}
                 >
-                    <FernScrollArea viewportRef={viewportRef}>
+                    <FernScrollArea
+                        viewportRef={viewportRef}
+                        style={{
+                            maxHeight: getMaxHeight(fontSize, maxLines),
+                        }}
+                    >
                         <FernSyntaxHighlighterTokensCode
                             tokens={tokens}
                             fontSize={fontSize}
@@ -149,6 +158,16 @@ export const FernSyntaxHighlighterTokens = memo(
     },
 );
 FernSyntaxHighlighterTokens.displayName = "FernSyntaxHighlighterTokens";
+
+function getMaxHeight(fontSize: "sm" | "base" | "lg", maxLines?: number): number | undefined {
+    if (maxLines == null || maxLines <= 0) {
+        return undefined;
+    }
+
+    const lineHeight = 1.625 * (fontSize === "sm" ? 12 : fontSize === "base" ? 14 : 16);
+
+    return maxLines * lineHeight + (fontSize === "sm" ? 8 : 12) * 2;
+}
 
 function flattenHighlightLines(highlightLines: HighlightLine[]): number[] {
     return highlightLines.flatMap((lineNumber) => {

@@ -4540,6 +4540,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nprogress", "npm:0.2.0"],\
             ["numeral", "npm:2.0.6"],\
             ["organize-imports-cli", "npm:0.10.0"],\
+            ["parse-numeric-range", "npm:1.3.0"],\
             ["posthog-js", "npm:1.81.1"],\
             ["prettier", "npm:3.2.4"],\
             ["react", "npm:18.2.0"],\
@@ -17409,6 +17410,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/parse-node-version-npm-1.0.1-7dd3b14751-c192393b6a.zip/node_modules/parse-node-version/",\
           "packageDependencies": [\
             ["parse-node-version", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["parse-numeric-range", [\
+        ["npm:1.3.0", {\
+          "packageLocation": "./.yarn/cache/parse-numeric-range-npm-1.3.0-71baf377a4-289ca126d5.zip/node_modules/parse-numeric-range/",\
+          "packageDependencies": [\
+            ["parse-numeric-range", "npm:1.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
