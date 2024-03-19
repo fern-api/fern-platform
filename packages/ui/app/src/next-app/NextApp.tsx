@@ -56,7 +56,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     useEffect(() => {
         initializePosthog();
-    }, [router.isPreview]);
+    }, []);
 
     const theme =
         pageProps.colors?.dark != null && pageProps.colors?.light != null
