@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
@@ -69,7 +69,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         rel,
     } = props;
     const renderLink = (child: ReactElement) => {
-        const linkClassName = classNames(linkClassNameProp, "fern-sidebar-link");
+        const linkClassName = cn(linkClassNameProp, "fern-sidebar-link");
 
         return href != null ? (
             <Link
@@ -121,7 +121,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
             data-state={showIndicator ? "active" : "inactive"}
         >
             <ChevronDownIcon
-                className={classNames("transition-transform size-5 lg:size-icon", {
+                className={cn("transition-transform size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -132,7 +132,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
     return (
         <li ref={elementRef} className="fern-sidebar-item">
             <div
-                className={classNames("fern-sidebar-link-container group", className)}
+                className={cn("fern-sidebar-link-container group", className)}
                 data-state={selected ? "active" : "inactive"}
             >
                 {withTooltip(
@@ -141,7 +141,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                             {range(0, depth).map((i) => (
                                 <div
                                     key={i}
-                                    className={classNames(
+                                    className={cn(
                                         "fern-sidebar-link-indent",
                                         "transition-transform group-hover/sidebar:opacity-100 transition-opacity ease-out",
                                     )}

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { FC } from "react";
 import { ColorsConfig } from "../sidebar/types";
 import "./BgImageGradient.css";
@@ -18,7 +18,7 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors }
 
     return (
         <div
-            className={classNames(className, "fern-background", {
+            className={cn(className, "fern-background", {
                 "from-accent-primary/10 bg-gradient-to-b to-transparent":
                     lightBackground?.type === "gradient" && lightBackgroundImage == null,
                 "dark:bg-gradient-to-b dark:to-transparent":

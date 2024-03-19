@@ -1,6 +1,6 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import React, { ReactElement, useState } from "react";
 import { Search } from "react-feather";
 import { Chip } from "../../../components/Chip";
@@ -48,7 +48,7 @@ export const EnumTypeDefinition = ({
                     <FernButton
                         icon={
                             <Cross2Icon
-                                className={classNames("transition", {
+                                className={cn("transition", {
                                     "rotate-45": isCollapsed,
                                 })}
                             />

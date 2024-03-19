@@ -1,5 +1,5 @@
 import { ActivityLogIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { Snippet } from "react-instantsearch-hooks-web";
 import type { SearchRecord } from "../types";
 
@@ -14,13 +14,13 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
     return (
         <>
             <div
-                className={classNames("flex flex-col items-center justify-center rounded-md border p-1", {
+                className={cn("flex flex-col items-center justify-center rounded-md border p-1", {
                     "border-default": !isHovered,
                     "border-white dark:border-black bg-white dark:bg-black text-black": isHovered,
                 })}
             >
                 <ActivityLogIcon
-                    className={classNames("size-4", {
+                    className={cn("size-4", {
                         "!t-muted": !isHovered,
                         "!t-accent": isHovered,
                     })}
@@ -30,7 +30,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
-                        className={classNames("line-clamp-1 text-start", {
+                        className={cn("line-clamp-1 text-start", {
                             "t-default": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
@@ -39,7 +39,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                         hit={hit}
                     />
                     <div
-                        className={classNames("text-sm uppercase tracking-widest", {
+                        className={cn("text-sm uppercase tracking-widest", {
                             "text-text-disabled": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
@@ -49,7 +49,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                 </div>
                 <div className="flex flex-col items-start">
                     <Snippet
-                        className={classNames("line-clamp-1 text-start", {
+                        className={cn("line-clamp-1 text-start", {
                             "text-white dark:text-black": isHovered,
                             "t-muted": !isHovered,
                         })}

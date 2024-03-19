@@ -1,12 +1,12 @@
 import * as Switch from "@radix-ui/react-switch";
-import classNames from "classnames";
+import cn from "clsx";
 import { ReactElement } from "react";
 
 export function FernSwitch(props: Switch.SwitchProps): ReactElement {
     return (
         <Switch.Root
             {...props}
-            className={classNames(
+            className={cn(
                 "relative h-[25px] w-[42px] cursor-default rounded-full bg-tag-default ring-1 ring-inset ring-default data-[state=checked]:bg-accent",
                 props.className,
             )}

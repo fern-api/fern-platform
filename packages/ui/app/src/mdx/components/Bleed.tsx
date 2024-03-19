@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { PropsWithChildren, ReactElement } from "react";
 
 interface BleedProps {
@@ -8,7 +8,7 @@ interface BleedProps {
 export function Bleed({ full = false, children }: PropsWithChildren<BleedProps>): ReactElement {
     return (
         <div
-            className={classNames(
+            className={cn(
                 "fern-bleed relative -mx-6 mt-6 md:-mx-8 2xl:-mx-24",
                 full && [
                     "ltr:xl:ml-[calc(50%-50vw+16rem)] ltr:xl:mr-[calc(50%-50vw)]",

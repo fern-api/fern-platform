@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, Fragment, PropsWithChildren, RefObject, useEffect, useRef } from "react";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 
@@ -69,7 +69,7 @@ export const FeedbackFormDialog: FC<PropsWithChildren<FeedbackFormDialogProps>> 
                 <Transition.Child
                     as="div"
                     ref={handleModalRef}
-                    className={classNames(
+                    className={cn(
                         "border-default fixed z-50 w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-background/50",
                         className,
                     )}

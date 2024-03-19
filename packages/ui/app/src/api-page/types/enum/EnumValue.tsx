@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ResolvedEnumValue } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -15,7 +15,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
 
     return (
         <div
-            className={classNames("flex flex-col gap-2 py-2", {
+            className={cn("flex flex-col gap-2 py-2", {
                 "px-2": !isRootTypeDefinition,
             })}
         >

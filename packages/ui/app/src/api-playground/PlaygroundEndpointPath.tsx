@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
@@ -45,7 +45,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                                 return (
                                     <span
                                         key={idx}
-                                        className={classNames({
+                                        className={cn({
                                             "bg-accent-highlight t-accent px-1 rounded before:content-[':']":
                                                 stateValue.length === 0,
                                             "t-accent font-semibold": stateValue.length > 0,

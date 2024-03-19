@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -208,7 +208,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             ref={containerRef}
         >
             <div
-                className={classNames("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !hideBottomSeparator,
                 })}
                 ref={setContainerRef}
@@ -268,7 +268,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     </div>
 
                     <div
-                        className={classNames(
+                        className={cn(
                             "max-w-content-width",
                             "md:flex-1 md:sticky md:self-start",
                             "mt-12",

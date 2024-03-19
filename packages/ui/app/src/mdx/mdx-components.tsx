@@ -79,7 +79,7 @@ export const JSX_COMPONENTS = {
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
     // code: ({ className, ...rest }) => {
-    //     return <code {...rest} className={classNames(className, "not-prose")} />;
+    //     return <code {...rest} className={cn(className, "not-prose")} />;
     // },
     table: Table,
     thead: Thead,

@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import Link from "next/link";
 import { useMemo } from "react";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -46,7 +46,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     return (
         <Link
             ref={(elem) => setRef?.(elem)}
-            className={classNames("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
+            className={cn("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
                 "bg-accent t-accent-contrast": isHovered,
             })}
             href={`/${fullPath}`}

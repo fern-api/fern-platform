@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { atom, useAtom } from "jotai";
 import { isUndefined } from "lodash-es";
 import dynamic from "next/dynamic";
@@ -99,7 +99,7 @@ export function PlaygroundEndpointFormAside({
         return (
             <>
                 <div
-                    className={classNames("rounded-lg px-3 py-1.5 text-sm tracking-tight cursor-default", {
+                    className={cn("rounded-lg px-3 py-1.5 text-sm tracking-tight cursor-default", {
                         "bg-tag-primary": isFocused,
                         "bg-transparent hover:bg-tag-default": !isFocused,
                     })}
@@ -139,7 +139,7 @@ export function PlaygroundEndpointFormAside({
     );
 
     return (
-        <aside className={classNames("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
+        <aside className={cn("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
             <FernScrollArea
                 ref={scrollAreaRef}
                 className="min-h-0 shrink"

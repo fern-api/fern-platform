@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { memo, type MouseEventHandler } from "react";
 import { useSearchService } from "../services/useSearchService";
 
@@ -16,11 +16,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
 }) {
     const searchService = useSearchService();
     return (
-        <button
-            onClick={onClick}
-            className={classNames("fern-search-bar", className)}
-            disabled={!searchService.isAvailable}
-        >
+        <button onClick={onClick} className={cn("fern-search-bar", className)} disabled={!searchService.isAvailable}>
             <span className="search-placeholder">
                 <MagnifyingGlassIcon className="size-5" />
                 <span>Search...</span>

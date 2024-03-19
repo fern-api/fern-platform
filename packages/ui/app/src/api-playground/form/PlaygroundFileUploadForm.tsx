@@ -1,5 +1,5 @@
 import { Cross1Icon, FileIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import numeral from "numeral";
 import { ChangeEventHandler, DragEventHandler, memo, useCallback, useRef, useState } from "react";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
@@ -62,7 +62,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
             >
                 <input ref={ref} type="file" id={id} onChange={handleChange} className="hidden" />
                 <FernCard
-                    className={classNames("w-full rounded-lg", {
+                    className={cn("w-full rounded-lg", {
                         elevated: drag,
                     })}
                     onDragOver={dragOver}

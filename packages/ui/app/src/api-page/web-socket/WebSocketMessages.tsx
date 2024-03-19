@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC } from "react";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
@@ -35,9 +35,9 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
             )}
             {messages.map((message, index) => {
                 return (
-                    <Accordion.Item value={index.toString()} key={index} className={classNames("group relative")}>
+                    <Accordion.Item value={index.toString()} key={index} className={cn("group relative")}>
                         <Accordion.Trigger
-                            className={classNames(
+                            className={cn(
                                 "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background group-data-[state=closed]:rounded-[inherit] transition-[border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]",
                                 "sticky top-0 z-auto backdrop-blur",
                                 {
@@ -62,7 +62,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 {JSON.stringify(message.data)}
                             </span>
                             <span
-                                className={classNames("flex-1 inline-flex justify-end", {
+                                className={cn("flex-1 inline-flex justify-end", {
                                     // "justify-start": event.action === "send",
                                     // "justify-end": event.action === "recieve",
                                 })}
@@ -94,7 +94,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                             </div>
                         </Accordion.Content>
                         <div
-                            className={classNames(
+                            className={cn(
                                 "mx-px group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
                                 {
                                     "group-focus-within:ring-border-success":

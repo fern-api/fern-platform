@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
 import type { EndpointSearchRecordV2 } from "../types";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
@@ -16,13 +16,13 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <div
-                    className={classNames("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
+                    className={cn("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
                         "t-muted": !isHovered,
                         "t-accent-contrast": isHovered,
                     })}
                 >
                     <div
-                        className={classNames(
+                        className={cn(
                             "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
                             {
                                 "bg-tag-default": !isHovered,
@@ -44,7 +44,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                     literal: (part) => <span key={idx}>{part.value}</span>,
                                     pathParameter: (part) => (
                                         <span
-                                            className={classNames(
+                                            className={cn(
                                                 "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
                                                 {
                                                     "bg-tag-default": !isHovered,
@@ -66,7 +66,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                     </div>
                 </div>
                 <div
-                    className={classNames("text-sm tracking-wide", {
+                    className={cn("text-sm tracking-wide", {
                         "t-muted": !isHovered,
                         "t-accent-contrast": isHovered,
                     })}
@@ -76,7 +76,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
             </div>
             <div className="flex items-center justify-between">
                 <span
-                    className={classNames("line-clamp-1 text-start text-xs", {
+                    className={cn("line-clamp-1 text-start text-xs", {
                         "t-accent-contrast": isHovered,
                         "t-muted": !isHovered,
                     })}
@@ -85,7 +85,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 </span>
 
                 <CornerDownLeft
-                    className={classNames("size-3", {
+                    className={cn("size-3", {
                         "t-accent-contrast": isHovered,
                         "t-muted": !isHovered,
                     })}

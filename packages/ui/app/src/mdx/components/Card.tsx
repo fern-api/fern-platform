@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { isValidElement } from "react";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 import { FernCard, FernLinkCard } from "../../components/FernCard";
@@ -28,7 +28,7 @@ export const Card: React.FC<Card.Props> = ({
     children,
     href,
 }) => {
-    const className = classNames("text-sm flex items-start border p-4 grow basis-1/4 not-prose rounded-lg", {
+    const className = cn("text-sm flex items-start border p-4 grow basis-1/4 not-prose rounded-lg", {
         "space-y-3 flex-col": iconPosition === "top",
         "space-x-3 flex-row": iconPosition === "left",
     });

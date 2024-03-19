@@ -1,6 +1,6 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ArrowRightIcon, Cross1Icon, TrashIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { FC, useState } from "react";
@@ -33,7 +33,7 @@ export const SecretSpan: FC<{ secret: string } & React.HTMLAttributes<HTMLSpanEl
             content={wasJustCopied ? "Copied!" : "Click to copy secret"}
         >
             <span
-                className={classNames(
+                className={cn(
                     parentClassName,
                     "bg-tag-default hover:bg-tag-primary -mx-0.5 cursor-pointer rounded px-0.5 font-mono",
                 )}
