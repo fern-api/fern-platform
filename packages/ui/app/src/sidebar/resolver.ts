@@ -1,6 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { sortBy } from "lodash-es";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 import { SidebarNodeRaw } from "./types";
@@ -91,16 +90,28 @@ function resolveSidebarNodeRawApiSection(
         .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackageSection[];
 
     // default sort
-    let items: SidebarNodeRaw.ApiPageOrSubpackage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
+    const items: SidebarNodeRaw.ApiPageOrSubpackage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
 
     if (navigation?.items != null) {
-        items = sortBy(items, (page) => {
-            const index = navigation.items.findIndex(
+        items.sort((a, b) => {
+            const aIndex = navigation.items.findIndex(
                 (item) =>
-                    toApiType(item.type) === page.apiType &&
-                    (item.type === "subpackage" ? item.subpackageId === page.id : item.value === page.id),
+                    toApiType(item.type) === a.apiType &&
+                    (item.type === "subpackage" ? item.subpackageId === a.id : item.value === a.id),
             );
-            return index === -1 ? Infinity : index;
+            const bIndex = navigation.items.findIndex(
+                (item) =>
+                    toApiType(item.type) === b.apiType &&
+                    (item.type === "subpackage" ? item.subpackageId === b.id : item.value === b.id),
+            );
+
+            if (aIndex === -1) {
+                return 1;
+            }
+            if (bIndex === -1) {
+                return -1;
+            }
+            return aIndex - bIndex;
         });
     }
 
