@@ -6656,7 +6656,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tailwindcss/forms", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.7"],\
             ["@tailwindcss/typography", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:0.5.10"],\
             ["@types/jest", "npm:29.5.11"],\
-            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.18.13"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.2.18"],\
@@ -6665,7 +6664,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
-            ["lodash-es", "npm:4.17.21"],\
             ["next", "virtual:b40b3e868e9f1b1325458adf64d18686a9bf6c02b77edfd7c11fe70d8e7fd3e00e1c83184aea66895aec053cb5af36522448d13355eadeefef5e51adb9dd432a#npm:14.1.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["postcss", "npm:8.4.31"],\
