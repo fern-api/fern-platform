@@ -708,3 +708,33 @@ export function hasOptionalFields(
 }
 
 export const ENUM_RADIO_BREAKPOINT = 5;
+
+export function shouldRenderInline(
+    typeReference: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): boolean {
+    return visitDiscriminatedUnion(unwrapReference(typeReference, types), "type")._visit({
+        string: () => true,
+        boolean: () => true,
+        object: () => false,
+        map: () => false,
+        undiscriminatedUnion: () => false,
+        discriminatedUnion: () => false,
+        enum: (_enum) => true,
+        integer: () => true,
+        double: () => true,
+        long: () => true,
+        datetime: () => true,
+        uuid: () => true,
+        base64: () => true,
+        date: () => true,
+        optional: () => false,
+        list: () => false,
+        set: () => false,
+        booleanLiteral: () => true,
+        stringLiteral: () => true,
+        unknown: () => false,
+        alias: (alias) => shouldRenderInline(alias.shape, types),
+        _other: () => false,
+    });
+}
