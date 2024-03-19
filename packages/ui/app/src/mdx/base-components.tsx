@@ -7,6 +7,7 @@ import {
     Children,
     cloneElement,
     ComponentProps,
+    createElement,
     DetailedHTMLProps,
     FC,
     ImgHTMLAttributes,
@@ -85,100 +86,18 @@ export function useCurrentPathname(): string {
     return `/${resolvedPath.fullSlug}`;
 }
 
-export const H1: FC<ComponentProps<"h1">> = ({ className, ...rest }) => {
-    const children = Children.toArray(rest.children);
-    const text = children.reduce(flatten, "");
-    const slug = getSlugFromText(text);
+function getSlugFromChildren(children: ReactNode): string {
+    const text = Children.toArray(children).reduce(flatten, "");
+    return getSlugFromText(text);
+}
 
-    return (
-        <h1
-            id={slug}
-            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
-            {...rest}
-        >
-            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
-            <span>{children}</span>
-        </h1>
-    );
-};
-
-export const H2: FC<ComponentProps<"h2">> = ({ className, ...rest }) => {
-    const children = Children.toArray(rest.children);
-    const text = children.reduce(flatten, "");
-    const slug = getSlugFromText(text);
-    return (
-        <h2
-            id={slug}
-            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
-            {...rest}
-        >
-            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
-            <span>{children}</span>
-        </h2>
-    );
-};
-
-export const H3: FC<ComponentProps<"h3">> = ({ className, ...rest }) => {
-    const children = Children.toArray(rest.children);
-    const text = children.reduce(flatten, "");
-    const slug = getSlugFromText(text);
-    return (
-        <h3
-            id={slug}
-            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
-            {...rest}
-        >
-            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
-            <span>{children}</span>
-        </h3>
-    );
-};
-
-export const H4: FC<ComponentProps<"h4">> = ({ className, ...rest }) => {
-    const children = Children.toArray(rest.children);
-    const text = children.reduce(flatten, "");
-    const slug = getSlugFromText(text);
-    return (
-        <h4
-            id={slug}
-            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
-            {...rest}
-        >
-            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
-            <span>{children}</span>
-        </h4>
-    );
-};
-
-export const H5: FC<ComponentProps<"h5">> = ({ className, ...rest }) => {
-    const children = Children.toArray(rest.children);
-    const text = children.reduce(flatten, "");
-    const slug = getSlugFromText(text);
-    return (
-        <h5
-            id={slug}
-            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
-            {...rest}
-        >
-            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
-            <span>{children}</span>
-        </h5>
-    );
-};
-
-export const H6: FC<ComponentProps<"h6">> = ({ className, ...rest }) => {
-    const children = Children.toArray(rest.children);
-    const text = children.reduce(flatten, "");
-    const slug = getSlugFromText(text);
-    return (
-        <h6
-            id={slug}
-            className={classNames(className, "flex items-center relative group/anchor-container mb-3")}
-            {...rest}
-        >
-            <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />
-            {children}
-        </h6>
+export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
+    const slug = getSlugFromChildren(props.children);
+    return createElement(
+        `h${level}`,
+        { id: slug, ...props },
+        <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />,
+        <span>{props.children}</span>,
     );
 };
 
@@ -263,5 +182,8 @@ export const Img: FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest })
 };
 
 export function getSlugFromText(text: string): string {
+    if (text == null) {
+        return "";
+    }
     return text.toLowerCase().replace(/\W/g, "-").replace(/-+/g, "-");
 }
