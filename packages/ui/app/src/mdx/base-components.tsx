@@ -126,9 +126,9 @@ export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
 };
 
 const RelativePathAnchor: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const { resolvedPath } = useNavigationContext();
+    const { domain, resolvedPath } = useNavigationContext();
     const cnCombined = cn("fern-mdx-link", className);
-    const newHref = href != null ? `/${resolvedPath.fullSlug}/${href}` : undefined;
+    const newHref = href != null ? new URL(href, `https://${domain}/${resolvedPath.fullSlug}`).pathname : undefined;
 
     return (
         <Link className={cnCombined} href={newHref ?? "#"} {...rest}>
