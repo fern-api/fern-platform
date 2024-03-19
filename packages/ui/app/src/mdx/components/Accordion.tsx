@@ -45,7 +45,7 @@ const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], router })
     return (
         <RadixAccordion.Root
             type="multiple"
-            className="ring-default divide-default mb-6 mt-4 divide-y rounded-lg ring-1"
+            className="fern-card divide-default mb-6 mt-4 divide-y rounded-lg"
             value={activeTabs}
             onValueChange={handleValueChange}
         >

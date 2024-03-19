@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { Element } from "hast";
 import { camelCase, isEqual } from "lodash-es";
 import { forwardRef, memo, ReactNode, useMemo } from "react";
@@ -56,7 +56,7 @@ const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProp
 
         return (
             <code
-                className={classNames("code-block", {
+                className={cn("code-block", {
                     "text-xs": fontSize === "sm",
                     "text-sm": fontSize === "base",
                     "text-base": fontSize === "lg",
@@ -64,7 +64,7 @@ const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProp
             >
                 <div className="code-block-inner">
                     <table
-                        className={classNames("code-block-line-group", {
+                        className={cn("code-block-line-group", {
                             "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
                             "gutter-cli": tokens.lang === "cli" || tokens.lang === "shell" || tokens.lang === "bash",
                             plaintext: tokens.lang === "plaintext" || tokens.lang === "text" || tokens.lang === "txt",
@@ -77,7 +77,7 @@ const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProp
                         <tbody>
                             {lines.map((line, lineNumber) => (
                                 <tr
-                                    className={classNames("code-block-line", {
+                                    className={cn("code-block-line", {
                                         highlight: highlightedLines.includes(lineNumber),
                                     })}
                                     key={lineNumber}
@@ -120,7 +120,7 @@ export const FernSyntaxHighlighterTokens = memo(
 
             return (
                 <pre
-                    className={classNames("code-block-root not-prose", className)}
+                    className={cn("code-block-root not-prose", className)}
                     style={{ ...style, ...preStyle }}
                     ref={ref}
                     tabIndex={0}

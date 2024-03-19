@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { Callout } from "../mdx/components/Callout";
@@ -8,7 +7,6 @@ import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketHandshakeFormProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     websocket: ResolvedWebSocketChannel;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
@@ -18,7 +16,6 @@ interface PlaygroundWebSocketHandshakeFormProps {
 }
 
 export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFormProps> = ({
-    auth,
     websocket,
     formState,
     setFormState,
@@ -56,6 +53,16 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
         [setFormState],
     );
 
+    if (
+        error == null &&
+        websocket.auth == null &&
+        websocket.headers.length === 0 &&
+        websocket.pathParameters.length === 0 &&
+        websocket.queryParameters.length === 0
+    ) {
+        return null;
+    }
+
     return (
         <>
             {error != null && (
@@ -64,9 +71,9 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                 </Callout>
             )}
 
-            {websocket.authed && auth != null && (
+            {websocket.auth != null && (
                 <PlaygroundAuthorizationFormCard
-                    auth={auth}
+                    auth={websocket.auth}
                     authState={formState?.auth}
                     setAuthorization={(newState) =>
                         setFormState((oldState) => ({
@@ -133,6 +140,8 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                     </div>
                 )}
             </div>
+
+            <hr />
         </>
     );
 };

@@ -4,12 +4,13 @@ import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernErrorBoundaryInternal, FernErrorBoundaryProps } from "../components/FernErrorBoundary";
 import {
     A,
-    H1,
-    H2,
-    H3,
-    H4,
-    H5,
-    H6,
+    HeadingRenderer,
+    // H1,
+    // H2,
+    // H3,
+    // H4,
+    // H5,
+    // H6,
     Img,
     Li,
     Ol,
@@ -25,6 +26,7 @@ import {
 } from "./base-components";
 import { Accordion } from "./components/Accordion";
 import { Availability } from "./components/Availability";
+import { Bleed } from "./components/Bleed";
 import {
     Callout,
     CheckCallout,
@@ -72,11 +74,12 @@ export const JSX_COMPONENTS = {
     EndpointRequestSnippet,
     EndpointResponseSnippet,
     Frame,
+    Bleed,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
     // code: ({ className, ...rest }) => {
-    //     return <code {...rest} className={classNames(className, "not-prose")} />;
+    //     return <code {...rest} className={cn(className, "not-prose")} />;
     // },
     table: Table,
     thead: Thead,
@@ -84,12 +87,12 @@ export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
     tr: Tr,
     th: Th,
     td: Td,
-    h1: H1,
-    h2: H2,
-    h3: H3,
-    h4: H4,
-    h5: H5,
-    h6: H6,
+    h1: (props) => HeadingRenderer(1, props),
+    h2: (props) => HeadingRenderer(2, props),
+    h3: (props) => HeadingRenderer(3, props),
+    h4: (props) => HeadingRenderer(4, props),
+    h5: (props) => HeadingRenderer(5, props),
+    h6: (props) => HeadingRenderer(6, props),
     p: (props: HTMLAttributes<HTMLParagraphElement>) => <P variant="markdown" {...props} />,
     P,
     ol: Ol,

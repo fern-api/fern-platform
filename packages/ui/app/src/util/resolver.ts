@@ -21,6 +21,11 @@ import { titleCase } from "./titleCase";
 export type WithDescription = { description: SerializedMdxContent | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
+export interface WithMetadata {
+    description: SerializedMdxContent | undefined;
+    availability: APIV1Read.Availability | undefined;
+}
+
 export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,
     filteredTypes?: string[],
@@ -78,7 +83,7 @@ async function resolveApiDefinitionPackage(
         ),
     );
     const websocketsPromise = Promise.all(
-        package_.websockets.map((websocket) => resolveWebsocketChannel(websocket, types)),
+        package_.websockets.map((websocket) => resolveWebsocketChannel(auth, websocket, types)),
     );
     const webhooksPromise = Promise.all(
         package_.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes)),
@@ -132,6 +137,7 @@ async function resolveSubpackage(
     return {
         name: subpackage.name,
         description: await serializeMdxContent(subpackage.description),
+        availability: undefined,
         title: titleCase(subpackage.name),
         type: "subpackage",
         apiSectionId,
@@ -145,7 +151,7 @@ async function resolveSubpackage(
 }
 
 async function resolveEndpointDefinition(
-    auth: APIV1Read.ApiAuth | undefined,
+    rootAuth: APIV1Read.ApiAuth | undefined,
     apiSectionId: FdrAPI.ApiDefinitionId,
     apiPackageId: FdrAPI.ApiDefinitionId,
     endpoint: FlattenedEndpointDefinition,
@@ -227,6 +233,7 @@ async function resolveEndpointDefinition(
             contentType: request.contentType,
             shape,
             description,
+            availability: undefined,
         };
     }
 
@@ -235,10 +242,10 @@ async function resolveEndpointDefinition(
             resolveResponseBodyShape(response.type, types),
             serializeMdxContent(response.description),
         ]);
-        return { shape, description };
+        return { shape, description, availability: undefined };
     }
 
-    const [pathParameters, queryParameters, headers, errors, description, requestBody, responseBody] =
+    const [pathParameters, queryParameters, rawHeaders, errors, description, requestBody, responseBody] =
         await Promise.all([
             pathParametersPromise,
             queryParametersPromise,
@@ -258,7 +265,11 @@ async function resolveEndpointDefinition(
                 return {
                     type: "pathParameter",
                     key: pathPart.value,
-                    valueShape: { type: "unknown" },
+                    valueShape: {
+                        type: "unknown",
+                        availability: undefined,
+                        description: undefined,
+                    },
                     description: undefined,
                     availability: undefined,
                 };
@@ -270,12 +281,14 @@ async function resolveEndpointDefinition(
         }
     });
 
+    const { auth, headers } = mergeAuthAndHeaders(endpoint.authed, rootAuth, rawHeaders);
+
     const toRet: ResolvedEndpointDefinition = {
         name: endpoint.name,
         id: endpoint.id,
         slug: endpoint.slug,
         description,
-        authed: endpoint.authed,
+        auth,
         availability: endpoint.availability,
         apiSectionId,
         apiPackageId,
@@ -319,14 +332,51 @@ async function resolveEndpointDefinition(
             //     responseBody != null
             //         ? highlight(highlighter, JSON.stringify(responseBody.value, undefined, 2), "json")
             //         : undefined,
-            snippets: resolveCodeSnippets(endpoint.authed ? auth : undefined, toRet, example, requestBody),
+            snippets: resolveCodeSnippets(toRet, example, requestBody),
         };
     });
 
     return toRet;
 }
 
+interface MergedAuthAndHeaders {
+    auth: APIV1Read.ApiAuth | undefined;
+    headers: ResolvedObjectProperty[];
+}
+
+// HACKHACK: this handles the case where FernIR is unable to interpret the security scheme for AsyncAPI
+// and that we direct users to specify the websocket bindings instead.
+function mergeAuthAndHeaders(
+    authed: boolean,
+    auth: APIV1Read.ApiAuth | undefined,
+    headers: ResolvedObjectProperty[],
+): MergedAuthAndHeaders {
+    if (authed && auth != null) {
+        return { auth, headers };
+    }
+
+    const filteredHeaders: ResolvedObjectProperty[] = [];
+
+    for (const header of headers) {
+        if (
+            header.key.toLowerCase() === "authorization" ||
+            header.key.toLowerCase().includes("api-key") ||
+            header.key.toLowerCase().includes("apikey")
+        ) {
+            auth = {
+                type: "header",
+                headerWireValue: header.key,
+            };
+            continue;
+        }
+        filteredHeaders.push(header);
+    }
+
+    return { auth, headers: filteredHeaders };
+}
+
 async function resolveWebsocketChannel(
+    rootAuth: APIV1Read.ApiAuth | undefined,
     websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
 ): Promise<Promise<ResolvedWebSocketChannel>> {
@@ -384,15 +434,17 @@ async function resolveWebsocketChannel(
             };
         }),
     );
-    const [pathParameters, headers, queryParameters, messages] = await Promise.all([
+    const [pathParameters, rawHeaders, queryParameters, messages] = await Promise.all([
         pathParametersPromise,
         headersPromise,
         queryParametersPromise,
         messagesPromise,
     ]);
 
+    const { auth, headers } = mergeAuthAndHeaders(websocket.authed, rootAuth, rawHeaders);
+
     return {
-        authed: websocket.authed,
+        auth,
         environments: websocket.environments,
         id: websocket.id,
         description: websocket.description,
@@ -447,6 +499,7 @@ async function resolveWebhookDefinition(
     return {
         name: webhook.name,
         description,
+        availability: undefined,
         slug: webhook.slug,
         method: webhook.method,
         id: webhook.id,
@@ -455,6 +508,7 @@ async function resolveWebhookDefinition(
         payload: {
             shape: payloadShape,
             description: await serializeMdxContent(webhook.payload.description),
+            availability: undefined,
         },
         examples: webhook.examples.map((example) => {
             const sortedPayload = stripUndefines(sortKeysByShape(example.payload, payloadShape, resolvedTypes));
@@ -480,7 +534,12 @@ function resolvePayloadShape(
             availability: undefined,
         }),
         reference: (reference) => resolveTypeReference(reference.value, types),
-        _other: () => Promise.resolve({ type: "unknown" }),
+        _other: () =>
+            Promise.resolve({
+                type: "unknown",
+                availability: undefined,
+                description: undefined,
+            }),
     });
 }
 
@@ -541,7 +600,12 @@ function resolveRequestBodyShape(
         }),
         bytes: (bytes) => Promise.resolve(bytes),
         reference: (reference) => resolveTypeReference(reference.value, types),
-        _other: () => Promise.resolve({ type: "unknown" }),
+        _other: () =>
+            Promise.resolve({
+                type: "unknown",
+                availability: undefined,
+                description: undefined,
+            }),
     });
 }
 
@@ -584,7 +648,7 @@ function resolveResponseBodyShape(
                     },
                 };
             },
-            _other: () => ({ type: "unknown" }),
+            _other: () => ({ type: "unknown", availability: undefined, description: undefined }),
         }),
     );
 }
@@ -625,6 +689,7 @@ function resolveTypeShape(
                 enum_.values.map(async (enumValue) => ({
                     value: enumValue.value,
                     description: await serializeMdxContent(enumValue.description),
+                    availability: undefined,
                 })),
             ),
             description: await serializeMdxContent(description),
@@ -669,7 +734,12 @@ function resolveTypeShape(
                 availability,
             };
         },
-        _other: () => Promise.resolve({ type: "unknown" }),
+        _other: () =>
+            Promise.resolve({
+                type: "unknown",
+                availability: undefined,
+                description: undefined,
+            }),
     });
 }
 
@@ -679,28 +749,60 @@ function resolveTypeReference(
 ): Promise<ResolvedTypeShape> {
     return Promise.resolve(
         visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeShape | Promise<ResolvedTypeShape>>({
-            literal: (literal) => literal.value,
-            unknown: (unknown) => unknown,
+            literal: (literal) => ({
+                ...literal.value,
+                description: undefined,
+                availability: undefined,
+            }),
+            unknown: (unknown) => ({
+                ...unknown,
+                availability: undefined,
+                description: undefined,
+            }),
             optional: async (optional) => ({
                 type: "optional",
                 shape: await unwrapOptionalRaw(await resolveTypeReference(optional.itemType, types), types),
+                availability: undefined,
+                defaultsTo: undefined,
+                description: undefined,
             }),
-            list: async (list) => ({ type: "list", shape: await resolveTypeReference(list.itemType, types) }),
-            set: async (set) => ({ type: "set", shape: await resolveTypeReference(set.itemType, types) }),
+            list: async (list) => ({
+                type: "list",
+                shape: await resolveTypeReference(list.itemType, types),
+                availability: undefined,
+                description: undefined,
+            }),
+            set: async (set) => ({
+                type: "set",
+                shape: await resolveTypeReference(set.itemType, types),
+                availability: undefined,
+                description: undefined,
+            }),
             map: async (map) => ({
                 type: "map",
                 keyShape: await resolveTypeReference(map.keyType, types),
                 valueShape: await resolveTypeReference(map.valueType, types),
+                availability: undefined,
+                description: undefined,
             }),
             id: ({ value: typeId }) => {
                 const typeDefinition = types[typeId];
                 if (typeDefinition == null) {
-                    return { type: "unknown" };
+                    return { type: "unknown", availability: undefined, description: undefined };
                 }
-                return { type: "reference", typeId };
+                return {
+                    type: "reference",
+                    typeId,
+                    availability: undefined,
+                    description: undefined,
+                };
             },
-            primitive: (primitive) => primitive.value,
-            _other: () => ({ type: "unknown" }),
+            primitive: (primitive) => ({
+                type: primitive.value.type,
+                description: undefined,
+                availability: undefined,
+            }),
+            _other: () => ({ type: "unknown", availability: undefined, description: undefined }),
         }),
     );
 }
@@ -711,7 +813,11 @@ export function dereferenceObjectProperties(
 ): ResolvedObjectProperty[] {
     const directProperties = object.properties;
     const extendedProperties = object.extends.flatMap((typeId) => {
-        const referencedShape = types[typeId] ?? { type: "unknown" };
+        const referencedShape = types[typeId] ?? {
+            type: "unknown",
+            availability: undefined,
+            description: undefined,
+        };
         const shape = unwrapReference(referencedShape, types);
         // TODO: should we be able to extend discriminated and undiscriminated unions?
         if (shape?.type !== "object") {
@@ -906,7 +1012,7 @@ export function isWebSocket(definition: ResolvedApiDefinition): definition is Re
     return definition.type === "websocket";
 }
 
-export interface ResolvedSubpackage extends WithDescription, ResolvedWithApiDefinition {
+export interface ResolvedSubpackage extends WithMetadata, ResolvedWithApiDefinition {
     type: "subpackage";
     apiSectionId: FdrAPI.ApiDefinitionId;
     id: APIV1Read.SubpackageId;
@@ -927,12 +1033,12 @@ export interface ResolvedRootPackage extends ResolvedWithApiDefinition {
 
 export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpackage;
 
-export interface ResolvedEndpointDefinition extends WithDescription {
+export interface ResolvedEndpointDefinition extends WithMetadata {
     id: APIV1Read.EndpointId;
     apiSectionId: FdrAPI.ApiDefinitionId;
     apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
     slug: string[];
-    authed: boolean;
+    auth: APIV1Read.ApiAuth | undefined;
     availability: APIV1Read.Availability | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
@@ -1086,7 +1192,6 @@ export interface ResolvedCodeSnippet {
 }
 
 function resolveCodeSnippets(
-    auth: APIV1Read.ApiAuth | undefined,
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     requestBody: ResolvedExampleEndpointRequest | undefined,
@@ -1095,7 +1200,7 @@ function resolveCodeSnippets(
     let toRet: ResolvedCodeSnippet[] = [];
 
     const curlCode = stringifyHttpRequestExampleToCurl(
-        endpointExampleToHttpRequestExample(auth, endpoint, example, requestBody),
+        endpointExampleToHttpRequestExample(endpoint, example, requestBody),
     );
 
     toRet.push({
@@ -1178,23 +1283,23 @@ function cleanLanguage(language: string): string {
     return language;
 }
 
-export interface ResolvedRequestBody extends WithDescription {
+export interface ResolvedRequestBody extends WithMetadata {
     contentType: string;
     shape: ResolvedHttpRequestBodyShape;
 }
 
-export interface ResolvedError extends WithDescription, WithAvailability {
+export interface ResolvedError extends WithMetadata {
     shape: ResolvedTypeShape | undefined;
     statusCode: number;
     name: string | undefined;
 }
 
-export interface ResolvedObjectProperty extends WithDescription, WithAvailability {
+export interface ResolvedObjectProperty extends WithMetadata {
     key: APIV1Read.PropertyKey;
     valueShape: ResolvedTypeShape;
 }
 
-export interface ResolvedResponseBody extends WithDescription {
+export interface ResolvedResponseBody extends WithMetadata {
     shape: ResolvedHttpResponseBodyShape;
 }
 
@@ -1220,7 +1325,7 @@ export interface ResolvedWebSocketChannel {
     name: string | undefined;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
-    authed: boolean;
+    auth: APIV1Read.ApiAuth | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     path: ResolvedEndpointPathParts[];
@@ -1231,14 +1336,14 @@ export interface ResolvedWebSocketChannel {
     examples: APIV1Read.ExampleWebSocketSession[];
 }
 
-export interface ResolvedWebSocketMessage extends WithAvailability, WithDescription {
+export interface ResolvedWebSocketMessage extends WithMetadata {
     type: APIV1Read.WebSocketMessageId;
     body: ResolvedTypeShape;
     displayName: string | undefined;
     origin: APIV1Read.WebSocketMessageOrigin;
 }
 
-export interface ResolvedWebhookDefinition extends WithDescription {
+export interface ResolvedWebhookDefinition extends WithMetadata {
     id: APIV1Read.WebhookId;
     slug: string[];
 
@@ -1254,57 +1359,58 @@ export interface ResolvedExampleWebhookPayload {
     // hast: Root;
 }
 
-export interface ResolvedPayload extends WithDescription {
+export interface ResolvedPayload extends WithMetadata {
     shape: ResolvedTypeShape;
 }
 
-export interface ResolvedObjectShape extends WithDescription, WithAvailability {
+export interface ResolvedObjectShape extends WithMetadata {
     name: string | undefined;
     type: "object";
     extends: string[];
     properties: ResolvedObjectProperty[];
 }
 
-export interface ResolvedUndiscriminatedUnionShapeVariant extends WithDescription, WithAvailability {
+export interface ResolvedUndiscriminatedUnionShapeVariant extends WithMetadata {
     displayName: string | undefined;
     shape: ResolvedTypeShape;
 }
 
-export interface ResolvedUndiscriminatedUnionShape extends WithDescription, WithAvailability {
+export interface ResolvedUndiscriminatedUnionShape extends WithMetadata {
     name: string | undefined;
     type: "undiscriminatedUnion";
     variants: ResolvedUndiscriminatedUnionShapeVariant[];
 }
 
-export interface ResolvedDiscriminatedUnionShapeVariant extends WithDescription, WithAvailability {
+export interface ResolvedDiscriminatedUnionShapeVariant extends WithMetadata {
     discriminantValue: string;
     extends: string[];
     properties: ResolvedObjectProperty[];
 }
 
-export interface ResolvedDiscriminatedUnionShape extends WithDescription, WithAvailability {
+export interface ResolvedDiscriminatedUnionShape extends WithMetadata {
     name: string | undefined;
     type: "discriminatedUnion";
     discriminant: string;
     variants: ResolvedDiscriminatedUnionShapeVariant[];
 }
 
-export interface ResolvedOptionalShape {
+export interface ResolvedOptionalShape extends WithMetadata {
     type: "optional";
     shape: NonOptionalTypeShape;
+    defaultsTo: unknown | undefined;
 }
 
-export interface ResolvedListShape {
+export interface ResolvedListShape extends WithMetadata {
     type: "list";
     shape: ResolvedTypeShape;
 }
 
-export interface ResolvedSetShape {
+export interface ResolvedSetShape extends WithMetadata {
     type: "set";
     shape: ResolvedTypeShape;
 }
 
-export interface ResolvedMapShape {
+export interface ResolvedMapShape extends WithMetadata {
     type: "map";
     keyShape: ResolvedTypeShape;
     valueShape: ResolvedTypeShape;
@@ -1316,19 +1422,19 @@ export type ResolvedTypeDefinition =
     | ResolvedDiscriminatedUnionShape
     | ResolvedEnumShape
     | ResolvedAliasShape
-    | APIV1Read.TypeReference.Unknown;
+    | (APIV1Read.TypeReference.Unknown & WithMetadata);
 
-interface ResolvedEnumShape extends WithDescription, WithAvailability {
+interface ResolvedEnumShape extends WithMetadata {
     name: string | undefined;
     type: "enum";
     values: ResolvedEnumValue[];
 }
 
-export interface ResolvedEnumValue extends WithDescription {
+export interface ResolvedEnumValue extends WithMetadata {
     value: string;
 }
 
-interface ResolvedAliasShape extends WithDescription, WithAvailability {
+interface ResolvedAliasShape extends WithMetadata {
     name: string | undefined;
     type: "alias";
     shape: ResolvedTypeShape;
@@ -1336,19 +1442,19 @@ interface ResolvedAliasShape extends WithDescription, WithAvailability {
 
 export type ResolvedTypeShape =
     | ResolvedTypeDefinition
-    | APIV1Read.PrimitiveType
+    | (APIV1Read.PrimitiveType & WithMetadata)
     | ResolvedOptionalShape
     | ResolvedListShape
     | ResolvedSetShape
     | ResolvedMapShape
-    | APIV1Read.LiteralType
-    | APIV1Read.TypeReference.Unknown
+    | (APIV1Read.LiteralType & WithMetadata)
+    | (APIV1Read.TypeReference.Unknown & WithMetadata)
     | ResolvedReferenceShape;
 
 export type DereferencedTypeShape = Exclude<ResolvedTypeShape, ResolvedReferenceShape>;
 export type NonOptionalTypeShape = Exclude<DereferencedTypeShape, ResolvedOptionalShape>;
 
-export interface ResolvedReferenceShape {
+export interface ResolvedReferenceShape extends WithMetadata {
     type: "reference";
     typeId: string;
 }
@@ -1361,7 +1467,7 @@ export declare namespace ResolvedFileUploadRequestProperty {
 
 export type ResolvedFileUploadRequestProperty = APIV1Read.FileProperty | ResolvedFileUploadRequestProperty.BodyProperty;
 
-export interface ResolvedFileUploadRequest extends WithDescription, WithAvailability {
+export interface ResolvedFileUploadRequest extends WithMetadata {
     name: string;
     properties: ResolvedFileUploadRequestProperty[];
 }
@@ -1440,7 +1546,7 @@ export function unwrapReference(
     if (shape.type === "reference") {
         const nestedShape = types[shape.typeId];
         if (nestedShape == null) {
-            return { type: "unknown" };
+            return { type: "unknown", availability: undefined, description: undefined };
         }
         return unwrapReference(nestedShape, types);
     }
@@ -1465,7 +1571,7 @@ export async function unwrapReferenceRaw(
     if (shape.type === "reference") {
         const nestedShape = types[shape.typeId];
         if (nestedShape == null) {
-            return { type: "unknown" };
+            return { type: "unknown", availability: undefined, description: undefined };
         }
         return unwrapReferenceRaw(await resolveTypeDefinition(nestedShape, types), types);
     }

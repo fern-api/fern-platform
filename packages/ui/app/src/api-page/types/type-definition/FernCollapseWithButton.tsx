@@ -1,5 +1,5 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, useState } from "react";
 import { FernButton, FernButtonProps } from "../../../components/FernButton";
 import { FernCollapse } from "../../../components/FernCollapse";
@@ -32,7 +32,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
 
     return (
         <div
-            className={classNames(
+            className={cn(
                 "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
                 "ring-default flex flex-col max-md:rounded-xl rounded-lg ring-1 m-px",
                 {
@@ -44,7 +44,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
         >
             <FernButton
                 {...buttonProps}
-                className={classNames("fern-collapse-trigger text-left", buttonProps?.className)}
+                className={cn("fern-collapse-trigger text-left", buttonProps?.className)}
                 onClick={(e) => {
                     toggleIsOpen();
                     e.stopPropagation();
@@ -53,7 +53,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
                 icon={
                     typeof text === "string" ? (
                         <Cross2Icon
-                            className={classNames("transition", {
+                            className={cn("transition", {
                                 "rotate-45": !isOpen,
                             })}
                         />

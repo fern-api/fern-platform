@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { ReactElement, useCallback } from "react";
 import {
     ResolvedTypeDefinition,
@@ -15,7 +15,7 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthandWithRequired } from "../type-shorthand/TypeShorthand";
+import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
 
 type IconInfo = {
     content: string;
@@ -104,12 +104,12 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
 
     return (
         <div
-            className={classNames("flex flex-col py-3", {
+            className={cn("flex flex-col py-3", {
                 "px-3": !isRootTypeDefinition,
             })}
         >
             <div className="flex flex-col gap-2">
-                <div className="t-muted flex items-center space-x-2.5">
+                <div className="t-muted flex items-center gap-2">
                     {getIconForTypeReference(unionVariant.shape, types)}
                     {unionVariant.displayName == null ? null : (
                         <span className="t-default font-mono text-sm">
@@ -118,8 +118,8 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                                 : unionVariant.displayName}
                         </span>
                     )}
-                    <span className="t-muted text-xs">
-                        {renderTypeShorthandWithRequired(unionVariant.shape, types)}
+                    <span className="t-muted inline-flex items-baseline gap-2 text-xs">
+                        {renderTypeShorthand(unionVariant.shape, { nullable: contextValue.isResponse }, types)}
                     </span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />

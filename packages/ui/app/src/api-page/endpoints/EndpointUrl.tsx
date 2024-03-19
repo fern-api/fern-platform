@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
@@ -64,19 +64,19 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     };
 
     return (
-        <div ref={ref} className={classNames("flex h-8 items-center gap-1 pr-2", className)}>
+        <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
-            <div className={classNames("flex items-center")}>
+            <div className={cn("flex items-center")}>
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
                     {(onClick) => (
                         <span
-                            className={classNames(
+                            className={cn(
                                 "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-default",
                             )}
                             onClick={onClick}
                         >
                             <span
-                                className={classNames("font-mono", {
+                                className={cn("font-mono", {
                                     "text-xs": !large,
                                     "text-sm": large,
                                 })}

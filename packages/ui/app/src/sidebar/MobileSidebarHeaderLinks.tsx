@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernButton";
@@ -14,7 +14,7 @@ interface HeaderSidebarSlugLinkProps {
 export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ navbarLink }) => {
     return (
         <Link
-            className={classNames(
+            className={cn(
                 "text-sm group pl-4 pr-3 py-1.5 border border-border-accent-muted hover:border-2 flex space-x-1.5 items-center no-underline hover:no-underline t-accent hover:t-accent transition rounded-lg hover:bg-tag-primary",
                 "hover:py-[calc(theme(spacing.1.5)-1px)] hover:pr-[calc(theme(spacing.3)-1px)] hover:pl-[calc(theme(spacing.4)-1px)]",
             )}
@@ -43,7 +43,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
     }
     return (
         <div
-            className={classNames("border-concealed list-none -mx-4 border-t p-4 mt-4", {
+            className={cn("border-concealed list-none -mx-4 border-t p-4 mt-4", {
                 "lg:hidden": layout?.disableHeader !== true,
             })}
         >
@@ -59,7 +59,7 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                             <ArrowRightIcon className="!size-5" />
                         ) : undefined
                     }
-                    className={classNames("w-full", {
+                    className={cn("w-full", {
                         "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
                     })}
                     variant={

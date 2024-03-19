@@ -29,7 +29,9 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.57.0-1-ge86efe6",
+    "@datadog/browser-logs": "^5.12.0",
+    "@datadog/browser-rum": "^5.12.0",
+    "@fern-api/fdr-sdk": "0.60.0-1-g4795d27",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
@@ -48,7 +50,7 @@
     "@shikijs/transformers": "^1.1.7",
     "@types/nprogress": "^0.2.3",
     "algoliasearch": "^4.22.1",
-    "classnames": "^2.5.1",
+    "clsx": "^2.1.0",
     "gray-matter": "^4.0.3",
     "hast": "^1.0.0",
     "hast-util-to-estree": "^3.1.0",

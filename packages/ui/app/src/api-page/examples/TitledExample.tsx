@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 
@@ -22,7 +22,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
 ) {
     return (
         <div
-            className={classNames(
+            className={cn(
                 "rounded-xl flex flex-col bg-card after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
                 className,
             )}
@@ -30,7 +30,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
             ref={ref}
         >
             <div
-                className={classNames("rounded-t-xl h-10", {
+                className={cn("rounded-t-xl h-10", {
                     "bg-tag-default-soft": type === "primary",
                     "bg-tag-danger-soft": type === "warning",
                 })}
@@ -38,7 +38,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
                 <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0]">
                     {typeof title === "string" ? (
                         <div
-                            className={classNames("text-xs uppercase px-1", {
+                            className={cn("text-xs uppercase px-1", {
                                 "t-muted": type === "primary",
                                 "t-danger": type === "warning",
                             })}

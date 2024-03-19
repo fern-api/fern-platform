@@ -1,30 +1,45 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional, unwrapReference } from "../../../util/resolver";
 
 export interface TypeShorthandOptions {
     plural?: boolean;
     withArticle?: boolean;
+    nullable?: boolean; // determines whether to render "Optional" or "Nullable"
 }
 
-export function renderTypeShorthandWithRequired(
+export function renderTypeShorthandRoot(
     shape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
+    isResponse: boolean = false,
 ): ReactNode {
-    const typeShorthand = renderTypeShorthand(shape, undefined, types);
-    if (shape.type === "optional") {
-        return typeShorthand;
-    }
+    const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     return (
-        <>
-            <span className="text-intent-danger">required</span> {typeShorthand}
-        </>
+        <span className="t-muted inline-flex items-baseline gap-2 text-xs">
+            <span>{typeShorthand}</span>
+            {shape.type === "optional" ? (
+                <span>{isResponse ? "Optional" : "Optional"}</span>
+            ) : !isResponse ? (
+                <span className="t-danger">Required</span>
+            ) : null}
+            {shape.type === "optional" && shape.defaultsTo !== undefined && (
+                <span>{renderDefaultTo(shape.defaultsTo)}</span>
+            )}
+        </span>
     );
+}
+
+function renderDefaultTo(defaultsTo: unknown): string {
+    return `Defaults to ${JSON.stringify(defaultsTo)}`;
 }
 
 export function renderTypeShorthand(
     shape: ResolvedTypeShape,
-    { plural = false, withArticle = false }: TypeShorthandOptions = { plural: false, withArticle: false },
+    { plural = false, withArticle = false, nullable = false }: TypeShorthandOptions = {
+        plural: false,
+        withArticle: false,
+        nullable: false,
+    },
     types: Record<string, ResolvedTypeDefinition>,
 ): string {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
@@ -49,7 +64,7 @@ export function renderTypeShorthand(
 
         // containing shapes
         optional: (optional) =>
-            `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(optional.shape, { plural }, types)}`,
+            `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(optional.shape, { plural }, types)}`,
         list: (list) =>
             `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(
                 list.shape,

@@ -1,6 +1,5 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
-import classNames from "classnames";
+import cn from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
@@ -21,7 +20,6 @@ import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils"
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundEndpointContentProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
@@ -35,7 +33,6 @@ interface PlaygroundEndpointContentProps {
 const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
 
 export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
-    auth,
     endpoint,
     formState,
     setFormState,
@@ -77,9 +74,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     rightClassName="pl-1"
                 >
                     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
-                        {endpoint.authed && auth != null && (
+                        {endpoint.auth != null && (
                             <PlaygroundAuthorizationFormCard
-                                auth={auth}
+                                auth={endpoint.auth}
                                 authState={formState?.auth}
                                 setAuthorization={(newState) =>
                                     setFormState((oldState) => ({
@@ -153,18 +150,17 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 <CopyToClipboardButton
                                     content={() =>
                                         requestType === "curl"
-                                            ? stringifyCurl(auth, endpoint, formState, false)
+                                            ? stringifyCurl(endpoint, formState, false)
                                             : requestType === "javascript"
-                                              ? stringifyFetch(auth, endpoint, formState, false)
+                                              ? stringifyFetch(endpoint, formState, false)
                                               : requestType === "python"
-                                                ? stringifyPythonRequests(auth, endpoint, formState, false)
+                                                ? stringifyPythonRequests(endpoint, formState, false)
                                                 : ""
                                     }
                                     className="-mr-2"
                                 />
                             </div>
                             <PlaygroundRequestPreview
-                                auth={auth}
                                 endpoint={endpoint}
                                 formState={formState}
                                 requestType={requestType}
@@ -177,16 +173,13 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 {response.type === "loaded" && (
                                     <div className="flex items-center gap-2 text-xs">
                                         <span
-                                            className={classNames(
-                                                "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
-                                                {
-                                                    ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                                                        response.value.response.status >= 200 &&
-                                                        response.value.response.status < 300,
-                                                    ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                                                        response.value.response.status > 300,
-                                                },
-                                            )}
+                                            className={cn("font-mono flex items-center py-1 px-1.5 rounded-md h-5", {
+                                                ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
+                                                    response.value.response.status >= 200 &&
+                                                    response.value.response.status < 300,
+                                                ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
+                                                    response.value.response.status > 300,
+                                            })}
                                         >
                                             status: {response.value.response.status}
                                         </span>
@@ -217,8 +210,6 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                 response.type === "json"
                                                     ? JSON.stringify(response.response.body, null, 2)
                                                     : response.response.body
-                                                          .map((chunk) => JSON.stringify(chunk))
-                                                          .join("\n")
                                             }
                                             className="-mr-2"
                                         />
@@ -235,12 +226,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     ) : (
                                         <div className="flex flex-1 items-center justify-center">Loading...</div>
                                     ),
-                                loaded: (response) => (
-                                    <PlaygroundResponsePreview
-                                        responseBody={response.response.body}
-                                        type={response.type}
-                                    />
-                                ),
+                                loaded: (response) => <PlaygroundResponsePreview response={response} />,
                                 failed: () => <span>Failed</span>,
                             })}
                         </FernCard>

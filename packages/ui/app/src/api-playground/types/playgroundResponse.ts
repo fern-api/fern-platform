@@ -5,7 +5,7 @@ export declare namespace PlaygroundResponse {
         type: "stream";
         response: {
             status: number; // this is mirrored by the proxy
-            body: unknown[]; // each chunk of the response
+            body: string; // contains all chunks of the response joined by newlines
         };
         time: number;
     }

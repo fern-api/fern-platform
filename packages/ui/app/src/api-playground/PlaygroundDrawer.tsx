@@ -316,7 +316,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                     </div>
                     {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
                         <PlaygroundEndpoint
-                            auth={matchedSection?.auth}
                             endpoint={matchedEndpoint}
                             formState={
                                 playgroundFormState?.type === "endpoint"
@@ -330,7 +329,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                         />
                     ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
                         <PlaygroundWebSocket
-                            auth={matchedSection?.auth}
                             websocket={matchedWebSocket}
                             formState={
                                 playgroundFormState?.type === "websocket"

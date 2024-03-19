@@ -40,11 +40,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorRoute = `${route}#${anchorId}`;
     return (
         <FernErrorBoundary type="endpoint_section">
-            <div
-                ref={ref}
-                data-route={anchorRoute.toLowerCase()}
-                className="scroll-mt-header-height-padded flex flex-col"
-            >
+            <div ref={ref} data-route={anchorRoute.toLowerCase()} className="scroll-mt-header-height-padded">
                 <div className="group/anchor-container relative flex items-baseline justify-between gap-4 pb-3">
                     {createElement(
                         headerType,
@@ -68,7 +64,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                         <Markdown className="text-base" mdx={description} />
                     </div>
                 )}
-                <div className="flex flex-col">{children}</div>
+                {children}
             </div>
         </FernErrorBoundary>
     );

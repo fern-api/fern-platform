@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 
 export declare namespace TypeComponentSeparator {
     export interface Props {
@@ -7,5 +7,5 @@ export declare namespace TypeComponentSeparator {
 }
 
 export const TypeComponentSeparator: React.FC<TypeComponentSeparator.Props> = ({ className }) => {
-    return <div className={classNames(className, "h-px bg-border-default")} />;
+    return <div className={cn(className, "h-px bg-border-default")} />;
 };

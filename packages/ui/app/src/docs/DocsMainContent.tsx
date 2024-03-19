@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { useIsReady } from "../contexts/useIsReady";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
@@ -20,7 +21,8 @@ const ChangelogPage = dynamic(() => import("./ChangelogPage2").then(({ Changelog
 export interface DocsMainContentProps {}
 
 export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
-    const { resolvedPath, hydrated } = useNavigationContext();
+    const { resolvedPath } = useNavigationContext();
+    const hydrated = useIsReady();
 
     const router = useRouter();
     if (router.query.error === "true") {

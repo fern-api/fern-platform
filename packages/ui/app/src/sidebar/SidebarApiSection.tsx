@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
 import moment from "moment";
 import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
@@ -95,7 +95,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
     }
 
     return (
-        <ul className={classNames(className, "fern-sidebar-group")}>
+        <ul className={cn(className, "fern-sidebar-group")}>
             {renderArtifacts()}
             {apiSection.endpoints.map((endpoint) => (
                 <SidebarSlugLink
@@ -210,7 +210,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
     const children = useMemo(
         () => (
             <InnerSidebarApiSection
-                className={classNames("expandable", { hidden: !expanded })}
+                className={cn("expandable", { hidden: !expanded })}
                 slug={slug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 depth={depth + 1}

@@ -1,5 +1,5 @@
-import classNames from "classnames";
-import React, { PropsWithChildren } from "react";
+import cn from "clsx";
+import { DetailedHTMLProps, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
 
 export declare namespace MonospaceText {
     export type Props = PropsWithChildren<{
@@ -7,6 +7,13 @@ export declare namespace MonospaceText {
     }>;
 }
 
-export const MonospaceText: React.FC<MonospaceText.Props> = ({ className, children }) => {
-    return <div className={classNames(className, "font-mono")}>{children}</div>;
-};
+export const MonospaceText = forwardRef<
+    HTMLSpanElement,
+    DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>
+>(function MonospaceText({ className, children, ...props }, ref) {
+    return (
+        <span ref={ref} className={cn(className, "font-mono")} {...props}>
+            {children}
+        </span>
+    );
+});

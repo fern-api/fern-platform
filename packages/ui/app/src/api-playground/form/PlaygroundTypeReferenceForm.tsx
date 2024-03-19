@@ -69,7 +69,7 @@ interface PlaygroundTypeReferenceFormProps {
 //     }
 //     return (
 //         <>
-//             <div className={classNames({ hidden: isPanelOpen })}>
+//             <div className={cn({ hidden: isPanelOpen })}>
 //                 <WithLabel property={property} value={value} onRemove={onRemove}>
 //                     <div
 //                         onClick={showPanel}
@@ -85,7 +85,7 @@ interface PlaygroundTypeReferenceFormProps {
 //                 </WithLabel>
 //             </div>
 //             <div
-//                 className={classNames("-mx-4 p-4 border-default bg-background border-y shadow-md relative", {
+//                 className={cn("-mx-4 p-4 border-default bg-background border-y shadow-md relative", {
 //                     hidden: !isPanelOpen,
 //                 })}
 //             >

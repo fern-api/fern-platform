@@ -1,11 +1,9 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
@@ -24,7 +22,6 @@ import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
 
 interface PlaygroundEndpointProps {
-    auth: APIV1Read.ApiAuth | null | undefined;
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
@@ -67,7 +64,7 @@ function executeProxy(req: ProxyRequest): Promise<ProxyResponseWithMetadata> {
 }
 
 interface ResponseChunk {
-    data: unknown;
+    data: string;
     time: number;
 }
 
@@ -88,7 +85,7 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
             parse: async (i) => {
                 const d = i as { data: string; time: number };
                 return {
-                    data: JSON.parse(d.data),
+                    data: d.data,
                     time: d.time,
                 };
             },
@@ -99,7 +96,6 @@ function executeProxyStream(req: ProxyRequest): Promise<[Response, Stream<Respon
 }
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
-    auth,
     endpoint,
     formState,
     setFormState,
@@ -107,7 +103,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
-    const { domain } = useDocsContext();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
     // const [, startTransition] = useTransition();
 
@@ -126,7 +121,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
             const req = {
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
-                headers: buildUnredactedHeaders(auth, endpoint, formState),
+                headers: buildUnredactedHeaders(endpoint, formState),
                 body: await serializeFormStateBody(formState.body),
             };
             if (!endpoint.id.endsWith("_stream")) {
@@ -154,20 +149,17 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     });
                 }
             } else {
-                const [res, stream] = await executeProxyStream({
-                    ...req,
-                    streamTerminator: domain.includes("perplexity") ? "data: " : "\n",
-                });
+                const [res, stream] = await executeProxyStream(req);
                 for await (const item of stream) {
                     setResponse((lastValue) =>
                         loaded({
                             type: "stream",
                             response: {
                                 status: res.status,
-                                body:
-                                    lastValue.type === "loaded" && lastValue.value.type === "stream"
-                                        ? [...lastValue.value.response.body, item.data]
-                                        : [item.data],
+                                body: (lastValue.type === "loaded" && lastValue.value.type === "stream"
+                                    ? lastValue.value.response.body + item.data
+                                    : item.data
+                                ).replace("\r\n\r\n", "\n"),
                             },
                             time: item.time,
                         }),
@@ -185,7 +177,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
         }
-    }, [auth, domain, endpoint, formState]);
+    }, [endpoint, formState]);
 
     return (
         <FernTooltipProvider>
@@ -205,7 +197,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">
                     <PlaygroundEndpointContent
-                        auth={auth}
                         endpoint={endpoint}
                         formState={formState}
                         setFormState={setFormState}

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
@@ -18,7 +18,7 @@ import {
     hasInternalTypeReference,
     InternalTypeReferenceDefinitions,
 } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthandWithRequired } from "../type-shorthand/TypeShorthand";
+import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
@@ -103,25 +103,25 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
     return (
         <div
             data-route={anchorRoute.toLowerCase()}
-            className={classNames("flex relative flex-col py-3 scroll-mt-header-height-padded gap-2", {
+            className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
             <div className="flex items-baseline gap-2">
-                <div className="group/anchor-container relative flex items-center">
+                <div className="group/anchor-container relative inline-flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
-                    <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
-                        <MonospaceText
-                            className={classNames("t-default text-sm", {
-                                "t-accent": isActive,
-                            })}
-                        >
-                            {property.key}
-                        </MonospaceText>
-                    </div>
+                    <MonospaceText
+                        className={cn("t-default text-sm", {
+                            "t-accent": isActive,
+                        })}
+                        onMouseEnter={onMouseEnterPropertyName}
+                        onMouseOut={onMouseOutPropertyName}
+                    >
+                        {property.key}
+                    </MonospaceText>
                 </div>
-                <div className="t-muted text-xs">{renderTypeShorthandWithRequired(property.valueShape, types)}</div>
+                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}

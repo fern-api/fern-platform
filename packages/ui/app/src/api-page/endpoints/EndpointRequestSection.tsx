@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import classNames from "classnames";
+import cn from "clsx";
 import { ReactNode } from "react";
 import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -33,7 +33,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         <div className="flex flex-col">
             <ApiPageDescription className="mt-3 text-sm" description={requestBody.description} isMarkdown={true} />
             <div
-                className={classNames("t-muted pb-5 text-sm leading-6", {
+                className={cn("t-muted pb-5 text-sm leading-6", {
                     "border-default border-b": requestBody.shape.type !== "fileUpload",
                 })}
             >

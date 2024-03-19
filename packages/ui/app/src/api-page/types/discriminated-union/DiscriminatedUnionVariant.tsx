@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "clsx";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
@@ -46,6 +46,8 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                     valueShape: {
                         type: "stringLiteral",
                         value: unionVariant.discriminantValue,
+                        description: undefined,
+                        availability: undefined,
                     },
                     description: undefined,
                     availability: undefined,
@@ -77,7 +79,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 
     return (
         <div
-            className={classNames("flex flex-col py-3 gap-2", {
+            className={cn("flex flex-col py-3 gap-2", {
                 "px-3": !isRootTypeDefinition,
             })}
         >

@@ -1,5 +1,5 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-import classNames from "classnames";
+import cn from "clsx";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
 import { SerializedMdxContent } from "../mdx/mdx";
@@ -19,7 +19,7 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
             content={wasJustCopied ? "Copied!" : description != null ? <Markdown mdx={description} /> : undefined}
         >
             <span
-                className={classNames(
+                className={cn(
                     "t-default bg-tag-default hover:bg-tag-default-hover cursor-default font-mono text-xs flex items-center",
                     {
                         ["py-1 px-1.5 rounded-md h-5"]: small,

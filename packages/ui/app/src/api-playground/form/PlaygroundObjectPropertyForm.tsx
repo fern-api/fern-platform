@@ -1,9 +1,9 @@
 import { useBooleanState } from "@fern-ui/react-commons";
 import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import classNames from "classnames";
+import cn from "clsx";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { renderTypeShorthandWithRequired } from "../../api-page/types/type-shorthand/TypeShorthand";
+import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../util/resolver";
@@ -116,7 +116,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                 type: "value",
                 value: property.key,
                 label: property.key,
-                helperText: renderTypeShorthandWithRequired(property.valueShape, types),
+                helperText: renderTypeShorthandRoot(property.valueShape, types),
                 labelClassName: "font-mono",
                 tooltip:
                     property.description != null ? (
@@ -141,7 +141,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
     return (
         <div
-            className={classNames("flex-1 shrink min-w-0", {
+            className={cn("flex-1 shrink min-w-0", {
                 "border-border-default-soft border-l pl-4": indent,
             })}
         >
