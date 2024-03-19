@@ -48,18 +48,15 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                         value: unionVariant.discriminantValue,
                         description: undefined,
                         availability: undefined,
-                        defaultsTo: undefined,
                     },
                     description: undefined,
                     availability: undefined,
-                    defaultsTo: undefined,
                 },
                 ...dereferenceObjectProperties(unionVariant, types),
             ],
             name: undefined,
             description: undefined,
             availability: undefined,
-            defaultsTo: undefined,
             extends: [],
         };
     }, [discriminant, types, unionVariant]);

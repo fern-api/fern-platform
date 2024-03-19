@@ -24,7 +24,6 @@ export type WithAvailability = { availability: APIV1Read.Availability | undefine
 export interface WithMetadata {
     description: SerializedMdxContent | undefined;
     availability: APIV1Read.Availability | undefined;
-    defaultsTo: unknown | undefined;
 }
 
 export async function resolveApiDefinition(
@@ -139,7 +138,6 @@ async function resolveSubpackage(
         name: subpackage.name,
         description: await serializeMdxContent(subpackage.description),
         availability: undefined,
-        defaultsTo: undefined,
         title: titleCase(subpackage.name),
         type: "subpackage",
         apiSectionId,
@@ -172,7 +170,6 @@ async function resolveEndpointDefinition(
                 valueShape,
                 description,
                 availability: parameter.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -188,7 +185,6 @@ async function resolveEndpointDefinition(
                 valueShape,
                 description,
                 availability: parameter.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -204,7 +200,6 @@ async function resolveEndpointDefinition(
                 valueShape,
                 description,
                 availability: header.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -223,7 +218,6 @@ async function resolveEndpointDefinition(
                 shape,
                 description,
                 availability: error.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -240,7 +234,6 @@ async function resolveEndpointDefinition(
             shape,
             description,
             availability: undefined,
-            defaultsTo: undefined,
         };
     }
 
@@ -249,7 +242,7 @@ async function resolveEndpointDefinition(
             resolveResponseBodyShape(response.type, types),
             serializeMdxContent(response.description),
         ]);
-        return { shape, description, availability: undefined, defaultsTo: undefined };
+        return { shape, description, availability: undefined };
     }
 
     const [pathParameters, queryParameters, rawHeaders, errors, description, requestBody, responseBody] =
@@ -275,12 +268,10 @@ async function resolveEndpointDefinition(
                     valueShape: {
                         type: "unknown",
                         availability: undefined,
-                        defaultsTo: undefined,
                         description: undefined,
                     },
                     description: undefined,
                     availability: undefined,
-                    defaultsTo: undefined,
                 };
             }
             return {
@@ -299,7 +290,6 @@ async function resolveEndpointDefinition(
         description,
         auth,
         availability: endpoint.availability,
-        defaultsTo: undefined,
         apiSectionId,
         apiPackageId,
         environments: endpoint.environments,
@@ -397,7 +387,6 @@ async function resolveWebsocketChannel(
                 valueShape: await resolveTypeReference(parameter.type, types),
                 description: await serializeMdxContent(parameter.description),
                 availability: parameter.availability,
-                defaultsTo: undefined,
             }),
         ),
     );
@@ -412,7 +401,6 @@ async function resolveWebsocketChannel(
                 valueShape,
                 description,
                 availability: header.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -427,7 +415,6 @@ async function resolveWebsocketChannel(
                 valueShape,
                 description,
                 availability: parameter.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -444,7 +431,6 @@ async function resolveWebsocketChannel(
                 origin,
                 description: resolvedDescription,
                 availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -507,7 +493,6 @@ async function resolveWebhookDefinition(
                 valueShape: await resolveTypeReference(header.type, types),
                 description: await serializeMdxContent(header.description),
                 availability: header.availability,
-                defaultsTo: undefined,
             })),
         ),
     ]);
@@ -515,7 +500,6 @@ async function resolveWebhookDefinition(
         name: webhook.name,
         description,
         availability: undefined,
-        defaultsTo: undefined,
         slug: webhook.slug,
         method: webhook.method,
         id: webhook.id,
@@ -525,7 +509,6 @@ async function resolveWebhookDefinition(
             shape: payloadShape,
             description: await serializeMdxContent(webhook.payload.description),
             availability: undefined,
-            defaultsTo: undefined,
         },
         examples: webhook.examples.map((example) => {
             const sortedPayload = stripUndefines(sortKeysByShape(example.payload, payloadShape, resolvedTypes));
@@ -549,14 +532,12 @@ function resolvePayloadShape(
             properties: await resolveObjectProperties(object, types),
             description: undefined,
             availability: undefined,
-            defaultsTo: undefined,
         }),
         reference: (reference) => resolveTypeReference(reference.value, types),
         _other: () =>
             Promise.resolve({
                 type: "unknown",
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
     });
@@ -574,7 +555,6 @@ function resolveRequestBodyShape(
             properties: await resolveObjectProperties(object, types),
             description: undefined,
             availability: undefined,
-            defaultsTo: undefined,
         }),
         fileUpload: async (fileUpload) => ({
             type: "fileUpload",
@@ -583,7 +563,6 @@ function resolveRequestBodyShape(
                     ? {
                           description: await serializeMdxContent(fileUpload.value.description),
                           availability: fileUpload.value.availability,
-                          defaultsTo: undefined,
                           name: fileUpload.value.name,
                           properties: await Promise.all(
                               fileUpload.value.properties.map(
@@ -596,7 +575,6 @@ function resolveRequestBodyShape(
                                                   // TODO: support description and availability
                                                   description: undefined,
                                                   availability: undefined,
-                                                  defaultsTo: undefined,
                                                   isOptional: property.value.isOptional,
                                               };
                                           }
@@ -610,7 +588,6 @@ function resolveRequestBodyShape(
                                                   key: property.key,
                                                   description,
                                                   availability: property.availability,
-                                                  defaultsTo: undefined,
                                                   valueShape,
                                               };
                                           }
@@ -627,7 +604,6 @@ function resolveRequestBodyShape(
             Promise.resolve({
                 type: "unknown",
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
     });
@@ -648,7 +624,6 @@ function resolveResponseBodyShape(
                 properties: await resolveObjectProperties(object, types),
                 description: undefined,
                 availability: undefined,
-                defaultsTo: undefined,
             }),
             fileDownload: (fileDownload) => fileDownload,
             streamingText: (streamingText) => streamingText,
@@ -670,11 +645,10 @@ function resolveResponseBodyShape(
                         properties: await resolveObjectProperties(stream.shape, types),
                         description: undefined,
                         availability: undefined,
-                        defaultsTo: undefined,
                     },
                 };
             },
-            _other: () => ({ type: "unknown", availability: undefined, defaultsTo: undefined, description: undefined }),
+            _other: () => ({ type: "unknown", availability: undefined, description: undefined }),
         }),
     );
 }
@@ -707,7 +681,6 @@ function resolveTypeShape(
             properties: await resolveObjectProperties(object, types),
             description: await serializeMdxContent(description),
             availability,
-            defaultsTo: undefined,
         }),
         enum: async (enum_) => ({
             type: "enum",
@@ -717,12 +690,10 @@ function resolveTypeShape(
                     value: enumValue.value,
                     description: await serializeMdxContent(enumValue.description),
                     availability: undefined,
-                    defaultsTo: undefined,
                 })),
             ),
             description: await serializeMdxContent(description),
             availability,
-            defaultsTo: undefined,
         }),
         undiscriminatedUnion: async (undiscriminatedUnion) => ({
             type: "undiscriminatedUnion",
@@ -733,12 +704,10 @@ function resolveTypeShape(
                     shape: await resolveTypeReference(variant.type, types),
                     description: await serializeMdxContent(variant.description),
                     availability: variant.availability,
-                    defaultsTo: undefined,
                 })),
             ),
             description: await serializeMdxContent(description),
             availability,
-            defaultsTo: undefined,
         }),
         alias: async (alias) => ({
             type: "alias",
@@ -746,7 +715,6 @@ function resolveTypeShape(
             shape: await resolveTypeReference(alias.value, types),
             description: await serializeMdxContent(description),
             availability,
-            defaultsTo: undefined,
         }),
         discriminatedUnion: async (discriminatedUnion) => {
             return {
@@ -760,19 +728,16 @@ function resolveTypeShape(
                         properties: await resolveObjectProperties(variant.additionalProperties, types),
                         description: await serializeMdxContent(variant.description),
                         availability: variant.availability,
-                        defaultsTo: undefined,
                     })),
                 ),
                 description: await serializeMdxContent(description),
                 availability,
-                defaultsTo: undefined,
             };
         },
         _other: () =>
             Promise.resolve({
                 type: "unknown",
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
     });
@@ -788,12 +753,10 @@ function resolveTypeReference(
                 ...literal.value,
                 description: undefined,
                 availability: undefined,
-                defaultsTo: undefined,
             }),
             unknown: (unknown) => ({
                 ...unknown,
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
             optional: async (optional) => ({
@@ -807,14 +770,12 @@ function resolveTypeReference(
                 type: "list",
                 shape: await resolveTypeReference(list.itemType, types),
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
             set: async (set) => ({
                 type: "set",
                 shape: await resolveTypeReference(set.itemType, types),
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
             map: async (map) => ({
@@ -822,19 +783,17 @@ function resolveTypeReference(
                 keyShape: await resolveTypeReference(map.keyType, types),
                 valueShape: await resolveTypeReference(map.valueType, types),
                 availability: undefined,
-                defaultsTo: undefined,
                 description: undefined,
             }),
             id: ({ value: typeId }) => {
                 const typeDefinition = types[typeId];
                 if (typeDefinition == null) {
-                    return { type: "unknown", availability: undefined, defaultsTo: undefined, description: undefined };
+                    return { type: "unknown", availability: undefined, description: undefined };
                 }
                 return {
                     type: "reference",
                     typeId,
                     availability: undefined,
-                    defaultsTo: undefined,
                     description: undefined,
                 };
             },
@@ -842,9 +801,8 @@ function resolveTypeReference(
                 type: primitive.value.type,
                 description: undefined,
                 availability: undefined,
-                defaultsTo: undefined,
             }),
-            _other: () => ({ type: "unknown", availability: undefined, defaultsTo: undefined, description: undefined }),
+            _other: () => ({ type: "unknown", availability: undefined, description: undefined }),
         }),
     );
 }
@@ -858,7 +816,6 @@ export function dereferenceObjectProperties(
         const referencedShape = types[typeId] ?? {
             type: "unknown",
             availability: undefined,
-            defaultsTo: undefined,
             description: undefined,
         };
         const shape = unwrapReference(referencedShape, types);
@@ -910,7 +867,6 @@ function resolveObjectProperties(
                 valueShape,
                 description,
                 availability: property.availability,
-                defaultsTo: undefined,
             };
         }),
     );
@@ -1441,6 +1397,7 @@ export interface ResolvedDiscriminatedUnionShape extends WithMetadata {
 export interface ResolvedOptionalShape extends WithMetadata {
     type: "optional";
     shape: NonOptionalTypeShape;
+    defaultsTo: unknown | undefined;
 }
 
 export interface ResolvedListShape extends WithMetadata {
@@ -1589,7 +1546,7 @@ export function unwrapReference(
     if (shape.type === "reference") {
         const nestedShape = types[shape.typeId];
         if (nestedShape == null) {
-            return { type: "unknown", availability: undefined, defaultsTo: undefined, description: undefined };
+            return { type: "unknown", availability: undefined, description: undefined };
         }
         return unwrapReference(nestedShape, types);
     }
@@ -1614,7 +1571,7 @@ export async function unwrapReferenceRaw(
     if (shape.type === "reference") {
         const nestedShape = types[shape.typeId];
         if (nestedShape == null) {
-            return { type: "unknown", availability: undefined, defaultsTo: undefined, description: undefined };
+            return { type: "unknown", availability: undefined, description: undefined };
         }
         return unwrapReferenceRaw(await resolveTypeDefinition(nestedShape, types), types);
     }

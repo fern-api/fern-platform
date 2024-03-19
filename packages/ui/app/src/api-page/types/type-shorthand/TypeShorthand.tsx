@@ -22,7 +22,9 @@ export function renderTypeShorthandRoot(
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {shape.defaultsTo !== undefined && <span>{renderDefaultTo(shape.defaultsTo)}</span>}
+            {shape.type === "optional" && shape.defaultsTo !== undefined && (
+                <span>{renderDefaultTo(shape.defaultsTo)}</span>
+            )}
         </span>
     );
 }
