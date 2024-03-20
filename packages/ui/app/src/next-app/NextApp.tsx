@@ -41,7 +41,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     const navigation = useDeepCompareMemoize(pageProps.navigation);
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
 
-    // we're memoizing the props to avoid re-rendering the entire app when the props change
+    // we're memoizing the props to avoid re-rendering the entire app when the route changes
     const newPageProps: DocsPage.Props = {
         ...pageProps,
         files,
