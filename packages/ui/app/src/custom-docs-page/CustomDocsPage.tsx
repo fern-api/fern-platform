@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
-import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
+import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { type SerializedMdxContent } from "../mdx/mdx";
 import { MdxContent } from "../mdx/MdxContent";

@@ -14,7 +14,7 @@ const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) =
     ssr: true,
 });
 
-const ChangelogPage = dynamic(() => import("./ChangelogPage2").then(({ ChangelogPage }) => ChangelogPage), {
+const ChangelogPage = dynamic(() => import("./ChangelogPage").then(({ ChangelogPage }) => ChangelogPage), {
     ssr: true,
 });
 

@@ -1,6 +1,6 @@
 import moment from "moment";
 import { ReactElement } from "react";
-import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
+import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../util/ResolvedPath";
