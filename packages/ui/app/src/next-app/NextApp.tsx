@@ -21,6 +21,7 @@ const store = createStore();
 function withDefaultContexts(children: ReactElement): ReactElement {
     return (
         <IsReadyProvider>
+            <DatadogInit />
             <JotaiProvider store={store}>
                 <ViewportContextProvider>
                     <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
@@ -58,27 +59,25 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         initializePosthog();
     }, []);
 
-    const theme =
-        pageProps.colors?.dark != null && pageProps.colors?.light != null
-            ? "darkAndLight"
-            : pageProps.colors?.dark != null
-              ? "dark"
-              : "light";
-
+    // This is a hack to handle edge-cases related to multitenant subpath rendering:
+    // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
     useInterceptNextDataHref({
         router,
         basePath: pageProps.baseUrl?.basePath,
         host: pageProps.baseUrl?.domain,
     });
 
+    // If we don't have a baseUrl, we're rendering the app in a non-docs context
+    // this should only happen when we're rendering a 404 or error page
     if (pageProps.baseUrl == null) {
         return withDefaultContexts(<Component {...newPageProps} />);
     }
 
+    // The order in which the context tree is built matters can cause "flickering" if the order is changed.
+    // These contexts should only be mounted once akin to a single-page app. Values that do not change are memoized above.
     return withDefaultContexts(
         <FeatureFlagContext.Provider value={featureFlags}>
-            <DatadogInit />
-            <ThemeProvider theme={theme}>
+            <ThemeProvider colors={colors}>
                 <DocsContextProvider
                     files={files}
                     layout={layout}

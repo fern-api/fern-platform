@@ -1,9 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import { memo, useEffect, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
@@ -46,7 +45,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     useCreateSearchService(search, algoliaSearchIndex, navigation);
     const searchService = useSearchService();
 
-    const { resolvedTheme: theme, themes, setTheme } = useTheme();
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
         key: "Slash",
@@ -57,14 +55,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
             }
         },
     });
-
-    useEffect(() => {
-        // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted
-        if (theme == null || !themes.includes(theme)) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            setTheme(themes.length === 1 ? themes[0]! : "system");
-        }
-    }, [setTheme, theme, themes]);
 
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
