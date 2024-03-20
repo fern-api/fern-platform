@@ -63,10 +63,8 @@ function flattenSidebarNodeSlugs(nodes: SidebarNodeRaw[]): { slug: string[] }[] 
         } else if (node.type === "section") {
             return [{ slug: node.slug }, ...flattenSidebarNodeSlugs(node.items)];
         } else if (node.type === "apiSection") {
-            const current = [...node.endpoints, ...node.websockets, ...node.webhooks, node.changelog].filter(
-                isNonNullish,
-            );
-            return [{ slug: node.slug }, ...current, ...flattenSidebarNodeSlugs(node.subpackages)];
+            const current = [...node.items, node.changelog].filter(isNonNullish);
+            return [{ slug: node.slug }, ...current];
         }
         return [];
     });
