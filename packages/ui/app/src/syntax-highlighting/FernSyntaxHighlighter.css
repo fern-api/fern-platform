@@ -54,7 +54,7 @@
 }
 
 .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
-    @apply blur-[1.5px] opacity-40 dark:opacity-50 transition-[filter];
+    @apply blur-[1.5px] opacity-40 dark:opacity-50 transition-[filter,opacity];
 }
 
 .code-block:hover .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
