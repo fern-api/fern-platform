@@ -28,6 +28,7 @@
     "eslint": "^8.56.0",
     "eslint-config-custom": "*",
     "jest": "^29.7.0",
+    "prettier": "^3.2.4",
     "tsconfig": "*",
     "typescript": "4.9.4"
   },

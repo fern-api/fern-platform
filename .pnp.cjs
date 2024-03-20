@@ -6479,6 +6479,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-base64", "npm:3.7.2"],\
             ["lodash", "npm:4.17.21"],\
             ["marked", "npm:5.1.2"],\
+            ["prettier", "npm:3.2.4"],\
             ["tinycolor2", "npm:1.6.0"],\
             ["tsconfig", "npm:7.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
@@ -16791,6 +16792,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["node-cron", "npm:3.0.3"],\
             ["nodemon", "npm:3.1.0"],\
             ["path-resolver", "npm:0.0.2"],\
+            ["prettier", "npm:3.2.4"],\
             ["prisma", "npm:4.15.0"],\
             ["tsconfig", "npm:7.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"],\
@@ -16814,6 +16816,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:1.6.5"],\
             ["constructs", "npm:10.3.0"],\
             ["jest", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:29.7.0"],\
+            ["prettier", "npm:3.2.4"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-jest", "virtual:4c2528a4e2181623d9a08e0ec4f11d9d385dea638ec70d4f13bb60900f1bf5f8c05d26bd4c8ebab425d51d86db9e158e363068f7bf3af0a1111fd7d2b6b6097f#npm:27.1.5"],\
             ["ts-node", "virtual:81cc2531fc6bda045c87d6c3b21351574209a7d87ba11b639412d754d2fbdd0831d00d35ee7d39be3226e871d899842f300a82fbfbdd17e263ce302a51c65de6#npm:10.9.1"],\
