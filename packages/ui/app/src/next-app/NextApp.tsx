@@ -11,8 +11,10 @@ import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
+import { BgImageGradient } from "../docs/BgImageGradient";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
+import { SearchDialog } from "../search/SearchDialog";
 import { DocsPage } from "./DocsPage";
 import "./globals.scss";
 
@@ -77,6 +79,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     // These contexts should only be mounted once akin to a single-page app. Values that do not change are memoized above.
     return withDefaultContexts(
         <FeatureFlagContext.Provider value={featureFlags}>
+            <BgImageGradient colors={colors} />
             <ThemeProvider colors={colors}>
                 <DocsContextProvider
                     files={files}
@@ -93,6 +96,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                         basePath={baseUrl.basePath}
                         title={pageProps.title}
                     >
+                        <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                         <Component {...newPageProps} />
                     </NavigationContextProvider>
                 </DocsContextProvider>

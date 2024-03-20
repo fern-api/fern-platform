@@ -1,6 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { useAtom } from "jotai";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -14,9 +15,13 @@ import { Breadcrumbs } from "../Breadcrumbs";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
 import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
+
+const EndpointContentCodeSnippets = dynamic(
+    () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
+    { ssr: true },
+);
 
 export declare namespace EndpointContent {
     export interface Props {

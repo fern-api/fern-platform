@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { atom, useAtom, useAtomValue } from "jotai";
+import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { SidebarNavigation } from "../sidebar/types";
@@ -92,7 +93,7 @@ export function useCreateSearchService(
 
                 return {
                     isAvailable: true,
-                    loadCredentials: createSearchApiKeyLoader(envConfig, indexSegment.id),
+                    loadCredentials: once(createSearchApiKeyLoader(envConfig, indexSegment.id)),
                     index: envConfig.algoliaSearchIndex,
                 };
             } else {
@@ -113,7 +114,7 @@ export function useCreateSearchService(
                 }
                 return {
                     isAvailable: true,
-                    loadCredentials: createSearchApiKeyLoader(envConfig, indexSegment.id),
+                    loadCredentials: once(createSearchApiKeyLoader(envConfig, indexSegment.id)),
                     index: envConfig.algoliaSearchIndex,
                 };
             }
