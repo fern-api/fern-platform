@@ -88,7 +88,10 @@ jobs:
         run: yarn install --immutable
 
       - name: Codegen
-        run: yarn workspace fdr run build:prisma
+        run: |
+          npm install -g fern-api
+          fern generate --local
+          yarn workspace fdr run build:prisma
 
       - name: Run tests
         run: yarn test --ci
