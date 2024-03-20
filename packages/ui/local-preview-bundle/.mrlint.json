@@ -10,7 +10,9 @@
         "postcss",
         "postcss-import",
         "cssnano",
-        "styled-jsx"
+        "styled-jsx",
+        "lodash-es",
+        "@types/lodash-es"
       ]
     }
   }
