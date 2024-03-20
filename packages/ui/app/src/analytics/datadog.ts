@@ -22,7 +22,7 @@ if (clientToken && process.env.NODE_ENV === "production") {
         service: "docs-frontend",
         env: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
         sessionSampleRate: 100,
-        sessionReplaySampleRate: 20,
+        sessionReplaySampleRate: 100,
         trackUserInteractions: true,
         trackResources: true,
         trackLongTasks: true,
