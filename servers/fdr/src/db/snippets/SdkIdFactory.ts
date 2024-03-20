@@ -1,6 +1,5 @@
 import { FdrAPI } from "../../api";
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class SdkIdFactory {
     public static fromTypescript(sdk: FdrAPI.TypeScriptSdk): string {
         return `typescript|${sdk.package}|${sdk.version}`;

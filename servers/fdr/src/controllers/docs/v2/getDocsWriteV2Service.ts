@@ -79,8 +79,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
-                fernUrl: fernUrl,
-                customUrls: customUrls,
+                fernUrl,
+                customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,

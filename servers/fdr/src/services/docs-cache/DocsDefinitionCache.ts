@@ -105,7 +105,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         }
         await this.app.services.auth.checkUserBelongsToOrg({
             authHeader: authorization,
-            orgId: orgId,
+            orgId,
         });
     }
 

@@ -3340,6 +3340,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/eslint-config@workspace:*, @fern-api/eslint-config@workspace:packages/eslint":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/eslint-config@workspace:packages/eslint"
+  dependencies:
+    "@next/eslint-plugin-next": ^14.1.0
+    "@typescript-eslint/eslint-plugin": 7.2.0
+    "@typescript-eslint/parser": 6.18.1
+    eslint: ^8.56.0
+    eslint-config-prettier: ^9.1.0
+    eslint-plugin-deprecation: ^2.0.0
+    eslint-plugin-import: ^2.29.1
+    eslint-plugin-jest: ^27.6.3
+    eslint-plugin-react: ^7.33.2
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-tailwindcss: ^3.13.1
+    prettier: ^3.2.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/fdr-sdk@npm:0.60.0-1-g4795d27":
   version: 0.60.0-1-g4795d27
   resolution: "@fern-api/fdr-sdk@npm:0.60.0-1-g4795d27"
@@ -3362,6 +3381,7 @@ __metadata:
     "@babel/core": ^7.18.9
     "@babel/preset-env": ^7.18.9
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/eslint-config": "workspace:*"
     "@types/jest": ^29.5.11
     "@types/lodash": ^4.14.194
     "@types/marked": ^5.0.0
@@ -4525,31 +4545,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:4.15.0":
-  version: 4.15.0
-  resolution: "@prisma/client@npm:4.15.0"
-  dependencies:
-    "@prisma/engines-version": 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
+"@prisma/client@npm:5.11.0":
+  version: 5.11.0
+  resolution: "@prisma/client@npm:5.11.0"
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 875eb31e702e16a50188f4762d9689a930aeb4f18a158a0a5270feefc80dc9a30935890df65d98fc9c6655d5f4f65d9943997bb86a51dd904577e7d19c6a2a7c
+  checksum: 2d76e66fe088b3eaa64a88a50261886ae746800fe57b8e8e2ed584431b5675b1d067bce3566227242c69de9dae11fb561bc1ba04fb38ff2d1cfe9aabd7430557
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944":
-  version: 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
-  resolution: "@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944"
-  checksum: 6da6f076746aac2db043a9f15790f51c6d0e86139e1ebd83e6e046e799c0dbfa0d2df14cd7c70cc9583ce85b4bfc02e48fe1461077b79ed31ba83ad9440bb90f
+"@prisma/debug@npm:5.11.0":
+  version: 5.11.0
+  resolution: "@prisma/debug@npm:5.11.0"
+  checksum: 37c130b40ed3b8cb81ef6df67aac29eb914aba331b186b55478f279fce37ae190d34fdb9c37fe33bba2fcc54c3fef21d06629c7f88addeb17b21fc22dea4120d
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:4.15.0":
-  version: 4.15.0
-  resolution: "@prisma/engines@npm:4.15.0"
-  checksum: 61b53fe5ad7b0927de9aa4f51027e281788258d3fb5e389c3ae940829fdc5428a7108ce0cae5b329ddac0ee3206b0b9f8e8adae401c456f77d912c96368cfa5f
+"@prisma/engines-version@npm:5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102":
+  version: 5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102
+  resolution: "@prisma/engines-version@npm:5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102"
+  checksum: 557de48bc9cb78505ff70e283f7973901e65df60b1d6a2695044df18c30569d0e82d46f9235e980d279fd08ff2cc928f77e8e9250cfc1a3caa53745e93fdaa64
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:5.11.0":
+  version: 5.11.0
+  resolution: "@prisma/engines@npm:5.11.0"
+  dependencies:
+    "@prisma/debug": 5.11.0
+    "@prisma/engines-version": 5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102
+    "@prisma/fetch-engine": 5.11.0
+    "@prisma/get-platform": 5.11.0
+  checksum: 927ba456fdd8d60704b48d294e9ff91ca7d260617b67b7f2bc20ddeb6c5aead36af5cbf9348d17c71c2217ecce4f17d8f0676ab780fdadb27b8d95675a032379
+  languageName: node
+  linkType: hard
+
+"@prisma/fetch-engine@npm:5.11.0":
+  version: 5.11.0
+  resolution: "@prisma/fetch-engine@npm:5.11.0"
+  dependencies:
+    "@prisma/debug": 5.11.0
+    "@prisma/engines-version": 5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102
+    "@prisma/get-platform": 5.11.0
+  checksum: 708650f95d9cd3537c067934921af46a7674c186469a952399580bc6834fccd3df2f35867a6da0f3f472d3cd11a007f777c1a95c0dd0cc5f19ea53ecb2af7ba2
+  languageName: node
+  linkType: hard
+
+"@prisma/get-platform@npm:5.11.0":
+  version: 5.11.0
+  resolution: "@prisma/get-platform@npm:5.11.0"
+  dependencies:
+    "@prisma/debug": 5.11.0
+  checksum: c3712ca6d56bc47f420280960aca167bf44a47a23eb63d310ae1c144f27c938b9a658a6c3dc4555b53f2de16083e371775216a3d282524459143b9fe3c7b84db
   languageName: node
   linkType: hard
 
@@ -6699,6 +6749,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.17.15":
+  version: 18.19.26
+  resolution: "@types/node@npm:18.19.26"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: d72d4e7e520206a2a05cb3e03a73696fc3bdcdc6ba5330a75cfef4818cb137b260c32dfe85e8b4ea28e8fe92f1d1497e26336c607254c5eaf47032a1b1c8bb6e
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^18.7.18":
   version: 18.18.13
   resolution: "@types/node@npm:18.18.13"
@@ -7470,6 +7529,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@yarnpkg/core@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@yarnpkg/core@npm:4.0.3"
+  dependencies:
+    "@arcanis/slice-ansi": ^1.1.1
+    "@types/semver": ^7.1.0
+    "@types/treeify": ^1.0.0
+    "@yarnpkg/fslib": ^3.0.2
+    "@yarnpkg/libzip": ^3.0.1
+    "@yarnpkg/parsers": ^3.0.0
+    "@yarnpkg/shell": ^4.0.0
+    camelcase: ^5.3.1
+    chalk: ^3.0.0
+    ci-info: ^3.2.0
+    clipanion: ^4.0.0-rc.2
+    cross-spawn: 7.0.3
+    diff: ^5.1.0
+    dotenv: ^16.3.1
+    fast-glob: ^3.2.2
+    got: ^11.7.0
+    lodash: ^4.17.15
+    micromatch: ^4.0.2
+    p-limit: ^2.2.0
+    semver: ^7.1.2
+    strip-ansi: ^6.0.0
+    tar: ^6.0.5
+    tinylogic: ^2.0.0
+    treeify: ^1.1.0
+    tslib: ^2.4.0
+    tunnel: ^0.0.6
+  checksum: 811956ab94e9f4b3601f304312baf816322df124cf85754ef3985110c90935b1b761c8266a06c2c5633f6edc39c8a4ceffeff50f08f036d7adf19612ce3761a3
+  languageName: node
+  linkType: hard
+
 "@yarnpkg/esbuild-plugin-pnp@npm:^3.0.0-rc.15":
   version: 3.0.0-rc.15
   resolution: "@yarnpkg/esbuild-plugin-pnp@npm:3.0.0-rc.15"
@@ -7490,6 +7583,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@yarnpkg/fslib@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@yarnpkg/fslib@npm:3.0.2"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: b0795df777e43eb1c2bd8aa1d6c45f88b8a1d3922ee8bf264cdca916cc6f9455551a9499761a9c1f585aa576350d84adcc315e497fc031cdbbbc1a5c71942e1b
+  languageName: node
+  linkType: hard
+
 "@yarnpkg/libzip@npm:^3.0.0":
   version: 3.0.0
   resolution: "@yarnpkg/libzip@npm:3.0.0"
@@ -7503,6 +7605,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@yarnpkg/libzip@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@yarnpkg/libzip@npm:3.0.1"
+  dependencies:
+    "@types/emscripten": ^1.39.6
+    "@yarnpkg/fslib": ^3.0.2
+    tslib: ^2.4.0
+  peerDependencies:
+    "@yarnpkg/fslib": ^3.0.2
+  checksum: 932b1fc35bb60ca57d033aab7a940f7b1d7bf52a68bfff6c755fe26827c0f1b373fda33e373afabbae98de3ed31ae4f0e9ee2ef24588cd074b75fb814117827d
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/nm@npm:^4.0.1":
+  version: 4.0.2
+  resolution: "@yarnpkg/nm@npm:4.0.2"
+  dependencies:
+    "@yarnpkg/core": ^4.0.3
+    "@yarnpkg/fslib": ^3.0.2
+    "@yarnpkg/pnp": ^4.0.2
+  checksum: 4a9d1a62d33230c84c3396e84e6b8a25e6b6c3ab9f9f36815b7ecf7581f5bf59abc1996f9ccf583627c177a841d09ffa31ad9cdd48ba3d500263bf12ad1ff281
+  languageName: node
+  linkType: hard
+
 "@yarnpkg/parsers@npm:^3.0.0":
   version: 3.0.0
   resolution: "@yarnpkg/parsers@npm:3.0.0"
@@ -7510,6 +7636,31 @@ __metadata:
     js-yaml: ^3.10.0
     tslib: ^2.4.0
   checksum: fefe5ecafb5bfa2b678ac9ba9259810fdda40142afd9d0b7e0e5cc1cce1fd824dffc52217c5e429807481d8fd18ead074bd317e64fd626335d3c9f1a320bade2
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/pnp@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@yarnpkg/pnp@npm:4.0.2"
+  dependencies:
+    "@types/node": ^18.17.15
+    "@yarnpkg/fslib": ^3.0.2
+  checksum: 7efd3702e83495b22452f79e56fc753f71e9f57613acaa775f64ec026b585cc8d3d6e2be6afeed9f6fbaa6034814eb25b70bc8a451c1f860100143d6e0e59c75
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/pnpify@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@yarnpkg/pnpify@npm:4.0.1"
+  dependencies:
+    "@yarnpkg/core": ^4.0.2
+    "@yarnpkg/fslib": ^3.0.1
+    "@yarnpkg/nm": ^4.0.1
+    clipanion: ^4.0.0-rc.2
+    tslib: ^2.4.0
+  bin:
+    pnpify: ./lib/cli.js
+  checksum: 3a6994e3fd6e3aae48e11965208a5f202cc01b09d687433f155b0057a42af57346ab3c79637d900f2ed3fa0eb099418bde044eacd4798e41d6baf22f68c6778a
   languageName: node
   linkType: hard
 
@@ -11785,7 +11936,7 @@ env-cmd@toddbluhm/env-cmd:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
     "@fern-api/venus-api-sdk": ^0.1.0
-    "@prisma/client": 4.15.0
+    "@prisma/client": 5.11.0
     "@slack/web-api": ^6.9.0
     "@types/compression": ^1.7.5
     "@types/cors": ^2.8.13
@@ -11800,6 +11951,7 @@ env-cmd@toddbluhm/env-cmd:
     "@types/node-cron": ^3.0.8
     "@types/uuid": ^9.0.1
     "@ungap/url-search-params": 0.2.2
+    "@yarnpkg/pnpify": ^4.0.1
     algoliasearch: ^4.22.1
     axios: ^1.6.5
     axios-logger: ^2.6.2
@@ -11821,7 +11973,7 @@ env-cmd@toddbluhm/env-cmd:
     nodemon: ^3.0.0
     path-resolver: "*"
     prettier: ^3.2.4
-    prisma: 4.15.0
+    prisma: 5.11.0
     tsconfig: "*"
     typescript: 4.9.4
     uuid: ^9.0.0
@@ -17673,15 +17825,14 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"prisma@npm:4.15.0":
-  version: 4.15.0
-  resolution: "prisma@npm:4.15.0"
+"prisma@npm:5.11.0":
+  version: 5.11.0
+  resolution: "prisma@npm:5.11.0"
   dependencies:
-    "@prisma/engines": 4.15.0
+    "@prisma/engines": 5.11.0
   bin:
     prisma: build/index.js
-    prisma2: build/index.js
-  checksum: a42b940396f5f101d44effad9bfccca4b062ae80a369dc44961cbc074326239340f05c5af49981b1cddb08d9155c4bcc93c4d69ed2ae4a634e1742159204cb89
+  checksum: 15d30454347381122c6ea5864754ae15e59d2d9771733640e549e11acf9679eb4a668788cd05f6f93ea8479e118b2fcb3a012df3d6e036a36675f22bdaeaea84
   languageName: node
   linkType: hard
 

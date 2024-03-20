@@ -18,7 +18,9 @@ export class DatabaseServiceImpl implements DatabaseService {
                 apiDefinitionId: id,
             },
         });
-        if (!record) return null;
+        if (!record) {
+            return null;
+        }
         try {
             return JSON.parse(record.definition.toString()) as APIV1Db.DbApiDefinition;
         } catch {

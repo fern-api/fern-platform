@@ -70,7 +70,6 @@ jobs:
         # comma that prettier adds back
         run: |
           yarn organize-imports
-          yarn format:fix
           git --no-pager diff --exit-code
 
   test:
@@ -87,6 +86,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --immutable
+
+      - name: Codegen
+        run: yarn workspace fdr run build:prisma
 
       - name: Run tests
         run: yarn test --ci

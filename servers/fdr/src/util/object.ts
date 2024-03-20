@@ -17,8 +17,12 @@ export function compact<T extends Record<string, unknown>>(source: T) {
 }
 
 function compactVal(val: unknown): unknown {
-    if (Array.isArray(val)) return val.filter((v) => v !== undefined).map((v) => compactVal(v));
-    if (isPlainObject(val)) return compact(val);
+    if (Array.isArray(val)) {
+        return val.filter((v) => v !== undefined).map((v) => compactVal(v));
+    }
+    if (isPlainObject(val)) {
+        return compact(val);
+    }
     return val;
 }
 

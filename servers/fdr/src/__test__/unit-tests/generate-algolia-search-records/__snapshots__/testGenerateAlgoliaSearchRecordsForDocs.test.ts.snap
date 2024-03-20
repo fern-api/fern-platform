@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"candid"} 1`] = `
-Array [
-  Object {
+[
+  {
     "content": "ENCOUNTERS
 
 Candid's primary entry point for submitting encounter information is the Encounters [../api-reference/encounters] endpoint. Candid
@@ -39,13 +39,13 @@ EXAMPLE WORKFLOW USING CANDID'S PRODUCTS
     on finalized adjudicated claims based on this data.
  5. Tasks [../api-reference/tasks] are synchronized with your system if you are not working them directly in the Candid app.",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Our Products",
           "urlSlug": "our-products",
         },
@@ -54,7 +54,7 @@ EXAMPLE WORKFLOW USING CANDID'S PRODUCTS
     "title": "Our Products",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "Candid Health supports most payers. You can find a list of supported payers with their respective payer_id, payer_name, and cpid
 below.
 
@@ -77,13 +77,13 @@ a match on a combination of payer_name and payer_id to determine the right place
 View list of supported Payer IDs, Payer Names, and CPIDs or download a CSV here
 [https://app.joincandidhealth.com/dynamic-files/payers-list.csv].",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Payer Information",
           "urlSlug": "payer-information",
         },
@@ -92,7 +92,7 @@ View list of supported Payer IDs, Payer Names, and CPIDs or download a CSV here
     "title": "Payer Information",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "This page outlines how to use our Python and TypeScript SDKs to interact with our API. Specifically, you'll learn how to make a
 request to create an Encounter.
 
@@ -119,20 +119,20 @@ To make requests to our API, you'll need to use your API key for authentication.
 client = CandidApiClient(
     environment=CandidApiEnvironment.STAGING,
     options=CandidApiClientOptions(
-        client_id=\\"YOUR_CLIENT_ID\\",
-        client_secret=\\"YOUR_CLIENT_SECRET\\"
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET"
     )
 )
 \`\`\`
 </CodeBlock>
-<CodeBlock title=\\"TypeScript\\">
+<CodeBlock title="TypeScript">
 \`\`\`typescript
-import { CandidApi, CandidApiClient, CandidApiEnvironment } from \\"candidhealth\\";
+import { CandidApi, CandidApiClient, CandidApiEnvironment } from "candidhealth";
 
 const client = new CandidApiClient({
     environment: CandidApiEnvironment.Staging,
-    clientId: \\"YOUR_CLIENT_ID\\",
-    clientSecret: \\"YOUR_CLIENT_SECRET\\",
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET",
 });
 \`\`\`
 </CodeBlock>
@@ -146,28 +146,28 @@ MAKING AN EXAMPLE REQUEST
 
 In this example, we'll create an Encounter using the V4 API.
 
-\`\`\`python created_encounter = client.encounters.v_4.create( external_id=EncounterExternalId(\\"emr-claim-id-abcd\\",
-date_of_service=Date(\\"2023-05-23\\", billable_status=BillableStatusType.BILLABLE, # or BillableStatusType.NOT_BILLABLE
+\`\`\`python created_encounter = client.encounters.v_4.create( external_id=EncounterExternalId("emr-claim-id-abcd",
+date_of_service=Date("2023-05-23", billable_status=BillableStatusType.BILLABLE, # or BillableStatusType.NOT_BILLABLE
 responsible_party=ResponsiblePartyType.INSURANCE_PAY, # or ResponsiblePartyType.SELF_PAY patient=PatientCreate(
-external_id=\\"emr-patient-id-123\\", first_name=\\"Loki\\", last_name=\\"Laufeyson\\", date_of_birth=Date(\\"1983-12-17\\", gender=Gender.MALE,
-address=StreetAddressShortZip( address_1=\\"1234 Main St\\", address_2=\\"Apt 9876\\", city=\\"Asgard\\", state=State.CA, zip_code=\\"94109\\",
-zip_plus_four_code=\\"1234\\", ), ), patient_authorized_release=True, billing_provider=BillingProvider( organization_name=\\"Acme Health
-PC\\", npi=\\"1234567890\\", tax_id=\\"123456789\\", address=StreetAddressLongZip( address_1=\\"1234 Main St\\", address_2=\\"Apt 9876\\",
-city=\\"Asgard\\", state=State.CA, zip_code=\\"94109\\", zip_plus_four_code=\\"1234\\", ), ), rendering_provider=RenderingProvider(
-first_name=\\"Doctor\\", last_name=\\"Strange\\", npi=\\"9876543210\\", ), diagnoses=[ DiagnosisCreate(code_type=DiagnosisTypeCode.ABF,
-code=\\"Z63.88\\", DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\", ],
-place_of_service_code=FacilityTypeCode.TELEHEALTH, service_lines=[ ServiceLineCreate( procedure_code=\\"99212\\", modifiers=[],
-quantity=Decimal(\\"1.0\\", units=ServiceLineUnits.UN, charge_amount_cents=1500, diagnosis_pointers=[0, 1], ), ], clinical_notes=[],
+external_id="emr-patient-id-123", first_name="Loki", last_name="Laufeyson", date_of_birth=Date("1983-12-17", gender=Gender.MALE,
+address=StreetAddressShortZip( address_1="1234 Main St", address_2="Apt 9876", city="Asgard", state=State.CA, zip_code="94109",
+zip_plus_four_code="1234", ), ), patient_authorized_release=True, billing_provider=BillingProvider( organization_name="Acme Health
+PC", npi="1234567890", tax_id="123456789", address=StreetAddressLongZip( address_1="1234 Main St", address_2="Apt 9876",
+city="Asgard", state=State.CA, zip_code="94109", zip_plus_four_code="1234", ), ), rendering_provider=RenderingProvider(
+first_name="Doctor", last_name="Strange", npi="9876543210", ), diagnoses=[ DiagnosisCreate(code_type=DiagnosisTypeCode.ABF,
+code="Z63.88", DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="E66.66", ],
+place_of_service_code=FacilityTypeCode.TELEHEALTH, service_lines=[ ServiceLineCreate( procedure_code="99212", modifiers=[],
+quantity=Decimal("1.0", units=ServiceLineUnits.UN, charge_amount_cents=1500, diagnosis_pointers=[0, 1], ), ], clinical_notes=[],
 provider_accepts_assignment=True, benefits_assigned_to_provider=True, ) \`\`\` \`\`\`typescript const createEncounterResponse = await
-client.encounters.v4.create({ externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\", dateOfService:
-CandidApi.Date_(\\"2023-05-23\\", billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
-patient: { externalId: \\"emr-patient-id-123\\", firstName: \\"Loki\\", lastName: \\"Laufeyson\\", dateOfBirth: CandidApi.Date_(\\"1983-12-17\\",
-gender: \\"male\\", address: { address1: \\"1234 Main St\\", address2: \\"Apt 9876\\", city: \\"Asgard\\", state: \\"CA\\", zipCode: \\"94109\\",
-zipPlusFourCode: \\"1234\\", }, }, patientAuthorizedRelease: true, billingProvider: { organizationName: \\"Acme Health PC\\", npi:
-\\"1234567890\\", taxId: \\"123456789\\", address: { address1: \\"1234 Main St\\", address2: \\"Apt 9876\\", city: \\"Asgard\\", state: \\"CA\\", zipCode:
-\\"94109\\", zipPlusFourCode: \\"1234\\", }, }, renderingProvider: { firstName: \\"Doctor\\", lastName: \\"Strange\\", npi: \\"9876543210\\", },
-diagnoses: [ { codeType: \\"ABF\\", code: \\"Z63.88\\" }, { codeType: \\"ABF\\", code: \\"E66.66\\" }, ], placeOfServiceCode: \\"02\\", //
-telemedicine serviceLines: [ { procedureCode: \\"99212\\", modifiers: [], quantity: CandidApi.Decimal(\\"1.0\\", units: \\"UN\\",
+client.encounters.v4.create({ externalId: CandidApi.EncounterExternalId("emr-claim-id-abcd", dateOfService:
+CandidApi.Date_("2023-05-23", billableStatus: "BILLABLE", // or "NOT_BILLABLE responsibleParty: "INSURANCE_PAY", // or "SELF_PAY"
+patient: { externalId: "emr-patient-id-123", firstName: "Loki", lastName: "Laufeyson", dateOfBirth: CandidApi.Date_("1983-12-17",
+gender: "male", address: { address1: "1234 Main St", address2: "Apt 9876", city: "Asgard", state: "CA", zipCode: "94109",
+zipPlusFourCode: "1234", }, }, patientAuthorizedRelease: true, billingProvider: { organizationName: "Acme Health PC", npi:
+"1234567890", taxId: "123456789", address: { address1: "1234 Main St", address2: "Apt 9876", city: "Asgard", state: "CA", zipCode:
+"94109", zipPlusFourCode: "1234", }, }, renderingProvider: { firstName: "Doctor", lastName: "Strange", npi: "9876543210", },
+diagnoses: [ { codeType: "ABF", code: "Z63.88" }, { codeType: "ABF", code: "E66.66" }, ], placeOfServiceCode: "02", //
+telemedicine serviceLines: [ { procedureCode: "99212", modifiers: [], quantity: CandidApi.Decimal("1.0", units: "UN",
 chargeAmountCents: 1500, diagnosisPointers: [0, 1], } ], clinicalNotes: [], providerAcceptsAssignment: true,
 benefitsAssignedToProvider: true, }); \`\`\`
 
@@ -182,10 +182,10 @@ via native exception-handling:
 try:
     created_encounter = client.encounters.v_4.create(...)
 except EncounterExternalIdUniquenessError as e:
-    print(f\\"An error occurred: {e}\\")
+    print(f"An error occurred: {e}")
 \`\`\`
 </CodeBlock>
-<CodeBlock title=\\"TypeScript\\">
+<CodeBlock title="TypeScript">
 \`\`\`typescript
 if (createEncounterResponse.ok) {
     const { body: newEncounter } = createEncounterResponse;
@@ -206,60 +206,60 @@ candid.resources.encounters.resources.v_4 import BillableStatusType, Responsible
 client = CandidApiClient(
     environment=CandidApiEnvironment.STAGING,
     options=CandidApiClientOptions(
-        client_id=\\"YOUR_CLIENT_ID\\",
-        client_secret=\\"YOUR_CLIENT_SECRET\\"
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET"
     )
 )
 
 created_encounter = client.encounters.v_4.create(
-    external_id=EncounterExternalId(\\"emr-claim-id-abcd\\",
-    date_of_service=Date(\\"2023-05-23\\",
+    external_id=EncounterExternalId("emr-claim-id-abcd",
+    date_of_service=Date("2023-05-23",
     billable_status=BillableStatusType.BILLABLE,  # or BillableStatusType.NOT_BILLABLE
     responsible_party=ResponsiblePartyType.INSURANCE_PAY,  # or ResponsiblePartyType.SELF_PAY
     patient=PatientCreate(
-        external_id=\\"emr-patient-id-123\\",
-        first_name=\\"Loki\\",
-        last_name=\\"Laufeyson\\",
-        date_of_birth=Date(\\"1983-12-17\\",
+        external_id="emr-patient-id-123",
+        first_name="Loki",
+        last_name="Laufeyson",
+        date_of_birth=Date("1983-12-17",
         gender=Gender.MALE,
         address=StreetAddressShortZip(
-            address_1=\\"1234 Main St\\",
-            address_2=\\"Apt 9876\\",
-            city=\\"Asgard\\",
+            address_1="1234 Main St",
+            address_2="Apt 9876",
+            city="Asgard",
             state=State.CA,
-            zip_code=\\"94109\\",
-            zip_plus_four_code=\\"1234\\",
+            zip_code="94109",
+            zip_plus_four_code="1234",
         ),
     ),
     patient_authorized_release=True,
     billing_provider=BillingProvider(
-        organization_name=\\"Acme Health PC\\",
-        npi=\\"1234567890\\",
-        tax_id=\\"123456789\\",
+        organization_name="Acme Health PC",
+        npi="1234567890",
+        tax_id="123456789",
         address=StreetAddressLongZip(
-            address_1=\\"1234 Main St\\",
-            address_2=\\"Apt 9876\\",
-            city=\\"Asgard\\",
+            address_1="1234 Main St",
+            address_2="Apt 9876",
+            city="Asgard",
             state=State.CA,
-            zip_code=\\"94109\\",
-            zip_plus_four_code=\\"1234\\",
+            zip_code="94109",
+            zip_plus_four_code="1234",
         ),
     ),
     rendering_provider=RenderingProvider(
-        first_name=\\"Doctor\\",
-        last_name=\\"Strange\\",
-        npi=\\"9876543210\\",
+        first_name="Doctor",
+        last_name="Strange",
+        npi="9876543210",
     ),
     diagnoses=[
-        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"Z63.88\\",
-        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code=\\"E66.66\\",
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="Z63.88",
+        DiagnosisCreate(code_type=DiagnosisTypeCode.ABF, code="E66.66",
     ],
     place_of_service_code=FacilityTypeCode.TELEHEALTH,
     service_lines=[
         ServiceLineCreate(
-            procedure_code=\\"99212\\",
+            procedure_code="99212",
             modifiers=[],
-            quantity=Decimal(\\"1.0\\",
+            quantity=Decimal("1.0",
             units=ServiceLineUnits.UN,
             charge_amount_cents=1500,
             diagnosis_pointers=[0, 1],
@@ -271,66 +271,66 @@ created_encounter = client.encounters.v_4.create(
 )
 \`\`\`
 </CodeBlock>
-<CodeBlock title=\\"TypeScript\\">
+<CodeBlock title="TypeScript">
 \`\`\`typescript
-import { CandidApi, CandidApiClient, CandidApiEnvironment } from \\"candidhealth\\";
+import { CandidApi, CandidApiClient, CandidApiEnvironment } from "candidhealth";
 
 const client = new CandidApiClient({
     environment: CandidApiEnvironment.Staging,
-    clientId: \\"YOUR_CLIENT_ID\\",
-    clientSecret: \\"YOUR_CLIENT_SECRET\\",
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET",
 });
 
 const createEncounterResponse = await client.encounters.v4.create({
-    externalId: CandidApi.EncounterExternalId(\\"emr-claim-id-abcd\\",
-    dateOfService: CandidApi.Date_(\\"2023-05-23\\",
-    billableStatus: \\"BILLABLE\\", // or \\"NOT_BILLABLE
-    responsibleParty: \\"INSURANCE_PAY\\", // or \\"SELF_PAY\\"
+    externalId: CandidApi.EncounterExternalId("emr-claim-id-abcd",
+    dateOfService: CandidApi.Date_("2023-05-23",
+    billableStatus: "BILLABLE", // or "NOT_BILLABLE
+    responsibleParty: "INSURANCE_PAY", // or "SELF_PAY"
     patient: {
-        externalId: \\"emr-patient-id-123\\",
-        firstName: \\"Loki\\",
-        lastName: \\"Laufeyson\\",
-        dateOfBirth: CandidApi.Date_(\\"1983-12-17\\",
-        gender: \\"male\\",
+        externalId: "emr-patient-id-123",
+        firstName: "Loki",
+        lastName: "Laufeyson",
+        dateOfBirth: CandidApi.Date_("1983-12-17",
+        gender: "male",
         address: {
-            address1: \\"1234 Main St\\",
-            address2: \\"Apt 9876\\",
-            city: \\"Asgard\\",
-            state: \\"CA\\",
-            zipCode: \\"94109\\",
-            zipPlusFourCode: \\"1234\\",
+            address1: "1234 Main St",
+            address2: "Apt 9876",
+            city: "Asgard",
+            state: "CA",
+            zipCode: "94109",
+            zipPlusFourCode: "1234",
         },
     },
     patientAuthorizedRelease: true,
     billingProvider: {
-        organizationName: \\"Acme Health PC\\",
-        npi: \\"1234567890\\",
-        taxId: \\"123456789\\",
+        organizationName: "Acme Health PC",
+        npi: "1234567890",
+        taxId: "123456789",
         address: {
-            address1: \\"1234 Main St\\",
-            address2: \\"Apt 9876\\",
-            city: \\"Asgard\\",
-            state: \\"CA\\",
-            zipCode: \\"94109\\",
-            zipPlusFourCode: \\"1234\\",
+            address1: "1234 Main St",
+            address2: "Apt 9876",
+            city: "Asgard",
+            state: "CA",
+            zipCode: "94109",
+            zipPlusFourCode: "1234",
         },
     },
     renderingProvider: {
-        firstName: \\"Doctor\\",
-        lastName: \\"Strange\\",
-        npi: \\"9876543210\\",
+        firstName: "Doctor",
+        lastName: "Strange",
+        npi: "9876543210",
     },
     diagnoses: [
-        { codeType: \\"ABF\\", code: \\"Z63.88\\" },
-        { codeType: \\"ABF\\", code: \\"E66.66\\" },
+        { codeType: "ABF", code: "Z63.88" },
+        { codeType: "ABF", code: "E66.66" },
     ],
-    placeOfServiceCode: \\"02\\", // telemedicine
+    placeOfServiceCode: "02", // telemedicine
     serviceLines: [
         {
-            procedureCode: \\"99212\\",
+            procedureCode: "99212",
             modifiers: [],
-            quantity: CandidApi.Decimal(\\"1.0\\",
-            units: \\"UN\\",
+            quantity: CandidApi.Decimal("1.0",
+            units: "UN",
             chargeAmountCents: 1500,
             diagnosisPointers: [0, 1],
         }
@@ -343,13 +343,13 @@ const createEncounterResponse = await client.encounters.v4.create({
 </CodeBlock>
 ",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Getting Started",
           "urlSlug": "getting-started",
         },
@@ -358,7 +358,7 @@ const createEncounterResponse = await client.encounters.v4.create({
     "title": "Getting Started",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "We strive to keep our API integration experience seamless. When making API design decisions, we do the following:
 
  * We aim to use the same APIs internally that you use. This allows us to catch errors early and to make sure that our API is easy
@@ -375,13 +375,13 @@ const createEncounterResponse = await client.encounters.v4.create({
    things above better. If you do, please let us know! We are always looking for ways to improve our API, and you can reach us by
    emailing support@joincandidhealth.com [support@joincandidhealth.com].",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Principles",
           "urlSlug": "api-principles",
         },
-        Object {
+        {
           "name": "Design Principles",
           "urlSlug": "design-principles",
         },
@@ -390,7 +390,7 @@ const createEncounterResponse = await client.encounters.v4.create({
     "title": "Design Principles",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "Endpoints in our API live in one of three states: incubating, available, and deprecated.
 
  * Incubating: Endpoints in this state can be used, but proceed with caution. We are still working on them, and they may change or
@@ -404,13 +404,13 @@ const createEncounterResponse = await client.encounters.v4.create({
 Our endpoint documentation will specify if the endpoint is incubating or deprecated. Otherwise, you can safely assume that it is
 available.",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Principles",
           "urlSlug": "api-principles",
         },
-        Object {
+        {
           "name": "Development Lifecycle",
           "urlSlug": "development-lifecycle",
         },
@@ -419,7 +419,7 @@ available.",
     "title": "Development Lifecycle",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "We do our absolute best to avoid breaking changes in our API. However, sometimes we need to make changes to our API that will
 break existing clients. Here's how we recommend thinking about breaking changes from us:
 
@@ -450,13 +450,13 @@ Here are some examples of changes that we consider breaking:
  * Removing a required field on a response shape
  * Changing the data type of a field",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Principles",
           "urlSlug": "api-principles",
         },
-        Object {
+        {
           "name": "Breaking Changes",
           "urlSlug": "breaking-changes",
         },
@@ -465,7 +465,7 @@ Here are some examples of changes that we consider breaking:
     "title": "Breaking Changes",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "TYPE ALIASES & BRANDING
 
 For many string or UUID types, you may notice we alias / brand them as their own type. Branding is a technique to preserve the
@@ -506,13 +506,13 @@ We also expect that it is a non-breaking change to add a new union member to a u
 field in a response, we expect you to gracefully handle an _other case. This allows us to better serve and improve our APIs at a
 quick velocity without breaking your code.",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Principles",
           "urlSlug": "api-principles",
         },
-        Object {
+        {
           "name": "Conventions",
           "urlSlug": "conventions",
         },
@@ -521,17 +521,17 @@ quick velocity without breaking your code.",
     "title": "Conventions",
     "type": "page-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "POST",
       "name": "Get Token",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/auth/v2",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/token",
           },
@@ -539,17 +539,17 @@ quick velocity without breaking your code.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "auth",
           "urlSlug": "auth",
         },
-        Object {
+        {
           "name": "Get Token",
           "urlSlug": "get-token",
         },
@@ -557,8 +557,8 @@ quick velocity without breaking your code.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "This API is a wrapper around Change Healthcare's eligibility API. Below are some helpful documentation links:
 
  * Candid Health Support article [https://support.joincandidhealth.com/hc/en-us/articles/7937415468820]
@@ -577,13 +577,13 @@ A schema of the response object can be found here: Change Healthcare Docs
 [https://developers.changehealthcare.com/eligibilityandclaims/reference/medicaleligibility]",
       "method": "POST",
       "name": "Submit encounter eligibility check",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/eligibility/v2",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -591,21 +591,21 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "eligibility",
           "urlSlug": "eligibility",
         },
-        Object {
+        {
           "name": "v2",
           "urlSlug": "v-2",
         },
-        Object {
+        {
           "name": "Submit encounter eligibility check",
           "urlSlug": "submit-eligibility-check",
         },
@@ -613,17 +613,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get all encounters",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/encounters/v4",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -631,17 +631,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "encounters",
           "urlSlug": "encounters",
         },
-        Object {
+        {
           "name": "Get all encounters",
           "urlSlug": "get-all",
         },
@@ -649,25 +649,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get encounter",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/encounters/v4",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "encounter_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -675,17 +675,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "encounters",
           "urlSlug": "encounters",
         },
-        Object {
+        {
           "name": "Get encounter",
           "urlSlug": "get",
         },
@@ -693,17 +693,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "POST",
       "name": "Create encounter",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/encounters/v4",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -711,17 +711,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "encounters",
           "urlSlug": "encounters",
         },
-        Object {
+        {
           "name": "Create encounter",
           "urlSlug": "create",
         },
@@ -729,25 +729,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "PATCH",
       "name": "Update encounter",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/encounters/v4",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "encounter_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -755,17 +755,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "encounters",
           "urlSlug": "encounters",
         },
-        Object {
+        {
           "name": "Update encounter",
           "urlSlug": "update",
         },
@@ -773,17 +773,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "POST",
       "name": "Compute network status",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/expected-network-status/v1",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -791,17 +791,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "expected-network-status",
           "urlSlug": "expected-network-status",
         },
-        Object {
+        {
           "name": "Compute network status",
           "urlSlug": "compute",
         },
@@ -809,17 +809,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get Exports",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/exports/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -827,21 +827,21 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "exports",
           "urlSlug": "exports",
         },
-        Object {
+        {
           "name": "v3",
           "urlSlug": "v-3",
         },
-        Object {
+        {
           "name": "Get Exports",
           "urlSlug": "get-exports",
         },
@@ -849,25 +849,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "POST",
       "name": "Create",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/guarantors/v1",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "encounter_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -875,17 +875,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "guarantor",
           "urlSlug": "guarantor",
         },
-        Object {
+        {
           "name": "Create",
           "urlSlug": "create",
         },
@@ -893,25 +893,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/guarantors/v1",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "guarantor_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -919,17 +919,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "guarantor",
           "urlSlug": "guarantor",
         },
-        Object {
+        {
           "name": "Get",
           "urlSlug": "get",
         },
@@ -937,25 +937,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "PATCH",
       "name": "Update",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/guarantors/v1",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "guarantor_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -963,17 +963,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "guarantor",
           "urlSlug": "guarantor",
         },
-        Object {
+        {
           "name": "Update",
           "urlSlug": "update",
         },
@@ -981,25 +981,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/organization-providers/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "organization_provider_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1007,21 +1007,21 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "organization-providers",
           "urlSlug": "organization-providers",
         },
-        Object {
+        {
           "name": "v3",
           "urlSlug": "v-3",
         },
-        Object {
+        {
           "name": "Get",
           "urlSlug": "get",
         },
@@ -1029,17 +1029,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get Multi",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/organization-providers/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1047,21 +1047,21 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "organization-providers",
           "urlSlug": "organization-providers",
         },
-        Object {
+        {
           "name": "v3",
           "urlSlug": "v-3",
         },
-        Object {
+        {
           "name": "Get Multi",
           "urlSlug": "get-multi",
         },
@@ -1069,17 +1069,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "POST",
       "name": "Create",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/organization-providers/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1087,21 +1087,21 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "organization-providers",
           "urlSlug": "organization-providers",
         },
-        Object {
+        {
           "name": "v3",
           "urlSlug": "v-3",
         },
-        Object {
+        {
           "name": "Create",
           "urlSlug": "create",
         },
@@ -1109,25 +1109,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "PATCH",
       "name": "Update",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/organization-providers/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "organization_provider_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1135,21 +1135,21 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "organization-providers",
           "urlSlug": "organization-providers",
         },
-        Object {
+        {
           "name": "v3",
           "urlSlug": "v-3",
         },
-        Object {
+        {
           "name": "Update",
           "urlSlug": "update",
         },
@@ -1157,25 +1157,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get Actions",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/tasks/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "task_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/actions",
           },
@@ -1183,17 +1183,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "tasks",
           "urlSlug": "tasks",
         },
-        Object {
+        {
           "name": "Get Actions",
           "urlSlug": "get-actions",
         },
@@ -1201,17 +1201,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "POST",
       "name": "Create billing note",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/billing_notes/v2",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1219,17 +1219,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "billing-notes",
           "urlSlug": "billing-notes",
         },
-        Object {
+        {
           "name": "Create billing note",
           "urlSlug": "create",
         },
@@ -1237,25 +1237,25 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get payer",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/payers/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "payer_uuid",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1263,17 +1263,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "payers",
           "urlSlug": "payers",
         },
-        Object {
+        {
           "name": "Get payer",
           "urlSlug": "get",
         },
@@ -1281,17 +1281,17 @@ A schema of the response object can be found here: Change Healthcare Docs
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "GET",
       "name": "Get all payers",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "/api/payers/v3",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -1299,17 +1299,17 @@ A schema of the response object can be found here: Change Healthcare Docs
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "payers",
           "urlSlug": "payers",
         },
-        Object {
+        {
           "name": "Get all payers",
           "urlSlug": "get-all",
         },
@@ -1321,8 +1321,8 @@ A schema of the response object can be found here: Change Healthcare Docs
 `;
 
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
-Array [
-  Object {
+[
+  {
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -1349,7 +1349,7 @@ are ready, we allow for a X-Api-Version header to be passed on all API requests.
 
 If you omit the version header, your request will default to the earliest supported version of the API.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Api-Version: 2.2'
 
 
@@ -1358,13 +1358,13 @@ AVAILABLE VERSIONS
 
 Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Getting Started",
           "urlSlug": "getting-started",
         },
@@ -1372,12 +1372,12 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     },
     "title": "Getting Started",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -1386,7 +1386,7 @@ or share API keys (particularly in your source version control system), and they
 
 Authentication is handled via HTTP headers, specifically the X-Api-Key header.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Api-Key: <YOUR_API_KEY>'
 
 
@@ -1407,13 +1407,13 @@ about important payment lifecycle events. transactions:authorize Authorize a pay
 transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
 Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Authentication",
           "urlSlug": "authentication",
         },
@@ -1421,12 +1421,12 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     },
     "title": "Authentication",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -1445,11 +1445,11 @@ The format of the payload for all errors is common. When an unsuccessful request
 following format:
 
 {
-  \\"error\\": {
-    \\"errorId\\": \\"AnErrorId\\",
-    \\"description\\": \\"A human description of the error.\\",
-    \\"diagnosticsId\\": \\"1234567890\\",
-    \\"validationErrors\\": []
+  "error": {
+    "errorId": "AnErrorId",
+    "description": "A human description of the error.",
+    "diagnosticsId": "1234567890",
+    "validationErrors": []
   }
 }
 
@@ -1475,13 +1475,13 @@ your response payload for more details. CANCELLED The payment was cancelled prio
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
 [support@primer.io], or contact your Primer account manager.",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "API Responses",
           "urlSlug": "api-responses",
         },
@@ -1489,12 +1489,12 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     },
     "title": "API Responses",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -1509,7 +1509,7 @@ If this is the case, make another request with the same idempotency key:
 
 To make an idempotent request, generate an idempotency key and pass it to the header X-Idempotency-Key.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Idempotency-Key: <idempotency-key>'
 
 
@@ -1521,13 +1521,13 @@ API. Therefore, if you want to allow the user to retry an unsuccessful payment, 
 As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
 be made for a single order.",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Idempotency Key",
           "urlSlug": "idempotency-key",
         },
@@ -1535,12 +1535,12 @@ be made for a single order.",
     },
     "title": "Idempotency Key",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -1576,13 +1576,13 @@ GET A LIST OF TRANSACTIONS
 Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
 transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Loyalty Transactions",
           "urlSlug": "loyalty-transactions",
         },
@@ -1590,12 +1590,12 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     },
     "title": "Loyalty Transactions",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To
 make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.
 
@@ -1616,56 +1616,56 @@ CLIENT SESSION
 This is an example of a request in v1: POST /auth/client-token.
 
 {
-  \\"customerCountryCode\\": \\"GB\\",
-  \\"customerId\\": \\"customer-123\\",
-  \\"checkout\\": {
-    \\"paymentFlow\\": \\"DEFAULT\\"
+  "customerCountryCode": "GB",
+  "customerId": "customer-123",
+  "checkout": {
+    "paymentFlow": "DEFAULT"
   }
 }
 
 
-This is an example of a equivalent request in v2: POST /client-session with X-Api-Version=\\"2021-09-27\\".
+This is an example of a equivalent request in v2: POST /client-session with X-Api-Version="2021-09-27".
 
 {
-  \\"customerId\\": \\"customer-123\\",
-  \\"customer\\": {
-    \\"emailAddress\\": \\"customer@primer.io\\",
-    \\"mobileNumber\\": \\"+44841234567\\",
-    \\"firstName\\": \\"John\\",
-    \\"lastName\\": \\"Doe\\",
-    \\"billingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+  "customerId": "customer-123",
+  "customer": {
+    "emailAddress": "customer@primer.io",
+    "mobileNumber": "+44841234567",
+    "firstName": "John",
+    "lastName": "Doe",
+    "billingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     },
-    \\"shippingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+    "shippingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     }
   },
-  \\"order\\": {
-    \\"lineItems\\": [
+  "order": {
+    "lineItems": [
       {
-        \\"itemId\\": \\"item-1\\",
-        \\"description\\": \\"My item\\",
-        \\"amount\\": 1337,
-        \\"quantity\\": 1
+        "itemId": "item-1",
+        "description": "My item",
+        "amount": 1337,
+        "quantity": 1
       }
     ],
-    \\"countryCode\\": \\"GB\\"
+    "countryCode": "GB"
   },
-  \\"currencyCode\\": \\"GBP\\",
-  \\"orderId\\": \\"order-123\\",
-  \\"metadata\\": {
-    \\"productType\\": \\"Merchandise\\"
+  "currencyCode": "GBP",
+  "orderId": "order-123",
+  "metadata": {
+    "productType": "Merchandise"
   },
-  \\"paymentMethod\\": {
-    \\"vaultOnSuccess\\": true
+  "paymentMethod": {
+    "vaultOnSuccess": true
   }
 }
 
@@ -1673,48 +1673,48 @@ This is an example of a equivalent request in v2: POST /client-session with X-Ap
 
 V2.1
 
-This is an example of a equivalent request in v2.1: POST /client-session with X-Api-Version=\\"2.1\\".
+This is an example of a equivalent request in v2.1: POST /client-session with X-Api-Version="2.1".
 
 {
-  \\"customerId\\": \\"customer-123\\",
-  \\"customer\\": {
-    \\"emailAddress\\": \\"customer@primer.io\\",
-    \\"mobileNumber\\": \\"+44841234567\\",
-    \\"firstName\\": \\"John\\",
-    \\"lastName\\": \\"Doe\\",
-    \\"billingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+  "customerId": "customer-123",
+  "customer": {
+    "emailAddress": "customer@primer.io",
+    "mobileNumber": "+44841234567",
+    "firstName": "John",
+    "lastName": "Doe",
+    "billingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     },
-    \\"shippingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+    "shippingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     }
   },
-  \\"lineItems\\": [
+  "lineItems": [
     {
-      \\"itemId\\": \\"item-1\\",
-      \\"description\\": \\"My item\\",
-      \\"amount\\": 1337,
-      \\"quantity\\": 1
+      "itemId": "item-1",
+      "description": "My item",
+      "amount": 1337,
+      "quantity": 1
     }
   ],
-  \\"orderDetails\\": {
-    \\"countryCode\\": \\"GB\\"
+  "orderDetails": {
+    "countryCode": "GB"
   },
-  \\"currencyCode\\": \\"GBP\\",
-  \\"orderId\\": \\"order-123\\",
-  \\"metadata\\": {
-    \\"productType\\": \\"Merchandise\\"
+  "currencyCode": "GBP",
+  "orderId": "order-123",
+  "metadata": {
+    "productType": "Merchandise"
   },
-  \\"paymentMethod\\": {
-    \\"vaultOnSuccess\\": true
+  "paymentMethod": {
+    "vaultOnSuccess": true
   }
 }
 
@@ -1730,99 +1730,99 @@ SUMMARY OF THE V2.1 CHANGES
 
 CREATE A PAYMENT
 
-This is an example of an equivalent request: POST /payments with X-Api-Version=\\"2021-09-27\\".
+This is an example of an equivalent request: POST /payments with X-Api-Version="2021-09-27".
 
 POST /payments
 
 {
-  \\"orderId\\": \\"order-123\\",
-  \\"currencyCode\\": \\"GBP\\",
-  \\"amount\\": 1337,
-  \\"paymentInstrument\\": {
-    \\"token\\": \\"{{payment_method_token}}\\" // As received from the SDK
+  "orderId": "order-123",
+  "currencyCode": "GBP",
+  "amount": 1337,
+  "paymentInstrument": {
+    "token": "{{payment_method_token}}" // As received from the SDK
   },
-  \\"statementDescriptor\\": \\"Test payment\\",
-  \\"customer\\": {
-    \\"email\\": \\"customer@primer.io\\",
-    \\"billingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+  "statementDescriptor": "Test payment",
+  "customer": {
+    "email": "customer@primer.io",
+    "billingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     }
   }
 }
 
 
-This is an example of an equivalent request in v2: POST /payments with X-Api-Version=\\"2021-09-27\\".
+This is an example of an equivalent request in v2: POST /payments with X-Api-Version="2021-09-27".
 
 {
-  \\"orderId\\": \\"order-123\\",
-  \\"amount\\": 1000,
-  \\"currencyCode\\": \\"GBP\\",
-  \\"customer\\": {
-    \\"email\\": \\"customer@primer.io\\",
-    \\"billingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+  "orderId": "order-123",
+  "amount": 1000,
+  "currencyCode": "GBP",
+  "customer": {
+    "email": "customer@primer.io",
+    "billingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     }
   },
-  \\"metadata\\": {
-    \\"productType\\": \\"Merchandise\\"
+  "metadata": {
+    "productType": "Merchandise"
   },
-  \\"paymentMethodToken\\": \\"{{payment_method_token}}\\", // As received from the SDK
-  \\"paymentMethod\\": {
-    \\"descriptor\\": \\"Test payment\\",
-    \\"paymentType\\": \\"FIRST_PAYMENT\\"
+  "paymentMethodToken": "{{payment_method_token}}", // As received from the SDK
+  "paymentMethod": {
+    "descriptor": "Test payment",
+    "paymentType": "FIRST_PAYMENT"
   }
 }
 
 
-This is an example of an equivalent request in v2.1: POST /payments with X-Api-Version=\\"2.1\\"
+This is an example of an equivalent request in v2.1: POST /payments with X-Api-Version="2.1"
 
 {
-  \\"paymentMethodToken\\": \\"{{payment_method_token}}\\" // As received from the SDK
+  "paymentMethodToken": "{{payment_method_token}}" // As received from the SDK
 }
 
 
 OR
 
 {
-  \\"orderId\\": \\"order-123\\",
-  \\"amount\\": 1337,
-  \\"currencyCode\\": \\"GBP\\",
-  \\"customer\\": {
-    \\"email\\": \\"customer@primer.io\\",
-    \\"billingAddress\\": {
-      \\"addressLine1\\": \\"42A\\",
-      \\"postalCode\\": \\"abcde\\",
-      \\"city\\": \\"Cambridge\\",
-      \\"state\\": \\"Cambridgeshire\\",
-      \\"countryCode\\": \\"GB\\"
+  "orderId": "order-123",
+  "amount": 1337,
+  "currencyCode": "GBP",
+  "customer": {
+    "email": "customer@primer.io",
+    "billingAddress": {
+      "addressLine1": "42A",
+      "postalCode": "abcde",
+      "city": "Cambridge",
+      "state": "Cambridgeshire",
+      "countryCode": "GB"
     }
   },
-  \\"lineItems\\": [
+  "lineItems": [
     {
-      \\"itemId\\": \\"item-1\\",
-      \\"description\\": \\"My item\\",
-      \\"amount\\": 1337,
-      \\"quantity\\": 1
+      "itemId": "item-1",
+      "description": "My item",
+      "amount": 1337,
+      "quantity": 1
     }
   ],
-  \\"orderDetails\\": {
-    \\"countryCode\\": \\"GB\\"
+  "orderDetails": {
+    "countryCode": "GB"
   },
-  \\"metadata\\": {
-    \\"productType\\": \\"Merchandise\\"
+  "metadata": {
+    "productType": "Merchandise"
   },
-  \\"paymentMethodToken\\": \\"{{payment_method_token}}\\", // As received from the SDK
-  \\"paymentMethod\\": {
-    \\"descriptor\\": \\"Test payment\\",
-    \\"paymentType\\": \\"FIRST_PAYMENT\\"
+  "paymentMethodToken": "{{payment_method_token}}", // As received from the SDK
+  "paymentMethod": {
+    "descriptor": "Test payment",
+    "paymentType": "FIRST_PAYMENT"
   }
 }
 
@@ -1833,13 +1833,13 @@ SUMMARY OF THE V2.1 CHANGES
  * order is now called orderDetails
  * lineItems is now a top-level element",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Changelog",
           "urlSlug": "changelog",
         },
-        Object {
+        {
           "name": "API Migration Guide",
           "urlSlug": "api-migration-guide",
         },
@@ -1847,12 +1847,12 @@ SUMMARY OF THE V2.1 CHANGES
     },
     "title": "API Migration Guide",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API. You must set the
 X-Api-Version header to 2.2 to use v2.2 of the API.
 
@@ -1866,13 +1866,13 @@ PAYMENTS API
 
  * Added order.lineItems.productData on the request and response",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Changelog",
           "urlSlug": "changelog",
         },
-        Object {
+        {
           "name": "API v2.2",
           "urlSlug": "api-v-2-2",
         },
@@ -1880,12 +1880,12 @@ PAYMENTS API
     },
     "title": "API v2.2",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
 
 Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉 Set the
@@ -1918,13 +1918,13 @@ PAYMENT METHODS API
    verified before vaulting
  * Added isVerified to the payment method response",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Changelog",
           "urlSlug": "changelog",
         },
-        Object {
+        {
           "name": "API v2.1",
           "urlSlug": "api-v-2-1",
         },
@@ -1932,12 +1932,12 @@ PAYMENT METHODS API
     },
     "title": "API v2.1",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.
 
 
@@ -1967,13 +1967,13 @@ PAYMENTS API
    to the last4digits returned. This is an opt-in field, so it is null by default.
  * The customer billingAddress and shippingAddress fields are now all optional",
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Changelog",
           "urlSlug": "changelog",
         },
-        Object {
+        {
           "name": "API v2",
           "urlSlug": "api-v-2",
         },
@@ -1981,24 +1981,24 @@ PAYMENTS API
     },
     "title": "API v2",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
       "method": "GET",
       "name": "Retrieve a client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -2006,30 +2006,30 @@ the request. The fields with empty values are excluded from the response.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Retrieve a client session",
           "urlSlug": "retrieve-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
@@ -2045,13 +2045,13 @@ POST /client-session does not have required fields as all fields are not always 
 Client tokens expire after 24 hours.",
       "method": "POST",
       "name": "Create a client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -2059,30 +2059,30 @@ Client tokens expire after 24 hours.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Create a client session",
           "urlSlug": "create-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "You can update a clients session created earlier with the PATCH /client-session API call.
 
 The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
@@ -2102,13 +2102,13 @@ not supported.
 The response will contain all the fields of the client session including the ones that were changed.",
       "method": "PATCH",
       "name": "Update client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -2116,30 +2116,30 @@ The response will contain all the fields of the client session including the one
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Update client session",
           "urlSlug": "update-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
@@ -2147,11 +2147,11 @@ parameter to the value of nextCursor in your current result payload. Use prevCur
 
 Note: this endpoint returns a list of summarized payments. Not all payments attributes are present. You can use the query
 parameters to filter payments. You can separate multiple query parameters with the & symbol. Query parameters with types of the
-form \\"Array of strings\\" (such as the status parameter) can be specified as a comma-separated list.
+form "Array of strings" (such as the status parameter) can be specified as a comma-separated list.
 
 For example, if you wanted to get both FAILED and CANCELLED payments, for customer john-123, you would use:
 
-curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\\
+curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\
 --header 'X-Api-Key: <YOUR_API_KEY>'
 
 
@@ -2160,13 +2160,13 @@ You can alternatively specify a list by repeating the parameter multiple times.
 Note: payments will be available within a minute from being created.",
       "method": "GET",
       "name": "Search & list payments",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments",
           },
@@ -2174,30 +2174,30 @@ Note: payments will be available within a minute from being created.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Search & list payments",
           "urlSlug": "list-payments",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
@@ -2212,13 +2212,13 @@ in Client Session and then pass customer.emailAddress data with this request, it
 use both billingAddress and emailAddress for later calculations.",
       "method": "POST",
       "name": "Create a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments",
           },
@@ -2226,51 +2226,51 @@ use both billingAddress and emailAddress for later calculations.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Create a payment",
           "urlSlug": "create-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow
 action. The processor merchant ID must be provided which can be found on the Integrations page
 [https://dashboard.primer.io/integrations]. The processor name is optional but it must be provided if your account has multiple
 processors configured which share the same merchant IDs.",
       "method": "POST",
       "name": "Authorize a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/authorize",
           },
@@ -2278,30 +2278,30 @@ processors configured which share the same merchant IDs.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Authorize a payment",
           "urlSlug": "authorize-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
@@ -2311,21 +2311,21 @@ amount that was authorized will be sent for capture. Below are the available pay
 control when capturing funds, if you require it.",
       "method": "POST",
       "name": "Capture a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/capture",
           },
@@ -2333,50 +2333,50 @@ control when capturing funds, if you require it.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Capture a payment",
           "urlSlug": "capture-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
-      "description": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+  {
+    "endpoint": {
+      "description": "Provided the payment has not reached SETTLED status, Primer will send a "void" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
 payload is optional.",
       "method": "POST",
       "name": "Cancel a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/cancel",
           },
@@ -2384,50 +2384,50 @@ payload is optional.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Cancel a payment",
           "urlSlug": "cancel-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
       "method": "POST",
       "name": "Refund a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/refund",
           },
@@ -2435,49 +2435,49 @@ Optionally, pass in a lesser amount for a partial refund.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Refund a payment",
           "urlSlug": "refund-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
       "method": "POST",
       "name": "Resume a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/resume",
           },
@@ -2485,49 +2485,49 @@ further information from the customer, or when waiting for an asynchronous respo
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Resume a payment",
           "urlSlug": "resume-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Adjust authorized amount. This is only possible if authorizationType was set to ESTIMATED when the payment was created, and the
 mechanism is supported by the payment method.",
       "method": "POST",
       "name": "Adjust authorized amount",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/adjust-authorization",
           },
@@ -2535,48 +2535,48 @@ mechanism is supported by the payment method.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Adjust authorized amount",
           "urlSlug": "adjust-authorization",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a payment by its ID.",
       "method": "GET",
       "name": "Get a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -2584,30 +2584,30 @@ mechanism is supported by the payment method.",
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Get a payment",
           "urlSlug": "get-payment-by-id",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
 before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
 subscription rates for recurring payments.
@@ -2615,21 +2615,21 @@ subscription rates for recurring payments.
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
       "method": "POST",
       "name": "Save a payment method token",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentMethodToken",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/vault",
           },
@@ -2637,40 +2637,40 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Save a payment method token",
           "urlSlug": "vault-payment-method-payment-methods-token-vault-post",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a list of stored payment methods for a customer.",
       "method": "GET",
       "name": "List saved payment methods",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments",
           },
@@ -2678,48 +2678,48 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "List saved payment methods",
           "urlSlug": "get-payment-methods-payment-methods-get",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Delete a saved payment method.",
       "method": "DELETE",
       "name": "Delete a saved payment method",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentMethodToken",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -2727,48 +2727,48 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Delete a saved payment method",
           "urlSlug": "delete-payment-method-payment-methods-token-delete",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Update a saved payment method to be the default stored payment method for a customer.",
       "method": "POST",
       "name": "Update the default saved payment method",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentMethodToken",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/default",
           },
@@ -2776,30 +2776,30 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Update the default saved payment method",
           "urlSlug": "set-payment-method-default-payment-methods-token-default-post",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Creating a payment with the Observability API sends external payments data to Primer to populate Observability Payment Insights
@@ -2811,13 +2811,13 @@ Create an API key with the observability-payments:write scope.
 Each record must be created with a unique paymentId. To update a payment record with new data use the PATCH endpoint.",
       "method": "POST",
       "name": "Create an external payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/observability/payments",
           },
@@ -2825,30 +2825,30 @@ Each record must be created with a unique paymentId. To update a payment record 
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Observability API",
           "urlSlug": "observability-api",
         },
-        Object {
+        {
           "name": "Create an external payment",
           "urlSlug": "external-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "The Observability API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 You can update payments created earlier through the Observability API with this endpoint. The only required field for the request
@@ -2861,21 +2861,21 @@ update the processor name, you would pass in processor.name only.
 The response will contain all the fields of the payment including the ones that were changed.",
       "method": "PATCH",
       "name": "Update an external payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/observability/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentId",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -2883,30 +2883,30 @@ The response will contain all the fields of the payment including the ones that 
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Observability API",
           "urlSlug": "observability-api",
         },
-        Object {
+        {
           "name": "Update an external payment",
           "urlSlug": "external-payment-update",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:read scopes.
@@ -2919,21 +2919,21 @@ provider connection is created.
 The customerId refers to the customer identifier on the loyalty provider's side.",
       "method": "GET",
       "name": "Get a loyalty customer's points balance",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/loyalty-customers/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -2941,30 +2941,30 @@ The customerId refers to the customer identifier on the loyalty provider's side.
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Loyalty API",
           "urlSlug": "loyalty-api",
         },
-        Object {
+        {
           "name": "Get a loyalty customer's points balance",
           "urlSlug": "get-loyalty-customer",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:read scopes.
@@ -2974,13 +2974,13 @@ Get all your loyalty transactions. You can filter by connectionId (recommended) 
 Additionally provide a limit to restrict the number of transactions in the response, and an offset to determine where to start.",
       "method": "GET",
       "name": "List the transactions for a customer",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/loyalty-transactions",
           },
@@ -2988,30 +2988,30 @@ Additionally provide a limit to restrict the number of transactions in the respo
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Loyalty API",
           "urlSlug": "loyalty-api",
         },
-        Object {
+        {
           "name": "List the transactions for a customer",
           "urlSlug": "get-loyalty-customer-transactions",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "The Loyalty API is currently in beta. Please contact support@primer.io [support@primer.io] for access.
 
 Create an API key with the loyalty-transactions:write scopes.
@@ -3019,13 +3019,13 @@ Create an API key with the loyalty-transactions:write scopes.
 Create a loyalty transaction. This is either a points redemption or a points refund.",
       "method": "POST",
       "name": "Create a loyalty transaction",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/loyalty-transactions",
           },
@@ -3033,29 +3033,29 @@ Create a loyalty transaction. This is either a points redemption or a points ref
       },
     },
     "indexSegmentId": "v2.2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Loyalty API",
           "urlSlug": "loyalty-api",
         },
-        Object {
+        {
           "name": "Create a loyalty transaction",
           "urlSlug": "post-loyalty-transaction",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.2",
       "urlSlug": "v-2-2",
     },
   },
-  Object {
+  {
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -3082,7 +3082,7 @@ are ready, we allow for a X-Api-Version header to be passed on all API requests.
 
 If you omit the version header, your request will default to the earliest supported version of the API.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Api-Version: 2.2'
 
 
@@ -3091,13 +3091,13 @@ AVAILABLE VERSIONS
 
 Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Getting Started",
           "urlSlug": "getting-started",
         },
@@ -3105,12 +3105,12 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     },
     "title": "Getting Started",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
+  {
     "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -3119,7 +3119,7 @@ or share API keys (particularly in your source version control system), and they
 
 Authentication is handled via HTTP headers, specifically the X-Api-Key header.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Api-Key: <YOUR_API_KEY>'
 
 
@@ -3140,13 +3140,13 @@ about important payment lifecycle events. transactions:authorize Authorize a pay
 transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
 Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Authentication",
           "urlSlug": "authentication",
         },
@@ -3154,12 +3154,12 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     },
     "title": "Authentication",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
+  {
     "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -3178,11 +3178,11 @@ The format of the payload for all errors is common. When an unsuccessful request
 following format:
 
 {
-  \\"error\\": {
-    \\"errorId\\": \\"AnErrorId\\",
-    \\"description\\": \\"A human description of the error.\\",
-    \\"diagnosticsId\\": \\"1234567890\\",
-    \\"validationErrors\\": []
+  "error": {
+    "errorId": "AnErrorId",
+    "description": "A human description of the error.",
+    "diagnosticsId": "1234567890",
+    "validationErrors": []
   }
 }
 
@@ -3208,13 +3208,13 @@ your response payload for more details. CANCELLED The payment was cancelled prio
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
 [support@primer.io], or contact your Primer account manager.",
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "API Responses",
           "urlSlug": "api-responses",
         },
@@ -3222,12 +3222,12 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     },
     "title": "API Responses",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
+  {
     "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -3242,7 +3242,7 @@ If this is the case, make another request with the same idempotency key:
 
 To make an idempotent request, generate an idempotency key and pass it to the header X-Idempotency-Key.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Idempotency-Key: <idempotency-key>'
 
 
@@ -3254,13 +3254,13 @@ API. Therefore, if you want to allow the user to retry an unsuccessful payment, 
 As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
 be made for a single order.",
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Idempotency Key",
           "urlSlug": "idempotency-key",
         },
@@ -3268,12 +3268,12 @@ be made for a single order.",
     },
     "title": "Idempotency Key",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
+  {
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -3309,13 +3309,13 @@ GET A LIST OF TRANSACTIONS
 Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
 transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Loyalty Transactions",
           "urlSlug": "loyalty-transactions",
         },
@@ -3323,24 +3323,24 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     },
     "title": "Loyalty Transactions",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in
 the request. The fields with empty values are excluded from the response.",
       "method": "GET",
       "name": "Retrieve a client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -3348,30 +3348,30 @@ the request. The fields with empty values are excluded from the response.",
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Retrieve a client session",
           "urlSlug": "retrieve-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
@@ -3387,13 +3387,13 @@ POST /client-session does not have required fields as all fields are not always 
 Client tokens expire after 24 hours.",
       "method": "POST",
       "name": "Create a client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -3401,30 +3401,30 @@ Client tokens expire after 24 hours.",
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Create a client session",
           "urlSlug": "create-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "You can update a clients session created earlier with the PATCH /client-session API call.
 
 The only required field for the request is clientToken. Other supported request fields are same as for the POST /client-session
@@ -3444,13 +3444,13 @@ not supported.
 The response will contain all the fields of the client session including the ones that were changed.",
       "method": "PATCH",
       "name": "Update client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -3458,30 +3458,30 @@ The response will contain all the fields of the client session including the one
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Update client session",
           "urlSlug": "update-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
@@ -3489,11 +3489,11 @@ parameter to the value of nextCursor in your current result payload. Use prevCur
 
 Note: this endpoint returns a list of summarized payments. Not all payments attributes are present. You can use the query
 parameters to filter payments. You can separate multiple query parameters with the & symbol. Query parameters with types of the
-form \\"Array of strings\\" (such as the status parameter) can be specified as a comma-separated list.
+form "Array of strings" (such as the status parameter) can be specified as a comma-separated list.
 
 For example, if you wanted to get both FAILED and CANCELLED payments, for customer john-123, you would use:
 
-curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\\
+curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\
 --header 'X-Api-Key: <YOUR_API_KEY>'
 
 
@@ -3502,13 +3502,13 @@ You can alternatively specify a list by repeating the parameter multiple times.
 Note: payments will be available within a minute from being created.",
       "method": "GET",
       "name": "Search & list payments",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments",
           },
@@ -3516,30 +3516,30 @@ Note: payments will be available within a minute from being created.",
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Search & list payments",
           "urlSlug": "list-payments",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
@@ -3552,13 +3552,13 @@ All fields provided on this request will take preference over any field on the o
 you pass amount on this request, it will override the amount on the order associated with the Client Session.",
       "method": "POST",
       "name": "Create a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments",
           },
@@ -3566,30 +3566,30 @@ you pass amount on this request, it will override the amount on the order associ
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Create a payment",
           "urlSlug": "create-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
@@ -3599,21 +3599,21 @@ amount that was authorized will be sent for capture. Below are the available pay
 control when capturing funds, if you require it.",
       "method": "POST",
       "name": "Capture a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/capture",
           },
@@ -3621,50 +3621,50 @@ control when capturing funds, if you require it.",
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Capture a payment",
           "urlSlug": "capture-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
-      "description": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+  {
+    "endpoint": {
+      "description": "Provided the payment has not reached SETTLED status, Primer will send a "void" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds. Upon success, the payment will transition to CANCELLED. The
 payload is optional.",
       "method": "POST",
       "name": "Cancel a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/cancel",
           },
@@ -3672,50 +3672,50 @@ payload is optional.",
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Cancel a payment",
           "urlSlug": "cancel-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
       "method": "POST",
       "name": "Refund a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/refund",
           },
@@ -3723,49 +3723,49 @@ Optionally, pass in a lesser amount for a partial refund.",
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Refund a payment",
           "urlSlug": "refund-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
       "method": "POST",
       "name": "Resume a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/resume",
           },
@@ -3773,48 +3773,48 @@ further information from the customer, or when waiting for an asynchronous respo
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Resume a payment",
           "urlSlug": "resume-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a payment by its ID.",
       "method": "GET",
       "name": "Get a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -3822,30 +3822,30 @@ further information from the customer, or when waiting for an asynchronous respo
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Get a payment",
           "urlSlug": "get-payment-by-id",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Save a SINGLE_USE payment method token so it can be used again later. You can optionally choose to verify the payment method
 before vaulting. If verification fails, no payment method data will be vaulted. Verification can minimise fraud and boost
 subscription rates for recurring payments.
@@ -3853,21 +3853,21 @@ subscription rates for recurring payments.
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
       "method": "POST",
       "name": "Save a payment method token",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentMethodToken",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/vault",
           },
@@ -3875,40 +3875,40 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Save a payment method token",
           "urlSlug": "vault-payment-method-payment-methods-token-vault-post",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a list of stored payment methods for a customer.",
       "method": "GET",
       "name": "List saved payment methods",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments",
           },
@@ -3916,48 +3916,48 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "List saved payment methods",
           "urlSlug": "get-payment-methods-payment-methods-get",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Delete a saved payment method.",
       "method": "DELETE",
       "name": "Delete a saved payment method",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentMethodToken",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -3965,48 +3965,48 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Delete a saved payment method",
           "urlSlug": "delete-payment-method-payment-methods-token-delete",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Update a saved payment method to be the default stored payment method for a customer.",
       "method": "POST",
       "name": "Update the default saved payment method",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "paymentMethodToken",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/default",
           },
@@ -4014,29 +4014,29 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2.1-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Update the default saved payment method",
           "urlSlug": "set-payment-method-default-payment-methods-token-default-post",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2.1",
       "urlSlug": "v-2-1",
     },
   },
-  Object {
+  {
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -4063,7 +4063,7 @@ are ready, we allow for a X-Api-Version header to be passed on all API requests.
 
 If you omit the version header, your request will default to the earliest supported version of the API.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Api-Version: 2.2'
 
 
@@ -4072,13 +4072,13 @@ AVAILABLE VERSIONS
 
 Read about the available versions of the APIs below on our Changelog [https://apiref.primer.io/changelog].",
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Getting Started",
           "urlSlug": "getting-started",
         },
@@ -4086,12 +4086,12 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     },
     "title": "Getting Started",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
+  {
     "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -4100,7 +4100,7 @@ or share API keys (particularly in your source version control system), and they
 
 Authentication is handled via HTTP headers, specifically the X-Api-Key header.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Api-Key: <YOUR_API_KEY>'
 
 
@@ -4121,13 +4121,13 @@ about important payment lifecycle events. transactions:authorize Authorize a pay
 transactions:capture Submit a payment for settlement. transactions:retrieve Retrieve one or more payments. transactions:refund
 Refund a payment. payment_instrument:read Read stored payment methods. payment_instrument:write Write stored payment methods.",
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Authentication",
           "urlSlug": "authentication",
         },
@@ -4135,12 +4135,12 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     },
     "title": "Authentication",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
+  {
     "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -4159,11 +4159,11 @@ The format of the payload for all errors is common. When an unsuccessful request
 following format:
 
 {
-  \\"error\\": {
-    \\"errorId\\": \\"AnErrorId\\",
-    \\"description\\": \\"A human description of the error.\\",
-    \\"diagnosticsId\\": \\"1234567890\\",
-    \\"validationErrors\\": []
+  "error": {
+    "errorId": "AnErrorId",
+    "description": "A human description of the error.",
+    "diagnosticsId": "1234567890",
+    "validationErrors": []
   }
 }
 
@@ -4189,13 +4189,13 @@ your response payload for more details. CANCELLED The payment was cancelled prio
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io
 [support@primer.io], or contact your Primer account manager.",
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "API Responses",
           "urlSlug": "api-responses",
         },
@@ -4203,12 +4203,12 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     },
     "title": "API Responses",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
+  {
     "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -4223,7 +4223,7 @@ If this is the case, make another request with the same idempotency key:
 
 To make an idempotent request, generate an idempotency key and pass it to the header X-Idempotency-Key.
 
-curl -X POST 'https://api.primer.io/<ENDPOINT>' \\\\
+curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
   --header 'X-Idempotency-Key: <idempotency-key>'
 
 
@@ -4235,13 +4235,13 @@ API. Therefore, if you want to allow the user to retry an unsuccessful payment, 
 As a such, don't use anything too restrictive like an orderId for the idempotency key as multiple payment attempts and refunds can
 be made for a single order.",
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Idempotency Key",
           "urlSlug": "idempotency-key",
         },
@@ -4249,12 +4249,12 @@ be made for a single order.",
     },
     "title": "Idempotency Key",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
+  {
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -4290,13 +4290,13 @@ GET A LIST OF TRANSACTIONS
 Call the Loyalty Transactions [https://apiref.primer.io/reference/get_loyalty_transaction] endpoint to retrieve a list of all your
 transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Loyalty Transactions",
           "urlSlug": "loyalty-transactions",
         },
@@ -4304,13 +4304,13 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     },
     "title": "Loyalty Transactions",
     "type": "page-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Creating a client session generates a client token: a temporary key used to initialize Universal Checkout
 [https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web] and authenticate it against your account.
 
@@ -4323,13 +4323,13 @@ available, you can provide them when making the payment request.
 Client tokens expire after 24 hours.",
       "method": "POST",
       "name": "Create a client session",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/client-session",
           },
@@ -4337,30 +4337,30 @@ Client tokens expire after 24 hours.",
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Client Session API",
           "urlSlug": "client-session-api",
         },
-        Object {
+        {
           "name": "Create a client session",
           "urlSlug": "create-client-side-token",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a list of your payments.
 
 Results are paginated, they will only return up to 100 payments maximum. To access the next page of result, set the cursor query
@@ -4368,11 +4368,11 @@ parameter to the value of nextCursor in your current result payload. Use prevCur
 
 Note: this endpoint returns a list of summarized payments. Not all payments attributes are present. You can use the query
 parameters to filter payments. You can separate multiple query parameters with the & symbol. Query parameters with types of the
-form \\"Array of strings\\" (such as the status parameter) can be specified as a comma-separated list.
+form "Array of strings" (such as the status parameter) can be specified as a comma-separated list.
 
 For example, if you wanted to get both FAILED and CANCELLED payments, for customer john-123, you would use:
 
-curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\\
+curl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\
 --header 'X-Api-Key: <YOUR_API_KEY>'
 
 
@@ -4381,13 +4381,13 @@ You can alternatively specify a list by repeating the parameter multiple times.
 Note: payments will be available within a minute from being created.",
       "method": "GET",
       "name": "Search & list payments",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments",
           },
@@ -4395,30 +4395,30 @@ Note: payments will be available within a minute from being created.",
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Search & list payments",
           "urlSlug": "list-payments",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Create and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI
 implications.
 
@@ -4431,13 +4431,13 @@ All fields provided on this request will take preference over any field on the o
 you pass amount on this request, it will override the amount on the order associated with the Client Session.",
       "method": "POST",
       "name": "Create a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments",
           },
@@ -4445,30 +4445,30 @@ you pass amount on this request, it will override the amount on the order associ
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Create a payment",
           "urlSlug": "create-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "If you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment,
 depending on whether your selected payment processor supports it. The payment will be updated to SETTLED or SETTLING, depending on
 the payment method type.
@@ -4479,21 +4479,21 @@ amount that was authorized will be sent for capture.
 Below are the available payload attributes, which give you more granular control when capturing funds, if you require it.",
       "method": "POST",
       "name": "Capture a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/capture",
           },
@@ -4501,31 +4501,31 @@ Below are the available payload attributes, which give you more granular control
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Capture a payment",
           "urlSlug": "capture-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
-      "description": "Provided the payment has not reached SETTLED status, Primer will send a \\"void\\" request to the payment processor, thereby
+  {
+    "endpoint": {
+      "description": "Provided the payment has not reached SETTLED status, Primer will send a "void" request to the payment processor, thereby
 cancelling the payment and releasing the hold on customer funds.
 
 Upon success, the payment will transition to CANCELLED.
@@ -4533,21 +4533,21 @@ Upon success, the payment will transition to CANCELLED.
 The payload is optional.",
       "method": "POST",
       "name": "Cancel a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/cancel",
           },
@@ -4555,50 +4555,50 @@ The payload is optional.",
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Cancel a payment",
           "urlSlug": "cancel-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "By default, this request will refund the full amount.
 
 Optionally, pass in a lesser amount for a partial refund.",
       "method": "POST",
       "name": "Refund a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/refund",
           },
@@ -4606,49 +4606,49 @@ Optionally, pass in a lesser amount for a partial refund.",
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Refund a payment",
           "urlSlug": "refund-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Resume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get
 further information from the customer, or when waiting for an asynchronous response from a third party connection.",
       "method": "POST",
       "name": "Resume a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/resume",
           },
@@ -4656,48 +4656,48 @@ further information from the customer, or when waiting for an asynchronous respo
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Resume a payment",
           "urlSlug": "resume-payment",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a payment by its ID.",
       "method": "GET",
       "name": "Get a payment",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -4705,50 +4705,50 @@ further information from the customer, or when waiting for an asynchronous respo
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payments API",
           "urlSlug": "payments-api",
         },
-        Object {
+        {
           "name": "Get a payment",
           "urlSlug": "get-payment-by-id",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Save a SINGLE_USE payment method token so it can be used again later.
 
 If you try to vault an already vaulted token, you will get the existing vaulted token back.",
       "method": "POST",
       "name": "Save a payment method token",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "token",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/vault",
           },
@@ -4756,40 +4756,40 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Save a payment method token",
           "urlSlug": "vault-payment-method-payment-methods-token-vault-post",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Retrieve a list of stored payment methods for a customer.",
       "method": "GET",
       "name": "List saved payment methods",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments",
           },
@@ -4797,48 +4797,48 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "List saved payment methods",
           "urlSlug": "get-payment-methods-payment-methods-get",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Delete a saved payment method.",
       "method": "DELETE",
       "name": "Delete a saved payment method",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "token",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -4846,48 +4846,48 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Delete a saved payment method",
           "urlSlug": "delete-payment-method-payment-methods-token-delete",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Update a saved payment method to be the default stored payment method for a customer.",
       "method": "POST",
       "name": "Update the default saved payment method",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/payment-instruments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "token",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/default",
           },
@@ -4895,24 +4895,24 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
       },
     },
     "indexSegmentId": "v2-constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Primer API",
           "urlSlug": "primer-api",
         },
-        Object {
+        {
           "name": "Payment Methods API",
           "urlSlug": "payment-methods-api",
         },
-        Object {
+        {
           "name": "Update the default saved payment method",
           "urlSlug": "set-payment-method-default-payment-methods-token-default-post",
         },
       ],
     },
     "type": "endpoint-v2",
-    "version": Object {
+    "version": {
       "id": "v2",
       "urlSlug": "v-2",
     },
@@ -4921,8 +4921,8 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
 `;
 
 exports[`generateAlgoliaSearchRecordsForDocs {"name":"vellum"} 1`] = `
-Array [
-  Object {
+[
+  {
     "content": "When using an LLM, you input a prompt and get back a completion. However, in order for a prompt to be reusable, you’ll want to be
 able to specify certain parts of it dynamically.
 
@@ -4952,7 +4952,7 @@ CONDITIONALS
 
 Perform conditional logic based on your input variables using if/else statements
 
-\`\`\` You are a {{ personality_type }} AI assistant. {% if personality_type == \\"rude\\" %} You end every message with a frowning
+\`\`\` You are a {{ personality_type }} AI assistant. {% if personality_type == "rude" %} You end every message with a frowning
 emoji. {% else %} You end every message with a smiling emoji. {% endif %} \`\`\`
 
 
@@ -4962,17 +4962,17 @@ You can use jinja to leave comments in your prompt that don’t use up any token
 
 \`\`\` {# This is a comment #} Hello, world! \`\`\`",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Help Center",
           "urlSlug": "help-center",
         },
-        Object {
+        {
           "name": "Prompts",
           "urlSlug": "prompts",
         },
-        Object {
+        {
           "name": "Prompt Template Syntax",
           "urlSlug": "prompt-template-syntax",
         },
@@ -4981,7 +4981,7 @@ You can use jinja to leave comments in your prompt that don’t use up any token
     "title": "Prompt Template Syntax",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "Vellum Playground is a powerful tool for rapid iteration and collaboration between multiple models and prompts. Save, tag, and
 share your work with ease using the features outlined below.
 
@@ -5019,17 +5019,17 @@ Share
 
 With these powerful features, Vellum Playground makes it easy to collaborate, iterate, and share your work, all in one place.",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Help Center",
           "urlSlug": "help-center",
         },
-        Object {
+        {
           "name": "Prompts",
           "urlSlug": "prompts",
         },
-        Object {
+        {
           "name": "Playground History and Collaboration",
           "urlSlug": "playground-history-and-collaboration",
         },
@@ -5038,7 +5038,7 @@ With these powerful features, Vellum Playground makes it easy to collaborate, it
     "title": "Playground History and Collaboration",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "Any document that you want to query against should be uploaded ahead of time at https://app.vellum.ai/document-indexes
 [https://app.vellum.ai/document-indexes].
 
@@ -5067,17 +5067,17 @@ Name - Human readable text which is how the document will be visible in Vellum's
 External ID - As the contents of a document change and the old documents becomes out of date, you can submit the updated document
 for reindexing re-uploading it and specifying the same \`External ID\`.",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Help Center",
           "urlSlug": "help-center",
         },
-        Object {
+        {
           "name": "Documents",
           "urlSlug": "documents",
         },
-        Object {
+        {
           "name": "Uploading Documents",
           "urlSlug": "uploading-documents",
         },
@@ -5086,7 +5086,7 @@ for reindexing re-uploading it and specifying the same \`External ID\`.",
     "title": "Uploading Documents",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "You can monitor production traffic of a Vellum Deployment through all the charts in the Monitoring tab. These charts can be
 filtered for various time ranges using the “Relative Date” button. This help doc details the charts you can see on this tab, if
 you’d like to see any other information about your Deployment, please don’t hesitate to reach out and we can add it in!
@@ -5105,17 +5105,17 @@ Average Latency over Time: Time taken for the request to complete
 
 Num LLM Provider Errors Over Time: Number of errors from the LLM provider",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "Help Center",
           "urlSlug": "help-center",
         },
-        Object {
+        {
           "name": "Deployments",
           "urlSlug": "deployments",
         },
-        Object {
+        {
           "name": "Monitoring production traffic",
           "urlSlug": "monitoring-production-traffic",
         },
@@ -5124,7 +5124,7 @@ Num LLM Provider Errors Over Time: Number of errors from the LLM provider",
     "title": "Monitoring production traffic",
     "type": "page-v2",
   },
-  Object {
+  {
     "content": "WELCOME 👋
 
 Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you, as well as the
@@ -5136,8 +5136,8 @@ you wish you could perform via API, please let us know and we can expose it here
 
 API STABILITY
 
-Some of the APIs documented within are undergoing active development. Use the <strong style={{ backgroundColor: \\"#4caf50\\", color:
-\\"white\\", padding: 4, borderRadius: 4 }}>Stable and <strong style={{ backgroundColor: \\"#ffc107\\", color: \\"white\\", padding: 4,
+Some of the APIs documented within are undergoing active development. Use the <strong style={{ backgroundColor: "#4caf50", color:
+"white", padding: 4, borderRadius: 4 }}>Stable and <strong style={{ backgroundColor: "#ffc107", color: "white", padding: 4,
 borderRadius: 4 }}>Unstable tags to differentiate between those that are stable and those that are not.
 
 
@@ -5154,17 +5154,17 @@ OFFICIAL API CLIENTS:
 Vellum maintains official API clients for Python and Node/Typescript. We recommend using these clients to interact with all stable
 endpoints. You can find them here:",
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Introduction",
           "urlSlug": "introduction",
         },
-        Object {
+        {
           "name": "Getting started",
           "urlSlug": "getting-started",
         },
@@ -5173,20 +5173,20 @@ endpoints. You can find them here:",
     "title": "Getting started",
     "type": "page-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Executes a deployed Workflow and streams back its results.",
       "method": "POST",
       "name": "Execute Workflow Stream",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/execute-workflow-stream",
           },
@@ -5194,18 +5194,18 @@ Executes a deployed Workflow and streams back its results.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Execute Workflow Stream",
           "urlSlug": "execute-workflow-stream",
         },
@@ -5213,8 +5213,8 @@ Executes a deployed Workflow and streams back its results.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Generate a completion using a previously defined deployment.
@@ -5222,13 +5222,13 @@ Generate a completion using a previously defined deployment.
 Note: Uses a base url of https://predict.vellum.ai.",
       "method": "POST",
       "name": "Generate",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/generate",
           },
@@ -5236,18 +5236,18 @@ Note: Uses a base url of https://predict.vellum.ai.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Generate",
           "urlSlug": "generate",
         },
@@ -5255,8 +5255,8 @@ Note: Uses a base url of https://predict.vellum.ai.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Generate a stream of completions using a previously defined deployment.
@@ -5264,13 +5264,13 @@ Generate a stream of completions using a previously defined deployment.
 Note: Uses a base url of https://predict.vellum.ai.",
       "method": "POST",
       "name": "Generate Stream",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/generate-stream",
           },
@@ -5278,18 +5278,18 @@ Note: Uses a base url of https://predict.vellum.ai.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Generate Stream",
           "urlSlug": "generate-stream",
         },
@@ -5297,8 +5297,8 @@ Note: Uses a base url of https://predict.vellum.ai.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Perform a search against a document index.
@@ -5306,13 +5306,13 @@ Perform a search against a document index.
 Note: Uses a base url of https://predict.vellum.ai.",
       "method": "POST",
       "name": "Search",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/search",
           },
@@ -5320,18 +5320,18 @@ Note: Uses a base url of https://predict.vellum.ai.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Search",
           "urlSlug": "search",
         },
@@ -5339,8 +5339,8 @@ Note: Uses a base url of https://predict.vellum.ai.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Used to submit feedback regarding the quality of previously generated completions.
@@ -5348,13 +5348,13 @@ Used to submit feedback regarding the quality of previously generated completion
 Note: Uses a base url of https://predict.vellum.ai.",
       "method": "POST",
       "name": "Submit Completion Actuals",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/submit-completion-actuals",
           },
@@ -5362,18 +5362,18 @@ Note: Uses a base url of https://predict.vellum.ai.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Submit Completion Actuals",
           "urlSlug": "submit-completion-actuals",
         },
@@ -5381,8 +5381,8 @@ Note: Uses a base url of https://predict.vellum.ai.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Used to submit feedback regarding the quality of previous workflow execution and its outputs.
@@ -5390,13 +5390,13 @@ Used to submit feedback regarding the quality of previous workflow execution and
 Note: Uses a base url of https://predict.vellum.ai.",
       "method": "POST",
       "name": "Submit Workflow Execution Actuals",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/submit-workflow-execution-actuals",
           },
@@ -5404,18 +5404,18 @@ Note: Uses a base url of https://predict.vellum.ai.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "Submit Workflow Execution Actuals",
           "urlSlug": "submit-workflow-execution-actuals",
         },
@@ -5423,28 +5423,28 @@ Note: Uses a base url of https://predict.vellum.ai.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Used to retrieve a deployment given its ID or name.",
       "method": "GET",
       "name": "Retrieve",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/deployments/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -5452,22 +5452,22 @@ Used to retrieve a deployment given its ID or name.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "deployments",
           "urlSlug": "deployments",
         },
-        Object {
+        {
           "name": "Retrieve",
           "urlSlug": "retrieve",
         },
@@ -5475,20 +5475,20 @@ Used to retrieve a deployment given its ID or name.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Creates a new document index.",
       "method": "POST",
       "name": "Create",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/document-indexes",
           },
@@ -5496,22 +5496,22 @@ Creates a new document index.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "documentIndexes",
           "urlSlug": "document-indexes",
         },
-        Object {
+        {
           "name": "Create",
           "urlSlug": "create",
         },
@@ -5519,20 +5519,20 @@ Creates a new document index.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Used to list documents. Optionally filter on supported fields.",
       "method": "GET",
       "name": "List",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/documents",
           },
@@ -5540,22 +5540,22 @@ Used to list documents. Optionally filter on supported fields.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "documents",
           "urlSlug": "documents",
         },
-        Object {
+        {
           "name": "List",
           "urlSlug": "list",
         },
@@ -5563,28 +5563,28 @@ Used to list documents. Optionally filter on supported fields.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Update a Document, keying off of its Vellum-generated ID. Particularly useful for updating its metadata.",
       "method": "PATCH",
       "name": "Partial Update",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/documents/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -5592,22 +5592,22 @@ Update a Document, keying off of its Vellum-generated ID. Particularly useful fo
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "documents",
           "urlSlug": "documents",
         },
-        Object {
+        {
           "name": "Partial Update",
           "urlSlug": "partial-update",
         },
@@ -5615,25 +5615,25 @@ Update a Document, keying off of its Vellum-generated ID. Particularly useful fo
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "method": "DELETE",
       "name": "Destroy",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/documents/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -5641,22 +5641,22 @@ Update a Document, keying off of its Vellum-generated ID. Particularly useful fo
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "documents",
           "urlSlug": "documents",
         },
-        Object {
+        {
           "name": "Destroy",
           "urlSlug": "destroy",
         },
@@ -5664,8 +5664,8 @@ Update a Document, keying off of its Vellum-generated ID. Particularly useful fo
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Stable
 
 Upload a document to be indexed and used for search.
@@ -5673,13 +5673,13 @@ Upload a document to be indexed and used for search.
 Note: Uses a base url of https://documents.vellum.ai.",
       "method": "POST",
       "name": "Upload",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/upload-document",
           },
@@ -5687,22 +5687,22 @@ Note: Uses a base url of https://documents.vellum.ai.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "documents",
           "urlSlug": "documents",
         },
-        Object {
+        {
           "name": "Upload",
           "urlSlug": "upload",
         },
@@ -5710,28 +5710,28 @@ Note: Uses a base url of https://documents.vellum.ai.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Used to retrieve a model version given its ID.",
       "method": "GET",
       "name": "Retrieve",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/model-versions/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -5739,22 +5739,22 @@ Used to retrieve a model version given its ID.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "modelVersions",
           "urlSlug": "model-versions",
         },
-        Object {
+        {
           "name": "Retrieve",
           "urlSlug": "retrieve",
         },
@@ -5762,28 +5762,28 @@ Used to retrieve a model version given its ID.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Compiles the prompt backing the model version using the provided input values.",
       "method": "POST",
       "name": "Model Version Compile Prompt",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/model-versions/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/compile-prompt",
           },
@@ -5791,22 +5791,22 @@ Compiles the prompt backing the model version using the provided input values.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "modelVersions",
           "urlSlug": "model-versions",
         },
-        Object {
+        {
           "name": "Model Version Compile Prompt",
           "urlSlug": "model-version-compile-prompt",
         },
@@ -5814,8 +5814,8 @@ Compiles the prompt backing the model version using the provided input values.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration partners, not directly
@@ -5824,13 +5824,13 @@ by Vellum users.
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
       "method": "POST",
       "name": "Register Prompt",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/registered-prompts/register",
           },
@@ -5838,22 +5838,22 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "registeredPrompts",
           "urlSlug": "registered-prompts",
         },
-        Object {
+        {
           "name": "Register Prompt",
           "urlSlug": "register-prompt",
         },
@@ -5861,8 +5861,8 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
@@ -5874,21 +5874,21 @@ Note that a full replacement of the scenario is performed, so any fields not pro
 values.",
       "method": "POST",
       "name": "Upsert Sandbox Scenario",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/sandboxes/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/scenarios",
           },
@@ -5896,22 +5896,22 @@ values.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "sandboxes",
           "urlSlug": "sandboxes",
         },
-        Object {
+        {
           "name": "Upsert Sandbox Scenario",
           "urlSlug": "upsert-sandbox-scenario",
         },
@@ -5919,36 +5919,36 @@ values.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "method": "DELETE",
       "name": "Delete Sandbox Scenario",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/sandboxes/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/scenarios/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "scenario_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -5956,22 +5956,22 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "sandboxes",
           "urlSlug": "sandboxes",
         },
-        Object {
+        {
           "name": "Delete Sandbox Scenario",
           "urlSlug": "delete-sandbox-scenario",
         },
@@ -5979,8 +5979,8 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Upserts a new test case for a test suite, keying off of the optionally provided test case id.
@@ -5992,21 +5992,21 @@ Note that a full replacement of the test case is performed, so any fields not pr
 values.",
       "method": "POST",
       "name": "Upsert Test Suite Test Case",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/test-suites/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/test-cases",
           },
@@ -6014,22 +6014,22 @@ values.",
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "testSuites",
           "urlSlug": "test-suites",
         },
-        Object {
+        {
           "name": "Upsert Test Suite Test Case",
           "urlSlug": "upsert-test-suite-test-case",
         },
@@ -6037,36 +6037,36 @@ values.",
     },
     "type": "endpoint-v2",
   },
-  Object {
-    "endpoint": Object {
+  {
+    "endpoint": {
       "description": "Unstable
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "method": "DELETE",
       "name": "Delete Test Suite Test Case",
-      "path": Object {
-        "parts": Array [
-          Object {
+      "path": {
+        "parts": [
+          {
             "type": "literal",
             "value": "",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/v1/test-suites/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "/test-cases/",
           },
-          Object {
+          {
             "type": "pathParameter",
             "value": "test_case_id",
           },
-          Object {
+          {
             "type": "literal",
             "value": "",
           },
@@ -6074,22 +6074,22 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       },
     },
     "indexSegmentId": "constant",
-    "path": Object {
-      "parts": Array [
-        Object {
+    "path": {
+      "parts": [
+        {
           "name": "API Reference",
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "API Reference",
           "skipUrlSlug": true,
           "urlSlug": "api-reference",
         },
-        Object {
+        {
           "name": "testSuites",
           "urlSlug": "test-suites",
         },
-        Object {
+        {
           "name": "Delete Test Suite Test Case",
           "urlSlug": "delete-test-suite-test-case",
         },

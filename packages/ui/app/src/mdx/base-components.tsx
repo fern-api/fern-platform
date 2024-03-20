@@ -66,11 +66,7 @@ export const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) =
 /**
  * @see https://github.com/remarkjs/react-markdown/issues/404#issuecomment-604019030
  */
-const flatten = (
-    text: string,
-    child: ReactNode,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): any => {
+const flatten = (text: string, child: ReactNode): any => {
     return typeof child === "string"
         ? text + child
         : Children.toArray((child as ReactElement).props.children).reduce(flatten, text);

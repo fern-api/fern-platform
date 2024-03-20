@@ -76,7 +76,7 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                     apiId: apiInfo.apiId,
                     endpointIdentifier: undefined,
                     sdks: req.body.sdks,
-                    page: page,
+                    page,
                 },
             });
             return res.send({

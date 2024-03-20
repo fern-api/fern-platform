@@ -76,7 +76,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
         }
         const dbSnippetRows = await this.prisma.snippet.findMany({
             where: {
-                sdkId: sdkId,
+                sdkId,
             },
         });
         const snippetCollector = new EndpointSnippetCollector();
@@ -102,7 +102,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
         return await this.prisma.$transaction(async (tx) => {
             const sdkIds: string[] | undefined = loadSnippetsInfo.sdks?.map((sdk: FdrAPI.Sdk) => {
                 return sdkInfoFromSdk({
-                    sdk: sdk,
+                    sdk,
                 }).id;
             });
 

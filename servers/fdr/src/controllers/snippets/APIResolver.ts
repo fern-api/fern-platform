@@ -45,7 +45,7 @@ export class APIResolver {
         await this.assertUserHasAccessToOrg(orgId);
         const snippetAPI = await this.app.dao.snippetAPIs().loadSnippetAPI({
             loadSnippetAPIRequest: {
-                orgId: orgId,
+                orgId,
                 apiName: apiId,
             },
         });

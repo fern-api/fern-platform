@@ -15,7 +15,7 @@ export function registerAlgoliaSearchRecordDeletionBackgroundTask(app: FdrApplic
                 });
             app.logger.debug(`Successfully deleted ${deletedIndexSegmentCount} old index segments.`);
         } catch (e) {
-            app.logger.error(`Error while deleting old index segments.`, e);
+            app.logger.error("Error while deleting old index segments.", e);
         }
     });
 }

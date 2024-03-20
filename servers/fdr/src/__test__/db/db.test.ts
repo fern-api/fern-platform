@@ -771,7 +771,7 @@ it("load snippets", async () => {
                 package: "acme",
                 version: "0.0.1",
             },
-            snippets: snippets,
+            snippets,
         },
     });
 

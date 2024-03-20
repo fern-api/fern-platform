@@ -96,7 +96,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
     public async loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined> {
         const instance = await this.prisma.docsConfigInstances.findFirst({
             where: {
-                docsConfigInstanceId: docsConfigInstanceId,
+                docsConfigInstanceId,
             },
         });
         if (instance == null) {

@@ -1,8 +1,8 @@
 import { isEqual, kebabCase, startCase } from "lodash";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { titleCase } from "../utils/titleCase";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
@@ -33,7 +33,7 @@ export function convertAPIDefinitionToDb(
                         writeShape: endpoint,
                         apiDefinition: writeShape,
                         context,
-                        snippets: snippets,
+                        snippets,
                     }) ?? [],
             ),
             webhooks:
@@ -94,9 +94,9 @@ function transformSubpackage({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         subpackageId: id,
-        parent: parent,
+        parent,
         name: writeShape.name,
-        endpoints: endpoints,
+        endpoints,
         websockets: websockets ?? [],
         types: writeShape.types,
         subpackages: writeShape.subpackages,
@@ -473,8 +473,8 @@ export function transformExampleEndpointCall({
         responseStatusCode: writeShape.responseStatusCode,
         responseBody: writeShape.responseBody,
         codeExamples: transformCodeExamples({
-            endpointDefinition: endpointDefinition,
-            snippets: snippets,
+            endpointDefinition,
+            snippets,
         }),
         requestBodyV3:
             writeShape.requestBodyV3 ?? writeShape.requestBody != null
