@@ -69,7 +69,8 @@ export function rehypeFernCode(): (tree: Root) => void {
                 return;
             }
 
-            if (isBlockCode(node)) {
+            if (isBlockCode(node) && node.data?.visited !== true) {
+                node.data = { visited: true };
                 const head = node.children.filter(isElement).find((child) => child.tagName === "code");
                 if (head != null) {
                     const code = getCode(head);
@@ -114,17 +115,15 @@ export function rehypeFernCode(): (tree: Root) => void {
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
     const codeBlockItems: CodeBlocks.Item[] = [];
-    visit(nodeToVisit, (node, index, parent) => {
-        if (index == null) {
-            return;
-        }
+    visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(
                 (attr) => attr.type === "mdxJsxAttribute",
             ) as MdxJsxAttribute[];
             const title = jsxAttributes.find((attr) => attr.name === "title");
             visit(node, "element", (child) => {
-                if (child.tagName === "code") {
+                if (child.tagName === "code" && child.data?.visited !== true) {
+                    child.data = { visited: true };
                     const code = getCode(child);
                     const meta = parseBlockMetaString(child, "plaintext");
                     if (code != null) {
@@ -145,12 +144,12 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                     }
                 }
             });
-            parent?.children.splice(index, 1);
         }
     });
 
     visit(nodeToVisit, "element", (child) => {
-        if (child.tagName === "code") {
+        if (child.tagName === "code" && child.data?.visited !== true) {
+            child.data = { visited: true };
             const code = getCode(child);
             const meta = parseBlockMetaString(child, "plaintext");
             if (code != null) {
