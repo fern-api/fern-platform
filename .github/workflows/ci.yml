@@ -92,6 +92,8 @@ jobs:
           npm install -g fern-api
           fern generate --local
           yarn workspace fdr run build:prisma
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: Run tests
         run: yarn test --ci
