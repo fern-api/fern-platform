@@ -1,4 +1,5 @@
 import cn from "clsx";
+import dynamic from "next/dynamic";
 import React, { useCallback } from "react";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -8,9 +9,13 @@ import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
-import { WebhookExample } from "./webhook-examples/WebhookExample";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
+
+const WebhookExample = dynamic(
+    () => import("./webhook-examples/WebhookExample").then(({ WebhookExample }) => WebhookExample),
+    { ssr: true },
+);
 
 export declare namespace WebhookContent {
     export interface Props {

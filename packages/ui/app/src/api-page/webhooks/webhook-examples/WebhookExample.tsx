@@ -1,7 +1,13 @@
+import dynamic from "next/dynamic";
 import { createRef, useEffect, useMemo } from "react";
 import { ResolvedExampleWebhookPayload } from "../../../util/resolver";
-import { CodeSnippetExample, getJsonLineNumbers } from "../../examples/CodeSnippetExample";
+import { getJsonLineNumbers } from "../../examples/getJsonLineNumbers";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
+
+const CodeSnippetExample = dynamic(
+    () => import("../../examples/CodeSnippetExample").then(({ CodeSnippetExample }) => CodeSnippetExample),
+    { ssr: true },
+);
 
 export declare namespace WebhookExample {
     export interface Props {

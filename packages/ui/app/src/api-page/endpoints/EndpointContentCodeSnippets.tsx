@@ -1,13 +1,19 @@
 "use client";
+import dynamic from "next/dynamic";
 import { memo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
-import { CodeSnippetExample, lineNumberOf } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { lineNumberOf } from "../examples/utils";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
+
+const CodeSnippetExample = dynamic(
+    () => import("../examples/CodeSnippetExample").then(({ CodeSnippetExample }) => CodeSnippetExample),
+    { ssr: true },
+);
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
