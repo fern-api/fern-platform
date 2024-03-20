@@ -4,7 +4,7 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/resolver";
 import { joinUrlSlugs } from "../util/slug";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";

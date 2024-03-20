@@ -13,7 +13,7 @@ import {
     ResolvedTypeShape,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/resolver";
 import {
     convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
     PlaygroundEndpointRequestFormState,

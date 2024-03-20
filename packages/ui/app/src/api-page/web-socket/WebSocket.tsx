@@ -8,7 +8,6 @@ import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAn
 import { FernScrollArea } from "../../components/FernScrollArea";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
@@ -16,7 +15,8 @@ import {
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
     unwrapReference,
-} from "../../util/resolver";
+} from "../../resolver/resolver";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { joinUrlSlugs } from "../../util/slug";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";

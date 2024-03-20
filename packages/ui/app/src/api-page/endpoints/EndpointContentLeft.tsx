@@ -11,7 +11,7 @@ import {
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
-} from "../../util/resolver";
+} from "../../resolver/resolver";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";

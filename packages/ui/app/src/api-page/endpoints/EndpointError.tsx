@@ -9,7 +9,7 @@ import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     unwrapReference,
-} from "../../util/resolver";
+} from "../../resolver/resolver";
 import { toTitleCase } from "../../util/string";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

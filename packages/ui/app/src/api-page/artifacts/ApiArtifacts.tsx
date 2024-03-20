@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { API_ARTIFACTS_TITLE } from "../../config";
-import { ResolvedWithApiDefinition } from "../../util/resolver";
+import { ResolvedWithApiDefinition } from "../../resolver/resolver";
 import { joinUrlSlugs } from "../../util/slug";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";

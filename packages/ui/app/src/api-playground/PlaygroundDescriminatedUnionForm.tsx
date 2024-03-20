@@ -4,7 +4,11 @@ import { memo, useCallback, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { dereferenceObjectProperties, ResolvedDiscriminatedUnionShape, ResolvedTypeDefinition } from "../util/resolver";
+import {
+    dereferenceObjectProperties,
+    ResolvedDiscriminatedUnionShape,
+    ResolvedTypeDefinition,
+} from "../resolver/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";

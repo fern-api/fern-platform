@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { memo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
-import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../resolver/resolver";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { lineNumberOf } from "../examples/utils";

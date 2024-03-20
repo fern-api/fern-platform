@@ -10,7 +10,6 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { SidebarNode } from "../sidebar/types";
 import {
     dereferenceObjectProperties,
     ResolvedEndpointDefinition,
@@ -19,7 +18,8 @@ import {
     unwrapOptional,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/resolver";
+import { SidebarNode } from "../sidebar/types";
 import { joinUrlSlugs } from "../util/slug";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 

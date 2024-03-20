@@ -1,6 +1,6 @@
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/resolver";
 import { joinUrlSlugs } from "../../util/slug";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";

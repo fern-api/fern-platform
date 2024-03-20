@@ -4,7 +4,7 @@ import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebS
 import { FernButton } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";

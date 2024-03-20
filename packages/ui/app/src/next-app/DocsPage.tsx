@@ -6,6 +6,7 @@ import Script from "next/script";
 import { ReactElement, useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FeatureFlags } from "../contexts/FeatureFlagContext";
+import { type ResolvedPath } from "../resolver/ResolvedPath";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -14,7 +15,6 @@ import {
     isUnversionedUntabbedNavigationConfig,
     isVersionedNavigationConfig,
 } from "../util/fern";
-import { type ResolvedPath } from "../util/ResolvedPath";
 import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 

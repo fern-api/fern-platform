@@ -2,11 +2,11 @@ import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
+import { flattenApiDefinition } from "../resolver/flattenApiDefinition";
+import type { ResolvedPath } from "../resolver/ResolvedPath";
+import { resolveApiDefinition } from "../resolver/resolver";
 import { SidebarNode } from "../sidebar/types";
 import { findApiSection, visitSidebarNodes } from "../sidebar/visitor";
-import { flattenApiDefinition } from "./flattenApiDefinition";
-import type { ResolvedPath } from "./ResolvedPath";
-import { resolveApiDefinition } from "./resolver";
 
 async function getExcerpt(
     node: SidebarNode.Page,

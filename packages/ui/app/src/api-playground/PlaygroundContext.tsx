@@ -6,15 +6,15 @@ import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffec
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FeatureFlags, useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { APIS } from "../sidebar/atom";
-import { SidebarNode } from "../sidebar/types";
 import {
     flattenRootPackage,
     isEndpoint,
     isWebSocket,
     ResolvedApiDefinition,
     ResolvedRootPackage,
-} from "../util/resolver";
+} from "../resolver/resolver";
+import { APIS } from "../sidebar/atom";
+import { SidebarNode } from "../sidebar/types";
 import {
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,

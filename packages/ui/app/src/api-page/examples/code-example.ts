@@ -1,5 +1,5 @@
 import { sortBy } from "lodash-es";
-import { ResolvedExampleEndpointCall } from "../../util/resolver";
+import { ResolvedExampleEndpointCall } from "../../resolver/resolver";
 import { titleCase } from "../../util/titleCase";
 
 export interface CodeExample {

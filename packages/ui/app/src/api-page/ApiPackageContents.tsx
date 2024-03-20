@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { isResolvedSubpackage, ResolvedTypeDefinition, ResolvedWithApiDefinition } from "../util/resolver";
+import { isResolvedSubpackage, ResolvedTypeDefinition, ResolvedWithApiDefinition } from "../resolver/types";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { WebSocket } from "./web-socket/WebSocket";

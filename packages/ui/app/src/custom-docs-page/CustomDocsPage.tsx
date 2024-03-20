@@ -8,7 +8,7 @@ import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { type SerializedMdxContent } from "../mdx/mdx";
 import { MdxContent } from "../mdx/MdxContent";
-import { type ResolvedPath } from "../util/ResolvedPath";
+import { type ResolvedPath } from "../resolver/ResolvedPath";
 import { Feedback } from "./Feedback";
 import { HTMLTableOfContents } from "./TableOfContents";
 

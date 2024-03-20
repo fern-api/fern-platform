@@ -11,7 +11,6 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SidebarNode } from "../sidebar/types";
 import {
     FlattenedRootPackage,
     isEndpoint,
@@ -21,7 +20,8 @@ import {
     ResolvedExampleEndpointCall,
     ResolvedTypeDefinition,
     ResolvedWebSocketChannel,
-} from "../util/resolver";
+} from "../resolver/resolver";
+import { SidebarNode } from "../sidebar/types";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";

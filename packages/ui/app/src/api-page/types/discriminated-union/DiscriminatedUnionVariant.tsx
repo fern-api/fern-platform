@@ -6,7 +6,7 @@ import {
     dereferenceObjectProperties,
     ResolvedDiscriminatedUnionShapeVariant,
     ResolvedTypeDefinition,
-} from "../../../util/resolver";
+} from "../../../resolver/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {

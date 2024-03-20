@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../util/ResolvedPath";
+import { ResolvedPath } from "../resolver/ResolvedPath";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     return (

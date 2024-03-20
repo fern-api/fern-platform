@@ -8,7 +8,7 @@ import {
     ResolvedTypeDefinition,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/resolver";
 import { titleCase } from "../util/titleCase";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";

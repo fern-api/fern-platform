@@ -6,8 +6,8 @@ import { memo, ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
+import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../resolver/resolver";
 import { getAnchorId } from "../../../util/anchor";
-import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

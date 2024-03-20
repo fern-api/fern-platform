@@ -1,4 +1,4 @@
-import { ResolvedResponseBody, ResolvedTypeDefinition } from "../../util/resolver";
+import { ResolvedResponseBody, ResolvedTypeDefinition } from "../../resolver/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { Callout } from "../mdx/components/Callout";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../resolver/resolver";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";

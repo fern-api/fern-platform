@@ -2,16 +2,16 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { keyBy, mapValues, noop } from "lodash-es";
 import { buildRequestUrl } from "../../api-playground/utils";
-import { getEndpointEnvironmentUrl } from "../../util/endpoint";
+import { dereferenceObjectProperties } from "../../resolver/resolver";
 import {
-    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointRequest,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-} from "../../util/resolver";
+} from "../../resolver/types";
+import { getEndpointEnvironmentUrl } from "../../util/endpoint";
 
 export interface HttpRequestExample {
     method: string;

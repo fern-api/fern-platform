@@ -6,7 +6,7 @@ import {
     ResolvedTypeShape,
     ResolvedUndiscriminatedUnionShapeVariant,
     unwrapReference,
-} from "../../../util/resolver";
+} from "../../../resolver/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
