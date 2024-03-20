@@ -30,7 +30,7 @@ async function main() {
                     environmentInfo,
                     {
                         env: { account: "985111089818", region: "us-east-1" },
-                    }
+                    },
                 );
                 break;
             default:
@@ -47,7 +47,7 @@ async function getEnvironments(): Promise<Environments> {
             headers: {
                 Authorization: "Bearer " + process.env["GITHUB_TOKEN"],
             },
-        }
+        },
     );
     return response.data as Environments;
 }
