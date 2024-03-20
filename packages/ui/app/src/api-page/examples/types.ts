@@ -80,7 +80,17 @@ function requiresUrlEncode(str: string): boolean {
     return encodeURIComponent(str) !== str;
 }
 
-export function stringifyHttpRequestExampleToCurl({
+export function stringifyHttpRequestExampleToCurl(request: HttpRequestExample): string {
+    try {
+        return unsafeStringifyHttpRequestExampleToCurl(request);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        return "";
+    }
+}
+
+function unsafeStringifyHttpRequestExampleToCurl({
     method,
     url,
     urlQueries,
@@ -127,8 +137,19 @@ export function stringifyHttpRequestExampleToCurl({
                       Object.entries(value)
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
-                                  json: ({ value }) =>
-                                      ` \\\n     -F ${key}=${typeof value === "string" ? `"${value.replace(/"/g, '\\"')}"` : `'${JSON.stringify(value, null, 2).replace(/"/g, "\\'")}'`}`,
+                                  json: ({ value }) => {
+                                      if (value == null) {
+                                          return "";
+                                      }
+
+                                      if (typeof value === "string") {
+                                          return ` \\\n     -F ${key}="${value.replace(/"/g, '\\"')}"`;
+                                      }
+
+                                      const stringValue = JSON.stringify(value, null, 2);
+
+                                      return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "\\'")}'`;
+                                  },
                                   file: ({ fileName }) =>
                                       ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                   fileArray: ({ fileNames }) =>

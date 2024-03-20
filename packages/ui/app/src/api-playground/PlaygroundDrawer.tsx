@@ -8,6 +8,7 @@ import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SidebarNode } from "../sidebar/types";
@@ -314,40 +315,42 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                             </div>
                         </div>
                     </div>
-                    {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
-                        <PlaygroundEndpoint
-                            endpoint={matchedEndpoint}
-                            formState={
-                                playgroundFormState?.type === "endpoint"
-                                    ? playgroundFormState
-                                    : EMPTY_ENDPOINT_FORM_STATE
-                            }
-                            setFormState={setPlaygroundEndpointFormState}
-                            resetWithExample={resetWithExample}
-                            resetWithoutExample={resetWithoutExample}
-                            types={types}
-                        />
-                    ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
-                        <PlaygroundWebSocket
-                            websocket={matchedWebSocket}
-                            formState={
-                                playgroundFormState?.type === "websocket"
-                                    ? playgroundFormState
-                                    : EMPTY_WEBSOCKET_FORM_STATE
-                            }
-                            setFormState={setPlaygroundWebSocketFormState}
-                            types={types}
-                        />
-                    ) : (
-                        <TooltipProvider>
-                            <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
-                                <PlaygroundEndpointSelectorContent
-                                    navigation={navigation}
-                                    className="fern-card mb-6 min-h-0 shrink p-px"
-                                />
-                            </div>
-                        </TooltipProvider>
-                    )}
+                    <FernErrorBoundary type="playground" className="flex h-full items-center justify-center">
+                        {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
+                            <PlaygroundEndpoint
+                                endpoint={matchedEndpoint}
+                                formState={
+                                    playgroundFormState?.type === "endpoint"
+                                        ? playgroundFormState
+                                        : EMPTY_ENDPOINT_FORM_STATE
+                                }
+                                setFormState={setPlaygroundEndpointFormState}
+                                resetWithExample={resetWithExample}
+                                resetWithoutExample={resetWithoutExample}
+                                types={types}
+                            />
+                        ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
+                            <PlaygroundWebSocket
+                                websocket={matchedWebSocket}
+                                formState={
+                                    playgroundFormState?.type === "websocket"
+                                        ? playgroundFormState
+                                        : EMPTY_WEBSOCKET_FORM_STATE
+                                }
+                                setFormState={setPlaygroundWebSocketFormState}
+                                types={types}
+                            />
+                        ) : (
+                            <TooltipProvider>
+                                <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
+                                    <PlaygroundEndpointSelectorContent
+                                        navigation={navigation}
+                                        className="fern-card mb-6 min-h-0 shrink p-px"
+                                    />
+                                </div>
+                            </TooltipProvider>
+                        )}
+                    </FernErrorBoundary>
                 </div>
             </Transition>
         </Portal>

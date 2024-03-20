@@ -158,7 +158,14 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
     const handleFormDataJsonChange = useCallback(
         (key: string, value: unknown) => {
-            setFormDataEntry(key, value == null ? undefined : { type: "json", value });
+            setFormDataEntry(
+                key,
+                value == null
+                    ? undefined
+                    : typeof value === "function"
+                      ? (oldValue) => ({ type: "json", value: value(oldValue?.value) })
+                      : { type: "json", value },
+            );
         },
         [setFormDataEntry],
     );
