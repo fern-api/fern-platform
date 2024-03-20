@@ -1,17 +1,24 @@
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import clsx from "clsx";
 import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect, useMemo } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { Callout } from "../mdx/components/Callout";
 
 export declare interface FernErrorBoundaryProps {
     error: unknown;
+    className?: string;
     resetErrorBoundary?: () => void;
     type: string;
 }
 
-export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({ type, error, resetErrorBoundary }) => {
+export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
+    type,
+    className,
+    error,
+    resetErrorBoundary,
+}) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -36,21 +43,33 @@ export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({ ty
         return JSON.stringify(error);
     }, [error]);
 
-    useEffect(() => capturePosthogEvent(`failed_to_render_${type}`, { error }), [error, type]);
+    useEffect(() => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        return capturePosthogEvent(`failed_to_render_${type}`, { error });
+    }, [error, type]);
 
     return (
-        <Callout intent="error" title="Failed to render">
-            <pre className="pre t-muted bg-tag-default mt-4 whitespace-normal rounded p-4">{stringifiedError}</pre>
-        </Callout>
+        <div className={clsx(className ?? "my-4")}>
+            <span className="bg-tag-danger t-danger inline-flex items-center gap-2 rounded-full px-2">
+                <ExclamationTriangleIcon />
+                <span>{stringifiedError}</span>
+            </span>
+        </div>
     );
 };
 
-const getFallbackComponent = memoize(function getFallbackComponent(type: string) {
+const getFallbackComponent = memoize(function getFallbackComponent(
+    props: Omit<FernErrorBoundaryProps, keyof FallbackProps>,
+) {
     return function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
-        return <FernErrorBoundaryInternal error={error} resetErrorBoundary={resetErrorBoundary} type={type} />;
+        return <FernErrorBoundaryInternal error={error} resetErrorBoundary={resetErrorBoundary} {...props} />;
     };
 });
 
-export function FernErrorBoundary({ children, type }: PropsWithChildren<{ type: string }>): ReactElement {
-    return <ErrorBoundary FallbackComponent={getFallbackComponent(type)}>{children}</ErrorBoundary>;
+export function FernErrorBoundary({
+    children,
+    ...props
+}: PropsWithChildren<Omit<FernErrorBoundaryProps, keyof FallbackProps>>): ReactElement {
+    return <ErrorBoundary FallbackComponent={getFallbackComponent(props)}>{children}</ErrorBoundary>;
 }

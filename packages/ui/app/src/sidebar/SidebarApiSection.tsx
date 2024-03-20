@@ -84,69 +84,49 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
         );
     };
 
-    if (
-        apiSection.endpoints.length === 0 &&
-        apiSection.webhooks.length === 0 &&
-        apiSection.websockets.length === 0 &&
-        apiSection.subpackages.length === 0 &&
-        (artifacts == null || areApiArtifactsNonEmpty(artifacts))
-    ) {
+    if (apiSection.items.length === 0 && (artifacts == null || areApiArtifactsNonEmpty(artifacts))) {
         return null;
     }
 
     return (
         <ul className={cn(className, "fern-sidebar-group")}>
             {renderArtifacts()}
-            {apiSection.endpoints.map((endpoint) => (
-                <SidebarSlugLink
-                    key={joinUrlSlugs(...endpoint.slug)}
-                    slug={endpoint.slug}
-                    shallow={shallow}
-                    title={endpoint.id.endsWith("_stream") ? withStream(endpoint.title) : endpoint.title}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    selected={isEqual(endpoint.slug, selectedSlug)}
-                    depth={Math.max(0, depth - 1)}
-                    rightElement={HTTP_METHOD_TAGS[endpoint.method]}
-                />
-            ))}
-            {apiSection.websockets.map((channel) => (
-                <SidebarSlugLink
-                    key={joinUrlSlugs(...channel.slug)}
-                    slug={channel.slug}
-                    shallow={shallow}
-                    title={channel.title}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    selected={isEqual(channel.slug, selectedSlug)}
-                    depth={Math.max(0, depth - 1)}
-                    rightElement={
-                        <FernTooltip content="WebSocket Channel">
-                            <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
-                        </FernTooltip>
-                    }
-                />
-            ))}
-            {apiSection.webhooks.map((webhook) => (
-                <SidebarSlugLink
-                    key={joinUrlSlugs(...webhook.slug)}
-                    slug={webhook.slug}
-                    shallow={shallow}
-                    title={webhook.title}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    selected={isEqual(webhook.slug, selectedSlug)}
-                    depth={Math.max(0, depth - 1)}
-                />
-            ))}
-            {apiSection.subpackages.map((subpackage) => (
-                <ExpandableSidebarApiSection
-                    key={joinUrlSlugs(...subpackage.slug)}
-                    title={subpackage.title}
-                    slug={subpackage.slug}
-                    apiSection={subpackage}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    depth={depth}
-                    artifacts={undefined}
-                />
-            ))}
+            {apiSection.items.map((item) =>
+                item.type === "apiSection" ? (
+                    <ExpandableSidebarApiSection
+                        key={joinUrlSlugs(...item.slug)}
+                        title={item.title}
+                        slug={item.slug}
+                        apiSection={item}
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        depth={depth}
+                        artifacts={undefined}
+                    />
+                ) : (
+                    <SidebarSlugLink
+                        key={joinUrlSlugs(...item.slug)}
+                        slug={item.slug}
+                        shallow={shallow}
+                        title={
+                            item.apiType === "endpoint" && item.id.endsWith("_stream")
+                                ? withStream(item.title)
+                                : item.title
+                        }
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        selected={isEqual(item.slug, selectedSlug)}
+                        depth={Math.max(0, depth - 1)}
+                        rightElement={
+                            item.apiType === "endpoint" ? (
+                                HTTP_METHOD_TAGS[item.method]
+                            ) : item.apiType === "websocket" ? (
+                                <FernTooltip content="WebSocket Channel">
+                                    <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
+                                </FernTooltip>
+                            ) : null
+                        }
+                    />
+                ),
+            )}
             {apiSection.changelog != null && (
                 <SidebarSlugLink
                     slug={apiSection.changelog.slug}

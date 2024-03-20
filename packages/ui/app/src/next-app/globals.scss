@@ -805,4 +805,28 @@
     input.fern-input[type="number"] {
         appearance: textfield;
     }
+
+    .fern-mdx-link {
+        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa;
+        @apply font-semibold;
+
+        h1 &,
+        h2 &,
+        h3 &,
+        h4 &,
+        h5 &,
+        h6 & {
+            font-weight: inherit;
+        }
+
+        svg.external-link-icon {
+            @apply ml-0.5 inline-block t-muted;
+        }
+
+        &:hover {
+            svg.external-link-icon {
+                @apply t-accent;
+            }
+        }
+    }
 }

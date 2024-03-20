@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -57,12 +57,11 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
                 fileUpload: (fileUpload) =>
                     fileUpload.value?.properties.map((p) => (
-                        <>
+                        <Fragment key={p.key}>
                             <TypeComponentSeparator />
                             {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
                                 file: (file) => (
                                     <EndpointParameterContent
-                                        key={file.key}
                                         name={file.key}
                                         description={undefined}
                                         typeShorthand={file.isOptional ? "optional file" : "file"}
@@ -73,7 +72,6 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                 ),
                                 fileArray: (fileArray) => (
                                     <EndpointParameterContent
-                                        key={fileArray.key}
                                         name={fileArray.key}
                                         description={undefined}
                                         typeShorthand={
@@ -97,7 +95,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                 ),
                                 _other: () => null,
                             })}
-                        </>
+                        </Fragment>
                     )),
                 bytes: () => null,
                 typeShape: (typeShape) => (

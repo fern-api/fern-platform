@@ -39,7 +39,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                     copyToClipboard?.();
                 }) ?? (
                     <FernButton
-                        className={cn("group", className)}
+                        className={cn("group fern-copy-button", className)}
                         disabled={copyToClipboard == null}
                         onClickCapture={(e) => {
                             onClick?.(e);
@@ -50,6 +50,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                         icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
                         variant="minimal"
                         intent={wasJustCopied ? "success" : "none"}
+                        disableAutomaticTooltip={true}
                     />
                 )}
             </FernTooltip>

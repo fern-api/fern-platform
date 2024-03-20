@@ -4,6 +4,19 @@ import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 import { SidebarNodeRaw } from "./types";
 
+function toApiType(apiType: APIV1Read.ApiNavigationConfigItem["type"]): SidebarNodeRaw.ApiPageOrSubpackage["apiType"] {
+    switch (apiType) {
+        case "endpointId":
+            return "endpoint";
+        case "websocketId":
+            return "websocket";
+        case "webhookId":
+            return "webhook";
+        case "subpackage":
+            return "subpackage";
+    }
+}
+
 function resolveSidebarNodeRawApiSection(
     api: FdrAPI.ApiId,
     id: string,
@@ -12,6 +25,7 @@ function resolveSidebarNodeRawApiSection(
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     showErrors: boolean,
     parentSlugs: string[],
+    navigation: APIV1Read.ApiNavigationConfigRoot | APIV1Read.ApiNavigationConfigSubpackage | undefined,
 ): SidebarNodeRaw.ApiSection | undefined {
     let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
     while (subpackage?.pointsTo != null) {
@@ -25,6 +39,7 @@ function resolveSidebarNodeRawApiSection(
     const endpoints = subpackage.endpoints.map(
         (endpoint): SidebarNodeRaw.EndpointPage => ({
             type: "page",
+            apiType: "endpoint",
             api,
             id: endpoint.id,
             slug: [...slug, endpoint.urlSlug],
@@ -35,8 +50,9 @@ function resolveSidebarNodeRawApiSection(
         }),
     );
     const websockets = subpackage.websockets.map(
-        (websocket): SidebarNodeRaw.ApiPage => ({
+        (websocket): SidebarNodeRaw.WebSocketPage => ({
             type: "page",
+            apiType: "websocket",
             api,
             id: websocket.id,
             slug: [...slug, websocket.urlSlug],
@@ -45,8 +61,9 @@ function resolveSidebarNodeRawApiSection(
         }),
     );
     const webhooks = subpackage.webhooks.map(
-        (webhook): SidebarNodeRaw.ApiPage => ({
+        (webhook): SidebarNodeRaw.WebhookPage => ({
             type: "page",
+            apiType: "webhook",
             api,
             id: webhook.id,
             slug: [...slug, webhook.urlSlug],
@@ -54,6 +71,7 @@ function resolveSidebarNodeRawApiSection(
             description: webhook.description,
         }),
     );
+
     const subpackages = subpackage.subpackages
         .map((innerSubpackageId) =>
             resolveSidebarNodeRawApiSection(
@@ -64,11 +82,40 @@ function resolveSidebarNodeRawApiSection(
                 subpackagesMap,
                 showErrors,
                 slug,
+                navigation?.items
+                    .filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
+                    .find((item) => item.subpackageId === innerSubpackageId),
             ),
         )
-        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.ApiSection[];
+        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackageSection[];
 
-    if (endpoints.length === 0 && websockets.length === 0 && webhooks.length === 0 && subpackages.length === 0) {
+    // default sort
+    const items: SidebarNodeRaw.ApiPageOrSubpackage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
+
+    if (navigation?.items != null) {
+        items.sort((a, b) => {
+            const aIndex = navigation.items.findIndex(
+                (item) =>
+                    toApiType(item.type) === a.apiType &&
+                    (item.type === "subpackage" ? item.subpackageId === a.id : item.value === a.id),
+            );
+            const bIndex = navigation.items.findIndex(
+                (item) =>
+                    toApiType(item.type) === b.apiType &&
+                    (item.type === "subpackage" ? item.subpackageId === b.id : item.value === b.id),
+            );
+
+            if (aIndex === -1) {
+                return 1;
+            }
+            if (bIndex === -1) {
+                return -1;
+            }
+            return aIndex - bIndex;
+        });
+    }
+
+    if (items.length === 0) {
         return;
     }
 
@@ -78,13 +125,11 @@ function resolveSidebarNodeRawApiSection(
         id,
         title,
         slug,
-        endpoints,
-        webhooks,
-        websockets,
-        subpackages,
+        items,
         showErrors,
         artifacts: undefined,
         changelog: undefined,
+        description: undefined, // TODO: add description here
     };
 }
 
@@ -137,6 +182,7 @@ export function resolveSidebarNodes(
                         definition.subpackages,
                         api.showErrors,
                         definitionSlug,
+                        definition.navigation,
                     );
                     SidebarNodeRaws.push({
                         type: "apiSection",
@@ -144,10 +190,7 @@ export function resolveSidebarNodes(
                         id: api.api,
                         title: api.title,
                         slug: definitionSlug,
-                        endpoints: resolved?.endpoints ?? [],
-                        webhooks: resolved?.webhooks ?? [],
-                        websockets: resolved?.websockets ?? [],
-                        subpackages: resolved?.subpackages ?? [],
+                        items: resolved?.items ?? [],
                         artifacts: api.artifacts,
                         showErrors: api.showErrors,
                         changelog:
@@ -166,6 +209,7 @@ export function resolveSidebarNodes(
                                       })),
                                   }
                                 : undefined,
+                        description: undefined, // TODO: add description here
                     });
                 }
             },

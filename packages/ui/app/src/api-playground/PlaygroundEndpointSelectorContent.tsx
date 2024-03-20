@@ -24,20 +24,18 @@ export interface PlaygroundEndpointSelectorContentProps {
     className?: string;
 }
 
-interface ApiGroup {
+export interface ApiGroup {
     api: FdrAPI.ApiId;
     id: string;
     breadcrumbs: string[];
-    endpoints: SidebarNode.EndpointPage[];
-    webhooks: SidebarNode.ApiPage[];
-    websockets: SidebarNode.ApiPage[];
+    items: SidebarNode.ApiPage[];
 }
 
 function isApiGroupNotEmpty(group: ApiGroup): boolean {
-    return group.endpoints.length > 0 || group.webhooks.length > 0 || group.websockets.length > 0;
+    return group.items.filter((item) => item.type === "page").length > 0;
 }
 
-function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
+export function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
     const result: ApiGroup[] = [];
     for (const node of navigation) {
         visitDiscriminatedUnion(node, "type")._visit({
@@ -54,13 +52,15 @@ function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
                     api: apiSection.api,
                     id: apiSection.id,
                     breadcrumbs: [apiSection.title],
-                    endpoints: apiSection.endpoints,
-                    webhooks: apiSection.webhooks,
-                    websockets: apiSection.websockets,
+                    items: apiSection.items.filter((item): item is SidebarNode.ApiPage => item.type === "page"),
                 });
 
                 result.push(
-                    ...flattenApiSection(apiSection.subpackages).map((group) => ({
+                    ...flattenApiSection(
+                        apiSection.items.filter(
+                            (item): item is SidebarNode.SubpackageSection => item.type === "apiSection",
+                        ),
+                    ).map((group) => ({
                         ...group,
                         breadcrumbs: [apiSection.title, ...group.breadcrumbs],
                     })),
@@ -77,7 +77,7 @@ function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.A
     return (
         group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
         endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
-        (SidebarNode.isEndpointPage(endpoint) && endpoint.method.toLowerCase().includes(query.toLowerCase()))
+        (endpoint.apiType === "endpoint" && endpoint.method.toLowerCase().includes(query.toLowerCase()))
     );
 }
 
@@ -110,11 +110,10 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         };
 
         function renderApiDefinitionPackage(apiGroup: ApiGroup) {
-            const endpoints = apiGroup.endpoints.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
-            const websockets = apiGroup.websockets.filter((endpoint) =>
+            const endpoints = apiGroup.items.filter((endpoint): endpoint is SidebarNode.ApiPage =>
                 matchesEndpoint(filterValue, apiGroup, endpoint),
             );
-            if (endpoints.length === 0 && websockets.length === 0) {
+            if (endpoints.length === 0) {
                 return null;
             }
             return (
@@ -135,54 +134,59 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         {endpoints.map((endpointItem) => {
                             const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
                             const text = renderTextWithHighlight(endpointItem.title, filterValue);
-                            return (
-                                <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                    <FernTooltip
-                                        content={
-                                            endpointItem.description != null ? (
-                                                <Markdown className="text-xs" mdx={endpointItem.description} />
-                                            ) : undefined
-                                        }
-                                        side="right"
-                                    >
-                                        <FernButton
-                                            text={endpointItem.stream ? withStream(text) : text}
-                                            className="w-full rounded-none text-left"
-                                            variant="minimal"
-                                            intent={active ? "primary" : "none"}
-                                            active={active}
-                                            onClick={createSelectEndpoint(apiGroup, endpointItem)}
-                                            rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
-                                        />
-                                    </FernTooltip>
-                                </li>
-                            );
-                        })}
-                        {websockets.map((endpointItem) => {
-                            const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
-                            const text = renderTextWithHighlight(endpointItem.title, filterValue);
-                            return (
-                                <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                    <FernTooltip
-                                        content={
-                                            endpointItem.description != null ? (
-                                                <Markdown className="text-xs" mdx={endpointItem.description} />
-                                            ) : undefined
-                                        }
-                                        side="right"
-                                    >
-                                        <FernButton
-                                            text={text}
-                                            className="w-full rounded-none text-left"
-                                            variant="minimal"
-                                            intent={active ? "primary" : "none"}
-                                            active={active}
-                                            onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                            rightIcon={<Chip name="WSS" small />}
-                                        />
-                                    </FernTooltip>
-                                </li>
-                            );
+                            if (endpointItem.apiType === "endpoint") {
+                                return (
+                                    <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
+                                        <FernTooltip
+                                            content={
+                                                endpointItem.description != null ? (
+                                                    <Markdown className="text-xs" mdx={endpointItem.description} />
+                                                ) : undefined
+                                            }
+                                            side="right"
+                                        >
+                                            <FernButton
+                                                text={
+                                                    endpointItem.apiType === "endpoint" && endpointItem.stream
+                                                        ? withStream(text)
+                                                        : text
+                                                }
+                                                className="w-full rounded-none text-left"
+                                                variant="minimal"
+                                                intent={active ? "primary" : "none"}
+                                                active={active}
+                                                onClick={createSelectEndpoint(apiGroup, endpointItem)}
+                                                rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
+                                            />
+                                        </FernTooltip>
+                                    </li>
+                                );
+                            } else if (endpointItem.apiType === "websocket") {
+                                return (
+                                    <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
+                                        <FernTooltip
+                                            content={
+                                                endpointItem.description != null ? (
+                                                    <Markdown className="text-xs" mdx={endpointItem.description} />
+                                                ) : undefined
+                                            }
+                                            side="right"
+                                        >
+                                            <FernButton
+                                                text={text}
+                                                className="w-full rounded-none text-left"
+                                                variant="minimal"
+                                                intent={active ? "primary" : "none"}
+                                                active={active}
+                                                onClick={createSelectWebSocket(apiGroup, endpointItem)}
+                                                rightIcon={<Chip name="WSS" small />}
+                                            />
+                                        </FernTooltip>
+                                    </li>
+                                );
+                            } else {
+                                return null;
+                            }
                         })}
                     </ul>
                 </li>
