@@ -10,5 +10,6 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "scss.validate": false
+  "scss.validate": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

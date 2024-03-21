@@ -46,8 +46,6 @@
     "@types/jest": "^29.5.11",
     "@types/lodash": "^4.14.194",
     "@types/marked": "^5.0.0",
-    "@types/moment": "^2.13.0",
-    "@types/node-cache": "^4.2.5",
     "@types/node-cron": "^3.0.8",
     "@types/uuid": "^9.0.1",
     "@yarnpkg/pnpify": "^4.0.1",
@@ -59,7 +57,7 @@
     "prettier": "^3.2.4",
     "prisma": "5.11.0",
     "tsconfig": "*",
-    "typescript": "4.9.4"
+    "typescript": "4.9.5"
   },
   "scripts": {
     "build": "tsc --build",
