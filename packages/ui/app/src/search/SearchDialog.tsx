@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
 import cn from "clsx";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
-import { InstantSearch } from "react-instantsearch-hooks-web";
+import { InstantSearch } from "react-instantsearch";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";

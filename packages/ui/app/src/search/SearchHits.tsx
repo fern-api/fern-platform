@@ -2,7 +2,7 @@ import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
+import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SearchHit } from "./SearchHit";

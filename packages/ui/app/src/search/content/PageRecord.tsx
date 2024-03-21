@@ -1,6 +1,6 @@
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { Snippet } from "react-instantsearch-hooks-web";
+import { Snippet } from "react-instantsearch";
 import type { SearchRecord } from "../types";
 
 export declare namespace PageRecord {
