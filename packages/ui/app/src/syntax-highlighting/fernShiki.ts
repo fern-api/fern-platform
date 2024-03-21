@@ -15,29 +15,31 @@ let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;
 
 // only call this once per language
-export const getHighlighterInstance = memoize(async (language: string): Promise<Highlighter> => {
-    const lang = parseLang(language);
+export const getHighlighterInstance: (language: string) => Promise<Highlighter> = memoize(
+    async (language: string): Promise<Highlighter> => {
+        const lang = parseLang(language);
 
-    if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
-        console.debug("Loading language:", lang);
-    }
+        if (process.env.NODE_ENV === "development") {
+            // eslint-disable-next-line no-console
+            console.debug("Loading language:", lang);
+        }
 
-    if (highlighterPromise == null) {
-        highlighterPromise = getHighlighter({
-            langs: [lang],
-            themes: [LIGHT_THEME, DARK_THEME],
-        });
-    }
+        if (highlighterPromise == null) {
+            highlighterPromise = getHighlighter({
+                langs: [lang],
+                themes: [LIGHT_THEME, DARK_THEME],
+            });
+        }
 
-    highlighter = await highlighterPromise;
+        highlighter = await highlighterPromise;
 
-    if (!highlighter.getLoadedLanguages().includes(lang)) {
-        await highlighter.loadLanguage(lang);
-    }
+        if (!highlighter.getLoadedLanguages().includes(lang)) {
+            await highlighter.loadLanguage(lang);
+        }
 
-    return highlighter;
-});
+        return highlighter;
+    },
+);
 
 function hasLanguage(lang: string): boolean {
     return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;

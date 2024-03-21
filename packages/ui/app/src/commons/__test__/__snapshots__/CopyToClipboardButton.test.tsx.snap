@@ -3,7 +3,7 @@
 exports[`CopyToClipboardButton renders correctly 1`] = `
 <button
   aria-disabled={false}
-  className="group fern-button minimal normal rounded square"
+  className="group fern-copy-button fern-button minimal normal rounded square"
   data-state="off"
   data-testid="copy-btn"
   disabled={false}
