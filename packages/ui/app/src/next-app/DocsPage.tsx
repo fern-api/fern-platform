@@ -6,6 +6,7 @@ import Script from "next/script";
 import { ReactElement, useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FeatureFlags } from "../contexts/FeatureFlagContext";
+import { Docs } from "../docs/Docs";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -15,7 +16,6 @@ import {
     isVersionedNavigationConfig,
 } from "../util/fern";
 import { type ResolvedPath } from "../util/ResolvedPath";
-import { DocsApp } from "./DocsApp";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
 export declare namespace DocsPage {
@@ -81,13 +81,15 @@ export function DocsPage({
                 {title != null && <title>{title}</title>}
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
             </Head>
-            <DocsApp
-                logoHeight={logoHeight}
-                logoHref={logoHref}
-                navbarLinks={navbarLinks}
-                search={search}
-                algoliaSearchIndex={algoliaSearchIndex}
-            />
+            <div className="min-h-screen w-full">
+                <Docs
+                    logoHeight={logoHeight}
+                    logoHref={logoHref}
+                    navbarLinks={navbarLinks}
+                    search={search}
+                    algoliaSearchIndex={algoliaSearchIndex}
+                />
+            </div>
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
                     {inline}
