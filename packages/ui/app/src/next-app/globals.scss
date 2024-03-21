@@ -22,6 +22,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --body-font-fallback: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans,
+        Helvetica Neue, sans-serif;
+    --code-font-fallback: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+}
+
 @layer base {
     html {
         box-sizing: border-box;
@@ -50,14 +56,14 @@
     body {
         @apply t-default;
 
-        font-family: var(--typography-body-font-family) !important;
+        font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
         font-size: 16px !important;
     }
 
     code,
     pre,
     .font-mono {
-        font-family: var(--typography-code-font-family);
+        font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
     }
 
     code.inline-code {

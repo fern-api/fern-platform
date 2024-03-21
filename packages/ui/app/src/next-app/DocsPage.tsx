@@ -3,6 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Script from "next/script";
 import { ReactElement, useMemo } from "react";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
@@ -49,7 +50,8 @@ export declare namespace DocsPage {
     }
 }
 
-export function DocsPage(pageProps: DocsPage.Props): ReactElement {
+export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
+    const router = useRouter();
     const files = useDeepCompareMemoize(pageProps.files);
     const layout = useDeepCompareMemoize(pageProps.layout);
     const colors = useDeepCompareMemoize(pageProps.colors);
@@ -68,6 +70,13 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement {
         () => renderThemeStylesheet(colors, typography, layout, css, files),
         [colors, css, files, layout, typography],
     );
+
+    if (baseUrl == null) {
+        // eslint-disable-next-line no-console
+        console.error("Fern Docs crashed. Reloading the page might fix the issue.");
+        router.reload();
+        return null;
+    }
 
     return (
         <FeatureFlagContext.Provider value={featureFlags}>

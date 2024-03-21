@@ -42,7 +42,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     return (
-        <FernErrorBoundary type="playground" className="flex h-full items-center justify-center">
+        <FernErrorBoundary type="playground" className="flex h-screen items-center justify-center">
             {withDefaultContexts(<Component {...pageProps} />)}
         </FernErrorBoundary>
     );
