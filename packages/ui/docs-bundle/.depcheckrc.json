@@ -7,6 +7,7 @@
     "autoprefixer",
     "postcss",
     "postcss-import",
+    "jsonpath",
     "cssnano"
   ],
   "ignore-patterns": ["lib"]
