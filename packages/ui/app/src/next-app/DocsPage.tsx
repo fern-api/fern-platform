@@ -1,12 +1,16 @@
 import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import Head from "next/head";
 import Script from "next/script";
 import { ReactElement, useMemo } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { FeatureFlags } from "../contexts/FeatureFlagContext";
-import { Docs } from "../docs/Docs";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
+import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
+import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
+import { BgImageGradient } from "../docs/BgImageGradient";
+import { Docs, SearchDialog } from "../docs/Docs";
+import { ThemeProvider } from "../docs/ThemeProvider";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -45,23 +49,28 @@ export declare namespace DocsPage {
     }
 }
 
-export function DocsPage({
-    title,
-    favicon,
-    js,
-    navbarLinks,
-    logoHeight,
-    logoHref,
-    search,
-    algoliaSearchIndex,
-}: DocsPage.Props): ReactElement {
-    const { colors, typography, layout, css, files } = useDocsContext();
+export function DocsPage(pageProps: DocsPage.Props): ReactElement {
+    const files = useDeepCompareMemoize(pageProps.files);
+    const layout = useDeepCompareMemoize(pageProps.layout);
+    const colors = useDeepCompareMemoize(pageProps.colors);
+    const typography = useDeepCompareMemoize(pageProps.typography);
+    const css = useDeepCompareMemoize(pageProps.css);
+    const js = useDeepCompareMemoize(pageProps.js);
+    const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
+    const baseUrl = useDeepCompareMemoize(pageProps.baseUrl);
+    const navigation = useDeepCompareMemoize(pageProps.navigation);
+    const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
+    const search = useDeepCompareMemoize(pageProps.search);
+
+    const { title, favicon, logoHeight, logoHref, algoliaSearchIndex, resolvedPath } = pageProps;
+
     const stylesheet = useMemo(
         () => renderThemeStylesheet(colors, typography, layout, css, files),
         [colors, css, files, layout, typography],
     );
+
     return (
-        <>
+        <FeatureFlagContext.Provider value={featureFlags}>
             {/* 
                     We concatenate all global styles into a single instance,
                     as styled JSX will only create one instance of global styles
@@ -82,13 +91,34 @@ export function DocsPage({
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
             </Head>
             <div className="min-h-screen w-full">
-                <Docs
-                    logoHeight={logoHeight}
-                    logoHref={logoHref}
-                    navbarLinks={navbarLinks}
-                    search={search}
-                    algoliaSearchIndex={algoliaSearchIndex}
-                />
+                <BgImageGradient colors={colors} />
+                <ThemeProvider colors={colors}>
+                    <DocsContextProvider
+                        files={files}
+                        layout={layout}
+                        baseUrl={baseUrl}
+                        colors={colors}
+                        typography={typography}
+                        css={css}
+                    >
+                        <NavigationContextProvider
+                            resolvedPath={resolvedPath} // this changes between pages
+                            navigation={navigation}
+                            domain={baseUrl.domain}
+                            basePath={baseUrl.basePath}
+                            title={title}
+                        >
+                            <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                            <Docs
+                                logoHeight={logoHeight}
+                                logoHref={logoHref}
+                                navbarLinks={navbarLinks}
+                                search={search}
+                                algoliaSearchIndex={algoliaSearchIndex}
+                            />
+                        </NavigationContextProvider>
+                    </DocsContextProvider>
+                </ThemeProvider>
             </div>
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
@@ -105,7 +135,7 @@ export function DocsPage({
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-        </>
+        </FeatureFlagContext.Provider>
     );
 }
 

@@ -16,7 +16,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         fullSlug: "",
         title: "",
         sectionTitleBreadcrumbs: [],
-        serializedMdxContent: { compiledSource: "", frontmatter: {}, scope: {} },
+        serializedMdxContent: "",
         editThisPageUrl: null,
         neighbors: {
             prev: null,

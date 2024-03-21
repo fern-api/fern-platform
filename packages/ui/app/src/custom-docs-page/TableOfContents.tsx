@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { parse } from "node-html-parser";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
-import { getSlugFromText } from "../mdx/base-components";
 
 export declare namespace TableOfContents {
     export interface HTMLProps {
@@ -202,8 +201,9 @@ function generateTableOfContents(html: string): TableOfContentsItem[] {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             depth: parseInt(heading.tagName[1]!),
             text: heading.textContent?.trim() ?? "",
+            id: heading.id.trim() ?? "",
         }))
-        .filter((heading) => heading.text.length > 0);
+        .filter((heading) => heading.id.length > 0);
 
     const minDepth = Math.min(...parsedHeadings.map((heading) => heading.depth));
 
@@ -214,6 +214,7 @@ const makeTree = (
     headings: {
         depth: number;
         text: string;
+        id: string;
     }[],
     depth: number = 1,
 ): TableOfContentsItem[] => {
@@ -230,12 +231,13 @@ const makeTree = (
 
         if (firstToken.depth === depth) {
             const token = headings.shift();
-            const simpleString = token != null ? token.text.trim() : "";
-            tree.push({
-                simpleString,
-                anchorString: getSlugFromText(simpleString),
-                children: makeTree(headings, depth + 1),
-            });
+            if (token != null) {
+                tree.push({
+                    simpleString: token.text.trim(),
+                    anchorString: token.id.trim(),
+                    children: makeTree(headings, depth + 1),
+                });
+            }
         } else {
             tree.push(...makeTree(headings, depth + 1));
         }
