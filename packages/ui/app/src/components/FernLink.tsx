@@ -1,14 +1,14 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { type ComponentProps } from "react";
+import { ReactElement, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
 }
 
-export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps) {
+export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps): ReactElement {
     const url = toUrlObject(props.href);
     const isExternalUrl = checkIsExternalUrl(url);
 
@@ -39,11 +39,11 @@ function FernRelativeLink(props: ComponentProps<typeof Link>) {
     }
 }
 
-export function toUrlObject(url: string | UrlObject) {
+export function toUrlObject(url: string | UrlObject): UrlObject {
     return typeof url === "string" ? parse(url) : url;
 }
 
-export function formatUrlString(url: string | UrlObject) {
+export function formatUrlString(url: string | UrlObject): string {
     return typeof url === "string" ? url : format(url);
 }
 
@@ -56,19 +56,17 @@ export function resolveRelativeUrl(pathName: string, href: string): string {
     return href;
 }
 
-export function checkIsExternalUrl(url: UrlObject) {
+export function checkIsExternalUrl(url: UrlObject): boolean {
     return url.protocol != null && url.host != null;
 }
 
-export function checkIsRelativeUrl(url: UrlObject) {
+export function checkIsRelativeUrl(url: UrlObject): boolean {
     if (checkIsExternalUrl(url)) {
         return false;
     }
-    return (
-        url.href == null ||
-        url.href.startsWith(".") ||
-        !url.href.startsWith("/") ||
-        url.href.startsWith("#") ||
-        url.href.startsWith("?")
-    );
+    if (url.href?.startsWith("/") || url.href?.startsWith("#") || url.href?.startsWith("?")) {
+        return false;
+    }
+
+    return url.href == null || url.href.startsWith(".") || !url.href.startsWith("/");
 }
