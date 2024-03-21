@@ -29,7 +29,6 @@ export interface FernDocsFrontmatterInternal {
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
-    // @ts-expect-error: remarkParse, remarkRehype have bad typings
     remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkGemoji],
     rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
     format: "detect",
@@ -92,8 +91,6 @@ export async function serializeMdxContent(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        // eslint-disable-next-line no-console
-        console.log(content);
         return content;
     }
 }

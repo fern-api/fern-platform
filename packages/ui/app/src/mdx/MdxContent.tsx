@@ -17,6 +17,12 @@ export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx
         return <span className="whitespace-pre-wrap">{mdx}</span>;
     }
 
+    if (mdx.compiledSource.trim() === "") {
+        // eslint-disable-next-line no-console
+        console.error("Unexpected empty compiledSource", mdx);
+        return null;
+    }
+
     return (
         <FernErrorBoundary type="mdx">
             <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>

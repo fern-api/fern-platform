@@ -5,6 +5,7 @@ import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { type SerializedMdxContent } from "../mdx/mdx";
 import { MdxContent } from "../mdx/MdxContent";
@@ -77,7 +78,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                         }
                     />
 
-                    {mdxContent}
+                    <FernErrorBoundary type="custom_docs_page_mdx">{mdxContent}</FernErrorBoundary>
                     <BottomNavigationButtons />
                     <div className="h-20" />
                 </article>
