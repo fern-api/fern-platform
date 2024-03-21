@@ -20,6 +20,7 @@ export default async (): Promise<Config> => {
                 ...defaultConfig,
                 displayName: p.name,
                 rootDir: `${p.location}/src`,
+                testPathIgnorePatterns: ["/db/", "/ete/", ...(defaultConfig.testPathIgnorePatterns || [])],
             };
         }),
     };
