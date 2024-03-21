@@ -8,7 +8,7 @@ interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
 }
 
-export function FernLink(props: FernLinkProps) {
+export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps) {
     const url = toUrlObject(props.href);
     const isExternalUrl = checkIsExternalUrl(url);
 
@@ -22,15 +22,21 @@ export function FernLink(props: FernLinkProps) {
     return (
         <Link {...props} target={isExternalUrl ? "_blank" : props.target}>
             {props.children}
-            {isExternalUrl && props.showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
+            {isExternalUrl && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
         </Link>
     );
 }
 
 function FernRelativeLink(props: ComponentProps<typeof Link>) {
     const router = useRouter();
-    const href = resolveRelativeUrl(router.asPath, formatUrlString(props.href));
-    return <Link {...props} href={href} />;
+    // SSG will render the route as /static/x.docs.buildwithfern.com/slug which is incorrect.
+    // We will delay the rendering of the link until the router is ready to ensure the correct pathname is used.
+    if (router.isReady) {
+        const href = resolveRelativeUrl(router.asPath, formatUrlString(props.href));
+        return <Link {...props} href={href} />;
+    } else {
+        return <a className={props.className}>{props.children}</a>;
+    }
 }
 
 export function toUrlObject(url: string | UrlObject) {

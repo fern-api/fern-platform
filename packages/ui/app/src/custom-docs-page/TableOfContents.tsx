@@ -1,8 +1,8 @@
 import cn from "clsx";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { parse } from "node-html-parser";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
+import { FernLink } from "../components/FernLink";
 import { getSlugFromText } from "../util/getSlugFromText";
 
 export declare namespace TableOfContents {
@@ -41,7 +41,7 @@ function TableOfContentsItem({
     return (
         <li>
             {text.length > 0 && (
-                <Link
+                <FernLink
                     className={cn(
                         "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 transition-all",
                         {
@@ -52,7 +52,7 @@ function TableOfContentsItem({
                     href={`#${anchorString}`}
                 >
                     {text}
-                </Link>
+                </FernLink>
             )}
             {items.length > 0 && <TableOfContentsList headings={items} indent={true} anchorInView={anchorInView} />}
         </li>
