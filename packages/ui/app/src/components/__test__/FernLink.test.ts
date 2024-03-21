@@ -8,23 +8,37 @@ describe("checkIsExternalUrl", () => {
         expect(checkIsExternalUrl(toUrlObject("tel:1234567890"))).toBe(true);
     });
 
-    it("returns false for relative URLs", () => {
+    it("returns false for relative and absolute URLs", () => {
         expect(checkIsExternalUrl(toUrlObject("/path"))).toBe(false);
+        expect(checkIsExternalUrl(toUrlObject("/path/to/docs"))).toBe(false);
         expect(checkIsExternalUrl(toUrlObject("path"))).toBe(false);
+        expect(checkIsExternalUrl(toUrlObject("path/to/docs"))).toBe(false);
         expect(checkIsExternalUrl(toUrlObject("../path"))).toBe(false);
+        expect(checkIsExternalUrl(toUrlObject("../../path"))).toBe(false);
         expect(checkIsExternalUrl(toUrlObject("./path"))).toBe(false);
+        expect(checkIsExternalUrl(toUrlObject("#hash"))).toBe(false);
+        expect(checkIsExternalUrl(toUrlObject("#"))).toBe(false);
+        expect(checkIsExternalUrl(toUrlObject("?search"))).toBe(false);
+        expect(checkIsExternalUrl({})).toBe(false);
     });
 });
 
 describe("checkIsRelativeUrl", () => {
     it("returns true for relative URLs", () => {
         expect(checkIsRelativeUrl(toUrlObject("path"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("path/to/docs"))).toBe(true);
         expect(checkIsRelativeUrl(toUrlObject("../path"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("../../path"))).toBe(true);
         expect(checkIsRelativeUrl(toUrlObject("./path"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("#hash"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("#"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("?search"))).toBe(true);
+        expect(checkIsRelativeUrl({})).toBe(true);
     });
 
     it("returns false for absolute URLs", () => {
         expect(checkIsRelativeUrl(toUrlObject("/path"))).toBe(false);
+        expect(checkIsRelativeUrl(toUrlObject("/#"))).toBe(false);
     });
 
     it("returns false for external URLs", () => {
@@ -49,15 +63,19 @@ describe("resolveRelativeUrl", () => {
     });
 
     it("resolves relative urls", () => {
-        expect(resolveRelativeUrl("/base/path", "a/b/c")).toEqual("/base/path/a/b/c");
-        expect(resolveRelativeUrl("/base/path", "../a/b/c")).toEqual("/base/a/b/c");
-        expect(resolveRelativeUrl("/base/path", "./a/b/c")).toEqual("/base/path/a/b/c");
+        expect(resolveRelativeUrl("/base/path", "a/b/c")).toEqual("/base/a/b/c");
+        expect(resolveRelativeUrl("/base/path", "../a/b/c")).toEqual("/a/b/c");
+        expect(resolveRelativeUrl("/base/path", "./a/b/c")).toEqual("/base/a/b/c");
     });
 
     it("retains #hash and ?search", () => {
         expect(resolveRelativeUrl("/base/path", "/path#hash")).toEqual("/path#hash");
         expect(resolveRelativeUrl("/base/path", "/path?search")).toEqual("/path?search");
-        expect(resolveRelativeUrl("/base/path", "../path2#hash")).toEqual("/base/path2#hash");
+        expect(resolveRelativeUrl("/base/path", "../path2#hash")).toEqual("/path2#hash");
         expect(resolveRelativeUrl("/base/path", "../../path2?search")).toEqual("/path2?search");
+        expect(resolveRelativeUrl("/base/path", "#hash")).toEqual("/base/path#hash");
+        expect(resolveRelativeUrl("/base/path", "#")).toEqual("/base/path#");
+        expect(resolveRelativeUrl("/base/path", "?")).toEqual("/base/path?");
+        expect(resolveRelativeUrl("/base/path", formatUrlString({}))).toEqual("/base/path");
     });
 });

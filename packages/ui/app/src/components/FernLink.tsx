@@ -1,27 +1,28 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import path from "path";
 import { type ComponentProps } from "react";
-import { format, parse, type UrlObject } from "url";
+import { format, parse, resolve, type UrlObject } from "url";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
 }
 
 export function FernLink(props: FernLinkProps) {
-    const urlObject = toUrlObject(props.href);
+    const url = toUrlObject(props.href);
+    const isExternalUrl = checkIsExternalUrl(url);
 
-    if (checkIsRelativeUrl(urlObject)) {
+    // if the url is relative, we will need to invoke useRouter to resolve the relative url
+    // since useRouter injects the router context, it will cause a re-render any time the route changes.
+    // to avoid unnecessary re-renders, we will isolate the useRouter call to a separate component.
+    if (!isExternalUrl && checkIsRelativeUrl(url)) {
         return <FernRelativeLink {...props} />;
     }
-
-    const isExternalUrl = checkIsExternalUrl(urlObject);
 
     return (
         <Link {...props} target={isExternalUrl ? "_blank" : props.target}>
             {props.children}
-            {isExternalUrl && props.showExternalLinkIcon && <ExternalLinkIcon />}
+            {isExternalUrl && props.showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
         </Link>
     );
 }
@@ -42,9 +43,8 @@ export function formatUrlString(url: string | UrlObject) {
 
 export function resolveRelativeUrl(pathName: string, href: string): string {
     // if the href is "../" or "./" or missing an initial slash, we want to resolve it relative to the current page
-    if (href.startsWith(".") || !href.startsWith("/")) {
-        const pathname = path.resolve(parse(pathName).pathname ?? "", href);
-
+    if (href.startsWith(".") || !href.startsWith("/") || href.startsWith("#") || href.startsWith("?")) {
+        const pathname = resolve(pathName, href);
         return pathname;
     }
     return href;
@@ -55,5 +55,14 @@ export function checkIsExternalUrl(url: UrlObject) {
 }
 
 export function checkIsRelativeUrl(url: UrlObject) {
-    return url.protocol == null && url.host == null && url.pathname != null && !url.pathname.startsWith("/");
+    if (checkIsExternalUrl(url)) {
+        return false;
+    }
+    return (
+        url.href == null ||
+        url.href.startsWith(".") ||
+        !url.href.startsWith("/") ||
+        url.href.startsWith("#") ||
+        url.href.startsWith("?")
+    );
 }
