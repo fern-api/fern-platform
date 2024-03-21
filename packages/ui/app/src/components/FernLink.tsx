@@ -55,5 +55,5 @@ export function checkIsExternalUrl(url: UrlObject) {
 }
 
 export function checkIsRelativeUrl(url: UrlObject) {
-    return url.protocol == null && url.host == null;
+    return url.protocol == null && url.host == null && url.pathname != null && !url.pathname.startsWith("/");
 }

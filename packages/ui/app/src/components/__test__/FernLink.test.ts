@@ -18,10 +18,13 @@ describe("checkIsExternalUrl", () => {
 
 describe("checkIsRelativeUrl", () => {
     it("returns true for relative URLs", () => {
-        expect(checkIsRelativeUrl(toUrlObject("/path"))).toBe(true);
         expect(checkIsRelativeUrl(toUrlObject("path"))).toBe(true);
         expect(checkIsRelativeUrl(toUrlObject("../path"))).toBe(true);
         expect(checkIsRelativeUrl(toUrlObject("./path"))).toBe(true);
+    });
+
+    it("returns false for absolute URLs", () => {
+        expect(checkIsRelativeUrl(toUrlObject("/path"))).toBe(false);
     });
 
     it("returns false for external URLs", () => {
