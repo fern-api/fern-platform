@@ -5,7 +5,7 @@ import produce from "immer";
 import isEqual from "lodash-es/isEqual";
 import path from "path";
 import process from "process";
-import { YarnPackage, getAllPackages } from "./getAllPackages";
+import { getAllPackages, YarnPackage } from "./getAllPackages";
 
 const COMPILE_ROOT_PACKAGE = "@fern-ui/compile-root";
 
