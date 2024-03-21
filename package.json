@@ -84,7 +84,9 @@
     "typescript-plugin-css-modules": "^5.0.2"
   },
   "resolutions": {
-    "postcss": "8.4.31"
+    "postcss": "8.4.31",
+    "@mdx-js/mdx": "3.0.1",
+    "@mdx-js/react": "3.0.1"
   },
   "packageManager": "pnpm@8.15.4",
   "dependenciesMeta": {
