@@ -36,4 +36,4 @@ ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-CMD node apps/fdr/dist/server.js
+CMD node servers/fdr/dist/server.js

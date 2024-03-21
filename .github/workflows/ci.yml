@@ -95,6 +95,13 @@ jobs:
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
+      - name: Setup database
+        # TODO: re-enable when moving to turbo
+        # yarn workspace fdr run docker:local
+        run: |
+          yarn workspace fdr run test-db
+          yarn workspace fdr run test-ete
+
       - name: Run tests
         run: yarn test --ci
 

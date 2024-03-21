@@ -73,9 +73,14 @@
     "format": "prettier --check \"**/*.{ts,js}\"",
     "format:fix": "prettier --write \"**/*.{ts,js}\"",
     "format:prisma": "prisma format",
+    "docker:local": "dotenv -e apps/fdr/.env.local -- ./create_docker.sh local",
+    "docker:dev": "dotenv -e apps/fdr/.env.dev -- ./create_docker.sh",
+    "docker:prod": "dotenv -e apps/fdr/.env.prod -- ./create_docker.sh",
     "test": "jest src/__test__/unit-tests",
     "lint": "eslint --max-warnings 0 src --ext .ts",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "test-db": "dotenv -e .env.test -- ./scripts/db-tests.sh",
+    "test-ete": "dotenv -e .env.ete -- ./scripts/ete-tests.sh"
   },
   "packageManager": "yarn@1.22.19"
 }

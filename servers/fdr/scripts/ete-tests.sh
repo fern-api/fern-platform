@@ -6,7 +6,6 @@ docker-compose -f docker-compose.ete.yml up -d
 echo "Sleeping for 5s..."
 sleep 5
 
-cd apps/fdr
 yarn prisma migrate deploy
 
 yarn jest -i src/__test__/ete/

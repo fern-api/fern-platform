@@ -158,7 +158,7 @@ export async function loadIndexSegmentsAndGetSearchInfo({
     const activeIndexSegments =
         docsV2?.indexSegmentIds != null
             ? await app.services.db.prisma.indexSegment.findMany({
-                  where: { id: { in: docsV2.indexSegmentIds as string[] } },
+                  where: { id: { in: docsV2.indexSegmentIds } },
               })
             : [];
     return getSearchInfoFromDocs({

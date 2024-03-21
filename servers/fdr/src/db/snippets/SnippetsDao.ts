@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import { FdrAPI } from "../../api";
 import { readBuffer, writeBuffer } from "../../util";
 import { PrismaTransaction, SdkId } from "../types";
-import { SdkIdFactory } from "./SdkIdFactory";
-import { getPackageNameFromSdkSnippetsCreate } from "./getPackageNameFromSdkSnippetsCreate";
 import { EndpointSnippetCollector } from "./EndpointSnippetCollectors";
+import { getPackageNameFromSdkSnippetsCreate } from "./getPackageNameFromSdkSnippetsCreate";
+import { SdkIdFactory } from "./SdkIdFactory";
 
 export const DEFAULT_SNIPPETS_PAGE_SIZE = 100;
 
@@ -67,7 +67,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
         const dbSdkRow = await this.prisma.sdk.findFirst({
             where: {
                 id: {
-                    in: sdkId,
+                    in: [sdkId],
                 },
             },
         });
