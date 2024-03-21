@@ -26,7 +26,7 @@ module.exports = {
         },
         settings: {
             next: {
-                rootDir: "packages/public-docs-bundle/",
+                rootDir: "packages/docs-bundle/",
             },
         },
     },
