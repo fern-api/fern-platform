@@ -5,7 +5,7 @@ import produce from "immer";
 import isEqual from "lodash-es/isEqual";
 import path from "path";
 import process from "process";
-import { Package, getAllPackages } from "./getAllPackages";
+import { YarnPackage, getAllPackages } from "./getAllPackages";
 
 const COMPILE_ROOT_PACKAGE = "@fern-ui/compile-root";
 
@@ -74,7 +74,7 @@ async function asyncFilter<T>(items: T[], predicate: (item: T) => Promise<boolea
     return items.filter((_item, i) => predicateResults[i]);
 }
 
-async function doesPackageEmit(p: Package): Promise<boolean> {
+async function doesPackageEmit(p: YarnPackage): Promise<boolean> {
     try {
         const tsConfigLocation = path.join(p.location, "tsconfig.json");
         const tsConfigStr = (await readFile(tsConfigLocation)).toString();

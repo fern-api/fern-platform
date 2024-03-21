@@ -1,12 +1,12 @@
 import execa from "execa";
 import path from "path";
 
-export interface Package {
+export interface YarnPackage {
     name: string;
     location: string;
 }
 
-export async function getAllPackages({ since = false }: { since?: boolean } = {}): Promise<Package[]> {
+export async function getAllPackages({ since = false }: { since?: boolean } = {}): Promise<YarnPackage[]> {
     const args = ["workspaces", "list", "--json"];
     if (since) {
         args.push("--since", "--recursive");
@@ -19,8 +19,8 @@ export async function getAllPackages({ since = false }: { since?: boolean } = {}
         return [];
     }
 
-    return trimmedStdout.split("\n").reduce<Package[]>((packages, line) => {
-        const parsed = JSON.parse(line) as Package;
+    return trimmedStdout.split("\n").reduce<YarnPackage[]>((packages, line) => {
+        const parsed = JSON.parse(line) as YarnPackage;
         if (parsed.location !== ".") {
             packages.push({
                 name: parsed.name,
