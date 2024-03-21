@@ -78,4 +78,14 @@ describe("resolveRelativeUrl", () => {
         expect(resolveRelativeUrl("/base/path", "?")).toEqual("/base/path?");
         expect(resolveRelativeUrl("/base/path", formatUrlString({}))).toEqual("/base/path");
     });
+
+    it("drops #hash from the left side", () => {
+        expect(resolveRelativeUrl("/base/path#hash", "#hash2")).toEqual("/base/path#hash2");
+        expect(resolveRelativeUrl("/base/path#hash", "#")).toEqual("/base/path#");
+        expect(resolveRelativeUrl("/base/path#hash", "?search")).toEqual("/base/path?search");
+        expect(resolveRelativeUrl("/base/path#hash", "?")).toEqual("/base/path?");
+        expect(resolveRelativeUrl("/base/path#hash", formatUrlString({}))).toEqual("/base/path");
+        expect(resolveRelativeUrl("/base/path#hash", "/path")).toEqual("/path");
+        expect(resolveRelativeUrl("/base/path#hash", "path2")).toEqual("/base/path2");
+    });
 });
