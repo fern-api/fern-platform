@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { parse } from "node-html-parser";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
-import { getSlugFromText } from "../mdx/base-components";
+import { getSlugFromText } from "../util/getSlugFromText";
 
 export declare namespace TableOfContents {
     export interface HTMLProps {

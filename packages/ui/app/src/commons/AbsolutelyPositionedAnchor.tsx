@@ -3,9 +3,9 @@ import { Transition } from "@headlessui/react";
 import { Link1Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Url } from "next/dist/shared/lib/router/router";
-import Link from "next/link";
 import { Fragment, memo } from "react";
 import { Check } from "react-feather";
+import { FernLink } from "../components/FernLink";
 import "./AbsolutelyPositionedAnchor.scss";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -49,7 +49,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
 
     return (
         <div className="fern-anchor">
-            <Link
+            <FernLink
                 href={href}
                 shallow={true}
                 replace={true}
@@ -78,7 +78,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
                         </div>
                     </Transition>
                 )}
-            </Link>
+            </FernLink>
         </div>
     );
 });

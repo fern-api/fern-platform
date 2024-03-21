@@ -2,7 +2,7 @@ import * as RadixAccordion from "@radix-ui/react-accordion";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { NextRouter, withRouter } from "next/router";
 import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { getSlugFromText } from "../base-components";
+import { getSlugFromText } from "../../util/getSlugFromText";
 
 export interface AccordionItemProps {
     title: string;
