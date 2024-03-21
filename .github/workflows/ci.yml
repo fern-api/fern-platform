@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Check root package
-        run: yarn root-package:check
+      - name: Compile
+        run: yarn compile
 
       - name: Check dependencies
         run: yarn depcheck
@@ -70,7 +70,6 @@ jobs:
         # comma that prettier adds back
         run: |
           yarn organize-imports
-          yarn format:fix
           git --no-pager diff --exit-code
 
   test:
@@ -87,6 +86,21 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --immutable
+
+      - name: Codegen
+        run: |
+          npm install -g fern-api
+          fern generate --local
+          yarn workspace fdr run build:prisma
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+
+      - name: Setup database
+        # TODO: re-enable when moving to turbo
+        # yarn workspace fdr run docker:local
+        run: |
+          yarn workspace fdr run test-db
+          yarn workspace fdr run test-ete
 
       - name: Run tests
         run: yarn test --ci

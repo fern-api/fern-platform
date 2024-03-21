@@ -1,0 +1,29 @@
+{
+  "name": "fdr-deploy",
+  "version": "0.1.0",
+  "bin": "bin/fdr-deploy.js",
+  "scripts": {
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "deploy:dev": "cdk deploy fdr-dev2 --require-approval never --progress events",
+    "deploy:prod": "cdk deploy fdr-prod --require-approval never --progress events"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@types/node": "^18.7.18",
+    "@types/prettier": "2.6.0",
+    "aws-cdk": "^2.118.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.4",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.9.1",
+    "typescript": "4.9.4"
+  },
+  "dependencies": {
+    "@fern-fern/fern-cloud-sdk": "^0.0.257",
+    "aws-cdk-lib": "^2.122.0",
+    "axios": "^1.6.5",
+    "constructs": "^10.3.0",
+    "source-map-support": "^0.5.21"
+  }
+}

@@ -1,0 +1,557 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+  apiReadV1: ../../../api/v1/read/__package__.yml
+  apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
+
+service:
+  base-path: /registry/docs
+  auth: false
+  audiences:
+    - read
+  endpoints:
+    getDocsForDomainLegacy:
+      availability: deprecated
+      method: GET
+      path: /load/{domain}
+      path-parameters:
+        domain: string
+      response: DocsDefinition
+      errors:
+        - DomainNotRegisteredError
+
+    getDocsForDomain:
+      availability: deprecated
+      method: POST
+      path: /load
+      request:
+        name: LoadDocsForDomainRequest
+        body:
+          properties:
+            domain: string
+      response: DocsDefinition
+      errors:
+        - DomainNotRegisteredError
+
+types:
+  PageId: string
+
+  Url: string
+
+  File:
+    union:
+      url: UrlFile
+      image: ImageFile
+
+  UrlFile:
+    properties:
+      url: Url
+
+  ImageFile:
+    properties:
+      url: Url
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
+  FileId: string
+
+  Height: double
+
+  AlgoliaSearchIndex: string
+
+  LoadDocsForUrlResponse:
+    properties:
+      baseUrl: string
+      definition: DocsDefinition
+
+  VersionId: string
+
+  IndexSegmentId: string
+
+  IndexSegment:
+    properties:
+      id: IndexSegmentId
+      searchApiKey: string
+
+  LegacyMultiAlgoliaIndexInfo:
+    properties:
+      algoliaIndex: optional<string>
+
+  SingleAlgoliaIndexInfo:
+    union:
+      unversioned: UnversionedSingleAlgoliaIndexInfo
+      versioned: VersionedSingleAlgoliaIndexInfo
+
+  UnversionedSingleAlgoliaIndexInfo:
+    properties:
+      indexSegment: IndexSegment
+
+  VersionedSingleAlgoliaIndexInfo:
+    properties:
+      indexSegmentsByVersionId: map<VersionId, IndexSegment>
+
+  SearchInfo:
+    union:
+      legacyMultiAlgoliaIndex:
+        docs: The legacy search storage where each docs website got its own algolia index.
+        type: LegacyMultiAlgoliaIndexInfo
+      singleAlgoliaIndex:
+        docs: Every docs website is indexed in a global Algolia Index
+        type: SingleAlgoliaIndexInfo
+
+  DocsDefinition:
+    properties:
+      algoliaSearchIndex: optional<AlgoliaSearchIndex>
+      pages: map<PageId, PageContent>
+      apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
+      files: map<FileId, Url>
+      filesV2: map<FileId, File>
+      id: optional<rootCommons.DocsConfigId>
+      config: DocsConfig
+      search: SearchInfo
+
+  PageContent:
+    properties:
+      markdown: string # eventually PageContent should just be a FileId ?
+      editThisPageUrl: optional<Url>
+
+  DocsConfig:
+    properties:
+      title: optional<string>
+      navigation: NavigationConfig
+
+      # logo
+      logoHeight: optional<Height>
+      logoHref: optional<Url>
+      favicon: optional<FileId>
+
+      # styles
+      colorsV3: optional<ColorsConfigV3>
+      navbarLinks: optional<list<NavbarLink>>
+      layout: optional<DocsLayoutConfig>
+      typographyV2: optional<DocsTypographyConfigV2>
+
+      # css and js
+      css: optional<CssConfig>
+      js: optional<JsConfig>
+
+      # deprecated
+      backgroundImage: optional<FileId>
+      logoV2: optional<LogoV2>
+      logo:
+        type: optional<FileId>
+        availability: deprecated
+      colors:
+        type: optional<ColorsConfig>
+        availability: deprecated
+      colorsV2:
+        type: optional<ColorsConfigV2>
+        availability: deprecated
+      typography:
+        type: optional<DocsTypographyConfig>
+        availability: deprecated
+
+  ColorsConfigV3:
+    union:
+      dark: ThemeConfig
+      light: ThemeConfig
+      darkAndLight: DarkAndLightModeConfig
+
+  ThemeConfig:
+    properties:
+      logo: optional<FileId>
+      backgroundImage: optional<FileId>
+      accentPrimary: RgbaColor
+      background: Background
+      border: optional<RgbaColor>
+      sidebarBackground: optional<RgbaColor>
+      headerBackground: optional<RgbaColor>
+      cardBackground: optional<RgbaColor>
+
+  DarkAndLightModeConfig:
+    properties:
+      dark: ThemeConfig
+      light: ThemeConfig
+
+  Background:
+    union:
+      solid: RgbaColor
+      gradient: {}
+
+  LogoV2:
+    properties:
+      dark: optional<FileId>
+      light: optional<FileId>
+
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  DocsTypographyConfigV2:
+    properties:
+      headingsFont: optional<FontConfigV2>
+      bodyFont: optional<FontConfigV2>
+      codeFont: optional<FontConfigV2>
+
+  FontConfig:
+    properties:
+      name: string
+      fontFile: FileId
+
+  # TODO: add support for google fonts
+  FontConfigV2:
+    union:
+      custom: CustomFontConfig
+
+  CustomFontConfig:
+    properties:
+      name: string
+      variants: list<CustomFontConfigVariant>
+      display: optional<FontDisplay>
+      fallback: optional<list<string>>
+
+      # declarations
+      fontVariationSettings: optional<string>
+
+  CustomFontConfigVariant:
+    properties:
+      fontFile: FileId
+      weight: optional<list<string>>
+      style: optional<list<FontStyle>>
+
+  FontStyle:
+    enum:
+      - normal
+      - italic
+
+  FontDisplay:
+    enum:
+      - auto
+      - block
+      - swap
+      - fallback
+      - optional
+
+  NavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedNavigationConfig
+      - VersionedNavigationConfig
+
+  UnversionedNavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedTabbedNavigationConfig
+      - UnversionedUntabbedNavigationConfig
+
+  UnversionedTabbedNavigationConfig:
+    properties:
+      tabs: list<NavigationTab>
+
+  NavigationTab:
+    properties:
+      title: string
+      icon: string
+      items: list<NavigationItem>
+      urlSlug: string
+
+  UnversionedUntabbedNavigationConfig:
+    properties:
+      items: list<NavigationItem>
+
+  VersionedNavigationConfig:
+    properties:
+      versions: list<VersionedNavigationConfigData>
+
+  VersionedNavigationConfigData:
+    properties:
+      version: VersionId
+      urlSlug: string
+      availability: optional<VersionAvailability>
+      config: UnversionedNavigationConfig
+
+  VersionAvailability:
+    enum:
+      - Stable
+      - GenerallyAvailable
+      - Deprecated
+      - Beta
+
+  DocsLayoutConfig:
+    properties:
+      pageWidth: optional<PageWidthSizeConfig>
+      contentWidth: optional<SizeConfig>
+      sidebarWidth: optional<SizeConfig>
+      headerHeight: optional<SizeConfig>
+      searchbarPlacement: optional<SidebarOrHeaderPlacement>
+      tabsPlacement: optional<SidebarOrHeaderPlacement>
+      contentAlignment: optional<ContentAlignment>
+      headerPosition: optional<HeaderPosition>
+      disableHeader: optional<boolean>
+
+  SidebarOrHeaderPlacement:
+    enum:
+      - HEADER
+      - SIDEBAR
+
+  ContentAlignment:
+    enum:
+      - CENTER
+      - LEFT
+
+  HeaderPosition:
+    enum:
+      - FIXED
+      - ABSOLUTE
+
+  PageWidthSizeConfig:
+    union:
+      px: double
+      rem: double
+      full: {}
+
+  SizeConfig:
+    union:
+      px: double
+      rem: double
+
+  NavigationItem:
+    union:
+      page: PageMetadata
+      api: ApiSection
+      section: DocsSection
+      link: LinkMetadata
+
+  PageMetadata:
+    properties:
+      id: PageId
+      title: string
+      urlSlug: string
+      fullSlug: optional<list<string>>
+
+  LinkMetadata:
+    properties:
+      title: string
+      url: string
+
+  NavbarLink:
+    union:
+      filled: NavbarLinkMetadata
+      outlined: NavbarLinkMetadata
+      minimal: NavbarLinkMetadata
+
+      # deprecated
+      primary: NavbarLinkMetadata # -> outlined
+      secondary: NavbarLinkMetadata # -> minimal
+
+  NavbarLinkMetadata:
+    properties:
+      url: string
+      text: string
+
+  ApiSection:
+    properties:
+      title: string
+      api: rootCommons.ApiDefinitionId
+      urlSlug: string
+      skipUrlSlug: boolean
+      artifacts: optional<ApiArtifacts>
+      showErrors: boolean
+      changelog: optional<ChangelogSection>
+      fullSlug: optional<list<string>>
+
+  ChangelogSection:
+    properties:
+      title: optional<string>
+      description: optional<string>
+      pageId: optional<PageId>
+      items: list<ChangelogItem>
+      urlSlug: string
+      fullSlug: optional<list<string>>
+
+  ChangelogItem:
+    properties:
+      date: date
+      pageId: PageId
+
+  DocsSection:
+    properties:
+      title: string
+      items: list<NavigationItem>
+      urlSlug: string
+      skipUrlSlug: boolean
+      collapsed: boolean
+      fullSlug: optional<list<string>>
+
+  ColorsConfig:
+    properties:
+      accentPrimary: optional<RgbaColor>
+
+  ColorsConfigV2:
+    properties:
+      accentPrimary: optional<ColorConfig>
+      background: optional<ColorConfig>
+
+  ColorConfig:
+    union:
+      unthemed: ColorUnthemedConfig
+      themed: ColorThemedConfig
+
+  ColorUnthemedConfig:
+    properties:
+      color: optional<RgbaColor>
+
+  ColorThemedConfig:
+    properties:
+      dark: optional<RgbaColor>
+      light: optional<RgbaColor>
+
+  RgbaColor:
+    properties:
+      r: integer
+      g: integer
+      b: integer
+      a: optional<double>
+
+  ApiArtifacts:
+    properties:
+      sdks: list<PublishedSdk>
+      postman: optional<PublishedPostmanCollection>
+
+  PublishedPostmanCollection:
+    properties:
+      url: string
+      githubRepo: optional<GitHubRepo>
+
+  PublishedSdk:
+    union:
+      npm: NpmPackage
+      maven: MavenPackage
+      pypi: PypiPackage
+
+  NpmPackage:
+    properties:
+      packageName: string
+      githubRepo: GitHubRepo
+      version: string
+
+  MavenPackage:
+    properties:
+      coordinate: string
+      githubRepo: GitHubRepo
+      version: string
+
+  PypiPackage:
+    properties:
+      packageName: string
+      githubRepo: GitHubRepo
+      version: string
+
+  GitHubRepo:
+    properties:
+      name: string
+      url: string
+
+  AlgoliaEndpointRecord:
+    properties:
+      title: string
+      subtitle: string
+      path: string # path does not include version slug
+      version: optional<VersionId>
+      versionSlug: optional<string>
+      indexSegmentId: optional<string>
+
+  AlgoliaPageRecord:
+    properties:
+      title: string
+      subtitle: string
+      path: string # path does not include version slug
+      version: optional<VersionId>
+      versionSlug: optional<string>
+      indexSegmentId: optional<string>
+
+  AlgoliaRecordEndpointPath:
+    properties:
+      parts: list<apiReadV1Endpoint.EndpointPathPart>
+
+  AlgoliaRecordPathPart:
+    properties:
+      name: string
+      urlSlug: string
+      skipUrlSlug: optional<boolean>
+
+  AlgoliaRecordPath:
+    docs: The path corresponding to a search record represented as a list of parts. If the docs are versioned, the version prefix must be added when building the string representation of the path.
+    properties:
+      parts: list<AlgoliaRecordPathPart>
+
+  AlgoliaRecordEndpointSummary:
+    properties:
+      name: optional<string>
+      description: optional<string>
+      method: apiReadV1Endpoint.HttpMethod
+      path: AlgoliaRecordEndpointPath
+
+  AlgoliaRecordVersion:
+    properties:
+      id: VersionId
+      urlSlug: string
+
+  AlgoliaEndpointRecordV2:
+    properties:
+      endpoint: AlgoliaRecordEndpointSummary
+      path: AlgoliaRecordPath
+      version: optional<AlgoliaRecordVersion>
+      indexSegmentId: string
+
+  AlgoliaPageRecordV2:
+    properties:
+      title: string
+      content: string
+      path: AlgoliaRecordPath
+      version: optional<AlgoliaRecordVersion>
+      indexSegmentId: string
+
+  AlgoliaRecord:
+    audiences:
+      - read
+    union:
+      endpoint: AlgoliaEndpointRecord
+      page: AlgoliaPageRecord
+      endpoint-v2: AlgoliaEndpointRecordV2
+      page-v2: AlgoliaPageRecordV2
+
+  CssConfig:
+    properties:
+      inline: optional<list<string>>
+
+  JsConfig:
+    properties:
+      remote: optional<list<JsRemoteConfig>>
+      files: list<JsFileConfig>
+      inline: optional<list<string>>
+
+  JsRemoteConfig:
+    properties:
+      url: Url
+      strategy: optional<JsScriptStrategy>
+
+  JsFileConfig:
+    properties:
+      fileId: FileId
+      strategy: optional<JsScriptStrategy>
+
+  JsScriptStrategy:
+    enum:
+      - beforeInteractive
+      - afterInteractive # default
+      - lazyOnload
+
+errors:
+  DomainNotRegisteredError:
+    status-code: 404

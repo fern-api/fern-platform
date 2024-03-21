@@ -1,0 +1,454 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../../commons.yml
+
+service:
+  base-path: /registry/docs
+  auth: false
+  audiences:
+    - write
+  endpoints:
+    startDocsRegister:
+      auth: true
+      method: POST
+      path: /init
+      request:
+        name: StartDocsRegisterRequest
+        body:
+          properties:
+            domain: string
+            orgId: rootCommons.OrgId
+            filepaths:
+              type: list<FilePath>
+              docs: Relative filepath from docs folder.
+      response: StartDocsRegisterResponse
+
+    finishDocsRegister:
+      auth: true
+      method: POST
+      path: /register/{docsRegistrationId}
+      path-parameters:
+        docsRegistrationId: DocsRegistrationId
+      request:
+        name: RegisterDocsRequest
+        body:
+          properties:
+            docsDefinition: DocsDefinition
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UserNotInOrgError
+        - DocsRegistrationIdNotFound
+
+types:
+  FilePath:
+    type: string
+    docs: Each string is a unique key for the file. You can use the filepath as a key.
+
+  DocsRegistrationId: string
+
+  StartDocsRegisterResponse:
+    properties:
+      docsRegistrationId: DocsRegistrationId
+      uploadUrls: map<FilePath, FileS3UploadUrl>
+
+  FileS3UploadUrl:
+    properties:
+      uploadUrl: string
+      fileId:
+        type: FileId
+        docs: |
+          When reading docs we will return a map<FileId, URL> that you can use to look up the docs.
+
+  FileId: string
+
+  Height: double
+
+  PageId: string
+
+  Url: string
+
+  DocsDefinition:
+    properties:
+      pages: map<PageId, PageContent>
+      config: DocsConfig
+
+  PageContent:
+    properties:
+      markdown: string # eventually PageContent should just be a FileId ?
+      editThisPageUrl: optional<Url>
+
+  DocsConfig:
+    properties:
+      title: optional<string>
+      navigation: NavigationConfig
+
+      # logo
+      logoHeight: optional<Height>
+      logoHref: optional<Url>
+      favicon: optional<FileId>
+
+      # styles
+      colorsV3: optional<ColorsConfigV3>
+      navbarLinks: optional<list<NavbarLink>>
+      layout: optional<DocsLayoutConfig>
+      typographyV2: optional<DocsTypographyConfigV2>
+
+      # css and js
+      css: optional<CssConfig>
+      js: optional<JsConfig>
+
+      # deprecated
+      backgroundImage: optional<FileId>
+      logoV2: optional<ThemedFileId>
+      logo:
+        type: optional<FileId>
+        availability: deprecated
+      colors:
+        type: optional<ColorsConfig>
+        availability: deprecated
+      colorsV2:
+        type: optional<ColorsConfigV2>
+        availability: deprecated
+      typography:
+        type: optional<DocsTypographyConfig>
+        availability: deprecated
+
+  ColorsConfigV3:
+    union:
+      dark: ThemeConfig
+      light: ThemeConfig
+      darkAndLight: DarkAndLightModeConfig
+
+  ThemeConfig:
+    properties:
+      logo: optional<FileId>
+      backgroundImage: optional<FileId>
+      accentPrimary: RgbaColor
+      background: optional<RgbaColor>
+      border: optional<RgbaColor>
+      sidebarBackground: optional<RgbaColor>
+      headerBackground: optional<RgbaColor>
+      cardBackground: optional<RgbaColor>
+
+  DarkAndLightModeConfig:
+    properties:
+      dark: ThemeConfig
+      light: ThemeConfig
+
+  ThemedFileId:
+    properties:
+      dark: optional<FileId>
+      light: optional<FileId>
+
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  DocsTypographyConfigV2:
+    properties:
+      headingsFont: optional<FontConfigV2>
+      bodyFont: optional<FontConfigV2>
+      codeFont: optional<FontConfigV2>
+
+  FontConfig:
+    properties:
+      name: string
+      fontFile: FileId
+
+  # TODO: add support for google fonts
+  FontConfigV2:
+    union:
+      custom: CustomFontConfig
+
+  CustomFontConfig:
+    properties:
+      name: string
+      variants: list<CustomFontConfigVariant>
+      display: optional<FontDisplay>
+      fallback: optional<list<string>>
+      # declarations
+      fontVariationSettings: optional<string>
+
+  CustomFontConfigVariant:
+    properties:
+      fontFile: FileId
+      weight: optional<list<string>>
+      style: optional<list<FontStyle>>
+
+  FontStyle:
+    enum:
+      - normal
+      - italic
+
+  FontDisplay:
+    enum:
+      - auto
+      - block
+      - swap
+      - fallback
+      - optional
+
+  NavbarLink:
+    union:
+      filled: NavbarLinkMetadata
+      outlined: NavbarLinkMetadata
+      minimal: NavbarLinkMetadata
+
+      # deprecated
+      primary: NavbarLinkMetadata # -> outlined
+      secondary: NavbarLinkMetadata # -> minimal
+
+  NavbarLinkMetadata:
+    properties:
+      url: string
+      text: string
+
+  NavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedNavigationConfig
+      - VersionedNavigationConfig
+
+  UnversionedNavigationConfig:
+    discriminated: false
+    union:
+      - UnversionedTabbedNavigationConfig
+      - UnversionedUntabbedNavigationConfig
+
+  UnversionedTabbedNavigationConfig:
+    properties:
+      tabs: list<NavigationTab>
+
+  NavigationTab:
+    properties:
+      title: string
+      icon: string
+      items: list<NavigationItem>
+      urlSlugOverride: optional<string>
+
+  UnversionedUntabbedNavigationConfig:
+    properties:
+      items: list<NavigationItem>
+
+  VersionedNavigationConfig:
+    properties:
+      versions: list<VersionedNavigationConfigData>
+
+  VersionedNavigationConfigData:
+    properties:
+      version: string
+      urlSlugOverride: optional<string>
+      availability: optional<VersionAvailability>
+      config: UnversionedNavigationConfig
+
+  VersionAvailability:
+    enum:
+      - Stable
+      - GenerallyAvailable
+      - Deprecated
+      - Beta
+
+  DocsLayoutConfig:
+    properties:
+      pageWidth: optional<PageWidthSizeConfig>
+      contentWidth: optional<SizeConfig>
+      sidebarWidth: optional<SizeConfig>
+      headerHeight: optional<SizeConfig>
+      searchbarPlacement: optional<SidebarOrHeaderPlacement>
+      tabsPlacement: optional<SidebarOrHeaderPlacement>
+      contentAlignment: optional<ContentAlignment>
+      headerPosition: optional<HeaderPosition>
+      disableHeader: optional<boolean>
+
+  SidebarOrHeaderPlacement:
+    enum:
+      - HEADER
+      - SIDEBAR
+
+  ContentAlignment:
+    enum:
+      - CENTER
+      - LEFT
+
+  HeaderPosition:
+    enum:
+      - FIXED
+      - ABSOLUTE
+
+  PageWidthSizeConfig:
+    union:
+      px: double
+      rem: double
+      full: {}
+
+  SizeConfig:
+    union:
+      px: double
+      rem: double
+
+  NavigationItem:
+    union:
+      page: PageMetadata
+      api: ApiSection
+      section: DocsSection
+      link: LinkMetadata
+
+  PageMetadata:
+    properties:
+      title: string
+      id: PageId
+      urlSlugOverride: optional<string>
+      fullSlug: optional<list<string>>
+
+  LinkMetadata:
+    properties:
+      title: string
+      url: string
+
+  ApiSection:
+    properties:
+      title: string
+      api: rootCommons.ApiDefinitionId
+      artifacts: optional<ApiArtifacts>
+      skipUrlSlug: optional<boolean>
+      showErrors: optional<boolean>
+      changelog: optional<ChangelogSection>
+      fullSlug: optional<list<string>>
+
+  ChangelogSection:
+    properties:
+      title:
+        type: optional<string>
+        docs: |
+          Optional title for the changelog section. Defaults to "Changelog" if not provided.
+      description: optional<string>
+      pageId:
+        type: optional<string>
+        docs: |
+          Optional mdx content to display at the top of the changelog section. The title and description will be parsed from the frontmatter and replace the config-defined values.
+      items: list<ChangelogItem>
+      urlSlug: string
+      fullSlug: optional<list<string>>
+
+  ChangelogItem:
+    properties:
+      date: date
+      pageId: string
+
+  DocsSection:
+    properties:
+      title: string
+      items: list<NavigationItem>
+      urlSlugOverride: optional<string>
+      collapsed: optional<boolean>
+      skipUrlSlug: optional<boolean>
+      fullSlug: optional<list<string>>
+
+  ColorsConfig:
+    properties:
+      accentPrimary: optional<RgbaColor>
+
+  ColorsConfigV2:
+    properties:
+      accentPrimary: optional<ColorConfig>
+      background: optional<ColorConfig>
+
+  ColorConfig:
+    union:
+      unthemed: ColorUnthemedConfig
+      themed: ColorThemedConfig
+
+  ColorUnthemedConfig:
+    properties:
+      color: optional<RgbaColor>
+
+  ColorThemedConfig:
+    properties:
+      dark: optional<RgbaColor>
+      light: optional<RgbaColor>
+
+  RgbaColor:
+    properties:
+      r: integer
+      g: integer
+      b: integer
+      a: optional<double>
+
+  ApiArtifacts:
+    properties:
+      sdks: list<PublishedSdk>
+      postman: optional<PublishedPostmanCollection>
+
+  PublishedPostmanCollection:
+    properties:
+      url: string
+      githubRepoName: optional<string>
+
+  PublishedSdk:
+    union:
+      npm: NpmPackage
+      maven: MavenPackage
+      pypi: PypiPackage
+
+  NpmPackage:
+    properties:
+      packageName: string
+      githubRepoName: string
+      version: string
+
+  MavenPackage:
+    properties:
+      coordinate: string
+      githubRepoName: string
+      version: string
+
+  PypiPackage:
+    properties:
+      packageName: string
+      githubRepoName: string
+      version: string
+
+  InvalidDomainErrorBody:
+    properties:
+      requiredDomainSuffix:
+        type: string
+        docs: Value the domain should end with (i.e. docs.buildwithfern.com or dev.docs.buildwithfern.com)
+
+  InvliadCustomDomainErrorBody:
+    properties:
+      overlappingDomains: list<OverlappingCustomDomains>
+
+  OverlappingCustomDomains: list<string>
+
+  CssConfig:
+    properties:
+      inline: optional<list<string>>
+
+  JsConfig:
+    properties:
+      remote: optional<list<JsRemoteConfig>>
+      files: list<JsFileConfig>
+      inline: optional<list<string>>
+
+  JsRemoteConfig:
+    properties:
+      url: Url
+      strategy: optional<JsScriptStrategy>
+
+  JsFileConfig:
+    properties:
+      fileId: FileId
+      strategy: optional<JsScriptStrategy>
+
+  JsScriptStrategy:
+    enum:
+      - beforeInteractive
+      - afterInteractive # default
+      - lazyOnload
+
+errors:
+  DocsRegistrationIdNotFound:
+    status-code: 404

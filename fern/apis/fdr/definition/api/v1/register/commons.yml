@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  WithDescription:
+    properties:
+      description: optional<string>
+  
+  WithAvailability: 
+    properties: 
+      availability: optional<Availability>
+
+  Availability: 
+    enum: 
+      - GenerallyAvailable
+      - Deprecated
+      - Beta

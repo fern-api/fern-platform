@@ -1,5 +1,4 @@
-import { DocsPage, getDocsPageProps } from "@fern-ui/ui";
-import { compact } from "lodash-es";
+import { DocsPage } from "@fern-ui/ui";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 
@@ -12,8 +11,9 @@ export default function LocalPreviewDocs(): ReactElement {
             return;
         }
         async function loadData() {
-            const slugArray = compact(router.asPath.split("/"));
-            const props = await getDocsPageProps(undefined, slugArray);
+            // const slugArray = compact(router.asPath.split("/"));
+            // const props = await getDocsPageProps(undefined, slugArray);
+            const props = {} as any;
             if (props.type === "props") {
                 setDocsProps(props.props);
             }

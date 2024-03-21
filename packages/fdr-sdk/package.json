@@ -1,0 +1,45 @@
+{
+  "name": "@fern-api/fdr-sdk",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@ungap/url-search-params": "0.2.2",
+    "axios": "^1.6.5",
+    "js-base64": "3.7.2",
+    "lodash": "^4.17.21",
+    "marked": "^5.1.0",
+    "tinycolor2": "^1.6.0",
+    "url-join": "4.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-typescript": "^7.18.6",
+    "@fern-api/eslint-config": "workspace:*",
+    "@types/jest": "^29.5.11",
+    "@types/lodash": "^4.14.194",
+    "@types/marked": "^5.0.0",
+    "@types/tinycolor2": "^1.4.6",
+    "@types/url-join": "4.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-custom": "*",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.4",
+    "tsconfig": "*",
+    "typescript": "4.9.4"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "format": "prettier --check \"**/*.{ts,js}\"",
+    "format:fix": "prettier --write \"**/*.{ts,js}\"",
+    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
+    "test": "jest --passWithNoTests"
+  },
+  "packageManager": "yarn@1.22.19"
+}

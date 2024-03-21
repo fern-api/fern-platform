@@ -43,7 +43,6 @@ export async function getDocsPageProps(
     const url = buildUrl({ host: xFernHost, pathname });
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
     if (!docs.ok) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((docs.error as any).content.statusCode === 401) {
             return {
                 type: "redirect",

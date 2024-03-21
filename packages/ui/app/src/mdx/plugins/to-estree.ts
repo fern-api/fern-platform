@@ -162,9 +162,7 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
         };
     }
     if (options.instanceAsObject || isPlainObject(value)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((value as any)?.name === MDX_CHILDREN) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const tree = { ...(value as any) };
             tree.name = null;
             const body = mdastToEstree(tree).body[0];
@@ -173,9 +171,7 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
             }
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((value as any)?.type === "mdxJsxAttributeValueExpression") {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return (value as any).data.estree.body[0].expression;
         }
 

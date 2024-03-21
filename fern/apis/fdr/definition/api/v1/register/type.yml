@@ -1,0 +1,155 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+types:
+  TypeId: string
+
+  TypeDefinition:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      name: string
+      shape: TypeShape
+
+  TypeShape:
+    union:
+      alias: TypeReference
+      enum: EnumType
+      undiscriminatedUnion: UndiscriminatedUnionType
+      discriminatedUnion: DiscriminatedUnionType
+      object: ObjectType
+
+  TypeReference:
+    union:
+      id: TypeId
+      primitive: PrimitiveType
+      optional: OptionalType
+      list: ListType
+      set: SetType
+      map: MapType
+      literal: LiteralType
+      unknown: {}
+
+  ObjectType:
+    properties:
+      extends: list<TypeId>
+      properties: list<ObjectProperty>
+
+  PropertyKey: string
+
+  ObjectProperty:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: PropertyKey
+      valueType: TypeReference
+
+  PrimitiveType:
+    union:
+      integer: {}
+      double: {}
+      long: {}
+      string: {}
+      boolean: {}
+      datetime: {}
+      uuid: {}
+      base64: {}
+      date: {}
+
+  OptionalType:
+    properties:
+      itemType: TypeReference
+
+  ListType:
+    properties:
+      itemType: TypeReference
+
+  SetType:
+    properties:
+      itemType: TypeReference
+
+  MapType:
+    properties:
+      keyType: TypeReference
+      valueType: TypeReference
+
+  EnumType:
+    properties:
+      values: list<EnumValue>
+
+  EnumValue:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      value: string
+
+  UndiscriminatedUnionType:
+    properties:
+      variants: list<UndiscriminatedUnionVariant>
+
+  UndiscriminatedUnionVariant:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      typeName: optional<string>
+      type: TypeReference
+
+  DiscriminatedUnionType:
+    properties:
+      discriminant: string
+      variants: list<DiscriminatedUnionVariant>
+
+  DiscriminatedUnionVariant:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      discriminantValue: string
+      additionalProperties: ObjectType
+
+  LiteralType:
+    union:
+      booleanLiteral: boolean
+      stringLiteral: string
+
+  FileUploadRequest:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      name: string
+      properties: list<FileUploadRequestProperty>
+
+  BytesRequest:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      isOptional: boolean
+      contentType: optional<string>
+
+  FileUploadRequestProperty:
+    union:
+      file: FileProperty
+      bodyProperty: ObjectProperty
+
+  FileProperty:
+    union:
+      file: FilePropertySingle
+      fileArray: FilePropertyArray
+
+  FilePropertySingle:
+    properties:
+      key: PropertyKey
+      isOptional: boolean
+
+  FilePropertyArray:
+    properties:
+      key: PropertyKey
+      isOptional: boolean

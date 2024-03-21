@@ -1,12 +1,10 @@
+/**
+ * @type {import("eslint").Linter.Config}
+ */
 module.exports = {
-    extends: ["next", "prettier"],
     root: true,
-    env: {
-        browser: true,
-        es2021: true,
-    },
-    plugins: ["@typescript-eslint", "jest", "deprecation", "import", "eslint-plugin-tailwindcss"],
     extends: [
+        "prettier",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/strict",
@@ -17,6 +15,11 @@ module.exports = {
         "plugin:tailwindcss/recommended",
         "plugin:@next/next/recommended",
     ],
+    plugins: ["jest", "deprecation", "import", "eslint-plugin-tailwindcss"],
+    env: {
+        browser: true,
+        es2021: true,
+    },
     settings: {
         react: {
             version: "^18.2.0",
@@ -118,4 +121,33 @@ module.exports = {
         "@next/next/no-html-link-for-pages": "off",
         "@next/next/no-img-element": "off",
     },
+    overrides: [
+        {
+            files: ["packages/fdr-sdk/**/*", "servers/fdr-deploy/**/*", "servers/fdr/**/*"],
+            rules: {
+                "jest/expect-expect": "off",
+                "jest/valid-expect": "off",
+                "jest/no-standalone-expect": "off",
+                "jest/no-conditional-expect": "off",
+                "@typescript-eslint/explicit-module-boundary-types": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-unused-vars": "off",
+                "@typescript-eslint/no-floating-promises": "off",
+                "@typescript-eslint/no-base-to-string": "off",
+            },
+        },
+        {
+            files: ["servers/fdr/**/*"],
+            rules: {
+                eqeqeq: "off",
+                "no-console": "off",
+            },
+        },
+        {
+            files: ["packages/ui/**/*"],
+            rules: {
+                "@typescript-eslint/no-explicit-any": "off",
+            },
+        },
+    ],
 };

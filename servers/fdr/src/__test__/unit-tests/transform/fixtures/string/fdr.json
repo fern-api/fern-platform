@@ -1,0 +1,614 @@
+{
+  "types": {
+    "type_lcf:CreateLcfRequest": {
+      "name": "CreateLcfRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "order",
+            "valueType": {
+              "value": "type_lcf:Order",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:Order": {
+      "name": "Order",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "A unique identifier for the order.",
+            "key": "orderId",
+            "valueType": {
+              "value": "type_lcf:OrderId",
+              "type": "id"
+            }
+          },
+          {
+            "description": "The address the order is being shipped to.",
+            "key": "shipTo",
+            "valueType": {
+              "value": "type_lcf:ShipTo",
+              "type": "id"
+            }
+          },
+          {
+            "description": "The number of days from the order date that the order must be \ndelivered to the customer by.  If no limit, set as null.\n",
+            "key": "deliveryCommitment",
+            "valueType": {
+              "value": {
+                "type": "integer"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The dimensions and weight of the package being shipped.",
+            "key": "package",
+            "valueType": {
+              "value": "type_lcf:Package",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:OrderId": {
+      "description": "The unique identifier for the order, this can be an order number from your Shopify store for example.",
+      "name": "OrderId",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "string"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_lcf:ShipTo": {
+      "name": "ShipTo",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The street address you're shipping an order to.  If your customer has a second address line, like an apartment number add street2.",
+            "key": "street1",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "street2",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "description": "The city you're shipping an order to'.",
+            "key": "city",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The state you're shipping an order to. \nTwo digit code.  For example, 'CA' for California.\n",
+            "key": "state",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The postal code you're shipping an order to. \nThis must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.\n",
+            "key": "postalCode",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "country",
+            "valueType": {
+              "value": "type_lcf:Country",
+              "type": "id"
+            }
+          },
+          {
+            "description": "If residential, set as true.  If commercial, set as false.",
+            "key": "isResidential",
+            "valueType": {
+              "value": {
+                "type": "boolean"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:Country": {
+      "description": "The country you're shipping an order to.  Only 'US' is supported at this time.",
+      "name": "Country",
+      "shape": {
+        "values": [
+          {
+            "value": "US"
+          }
+        ],
+        "type": "enum"
+      }
+    },
+    "type_lcf:Package": {
+      "name": "Package",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "dimensions",
+            "valueType": {
+              "value": "type_lcf:Dimensions",
+              "type": "id"
+            }
+          },
+          {
+            "key": "weight",
+            "valueType": {
+              "value": "type_lcf:Weight",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:Dimensions": {
+      "description": "The length, width, and height of the package in inches.  Order does not matter.",
+      "name": "Dimensions",
+      "shape": {
+        "value": {
+          "itemType": {
+            "value": {
+              "type": "double"
+            },
+            "type": "primitive"
+          },
+          "type": "set"
+        },
+        "type": "alias"
+      }
+    },
+    "type_lcf:Weight": {
+      "description": "The weight of the package in pounds. Include up to 2 decimal places.",
+      "name": "Weight",
+      "shape": {
+        "value": {
+          "value": {
+            "type": "double"
+          },
+          "type": "primitive"
+        },
+        "type": "alias"
+      }
+    },
+    "type_lcf:LeastCostFulfillment": {
+      "name": "LeastCostFulfillment",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "orderId",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "shipTo",
+            "valueType": {
+              "value": "type_lcf:ShipTo",
+              "type": "id"
+            }
+          },
+          {
+            "description": "An array of tags with high level information about the prediction String just made.",
+            "key": "tags",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "set"
+            }
+          },
+          {
+            "description": "An array of comments with detailed information about the prediction String just made.\nFirst comment includes the carrier, service code, account, cost, and package\n",
+            "key": "comments",
+            "valueType": {
+              "itemType": {
+                "value": {
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": "set"
+            }
+          },
+          {
+            "key": "service",
+            "valueType": {
+              "value": "type_lcf:Service",
+              "type": "id"
+            }
+          },
+          {
+            "key": "parcel",
+            "valueType": {
+              "value": "type_lcf:Parcel",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:Service": {
+      "name": "Service",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The carrier that will be used to ship the package.",
+            "key": "carrier",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The service code that will be used to ship the package.",
+            "key": "service",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.",
+            "key": "deliveryDate",
+            "valueType": {
+              "value": {
+                "type": "date"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "If the package can be delivered by the carrier on Saturday. 'True' only possible for UPS and FedEx.",
+            "key": "saturdayDelivery",
+            "valueType": {
+              "value": {
+                "type": "boolean"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "You carrier account that will be used to ship the package.",
+            "key": "accountNumber",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The cost of the shipping label String recommends.",
+            "key": "cost",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:Parcel": {
+      "name": "Parcel",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The name of the package String reccomends.\nDefaults to 'CUSTOM_PACKAGE' if the user provides a package.\n",
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "key": "dimensions",
+            "valueType": {
+              "value": "type_lcf:ParcelDimensions",
+              "type": "id"
+            }
+          },
+          {
+            "key": "weight",
+            "valueType": {
+              "value": "type_lcf:ParcelWeight",
+              "type": "id"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:ParcelDimensions": {
+      "name": "ParcelDimensions",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The units of measurement for the package dimensions.  Only 'inches' is supported at this time.",
+            "key": "units",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The length of the package in inches.",
+            "key": "length",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The width of the package in inches.",
+            "key": "width",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The height of the package in inches.",
+            "key": "height",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_lcf:ParcelWeight": {
+      "name": "ParcelWeight",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "description": "The weight of the package in pounds.",
+            "key": "value",
+            "valueType": {
+              "value": {
+                "type": "double"
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "description": "The units of measurement for the package weight.  Only 'pounds' is supported at this time.",
+            "key": "unit",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_lcf": {
+      "subpackageId": "subpackage_lcf",
+      "name": "lcf",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "For a shipment, find the lowest cost shipping option based on provided parameters.",
+          "method": "POST",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.meetstring.com"
+            }
+          ],
+          "id": "CreateLeastCostFulfillment",
+          "name": "Create Least Cost Fulfillment",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "value": "",
+                "type": "literal"
+              },
+              {
+                "value": "/lcf",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "value": {
+                  "value": "type_lcf:CreateLcfRequest",
+                  "type": "id"
+                },
+                "type": "reference"
+              },
+              "type": "json"
+            }
+          },
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_lcf:LeastCostFulfillment",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [
+            {
+              "statusCode": 401
+            }
+          ],
+          "examples": [
+            {
+              "path": "/lcf",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "order": {
+                  "orderId": "shopify_12345",
+                  "shipTo": {
+                    "street1": "1600 Pennsylvania Avenue NW",
+                    "city": "Washington DC",
+                    "state": "Washington DC",
+                    "postalCode": "20500",
+                    "country": "US",
+                    "isResidential": false
+                  },
+                  "deliveryCommitment": 3,
+                  "package": {
+                    "dimensions": [14, 10, 3],
+                    "weight": 1.5
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "orderId": "shopify_12345",
+                "shipTo": {
+                  "street1": "1600 Pennsylvania Avenue NW",
+                  "city": "Washington DC",
+                  "state": "Washington DC",
+                  "postalCode": "20500",
+                  "country": "US",
+                  "isResidential": false
+                },
+                "tags": [],
+                "comments": [],
+                "service": {
+                  "carrier": "carrier",
+                  "service": "service",
+                  "deliveryDate": "2017-07-21",
+                  "saturdayDelivery": false,
+                  "accountNumber": "acc_1234",
+                  "cost": 2
+                },
+                "parcel": {
+                  "name": "CUSTOM_PACKAGE",
+                  "dimensions": {
+                    "units": "inches",
+                    "length": 14,
+                    "width": 10,
+                    "height": 3
+                  },
+                  "weight": {
+                    "value": 1.5,
+                    "unit": "pounds"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "types": [
+        "type_lcf:CreateLcfRequest",
+        "type_lcf:Order",
+        "type_lcf:OrderId",
+        "type_lcf:ShipTo",
+        "type_lcf:Country",
+        "type_lcf:Package",
+        "type_lcf:Dimensions",
+        "type_lcf:Weight",
+        "type_lcf:LeastCostFulfillment",
+        "type_lcf:Service",
+        "type_lcf:Parcel",
+        "type_lcf:ParcelDimensions",
+        "type_lcf:ParcelWeight"
+      ],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "types": [],
+    "subpackages": ["subpackage_lcf"]
+  },
+  "auth": {
+    "headerWireValue": "Authorization",
+    "nameOverride": "MyAuthScheme",
+    "type": "header"
+  }
+}

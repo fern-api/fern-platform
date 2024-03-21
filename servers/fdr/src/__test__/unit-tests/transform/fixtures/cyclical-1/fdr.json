@@ -1,0 +1,133 @@
+{
+  "types": {
+    "type_transactions:Transaction": {
+      "name": "Transaction",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "creditor",
+            "valueType": {
+              "itemType": {
+                "value": "type_transactions:User",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "key": "debtor",
+            "valueType": {
+              "itemType": {
+                "value": "type_transactions:User",
+                "type": "id"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "type_transactions:User": {
+      "name": "User",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "value": {
+                "type": "string"
+              },
+              "type": "primitive"
+            }
+          }
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_transactions": {
+      "subpackageId": "subpackage_transactions",
+      "name": "transactions",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "Retrieves the user with the given ID.",
+          "method": "GET",
+          "defaultEnvironment": "Production",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://api.buildwithfern.com"
+            },
+            {
+              "id": "Staging",
+              "baseUrl": "https://staging.buildwithfern.com"
+            }
+          ],
+          "id": "get",
+          "name": "Retrieve a transaction",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "transaction_id",
+                "type": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "parts": [
+              {
+                "value": "/transactions",
+                "type": "literal"
+              },
+              {
+                "value": "/",
+                "type": "literal"
+              },
+              {
+                "value": "transaction_id",
+                "type": "pathParameter"
+              },
+              {
+                "value": "",
+                "type": "literal"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "value": {
+                "value": "type_transactions:Transaction",
+                "type": "id"
+              },
+              "type": "reference"
+            }
+          },
+          "errors": [],
+          "examples": []
+        }
+      ],
+      "types": ["type_transactions:Transaction", "type_transactions:User"],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "types": [],
+    "subpackages": ["subpackage_transactions"]
+  },
+  "auth": {
+    "headerWireValue": "Authorization",
+    "nameOverride": "secretKey",
+    "type": "header"
+  }
+}

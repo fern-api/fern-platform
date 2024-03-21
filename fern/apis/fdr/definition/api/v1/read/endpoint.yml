@@ -1,0 +1,255 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  type: type.yml
+  commons: commons.yml
+
+types:
+  EnvironmentId: string
+
+  EndpointId: string
+
+  EndpointDefinition:
+    extends: commons.WithDescription
+    properties:
+      authed:
+        type: boolean
+        docs: When this is true, the api definition will have a union for auth
+      availability: optional<commons.Availability>
+      defaultEnvironment: optional<EnvironmentId>
+      environments: list<Environment>
+      method: HttpMethod
+      id: EndpointId
+      urlSlug: string
+      migratedFromUrlSlugs: optional<list<string>>
+      name: optional<string>
+      path: EndpointPath
+      queryParameters: list<QueryParameter>
+      headers: list<Header>
+      request: optional<HttpRequest>
+      response: optional<HttpResponse>
+      errors: list<ErrorDeclaration>
+      errorsV2: optional<list<ErrorDeclarationV2>>
+      examples: list<ExampleEndpointCall>
+
+  Environment:
+    properties:
+      id: EnvironmentId
+      baseUrl: string
+
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+
+  EndpointPath:
+    properties:
+      parts: list<EndpointPathPart>
+      pathParameters: list<PathParameter>
+
+  EndpointPathPart:
+    union:
+      literal: string
+      pathParameter: PathParameterKey
+
+  PathParameter:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: PathParameterKey
+      type: type.TypeReference
+
+  PathParameterKey: string
+
+  QueryParameter:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: string
+      type: type.TypeReference
+
+  Header:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: string
+      type: type.TypeReference
+
+  HttpRequest:
+    extends: commons.WithDescription
+    properties:
+      contentType: string
+      type: HttpRequestBodyShape
+
+  HttpRequestBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+      fileUpload:
+        type: optional<type.FileUploadRequest>
+        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
+      bytes: type.BytesRequest
+
+  HttpResponse:
+    extends: commons.WithDescription
+    properties:
+      type: HttpResponseBodyShape
+
+  JsonBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+
+  HttpResponseBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+      fileDownload: {}
+      streamingText: {}
+      stream: StreamResponseV2
+
+      # deprecated
+      streamCondition:
+        type: StreamConditionResponse
+        docs: |
+          A response that can either be streaming or REST
+
+  StreamResponseV2:
+    properties:
+      shape: JsonBodyShape
+
+  StreamConditionResponse:
+    availability: deprecated
+    properties:
+      response: NonStreamResponse
+      streamResponse: StreamResponse
+      streamCondition: StreamCondition
+
+  NonStreamResponse:
+    availability: deprecated
+    properties:
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+
+  StreamResponse:
+    availability: deprecated
+    properties:
+      shape: JsonBodyShape
+      examples: list<ExampleEndpointCall>
+
+  StreamCondition:
+    union:
+      booleanRequestProperty: type.PropertyKey
+
+  ErrorDeclaration:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      type: optional<type.TypeReference>
+      statusCode: integer
+
+  ErrorDeclarationV2:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      type: optional<type.TypeShape>
+      statusCode: integer
+      name: optional<string>
+
+  # examples
+
+  ExampleEndpointCall:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      path: string
+      pathParameters: map<PathParameterKey, unknown>
+      queryParameters: map<string, unknown>
+      headers: map<string, unknown>
+      requestBody: unknown
+      requestBodyV3: optional<ExampleEndpointRequest>
+      responseStatusCode: integer
+      responseBody: unknown
+      responseBodyV3: optional<ExampleEndpointResponse>
+      codeExamples: CodeExamples
+      codeSamples: list<CustomCodeSample>
+
+  CodeExamples:
+    properties:
+      nodeAxios: optional<string>
+      pythonSdk: optional<PythonSnippet>
+      typescriptSdk: optional<TypescriptSnippet>
+      goSdk: optional<GoSnippet>
+
+  CustomCodeSample:
+    docs: Hand-written code samples
+    extends: commons.WithDescription
+    properties:
+      language: Language
+      code: string
+      name: optional<string>
+      install: optional<string>
+
+  Language:
+    discriminated: false
+    union:
+      - SupportedLanguage
+      - string
+    docs: Fallback to string to catch-all for languages that are not supported by fern
+
+  SupportedLanguage:
+    enum:
+      - curl
+      - python
+      - javascript
+      - js # alias to javascript
+      - node # alias to javascript
+      - typescript
+      - ts # alias to typescript
+      - go
+
+  ExampleEndpointRequest:
+    union:
+      json: unknown
+      form: map<string, FormValue>
+
+  FormValue:
+    union:
+      json: unknown
+      filename: string
+
+  ExampleEndpointResponse:
+    union:
+      json: unknown
+      filename: string
+      stream: list<unknown>
+
+  PythonSnippet:
+    properties:
+      async_client: string
+      sync_client: string
+      install: optional<string>
+
+  TypescriptSnippet:
+    properties:
+      client:
+        type: string
+        docs: |
+          The client code that is generated by the fern compiler
+      install: optional<string>
+
+  GoSnippet:
+    properties:
+      client:
+        type: string
+        docs: |
+          The client code that is generated by the fern compiler
+      install: optional<string>

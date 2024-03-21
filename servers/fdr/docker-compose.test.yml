@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:10.3
+    restart: always
+    environment:
+      - POSTGRES_USER=fdr
+      - POSTGRES_PASSWORD=fdr1!
+    ports:
+      - "5433:5432"
+  s3-mock:
+    image: adobe/s3mock
+    ports:
+      - 9090:9090
+      - 9191:9191
+    environment:
+      initialBuckets: fdr

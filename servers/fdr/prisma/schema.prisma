@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model ApiDefinitionsV2 {
+  orgId           String
+  apiName         String
+  apiDefinitionId String
+  createdAt       DateTime @default(now())
+  definition      Bytes
+
+  @@id([apiDefinitionId])
+}
+
+model Docs {
+  url            String
+  docsDefinition Bytes
+
+  @@id([url])
+}
+
+model DocsV2 {
+  orgID                String
+  authType             AuthType @default(PUBLIC)
+  updatedTime          DateTime @updatedAt
+  domain               String
+  path                 String
+  algoliaIndex         String?
+  docsDefinition       Bytes
+  indexSegmentIds      Json?
+  docsConfigInstanceId String?
+  isPreview            Boolean  @default(false)
+
+  @@id([domain, path])
+}
+
+enum AuthType {
+  PUBLIC
+  WORKOS_SSO
+}
+
+model DocsConfigInstances {
+  docsConfigInstanceId       String   @id
+  createdAt                  DateTime @default(now())
+  referencedApiDefinitionIds Json?
+  docsConfig                 Bytes
+}
+
+model IndexSegment {
+  id        String   @id
+  createdAt DateTime @default(now())
+  version   String?
+
+  @@map("index_segments")
+}
+
+model OverwrittenAlgoliaIndex {
+  overwrittenTime DateTime @default(now())
+  indexId         String   @unique
+
+  @@map("overwritten_algolia_indexes")
+}
+
+model Snippet {
+  id             String     @id
+  orgId          String
+  apiName        String
+  endpointPath   String
+  endpointMethod HttpMethod
+  sdkId          String
+  sdk            Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+  snippet        Bytes
+  createdAt      DateTime   @default(now())
+}
+
+model Sdk {
+  id        String    @id
+  // Optional for backcompat 
+  // Package name used by registry (e.g. @velllum/api or com.vellum.ai:vellum)
+  package   String?
+  language  Language
+  sdk       Bytes
+  createdAt DateTime  @default(now())
+  Snippet   Snippet[]
+}
+
+model SnippetApi {
+  orgId     String
+  apiName   String
+  createdAt DateTime @default(now())
+
+  @@id([orgId, apiName])
+}
+
+enum HttpMethod {
+  PUT
+  POST
+  GET
+  PATCH
+  DELETE
+}
+
+enum Language {
+  TYPESCRIPT
+  PYTHON
+  GO
+  JAVA
+}
