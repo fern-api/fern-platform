@@ -1,6 +1,5 @@
-import { InvalidPageError } from "../../../api/generated/api/errors";
-import { UnauthorizedError } from "../../../api/generated/api/resources/commons/errors";
 import { SnippetsService } from "../../api";
+import { InvalidPageError, UnauthorizedError } from "../../api/generated/api";
 import { type FdrApplication } from "../../app";
 import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
 import { APIResolver, ResolvedAPI } from "./APIResolver";
