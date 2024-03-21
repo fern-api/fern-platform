@@ -8,7 +8,7 @@ import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
 import { SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
-import { flattenApiSection, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 
 export interface PlaygroundEndpointSelectorProps {
     navigation: SidebarNode[];

@@ -36,10 +36,9 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --check \"**/*.{ts,js}\"",
-    "format:fix": "prettier --write \"**/*.{ts,js}\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
     "test": "jest --passWithNoTests"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }

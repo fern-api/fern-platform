@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: pnpm
       - run:
           name: Generate Fern SDKs
           command: |
@@ -17,7 +17,7 @@ jobs:
             fern generate --local --group local --log-level debug
       - run:
           name: Build
-          command: yarn build
+          command: pnpm build
       - persist_to_workspace:
           root: /home/circleci
           paths: [project]
@@ -28,13 +28,13 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - run:
-          command: yarn lint
+          command: pnpm lint
           name: Lint
       - run:
-          command: yarn test
+          command: pnpm test
           name: Test
       - run:
-          command: yarn test-db
+          command: pnpm test-db
           name: Test DB
 
   ete-test:
@@ -44,10 +44,10 @@ jobs:
       - attach_workspace: { at: /home/circleci }
       - run:
           name: Dockerize Local
-          command: yarn run docker:local
+          command: pnpm run docker:local
       - run:
           name: Test ETE
-          command: yarn run test-ete
+          command: pnpm run test-ete
 
   migrate-dev2:
     circleci_ip_ranges: true
@@ -58,7 +58,7 @@ jobs:
       - attach_workspace: { at: /home/circleci }
       - run:
           name: prisma deploy
-          command: yarn run db:migrate:dev
+          command: pnpm run db:migrate:dev
 
   deploy-dev2:
     machine:
@@ -70,10 +70,10 @@ jobs:
           name: cdk deploy
           command: |
             git_version="$(scripts/git-version.sh)"
-            yarn run docker:dev "${git_version}"
+            pnpm run docker:dev "${git_version}"
             npm install -g aws-cdk
-            yarn install
-            VERSION="${git_version}" yarn workspace fdr-deploy deploy:dev
+            pnpm install
+            VERSION="${git_version}" pnpm workspace fdr-deploy deploy:dev
 
   migrate-prod:
     circleci_ip_ranges: true
@@ -83,7 +83,7 @@ jobs:
     steps:
       - attach_workspace: { at: /home/circleci }
       - run:
-          command: yarn run db:migrate:prod
+          command: pnpm run db:migrate:prod
           name: prisma deploy
 
   deploy-prod:
@@ -96,11 +96,11 @@ jobs:
           name: cdk deploy
           command: |
             git_version="$(scripts/git-version.sh)"
-            yarn run docker:prod "${git_version}"
+            pnpm run docker:prod "${git_version}"
             npm install -g aws-cdk
-            yarn install
+            pnpm install
             cd apps/fdr-deploy
-            VERSION="${git_version}" yarn workspace fdr-deploy deploy:prod
+            VERSION="${git_version}" pnpm workspace fdr-deploy deploy:prod
 
   publish-sdks:
     machine:
@@ -116,7 +116,7 @@ jobs:
             version_replace="s/0.0.0/${git_version}/"
             cat package.json.tmp| sed "${version_replace}" > package.json
             rm -rf package.json.tmp
-            echo "//registry.npmjs.org/:_authToken=${YARN_NPM_AUTH_TOKEN}" > ~/.npmrc
+            echo "//registry.npmjs.org/:_authToken=${pnpm_NPM_AUTH_TOKEN}" > ~/.npmrc
             npm publish --access public
       - run:
           name: Publish FDR Fiddle SDK

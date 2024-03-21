@@ -6,9 +6,9 @@ docker-compose -f docker-compose.test.yml up -d
 echo "Sleeping for 5s..."
 sleep 5
 
-yarn prisma migrate deploy
+pnpm prisma migrate deploy
 
-yarn jest -i src/__test__/db/
+pnpm jest -i src/__test__/db/
 JEST_EXIT_CODE=$?
 
 docker-compose -f docker-compose.test.yml down

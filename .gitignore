@@ -9,6 +9,11 @@ packages/**/lib
 packages/**/dist
 packages/**/tsconfig*tsbuildinfo
 packages/**/out
+servers/**/build
+servers/**/lib
+servers/**/dist
+servers/**/tsconfig*tsbuildinfo
+servers/**/out
 
 # next
 .next
@@ -39,3 +44,6 @@ packages/**/generated
 # environments
 .env*.local
 .vercel
+
+# turbo
+.turbo

@@ -8,6 +8,14 @@ import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntax
 import { valueToEstree } from "./to-estree";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
+declare module "hast" {
+    interface ElementData {
+        visited?: boolean;
+        meta?: string;
+        metastring?: string;
+    }
+}
+
 export function rehypeFernCode(): (tree: Root) => void {
     return async function (tree: Root): Promise<void> {
         // match CodeBlocks and its CodeBlock children

@@ -1,0 +1,9 @@
+packages:
+  - "packages/**"
+  - "!packages/**/lib"
+  - "!packages/**/dist"
+  - "!packages/**/generated"
+  - "servers/**"
+  - "!servers/**/lib"
+  - "!servers/**/dist"
+  - "!servers/**/generated"

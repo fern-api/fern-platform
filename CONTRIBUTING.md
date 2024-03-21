@@ -16,7 +16,7 @@ Write code! We've got lots of open issues - feel free to volunteer for one by co
 
 ## Local development
 
-Our repo is a monorepo that relies on [Yarn workspaces](https://yarnpkg.com/features/workspaces) and [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp) to run smoothly.
+Our repo uses [pnpm](https://pnpm.io/) to manage dependencies.
 
 To get started:
 
@@ -38,36 +38,27 @@ code .
 yarn
 ```
 
-**Step 4: Use the "workspace" vesion of Typescript**
-
-1. Open any TypeScript file in VSCode
-1. Open the Command Palette (Cmd+Shift+P on Mac) and select `Typescript: Select TypeScript Version...`
-1. Choose `Use Workspace Version`
-
-This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks/typescript`, which
-is modified to work with Yarn PNP.
-
 ### Compiling
 
-To compile the packages in this monorepo, run `yarn compile`.
+To compile the packages in this monorepo, run `pnpm compile`.
 
 ### Tests
 
 This repo contains both unit tests and integration (end-to-end) tests.
 
-To run the unit tests: `yarn test`.
+To run the unit tests: `pnpm test`.
 
-To run the integration tests: `yarn test:ete`.
+To run the integration tests: `pnpm test:ete`.
 
-Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `yarn test -u` and `yarn test:ete -u`.
+Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `pnpm test -u` and `pnpm test:ete -u`.
 
 ### CLI
 
 To build the CLI, run either:
 
-- `yarn dist:cli:dev`. This compiles and bundles a CLI that communicates with our dev cloud environment. The CLI is outputted to `packages/cli/cli/dist/dev/cli.cjs`.
+- `pnpm dist:cli:dev`. This compiles and bundles a CLI that communicates with our dev cloud environment. The CLI is outputted to `packages/cli/cli/dist/dev/cli.cjs`.
 
-- `yarn dist:cli:prod`. This compiles and bundles a CLI that communicates with our production cloud environment. The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
+- `pnpm dist:cli:prod`. This compiles and bundles a CLI that communicates with our production cloud environment. The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
 
 To run the locally-generated CLI, run:
 
@@ -79,9 +70,9 @@ FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 
 To build and run the NextJS docs UI, run either:
 
-- `yarn workspace @fern-ui/public-docs-bundle dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
+- `pnpm workspace @fern-ui/public-docs-bundle dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
 
-- `yarn workspace @fern-ui/public-docs-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our cloud production environment.
+- `pnpm workspace @fern-ui/public-docs-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our cloud production environment.
 
 The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
 

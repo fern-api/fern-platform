@@ -30,7 +30,6 @@ export class RevalidatorServiceImpl implements RevalidatorService {
 
     public constructor() {
         this.axiosInstance = axios.create();
-        // @ts-expect-error See https://github.com/hg-pyun/axios-logger/issues/131
         this.axiosInstance.interceptors.request.use(AxiosLogger.requestLogger);
     }
 

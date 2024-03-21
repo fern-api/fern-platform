@@ -1,75 +1,57 @@
 name: CI
 
-# Controls when the workflow will run
 on:
   push:
     branches:
       - "**"
 
 jobs:
-  # Jobs go here
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: yarn
+          fetch-depth: 5 # This helps turbo resolve changes faster
 
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Compile
-        run: yarn compile
+        run: pnpm compile
 
       - name: Check dependencies
-        run: yarn depcheck
+        run: pnpm depcheck
 
       - name: Check format
-        run: yarn format:check
+        run: pnpm format:check
 
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
-
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Lint monorepo
-        run: yarn lint:monorepo
+        run: pnpm lint:monorepo
 
-      - name: Lint style
-        run: yarn lint:style
-
-      - name: Lint typescript
-        run: yarn lint:eslint
+      - name: Lint style and eslint
+        run: pnpm turbo lint:style lint:eslint format:check
 
   organize-imports:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
-
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Organize imports
         # not using --list-different because sometimes this removes a trailing
         # comma that prettier adds back
         run: |
-          yarn organize-imports
+          pnpm organize-imports
           git --no-pager diff --exit-code
 
   test:
@@ -79,31 +61,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
-
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Codegen
         run: |
           npm install -g fern-api
           fern generate --local
-          yarn workspace fdr run build:prisma
+          pnpm workspace fdr run build:prisma
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: Setup database
         # TODO: re-enable when moving to turbo
-        # yarn workspace fdr run docker:local
+        # pnpm workspace fdr run docker:local
         run: |
-          yarn workspace fdr run test-db
-          yarn workspace fdr run test-ete
+          pnpm workspace fdr run test-db
+          pnpm workspace fdr run test-ete
 
       - name: Run tests
-        run: yarn test --ci
+        run: pnpm test
+        env:
+          CI: true
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -113,13 +92,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
-
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Check release blockers
-        run: yarn check-docs-release-blockers
+        run: pnpm check-docs-release-blockers

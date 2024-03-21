@@ -21,15 +21,13 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "dist:cli": "yarn compile && node build.cjs",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
+    "depcheck": "depcheck"
   },
   "dependencies": {
     "chalk": "^5.3.0",

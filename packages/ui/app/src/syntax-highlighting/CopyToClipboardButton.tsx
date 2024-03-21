@@ -10,7 +10,7 @@ export declare namespace CopyToClipboardButton {
         className?: string;
         content?: string | (() => string);
         testId?: string;
-        children?: (onClick: ((e: React.MouseEvent) => void) | undefined) => JSX.Element;
+        children?: (onClick: ((e: React.MouseEvent) => void) | undefined) => React.ReactNode;
         onClick?: (e: React.MouseEvent) => void;
     }
 }

@@ -4,7 +4,6 @@ import {
     ButtonHTMLAttributes,
     ComponentProps,
     DetailedHTMLProps,
-    FC,
     forwardRef,
     PropsWithChildren,
     ReactNode,
@@ -92,70 +91,66 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
     );
 });
 
-export const FernButton: FC<FernButtonProps> = forwardRef<HTMLButtonElement, FernButtonProps>(
-    function FernButton(props, ref) {
-        const {
-            icon,
-            disabled = false,
-            rightIcon,
-            className,
-            text,
-            children,
-            variant,
-            size,
-            mono,
-            intent,
-            active,
-            full,
-            rounded,
-            disableAutomaticTooltip,
-            ...buttonProps
-        } = props;
-        const buttonTextRef = useRef<HTMLSpanElement>(null);
-        function isEllipsisActive() {
-            return (
-                buttonTextRef.current != null && buttonTextRef.current.scrollWidth > buttonTextRef.current.clientWidth
-            );
-        }
-        const button = (
-            <button
-                tabIndex={0}
-                ref={ref}
-                disabled={disabled}
-                data-state={active ? "on" : "off"}
-                aria-disabled={disabled}
-                aria-selected={active}
-                data-selected={active}
-                {...buttonProps}
-                className={getButtonClassName(props)}
-                onClick={
-                    props.onClick != null
-                        ? (e) => {
-                              if (disabled) {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                              } else {
-                                  props.onClick?.(e);
-                              }
+export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(function FernButton(props, ref) {
+    const {
+        icon,
+        disabled = false,
+        rightIcon,
+        className,
+        text,
+        children,
+        variant,
+        size,
+        mono,
+        intent,
+        active,
+        full,
+        rounded,
+        disableAutomaticTooltip,
+        ...buttonProps
+    } = props;
+    const buttonTextRef = useRef<HTMLSpanElement>(null);
+    function isEllipsisActive() {
+        return buttonTextRef.current != null && buttonTextRef.current.scrollWidth > buttonTextRef.current.clientWidth;
+    }
+    const button = (
+        <button
+            tabIndex={0}
+            ref={ref}
+            disabled={disabled}
+            data-state={active ? "on" : "off"}
+            aria-disabled={disabled}
+            aria-selected={active}
+            data-selected={active}
+            {...buttonProps}
+            className={getButtonClassName(props)}
+            onClick={
+                props.onClick != null
+                    ? (e) => {
+                          if (disabled) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                          } else {
+                              props.onClick?.(e);
                           }
-                        : undefined
-                }
-            >
-                {renderButtonContent(props, buttonTextRef)}
-            </button>
-        );
+                      }
+                    : undefined
+            }
+        >
+            {renderButtonContent(props, buttonTextRef)}
+        </button>
+    );
 
-        if (isEllipsisActive() && !disableAutomaticTooltip) {
-            return (
-                <FernTooltip content={children ?? text} className="line-clamp-3">
-                    {button}
-                </FernTooltip>
-            );
-        } else {
-            return button;
-        }
-    },
-);
+    if (isEllipsisActive() && !disableAutomaticTooltip) {
+        return (
+            <FernTooltip content={children ?? text} className="line-clamp-3">
+                {button}
+            </FernTooltip>
+        );
+    } else {
+        return button;
+    }
+});
 
 export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">>(function FernButtonGroup(
     { className, children, ...props },
