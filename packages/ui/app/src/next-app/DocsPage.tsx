@@ -194,11 +194,22 @@ export async function getNavigation(
     }
 
     if (isVersionedNavigationConfig(nav)) {
-        currentVersionIndex = nav.versions.findIndex((version) => version.urlSlug === currentPath[0]);
+        currentVersionIndex = nav.versions.findIndex((version) => {
+            const versionSlug = version.urlSlug.split("/");
+            if (versionSlug.length > currentPath.length) {
+                return false;
+            }
+            for (let i = 0; i < versionSlug.length; i++) {
+                if (versionSlug[i] !== currentPath[i]) {
+                    return false;
+                }
+            }
+            return true;
+        });
 
         versions = nav.versions.map((version, idx) => ({
             id: version.version,
-            slug: idx === 0 && currentVersionIndex === -1 ? [...slug] : [...slug, version.urlSlug],
+            slug: idx === 0 && currentVersionIndex === -1 ? [...slug] : [...slug, ...version.urlSlug.split("/")],
             index: idx,
             availability: version.availability ?? null,
         }));
@@ -206,7 +217,7 @@ export async function getNavigation(
         // If the version slug is not found based on the current path, default to the first version
         // otherwise, remove the version slug from the current path
         if (currentVersionIndex > -1) {
-            currentPath = currentPath.slice(1);
+            currentPath = currentPath.slice(nav.versions[currentVersionIndex]?.urlSlug.split("/").length);
         }
 
         const matchedVersion = nav.versions[currentVersionIndex > -1 ? currentVersionIndex : 0];
@@ -216,7 +227,7 @@ export async function getNavigation(
         }
 
         if (currentVersionIndex > -1) {
-            slug.push(matchedVersion.urlSlug);
+            slug.push(...matchedVersion.urlSlug.split("/"));
         } else {
             currentVersionIndex = 0;
         }
@@ -230,10 +241,24 @@ export async function getNavigation(
         tabs = nav.tabs.map((tab) => ({
             title: tab.title,
             icon: tab.icon,
-            slug: [...slug, tab.urlSlug],
+            slug: [...slug, ...tab.urlSlug.split("/")],
         }));
 
-        currentTabIndex = currentPath.length === 0 ? 0 : nav.tabs.findIndex((tab) => tab.urlSlug === currentPath[0]);
+        currentTabIndex =
+            currentPath.length === 0
+                ? 0
+                : nav.tabs.findIndex((tab) => {
+                      const tabSlug = tab.urlSlug.split("/");
+                      if (tabSlug.length > currentPath.length) {
+                          return false;
+                      }
+                      for (let i = 0; i < tabSlug.length; i++) {
+                          if (tabSlug[i] !== currentPath[i]) {
+                              return false;
+                          }
+                      }
+                      return true;
+                  });
 
         const matchedTab = nav.tabs[currentTabIndex];
 
@@ -243,7 +268,10 @@ export async function getNavigation(
                 const currentTab = nav.tabs[i]!;
 
                 if (containsMatchingFullSlug(currentTab.items, slugArray.join("/"))) {
-                    const rawSidebarNodes = resolveSidebarNodes(currentTab.items, apis, [...slug, currentTab.urlSlug]);
+                    const rawSidebarNodes = resolveSidebarNodes(currentTab.items, apis, [
+                        ...slug,
+                        ...currentTab.urlSlug.split("/"),
+                    ]);
                     const sidebarNodes = await Promise.all(
                         rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
                     );
@@ -261,7 +289,7 @@ export async function getNavigation(
             return undefined;
         }
 
-        slug.push(matchedTab.urlSlug);
+        slug.push(...matchedTab.urlSlug.split("/"));
 
         currentNavigationItems = matchedTab.items;
     }
