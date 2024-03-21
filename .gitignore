@@ -47,3 +47,5 @@ packages/**/generated
 
 # turbo
 .turbo
+
+*storybook.log
