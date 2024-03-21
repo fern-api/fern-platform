@@ -1,5 +1,4 @@
 import { APIV1Write, DocsV1Write, FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
-import { APIResponse } from "@fern-api/fdr-sdk/src/client/generated/core";
 import { PrismaClient } from "@prisma/client";
 import { addHours, subHours } from "date-fns";
 import express from "express";
@@ -18,6 +17,16 @@ import { getSnippetsService } from "../../controllers/snippets/getSnippetsServic
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { createMockFdrApplication } from "../mock";
 import { createApiDefinition, createMockDocs, createMockIndexSegment } from "./util";
+
+type APIResponse<Success, Failure> = SuccessfulResponse<Success> | FailedResponse<Failure>;
+interface SuccessfulResponse<T> {
+    ok: true;
+    body: T;
+}
+interface FailedResponse<T> {
+    ok: false;
+    error: T;
+}
 
 const PORT = 9999;
 
