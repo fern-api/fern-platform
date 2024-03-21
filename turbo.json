@@ -21,6 +21,7 @@
     "lint:style": {},
     "lint:eslint:fix": {},
     "lint:style:fix": {},
+    "format:check": {},
     "depcheck": {},
     "clean": {
       "cache": false

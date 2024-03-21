@@ -17,9 +17,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm workspace @fern-ui/local-preview-bundle run build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Synthesize local preview bundle
-        run: pnpm workspace @fern-ui/cdk run synth:dev
+        run: pnpm --filter=@fern-ui/cdk run synth:dev
 
   deploy-local-preview-dev:
     needs: [dryrun-deploy-local-preview-dev]
@@ -36,9 +36,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm workspace @fern-ui/local-preview-bundle run build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: pnpm workspace @fern-ui/cdk run deploy:dev
+        run: pnpm --filter=@fern-ui/cdk run deploy:dev
 
   deploy-local-preview-prod:
     needs: [deploy-local-preview-dev]
@@ -56,6 +56,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm workspace @fern-ui/local-preview-bundle run build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: pnpm workspace @fern-ui/cdk run deploy:prod
+        run: pnpm --filter=@fern-ui/cdk run deploy:prod

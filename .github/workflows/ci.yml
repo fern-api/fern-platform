@@ -68,16 +68,16 @@ jobs:
         run: |
           npm install -g fern-api
           fern generate --local
-          pnpm workspace fdr run build:prisma
+          pnpm turbo --filter=@fern-platform/fdr codegen
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: Setup database
         # TODO: re-enable when moving to turbo
-        # pnpm workspace fdr run docker:local
+        # pnpm turbo --filter= docker:local
         run: |
-          pnpm workspace fdr run test-db
-          pnpm workspace fdr run test-ete
+          pnpm turbo --filter= test-db
+          pnpm turbo --filter= test-ete
 
       - name: Run tests
         run: pnpm test

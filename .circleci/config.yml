@@ -73,7 +73,7 @@ jobs:
             pnpm run docker:dev "${git_version}"
             npm install -g aws-cdk
             pnpm install
-            VERSION="${git_version}" pnpm workspace fdr-deploy deploy:dev
+            VERSION="${git_version}" pnpm --filter=@fern-platform=fdr-deploy deploy:dev
 
   migrate-prod:
     circleci_ip_ranges: true
@@ -100,7 +100,7 @@ jobs:
             npm install -g aws-cdk
             pnpm install
             cd apps/fdr-deploy
-            VERSION="${git_version}" pnpm workspace fdr-deploy deploy:prod
+            VERSION="${git_version}" pnpm --filter=@fern-platform=fdr-deploy deploy:prod
 
   publish-sdks:
     machine:

@@ -223,7 +223,6 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
 
 const MDX_CHILDREN = "MDX_CHILDREN";
 
- 
 export function wrapChildren(children: ElementContent[]): {
     type: string;
     children: (Comment | Element | any)[];

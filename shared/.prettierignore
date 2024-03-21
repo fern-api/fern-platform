@@ -13,3 +13,4 @@ bundle.c?js
 .vscode
 **/fern/**
 out
+pnpm-lock.yaml
