@@ -6,6 +6,7 @@ import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
+import { getRedirectForPath } from "./hackRedirects";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(
@@ -140,6 +141,18 @@ async function convertDocsToDocsPageProps({
     const docsDefinition = docs.definition;
     const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
+
+    const redirect = getRedirectForPath(xFernHost, `/${slug.join("/")}`);
+
+    if (redirect != null) {
+        return {
+            type: "redirect",
+            redirect: {
+                destination: redirect.to,
+                permanent: false,
+            },
+        };
+    }
 
     const navigation = await getNavigation(slug, basePath, docs.definition.apis, docsConfig.navigation);
 
