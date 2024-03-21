@@ -20,6 +20,7 @@ export function useNullableQuery<
         onSettled,
         // eslint-disable-next-line deprecation/deprecation
         onSuccess,
+        // eslint-disable-next-line deprecation/deprecation
         isDataEqual,
         select,
     } = options ?? {};

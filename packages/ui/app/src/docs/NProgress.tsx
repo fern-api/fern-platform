@@ -31,7 +31,7 @@ export interface NextNProgressProps {
      * This is useful if you want to use a different style or minify the CSS.
      * @default (css) => <style nonce={nonce}>{css}</style>
      */
-    transformCSS?: (css: string) => JSX.Element;
+    transformCSS?: (css: string) => React.ReactNode;
 }
 
 let timer: number;

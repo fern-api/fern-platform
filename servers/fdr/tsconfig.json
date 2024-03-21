@@ -1,5 +1,12 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "dist", "rootDir": "." },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "@prisma/client": ["../prisma/client"],
+    },
+  },
   "include": ["./src/**/*"],
 }

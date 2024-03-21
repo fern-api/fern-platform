@@ -1,0 +1,48 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      // Build depends on own codegen and downstream build
+      "outputs": ["lib/**", "dist/**"],
+      "dependsOn": ["^build", "codegen"]
+    },
+    "codegen": {
+      // Don't cache codegen. We may not know all the outputs
+      // we can cache on a per-package basis
+      "cache": false
+    },
+    "compile": {
+      // Build depends on own codegen
+      "outputs": ["lib/**", "dist/**"],
+      "dependsOn": ["codegen"]
+    },
+    "lint": {},
+    "lint:eslint": {},
+    "lint:style": {},
+    "lint:eslint:fix": {},
+    "lint:style:fix": {},
+    "format:check": {},
+    "depcheck": {},
+    "clean": {
+      "cache": false
+    },
+    "format": {},
+    "test": {
+      // Test depends on own compile
+      "dependsOn": ["^build"]
+    },
+    "test-db": {
+      // Test depends on own compile
+      "dependsOn": ["^build"]
+    },
+    "test-ete": {
+      // Test depends on own compile
+      "dependsOn": ["^build"]
+    },
+    "//#fdr:generate": {
+      "inputs": ["fern"],
+      "outputs": ["servers/fdr/src/api/generated/**", "packages/fdr-sdk/src/client/generated/**"]
+    }
+  },
+  "globalDependencies": [".eslintrc.js", ".prettierrc.json"]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "fdr",
+  "name": "@fern-platform/fdr",
   "version": "0.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:fern-api/fern-definition-registry.git",
@@ -62,25 +62,23 @@
     "typescript": "4.9.4"
   },
   "scripts": {
-    "build": "yarn build:prisma && yarn build:compile",
-    "build:compile": "tsc --build",
-    "build:prisma": "yarn pnpify prisma generate",
-    "db:migrate:dev": "dotenv -e .env.dev -- yarn prisma migrate deploy",
-    "db:migrate:local": "dotenv -e .env.local -- yarn prisma migrate dev",
-    "db:migrate:prod": "dotenv -e .env.prod -- yarn prisma migrate deploy",
+    "build": "tsc --build",
+    "codegen": "prisma generate",
+    "db:migrate:dev": "dotenv -e .env.dev -- prisma migrate deploy",
+    "db:migrate:local": "dotenv -e .env.local -- prisma migrate dev",
+    "db:migrate:prod": "dotenv -e .env.prod -- prisma migrate deploy",
     "dev": "nodemon src/server.ts ",
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --check \"**/*.{ts,js}\"",
-    "format:fix": "prettier --write \"**/*.{ts,js}\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:prisma": "prisma format",
     "docker:local": "dotenv -e apps/fdr/.env.local -- ./create_docker.sh local",
     "docker:dev": "dotenv -e apps/fdr/.env.dev -- ./create_docker.sh",
     "docker:prod": "dotenv -e apps/fdr/.env.prod -- ./create_docker.sh",
     "test": "jest src/__test__/unit-tests",
     "lint": "eslint --max-warnings 0 src --ext .ts",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "pnpm lint --fix",
     "test-db": "dotenv -e .env.test -- ./scripts/db-tests.sh",
     "test-ete": "dotenv -e .env.ete -- ./scripts/ete-tests.sh"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }

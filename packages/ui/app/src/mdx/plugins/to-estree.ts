@@ -223,8 +223,11 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
 
 const MDX_CHILDREN = "MDX_CHILDREN";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function wrapChildren(children: ElementContent[]) {
+export function wrapChildren(children: ElementContent[]): {
+    type: string;
+    children: (Comment | Element | any)[];
+    name: string;
+} {
     const tree = {
         type: "mdxJsxFlowElement",
         children: children.map((child) => (child.type === "text" ? h("p", child.value) : child)),

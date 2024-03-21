@@ -29,6 +29,7 @@ export interface FernDocsFrontmatterInternal {
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
+    // @ts-expect-error: remarkParse, remarkRehype have bad typings
     remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkGemoji],
     rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
     format: "detect",

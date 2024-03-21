@@ -3,7 +3,7 @@ import cn from "clsx";
 import { FC, ReactNode } from "react";
 import { useIsReady } from "../contexts/useIsReady";
 
-interface FernTooltipProps extends Tooltip.TooltipProps, Tooltip.TooltipContentProps {
+interface FernTooltipProps extends Tooltip.TooltipProps, Omit<Tooltip.TooltipContentProps, "content"> {
     content: ReactNode | undefined;
 }
 

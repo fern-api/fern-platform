@@ -1,7 +1,7 @@
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import winston from "winston";
-import { FernRegistryError } from "../../../api/generated";
 import { FdrAPI } from "../../api";
+import { FernRegistryError } from "../../api/generated";
 import type { FdrApplication, FdrConfig } from "../../app";
 
 export type OrgIdsResponse = SuccessOrgIdsResponse | ErrorOrgIdsResponse;

@@ -1,7 +1,6 @@
 import type { Root, RootContent } from "hast";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { FC, useMemo } from "react";
-// @ts-expect-error: the automatic react runtime is untyped.
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 
 interface HastToJSXProps {
@@ -13,7 +12,9 @@ export const HastToJSX: FC<HastToJSXProps> = ({ hast }) => {
         () =>
             toJsxRuntime(hast, {
                 Fragment,
+                // @ts-expect-error: the automatic react runtime is untyped.
                 jsx,
+                // @ts-expect-error: the automatic react runtime is untyped.
                 jsxs,
             }),
         [hast],

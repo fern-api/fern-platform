@@ -12,7 +12,7 @@ export async function getAllPackages({ since = false }: { since?: boolean } = {}
         args.push("--since", "--recursive");
     }
 
-    const { stdout } = await execa("yarn", args);
+    const { stdout } = await execa("pnpm", args);
     const trimmedStdout = stdout.trim();
 
     if (trimmedStdout === "") {

@@ -1,18 +1,18 @@
 # Fern Definition Registry
 
-This repo contains the backend code for the Fern Definition Registry (FDR) as well as the packages/SDKs associated with it. This project is a TypeScript monorepo that uses [Yarn](https://yarnpkg.com) workspaces with [Turbo](https://turbo.build) as the build system. The interface of the FDR API is defined in Fern. The application that serves the API is `fdr`, which runs on AWS ([ECS](https://aws.amazon.com/ecs/)) in a Dockerized format.
+This repo contains the backend code for the Fern Definition Registry (FDR) as well as the packages/SDKs associated with it. This project is a TypeScript monorepo that uses [pnpm](https://pnpm.io/) workspaces with [Turbo](https://turbo.build) as the build system. The interface of the FDR API is defined in Fern. The application that serves the API is `fdr`, which runs on AWS ([ECS](https://aws.amazon.com/ecs/)) in a Dockerized format.
 
 ## Getting Started
 
 ### Pre-requisites
 
-- Make sure Node.js 18+ and Yarn are installed on your machine
+- Make sure Node.js 18+ and pnpm are installed on your machine
 - Make sure you have fern-api installed: `npm install -g fern-api`
 
 Once you've cloned the repo to your favourite directory run the following:
 
 ```bash
-yarn
+pnpm
 fern generate
 ```
 
@@ -37,13 +37,13 @@ in each workspace wherein it has been defined. The `--filter` flag can be used t
 Builds all apps and packages.
 
 ```bash
-yarn build
+pnpm build
 ```
 
 To build specifically the `fdr` app run.
 
 ```bash
-yarn build:fdr
+pnpm build:fdr
 ```
 
 #### `lint`
@@ -51,7 +51,7 @@ yarn build:fdr
 Lints all workspaces.
 
 ```bash
-yarn lint
+pnpm lint
 ```
 
 #### `format`
@@ -59,7 +59,7 @@ yarn lint
 Runs format check in each workspace.
 
 ```bash
-yarn format
+pnpm format
 ```
 
 #### `test`
@@ -67,5 +67,5 @@ yarn format
 Runs test in each workspace.
 
 ```bash
-yarn test
+pnpm test
 ```

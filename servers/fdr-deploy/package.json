@@ -1,5 +1,5 @@
 {
-  "name": "fdr-deploy",
+  "name": "@fern-platform/fdr-deploy",
   "version": "0.1.0",
   "bin": "bin/fdr-deploy.js",
   "scripts": {

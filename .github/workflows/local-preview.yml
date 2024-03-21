@@ -14,11 +14,12 @@ jobs:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: yarn workspace @fern-ui/local-preview-bundle run build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Synthesize local preview bundle
-        run: yarn workspace @fern-ui/cdk run synth:dev
+        run: pnpm --filter=@fern-ui/cdk run synth:dev
 
   deploy-local-preview-dev:
     needs: [dryrun-deploy-local-preview-dev]
@@ -32,11 +33,12 @@ jobs:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: yarn workspace @fern-ui/local-preview-bundle run build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: yarn workspace @fern-ui/cdk run deploy:dev
+        run: pnpm --filter=@fern-ui/cdk run deploy:dev
 
   deploy-local-preview-prod:
     needs: [deploy-local-preview-dev]
@@ -51,8 +53,9 @@ jobs:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: yarn workspace @fern-ui/local-preview-bundle run build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: yarn workspace @fern-ui/cdk run deploy:prod
+        run: pnpm --filter=@fern-ui/cdk run deploy:prod
