@@ -28,9 +28,9 @@
     "check-docs-release-blockers": "pnpm tsx packages/scripts/src/cli.ts -- fern-scripts check-docs-release-blockers",
     "root-package:check": "pnpm tsx packages/scripts/src/cli.ts -- fern-scripts check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
-    "docs:dev": "pnpm --filter=@fern-ui/public-docs-bundle run dev:fern-prod",
-    "docs-dev:dev": "pnpm --filter=@fern-ui/public-docs-bundle run dev:fern-dev",
-    "docs:build": "pnpm --filter=@fern-ui/public-docs-bundle run build:fern-prod",
+    "docs:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-prod",
+    "docs-dev:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-dev",
+    "docs:build": "pnpm --filter=@fern-ui/docs-bundle run build:fern-prod",
     "fdr:generate": "fern generate --api fdr --local"
   },
   "devDependencies": {

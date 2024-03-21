@@ -1,10 +1,10 @@
 {
-  "name": "@fern-ui/public-docs-bundle",
+  "name": "@fern-ui/docs-bundle",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/ui/public-docs-bundle"
+    "directory": "packages/ui/docs-bundle"
   },
   "private": true,
   "files": [
