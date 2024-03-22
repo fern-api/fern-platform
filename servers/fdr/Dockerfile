@@ -9,14 +9,15 @@ RUN apk update
 # Produce a pruned version of the monorepo
 WORKDIR /app
 # Install pnpm
-RUN npm install -g pnpm
+RUN npm install -g turbo
 COPY . .
-RUN turbo prune fdr --docker
+RUN turbo prune @fern-platform/fdr --docker
 
 # Add lockfile and package.json's
 FROM base AS installer
 RUN apk add --no-cache libc6-compat
 RUN apk update
+RUN npm install -g pnpm
 WORKDIR /app
 
 # Install deps
@@ -28,7 +29,8 @@ RUN pnpm install
 # Build
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN pnpm turbo run build --filter=fdr
+COPY shared shared
+RUN pnpm turbo run build --filter=@fern-platform/fdr
 
 FROM base AS runner
 WORKDIR /app
