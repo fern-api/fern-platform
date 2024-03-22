@@ -9,6 +9,9 @@
     "postcss-import",
     "cssnano",
     "jsonpath",
+    "@tailwindcss/typography",
+    "@tailwindcss/forms",
+    "tailwindcss",
     "styled-jsx",
     "lodash-es",
     "@types/lodash-es"
