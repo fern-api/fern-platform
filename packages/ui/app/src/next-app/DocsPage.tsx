@@ -21,6 +21,7 @@ import {
     isVersionedNavigationConfig,
 } from "../util/fern";
 import { type ResolvedPath } from "../util/ResolvedPath";
+import { getFontExtension } from "./utils/getFontVariables";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
 export declare namespace DocsPage {
@@ -98,6 +99,9 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                 />
                 {title != null && <title>{title}</title>}
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
+                {typography?.bodyFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {typography?.headingsFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {typography?.codeFont?.variants.map((v) => getPreloadedFont(v, files))}
             </Head>
             <div className="min-h-screen w-full">
                 <BgImageGradient colors={colors} />
@@ -145,6 +149,26 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
         </FeatureFlagContext.Provider>
+    );
+}
+
+function getPreloadedFont(
+    variant: DocsV1Read.CustomFontConfigVariant,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+) {
+    const file = files[variant.fontFile]?.url;
+    if (file == null) {
+        return null;
+    }
+    return (
+        <link
+            key={variant.fontFile}
+            rel="preload"
+            href={file}
+            as="font"
+            type={`font/${getFontExtension(new URL(file).pathname)}`}
+            crossOrigin="anonymous"
+        />
     );
 }
 
