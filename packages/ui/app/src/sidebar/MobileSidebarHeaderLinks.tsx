@@ -51,7 +51,6 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                 <FernLinkButton
                     key={idx}
                     href={navbarLink.url}
-                    target="_blank"
                     text={navbarLink.text}
                     rightIcon={
                         navbarLink.type === "primary" ||

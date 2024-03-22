@@ -1,7 +1,7 @@
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/router";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { getSlugFromText } from "../base-components";
+import { getSlugFromText } from "../../util/getSlugFromText";
 
 export interface TabProps {
     title: string;

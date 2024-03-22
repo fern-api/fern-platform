@@ -9,6 +9,7 @@ import { FernScrollArea } from "../../components/FernScrollArea";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
+import { getSlugFromChildren } from "../../util/getSlugFromText";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
@@ -370,7 +371,7 @@ function CardedSection({
     children: ReactNode | undefined;
     route: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
-    const anchorRoute = `${route}#${title}`.toLowerCase();
+    const anchorRoute = `${route}#${getSlugFromChildren(title)}`.toLowerCase();
     return (
         <section
             {...props}
