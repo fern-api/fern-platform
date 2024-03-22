@@ -113,6 +113,8 @@ jobs:
   smoke-test: 
     runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v4
+
       - name: Smoke Test Dev Docs
         env:
           NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -123,4 +125,3 @@ jobs:
           npm install -g @fern-api/fern-api-dev
           fern-dev generate --docs --instance https://fern-platform-test.docs.dev.buildwithfern.com
 
-          
