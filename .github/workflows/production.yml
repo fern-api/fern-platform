@@ -38,8 +38,13 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Get Tag
+        id: tag
+        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+        shell: bash
+
       - name: Build Project Artifacts
-        run: VERSION="$(scripts/git-version.sh)" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: VERSION="${{ steps.tag.outputs.TAG_NAME }}" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         run: |
@@ -69,11 +74,6 @@ jobs:
 
       - name: Install datadog-ci
         run: pnpm install --global @datadog/datadog-ci
-
-      - name: Get Tag
-        id: tag
-        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
-        shell: bash
 
       - name: Upload sourcemap
         run: |
