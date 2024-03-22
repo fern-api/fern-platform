@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Deploy FDR
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
     tags: ["*"]
   # TODO: remove before merging
   pull_request:
-    branches: [master]
+    types: [opened, synchronize]
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
