@@ -1,12 +1,17 @@
 import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
+import { useTheme } from "next-themes";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Script from "next/script";
 import { ReactElement, useMemo } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { FeatureFlags } from "../contexts/FeatureFlagContext";
-import { Docs } from "../docs/Docs";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
+import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
+import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
+import { BgImageGradient } from "../docs/BgImageGradient";
+import { Docs, SearchDialog } from "../docs/Docs";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -16,6 +21,8 @@ import {
     isVersionedNavigationConfig,
 } from "../util/fern";
 import { type ResolvedPath } from "../util/ResolvedPath";
+import { getThemeColor } from "./utils/getColorVariables";
+import { getFontExtension } from "./utils/getFontVariables";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
 export declare namespace DocsPage {
@@ -45,23 +52,37 @@ export declare namespace DocsPage {
     }
 }
 
-export function DocsPage({
-    title,
-    favicon,
-    js,
-    navbarLinks,
-    logoHeight,
-    logoHref,
-    search,
-    algoliaSearchIndex,
-}: DocsPage.Props): ReactElement {
-    const { colors, typography, layout, css, files } = useDocsContext();
+export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
+    const router = useRouter();
+    const files = useDeepCompareMemoize(pageProps.files);
+    const layout = useDeepCompareMemoize(pageProps.layout);
+    const colors = useDeepCompareMemoize(pageProps.colors);
+    const typography = useDeepCompareMemoize(pageProps.typography);
+    const css = useDeepCompareMemoize(pageProps.css);
+    const js = useDeepCompareMemoize(pageProps.js);
+    const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
+    const baseUrl = useDeepCompareMemoize(pageProps.baseUrl);
+    const navigation = useDeepCompareMemoize(pageProps.navigation);
+    const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
+    const search = useDeepCompareMemoize(pageProps.search);
+    const { resolvedTheme: theme } = useTheme();
+
+    const { title, favicon, logoHeight, logoHref, algoliaSearchIndex, resolvedPath } = pageProps;
+
     const stylesheet = useMemo(
         () => renderThemeStylesheet(colors, typography, layout, css, files),
         [colors, css, files, layout, typography],
     );
+
+    if (baseUrl == null) {
+        // eslint-disable-next-line no-console
+        console.error("Fern Docs crashed. Reloading the page might fix the issue.");
+        router.reload();
+        return null;
+    }
+
     return (
-        <>
+        <FeatureFlagContext.Provider value={featureFlags}>
             {/* 
                     We concatenate all global styles into a single instance,
                     as styled JSX will only create one instance of global styles
@@ -80,15 +101,43 @@ export function DocsPage({
                 />
                 {title != null && <title>{title}</title>}
                 {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
+                {typography?.bodyFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {typography?.headingsFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {typography?.codeFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {theme === "light" && colors.light != null && (
+                    <meta name="theme-color" content={getThemeColor(colors.light)} />
+                )}
+                {theme === "dark" && colors.dark != null && (
+                    <meta name="theme-color" content={getThemeColor(colors.dark)} />
+                )}
             </Head>
             <div className="min-h-screen w-full">
-                <Docs
-                    logoHeight={logoHeight}
-                    logoHref={logoHref}
-                    navbarLinks={navbarLinks}
-                    search={search}
-                    algoliaSearchIndex={algoliaSearchIndex}
-                />
+                <BgImageGradient colors={colors} />
+                <DocsContextProvider
+                    files={files}
+                    layout={layout}
+                    baseUrl={baseUrl}
+                    colors={colors}
+                    typography={typography}
+                    css={css}
+                >
+                    <NavigationContextProvider
+                        resolvedPath={resolvedPath} // this changes between pages
+                        navigation={navigation}
+                        domain={baseUrl.domain}
+                        basePath={baseUrl.basePath}
+                        title={title}
+                    >
+                        <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                        <Docs
+                            logoHeight={logoHeight}
+                            logoHref={logoHref}
+                            navbarLinks={navbarLinks}
+                            search={search}
+                            algoliaSearchIndex={algoliaSearchIndex}
+                        />
+                    </NavigationContextProvider>
+                </DocsContextProvider>
             </div>
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
@@ -105,7 +154,27 @@ export function DocsPage({
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-        </>
+        </FeatureFlagContext.Provider>
+    );
+}
+
+function getPreloadedFont(
+    variant: DocsV1Read.CustomFontConfigVariant,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+) {
+    const file = files[variant.fontFile]?.url;
+    if (file == null) {
+        return null;
+    }
+    return (
+        <link
+            key={variant.fontFile}
+            rel="preload"
+            href={file}
+            as="font"
+            type={`font/${getFontExtension(new URL(file).pathname)}`}
+            crossOrigin="anonymous"
+        />
     );
 }
 

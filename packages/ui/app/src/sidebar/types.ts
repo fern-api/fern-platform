@@ -176,4 +176,6 @@ export const SidebarNodeRaw = {
         node.type === "page" && (node as SidebarNodeRaw.ChangelogPage).pageType === "changelog",
     isEndpointPage: (node: SidebarNodeRaw.Page): node is SidebarNodeRaw.EndpointPage =>
         node.type === "page" && "method" in node,
+    isSubpackageSection: (node: SidebarNodeRaw.ApiPageOrSubpackage): node is SidebarNodeRaw.SubpackageSection =>
+        node.type === "apiSection",
 };

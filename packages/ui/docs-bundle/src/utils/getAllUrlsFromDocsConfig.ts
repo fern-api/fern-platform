@@ -43,14 +43,14 @@ function flattenNavigationConfig(nav: DocsV1Read.NavigationConfig, parentSlugs: 
             idx === 0
                 ? [
                       ...flattenNavigationConfig(version.config, [...parentSlugs]), // default version
-                      ...flattenNavigationConfig(version.config, [...parentSlugs, version.urlSlug]),
+                      ...flattenNavigationConfig(version.config, [...parentSlugs, ...version.urlSlug.split("/")]),
                   ]
-                : flattenNavigationConfig(version.config, [...parentSlugs, version.urlSlug]),
+                : flattenNavigationConfig(version.config, [...parentSlugs, ...version.urlSlug.split("/")]),
         );
     }
 
     if (isUnversionedTabbedNavigationConfig(nav)) {
-        return nav.tabs.map((tab) => ({ slug: [...parentSlugs, tab.urlSlug], items: tab.items }));
+        return nav.tabs.map((tab) => ({ slug: [...parentSlugs, ...tab.urlSlug.split("/")], items: tab.items }));
     }
 
     return [{ slug: parentSlugs, items: nav.items }];
@@ -64,7 +64,11 @@ function flattenSidebarNodeSlugs(nodes: SidebarNodeRaw[]): { slug: string[] }[] 
             return [{ slug: node.slug }, ...flattenSidebarNodeSlugs(node.items)];
         } else if (node.type === "apiSection") {
             const current = [...node.items, node.changelog].filter(isNonNullish);
-            return [{ slug: node.slug }, ...current];
+            return [
+                { slug: node.slug },
+                ...current,
+                ...flattenSidebarNodeSlugs(node.items.filter(SidebarNodeRaw.isSubpackageSection)),
+            ];
         }
         return [];
     });

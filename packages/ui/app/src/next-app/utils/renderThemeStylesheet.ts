@@ -12,6 +12,9 @@ export function renderThemeStylesheet(
     css: DocsV1Read.CssConfig | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): string {
+    if (colorsConfig == null) {
+        return "";
+    }
     // const bg = getBgVariables(backgroundImage, files);
     const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(typography, files);
     const colors = getColorVariables(colorsConfig, files);

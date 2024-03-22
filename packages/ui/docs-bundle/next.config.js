@@ -109,6 +109,9 @@ const nextConfig = {
         ],
         path: assetPrefix != null ? `${assetPrefix}_next/image` : undefined,
     },
+    env: {
+        VERSION: process.env.VERSION,
+    },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

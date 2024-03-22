@@ -305,13 +305,7 @@ function buildRedactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        if (auth.headerWireValue === "Authorization") {
-                            headers[auth.headerWireValue] = value.includes(":")
-                                ? `Basic ${obfuscateSecret(value)}`
-                                : `Bearer ${obfuscateSecret(value)}`;
-                        } else {
-                            headers[auth.headerWireValue] = obfuscateSecret(value);
-                        }
+                        headers[auth.headerWireValue] = obfuscateSecret(value);
                     }
                 }
             },

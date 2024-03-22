@@ -6,7 +6,7 @@ export const CSS_VARIABLES = {
     CODE_FONT: "--typography-code-font-family",
 };
 
-function getFontExtension(url: string): string {
+export function getFontExtension(url: string): string {
     const ext = url.split(".").pop();
     if (ext == null) {
         throw new Error("No extension found for font: " + url);

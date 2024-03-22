@@ -2,6 +2,13 @@ const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} */
 
+const round = (num) =>
+    num
+        .toFixed(7)
+        .replace(/(\.[0-9]+?)0+$/, "$1")
+        .replace(/\.0$/, "");
+const em = (px, base) => `${round(px / base)}em`;
+
 module.exports = {
     darkMode: "class",
     content: [
@@ -151,6 +158,12 @@ module.exports = {
                         "--tw-prose-pre-bg": "initial",
                         "--tw-prose-th-borders": "var(--border)",
                         "--tw-prose-td-borders": "var(--border)",
+                        "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
+                            paddingRight: em(8, 14),
+                        },
+                        "tbody td[rowspan]:first-child + td, tfoot td[rowspan]:first-child + td": {
+                            paddingLeft: 0,
+                        },
                     },
                 },
                 sm: {
@@ -158,6 +171,12 @@ module.exports = {
                         color: "var(--grayscale-a11)",
                         p: {
                             marginTop: "0.25rem",
+                        },
+                        "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
+                            paddingRight: em(12, 12),
+                        },
+                        "tbody td[rowspan]:first-child + td, tfoot td[rowspan]:first-child + td": {
+                            paddingLeft: 0,
                         },
                     },
                 },

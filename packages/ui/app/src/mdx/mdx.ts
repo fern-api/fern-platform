@@ -91,8 +91,6 @@ export async function serializeMdxContent(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        // eslint-disable-next-line no-console
-        console.log(content);
         return content;
     }
 }
