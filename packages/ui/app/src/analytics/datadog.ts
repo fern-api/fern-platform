@@ -21,6 +21,7 @@ if (clientToken && process.env.NODE_ENV === "production") {
         site: "datadoghq.com",
         service: "docs-frontend",
         env: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
+        version: process.env.VERSION,
         sessionSampleRate: 100,
         sessionReplaySampleRate: 100,
         trackUserInteractions: true,
