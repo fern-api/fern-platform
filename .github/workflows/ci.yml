@@ -5,13 +5,17 @@ on:
     branches:
       - "**"
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 5 # This helps turbo resolve changes faster
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
@@ -29,6 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
@@ -43,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
@@ -59,7 +67,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
@@ -91,6 +99,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
