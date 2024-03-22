@@ -9,24 +9,11 @@ import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
 import { NextNProgress } from "../docs/NProgress";
+import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
 import "./globals.scss";
 
 const store = createStore();
-
-function withDefaultContexts(children: ReactElement): ReactElement {
-    return (
-        <IsReadyProvider>
-            <DatadogInit />
-            <JotaiProvider store={store}>
-                <ViewportContextProvider>
-                    <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                    {children}
-                </ViewportContextProvider>
-            </JotaiProvider>
-        </IsReadyProvider>
-    );
-}
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
     useEffect(() => {
@@ -43,7 +30,17 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     return (
         <FernErrorBoundary type="playground" className="flex h-screen items-center justify-center">
-            {withDefaultContexts(<Component {...pageProps} />)}
+            <ThemeProvider colors={pageProps.colors}>
+                <IsReadyProvider>
+                    <DatadogInit />
+                    <JotaiProvider store={store}>
+                        <ViewportContextProvider>
+                            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                            <Component {...pageProps} />
+                        </ViewportContextProvider>
+                    </JotaiProvider>
+                </IsReadyProvider>
+            </ThemeProvider>
         </FernErrorBoundary>
     );
 }

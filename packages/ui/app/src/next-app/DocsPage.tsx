@@ -2,6 +2,7 @@ import { APIV1Read, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
+import { useTheme } from "next-themes";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
@@ -11,7 +12,6 @@ import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
-import { ThemeProvider } from "../docs/ThemeProvider";
 import { resolveSidebarNodes } from "../sidebar/resolver";
 import { serializeSidebarNodeDescriptionMdx } from "../sidebar/serializer";
 import type { ColorsConfig, SidebarNavigation, SidebarTab, SidebarVersionInfo } from "../sidebar/types";
@@ -21,6 +21,7 @@ import {
     isVersionedNavigationConfig,
 } from "../util/fern";
 import { type ResolvedPath } from "../util/ResolvedPath";
+import { getThemeColor } from "./utils/getColorVariables";
 import { getFontExtension } from "./utils/getFontVariables";
 import { renderThemeStylesheet } from "./utils/renderThemeStylesheet";
 
@@ -64,6 +65,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const navigation = useDeepCompareMemoize(pageProps.navigation);
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
     const search = useDeepCompareMemoize(pageProps.search);
+    const { resolvedTheme: theme } = useTheme();
 
     const { title, favicon, logoHeight, logoHref, algoliaSearchIndex, resolvedPath } = pageProps;
 
@@ -102,36 +104,40 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                 {typography?.bodyFont?.variants.map((v) => getPreloadedFont(v, files))}
                 {typography?.headingsFont?.variants.map((v) => getPreloadedFont(v, files))}
                 {typography?.codeFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {theme === "light" && colors.light != null && (
+                    <meta name="theme-color" content={getThemeColor(colors.light)} />
+                )}
+                {theme === "dark" && colors.dark != null && (
+                    <meta name="theme-color" content={getThemeColor(colors.dark)} />
+                )}
             </Head>
             <div className="min-h-screen w-full">
                 <BgImageGradient colors={colors} />
-                <ThemeProvider colors={colors}>
-                    <DocsContextProvider
-                        files={files}
-                        layout={layout}
-                        baseUrl={baseUrl}
-                        colors={colors}
-                        typography={typography}
-                        css={css}
+                <DocsContextProvider
+                    files={files}
+                    layout={layout}
+                    baseUrl={baseUrl}
+                    colors={colors}
+                    typography={typography}
+                    css={css}
+                >
+                    <NavigationContextProvider
+                        resolvedPath={resolvedPath} // this changes between pages
+                        navigation={navigation}
+                        domain={baseUrl.domain}
+                        basePath={baseUrl.basePath}
+                        title={title}
                     >
-                        <NavigationContextProvider
-                            resolvedPath={resolvedPath} // this changes between pages
-                            navigation={navigation}
-                            domain={baseUrl.domain}
-                            basePath={baseUrl.basePath}
-                            title={title}
-                        >
-                            <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
-                            <Docs
-                                logoHeight={logoHeight}
-                                logoHref={logoHref}
-                                navbarLinks={navbarLinks}
-                                search={search}
-                                algoliaSearchIndex={algoliaSearchIndex}
-                            />
-                        </NavigationContextProvider>
-                    </DocsContextProvider>
-                </ThemeProvider>
+                        <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                        <Docs
+                            logoHeight={logoHeight}
+                            logoHref={logoHref}
+                            navbarLinks={navbarLinks}
+                            search={search}
+                            algoliaSearchIndex={algoliaSearchIndex}
+                        />
+                    </NavigationContextProvider>
+                </DocsContextProvider>
             </div>
             {js?.inline?.map((inline, idx) => (
                 <Script key={`inline-script-${idx}`} id={`inline-script-${idx}`}>
