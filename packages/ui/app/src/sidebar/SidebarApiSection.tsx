@@ -18,7 +18,7 @@ import { SidebarNode } from "./types";
 export interface SidebarApiSectionProps {
     className?: string;
     apiSection: SidebarNode.ApiSection;
-    slug: string[];
+    slug: readonly string[];
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     depth: number;
 }

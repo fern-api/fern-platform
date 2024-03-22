@@ -8,7 +8,7 @@ export interface ColorsConfig {
 
 export interface SidebarVersionInfo {
     id: string;
-    slug: string[];
+    slug: readonly string[];
     index: number;
     availability: DocsV1Read.VersionAvailability | null;
 }
@@ -16,7 +16,7 @@ export interface SidebarVersionInfo {
 export interface SidebarTab {
     title: string;
     icon: string;
-    slug: string[];
+    slug: readonly string[];
 }
 
 export interface SidebarNavigation {
@@ -25,7 +25,7 @@ export interface SidebarNavigation {
     currentVersionIndex: number | undefined;
     versions: SidebarVersionInfo[];
     sidebarNodes: SidebarNode[];
-    slug: string[]; // contains basepath, current version, and tab
+    slug: readonly string[]; // contains basepath, current version, and tab
 }
 
 export type SidebarNodeRaw = SidebarNodeRaw.PageGroup | SidebarNodeRaw.ApiSection | SidebarNodeRaw.Section;
@@ -33,7 +33,7 @@ export type SidebarNodeRaw = SidebarNodeRaw.PageGroup | SidebarNodeRaw.ApiSectio
 export declare namespace SidebarNodeRaw {
     export interface PageGroup {
         type: "pageGroup";
-        slug: string[];
+        slug: readonly string[];
         pages: (Page | Link)[];
     }
 
@@ -51,7 +51,7 @@ export declare namespace SidebarNodeRaw {
         api: FdrAPI.ApiId;
         id: string;
         title: string;
-        slug: string[];
+        slug: readonly string[];
         items: ApiPageOrSubpackage[];
         artifacts: DocsV1Read.ApiArtifacts | undefined;
         showErrors: boolean;
@@ -62,7 +62,7 @@ export declare namespace SidebarNodeRaw {
     export interface Section {
         type: "section";
         title: string;
-        slug: string[];
+        slug: readonly string[];
         items: SidebarNodeRaw[];
     }
 

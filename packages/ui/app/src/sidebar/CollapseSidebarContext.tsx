@@ -5,9 +5,9 @@ import { useNavigationContext } from "../contexts/navigation-context/useNavigati
 interface CollapseSidebarContextValue {
     expanded: string[][]; // true = expand all, string[] = expand only these slugs
     setExpanded: (slugs: string[][]) => void;
-    toggleExpanded: (slug: string[]) => void;
-    selectedSlug: string[] | undefined;
-    checkExpanded: (expandableSlug: string[]) => boolean;
+    toggleExpanded: (slug: readonly string[]) => void;
+    selectedSlug: readonly string[] | undefined;
+    checkExpanded: (expandableSlug: readonly string[]) => boolean;
 }
 
 const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
@@ -18,7 +18,7 @@ const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
     checkExpanded: () => false,
 });
 
-export function checkSlugStartsWith(slug: string[], startsWith: string[]): boolean {
+export function checkSlugStartsWith(slug: readonly string[], startsWith: readonly string[]): boolean {
     if (slug.length < startsWith.length) {
         return false;
     }
@@ -48,16 +48,16 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
     }, [selectedSlug]);
 
     const checkExpanded = useCallback(
-        (expandableSlug: string[]) => expanded.some((slug) => checkSlugStartsWith(slug, expandableSlug)),
+        (expandableSlug: readonly string[]) => expanded.some((slug) => checkSlugStartsWith(slug, expandableSlug)),
         [expanded],
     );
 
-    const toggleExpanded = useCallback((slug: string[]) => {
+    const toggleExpanded = useCallback((slug: readonly string[]) => {
         setExpanded((expanded) => {
             if (expanded.some((s) => checkSlugStartsWith(s, slug))) {
                 return expanded.filter((s) => !checkSlugStartsWith(s, slug));
             }
-            return [...expanded, slug];
+            return [...expanded, [...slug]];
         });
     }, []);
 

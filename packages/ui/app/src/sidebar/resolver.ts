@@ -24,7 +24,7 @@ function resolveSidebarNodeRawApiSection(
     title: string,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     showErrors: boolean,
-    parentSlugs: string[],
+    parentSlugs: readonly string[],
     navigation: APIV1Read.ApiNavigationConfigRoot | APIV1Read.ApiNavigationConfigSubpackage | undefined,
 ): SidebarNodeRaw.ApiSection | undefined {
     let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
@@ -145,7 +145,7 @@ function stringifyEndpointPathParts(path: APIV1Read.EndpointPathPart[]): string 
 export function resolveSidebarNodes(
     navigationItems: DocsV1Read.NavigationItem[],
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    parentSlugs: string[] = [],
+    parentSlugs: readonly string[] = [],
 ): SidebarNodeRaw[] {
     const SidebarNodeRaws: SidebarNodeRaw[] = [];
     for (const navigationItem of navigationItems) {

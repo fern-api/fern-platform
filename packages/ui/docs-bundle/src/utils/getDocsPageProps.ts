@@ -1,11 +1,12 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, convertNavigatableToResolvedPath, DocsPage, DocsPageResult, getNavigation } from "@fern-ui/ui";
+import { buildUrl, convertNavigatableToResolvedPath, DocsPage, DocsPageResult } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
+import { getNavigationRoot } from "./getAllUrlsFromDocsConfig";
 import { getRedirectForPath } from "./hackRedirects";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
@@ -154,7 +155,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = await getNavigation(slug, basePath, docs.definition.apis, docsConfig.navigation);
+    const navigation = await getNavigationRoot(slug, basePath, docs.definition.apis, docsConfig.navigation);
 
     if (navigation == null) {
         // eslint-disable-next-line no-console

@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "./types";
 
-function matchSlug(slug: string[], nodeSlug: string[]): boolean {
+function matchSlug(slug: readonly string[], nodeSlug: readonly string[]): boolean {
     for (let i = 0; i < slug.length; i++) {
         if (slug[i] !== nodeSlug[i]) {
             return false;

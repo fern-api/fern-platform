@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { notFoundResponse } from "../../../utils/serverResponse";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;
@@ -57,7 +58,4 @@ function getSitemapXml(urls: string[]): string {
             })
             .join("\n")}
     </urlset>`;
-}
-function notFoundResponse(): NextResponse<unknown> | PromiseLike<NextResponse<unknown>> {
-    throw new Error("Function not implemented.");
 }

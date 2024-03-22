@@ -183,60 +183,6 @@ export type DocsPageResult<Props> =
     | { type: "redirect"; redirect: Redirect; revalidate?: number | boolean }
     | { type: "notFound"; notFound: true; revalidate?: number | boolean };
 
-export function getVersionAndTabSlug(
-    slugArray: string[],
-    basePath: string | undefined,
-    nav: DocsV1Read.NavigationConfig,
-): string[] | undefined {
-    let currentPath = slugArray;
-
-    const versionAndTabSlug = [];
-    if (basePath != null) {
-        for (const part of basePath.split("/")) {
-            if (part.trim().length === 0) {
-                continue;
-            }
-            if (currentPath[0] === part) {
-                currentPath = currentPath.slice(1);
-                versionAndTabSlug.push(part);
-            } else {
-                return undefined;
-            }
-        }
-    }
-
-    if (isVersionedNavigationConfig(nav)) {
-        const matchedVersion = nav.versions.find((version) => version.urlSlug === currentPath[0]) ?? nav.versions[0];
-
-        if (matchedVersion == null) {
-            return undefined;
-        }
-
-        versionAndTabSlug.push(matchedVersion.urlSlug);
-
-        if (isUnversionedTabbedNavigationConfig(matchedVersion.config)) {
-            const matchedTab =
-                matchedVersion.config.tabs.find((tab) => tab.urlSlug === currentPath[1]) ??
-                matchedVersion.config.tabs[0];
-
-            if (matchedTab == null) {
-                return undefined;
-            }
-
-            versionAndTabSlug.push(matchedVersion.urlSlug, matchedTab.urlSlug);
-        }
-    } else if (isUnversionedTabbedNavigationConfig(nav)) {
-        const matchedTab = nav.tabs.find((tab) => tab.urlSlug === currentPath[0]) ?? nav.tabs[0];
-
-        if (matchedTab == null) {
-            return undefined;
-        }
-
-        versionAndTabSlug.push(matchedTab.urlSlug);
-    }
-    return versionAndTabSlug;
-}
-
 export async function getNavigation(
     slugArray: string[],
     basePath: string | undefined,

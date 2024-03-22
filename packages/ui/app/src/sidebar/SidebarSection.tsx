@@ -13,7 +13,7 @@ import { SidebarNode } from "./types";
 export interface SidebarSectionProps {
     className?: string;
     navigationItems: SidebarNode[];
-    slug: string[];
+    slug: readonly string[];
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 

@@ -975,7 +975,7 @@ export interface ResolvedWithApiDefinition {
     websockets: ResolvedWebSocketChannel[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
-    slug: string[];
+    slug: readonly string[];
 }
 
 export type ResolvedApiDefinition =
