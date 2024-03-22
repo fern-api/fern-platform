@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isSubpackage } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 import { SidebarNodeRaw } from "./types";
@@ -74,7 +74,7 @@ function resolveSidebarNodeRawApiSection(
     );
 
     const subpackages = subpackage.subpackages
-        .map((innerSubpackageId) => {
+        .map((innerSubpackageId): SidebarNodeRaw.SubpackageSection | undefined => {
             const resolvedSubpackage = resolveSidebarNodeRawApiSection(
                 api,
                 innerSubpackageId,
@@ -92,7 +92,7 @@ function resolveSidebarNodeRawApiSection(
             }
             return { ...resolvedSubpackage, apiType: "subpackage" };
         })
-        .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackageSection[];
+        .filter(isNonNullish);
 
     // default sort
     const items: SidebarNodeRaw.ApiPageOrSubpackage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
