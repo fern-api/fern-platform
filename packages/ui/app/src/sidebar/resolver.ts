@@ -75,7 +75,7 @@ function resolveSidebarNodeRawApiSection(
 
     const subpackages = subpackage.subpackages
         .map((innerSubpackageId) => {
-            const subpackage = resolveSidebarNodeRawApiSection(
+            const resolvedSubpackage = resolveSidebarNodeRawApiSection(
                 api,
                 innerSubpackageId,
                 subpackagesMap[innerSubpackageId],
@@ -87,7 +87,10 @@ function resolveSidebarNodeRawApiSection(
                     .filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
                     .find((item) => item.subpackageId === innerSubpackageId),
             );
-            return { ...subpackage, apiType: "subpackage" };
+            if (resolvedSubpackage == null) {
+                return undefined;
+            }
+            return { ...resolvedSubpackage, apiType: "subpackage" };
         })
         .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackageSection[];
 
