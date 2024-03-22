@@ -21,7 +21,10 @@ jobs:
           npm install -g fern-api
 
       - name: Compile
-        run: pnpm turbo codegen compile build
+        run: pnpm turbo compile
+
+      - name: Build
+        run: pnpm turbo codegen build
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
