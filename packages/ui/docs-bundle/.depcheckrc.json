@@ -7,6 +7,9 @@
     "autoprefixer",
     "postcss",
     "postcss-import",
+    "@tailwindcss/typography",
+    "@tailwindcss/forms",
+    "tailwindcss",
     "jsonpath",
     "cssnano"
   ],

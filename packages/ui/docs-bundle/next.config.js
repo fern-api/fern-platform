@@ -1,7 +1,7 @@
-/** @type {import('next').NextConfig} */
-
 const assetPrefix = process.env.CDN_URI != null ? new URL("/", process.env.CDN_URI).href : undefined;
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+    reactStrictMode: true,
     transpilePackages: ["@fern-ui/ui"],
     productionBrowserSourceMaps: true,
     experimental: {
