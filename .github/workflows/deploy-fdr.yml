@@ -56,10 +56,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: 🔄 DB Migration
-        run: pnpm run --filter=@fern-platform/fdr db:migrate:dev
-        env:
-          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}
+      # Currently we migrate in the Docker container
+      # - name: 🔄 DB Migration
+      #   run: pnpm run --filter=@fern-platform/fdr db:migrate:dev
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}
 
       - name: 🚀 cdk deploy
         run: |
@@ -97,10 +98,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: 🔄 DB Migration
-        run: pnpm run --filter=@fern-platform/fdr db:migrate:prod
-        env:
-          DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}
+      # Currently we migrate in the Docker container
+      # - name: 🔄 DB Migration
+      #   run: pnpm run --filter=@fern-platform/fdr db:migrate:prod
+      #   env:
+      #     DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}
 
       - name: 🚀 cdk deploy
         run: |
