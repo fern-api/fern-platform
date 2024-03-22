@@ -20,8 +20,7 @@ env:
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
   FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
-  GITHUB_TOKEN:  ${{ secrets.FERN_GITHUB_TOKEN }}
-
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
 
 jobs:
   deploy_dev:
@@ -56,6 +55,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: 🔄 DB Migration
+        run: pnpm run --filter=@fern-platform/fdr db:migrate:dev
+        env:
+          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}
+
       - name: 🚀 cdk deploy
         run: |
           git_version="$(scripts/git-version.sh)"
@@ -64,6 +69,8 @@ jobs:
           pnpm install
           cd apps/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
+        env:
+          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}
 
   deploy_prod:
     runs-on: ubuntu-latest
@@ -91,6 +98,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: 🔄 DB Migration
+        run: pnpm run --filter=@fern-platform/fdr db:migrate:prod
+        env:
+          DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}
+
       - name: 🚀 cdk deploy
         run: |
           git_version="$(scripts/git-version.sh)"
@@ -99,3 +111,5 @@ jobs:
           pnpm install
           cd apps/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:prod
+        env:
+          DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}
