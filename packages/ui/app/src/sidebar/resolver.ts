@@ -35,14 +35,15 @@ function resolveSidebarNodeRawApiSection(
         return;
     }
     // the parentSlug comes from the parent package, ignoring all pointsTo rewriting
-    const slug = package_ != null && isSubpackage(package_) ? [...parentSlugs, package_.urlSlug] : parentSlugs;
+    const slug =
+        package_ != null && isSubpackage(package_) ? [...parentSlugs, ...package_.urlSlug.split("/")] : parentSlugs;
     const endpoints = subpackage.endpoints.map(
         (endpoint): SidebarNodeRaw.EndpointPage => ({
             type: "page",
             apiType: "endpoint",
             api,
             id: endpoint.id,
-            slug: [...slug, endpoint.urlSlug],
+            slug: [...slug, ...endpoint.urlSlug.split("/")],
             title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
             description: endpoint.description,
             method: endpoint.method,
@@ -55,7 +56,7 @@ function resolveSidebarNodeRawApiSection(
             apiType: "websocket",
             api,
             id: websocket.id,
-            slug: [...slug, websocket.urlSlug],
+            slug: [...slug, ...websocket.urlSlug.split("/")],
             title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
             description: websocket.description,
         }),
@@ -66,15 +67,15 @@ function resolveSidebarNodeRawApiSection(
             apiType: "webhook",
             api,
             id: webhook.id,
-            slug: [...slug, webhook.urlSlug],
+            slug: [...slug, ...webhook.urlSlug.split("/")],
             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
             description: webhook.description,
         }),
     );
 
     const subpackages = subpackage.subpackages
-        .map((innerSubpackageId) =>
-            resolveSidebarNodeRawApiSection(
+        .map((innerSubpackageId) => {
+            const subpackage = resolveSidebarNodeRawApiSection(
                 api,
                 innerSubpackageId,
                 subpackagesMap[innerSubpackageId],
@@ -85,8 +86,9 @@ function resolveSidebarNodeRawApiSection(
                 navigation?.items
                     .filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
                     .find((item) => item.subpackageId === innerSubpackageId),
-            ),
-        )
+            );
+            return { ...subpackage, apiType: "subpackage" };
+        })
         .filter((subpackage) => subpackage != null) as SidebarNodeRaw.SubpackageSection[];
 
     // default sort
@@ -150,7 +152,7 @@ export function resolveSidebarNodes(
                 if (lastSidebarNodeRaw != null && lastSidebarNodeRaw.type === "pageGroup") {
                     lastSidebarNodeRaw.pages.push({
                         ...page,
-                        slug: page.fullSlug ?? [...parentSlugs, page.urlSlug],
+                        slug: page.fullSlug ?? [...parentSlugs, ...page.urlSlug.split("/")],
                         type: "page",
                         description: undefined,
                     });
@@ -161,7 +163,7 @@ export function resolveSidebarNodes(
                         pages: [
                             {
                                 ...page,
-                                slug: page.fullSlug ?? [...parentSlugs, page.urlSlug],
+                                slug: page.fullSlug ?? [...parentSlugs, ...page.urlSlug.split("/")],
                                 type: "page",
                                 description: undefined,
                             },
@@ -173,7 +175,7 @@ export function resolveSidebarNodes(
                 const definition = apis[api.api];
                 if (definition != null) {
                     const definitionSlug =
-                        api.fullSlug ?? (api.skipUrlSlug ? parentSlugs : [...parentSlugs, api.urlSlug]);
+                        api.fullSlug ?? (api.skipUrlSlug ? parentSlugs : [...parentSlugs, ...api.urlSlug.split("/")]);
                     const resolved = resolveSidebarNodeRawApiSection(
                         api.api,
                         api.api,
@@ -202,7 +204,10 @@ export function resolveSidebarNodes(
                                       title: api.changelog.title ?? "Changelog",
                                       description: api.changelog.description,
                                       pageId: api.changelog.pageId,
-                                      slug: api.changelog.fullSlug ?? [...definitionSlug, api.changelog.urlSlug],
+                                      slug: api.changelog.fullSlug ?? [
+                                          ...definitionSlug,
+                                          ...api.changelog.urlSlug.split("/"),
+                                      ],
                                       items: api.changelog.items.map((item) => ({
                                           date: item.date,
                                           pageId: item.pageId,
@@ -215,7 +220,8 @@ export function resolveSidebarNodes(
             },
             section: (section) => {
                 const sectionSlug =
-                    section.fullSlug ?? (section.skipUrlSlug ? parentSlugs : [...parentSlugs, section.urlSlug]);
+                    section.fullSlug ??
+                    (section.skipUrlSlug ? parentSlugs : [...parentSlugs, ...section.urlSlug.split("/")]);
                 SidebarNodeRaws.push({
                     type: "section",
                     title: section.title,
