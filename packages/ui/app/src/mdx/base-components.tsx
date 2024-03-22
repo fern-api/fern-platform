@@ -78,6 +78,7 @@ export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): Rea
         `h${level}`,
         {
             id: slug,
+            "data-anchor": slug,
             ...props,
             className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
         },

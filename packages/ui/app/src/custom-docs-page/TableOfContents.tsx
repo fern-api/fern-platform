@@ -201,7 +201,7 @@ function generateTableOfContents(html: string): TableOfContentsItem[] {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             depth: parseInt(heading.tagName[1]!),
             text: heading.textContent?.trim() ?? "",
-            id: heading.id.trim() ?? "",
+            id: heading.getAttribute("data-anchor")?.trim() ?? "",
         }))
         .filter((heading) => heading.id.length > 0);
 
