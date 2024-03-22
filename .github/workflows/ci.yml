@@ -16,8 +16,14 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Codegen
+        run: |
+          npm install -g fern-api
+
       - name: Compile
         run: pnpm turbo codegen compile build
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: Check dependencies
         run: pnpm depcheck
