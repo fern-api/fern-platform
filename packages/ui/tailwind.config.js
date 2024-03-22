@@ -396,9 +396,9 @@ module.exports = {
                 ".shadow-default": {
                     "@apply shadow-border-default": {},
                 },
-                ".shadow-tag-primary": {
-                    "@apply shadow-tag-primary": {},
-                },
+                // ".shadow-tag-primary": {
+                //     "@apply shadow-tag-primary": {},
+                // },
                 ".shadow-border-primary": {
                     "@apply shadow-border-accent-muted": {},
                 },
