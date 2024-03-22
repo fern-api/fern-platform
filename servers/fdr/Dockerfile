@@ -5,9 +5,11 @@ FROM base AS builder
 RUN apk add --no-cache libc6-compat
 RUN apk update
 
+
 # Produce a pruned version of the monorepo
 WORKDIR /app
-RUN pnpm global add turbo
+# Install pnpm
+RUN npm install -g pnpm
 COPY . .
 RUN turbo prune fdr --docker
 

@@ -87,4 +87,4 @@ jobs:
           npm install -g aws-cdk
           pnpm install
           cd apps/fdr-deploy
-          VERSION="${git_version}" pnpm --filter=@fern-platform=fdr-deploy deploy:prod
+          VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:prod
