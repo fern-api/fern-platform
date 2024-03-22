@@ -66,3 +66,20 @@ jobs:
           echo "Revalidated: docs.buildwithfern.com"
 
           echo "Done!"
+
+      - name: Install datadog-ci
+        run: pnpm install --global @datadog/datadog-ci
+
+      - name: Get Tag
+        id: tag
+        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+        shell: bash
+
+      - name: Upload sourcemap
+        run: |
+          datadog-ci sourcemaps upload ./packages/ui/docs-bundle/.next/static \
+          --service=docs-frontend \
+          --release-version=${{ steps.tag.outputs.TAG_NAME }} \
+          --minified-path-prefix=https://app.buildwithfern.com/_next/static
+        env:
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
