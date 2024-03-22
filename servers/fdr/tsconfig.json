@@ -4,6 +4,7 @@
     "composite": true,
     "outDir": "dist",
     "rootDir": ".",
+    "isolatedModules": false,
     "paths": {
       "@prisma/client": ["../prisma/client"],
     },

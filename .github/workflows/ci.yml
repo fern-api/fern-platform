@@ -17,7 +17,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile
+        run: pnpm turbo codegen compile build
 
       - name: Check dependencies
         run: pnpm depcheck
