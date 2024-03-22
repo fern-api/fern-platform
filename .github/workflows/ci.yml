@@ -16,8 +16,16 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Compile
-        run: pnpm compile
+      - name: Codegen
+        run: |
+          npm install -g fern-api
+
+      - name: Compile and build
+        run: pnpm turbo compile codegen build
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+          WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
       - name: Check dependencies
         run: pnpm depcheck
