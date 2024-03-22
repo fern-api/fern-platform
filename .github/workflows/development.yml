@@ -32,6 +32,18 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
+      
+      - name: Smoke Test Dev Docs
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          FERN_TOKEN: ${{ secrets.FERN_DEV_TOKEN }}
+        run: | 
+          cd smoke-test
+          npm install -g @fern-api/fern-api-dev
+          fern-dev init --organization fern
+          fern-dev init --docs
+          fern-dev generate --docs
+          curl https://fern-platform-test.docs.dev.buildwithfern.com
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
