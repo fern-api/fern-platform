@@ -49,10 +49,10 @@ jobs:
       - name: 🚀 cdk deploy
         run: |
           git_version="$(scripts/git-version.sh)"
-          pnpm run docker:dev "${git_version}"
+          pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
           npm install -g aws-cdk
           pnpm install
-          VERSION="${git_version}" pnpm --filter=@fern-platform=fdr-deploy deploy:dev
+          VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
 
   deploy_prod:
     runs-on: ubuntu-latest
@@ -83,7 +83,7 @@ jobs:
       - name: 🚀 cdk deploy
         run: |
           git_version="$(scripts/git-version.sh)"
-          pnpm run docker:prod "${git_version}"
+          pnpm run --filter=@fern-platform/fdr docker:prod "${git_version}"
           npm install -g aws-cdk
           pnpm install
           cd apps/fdr-deploy
