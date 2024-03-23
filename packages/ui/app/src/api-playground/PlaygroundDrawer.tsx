@@ -1,5 +1,6 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
@@ -11,7 +12,6 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SidebarNode } from "../sidebar/types";
 import {
     FlattenedRootPackage,
     isEndpoint,

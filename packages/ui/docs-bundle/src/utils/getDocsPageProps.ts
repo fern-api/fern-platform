@@ -1,6 +1,12 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, convertNavigatableToResolvedPath, DocsPage, DocsPageResult } from "@fern-ui/ui";
+import { buildUrl } from "@fern-ui/fdr-utils";
+import {
+    convertNavigatableToResolvedPath,
+    DocsPage,
+    DocsPageResult,
+    serializeSidebarNodeDescriptionMdx,
+} from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -155,7 +161,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = await getNavigationRoot(slug, basePath, docs.definition.apis, docsConfig.navigation);
+    const navigation = getNavigationRoot(slug, basePath, docs.definition.apis, docsConfig.navigation);
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
@@ -173,9 +179,13 @@ async function convertDocsToDocsPageProps({
         };
     }
 
+    const sidebarNodes = await Promise.all(
+        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
+    );
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         slug,
-        sidebarNodes: navigation.found.sidebarNodes,
+        sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
     });
@@ -230,7 +240,10 @@ async function convertDocsToDocsPageProps({
         algoliaSearchIndex: docs.definition.algoliaSearchIndex,
         files: docs.definition.filesV2,
         resolvedPath,
-        navigation: navigation.found,
+        navigation: {
+            ...navigation.found,
+            sidebarNodes,
+        },
         featureFlags,
     };
 

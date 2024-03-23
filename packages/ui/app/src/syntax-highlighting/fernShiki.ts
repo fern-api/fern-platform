@@ -2,14 +2,7 @@ import { Root } from "hast";
 import { h } from "hastscript";
 import { memoize } from "lodash-es";
 import { useCallback, useEffect, useState } from "react";
-import {
-    BundledLanguage,
-    bundledLanguages,
-    BundledTheme,
-    getHighlighter,
-    Highlighter,
-    SpecialLanguage,
-} from "shiki/index.mjs";
+import { BundledLanguage, bundledLanguages, BundledTheme, getHighlighter, Highlighter, SpecialLanguage } from "shiki";
 
 let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;

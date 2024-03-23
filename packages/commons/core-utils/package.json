@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "strip-ansi": "^7.1.0",
+    "title": "^3.5.3",
     "ua-parser-js": "^1.0.35"
   },
   "devDependencies": {

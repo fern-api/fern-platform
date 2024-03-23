@@ -1,5 +1,15 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { SerializedMdxContent } from "../mdx/mdx";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+
+interface FernDocsFrontmatter {
+    title?: string;
+    description?: string;
+    editThisPageUrl?: string;
+    image?: string;
+    excerpt?: SerializedMdxContent;
+}
+
+type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;
@@ -19,13 +29,16 @@ export interface SidebarTab {
     slug: readonly string[];
 }
 
-export interface SidebarNavigation {
+export interface SidebarNavigationRaw {
     currentTabIndex: number | undefined;
     tabs: SidebarTab[];
     currentVersionIndex: number | undefined;
     versions: SidebarVersionInfo[];
+    sidebarNodes: readonly SidebarNodeRaw[];
+}
+
+export interface SidebarNavigation extends Omit<SidebarNavigationRaw, "sidebarNodes"> {
     sidebarNodes: SidebarNode[];
-    // slug: readonly string[]; // contains basepath, current version, and tab
 }
 
 export type SidebarNodeRaw = SidebarNodeRaw.PageGroup | SidebarNodeRaw.ApiSection | SidebarNodeRaw.Section;

@@ -1,6 +1,5 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish } from "@fern-ui/core-utils";
-import { titleCase } from "./titleCase";
+import { isNonNullish, titleCase } from "@fern-ui/core-utils";
 
 export interface FlattenedParameter {
     key: string;

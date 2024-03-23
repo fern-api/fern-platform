@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { SidebarNavigation } from "@fern-ui/fdr-utils";
 import { Dialog, Transition } from "@headlessui/react";
 import cn from "clsx";
 import { Fragment, memo, useRef } from "react";
@@ -16,7 +17,6 @@ import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarSection } from "./SidebarSection";
 import { SidebarTabButton } from "./SidebarTabButton";
-import { SidebarNavigation } from "./types";
 
 export interface SidebarProps {
     currentSlug: string[];

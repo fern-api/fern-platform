@@ -1,6 +1,5 @@
-import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { buildUrl, resolveSidebarNodesRoot } from "@fern-ui/ui";
-import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { buildUrl, resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
 
 export function getAllUrlsFromDocsConfig(
     host: string,

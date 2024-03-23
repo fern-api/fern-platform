@@ -1,6 +1,6 @@
 import { noop } from "@fern-ui/core-utils";
+import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import React from "react";
-import { SidebarNavigation, SidebarNode, SidebarVersionInfo } from "../../sidebar/types";
 import { type ResolvedPath } from "../../util/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({

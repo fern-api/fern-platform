@@ -1,0 +1,408 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getAllUrlsFromDocsConfig hume gets all urls from docs config 1`] = `
+[
+  "dev.hume.ai",
+  "dev.hume.ai/docs",
+  "dev.hume.ai/docs/introduction",
+  "dev.hume.ai/intro",
+  "dev.hume.ai/docs/introduction/api-key",
+  "dev.hume.ai/support",
+  "dev.hume.ai/docs/expression-measurement-api",
+  "dev.hume.ai/docs/expression-measurement-api/overview",
+  "dev.hume.ai/docs/expression-measurement-api/rest",
+  "dev.hume.ai/docs/expression-measurement-api/websocket",
+  "dev.hume.ai/docs/expression-measurement-api/faqs",
+  "dev.hume.ai/docs/custom-models-api",
+  "dev.hume.ai/docs/custom-models-api/overview",
+  "dev.hume.ai/docs/custom-models-api/creating-your-dataset",
+  "dev.hume.ai/docs/custom-models-api/training-a-custom-model",
+  "dev.hume.ai/docs/custom-models-api/evaluating-a-custom-model",
+  "dev.hume.ai/docs/custom-models-api/faqs",
+  "dev.hume.ai/docs/resources",
+  "dev.hume.ai/docs/resources/billing",
+  "dev.hume.ai/docs/resources/errors",
+  "dev.hume.ai/docs/resources/science",
+  "dev.hume.ai/docs/resources/use-case-guidelines",
+  "dev.hume.ai/docs/resources/privacy",
+  "dev.hume.ai/reference",
+  "dev.hume.ai/reference/expression-measurement-api",
+  "dev.hume.ai/reference/expression-measurement-api/batch",
+  "dev.hume.ai/reference/expression-measurement-api/batch/list-jobs",
+  "dev.hume.ai/reference/expression-measurement-api/batch/start-inference-job",
+  "dev.hume.ai/reference/expression-measurement-api/batch/get-job-details",
+  "dev.hume.ai/reference/expression-measurement-api/batch/get-job-predictions",
+  "dev.hume.ai/reference/expression-measurement-api/batch/get-artifacts",
+  "dev.hume.ai/reference/expression-measurement-api/batch/start-inference-job-with-file",
+  "dev.hume.ai/reference/expression-measurement-api/stream",
+  "dev.hume.ai/reference/expression-measurement-api/stream/stream",
+  "dev.hume.ai/reference/custom-models-api",
+  "dev.hume.ai/reference/custom-models-api/files",
+  "dev.hume.ai/reference/custom-models-api/files/get-files-and-attributes-by-user",
+  "dev.hume.ai/reference/custom-models-api/files/create-files",
+  "dev.hume.ai/reference/custom-models-api/files/upload-file",
+  "dev.hume.ai/reference/custom-models-api/files/get-file-and-attributes-by-id",
+  "dev.hume.ai/reference/custom-models-api/files/delete-file",
+  "dev.hume.ai/reference/custom-models-api/files/rename-file",
+  "dev.hume.ai/reference/custom-models-api/files/get-predictions-by-file-id",
+  "dev.hume.ai/reference/custom-models-api/datasets",
+  "dev.hume.ai/reference/custom-models-api/datasets/list-datasets",
+  "dev.hume.ai/reference/custom-models-api/datasets/create-dataset-1",
+  "dev.hume.ai/reference/custom-models-api/datasets/get-dataset-by-id",
+  "dev.hume.ai/reference/custom-models-api/datasets/update-dataset",
+  "dev.hume.ai/reference/custom-models-api/datasets/delete-dataset",
+  "dev.hume.ai/reference/custom-models-api/datasets/list-dataset-versions",
+  "dev.hume.ai/reference/custom-models-api/datasets/get-files-from-dataset-latest-version",
+  "dev.hume.ai/reference/custom-models-api/datasets/get-dataset-version-by-id",
+  "dev.hume.ai/reference/custom-models-api/datasets/get-files-from-dataset-version",
+  "dev.hume.ai/reference/custom-models-api/models",
+  "dev.hume.ai/reference/custom-models-api/models/get-model-by-id",
+  "dev.hume.ai/reference/custom-models-api/models/rename-model",
+  "dev.hume.ai/reference/custom-models-api/models/get-external-model-versions-by-id",
+  "dev.hume.ai/reference/custom-models-api/models/update-model-version-description",
+  "dev.hume.ai/reference/custom-models-api/models/get-models-by-user-and-name",
+  "dev.hume.ai/reference/custom-models-api/models/get-model-versions-by-query",
+  "dev.hume.ai/reference/custom-models-api/jobs",
+  "dev.hume.ai/reference/custom-models-api/jobs/start-inference-jobs",
+  "dev.hume.ai/reference/custom-models-api/jobs/start-transfer-learning-inference-jobs",
+]
+`;
+
+exports[`getNavigationRoot hume gets navigation root for /support 1`] = `undefined`;
+
+exports[`getNavigationRoot hume gets navigation root for docs 1`] = `
+{
+  "redirect": "/docs/introduction",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot hume gets navigation root for reference 1`] = `
+{
+  "redirect": "/reference/expression-measurement-api",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot hume gets navigation root for reference/expression-measurement-api/stream 1`] = `
+{
+  "redirect": "/reference/expression-measurement-api/stream/stream",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot hume gets navigation root for support 1`] = `
+{
+  "found": {
+    "currentTabIndex": 0,
+    "currentVersionIndex": -1,
+    "sidebarNodes": [
+      {
+        "items": [
+          {
+            "pages": [
+              {
+                "description": undefined,
+                "fullSlug": [
+                  "intro",
+                ],
+                "id": "docs/pages/documentation/introduction/welcome.mdx",
+                "slug": [
+                  "intro",
+                ],
+                "title": "Welcome to Hume AI",
+                "type": "page",
+                "urlSlug": "welcome-to-hume-ai",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/introduction/getting-your-api-key.mdx",
+                "slug": [
+                  "docs",
+                  "introduction",
+                  "api-key",
+                ],
+                "title": "Getting your API key",
+                "type": "page",
+                "urlSlug": "api-key",
+              },
+              {
+                "description": undefined,
+                "fullSlug": [
+                  "support",
+                ],
+                "id": "docs/pages/documentation/introduction/support.mdx",
+                "slug": [
+                  "support",
+                ],
+                "title": "Support",
+                "type": "page",
+                "urlSlug": "support",
+              },
+            ],
+            "slug": [
+              "docs",
+              "introduction",
+            ],
+            "type": "pageGroup",
+          },
+        ],
+        "slug": [
+          "docs",
+          "introduction",
+        ],
+        "title": "Introduction",
+        "type": "section",
+      },
+      {
+        "items": [
+          {
+            "pages": [
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/expression-measurement-api/overview.mdx",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "overview",
+                ],
+                "title": "Overview",
+                "type": "page",
+                "urlSlug": "overview",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/expression-measurement-api/rest.mdx",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "rest",
+                ],
+                "title": "Processing batches of media files",
+                "type": "page",
+                "urlSlug": "rest",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/expression-measurement-api/websocket.mdx",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "websocket",
+                ],
+                "title": "Real-time measurement streaming",
+                "type": "page",
+                "urlSlug": "websocket",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/expression-measurement-api/faqs.mdx",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "faqs",
+                ],
+                "title": "FAQs",
+                "type": "page",
+                "urlSlug": "faqs",
+              },
+            ],
+            "slug": [
+              "docs",
+              "expression-measurement-api",
+            ],
+            "type": "pageGroup",
+          },
+        ],
+        "slug": [
+          "docs",
+          "expression-measurement-api",
+        ],
+        "title": "Expression Measurement API",
+        "type": "section",
+      },
+      {
+        "items": [
+          {
+            "pages": [
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/custom-models-api/overview.mdx",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "overview",
+                ],
+                "title": "Overview",
+                "type": "page",
+                "urlSlug": "overview",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/custom-models-api/creating-your-dataset.mdx",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "creating-your-dataset",
+                ],
+                "title": "Creating your dataset",
+                "type": "page",
+                "urlSlug": "creating-your-dataset",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/custom-models-api/training-your-model.mdx",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "training-a-custom-model",
+                ],
+                "title": "Training a custom model",
+                "type": "page",
+                "urlSlug": "training-a-custom-model",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/custom-models-api/evaluating-your-model.mdx",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "evaluating-a-custom-model",
+                ],
+                "title": "Evaluating your custom model",
+                "type": "page",
+                "urlSlug": "evaluating-a-custom-model",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/custom-models-api/faqs.mdx",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "faqs",
+                ],
+                "title": "FAQs",
+                "type": "page",
+                "urlSlug": "faqs",
+              },
+            ],
+            "slug": [
+              "docs",
+              "custom-models-api",
+            ],
+            "type": "pageGroup",
+          },
+        ],
+        "slug": [
+          "docs",
+          "custom-models-api",
+        ],
+        "title": "Custom Models API",
+        "type": "section",
+      },
+      {
+        "items": [
+          {
+            "pages": [
+              {
+                "title": "Pricing",
+                "type": "link",
+                "url": "https://beta.hume.ai/pricing",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/resources/billing.mdx",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "billing",
+                ],
+                "title": "Billing",
+                "type": "page",
+                "urlSlug": "billing",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/resources/errors.mdx",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "errors",
+                ],
+                "title": "Errors",
+                "type": "page",
+                "urlSlug": "errors",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/resources/science-hume-ai.mdx",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "science",
+                ],
+                "title": "About the science",
+                "type": "page",
+                "urlSlug": "science",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/resources/use-case-guidelines.mdx",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "use-case-guidelines",
+                ],
+                "title": "Use case guidelines",
+                "type": "page",
+                "urlSlug": "use-case-guidelines",
+              },
+              {
+                "description": undefined,
+                "id": "docs/pages/documentation/resources/privacy.mdx",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "privacy",
+                ],
+                "title": "Privacy",
+                "type": "page",
+                "urlSlug": "privacy",
+              },
+            ],
+            "slug": [
+              "docs",
+              "resources",
+            ],
+            "type": "pageGroup",
+          },
+        ],
+        "slug": [
+          "docs",
+          "resources",
+        ],
+        "title": "Resources",
+        "type": "section",
+      },
+    ],
+    "tabs": [
+      {
+        "icon": "fa-solid fa-home",
+        "slug": [
+          "docs",
+        ],
+        "title": "Documentation",
+      },
+      {
+        "icon": "fa-solid fa-file-contract",
+        "slug": [
+          "reference",
+        ],
+        "title": "API Reference",
+      },
+    ],
+    "versions": [],
+  },
+  "type": "found",
+}
+`;

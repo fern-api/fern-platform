@@ -1,3 +1,4 @@
+import { SidebarNavigation, SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
@@ -7,8 +8,6 @@ import { renderToString } from "react-dom/server";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { MdxContent } from "../../mdx/MdxContent";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { traverseSidebarNodes } from "../../sidebar/traverser";
-import { SidebarNavigation, SidebarNode } from "../../sidebar/types";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
 import { useFeatureFlags } from "../FeatureFlagContext";

@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isSubpackage, isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../util/fern";
-import { titleCase } from "../util/titleCase";
+import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "./docs";
+import { isSubpackage } from "./subpackage";
 import { SidebarNodeRaw } from "./types";
 
 function toApiType(apiType: APIV1Read.ApiNavigationConfigItem["type"]): SidebarNodeRaw.ApiPageOrSubpackage["apiType"] {

@@ -1,9 +1,10 @@
+import type { SidebarNode } from "@fern-ui/fdr-utils";
 import {
     flattenApiDefinition,
     REGISTRY_SERVICE,
     resolveApiDefinition,
+    serializeSidebarNodeDescriptionMdx,
     type ResolvedRootPackage,
-    type SidebarNode,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getNavigationRoot } from "../../../utils/getNavigationRoot";
@@ -52,7 +53,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             return;
         }
 
-        const navigation = await getNavigationRoot(
+        const navigation = getNavigationRoot(
             pathname.slice(1).split("/"),
             basePath,
             docsDefinition.apis,
@@ -64,7 +65,11 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             return;
         }
 
-        const apiSectionSlug = findApiSection(api, navigation.found.sidebarNodes)?.slug;
+        const sidebarNodes = await Promise.all(
+            navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
+        );
+
+        const apiSectionSlug = findApiSection(api, sidebarNodes)?.slug;
 
         res.status(200).json(await resolveApiDefinition(flattenApiDefinition(apiDefinition, apiSectionSlug ?? [])));
     } catch (err) {

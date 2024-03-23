@@ -1,12 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import {
-    resolveSidebarNodesRoot,
-    serializeSidebarNodeDescriptionMdx,
-    SidebarNavigation,
-    SidebarNodeRaw,
-} from "@fern-ui/ui";
+import { resolveSidebarNodesRoot, SidebarNavigationRaw, SidebarNodeRaw, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
+// eslint-disable-next-line import/no-internal-modules
 import { sortBy } from "lodash-es";
-import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
 
 interface Redirect {
     type: "redirect";
@@ -15,7 +10,7 @@ interface Redirect {
 
 interface Found {
     type: "found";
-    found: SidebarNavigation;
+    found: SidebarNavigationRaw;
 }
 
 function isSidebarNodeRaw<T extends SidebarNodeRaw.VisitableNode>(
@@ -38,12 +33,12 @@ const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
     page: 0,
 };
 
-export async function getNavigationRoot(
+export function getNavigationRoot(
     slugArray: string[],
     basePath: string | undefined,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     nav: DocsV1Read.NavigationConfig,
-): Promise<Found | Redirect | undefined> {
+): Found | Redirect | undefined {
     const root = resolveSidebarNodesRoot(nav, apis, basePath);
     const hits: { node: SidebarNodeRaw.VisitableNode; parents: SidebarNodeRaw.ParentNode[] }[] = [];
 
@@ -92,7 +87,7 @@ export async function getNavigationRoot(
         return { type: "redirect", redirect: "/" + firstChild.slug.join("/") };
     }
 
-    const rawSidebarNodes = findSiblings<SidebarNodeRaw>(parents, isSidebarNodeRaw).items;
+    const sidebarNodes = findSiblings<SidebarNodeRaw>(parents, isSidebarNodeRaw).items;
 
     const tabs = findSiblings<SidebarNodeRaw.TabGroup>(
         parents,
@@ -104,7 +99,7 @@ export async function getNavigationRoot(
         (n): n is SidebarNodeRaw.VersionGroup => n.type === "versionGroup",
     );
 
-    const sidebarNodes = await Promise.all(rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)));
+    // const sidebarNodes = await Promise.all(rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)));
     const found = {
         currentVersionIndex: versions.index,
         versions: versions.items.map((version) => ({

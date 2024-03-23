@@ -1,10 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SidebarVersionInfo } from "../sidebar/types";
 import { VersionDropdown } from "./VersionDropdown";
 
 export interface HeaderLogoSectionProps {

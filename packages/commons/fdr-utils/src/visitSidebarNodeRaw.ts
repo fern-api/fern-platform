@@ -1,5 +1,5 @@
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNodeRaw } from "@fern-ui/ui";
+import { SidebarNodeRaw } from "./types";
 
 export function visitSidebarNodeRaw(
     node: SidebarNodeRaw.VisitableNode,

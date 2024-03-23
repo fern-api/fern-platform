@@ -13,5 +13,6 @@ export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
 export { values, type Values } from "./objects/values";
 export { PLATFORM, type Platform } from "./platform";
+export { titleCase } from "./titleCase";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";

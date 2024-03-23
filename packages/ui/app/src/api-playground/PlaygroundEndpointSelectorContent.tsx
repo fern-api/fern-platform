@@ -1,5 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { noop } from "lodash-es";
@@ -12,7 +13,6 @@ import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltip } from "../components/FernTooltip";
-import { SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });

@@ -1,4 +1,5 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { useTheme } from "next-themes";
@@ -11,7 +12,6 @@ import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
-import type { ColorsConfig, SidebarNavigation } from "../sidebar/types";
 import { type ResolvedPath } from "../util/ResolvedPath";
 import { getThemeColor } from "./utils/getColorVariables";
 import { getFontExtension } from "./utils/getFontVariables";

@@ -1,6 +1,6 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { PropsWithChildren, useCallback } from "react";
-import { ColorsConfig } from "../../sidebar/types";
 import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {

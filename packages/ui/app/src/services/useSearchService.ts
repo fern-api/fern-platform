@@ -1,9 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { SidebarNavigation } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
-import { SidebarNavigation } from "../sidebar/types";
 import { REGISTRY_SERVICE } from "./registry";
 
 export type SearchCredentials = {

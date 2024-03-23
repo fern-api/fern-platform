@@ -1,9 +1,8 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { findApiSection, SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
-import { findApiSection, traverseSidebarNodes } from "../sidebar/traverser";
-import { SidebarNode } from "../sidebar/types";
 import { flattenApiDefinition } from "./flattenApiDefinition";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
