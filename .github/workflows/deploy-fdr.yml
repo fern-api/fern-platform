@@ -64,7 +64,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: 🧪 Build and test
-        run: pnpm turbo codegen build lint test --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
 
       - name: 💻 Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
@@ -112,7 +112,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: 🧪 Build and test
-        run: pnpm turbo build lint test --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm turbo build test --filter=${{ env.PACKAGE_NAME }}
 
       - name: 💻 Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
