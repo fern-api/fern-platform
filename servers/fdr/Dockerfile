@@ -5,7 +5,6 @@ FROM base AS builder
 RUN apk add --no-cache libc6-compat
 RUN apk update
 
-
 # Produce a pruned version of the monorepo
 WORKDIR /app
 # Install pnpm
@@ -25,6 +24,9 @@ COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml .
 RUN pnpm install
+
+ARG FERN_TOKEN
+ENV FERN_TOKEN=$FERN_TOKEN
 
 # Build
 COPY --from=builder /app/out/full/ .
