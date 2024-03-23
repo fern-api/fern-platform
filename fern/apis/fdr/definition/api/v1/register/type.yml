@@ -63,6 +63,7 @@ types:
   OptionalType:
     properties:
       itemType: TypeReference
+      defaultValue: optional<unknown>
 
   ListType:
     properties:

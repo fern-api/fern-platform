@@ -498,6 +498,9 @@ importers:
       axios:
         specifier: ^1.6.5
         version: 1.6.8
+      form-data:
+        specifier: ^4.0.0
+        version: 4.0.0
       js-base64:
         specifier: 3.7.2
         version: 3.7.2
@@ -507,6 +510,9 @@ importers:
       marked:
         specifier: ^5.1.0
         version: 5.1.2
+      qs:
+        specifier: ^6.12.0
+        version: 6.12.0
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
@@ -535,6 +541,9 @@ importers:
       '@types/marked':
         specifier: ^5.0.0
         version: 5.0.2
+      '@types/qs':
+        specifier: ^6.9.14
+        version: 6.9.14
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -1046,6 +1055,9 @@ importers:
       cssnano:
         specifier: ^6.0.3
         version: 6.1.1(postcss@8.4.31)
+      jsonpath:
+        specifier: ^1.1.1
+        version: 1.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -13830,6 +13842,13 @@ packages:
       side-channel: 1.0.4
     dev: false
 
+  /qs@6.12.0:
+    resolution: {integrity: sha512-trVZiI6RMOkO476zLGaBIzszOdFPnCCXHPG9kn0yuS1uz6xdVxPfZdB3vUig9pxPFDM9BRAgz/YUIVQ1/vuiUg==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.6
+    dev: false
+
   /qs@6.9.7:
     resolution: {integrity: sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==}
     engines: {node: '>=0.6'}
@@ -14525,6 +14544,16 @@ packages:
       call-bind: 1.0.7
       get-intrinsic: 1.2.4
       object-inspect: 1.13.1
+
+  /side-channel@1.0.6:
+    resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.7
+      es-errors: 1.3.0
+      get-intrinsic: 1.2.4
+      object-inspect: 1.13.1
+    dev: false
 
   /sigmund@1.0.1:
     resolution: {integrity: sha512-fCvEXfh6NWpm+YSuY2bpXb/VIihqWA6hLsgboC+0nl71Q7N7o2eaCW8mJa/NLvQhs6jpd3VZV4UiUQlV6+lc8g==}

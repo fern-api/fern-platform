@@ -40,7 +40,7 @@
       "dependsOn": ["^build"]
     },
     "//#fdr:generate": {
-      "inputs": ["fern"],
+      "inputs": ["fern/**"],
       "outputs": ["servers/fdr/src/api/generated/**", "packages/fdr-sdk/src/client/generated/**"]
     }
   },

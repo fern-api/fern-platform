@@ -7,14 +7,16 @@ RUN apk update
 
 # Produce a pruned version of the monorepo
 WORKDIR /app
-RUN pnpm global add turbo
+# Install pnpm
+RUN npm install -g turbo
 COPY . .
-RUN turbo prune fdr --docker
+RUN turbo prune @fern-platform/fdr --docker
 
 # Add lockfile and package.json's
 FROM base AS installer
 RUN apk add --no-cache libc6-compat
 RUN apk update
+RUN npm install -g pnpm fern-api
 WORKDIR /app
 
 # Install deps
@@ -23,17 +25,24 @@ COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml .
 RUN pnpm install
 
+ARG FERN_TOKEN
+ENV FERN_TOKEN=$FERN_TOKEN
+
 # Build
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN pnpm turbo run build --filter=fdr
+COPY shared shared
+COPY fern fern
+RUN pnpm turbo run build --filter=@fern-platform/fdr
 
 FROM base AS runner
 WORKDIR /app
+
+RUN npm install -g prisma
 
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-CMD node servers/fdr/dist/server.js
+ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run.sh"]

@@ -3,7 +3,10 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-    "rootDir": ".",
+    "module": "CommonJS",
+    "allowJs": true,
+    "rootDir": "./src",
+    "isolatedModules": false,
     "paths": {
       "@prisma/client": ["../prisma/client"],
     },
