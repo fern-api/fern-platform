@@ -30,6 +30,7 @@ RUN pnpm install
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY shared shared
+COPY fern fern
 RUN pnpm turbo run build --filter=@fern-platform/fdr
 
 FROM base AS runner
