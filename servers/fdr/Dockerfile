@@ -45,4 +45,4 @@ ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-CMD ['prisma', "migrate", "deploy", "--schema", "servers/fdr/prisma/schema.prisma", "&&", "node", "servers/fdr/dist/server.js"]
+CMD ["prisma", "migrate", "deploy", "--schema", "servers/fdr/prisma/schema.prisma", "&&", "node", "servers/fdr/dist/server.js"]
