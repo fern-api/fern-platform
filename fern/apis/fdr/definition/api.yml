@@ -1,7 +1,7 @@
 name: registry
 auth: bearer
 default-environment: Dev
-environment: 
+environments: 
   Dev: https://registry-dev2.buildwithfern.com
   Prod: https://registry.buildwithfern.com
 error-discrimination:
