@@ -1,0 +1,111 @@
+name: Deploy FDR
+
+on:
+  push:
+    branches: [master]
+    tags: ["*"]
+
+env:
+  PACKAGE_NAME: "@fern-platform/fdr"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+  ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+  ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
+  ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+  FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+
+jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    # Only run on main push
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: 🔎 Has changed
+        id: has-changed
+        # if there are changes, npx turbo-ignore returns a failure exit code
+        # which makes steps.has-changed.outputs.RESULT = 'true'
+        run: npx turbo-ignore ${{ env.PACKAGE_NAME }} || echo "RESULT=true" >> $GITHUB_OUTPUT
+
+      - name: 🪴 Generate Fern SDKs
+        run: |
+          npm install -g fern-api
+          fern generate --local --group local --log-level debug
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+
+      - name: 🧪 Build and test
+        run: pnpm turbo codegen build lint test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: 💻 Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # Currently we migrate in the Docker container
+      # - name: 🔄 DB Migration
+      #   run: pnpm run --filter=@fern-platform/fdr db:migrate:dev
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
+
+      - name: 🚀 cdk deploy
+        run: |
+          git_version="$(scripts/git-version.sh)"
+          pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
+          npm install -g aws-cdk
+          cd servers/fdr-deploy
+          VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
+        env:
+          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
+
+  deploy_prod:
+    runs-on: ubuntu-latest
+    # Only run on tag push
+    if: github.ref_type == 'tag' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: 🪴 Generate Fern SDKs
+        run: |
+          npm install -g fern-api
+          fern generate --local --group local --log-level debug
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+
+      - name: 🧪 Build and test
+        run: pnpm turbo build lint test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: 💻 Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # Currently we migrate in the Docker container
+      # - name: 🔄 DB Migration
+      #   run: pnpm run --filter=@fern-platform/fdr db:migrate:prod
+      #   env:
+      #     DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}/fdr?schema=public
+
+      - name: 🚀 cdk deploy
+        run: |
+          git_version="$(scripts/git-version.sh)"
+          pnpm run --filter=@fern-platform/fdr docker:prod "${git_version}"
+          npm install -g aws-cdk
+          cd servers/fdr-deploy
+          VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:prod
+        env:
+          DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}/fdr?schema=public
