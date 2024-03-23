@@ -8,7 +8,12 @@ interface PlaygroundResponsePreviewProps {
 
 export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ response }) => {
     const responseJson = useMemo(
-        () => (response.type === "stream" ? response.response.body : JSON.stringify(response.response.body, null, 2)),
+        () =>
+            response.type === "stream"
+                ? response.response.body
+                : response.type === "file"
+                  ? ""
+                  : JSON.stringify(response.response.body, null, 2),
         [response],
     );
     const viewportRef = useRef<HTMLDivElement>(null);
