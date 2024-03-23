@@ -8,7 +8,7 @@ import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
 import { SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
+import { flattenApiSection, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
 
 export interface PlaygroundEndpointSelectorProps {
     navigation: SidebarNode[];
@@ -93,7 +93,7 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
 
                             <span className="whitespace-nowrap font-semibold">
                                 {selectedEndpoint != null
-                                    ? selectedEndpoint.id.endsWith("_stream")
+                                    ? selectedEndpoint.apiType === "endpoint" && selectedEndpoint.stream
                                         ? withStream(selectedEndpoint.title)
                                         : selectedEndpoint.title
                                     : placeholderText ?? "Select an endpoint"}
