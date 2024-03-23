@@ -299,7 +299,7 @@ export async function getNavigation(
                         currentVersionIndex,
                         versions,
                         sidebarNodes,
-                        slug,
+                        // slug,
                     };
                 }
             }
@@ -324,7 +324,7 @@ export async function getNavigation(
         currentVersionIndex,
         versions,
         sidebarNodes,
-        slug,
+        // slug,
     };
 }
 

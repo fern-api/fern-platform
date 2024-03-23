@@ -7,8 +7,8 @@ import { renderToString } from "react-dom/server";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { MdxContent } from "../../mdx/MdxContent";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
+import { traverseSidebarNodes } from "../../sidebar/traverser";
 import { SidebarNavigation, SidebarNode } from "../../sidebar/types";
-import { visitSidebarNodes } from "../../sidebar/visitor";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
 import { useFeatureFlags } from "../FeatureFlagContext";
@@ -289,7 +289,7 @@ function convertToDescription(
 
 const resolveActiveSidebarNode = memoize(
     (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
-        return visitSidebarNodes(sidebarNodes, fullSlug).curr;
+        return traverseSidebarNodes(sidebarNodes, fullSlug).curr;
     },
     (_sidebarNodes, fullSlug) => fullSlug.join("/"),
 );

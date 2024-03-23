@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isSubpackage } from "../util/fern";
+import { isSubpackage, isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "../util/fern";
 import { titleCase } from "../util/titleCase";
 import { SidebarNodeRaw } from "./types";
 
@@ -140,6 +140,63 @@ function resolveSidebarNodeRawApiSection(
 
 function stringifyEndpointPathParts(path: APIV1Read.EndpointPathPart[]): string {
     return "/" + path.map((part) => (part.type === "literal" ? part.value : `${part.value}`)).join("/");
+}
+
+export function resolveSidebarNodesRoot(
+    nav: DocsV1Read.NavigationConfig,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    basePath: string | undefined,
+): SidebarNodeRaw.Root {
+    const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
+
+    return {
+        type: "root",
+        slug: basePathSlug,
+        items: resolveSidebarNodesRootItems(nav, apis, basePathSlug),
+    };
+}
+
+function resolveSidebarNodesRootItems(
+    nav: DocsV1Read.NavigationConfig,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    parentSlugs: readonly string[],
+): SidebarNodeRaw.Root["items"] {
+    if (isVersionedNavigationConfig(nav)) {
+        return nav.versions.map((version, index): SidebarNodeRaw.VersionGroup => {
+            const versionSlug = index > 0 ? [...parentSlugs, ...version.urlSlug.split("/")] : parentSlugs;
+            return {
+                type: "versionGroup",
+                id: version.version,
+                slug: versionSlug,
+                index,
+                availability: version.availability ?? null,
+                items: resolveSidebarNodesVersionItems(version.config, apis, versionSlug),
+            };
+        });
+    }
+
+    return resolveSidebarNodesVersionItems(nav, apis, parentSlugs);
+}
+
+function resolveSidebarNodesVersionItems(
+    nav: DocsV1Read.UnversionedNavigationConfig,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    parentSlugs: readonly string[],
+): SidebarNodeRaw.VersionGroup["items"] {
+    if (isUnversionedTabbedNavigationConfig(nav)) {
+        return nav.tabs.map((tab): SidebarNodeRaw.TabGroup => {
+            const tabSlug = [...parentSlugs, ...tab.urlSlug.split("/")];
+            return {
+                type: "tabGroup",
+                title: tab.title,
+                icon: tab.icon,
+                slug: tabSlug,
+                items: resolveSidebarNodes(tab.items, apis, tabSlug),
+            };
+        });
+    }
+
+    return resolveSidebarNodes(nav.items, apis, parentSlugs);
 }
 
 export function resolveSidebarNodes(

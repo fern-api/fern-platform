@@ -118,7 +118,7 @@ function visitNode(
     });
 }
 
-export function visitSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]): TraverseState {
+export function traverseSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]): TraverseState {
     let traverseState: TraverseState = {
         prev: undefined,
         curr: undefined,

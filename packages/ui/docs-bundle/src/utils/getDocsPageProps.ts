@@ -6,7 +6,7 @@ import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
-import { getNavigationRoot } from "./getAllUrlsFromDocsConfig";
+import { getNavigationRoot } from "./getNavigationRoot";
 import { getRedirectForPath } from "./hackRedirects";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
@@ -163,9 +163,19 @@ async function convertDocsToDocsPageProps({
         return { type: "notFound", notFound: true };
     }
 
+    if (navigation.type === "redirect") {
+        return {
+            type: "redirect",
+            redirect: {
+                destination: navigation.redirect,
+                permanent: false,
+            },
+        };
+    }
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         slug,
-        sidebarNodes: navigation.sidebarNodes,
+        sidebarNodes: navigation.found.sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
     });
@@ -220,7 +230,7 @@ async function convertDocsToDocsPageProps({
         algoliaSearchIndex: docs.definition.algoliaSearchIndex,
         files: docs.definition.filesV2,
         resolvedPath,
-        navigation,
+        navigation: navigation.found,
         featureFlags,
     };
 

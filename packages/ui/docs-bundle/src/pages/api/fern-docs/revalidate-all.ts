@@ -70,7 +70,7 @@ const handler: NextApiHandler = async (
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const urls = await getAllUrlsFromDocsConfig(
+        const urls = getAllUrlsFromDocsConfig(
             xFernHost,
             docs.baseUrl.basePath,
             docs.definition.config,

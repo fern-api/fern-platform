@@ -46,7 +46,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             return jsonResponse(404, [], headers);
         }
 
-        const urls = await getAllUrlsFromDocsConfig(
+        const urls = getAllUrlsFromDocsConfig(
             xFernHost,
             docs.baseUrl.basePath,
             docs.definition.config,

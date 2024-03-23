@@ -25,12 +25,32 @@ export interface SidebarNavigation {
     currentVersionIndex: number | undefined;
     versions: SidebarVersionInfo[];
     sidebarNodes: SidebarNode[];
-    slug: readonly string[]; // contains basepath, current version, and tab
+    // slug: readonly string[]; // contains basepath, current version, and tab
 }
 
 export type SidebarNodeRaw = SidebarNodeRaw.PageGroup | SidebarNodeRaw.ApiSection | SidebarNodeRaw.Section;
 
 export declare namespace SidebarNodeRaw {
+    export type VisitableNode = SidebarNodeRaw.Root | SidebarNodeRaw.Page | SidebarNodeRaw.Root["items"][0];
+    export type ParentNode = SidebarNodeRaw.Root | SidebarNodeRaw.Root["items"][0];
+    export type NavigationNode = SidebarNodeRaw.Root | SidebarNodeRaw.VersionGroup | SidebarNodeRaw.TabGroup;
+
+    export interface Root {
+        type: "root";
+        slug: readonly string[];
+        items: readonly SidebarNodeRaw.VersionGroup[] | readonly SidebarNodeRaw.TabGroup[] | readonly SidebarNodeRaw[];
+    }
+
+    export interface VersionGroup extends SidebarVersionInfo {
+        type: "versionGroup";
+        items: readonly SidebarNodeRaw.TabGroup[] | readonly SidebarNodeRaw[];
+    }
+
+    export interface TabGroup extends SidebarTab {
+        type: "tabGroup";
+        items: readonly SidebarNodeRaw[];
+    }
+
     export interface PageGroup {
         type: "pageGroup";
         slug: readonly string[];
@@ -109,6 +129,20 @@ export declare namespace SidebarNodeRaw {
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
 
 export declare namespace SidebarNode {
+    export interface Root {
+        type: "root";
+        slug: readonly string[];
+        items: readonly VersionGroup[] | readonly TabGroup[] | readonly SidebarNode[];
+    }
+
+    export interface VersionGroup extends Omit<SidebarNodeRaw.VersionGroup, "items"> {
+        items: readonly TabGroup[] | readonly SidebarNode[];
+    }
+
+    export interface TabGroup extends Omit<SidebarNodeRaw.TabGroup, "items"> {
+        items: readonly SidebarNode[];
+    }
+
     export interface PageGroup extends Omit<SidebarNodeRaw.PageGroup, "pages"> {
         pages: (Page | SidebarNodeRaw.Link)[];
     }
@@ -128,10 +162,6 @@ export declare namespace SidebarNode {
     export interface Page extends Omit<SidebarNodeRaw.Page, "description"> {
         description: SerializedMdxContent | undefined;
     }
-
-    // export interface ApiPage extends Page, Omit<SidebarNodeRaw.ApiPage, keyof Page> {}
-
-    // export interface EndpointPage extends ApiPage, Omit<SidebarNodeRaw.EndpointPage, keyof ApiPage> {}
 
     export interface WebSocketPage extends Page {
         api: FdrAPI.ApiId;
