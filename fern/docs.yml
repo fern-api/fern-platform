@@ -5,6 +5,9 @@ title: Fern Internal Docs
 navigation:
   - page: Home
     path: ./docs/pages/welcome.mdx
+  - api: FDR API Reference
+    api-name: FDR
+    display-errors: true
 
 colors:
   accentPrimary:
