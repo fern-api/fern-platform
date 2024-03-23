@@ -14,8 +14,8 @@ docker build \
   --build-arg DATABASE_URL=${DATABASE_URL} \
   --build-arg FERN_TOKEN=${FERN_TOKEN}
 
-mkdir -p "$DOCKER_DIR/docker/build/tar/"
-docker save "$DOCKER_NAME" -o "$DOCKER_DIR/docker/build/tar/$DOCKER_NAME.tar"
+mkdir -p "$DOCKER_DIR/../../docker/build/tar/"
+docker save "$DOCKER_NAME" -o "$DOCKER_DIR/../../docker/build/tar/$DOCKER_NAME.tar"
 
 echo
 echo "Built docker: $DOCKER_NAME"
