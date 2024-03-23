@@ -1,1 +1,0 @@
-export { RegisterApiDefinitionRequest } from "./RegisterApiDefinitionRequest";

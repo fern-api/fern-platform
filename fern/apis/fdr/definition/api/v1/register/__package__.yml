@@ -42,6 +42,23 @@ types:
       auth: optional<ApiAuth>
       globalHeaders: optional<list<endpoint.Header>>
       snippetsConfiguration: optional<SnippetsConfig>
+      navigation: optional<ApiNavigationConfigRoot>
+
+  ApiNavigationConfigRoot:
+    properties:
+      items: list<ApiNavigationConfigItem>
+
+  ApiNavigationConfigItem:
+    union:
+      subpackage: ApiNavigationConfigSubpackage
+      endpointId: endpoint.EndpointId
+      websocketId: websocket.WebSocketId
+      webhookId: webhook.WebhookId
+
+  ApiNavigationConfigSubpackage:
+    properties:
+      subpackageId: SubpackageId
+      items: list<ApiNavigationConfigItem>
 
   SnippetsConfig:
     properties:
