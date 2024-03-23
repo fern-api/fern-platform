@@ -67,7 +67,7 @@ jobs:
           git_version="$(scripts/git-version.sh)"
           pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
           npm install -g aws-cdk
-          cd apps/fdr-deploy
+          cd servers/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
           DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
@@ -109,7 +109,7 @@ jobs:
           git_version="$(scripts/git-version.sh)"
           pnpm run --filter=@fern-platform/fdr docker:prod "${git_version}"
           npm install -g aws-cdk
-          cd apps/fdr-deploy
+          cd servers/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:prod
         env:
           DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}/fdr?schema=public
