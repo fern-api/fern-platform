@@ -2,7 +2,7 @@ name: Deploy FDR
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     tags: ["*"]
 
 env:
