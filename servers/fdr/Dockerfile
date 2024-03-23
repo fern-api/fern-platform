@@ -38,9 +38,11 @@ RUN pnpm turbo run build --filter=@fern-platform/fdr
 FROM base AS runner
 WORKDIR /app
 
+RUN npm install -g prisma
+
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-CMD ['prisma', "migrate", "deploy", "&&", "node", "servers/fdr/dist/server.js"]
+CMD ['prisma', "migrate", "deploy", "--schema", "servers/fdr/prisma/schema.prisma", "&&", "node", "servers/fdr/dist/server.js"]
