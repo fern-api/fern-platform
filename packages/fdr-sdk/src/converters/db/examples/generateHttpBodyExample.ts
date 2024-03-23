@@ -175,13 +175,15 @@ export function generateExampleFromTypeReference(
             if (ignoreOptionals) {
                 example = undefined;
             } else {
-                example = generateExampleFromTypeReference(
-                    reference.itemType,
-                    resolveTypeById,
-                    ignoreOptionals,
-                    visited,
-                    depth,
-                );
+                example =
+                    reference.defaultValue ??
+                    generateExampleFromTypeReference(
+                        reference.itemType,
+                        resolveTypeById,
+                        ignoreOptionals,
+                        visited,
+                        depth,
+                    );
             }
             break;
         case "list":

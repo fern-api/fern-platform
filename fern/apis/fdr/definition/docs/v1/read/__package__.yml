@@ -331,12 +331,14 @@ types:
     properties:
       id: PageId
       title: string
+      icon: optional<string>
       urlSlug: string
       fullSlug: optional<list<string>>
 
   LinkMetadata:
     properties:
       title: string
+      icon: optional<string>
       url: string
 
   NavbarLink:
@@ -357,6 +359,7 @@ types:
   ApiSection:
     properties:
       title: string
+      icon: optional<string>
       api: rootCommons.ApiDefinitionId
       urlSlug: string
       skipUrlSlug: boolean
@@ -368,6 +371,9 @@ types:
   ChangelogSection:
     properties:
       title: optional<string>
+      icon:
+        type: optional<string>
+        docs: Defaults to ActivityLog icon
       description: optional<string>
       pageId: optional<PageId>
       items: list<ChangelogItem>
@@ -382,10 +388,12 @@ types:
   DocsSection:
     properties:
       title: string
+      icon: optional<string>
       items: list<NavigationItem>
       urlSlug: string
       skipUrlSlug: boolean
       collapsed: boolean
+      hidden: optional<boolean>
       fullSlug: optional<list<string>>
 
   ColorsConfig:

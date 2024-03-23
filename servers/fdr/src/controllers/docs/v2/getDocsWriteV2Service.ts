@@ -79,8 +79,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
-                fernUrl,
-                customUrls,
+                fernUrl: fernUrl,
+                customUrls: customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
@@ -176,17 +176,30 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  * the only exception is for custom domains with subpaths, where we only revalidate the fernUrl
                  */
 
+                const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
+
+                const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
+                if (stagingUrl != null) {
+                    // revalidation needs to occur separately for staging
+                    urls.push(stagingUrl);
+                }
+
                 // revalidate all custom urls
                 await Promise.all(
-                    [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map(async (baseUrl) => {
-                        const results = await app.services.revalidator.revalidate({ baseUrl, app });
+                    urls.map(async (baseUrl) => {
+                        const results = await app.services.revalidator.revalidate({
+                            // treat staging URL as its own fernURL to handle basepath revalidation
+                            fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
+                            baseUrl,
+                            app,
+                        });
                         if (results.failedRevalidations.length === 0 && !results.revalidationFailed) {
                             app.logger.info(
                                 `Successfully revalidated ${results.successfulRevalidations.length} paths.`,
                             );
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({
-                                domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+                                domain: baseUrl.getFullUrl(),
                                 paths: results,
                             });
                         }
@@ -247,4 +260,17 @@ async function uploadToAlgolia(
     app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
 
     return newIndexSegments;
+}
+
+/**
+ * This is a temporary solution to generate a staging URL from a production URL. It will ignore custom domains and dev domains.
+ * @param url production URL
+ * @returns staging URL or undefined if the URL is not a production URL
+ */
+function createStagingUrl(url: ParsedBaseUrl): ParsedBaseUrl | undefined {
+    const maybeProdUrl = url.getFullUrl();
+    if (maybeProdUrl.includes(".docs.buildwithfern.com")) {
+        return ParsedBaseUrl.parse(maybeProdUrl.replace(".docs.buildwithfern.com", ".docs.staging.buildwithfern.com"));
+    }
+    return undefined;
 }

@@ -122,6 +122,11 @@ types:
 
   StreamResponseV2:
     properties:
+      terminator: 
+        type: optional<string>
+        docs: | 
+          The terminator for each message. For example, for OpenAPI 
+          the terminator is [DATA]. 
       shape: JsonBodyShape
 
   StreamConditionResponse:

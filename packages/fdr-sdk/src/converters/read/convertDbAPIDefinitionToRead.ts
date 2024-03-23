@@ -1,6 +1,6 @@
 import { APIV1Db, APIV1Read } from "../../client";
-import { assertNever } from "../utils/assertNever";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever";
 
 export function convertDbAPIDefinitionsToRead(dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>) {
     return Object.fromEntries(
@@ -32,6 +32,7 @@ export function convertDbAPIDefinitionToRead(
         ),
         auth: dbShape.auth,
         hasMultipleBaseUrls: dbShape.hasMultipleBaseUrls,
+        navigation: dbShape.navigation,
     };
 }
 
