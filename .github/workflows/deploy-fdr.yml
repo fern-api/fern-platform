@@ -60,7 +60,7 @@ jobs:
       # - name: 🔄 DB Migration
       #   run: pnpm run --filter=@fern-platform/fdr db:migrate:dev
       #   env:
-      #     DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}
+      #     DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
 
       - name: 🚀 cdk deploy
         run: |
@@ -70,7 +70,7 @@ jobs:
           cd apps/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
-          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}
+          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
 
   deploy_prod:
     runs-on: ubuntu-latest
@@ -102,7 +102,7 @@ jobs:
       # - name: 🔄 DB Migration
       #   run: pnpm run --filter=@fern-platform/fdr db:migrate:prod
       #   env:
-      #     DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}
+      #     DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}/fdr?schema=public
 
       - name: 🚀 cdk deploy
         run: |
@@ -112,4 +112,4 @@ jobs:
           cd apps/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:prod
         env:
-          DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}
+          DATABASE_URL: ${{ secrets.PROD_POSTGRES_URL }}/fdr?schema=public
