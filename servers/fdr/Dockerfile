@@ -45,5 +45,4 @@ ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-# ENTRYPOINT ["sh", "/app/servers/fdr/scripts/run.sh"]
 ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run.sh"]

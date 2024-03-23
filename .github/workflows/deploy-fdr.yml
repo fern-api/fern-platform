@@ -4,9 +4,6 @@ on:
   push:
     branches: [master]
     tags: ["*"]
-  # TODO: remove before merging
-  pull_request:
-    types: [opened, synchronize]
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
@@ -26,8 +23,7 @@ jobs:
   deploy_dev:
     runs-on: ubuntu-latest
     # Only run on main push
-    # TODO: uncomment before merging
-    # if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
       - name: 📥 Install
