@@ -59,7 +59,7 @@ jobs:
           echo "Deployment URL: $DEPLOYMENT_URL"
 
           DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
-          ALIAS_DOMAINS=$(jq -r ''.domains[].name' <<< $DEPLOYMENT_INFO)
+          ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
 
           echo "## PR Preview" > preview.txt
 
