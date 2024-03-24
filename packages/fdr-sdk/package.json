@@ -44,7 +44,7 @@
     "typescript": "4.9.5"
   },
   "scripts": {
-    "build": "fern generate --local --api fdr --log-level debug && tsc --build",
+    "build": "tsc --build",
     "clean": "rm -rf ./src/client/generated && rm -rf ./lib && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
