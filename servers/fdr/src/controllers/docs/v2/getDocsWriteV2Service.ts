@@ -1,5 +1,4 @@
-import { convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
-import { DocsDefinitionDb } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/docs/resources/v1/resources/db";
+import { convertDocsDefinitionToDb, DocsV1Db } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
@@ -79,8 +78,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
-                fernUrl: fernUrl,
-                customUrls: customUrls,
+                fernUrl,
+                customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
@@ -222,7 +221,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 async function uploadToAlgolia(
     app: FdrApplication,
     docsRegistrationInfo: DocsRegistrationInfo,
-    dbDocsDefinition: WithoutQuestionMarks<DocsDefinitionDb.V3>,
+    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
     apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
 ): Promise<IndexSegment[]> {
     // TODO: make sure to store private docs index into user-restricted algolia index
