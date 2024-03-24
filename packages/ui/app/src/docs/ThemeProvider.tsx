@@ -1,6 +1,6 @@
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes";
 import { PropsWithChildren, ReactElement, useEffect, useMemo } from "react";
-import { ColorsConfig } from "../sidebar/types";
 
 interface ThemeProviderProps {
     colors: ColorsConfig;

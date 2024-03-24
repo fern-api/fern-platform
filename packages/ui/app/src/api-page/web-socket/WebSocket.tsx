@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
@@ -18,7 +19,6 @@ import {
     ResolvedWebSocketMessage,
     unwrapReference,
 } from "../../util/resolver";
-import { joinUrlSlugs } from "../../util/slug";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";

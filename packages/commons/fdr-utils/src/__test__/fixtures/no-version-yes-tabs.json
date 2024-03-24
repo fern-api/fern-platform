@@ -1,0 +1,147 @@
+{
+  "baseUrl": {
+    "domain": "",
+    "basePath": "/docs/api"
+  },
+  "definition": {
+    "config": {
+      "navigation": {
+        "tabs": [
+          {
+            "title": "Tab 1",
+            "icon": "icon-1",
+            "items": [
+              {
+                "type": "section",
+                "title": "Section 1",
+                "urlSlug": "section-1",
+                "collapsed": false,
+                "items": [
+                  {
+                    "type": "page",
+                    "id": "page-1.md",
+                    "title": "Page 1",
+                    "urlSlug": "page-1"
+                  },
+                  {
+                    "type": "page",
+                    "id": "page-2.md",
+                    "title": "Page 2",
+                    "urlSlug": "page-2",
+                    "fullSlug": ["page-2"]
+                  }
+                ],
+                "skipUrlSlug": false
+              },
+              {
+                "type": "section",
+                "title": "Introduction",
+                "urlSlug": "section-2",
+                "collapsed": false,
+                "items": [
+                  {
+                    "type": "page",
+                    "id": "page-3.md",
+                    "title": "Page 3",
+                    "urlSlug": "page-3",
+                    "fullSlug": ["section-2"]
+                  },
+                  {
+                    "type": "page",
+                    "id": "page-4.md",
+                    "title": "Page 4",
+                    "urlSlug": "page-4"
+                  }
+                ],
+                "skipUrlSlug": false
+              },
+              {
+                "type": "section",
+                "title": "Section 3",
+                "urlSlug": "section-3",
+                "collapsed": false,
+                "items": [
+                  {
+                    "type": "page",
+                    "id": "page-5.md",
+                    "title": "Page 5",
+                    "urlSlug": "page-5"
+                  },
+                  {
+                    "type": "page",
+                    "id": "page-6.md",
+                    "title": "Page 6",
+                    "urlSlug": "page-6",
+                    "fullSlug": ["tab-1"]
+                  }
+                ],
+                "skipUrlSlug": true
+              }
+            ],
+            "urlSlug": "tab-1"
+          },
+          {
+            "title": "Tab 2",
+            "icon": "icon-2",
+            "items": [
+              {
+                "type": "section",
+                "title": "Section 4",
+                "urlSlug": "section-4",
+                "collapsed": false,
+                "items": [
+                  {
+                    "type": "page",
+                    "id": "page-7.md",
+                    "title": "Page 7",
+                    "urlSlug": "page-7"
+                  },
+                  {
+                    "type": "page",
+                    "id": "page-8.md",
+                    "title": "Page 8",
+                    "urlSlug": "page-8"
+                  }
+                ],
+                "skipUrlSlug": true
+              },
+              {
+                "type": "section",
+                "title": "Section 5",
+                "urlSlug": "section-5",
+                "collapsed": false,
+                "items": [
+                  {
+                    "type": "page",
+                    "id": "page-9.md",
+                    "title": "Page 9",
+                    "urlSlug": "page-9",
+                    "fullSlug": ["tab-1"]
+                  },
+                  {
+                    "type": "page",
+                    "id": "page-10.md",
+                    "title": "Page 10",
+                    "urlSlug": "page-10",
+                    "fullSlug": ["tab-2"]
+                  }
+                ],
+                "skipUrlSlug": false
+              }
+            ],
+            "urlSlug": "tab-2"
+          }
+        ]
+      }
+    },
+    "apis": {},
+    "files": {},
+    "filesV2": {},
+    "pages": {},
+    "search": {
+      "type": "legacyMultiAlgoliaIndex"
+    },
+    "id": "docs_definition"
+  },
+  "lightModeEnabled": true
+}

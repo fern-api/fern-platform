@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
-import { ColorsConfig } from "../../sidebar/types";
 
 export const DocsContext = React.createContext<DocsContextValue>({
     domain: "app.buildwithfern.com",

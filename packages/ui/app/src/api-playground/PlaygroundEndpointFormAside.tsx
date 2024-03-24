@@ -1,4 +1,5 @@
 import { isPlainObject } from "@fern-ui/core-utils";
+import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { atom, useAtom } from "jotai";
@@ -10,7 +11,6 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCollapse } from "../components/FernCollapse";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { SidebarNode } from "../sidebar/types";
 import {
     dereferenceObjectProperties,
     ResolvedEndpointDefinition,
@@ -20,7 +20,6 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { joinUrlSlugs } from "../util/slug";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {

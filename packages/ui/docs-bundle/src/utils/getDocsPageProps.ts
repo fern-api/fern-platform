@@ -1,6 +1,12 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, convertNavigatableToResolvedPath, DocsPage, DocsPageResult, getNavigation } from "@fern-ui/ui";
+import { buildUrl, getNavigationRoot } from "@fern-ui/fdr-utils";
+import {
+    convertNavigatableToResolvedPath,
+    DocsPage,
+    DocsPageResult,
+    serializeSidebarNodeDescriptionMdx,
+} from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -154,7 +160,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = await getNavigation(slug, basePath, docs.definition.apis, docsConfig.navigation);
+    const navigation = getNavigationRoot(slug, basePath, docs.definition.apis, docsConfig.navigation);
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
@@ -162,9 +168,23 @@ async function convertDocsToDocsPageProps({
         return { type: "notFound", notFound: true };
     }
 
+    if (navigation.type === "redirect") {
+        return {
+            type: "redirect",
+            redirect: {
+                destination: navigation.redirect,
+                permanent: false,
+            },
+        };
+    }
+
+    const sidebarNodes = await Promise.all(
+        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
+    );
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         slug,
-        sidebarNodes: navigation.sidebarNodes,
+        sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
     });
@@ -219,7 +239,13 @@ async function convertDocsToDocsPageProps({
         algoliaSearchIndex: docs.definition.algoliaSearchIndex,
         files: docs.definition.filesV2,
         resolvedPath,
-        navigation,
+        navigation: {
+            currentTabIndex: navigation.found.currentTabIndex,
+            tabs: navigation.found.tabs,
+            currentVersionIndex: navigation.found.currentVersionIndex,
+            versions: navigation.found.versions,
+            sidebarNodes,
+        },
         featureFlags,
     };
 

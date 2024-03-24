@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "./types";
 
-function matchSlug(slug: string[], nodeSlug: string[]): boolean {
+function matchSlug(slug: readonly string[], nodeSlug: readonly string[]): boolean {
     for (let i = 0; i < slug.length; i++) {
         if (slug[i] !== nodeSlug[i]) {
             return false;
@@ -118,7 +118,7 @@ function visitNode(
     });
 }
 
-export function visitSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]): TraverseState {
+export function traverseSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]): TraverseState {
     let traverseState: TraverseState = {
         prev: undefined,
         curr: undefined,

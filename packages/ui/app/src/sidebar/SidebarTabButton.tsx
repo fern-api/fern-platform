@@ -1,8 +1,8 @@
+import { SidebarTab } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { memo } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { SidebarTab } from "./types";
 
 export declare namespace SidebarTabButton {
     export interface Props {

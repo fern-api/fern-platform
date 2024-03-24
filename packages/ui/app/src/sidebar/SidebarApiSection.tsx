@@ -1,4 +1,5 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
@@ -10,15 +11,13 @@ import { withStream } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
-import { SidebarNode } from "./types";
 
 export interface SidebarApiSectionProps {
     className?: string;
     apiSection: SidebarNode.ApiSection;
-    slug: string[];
+    slug: readonly string[];
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     depth: number;
 }

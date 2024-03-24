@@ -30,11 +30,13 @@
   },
   "dependencies": {
     "strip-ansi": "^7.1.0",
+    "title": "^3.5.3",
     "ua-parser-js": "^1.0.35"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
+    "@types/title": "^3.4.3",
     "@types/ua-parser-js": "^0.7.39",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

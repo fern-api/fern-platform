@@ -1,3 +1,4 @@
+import { SidebarNode } from "@fern-ui/fdr-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
@@ -6,7 +7,6 @@ import cn from "clsx";
 import { FC, Fragment, useCallback, useMemo, useRef } from "react";
 import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
-import { SidebarNode } from "../sidebar/types";
 import { usePlaygroundContext } from "./PlaygroundContext";
 import { flattenApiSection, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
 

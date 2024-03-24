@@ -1,19 +1,18 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
-import { joinUrlSlugs } from "../util/slug";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarLink, SidebarSlugLink } from "./SidebarLink";
-import { SidebarNode } from "./types";
 
 export interface SidebarSectionProps {
     className?: string;
     navigationItems: SidebarNode[];
-    slug: string[];
+    slug: readonly string[];
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 

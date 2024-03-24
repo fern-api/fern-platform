@@ -1,4 +1,4 @@
-import { joinUrlSlugs } from "../util/slug";
+import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import type { SearchRecord } from "./types";
 
 export function getFullPathForSearchRecord(record: SearchRecord, basePath: string | undefined): string {
