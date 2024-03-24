@@ -21,7 +21,23 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
                 fixture.definition.config.navigation,
             );
 
-            expect(urls).toMatchSnapshot();
+            expect(stripForSnapshot(urls)).toMatchSnapshot();
         });
     });
+}
+
+function stripForSnapshot(obj: ReturnType<typeof getNavigationRoot>): unknown {
+    if (obj == null || obj.type === "redirect") {
+        return obj;
+    }
+
+    // only test the tab index, version index, and current node
+    return {
+        type: obj.type,
+        found: {
+            currentTabIndex: obj.found.currentTabIndex,
+            currentVersionIndex: obj.found.currentVersionIndex,
+            currentNode: obj.found.currentNode,
+        },
+    };
 }

@@ -240,7 +240,10 @@ async function convertDocsToDocsPageProps({
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {
-            ...navigation.found,
+            currentTabIndex: navigation.found.currentTabIndex,
+            tabs: navigation.found.tabs,
+            currentVersionIndex: navigation.found.currentVersionIndex,
+            versions: navigation.found.versions,
             sidebarNodes,
         },
         featureFlags,

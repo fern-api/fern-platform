@@ -162,17 +162,32 @@ function resolveSidebarNodesRootItems(
     parentSlugs: readonly string[],
 ): SidebarNodeRaw.Root["items"] {
     if (isVersionedNavigationConfig(nav)) {
-        return nav.versions.map((version, index): SidebarNodeRaw.VersionGroup => {
-            const versionSlug = index > 0 ? [...parentSlugs, ...version.urlSlug.split("/")] : parentSlugs;
-            return {
+        const toRet: SidebarNodeRaw.VersionGroup[] = [];
+        nav.versions.forEach((version, index) => {
+            // default version
+            if (index === 0) {
+                toRet.push({
+                    type: "versionGroup",
+                    id: version.version,
+                    slug: parentSlugs,
+                    index,
+                    availability: version.availability ?? null,
+                    items: resolveSidebarNodesVersionItems(version.config, apis, parentSlugs),
+                });
+            }
+
+            const versionSlug = [...parentSlugs, ...version.urlSlug.split("/")];
+            toRet.push({
                 type: "versionGroup",
                 id: version.version,
                 slug: versionSlug,
                 index,
                 availability: version.availability ?? null,
                 items: resolveSidebarNodesVersionItems(version.config, apis, versionSlug),
-            };
+            });
         });
+
+        return toRet;
     }
 
     return resolveSidebarNodesVersionItems(nav, apis, parentSlugs);
@@ -191,18 +206,19 @@ function resolveSidebarNodesVersionItems(
                 title: tab.title,
                 icon: tab.icon,
                 slug: tabSlug,
-                items: resolveSidebarNodes(tab.items, apis, tabSlug),
+                items: resolveSidebarNodes(tab.items, apis, tabSlug, parentSlugs),
             };
         });
     }
 
-    return resolveSidebarNodes(nav.items, apis, parentSlugs);
+    return resolveSidebarNodes(nav.items, apis, parentSlugs, parentSlugs);
 }
 
 export function resolveSidebarNodes(
     navigationItems: DocsV1Read.NavigationItem[],
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    parentSlugs: readonly string[] = [],
+    parentSlugs: readonly string[], // parent slugs that are inherited from the parent node
+    fixedSlugs: readonly string[], // basepath and version slugs
 ): SidebarNodeRaw[] {
     const SidebarNodeRaws: SidebarNodeRaw[] = [];
     for (const navigationItem of navigationItems) {
@@ -212,7 +228,10 @@ export function resolveSidebarNodes(
                 if (lastSidebarNodeRaw != null && lastSidebarNodeRaw.type === "pageGroup") {
                     lastSidebarNodeRaw.pages.push({
                         ...page,
-                        slug: page.fullSlug ?? [...parentSlugs, ...page.urlSlug.split("/")],
+                        slug:
+                            page.fullSlug != null
+                                ? [...fixedSlugs, ...page.fullSlug]
+                                : [...parentSlugs, ...page.urlSlug.split("/")],
                         type: "page",
                         description: undefined,
                     });
@@ -223,7 +242,10 @@ export function resolveSidebarNodes(
                         pages: [
                             {
                                 ...page,
-                                slug: page.fullSlug ?? [...parentSlugs, ...page.urlSlug.split("/")],
+                                slug:
+                                    page.fullSlug != null
+                                        ? [...fixedSlugs, ...page.fullSlug]
+                                        : [...parentSlugs, ...page.urlSlug.split("/")],
                                 type: "page",
                                 description: undefined,
                             },
@@ -235,7 +257,11 @@ export function resolveSidebarNodes(
                 const definition = apis[api.api];
                 if (definition != null) {
                     const definitionSlug =
-                        api.fullSlug ?? (api.skipUrlSlug ? parentSlugs : [...parentSlugs, ...api.urlSlug.split("/")]);
+                        api.fullSlug != null
+                            ? [...fixedSlugs, ...api.fullSlug]
+                            : api.skipUrlSlug
+                              ? parentSlugs
+                              : [...parentSlugs, ...api.urlSlug.split("/")];
                     const resolved = resolveSidebarNodeRawApiSection(
                         api.api,
                         api.api,
@@ -264,10 +290,10 @@ export function resolveSidebarNodes(
                                       title: api.changelog.title ?? "Changelog",
                                       description: api.changelog.description,
                                       pageId: api.changelog.pageId,
-                                      slug: api.changelog.fullSlug ?? [
-                                          ...definitionSlug,
-                                          ...api.changelog.urlSlug.split("/"),
-                                      ],
+                                      slug:
+                                          api.changelog.fullSlug != null
+                                              ? [...fixedSlugs, ...api.changelog.fullSlug]
+                                              : [...definitionSlug, ...api.changelog.urlSlug.split("/")],
                                       items: api.changelog.items.map((item) => ({
                                           date: item.date,
                                           pageId: item.pageId,
@@ -280,14 +306,17 @@ export function resolveSidebarNodes(
             },
             section: (section) => {
                 const sectionSlug =
-                    section.fullSlug ??
-                    (section.skipUrlSlug ? parentSlugs : [...parentSlugs, ...section.urlSlug.split("/")]);
+                    section.fullSlug != null
+                        ? [...fixedSlugs, ...section.fullSlug]
+                        : section.skipUrlSlug
+                          ? parentSlugs
+                          : [...parentSlugs, ...section.urlSlug.split("/")];
                 SidebarNodeRaws.push({
                     type: "section",
                     title: section.title,
                     slug: sectionSlug,
                     // if section.fullSlug is defined, the child slugs will be built from that, rather than from inherited parentSlugs
-                    items: resolveSidebarNodes(section.items, apis, sectionSlug),
+                    items: resolveSidebarNodes(section.items, apis, sectionSlug, fixedSlugs),
                 });
             },
             link: (link) => {

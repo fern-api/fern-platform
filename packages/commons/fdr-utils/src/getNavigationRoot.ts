@@ -102,7 +102,7 @@ export function getNavigationRoot(
     );
 
     // const sidebarNodes = await Promise.all(rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)));
-    const found = {
+    const found: SidebarNavigationRaw = {
         currentVersionIndex: versions.index,
         versions: versions.items.map((version) => ({
             id: version.id,
@@ -117,6 +117,7 @@ export function getNavigationRoot(
             slug: tab.slug,
         })),
         sidebarNodes,
+        currentNode: node,
     };
 
     return { type: "found", found };

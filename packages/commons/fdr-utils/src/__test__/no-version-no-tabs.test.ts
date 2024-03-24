@@ -1,15 +1,17 @@
 import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 import { testGetNavigationRoot } from "./testGetNavigationRoot";
 
-const FIXTURE = "hume";
+const FIXTURE = "no-version-no-tabs";
 
 describe("getAllUrlsFromDocsConfig", () => {
     testGetAllUrlsFromDocsConfig(FIXTURE);
 });
 
 describe("getNavigationRoot", () => {
-    testGetNavigationRoot(FIXTURE, "support");
-    testGetNavigationRoot(FIXTURE, "reference");
+    testGetNavigationRoot(FIXTURE, "");
     testGetNavigationRoot(FIXTURE, "docs");
-    testGetNavigationRoot(FIXTURE, "reference/expression-measurement-api/stream");
+    testGetNavigationRoot(FIXTURE, "docs/api/section-1");
+    testGetNavigationRoot(FIXTURE, "docs/api/section-2");
+    testGetNavigationRoot(FIXTURE, "docs/api/section-3");
+    testGetNavigationRoot(FIXTURE, "docs/api/page-6");
 });

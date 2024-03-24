@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getAllUrlsFromDocsConfig yes-version-yes-tabs gets all urls from docs config 1`] = `
+[
+  "yes-version-yes-tabs/docs/api",
+  "yes-version-yes-tabs/docs/api/tab-1",
+  "yes-version-yes-tabs/docs/api/tab-1/section-1",
+  "yes-version-yes-tabs/docs/api/tab-1/section-1/page-1",
+  "yes-version-yes-tabs/docs/api/page-2",
+  "yes-version-yes-tabs/docs/api/tab-1/section-2",
+  "yes-version-yes-tabs/docs/api/section-2",
+  "yes-version-yes-tabs/docs/api/tab-1/section-2/page-4",
+  "yes-version-yes-tabs/docs/api/tab-1/page-5",
+  "yes-version-yes-tabs/docs/api/tab-2",
+  "yes-version-yes-tabs/docs/api/tab-2/page-7",
+  "yes-version-yes-tabs/docs/api/tab-2/page-8",
+  "yes-version-yes-tabs/docs/api/tab-2/section-5",
+  "yes-version-yes-tabs/docs/api/tab-2/section-5/page-10",
+  "yes-version-yes-tabs/docs/api/version-1",
+  "yes-version-yes-tabs/docs/api/version-1/tab-1",
+  "yes-version-yes-tabs/docs/api/version-1/tab-1/section-1",
+  "yes-version-yes-tabs/docs/api/version-1/tab-1/section-1/page-1",
+  "yes-version-yes-tabs/docs/api/version-1/page-2",
+  "yes-version-yes-tabs/docs/api/version-1/tab-1/section-2",
+  "yes-version-yes-tabs/docs/api/version-1/section-2",
+  "yes-version-yes-tabs/docs/api/version-1/tab-1/section-2/page-4",
+  "yes-version-yes-tabs/docs/api/version-1/tab-1/page-5",
+  "yes-version-yes-tabs/docs/api/version-1/tab-2",
+  "yes-version-yes-tabs/docs/api/version-1/tab-2/page-7",
+  "yes-version-yes-tabs/docs/api/version-1/tab-2/page-8",
+  "yes-version-yes-tabs/docs/api/version-1/tab-2/section-5",
+  "yes-version-yes-tabs/docs/api/version-1/tab-2/section-5/page-10",
+  "yes-version-yes-tabs/docs/api/version-2",
+  "yes-version-yes-tabs/docs/api/version-2/tab-1",
+  "yes-version-yes-tabs/docs/api/version-2/tab-1/section-1",
+  "yes-version-yes-tabs/docs/api/version-2/tab-1/section-1/page-1",
+  "yes-version-yes-tabs/docs/api/version-2/page-2",
+  "yes-version-yes-tabs/docs/api/version-2/tab-1/section-2",
+  "yes-version-yes-tabs/docs/api/version-2/section-2",
+  "yes-version-yes-tabs/docs/api/version-2/tab-1/section-2/page-4",
+  "yes-version-yes-tabs/docs/api/version-2/tab-1/page-5",
+  "yes-version-yes-tabs/docs/api/version-2/tab-2",
+  "yes-version-yes-tabs/docs/api/version-2/tab-2/page-7",
+  "yes-version-yes-tabs/docs/api/version-2/tab-2/page-8",
+  "yes-version-yes-tabs/docs/api/version-2/tab-2/section-5",
+  "yes-version-yes-tabs/docs/api/version-2/tab-2/section-5/page-10",
+]
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api 1`] = `
+{
+  "redirect": "/docs/api/tab-1",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/tab-1 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "tab-1",
+      ],
+      "id": "page-6.md",
+      "slug": [
+        "docs",
+        "api",
+        "tab-1",
+      ],
+      "title": "Page 6",
+      "type": "page",
+      "urlSlug": "page-6",
+    },
+    "currentTabIndex": 0,
+    "currentVersionIndex": 0,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/tab-2 1`] = `
+{
+  "redirect": "/docs/api/tab-2/page-7",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/version-1 1`] = `
+{
+  "redirect": "/docs/api/version-1/tab-1",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/version-1/section-2 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "section-2",
+      ],
+      "id": "page-3.md",
+      "slug": [
+        "docs",
+        "api",
+        "version-1",
+        "section-2",
+      ],
+      "title": "Page 3",
+      "type": "page",
+      "urlSlug": "page-3",
+    },
+    "currentTabIndex": 0,
+    "currentVersionIndex": 1,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/version-2 1`] = `
+{
+  "redirect": "/docs/api/version-2/tab-1",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/version-2/tab-2 1`] = `
+{
+  "redirect": "/docs/api/version-2/tab-2/page-7",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for docs/api/version-2/tab-2/section-5 1`] = `
+{
+  "redirect": "/docs/api/version-2/tab-1",
+  "type": "redirect",
+}
+`;

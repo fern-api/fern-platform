@@ -34,10 +34,11 @@ export interface SidebarNavigationRaw {
     tabs: SidebarTab[];
     currentVersionIndex: number | undefined;
     versions: SidebarVersionInfo[];
+    currentNode: SidebarNodeRaw.VisitableNode;
     sidebarNodes: readonly SidebarNodeRaw[];
 }
 
-export interface SidebarNavigation extends Omit<SidebarNavigationRaw, "sidebarNodes"> {
+export interface SidebarNavigation extends Omit<SidebarNavigationRaw, "currentNode" | "sidebarNodes"> {
     sidebarNodes: SidebarNode[];
 }
 
