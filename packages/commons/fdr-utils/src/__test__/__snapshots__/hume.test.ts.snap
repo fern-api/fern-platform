@@ -68,28 +68,28 @@ exports[`getAllUrlsFromDocsConfig hume gets all urls from docs config 1`] = `
 ]
 `;
 
-exports[`getNavigationRoot hume gets navigation root for docs 1`] = `
+exports[`getNavigationRoot hume gets navigation root for /docs 1`] = `
 {
   "redirect": "/intro",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot hume gets navigation root for reference 1`] = `
+exports[`getNavigationRoot hume gets navigation root for /reference 1`] = `
 {
   "redirect": "/reference/expression-measurement-api/batch/list-jobs",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot hume gets navigation root for reference/expression-measurement-api/stream 1`] = `
+exports[`getNavigationRoot hume gets navigation root for /reference/expression-measurement-api/stream 1`] = `
 {
   "redirect": "/reference/expression-measurement-api/stream/stream",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot hume gets navigation root for support 1`] = `
+exports[`getNavigationRoot hume gets navigation root for /support 1`] = `
 {
   "found": {
     "currentNode": {

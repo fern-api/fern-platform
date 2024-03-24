@@ -2,30 +2,30 @@
 
 exports[`getAllUrlsFromDocsConfig no-version-yes-tabs gets all urls from docs config 1`] = `
 [
-  "no-version-yes-tabs/docs/api",
-  "no-version-yes-tabs/docs/api/tab-1",
-  "no-version-yes-tabs/docs/api/tab-1/section-1",
-  "no-version-yes-tabs/docs/api/tab-1/section-1/page-1",
-  "no-version-yes-tabs/docs/api/page-2",
-  "no-version-yes-tabs/docs/api/tab-1/section-2",
-  "no-version-yes-tabs/docs/api/section-2",
-  "no-version-yes-tabs/docs/api/tab-1/section-2/page-4",
-  "no-version-yes-tabs/docs/api/tab-1/page-5",
-  "no-version-yes-tabs/docs/api/tab-2",
-  "no-version-yes-tabs/docs/api/tab-2/page-7",
-  "no-version-yes-tabs/docs/api/tab-2/page-8",
-  "no-version-yes-tabs/docs/api/tab-2/section-5",
+  "/docs/api",
+  "/docs/api/tab-1",
+  "/docs/api/tab-1/section-1",
+  "/docs/api/tab-1/section-1/page-1",
+  "/docs/api/page-2",
+  "/docs/api/tab-1/section-2",
+  "/docs/api/section-2",
+  "/docs/api/tab-1/section-2/page-4",
+  "/docs/api/tab-1/page-5",
+  "/docs/api/tab-2",
+  "/docs/api/tab-2/page-7",
+  "/docs/api/tab-2/page-8",
+  "/docs/api/tab-2/section-5",
 ]
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api 1`] = `
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api 1`] = `
 {
   "redirect": "/docs/api/tab-1/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api/page-2 1`] = `
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/page-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -50,9 +50,9 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api/section-1 1`] = `undefined`;
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/section-1 1`] = `undefined`;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api/tab-1 1`] = `
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-1 1`] = `
 {
   "found": {
     "currentNode": {
@@ -77,7 +77,7 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api/tab-2 1`] = `
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -102,7 +102,7 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api/tab-2/section-5 1`] = `
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-2/section-5 1`] = `
 {
   "redirect": "/docs/api/tab-1",
   "type": "redirect",

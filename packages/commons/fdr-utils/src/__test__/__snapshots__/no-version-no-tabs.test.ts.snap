@@ -2,22 +2,22 @@
 
 exports[`getAllUrlsFromDocsConfig no-version-no-tabs gets all urls from docs config 1`] = `
 [
-  "no-version-no-tabs/docs/api",
-  "no-version-no-tabs/docs/api/section-1",
-  "no-version-no-tabs/docs/api/section-1/page-1",
-  "no-version-no-tabs/docs/api/page-2",
-  "no-version-no-tabs/docs/api/section-2",
-  "no-version-no-tabs/docs/api/section-2/page-4",
-  "no-version-no-tabs/docs/api/page-5",
-  "no-version-no-tabs/docs/api/page-6",
+  "/docs/api",
+  "/docs/api/section-1",
+  "/docs/api/section-1/page-1",
+  "/docs/api/page-2",
+  "/docs/api/section-2",
+  "/docs/api/section-2/page-4",
+  "/docs/api/page-5",
+  "/docs/api/page-6",
 ]
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for  1`] = `undefined`;
+exports[`getNavigationRoot no-version-no-tabs gets navigation root for / 1`] = `undefined`;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs 1`] = `undefined`;
+exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs 1`] = `undefined`;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs/api/page-6 1`] = `
+exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/page-6 1`] = `
 {
   "found": {
     "currentNode": {
@@ -39,14 +39,14 @@ exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs/api/
 }
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs/api/section-1 1`] = `
+exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/section-1 1`] = `
 {
   "redirect": "/docs/api/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs/api/section-2 1`] = `
+exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/section-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -71,4 +71,4 @@ exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs/api/
 }
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for docs/api/section-3 1`] = `undefined`;
+exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/section-3 1`] = `undefined`;

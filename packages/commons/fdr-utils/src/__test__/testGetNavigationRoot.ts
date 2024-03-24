@@ -7,7 +7,7 @@ import { getNavigationRoot } from "../getNavigationRoot";
 export function testGetNavigationRoot(fixtureName: string, slug: string): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
-        it("gets navigation root for " + slug, async () => {
+        it("gets navigation root for /" + slug, async () => {
             const fixturePath = path.join(__dirname, "fixtures", `${fixtureName}.json`);
 
             const content = fs.readFileSync(fixturePath, "utf-8");
