@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read, FdrAPI, WithoutQuestionMarks } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import {
@@ -16,6 +16,10 @@ import {
     FlattenedWebSocketChannel,
 } from "./flattenApiDefinition";
 import { titleCase } from "./titleCase";
+
+type WithoutQuestionMarks<T> = {
+    [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
+};
 
 export type WithDescription = { description: SerializedMdxContent | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
