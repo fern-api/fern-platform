@@ -1,4 +1,4 @@
-import type { SidebarNode } from "@fern-ui/fdr-utils";
+import { getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
 import {
     flattenApiDefinition,
     REGISTRY_SERVICE,
@@ -7,7 +7,6 @@ import {
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
-import { getNavigationRoot } from "../../../utils/getNavigationRoot";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {

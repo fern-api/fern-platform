@@ -1,6 +1,5 @@
-import { buildUrl } from "@fern-ui/fdr-utils";
+import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { getAllUrlsFromDocsConfig } from "../../../utils/getAllUrlsFromDocsConfig";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../utils/toValidPathname";
 

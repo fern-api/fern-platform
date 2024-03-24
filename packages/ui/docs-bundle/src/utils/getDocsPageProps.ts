@@ -1,6 +1,6 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl } from "@fern-ui/fdr-utils";
+import { buildUrl, getNavigationRoot } from "@fern-ui/fdr-utils";
 import {
     convertNavigatableToResolvedPath,
     DocsPage,
@@ -12,7 +12,6 @@ import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
-import { getNavigationRoot } from "./getNavigationRoot";
 import { getRedirectForPath } from "./hackRedirects";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {

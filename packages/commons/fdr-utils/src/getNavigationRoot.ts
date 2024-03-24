@@ -1,7 +1,8 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { resolveSidebarNodesRoot, SidebarNavigationRaw, SidebarNodeRaw, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
-// eslint-disable-next-line import/no-internal-modules
 import { sortBy } from "lodash-es";
+import { resolveSidebarNodesRoot } from "./resolver";
+import { SidebarNavigationRaw, SidebarNodeRaw } from "./types";
+import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
 
 interface Redirect {
     type: "redirect";
