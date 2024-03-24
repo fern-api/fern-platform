@@ -949,9 +949,6 @@ importers:
       jsonpath:
         specifier: ^1.1.1
         version: 1.1.1
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
       next:
         specifier: ^14.1.1
         version: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
@@ -974,9 +971,6 @@ importers:
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.11
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.26
