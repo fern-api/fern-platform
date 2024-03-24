@@ -130,7 +130,10 @@
                                         "type": "page",
                                         "id": "page-10.md",
                                         "title": "Page 10",
-                                        "urlSlug": "page-10"
+                                        "urlSlug": "page-10",
+                                        "fullSlug": [
+                                            "tab-2"
+                                        ]
                                     }
                                 ],
                                 "skipUrlSlug": false

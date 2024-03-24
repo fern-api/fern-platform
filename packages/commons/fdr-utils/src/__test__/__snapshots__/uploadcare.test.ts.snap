@@ -90,14 +90,14 @@ exports[`getAllUrlsFromDocsConfig uploadcare gets all urls from docs config 1`] 
 
 exports[`getNavigationRoot uploadcare gets navigation root for api/url-api 1`] = `
 {
-  "redirect": "/api/url-api/file-information",
+  "redirect": "/api/url-api/file-information/file-info-json",
   "type": "redirect",
 }
 `;
 
 exports[`getNavigationRoot uploadcare gets navigation root for docs 1`] = `
 {
-  "redirect": "/docs/introduction",
+  "redirect": "/docs/introduction/intro",
   "type": "redirect",
 }
 `;

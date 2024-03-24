@@ -15,13 +15,12 @@ exports[`getAllUrlsFromDocsConfig no-version-yes-tabs gets all urls from docs co
   "no-version-yes-tabs/docs/api/tab-2/page-7",
   "no-version-yes-tabs/docs/api/tab-2/page-8",
   "no-version-yes-tabs/docs/api/tab-2/section-5",
-  "no-version-yes-tabs/docs/api/tab-2/section-5/page-10",
 ]
 `;
 
 exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api 1`] = `
 {
-  "redirect": "/docs/api/tab-1",
+  "redirect": "/docs/api/tab-1/section-1/page-1",
   "type": "redirect",
 }
 `;
@@ -80,8 +79,26 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api
 
 exports[`getNavigationRoot no-version-yes-tabs gets navigation root for docs/api/tab-2 1`] = `
 {
-  "redirect": "/docs/api/tab-2/page-7",
-  "type": "redirect",
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "tab-2",
+      ],
+      "id": "page-10.md",
+      "slug": [
+        "docs",
+        "api",
+        "tab-2",
+      ],
+      "title": "Page 10",
+      "type": "page",
+      "urlSlug": "page-10",
+    },
+    "currentTabIndex": 1,
+    "currentVersionIndex": -1,
+  },
+  "type": "found",
 }
 `;
 

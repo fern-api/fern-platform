@@ -65,28 +65,8 @@ export function getNavigationRoot(
 
     const { node, parents } = hit;
 
-    if (isNavigationNode(node) || node.type === "section") {
-        const firstChild = node.items[0];
-        if (firstChild == null) {
-            return undefined;
-        }
-        return { type: "redirect", redirect: "/" + firstChild.slug.join("/") };
-    }
-
-    if (node.type === "pageGroup") {
-        const firstPage = node.pages.find(SidebarNodeRaw.isPage);
-        if (firstPage == null) {
-            return undefined;
-        }
-        return { type: "redirect", redirect: "/" + firstPage.slug.join("/") };
-    }
-
-    if (node.type === "apiSection") {
-        const firstChild = node.items[0] ?? node.changelog;
-        if (firstChild == null) {
-            return undefined;
-        }
-        return { type: "redirect", redirect: "/" + firstChild.slug.join("/") };
+    if (shouldRedirect(node)) {
+        return resolveRedirect(node, slugArray);
     }
 
     const sidebarNodes = findSiblings<SidebarNodeRaw>(parents, isSidebarNodeRaw).items;
@@ -121,6 +101,36 @@ export function getNavigationRoot(
     };
 
     return { type: "found", found };
+}
+
+function shouldRedirect(node: SidebarNodeRaw.VisitableNode): boolean {
+    return isNavigationNode(node) || node.type === "section" || node.type === "pageGroup" || node.type === "apiSection";
+}
+
+function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: string[]): Redirect | undefined {
+    if (node == null) {
+        return undefined;
+    }
+
+    if (isNavigationNode(node) || node.type === "section") {
+        const firstChild = node.items[0];
+        return resolveRedirect(firstChild, from);
+    }
+
+    if (node.type === "pageGroup") {
+        const firstPage = node.pages.find(SidebarNodeRaw.isPage);
+        return resolveRedirect(firstPage, from);
+    }
+
+    if (node.type === "apiSection") {
+        const firstChild = node.items[0] ?? node.changelog;
+        return resolveRedirect(firstChild, from);
+    }
+
+    if (node.slug.join("/") === from.join("/")) {
+        return undefined;
+    }
+    return { type: "redirect", redirect: "/" + node.slug.join("/") };
 }
 
 function findSiblings<T extends SidebarNodeRaw.ParentNode>(
