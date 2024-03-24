@@ -82,8 +82,7 @@ jobs:
 
       - name: Codegen
         run: |
-          npm install -g fern-api
-          fern generate --local
+          pnpm fern generate --local
           pnpm turbo --filter=@fern-platform/fdr codegen
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}

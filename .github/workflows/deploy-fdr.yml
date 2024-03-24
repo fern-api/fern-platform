@@ -58,8 +58,7 @@ jobs:
 
       - name: 🪴 Generate Fern SDKs
         run: |
-          npm install -g fern-api
-          fern generate --local --group local --log-level debug
+          pnpm fern generate --local --group local --log-level debug
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
@@ -106,8 +105,7 @@ jobs:
 
       - name: 🪴 Generate Code
         run: |
-          npm install -g fern-api
-          fern generate --local --group local --log-level debug
+          pnpm fern generate --local --group local --log-level debug
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
