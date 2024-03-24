@@ -93,7 +93,7 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
 
                             <span className="whitespace-nowrap font-semibold">
                                 {selectedEndpoint != null
-                                    ? selectedEndpoint.id.endsWith("_stream")
+                                    ? selectedEndpoint.apiType === "endpoint" && selectedEndpoint.stream
                                         ? withStream(selectedEndpoint.title)
                                         : selectedEndpoint.title
                                     : placeholderText ?? "Select an endpoint"}

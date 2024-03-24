@@ -4,6 +4,7 @@ import { memo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
+import { AudioExample } from "../examples/AudioExample";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { lineNumberOf } from "../examples/utils";
@@ -121,20 +122,23 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }
                 scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
-            {example.responseBody != null && (
-                <CodeSnippetExample
-                    title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                    type={example.responseStatusCode >= 400 ? "warning" : "primary"}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
-                    code={responseCodeSnippet}
-                    language="json"
-                    hoveredPropertyPath={hoveredResponsePropertyPath}
-                    json={responseJson}
-                    scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
-                />
-            )}
+            {example.responseBody != null &&
+                (endpoint.responseBody?.shape.type === "fileDownload" ? (
+                    <AudioExample title="Response" type={"primary"} />
+                ) : (
+                    <CodeSnippetExample
+                        title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
+                        type={example.responseStatusCode >= 400 ? "warning" : "primary"}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        code={responseCodeSnippet}
+                        language="json"
+                        hoveredPropertyPath={hoveredResponsePropertyPath}
+                        json={responseJson}
+                        scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
+                    />
+                ))}
         </div>
     );
 };

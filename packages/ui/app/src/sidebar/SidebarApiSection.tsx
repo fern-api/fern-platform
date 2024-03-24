@@ -106,11 +106,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         key={joinUrlSlugs(...item.slug)}
                         slug={item.slug}
                         shallow={shallow}
-                        title={
-                            item.apiType === "endpoint" && item.id.endsWith("_stream")
-                                ? withStream(item.title)
-                                : item.title
-                        }
+                        title={item.apiType === "endpoint" && item.stream ? withStream(item.title) : item.title}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         selected={isEqual(item.slug, selectedSlug)}
                         depth={Math.max(0, depth - 1)}
