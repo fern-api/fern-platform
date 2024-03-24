@@ -1,5 +1,4 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { sortBy } from "lodash-es";
 import { resolveSidebarNodesRoot } from "./resolver";
 import { SidebarNavigationRaw, SidebarNodeRaw } from "./types";
 import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
@@ -24,6 +23,7 @@ function isNavigationNode(n: SidebarNodeRaw.VisitableNode): n is SidebarNodeRaw.
     return n.type === "root" || n.type === "tabGroup" || n.type === "versionGroup";
 }
 
+// lower number means higher priority
 const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
     root: 3,
     tabGroup: 2,
@@ -61,7 +61,8 @@ export function getNavigationRoot(
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const hit = sortBy(hits, ({ node }) => PRIORITY_LIST[node.type])[0]!;
+    const hit = hits.sort((a, b) => PRIORITY_LIST[a.node.type] - PRIORITY_LIST[b.node.type])[0]!;
+
     const { node, parents } = hit;
 
     if (isNavigationNode(node) || node.type === "section") {
