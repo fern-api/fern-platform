@@ -248,8 +248,8 @@ importers:
   packages/commons/fdr-utils:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.65.171-18-g0ee639d9c
-        version: 0.65.171-18-g0ee639d9c
+        specifier: 0.65.171-20-g6442f5888
+        version: link:../../fdr-sdk
       '@fern-ui/core-utils':
         specifier: workspace:^
         version: link:../core-utils
@@ -271,7 +271,7 @@ importers:
         version: 29.7.0(@types/node@18.19.26)(ts-node@10.9.1)
       next-mdx-remote:
         specifier: ^4.4.1
-        version: 4.4.1(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.4.1(@types/react@18.2.69)(react-dom@18.2.0)(react@18.2.0)
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -689,8 +689,8 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0(@datadog/browser-logs@5.12.0)
       '@fern-api/fdr-sdk':
-        specifier: 0.65.171-18-g0ee639d9c
-        version: 0.65.171-18-g0ee639d9c
+        specifier: 0.65.171-20-g6442f5888
+        version: link:../../fdr-sdk
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
@@ -924,8 +924,8 @@ importers:
   packages/ui/docs-bundle:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.65.171-18-g0ee639d9c
-        version: 0.65.171-18-g0ee639d9c
+        specifier: 0.65.171-20-g6442f5888
+        version: link:../../fdr-sdk
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1
@@ -4185,21 +4185,6 @@ packages:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  /@fern-api/fdr-sdk@0.65.171-18-g0ee639d9c:
-    resolution: {integrity: sha512-n5zeA5F2oRXwH3xleRUo3oBrJKabwNyrQ0L+JopdK3KXsTP+fDMumD8dvJ2EVuEJve/say96HRp0aTMNY8q8ZA==}
-    dependencies:
-      form-data: 4.0.0
-      js-base64: 3.7.2
-      lodash: 4.17.21
-      marked: 5.1.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      tinycolor2: 1.6.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-    dev: false
-
   /@fern-api/venus-api-sdk@0.1.1:
     resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
     dependencies:
@@ -4670,6 +4655,18 @@ packages:
       '@types/mdx': 2.0.11
       '@types/react': 18.2.67
       react: 18.2.0
+    dev: false
+
+  /@mdx-js/react@3.0.1(@types/react@18.2.69)(react@18.2.0):
+    resolution: {integrity: sha512-9ZrPIU4MGf6et1m1ov3zKf+q9+deetI51zprKB1D/z3NOb+rUxxtEl3mCjW5wTGh6VhRdwPueh1oRzi6ezkA8A==}
+    peerDependencies:
+      '@types/react': '>=16'
+      react: '>=16'
+    dependencies:
+      '@types/mdx': 2.0.11
+      '@types/react': 18.2.69
+      react: 18.2.0
+    dev: true
 
   /@next/bundle-analyzer@14.1.4:
     resolution: {integrity: sha512-IpF/18HcAOcfHRr24tqPOUpMmVKIqvkCxIubMeRYWCXs3jm7niPGrt8Mu74yMDzfGlUwgQA6Xd6BUc5+jQxcEg==}
@@ -6605,6 +6602,10 @@ packages:
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
 
+  /@types/prop-types@15.7.12:
+    resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+    dev: true
+
   /@types/qs@6.9.8:
     resolution: {integrity: sha512-u95svzDlTysU5xecFNTgfFG5RUWu1A9P0VzgpcIiGZA9iraHOdSzcxMxQ55DyeRaGCSxQi7LxXDI4rzq/MYfdg==}
 
@@ -6629,6 +6630,14 @@ packages:
       '@types/prop-types': 15.7.11
       '@types/scheduler': 0.16.8
       csstype: 3.1.3
+
+  /@types/react@18.2.69:
+    resolution: {integrity: sha512-W1HOMUWY/1Yyw0ba5TkCV+oqynRjG7BnteBB+B7JmAK7iw3l2SW+VGOxL+akPweix6jk2NNJtyJKpn4TkpfK3Q==}
+    dependencies:
+      '@types/prop-types': 15.7.12
+      '@types/scheduler': 0.16.8
+      csstype: 3.1.3
+    dev: true
 
   /@types/readdir-glob@1.1.5:
     resolution: {integrity: sha512-raiuEPUYqXu+nvtY2Pe8s8FEmZ3x5yAH4VkLdihcPdalvsHltomrRC9BzuStrJ9yk06470hS0Crw0f1pXqD+Hg==}
@@ -12825,6 +12834,25 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
+    dev: false
+
+  /next-mdx-remote@4.4.1(@types/react@18.2.69)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1BvyXaIou6xy3XoNF4yaMZUCb6vD2GTAa5ciOa6WoO+gAUTYsb1K4rI/HSC2ogAWLrb/7VSV52skz07vOzmqIQ==}
+    engines: {node: '>=14', npm: '>=7'}
+    peerDependencies:
+      react: '>=16.x <=18.x'
+      react-dom: '>=16.x <=18.x'
+    dependencies:
+      '@mdx-js/mdx': 3.0.1
+      '@mdx-js/react': 3.0.1(@types/react@18.2.69)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      vfile: 5.3.7
+      vfile-matter: 3.0.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+    dev: true
 
   /next-themes@0.2.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
