@@ -1,4 +1,4 @@
-# Fern Platform
+# :herb: Fern Platform
 
 The Fern Platform repository contains all of Fern's closed-source services
 and frontends.
