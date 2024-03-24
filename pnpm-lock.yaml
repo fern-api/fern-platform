@@ -689,8 +689,8 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0(@datadog/browser-logs@5.12.0)
       '@fern-api/fdr-sdk':
-        specifier: 0.60.0-1-g4795d27
-        version: 0.60.0-1-g4795d27
+        specifier: workspace:*
+        version: link:../../fdr-sdk
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
@@ -924,8 +924,8 @@ importers:
   packages/ui/docs-bundle:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.60.0-1-g4795d27
-        version: 0.60.0-1-g4795d27
+        specifier: workspace:*
+        version: link:../../fdr-sdk
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1

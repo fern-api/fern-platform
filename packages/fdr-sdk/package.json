@@ -1,12 +1,19 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "main": "./src/index.ts",
-  "source": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fdr-sdk"
+  },
+  "private": true,
+  "type": "module",
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
   "files": [
     "lib"
   ],
-  "type": "module",
   "dependencies": {
     "lodash": "^4.17.21",
     "marked": "^5.1.0",

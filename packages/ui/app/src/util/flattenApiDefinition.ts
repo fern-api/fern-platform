@@ -79,6 +79,7 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
     api: FdrAPI.ApiDefinitionId;
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, APIV1Read.TypeDefinition>;
+    globalHeaders: APIV1Read.Header[];
 }
 
 export function flattenApiDefinition(
@@ -91,6 +92,7 @@ export function flattenApiDefinition(
         api: apiDefinition.id,
         auth: apiDefinition.auth,
         types: apiDefinition.types,
+        globalHeaders: apiDefinition.globalHeaders ?? [],
         ...package_,
     };
 }

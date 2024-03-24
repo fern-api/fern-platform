@@ -13,4 +13,5 @@
     },
   },
   "include": ["./src/**/*"],
+  "references": [{ "path": "../../packages/fdr-sdk" }],
 }
