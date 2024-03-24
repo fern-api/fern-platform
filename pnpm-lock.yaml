@@ -855,9 +855,6 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
-      title:
-        specifier: ^3.5.3
-        version: 3.5.3
       unified:
         specifier: ^11.0.4
         version: 11.0.4
@@ -901,9 +898,6 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
-      '@types/title':
-        specifier: ^3.4.3
-        version: 3.4.3
       depcheck:
         specifier: ^1.4.3
         version: 1.4.3
