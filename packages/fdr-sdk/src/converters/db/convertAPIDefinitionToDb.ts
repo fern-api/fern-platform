@@ -33,7 +33,7 @@ export function convertAPIDefinitionToDb(
                         writeShape: endpoint,
                         apiDefinition: writeShape,
                         context,
-                        snippets: snippets,
+                        snippets,
                     }) ?? [],
             ),
             webhooks:
@@ -66,6 +66,7 @@ export function convertAPIDefinitionToDb(
             return subpackages;
         }, {}),
         auth: writeShape.auth,
+        globalHeaders: writeShape.globalHeaders,
         hasMultipleBaseUrls: context.hasMultipleBaseUrls(),
         navigation: writeShape.navigation,
     };
@@ -95,9 +96,9 @@ function transformSubpackage({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         subpackageId: id,
-        parent: parent,
+        parent,
         name: writeShape.name,
-        endpoints: endpoints,
+        endpoints,
         websockets: websockets ?? [],
         types: writeShape.types,
         subpackages: writeShape.subpackages,
@@ -474,8 +475,8 @@ export function transformExampleEndpointCall({
         responseStatusCode: writeShape.responseStatusCode,
         responseBody: writeShape.responseBody,
         codeExamples: transformCodeExamples({
-            endpointDefinition: endpointDefinition,
-            snippets: snippets,
+            endpointDefinition,
+            snippets,
         }),
         requestBodyV3:
             writeShape.requestBodyV3 ?? writeShape.requestBody != null
