@@ -99,6 +99,8 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
         );
     }, [example?.messages, websocket.messages]);
 
+    const headers = websocket.headers.filter((header) => !header.hidden);
+
     return (
         <div
             className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
@@ -159,14 +161,14 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     </div>
                                 }
                             >
-                                {websocket.headers.length > 0 && (
+                                {headers.length > 0 && (
                                     <EndpointSection
                                         title="Headers"
                                         anchorIdParts={["request", "headers"]}
                                         route={route}
                                     >
                                         <div className="flex flex-col">
-                                            {websocket.headers.map((parameter) => (
+                                            {headers.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
