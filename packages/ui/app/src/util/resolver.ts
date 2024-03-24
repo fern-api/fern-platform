@@ -1,5 +1,4 @@
-import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
+import type { APIV1Read, DocsV1Read, FdrAPI, WithoutQuestionMarks } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import {
