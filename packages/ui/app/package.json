@@ -31,7 +31,7 @@
   "dependencies": {
     "@datadog/browser-logs": "^5.12.0",
     "@datadog/browser-rum": "^5.12.0",
-    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/fdr-sdk": "0.65.171-18-g0ee639d9c",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",

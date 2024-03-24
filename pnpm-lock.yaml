@@ -248,8 +248,8 @@ importers:
   packages/commons/fdr-utils:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.60.0-1-g4795d27
-        version: 0.60.0-1-g4795d27
+        specifier: 0.65.171-18-g0ee639d9c
+        version: 0.65.171-18-g0ee639d9c
       '@fern-ui/core-utils':
         specifier: workspace:^
         version: link:../core-utils
@@ -689,8 +689,8 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0(@datadog/browser-logs@5.12.0)
       '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
+        specifier: 0.65.171-18-g0ee639d9c
+        version: 0.65.171-18-g0ee639d9c
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
@@ -924,8 +924,8 @@ importers:
   packages/ui/docs-bundle:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
+        specifier: 0.65.171-18-g0ee639d9c
+        version: 0.65.171-18-g0ee639d9c
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1
@@ -4184,6 +4184,21 @@ packages:
   /@eslint/js@8.56.0:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@fern-api/fdr-sdk@0.65.171-18-g0ee639d9c:
+    resolution: {integrity: sha512-n5zeA5F2oRXwH3xleRUo3oBrJKabwNyrQ0L+JopdK3KXsTP+fDMumD8dvJ2EVuEJve/say96HRp0aTMNY8q8ZA==}
+    dependencies:
+      form-data: 4.0.0
+      js-base64: 3.7.2
+      lodash: 4.17.21
+      marked: 5.1.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      tinycolor2: 1.6.0
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@fern-api/venus-api-sdk@0.1.1:
     resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
