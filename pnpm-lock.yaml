@@ -213,6 +213,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.26
+      '@types/title':
+        specifier: ^3.4.3
+        version: 3.4.3
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
@@ -941,7 +944,7 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-ui/fdr-utils':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../commons/fdr-utils
       '@fern-ui/ui':
         specifier: workspace:*
