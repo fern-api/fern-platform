@@ -17,7 +17,7 @@ describe("getSlugForFirstNavigatableEndpointOrWebhook()", () => {
             const result = getSlugForFirstNavigatableEndpointOrWebhook(
                 SUBPACKAGE_WITH_NESTED_SUBPACKAGES,
                 [],
-                DEFINITION
+                DEFINITION,
             );
             expect(result).toEqual("sub_2/ep_1");
         });

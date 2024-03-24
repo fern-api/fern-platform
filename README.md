@@ -1,7 +1,18 @@
-# Fern Platform
+# :herb: Fern Platform
 
 The Fern Platform repository contains all of Fern's closed-source services
 and frontends.
+
+## API Definitions
+
+All API Definitions should be defined in Fern. These definitions will be
+documented in our [internal documentation website](https://fern-internal.docs.buildwithfern.com/).
+
+To check your API Definitions run `pnpm fern check`. All Fern commands
+should be prefixed with `pnpm` since our fern dependency is managed
+by our workspace root.
+
+> Note: To upgrade fern run `pnpm upgrade fern-api`.
 
 ## Services
 

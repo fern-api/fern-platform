@@ -1,6 +1,5 @@
-import { buildUrl } from "@fern-ui/ui";
+import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { getAllUrlsFromDocsConfig } from "../../../utils/getAllUrlsFromDocsConfig";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../utils/toValidPathname";
 
@@ -70,7 +69,7 @@ const handler: NextApiHandler = async (
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const urls = await getAllUrlsFromDocsConfig(
+        const urls = getAllUrlsFromDocsConfig(
             xFernHost,
             docs.baseUrl.basePath,
             docs.definition.config,

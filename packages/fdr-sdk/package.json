@@ -1,29 +1,21 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/fdr-sdk"
-  },
-  "private": true,
-  "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
+  "source": "./src/index.ts",
   "files": [
     "lib"
   ],
+  "type": "module",
   "dependencies": {
-    "@ungap/url-search-params": "0.2.2",
-    "axios": "^1.6.5",
-    "form-data": "^4.0.0",
-    "js-base64": "3.7.2",
     "lodash": "^4.17.21",
     "marked": "^5.1.0",
-    "qs": "^6.12.0",
     "tinycolor2": "^1.6.0",
-    "url-join": "4.0.1"
+    "url-join": "4.0.1",
+    "form-data": "4.0.0",
+    "node-fetch": "2.7.0",
+    "qs": "6.11.2",
+    "js-base64": "3.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
@@ -33,9 +25,10 @@
     "@types/jest": "^29.5.11",
     "@types/lodash": "^4.14.194",
     "@types/marked": "^5.0.0",
-    "@types/qs": "^6.9.14",
     "@types/tinycolor2": "^1.4.6",
     "@types/url-join": "4.0.1",
+    "@types/qs": "6.9.8",
+    "@types/node-fetch": "2.6.9",
     "eslint": "^8.56.0",
     "eslint-config-custom": "*",
     "jest": "^29.7.0",

@@ -1,3 +1,4 @@
+import { SidebarNode } from "@fern-ui/fdr-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
@@ -7,7 +8,6 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { FeatureFlags, useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
-import { SidebarNode } from "../sidebar/types";
 import {
     flattenRootPackage,
     isEndpoint,

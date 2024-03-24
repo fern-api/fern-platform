@@ -1,3 +1,4 @@
+import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
@@ -5,7 +6,6 @@ import { FernButton } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
-import { titleCase } from "../util/titleCase";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";

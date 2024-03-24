@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getAllUrlsFromDocsConfig no-version-yes-tabs gets all urls from docs config 1`] = `
+[
+  "/docs/api",
+  "/docs/api/tab-1",
+  "/docs/api/tab-1/section-1",
+  "/docs/api/tab-1/section-1/page-1",
+  "/docs/api/page-2",
+  "/docs/api/tab-1/section-2",
+  "/docs/api/section-2",
+  "/docs/api/tab-1/section-2/page-4",
+  "/docs/api/tab-1/page-5",
+  "/docs/api/tab-2",
+  "/docs/api/tab-2/page-7",
+  "/docs/api/tab-2/page-8",
+  "/docs/api/tab-2/section-5",
+]
+`;
+
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api 1`] = `
+{
+  "redirect": "/docs/api/tab-1/section-1/page-1",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/page-2 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "page-2",
+      ],
+      "id": "page-2.md",
+      "slug": [
+        "docs",
+        "api",
+        "page-2",
+      ],
+      "title": "Page 2",
+      "type": "page",
+      "urlSlug": "page-2",
+    },
+    "currentTabIndex": 0,
+    "currentVersionIndex": -1,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/section-1 1`] = `undefined`;
+
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-1 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "tab-1",
+      ],
+      "id": "page-6.md",
+      "slug": [
+        "docs",
+        "api",
+        "tab-1",
+      ],
+      "title": "Page 6",
+      "type": "page",
+      "urlSlug": "page-6",
+    },
+    "currentTabIndex": 0,
+    "currentVersionIndex": -1,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-2 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "tab-2",
+      ],
+      "id": "page-10.md",
+      "slug": [
+        "docs",
+        "api",
+        "tab-2",
+      ],
+      "title": "Page 10",
+      "type": "page",
+      "urlSlug": "page-10",
+    },
+    "currentTabIndex": 1,
+    "currentVersionIndex": -1,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-2/section-5 1`] = `
+{
+  "redirect": "/docs/api/tab-1",
+  "type": "redirect",
+}
+`;

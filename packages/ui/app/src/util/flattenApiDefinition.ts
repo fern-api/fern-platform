@@ -1,6 +1,5 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish } from "@fern-ui/core-utils";
-import { titleCase } from "./titleCase";
+import { isNonNullish, titleCase } from "@fern-ui/core-utils";
 
 export interface FlattenedParameter {
     key: string;
@@ -72,8 +71,8 @@ export interface FlattenedApiDefinitionPackage {
     websockets: FlattenedWebSocketChannel[];
     webhooks: FlattenedWebhookDefinition[];
     subpackages: FlattenedSubpackage[];
-    slug: string[];
-    usedTypes: string[];
+    slug: readonly string[];
+    usedTypes: readonly string[];
 }
 
 export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
@@ -85,7 +84,7 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
 
 export function flattenApiDefinition(
     apiDefinition: APIV1Read.ApiDefinition,
-    parentSlugs: string[],
+    parentSlugs: readonly string[],
 ): FlattenedApiDefinition {
     const package_ = flattenPackage(apiDefinition.rootPackage, apiDefinition.subpackages, parentSlugs);
 
@@ -101,7 +100,7 @@ export function flattenApiDefinition(
 function flattenPackage(
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage>,
-    parentSlugs: string[],
+    parentSlugs: readonly string[],
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {

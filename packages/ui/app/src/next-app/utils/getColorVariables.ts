@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { gray, mauve, olive, sage, sand, slate } from "@radix-ui/colors";
 import tinycolor from "tinycolor2";
-import { ColorsConfig } from "../../sidebar/types";
 
 interface ColorConfig {
     dark: DocsV1Read.RgbaColor;

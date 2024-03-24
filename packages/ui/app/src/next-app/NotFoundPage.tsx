@@ -1,8 +1,8 @@
+import { buildUrl } from "@fern-ui/fdr-utils";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { GetStaticProps } from "next/types";
 import { REGISTRY_SERVICE } from "../services/registry";
-import { buildUrl } from "../util/buildUrl";
 
 export declare namespace NotFoundPage {
     export interface Props {

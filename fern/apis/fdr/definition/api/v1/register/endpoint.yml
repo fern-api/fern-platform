@@ -133,7 +133,7 @@ types:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-      fileDownload: {}
+      fileDownload: FileDownloadResponseBodyShape
       streamingText: {}
       stream: StreamResponseV2
 
@@ -143,13 +143,17 @@ types:
         docs: |
           A response that can either be streaming or REST
 
+  FileDownloadResponseBodyShape:
+    properties:
+      contentType: optional<string>
+
   StreamResponseV2:
     properties:
-      terminator: 
+      terminator:
         type: optional<string>
-        docs: | 
+        docs: |
           The terminator for each message. For example, for OpenAPI 
-          the terminator is [DATA]. 
+          the terminator is [DATA].
       shape: JsonBodyShape
 
   StreamConditionResponse:
@@ -214,6 +218,14 @@ types:
     union:
       json: unknown
       filename: string
+      filenameWithData: FilenameWithData
+
+  FilenameWithData:
+    properties:
+      filename: string
+      data: FileId
+
+  FileId: string
 
   ExampleEndpointResponse:
     union:

@@ -1,5 +1,6 @@
-import type { APIV1Read, DocsV1Read, FdrAPI, WithoutQuestionMarks } from "@fern-api/fdr-sdk";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
+import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import {
     endpointExampleToHttpRequestExample,
@@ -15,7 +16,6 @@ import {
     FlattenedWebhookDefinition,
     FlattenedWebSocketChannel,
 } from "./flattenApiDefinition";
-import { titleCase } from "./titleCase";
 
 export type WithDescription = { description: SerializedMdxContent | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
@@ -1002,7 +1002,7 @@ export interface ResolvedWithApiDefinition {
     websockets: ResolvedWebSocketChannel[];
     webhooks: ResolvedWebhookDefinition[];
     subpackages: ResolvedSubpackage[];
-    slug: string[];
+    slug: readonly string[];
 }
 
 export type ResolvedApiDefinition =

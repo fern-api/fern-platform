@@ -1,9 +1,8 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { findApiSection, SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
-import { SidebarNode } from "../sidebar/types";
-import { findApiSection, visitSidebarNodes } from "../sidebar/visitor";
 import { flattenApiDefinition } from "./flattenApiDefinition";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
@@ -47,7 +46,7 @@ export async function convertNavigatableToResolvedPath({
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
 }): Promise<ResolvedPath | undefined> {
-    const traverseState = visitSidebarNodes(sidebarNodes, slug);
+    const traverseState = traverseSidebarNodes(sidebarNodes, slug);
 
     if (traverseState.curr == null) {
         return;
@@ -159,7 +158,7 @@ async function getNeighbor(
 }
 
 async function getNeighbors(
-    traverseState: ReturnType<typeof visitSidebarNodes>,
+    traverseState: ReturnType<typeof traverseSidebarNodes>,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedPath.Neighbors> {
     const [prev, next] = await Promise.all([

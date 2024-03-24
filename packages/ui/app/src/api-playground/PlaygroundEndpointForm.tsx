@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
@@ -9,7 +9,6 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { titleCase } from "../util/titleCase";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";

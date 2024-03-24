@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import tinycolor from "tinycolor2";
-import { ColorsConfig } from "../../sidebar/types";
 import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
 import { getLayoutVariables } from "./getLayoutVariables";

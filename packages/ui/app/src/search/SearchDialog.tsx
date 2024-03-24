@@ -1,3 +1,4 @@
+import { SidebarNode, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
 import cn from "clsx";
@@ -7,7 +8,6 @@ import { useNavigationContext } from "../contexts/navigation-context";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
-import { SidebarNode, SidebarVersionInfo } from "../sidebar/types";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
 import { SearchHits, SearchMobileHits } from "./SearchHits";
 
