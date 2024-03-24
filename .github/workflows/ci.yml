@@ -8,6 +8,7 @@ on:
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
 jobs:
   check:
@@ -84,8 +85,6 @@ jobs:
         run: |
           pnpm fern generate --local
           pnpm turbo --filter=@fern-platform/fdr codegen
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: Setup database
         # TODO: re-enable when moving to turbo
