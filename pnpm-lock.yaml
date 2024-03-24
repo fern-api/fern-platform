@@ -1142,8 +1142,8 @@ importers:
         specifier: ^3.335.0
         version: 3.537.0
       '@fern-api/fdr-sdk':
-        specifier: 0.60.0-1-g4795d27
-        version: 0.60.0-1-g4795d27
+        specifier: workspace:*
+        version: link:../../packages/fdr-sdk
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1
