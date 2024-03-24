@@ -249,12 +249,6 @@ importers:
       '@fern-ui/core-utils':
         specifier: workspace:^
         version: link:../core-utils
-      strip-ansi:
-        specifier: ^7.1.0
-        version: 7.1.0
-      ua-parser-js:
-        specifier: ^1.0.35
-        version: 1.0.37
     devDependencies:
       '@types/jest':
         specifier: ^29.5.11
@@ -262,9 +256,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.26
-      '@types/ua-parser-js':
-        specifier: ^0.7.39
-        version: 0.7.39
       depcheck:
         specifier: ^1.4.3
         version: 1.4.3
