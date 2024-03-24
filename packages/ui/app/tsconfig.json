@@ -5,7 +5,6 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },
-    { "path": "../../commons/react/react-commons" },
-    { "path": "../../fdr-sdk" }
+    { "path": "../../commons/react/react-commons" }
   ]
 }
