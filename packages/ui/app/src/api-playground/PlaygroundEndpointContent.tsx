@@ -7,7 +7,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react
 import { FernAudioPlayer } from "../components/FernAudioPlayer";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
-import { FernErrorTag, stringifyError } from "../components/FernErrorBoundary";
+import { FernErrorTag } from "../components/FernErrorBoundary";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -16,10 +16,10 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
+import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
-import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundEndpointContentProps {
     endpoint: ResolvedEndpointDefinition;
@@ -244,13 +244,15 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         />
                                     ) : (
                                         <FernErrorTag
+                                            component="PlaygroundEndpointContent"
                                             error={`File preview not supported for ${response.response.contentType}`}
                                             className="flex h-full items-center justify-center"
                                         />
                                     ),
                                 failed: (e) => (
                                     <FernErrorTag
-                                        error={stringifyError(e)}
+                                        component="PlaygroundEndpointContent"
+                                        error={e}
                                         className="flex h-full items-center justify-center"
                                     />
                                 ),

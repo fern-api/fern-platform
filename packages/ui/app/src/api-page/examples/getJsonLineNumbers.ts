@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
-import { capturePosthogEvent } from "../../analytics/posthog";
+import { emitDatadogError } from "../../analytics/datadogRum";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -21,7 +21,14 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        capturePosthogEvent("jsonpath_error", { error: e, query });
+
+        emitDatadogError(e, {
+            context: "ApiPage",
+            errorSource: "getJsonLineNumbers",
+            errorDescription:
+                "Jsonpath failed to query JSON object. Check the query that was constructed when the user hovered over a specific property",
+            data: { json, query },
+        });
     }
 
     if (part.type === "objectFilter") {

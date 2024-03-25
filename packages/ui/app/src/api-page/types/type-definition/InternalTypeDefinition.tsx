@@ -2,12 +2,12 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useRouter } from "next/router";
-import { memo, ReactElement, useCallback, useEffect, useMemo } from "react";
+import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { getAnchorId } from "../../../util/anchor";
-import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
+import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -148,7 +148,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
 
     if (!isCollapsible) {
         return (
-            <FernErrorBoundary type="type_definition">
+            <FernErrorBoundary component="InternalTypeDefinition">
                 <FernTooltipProvider>
                     <TypeDefinitionDetails
                         elements={collapsableContent.elements}
@@ -205,7 +205,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     );
 
     return (
-        <FernErrorBoundary type="type_definition">
+        <FernErrorBoundary component="InternalTypeDefinition">
             <FernTooltipProvider>{renderContent()}</FernTooltipProvider>
         </FernErrorBoundary>
     );

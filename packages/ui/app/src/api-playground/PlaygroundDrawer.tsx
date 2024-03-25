@@ -14,13 +14,13 @@ import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import {
     FlattenedRootPackage,
-    isEndpoint,
-    isWebSocket,
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
     ResolvedTypeDefinition,
     ResolvedWebSocketChannel,
+    isEndpoint,
+    isWebSocket,
 } from "../util/resolver";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
@@ -315,7 +315,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                             </div>
                         </div>
                     </div>
-                    <FernErrorBoundary type="playground" className="flex h-full items-center justify-center">
+                    <FernErrorBoundary component="PlaygroundDrawer" className="flex h-full items-center justify-center">
                         {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
                             <PlaygroundEndpoint
                                 endpoint={matchedEndpoint}

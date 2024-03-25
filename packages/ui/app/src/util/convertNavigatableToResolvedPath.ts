@@ -1,13 +1,14 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { findApiSection, SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
+import { SidebarNode, findApiSection, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
-import { flattenApiDefinition } from "./flattenApiDefinition";
 import type { ResolvedPath } from "./ResolvedPath";
+import { flattenApiDefinition } from "./flattenApiDefinition";
 import { resolveApiDefinition } from "./resolver";
 
-async function getExcerpt(
+async function getSubtitle(
     node: SidebarNode.Page,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<SerializedMdxContent | undefined> {
@@ -31,6 +32,16 @@ async function getExcerpt(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error occurred while parsing frontmatter", e);
+        emitDatadogError(e, {
+            context: "getStaticProps",
+            errorSource: "getSubtitle",
+            errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
+            data: {
+                pageTitle: node.title,
+                pageId: node.id,
+                route: `/${node.slug.join("/")}`,
+            },
+        });
         return undefined;
     }
 }
@@ -149,7 +160,7 @@ async function getNeighbor(
     if (sidebarNode == null) {
         return null;
     }
-    const excerpt = await getExcerpt(sidebarNode, pages);
+    const excerpt = await getSubtitle(sidebarNode, pages);
     return {
         fullSlug: sidebarNode.slug.join("/"),
         title: sidebarNode.title,

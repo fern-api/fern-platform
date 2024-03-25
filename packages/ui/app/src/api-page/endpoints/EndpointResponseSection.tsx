@@ -39,14 +39,18 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     console.error(
                         "Generated API Reference contains a deprecated streamingText shape. Please upgrade Fern CLI and regenerate the API Reference.",
                     );
-                    return <FernErrorTag error="Stream condition cannot be rendered" />;
+                    return (
+                        <FernErrorTag component="EndpointResponseSection" error="Stream condition cannot be rendered" />
+                    );
                 },
                 streamCondition: () => {
                     // eslint-disable-next-line no-console
                     console.error(
                         "Generated API Reference contains a deprecated streamCondition shape. Please upgrade Fern CLI and regenerate the API Reference.",
                     );
-                    return <FernErrorTag error="Stream condition cannot be rendered" />;
+                    return (
+                        <FernErrorTag component="EndpointResponseSection" error="Stream condition cannot be rendered" />
+                    );
                 },
                 stream: (stream) => (
                     <TypeReferenceDefinitions

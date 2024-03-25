@@ -35,7 +35,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     return (
         <>
             {endpoints.map((endpoint, idx) => (
-                <FernErrorBoundary type="endpoint" key={endpoint.id}>
+                <FernErrorBoundary component="ApiPackageContents" key={endpoint.id}>
                     <Endpoint
                         api={api}
                         showErrors={showErrors}
@@ -52,7 +52,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                 </FernErrorBoundary>
             ))}
             {websockets.map((websocket, idx) => (
-                <FernErrorBoundary type="websocket" key={websocket.id}>
+                <FernErrorBoundary component="ApiPackageContents" key={websocket.id}>
                     <WebSocket
                         api={api}
                         websocket={websocket}
@@ -62,7 +62,7 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                 </FernErrorBoundary>
             ))}
             {webhooks.map((webhook, idx) => (
-                <FernErrorBoundary type="webhook" key={webhook.id}>
+                <FernErrorBoundary component="ApiPackageContents" key={webhook.id}>
                     <Webhook
                         key={webhook.id}
                         webhook={webhook}
