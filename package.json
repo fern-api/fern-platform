@@ -31,7 +31,7 @@
     "docs:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-prod",
     "docs-dev:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-dev",
     "docs:build": "pnpm --filter=@fern-ui/docs-bundle run build:fern-prod",
-    "fdr:generate": "fern generate --api fdr --local"
+    "fdr:generate": "fern generate --api fdr"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -93,5 +93,8 @@
     "jsonc-parser@2.2.1": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "fern-api": "^0.19.18"
   }
 }

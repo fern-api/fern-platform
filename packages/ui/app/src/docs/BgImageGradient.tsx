@@ -1,6 +1,6 @@
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import { FC } from "react";
-import { ColorsConfig } from "../sidebar/types";
 import "./BgImageGradient.css";
 
 export declare namespace BgImageGradient {

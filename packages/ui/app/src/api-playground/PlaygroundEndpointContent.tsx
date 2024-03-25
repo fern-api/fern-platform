@@ -4,8 +4,10 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { FernAudioPlayer } from "../components/FernAudioPlayer";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
+import { FernErrorTag, stringifyError } from "../components/FernErrorBoundary";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -204,16 +206,21 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
                                 {visitLoadable(response, {
                                     loading: () => <div />,
-                                    loaded: (response) => (
-                                        <CopyToClipboardButton
-                                            content={() =>
-                                                response.type === "json"
-                                                    ? JSON.stringify(response.response.body, null, 2)
-                                                    : response.response.body
-                                            }
-                                            className="-mr-2"
-                                        />
-                                    ),
+                                    loaded: (response) =>
+                                        response.type === "file" ? (
+                                            <div />
+                                        ) : (
+                                            <CopyToClipboardButton
+                                                content={() =>
+                                                    response.type === "json"
+                                                        ? JSON.stringify(response.response.body, null, 2)
+                                                        : response.type === "stream"
+                                                          ? response.response.body
+                                                          : ""
+                                                }
+                                                className="-mr-2"
+                                            />
+                                        ),
                                     failed: () => <div />,
                                 })}
                             </div>
@@ -226,8 +233,27 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     ) : (
                                         <div className="flex flex-1 items-center justify-center">Loading...</div>
                                     ),
-                                loaded: (response) => <PlaygroundResponsePreview response={response} />,
-                                failed: () => <span>Failed</span>,
+                                loaded: (response) =>
+                                    response.type !== "file" ? (
+                                        <PlaygroundResponsePreview response={response} />
+                                    ) : response.response.contentType.startsWith("audio/") ? (
+                                        <FernAudioPlayer
+                                            src={response.response.src}
+                                            title={"Untitled"}
+                                            className="flex h-full items-center justify-center p-4"
+                                        />
+                                    ) : (
+                                        <FernErrorTag
+                                            error={`File preview not supported for ${response.response.contentType}`}
+                                            className="flex h-full items-center justify-center"
+                                        />
+                                    ),
+                                failed: (e) => (
+                                    <FernErrorTag
+                                        error={stringifyError(e)}
+                                        className="flex h-full items-center justify-center"
+                                    />
+                                ),
                             })}
                         </FernCard>
                     </VerticalSplitPane>

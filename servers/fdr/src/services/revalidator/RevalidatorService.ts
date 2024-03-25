@@ -21,7 +21,11 @@ export type RevalidatedPaths = {
 };
 
 export interface RevalidatorService {
-    revalidate(params: { baseUrl: ParsedBaseUrl; app: FdrApplication }): Promise<RevalidatedPaths>;
+    revalidate(params: {
+        fernUrl: ParsedBaseUrl;
+        baseUrl: ParsedBaseUrl;
+        app: FdrApplication;
+    }): Promise<RevalidatedPaths>;
 }
 
 export class RevalidatorServiceImpl implements RevalidatorService {
@@ -33,10 +37,27 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         this.axiosInstance.interceptors.request.use(AxiosLogger.requestLogger);
     }
 
+    /**
+     * NOTE on basepath revalidation:
+     *
+     * When the baseUrl.path is not null, this means we are revalidating a custom domain which has configured subpath rewriting.
+     * In this case, we don't have access to /api/revalidate-all and revalidation would fail.
+     * Instead, we can hit https://org.docs.buildwithfern.com/api/revalidate-all?basePath=/path where the x-fern-host is set to custom-domain.com.
+     * This works because custom-domain.com/path is rewritten to org.docs.buildwithfern.com/path
+     *
+     * Example prefetch request:
+     * https://custom-domain.com/path/_next/data/.../static/custom-domain.com/path.json is rewritten to:
+     * https://org.docs.buildwithfern.com/path/_next/data/.../static/custom-domain.com/path.json
+     *
+     * So `/static/custom-domain.com/path` is the path we need to revalidate on org.docs.buildwithfern.com
+     */
+
     public async revalidate({
+        fernUrl,
         baseUrl,
         app,
     }: {
+        fernUrl: ParsedBaseUrl;
         baseUrl: ParsedBaseUrl;
         app?: FdrApplication;
     }): Promise<RevalidatedPaths> {
@@ -45,10 +66,10 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         let revalidationFailed = false;
 
         try {
+            const hostname = baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname;
+            const queryParams = baseUrl.path != null ? `?basePath=${baseUrl.path}` : "";
             const res = await this.axiosInstance.post(
-                `https://${baseUrl.hostname}/api/revalidate-all${
-                    baseUrl.path != null ? `?basePath=${baseUrl.path}` : ""
-                }`,
+                `https://${hostname}/api/revalidate-all${queryParams}`,
                 undefined,
                 {
                     timeout: 1000 * 300, // 5 minutes (matches vercel timeout)

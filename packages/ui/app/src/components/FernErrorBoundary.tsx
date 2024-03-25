@@ -13,6 +13,27 @@ export declare interface FernErrorBoundaryProps {
     type: string;
 }
 
+export function FernErrorTag({ error, className }: { error: string; className?: string }): ReactElement {
+    return (
+        <div className={clsx(className ?? "my-4")}>
+            <span className="bg-tag-danger t-danger inline-flex items-center gap-2 rounded-full px-2">
+                <ExclamationTriangleIcon />
+                <span>{error}</span>
+            </span>
+        </div>
+    );
+}
+
+export function stringifyError(error: unknown): string {
+    if (typeof error === "string") {
+        return error;
+    }
+    if (error instanceof Error) {
+        return error.message;
+    }
+    return JSON.stringify(error);
+}
+
 export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     type,
     className,
@@ -33,15 +54,7 @@ export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
         };
     }, [resetErrorBoundary, router.events]);
 
-    const stringifiedError = useMemo(() => {
-        if (typeof error === "string") {
-            return error;
-        }
-        if (error instanceof Error) {
-            return error.message;
-        }
-        return JSON.stringify(error);
-    }, [error]);
+    const stringifiedError = useMemo(() => stringifyError(error), [error]);
 
     useEffect(() => {
         // eslint-disable-next-line no-console
@@ -49,14 +62,7 @@ export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
         return capturePosthogEvent(`failed_to_render_${type}`, { error });
     }, [error, type]);
 
-    return (
-        <div className={clsx(className ?? "my-4")}>
-            <span className="bg-tag-danger t-danger inline-flex items-center gap-2 rounded-full px-2">
-                <ExclamationTriangleIcon />
-                <span>{stringifiedError}</span>
-            </span>
-        </div>
-    );
+    return <FernErrorTag error={stringifiedError} className={className} />;
 };
 
 const getFallbackComponent = memoize(function getFallbackComponent(

@@ -1,8 +1,8 @@
 import cn from "clsx";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { parse } from "node-html-parser";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
+import { FernLink } from "../components/FernLink";
 
 export declare namespace TableOfContents {
     export interface HTMLProps {
@@ -40,7 +40,7 @@ function TableOfContentsItem({
     return (
         <li>
             {text.length > 0 && (
-                <Link
+                <FernLink
                     className={cn(
                         "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 transition-all",
                         {
@@ -51,7 +51,7 @@ function TableOfContentsItem({
                     href={`#${anchorString}`}
                 >
                     {text}
-                </Link>
+                </FernLink>
             )}
             {items.length > 0 && <TableOfContentsList headings={items} indent={true} anchorInView={anchorInView} />}
         </li>
@@ -201,7 +201,7 @@ function generateTableOfContents(html: string): TableOfContentsItem[] {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             depth: parseInt(heading.tagName[1]!),
             text: heading.textContent?.trim() ?? "",
-            id: heading.id.trim() ?? "",
+            id: heading.getAttribute("data-anchor")?.trim() ?? "",
         }))
         .filter((heading) => heading.id.length > 0);
 

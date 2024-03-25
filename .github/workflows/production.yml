@@ -6,11 +6,14 @@ env:
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
-  DATADOG_CLIENT_TOKEN: ${{ secrets.DATADOG_CLIENT_TOKEN }}
+  DATADOG_CLIENT_TOKEN: ${{ secrets.DATADOG_API_KEY }}
   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
   WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
   JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
 on:
   push:
     tags:
@@ -38,8 +41,13 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Get Tag
+        id: tag
+        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+        shell: bash
+
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: VERSION="${{ steps.tag.outputs.TAG_NAME }}" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         run: |
@@ -66,3 +74,15 @@ jobs:
           echo "Revalidated: docs.buildwithfern.com"
 
           echo "Done!"
+
+      - name: Install datadog-ci
+        run: pnpm install --global @datadog/datadog-ci
+
+      - name: Upload sourcemap
+        run: |
+          datadog-ci sourcemaps upload ./packages/ui/docs-bundle/.next/static \
+          --service=docs-frontend \
+          --release-version=${{ steps.tag.outputs.TAG_NAME }} \
+          --minified-path-prefix=https://app.buildwithfern.com/_next/static
+        env:
+          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}

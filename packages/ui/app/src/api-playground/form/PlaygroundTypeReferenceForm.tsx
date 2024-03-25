@@ -5,6 +5,7 @@ import { FernInput } from "../../components/FernInput";
 import { FernNumericInput } from "../../components/FernNumericInput";
 import { FernSwitch } from "../../components/FernSwitch";
 import { FernTextarea } from "../../components/FernTextarea";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import {
     dereferenceObjectProperties,
     ResolvedObjectProperty,
@@ -15,6 +16,7 @@ import {
 import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
 import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormAside";
 import { WithLabel } from "../WithLabel";
+import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
@@ -106,6 +108,7 @@ interface PlaygroundTypeReferenceFormProps {
 // };
 
 export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
+    const { domain } = useDocsContext();
     const { id, property, shape, onChange, value, types, disabled } = props;
     const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
@@ -165,16 +168,29 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
         ),
         string: () => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernInput
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "string" ? value : ""}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
+                {domain.includes("elevenlabs") && property?.key === "voice_id" ? (
+                    <PlaygroundElevenLabsVoiceIdForm
+                        id={id}
+                        className="w-full"
+                        value={typeof value === "string" ? value : ""}
+                        onValueChange={onChange}
+                        onFocus={() => {
+                            setFocusedParameter(id);
+                        }}
+                        disabled={disabled}
+                    />
+                ) : (
+                    <FernInput
+                        id={id}
+                        className="w-full"
+                        value={typeof value === "string" ? value : ""}
+                        onValueChange={onChange}
+                        onFocus={() => {
+                            setFocusedParameter(id);
+                        }}
+                        disabled={disabled}
+                    />
+                )}
             </WithLabel>
         ),
         boolean: () => {

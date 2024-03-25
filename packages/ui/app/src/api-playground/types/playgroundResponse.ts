@@ -14,6 +14,17 @@ export declare namespace PlaygroundResponse {
         type: "json";
         time: number;
     }
+
+    export interface File {
+        type: "file";
+        response: {
+            status: number;
+            src: string;
+            contentType: string;
+        };
+        time: number;
+        size: string | null;
+    }
 }
 
-export type PlaygroundResponse = PlaygroundResponse.Stream | PlaygroundResponse.Json;
+export type PlaygroundResponse = PlaygroundResponse.Stream | PlaygroundResponse.Json | PlaygroundResponse.File;

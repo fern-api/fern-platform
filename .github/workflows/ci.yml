@@ -5,19 +5,34 @@ on:
     branches:
       - "**"
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 5 # This helps turbo resolve changes faster
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Compile
-        run: pnpm compile
+      - name: Codegen
+        run: |
+          npm install -g fern-api
+
+      - name: Compile and build
+        run: pnpm turbo compile codegen build
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+          WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
       - name: Check dependencies
         run: pnpm depcheck
@@ -29,6 +44,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
@@ -43,6 +60,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
@@ -59,25 +78,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Codegen
         run: |
-          npm install -g fern-api
-          fern generate --local
+          pnpm fern generate --local
           pnpm turbo --filter=@fern-platform/fdr codegen
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: Setup database
         # TODO: re-enable when moving to turbo
         # pnpm turbo --filter= docker:local
         run: |
-          pnpm --filter=@fern-platform/fdr test-db
-          pnpm --filter=@fern-platform/fdr test-ete
+          pnpm turbo --filter=@fern-platform/fdr test-db
+          pnpm turbo --filter=@fern-platform/fdr test-ete
 
       - name: Run tests
         run: pnpm test
@@ -91,6 +107,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install

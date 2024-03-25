@@ -8,6 +8,7 @@ imports:
   readCommons: ../read/commons.yml
   readWebhook: ../read/webhook.yml
   readWebsocket: ../read/websocket.yml
+  readEndpoint: ../read/endpoint.yml
 
 types:
   DbApiDefinition:
@@ -22,6 +23,8 @@ types:
         docs: |
           Whether or not endpoints are being served at different 
           base urls (i.e. https://a.com and https://b.com)
+      navigation: optional<readRoot.ApiNavigationConfigRoot>
+      globalHeaders: optional<list<readEndpoint.Header>>
 
   DbApiDefinitionPackage:
     properties:

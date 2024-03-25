@@ -37,6 +37,24 @@ types:
           If empty, assume false. 
           Whether or not endpoints are being served at different 
           base urls (i.e. https://a.com and https://b.com)
+      navigation: optional<ApiNavigationConfigRoot>
+      globalHeaders: optional<list<endpoint.Header>>
+
+  ApiNavigationConfigRoot:
+    properties:
+      items: list<ApiNavigationConfigItem>
+
+  ApiNavigationConfigItem:
+    union:
+      subpackage: ApiNavigationConfigSubpackage
+      endpointId: endpoint.EndpointId
+      websocketId: websocket.WebSocketId
+      webhookId: webhook.WebhookId
+
+  ApiNavigationConfigSubpackage:
+    properties:
+      subpackageId: SubpackageId
+      items: list<ApiNavigationConfigItem>
 
   ApiDefinitionPackage:
     properties:

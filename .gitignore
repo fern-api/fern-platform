@@ -14,6 +14,7 @@ servers/**/lib
 servers/**/dist
 servers/**/tsconfig*tsbuildinfo
 servers/**/out
+docker/build
 
 # next
 .next

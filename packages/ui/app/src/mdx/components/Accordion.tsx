@@ -2,19 +2,21 @@ import * as RadixAccordion from "@radix-ui/react-accordion";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { NextRouter, withRouter } from "next/router";
 import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { getSlugFromText } from "../base-components";
+import { getSlugFromText } from "../../util/getSlugFromText";
 
 export interface AccordionItemProps {
     title: string;
+    toc?: boolean;
     children: ReactNode;
 }
 
 export interface AccordionPropsWithRouter {
     items: AccordionItemProps[];
     router: NextRouter;
+    toc?: boolean;
 }
 
-const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], router }) => {
+const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], toc: parentToc = true, router }) => {
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const anchor = router.asPath.split("#")[1];
     useEffect(() => {
@@ -49,24 +51,30 @@ const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], router })
             value={activeTabs}
             onValueChange={handleValueChange}
         >
-            {items.map((item, idx) => (
-                <RadixAccordion.Item
-                    key={idx}
-                    value={idx.toString()}
-                    className="scroll-mt-header-height-padded first:rounded-t-[inherit] last:rounded-b-[inherit]"
-                    id={getSlugFromText(item.title)}
-                >
-                    <RadixAccordion.Trigger className="hover:bg-tag-default group flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors data-[state=open]:rounded-b-none">
-                        <ChevronRightIcon className="t-muted ease-shift duration-400 size-4 transition-transform group-data-[state=open]:rotate-90" />
-                        <h6 className="t-default m-0 -mb-px flex max-w-max whitespace-nowrap text-base leading-6">
-                            {item.title}
-                        </h6>
-                    </RadixAccordion.Trigger>
-                    <RadixAccordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
-                        <div className="m-5">{item.children}</div>
-                    </RadixAccordion.Content>
-                </RadixAccordion.Item>
-            ))}
+            {items.map(({ title, toc = parentToc, children }, idx) => {
+                const slug = getSlugFromText(title);
+                return (
+                    <RadixAccordion.Item
+                        key={idx}
+                        value={idx.toString()}
+                        className="scroll-mt-header-height-padded first:rounded-t-[inherit] last:rounded-b-[inherit]"
+                        id={slug}
+                    >
+                        <RadixAccordion.Trigger className="hover:bg-tag-default group flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors data-[state=open]:rounded-b-none">
+                            <ChevronRightIcon className="t-muted ease-shift duration-400 size-4 transition-transform group-data-[state=open]:rotate-90" />
+                            <h6
+                                className="t-default m-0 -mb-px flex max-w-max whitespace-nowrap text-base leading-6"
+                                data-anchor={toc ? slug : undefined}
+                            >
+                                {title}
+                            </h6>
+                        </RadixAccordion.Trigger>
+                        <RadixAccordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
+                            <div className="m-5">{children}</div>
+                        </RadixAccordion.Content>
+                    </RadixAccordion.Item>
+                );
+            })}
         </RadixAccordion.Root>
     );
 };

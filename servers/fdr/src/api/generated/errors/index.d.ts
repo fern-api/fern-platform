@@ -1,1 +1,0 @@
-export { FernRegistryError } from "./FernRegistryError";

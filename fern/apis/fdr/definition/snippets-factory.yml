@@ -26,7 +26,7 @@ service:
             apiId:
               type: commons.ApiId
               docs: |
-                The API name. 
+                The API name.
             snippets: SDKSnippetsCreate
       errors:
         - commons.UnauthorizedError
@@ -34,8 +34,8 @@ service:
         - snippets.OrgIdNotFound
         - snippets.SDKNotFound
 
-types: 
-  SDKSnippetsCreate: 
+types:
+  SDKSnippetsCreate:
     union:
       typescript: TypescriptSDKSnippetsCreate
       python: PythonSDKSnippetCreate
@@ -53,18 +53,17 @@ types:
       snippets: list<SinglePythonSnippetCreate>
 
   GoSDKSnippetsCreate:
-    properties: 
+    properties:
       sdk: snippets.GoSDK
       snippets: list<SingleGoSnippetCreate>
 
-  JavaSDKSnippetsCreate: 
-    properties: 
+  JavaSDKSnippetsCreate:
+    properties:
       sdk: snippets.JavaSDK
       snippets: list<SingleJavaSnippetCreate>
-  
 
   # Single creates
-  
+
   SingleTypescriptSnippetCreate:
     properties:
       endpoint: snippets.EndpointIdentifier
@@ -84,9 +83,9 @@ types:
     properties:
       endpoint: snippets.EndpointIdentifier
       snippet: JavaSnippetCode
-  
+
   # Snippet Code
-  
+
   TypeScriptSnippetCode:
     properties:
       client: string
@@ -104,4 +103,3 @@ types:
     properties:
       async_client: string
       sync_client: string
-      

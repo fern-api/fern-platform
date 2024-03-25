@@ -1,0 +1,25 @@
+FROM node:18 AS base
+
+# TODO: This is currently unused.
+# We prisma migrate in the service's Docker container which is not recommended.
+# But it is easier than spinning up an EC2 instance just to run prisma migrate, right now.
+
+RUN openssl version -v
+RUN uname -a
+
+# Create app directory
+WORKDIR /app
+
+# Copy schema and migration folder
+COPY ./package.json ./package.json
+COPY ./servers/fdr/prisma ./prisma
+
+# Install prisma for the migration
+RUN npm install -g prisma
+
+# Don't run production as root
+RUN addgroup --system --gid 1001 app_user
+RUN adduser --system --uid 1001 app_user
+USER app_user
+
+CMD ["prisma", "migrate", "deploy"]

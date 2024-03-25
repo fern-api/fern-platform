@@ -10,6 +10,7 @@ import {
     useRef,
 } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernLink } from "./FernLink";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
 type Intent = "none" | "primary" | "success" | "warning" | "danger";
@@ -64,7 +65,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
         ...linkProps
     } = props;
     return (
-        <Link
+        <FernLink
             ref={ref}
             tabIndex={0}
             aria-disabled={disabled}
@@ -87,7 +88,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
             }
         >
             {renderButtonContent(props)}
-        </Link>
+        </FernLink>
     );
 });
 
@@ -141,7 +142,7 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
         </button>
     );
 
-    if (isEllipsisActive() && !disableAutomaticTooltip) {
+    if (isEllipsisActive() && !disableAutomaticTooltip && (children ?? text) != null) {
         return (
             <FernTooltip content={children ?? text} className="line-clamp-3">
                 {button}

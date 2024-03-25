@@ -1,6 +1,7 @@
 import cn from "clsx";
-import Link, { LinkProps } from "next/link";
+import { LinkProps } from "next/link";
 import { DetailedHTMLProps, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
+import { FernLink } from "./FernLink";
 
 interface FernCardProps {
     className?: string;
@@ -9,9 +10,9 @@ interface FernCardProps {
 export const FernLinkCard = forwardRef<HTMLAnchorElement, PropsWithChildren<FernCardProps & LinkProps>>(
     function FernLinkCard({ children, className, ...props }, ref) {
         return (
-            <Link className={cn("fern-card interactive", className)} {...props} ref={ref}>
+            <FernLink className={cn("fern-card interactive", className)} {...props} ref={ref}>
                 {children}
-            </Link>
+            </FernLink>
         );
     },
 );

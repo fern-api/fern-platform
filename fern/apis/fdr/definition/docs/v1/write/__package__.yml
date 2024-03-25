@@ -299,6 +299,7 @@ types:
   PageMetadata:
     properties:
       title: string
+      icon: optional<string>
       id: PageId
       urlSlugOverride: optional<string>
       fullSlug: optional<list<string>>
@@ -306,11 +307,13 @@ types:
   LinkMetadata:
     properties:
       title: string
+      icon: optional<string>
       url: string
 
   ApiSection:
     properties:
       title: string
+      icon: optional<string>
       api: rootCommons.ApiDefinitionId
       artifacts: optional<ApiArtifacts>
       skipUrlSlug: optional<boolean>
@@ -324,6 +327,9 @@ types:
         type: optional<string>
         docs: |
           Optional title for the changelog section. Defaults to "Changelog" if not provided.
+      icon:
+        type: optional<string>
+        docs: Defaults to ActivityLog icon
       description: optional<string>
       pageId:
         type: optional<string>
@@ -341,9 +347,11 @@ types:
   DocsSection:
     properties:
       title: string
+      icon: optional<string>
       items: list<NavigationItem>
       urlSlugOverride: optional<string>
       collapsed: optional<boolean>
+      hidden: optional<boolean>
       skipUrlSlug: optional<boolean>
       fullSlug: optional<list<string>>
 

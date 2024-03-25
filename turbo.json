@@ -4,7 +4,7 @@
     "build": {
       // Build depends on own codegen and downstream build
       "outputs": ["lib/**", "dist/**"],
-      "dependsOn": ["^build", "codegen"]
+      "dependsOn": ["^compile", "^build", "codegen"]
     },
     "codegen": {
       // Don't cache codegen. We may not know all the outputs
@@ -14,7 +14,7 @@
     "compile": {
       // Build depends on own codegen
       "outputs": ["lib/**", "dist/**"],
-      "dependsOn": ["codegen"]
+      "dependsOn": ["codegen", "^compile", "^build"]
     },
     "lint": {},
     "lint:eslint": {},
@@ -29,18 +29,18 @@
     "format": {},
     "test": {
       // Test depends on own compile
-      "dependsOn": ["^build"]
+      "dependsOn": ["compile", "build"]
     },
     "test-db": {
       // Test depends on own compile
-      "dependsOn": ["^build"]
+      "dependsOn": ["compile", "build"]
     },
     "test-ete": {
       // Test depends on own compile
-      "dependsOn": ["^build"]
+      "dependsOn": ["compile", "build"]
     },
     "//#fdr:generate": {
-      "inputs": ["fern"],
+      "inputs": ["fern/**"],
       "outputs": ["servers/fdr/src/api/generated/**", "packages/fdr-sdk/src/client/generated/**"]
     }
   },

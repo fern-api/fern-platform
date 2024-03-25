@@ -32,6 +32,8 @@ export function convertDbAPIDefinitionToRead(
         ),
         auth: dbShape.auth,
         hasMultipleBaseUrls: dbShape.hasMultipleBaseUrls,
+        navigation: dbShape.navigation,
+        globalHeaders: dbShape.globalHeaders,
     };
 }
 

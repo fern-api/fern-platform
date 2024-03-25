@@ -1,7 +1,7 @@
 import { useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import Link from "next/link";
 import { useContext } from "react";
+import { FernLink } from "../components/FernLink";
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { FernLogo } from "./FernLogo";
 
@@ -20,7 +20,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     }
 
     return (
-        <Link
+        <FernLink
             href="https://buildwithfern.com"
             className={cn("flex cursor-pointer items-center space-x-2 lg:px-3 py-3 mt-4 !no-underline", className)}
             {...containerCallbacks}
@@ -36,6 +36,6 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
             >
                 Built with Fern
             </div>
-        </Link>
+        </FernLink>
     );
 };

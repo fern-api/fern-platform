@@ -1,7 +1,7 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
-import { Callout } from "../mdx/components/Callout";
+import { FernErrorTag } from "../components/FernErrorBoundary";
 import {
     dereferenceObjectProperties,
     ResolvedEndpointDefinition,
@@ -9,7 +9,6 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
-import { titleCase } from "../util/titleCase";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
@@ -227,17 +226,18 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
                     fileUpload: (fileUpload) => {
                         const fileUploadFormValue = formState?.body?.type === "form-data" ? formState?.body.value : {};
+                        if (fileUpload.value == null) {
+                            // eslint-disable-next-line no-console
+                            console.error(
+                                "Generated API Reference is missing file upload metadata. Please upgrade the Fern CLI to 0.19.7 or greater.",
+                            );
+                        }
                         return fileUpload.value == null ? (
                             <div>
                                 <div className="mb-4 px-4">
                                     <h5 className="t-muted m-0">Body</h5>
                                 </div>
-                                <FernCard className="rounded-xl p-4 shadow-sm">
-                                    <Callout intent="warning">
-                                        Generated API Reference is missing file upload metadata. Please upgrade the Fern
-                                        CLI to 0.19.7 or greater.
-                                    </Callout>
-                                </FernCard>
+                                <FernErrorTag error="File upload is not supported on this endpoint" />
                             </div>
                         ) : (
                             <div className="min-w-0 flex-1 shrink">

@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { gray, mauve, olive, sage, sand, slate } from "@radix-ui/colors";
 import tinycolor from "tinycolor2";
-import { ColorsConfig } from "../../sidebar/types";
 
 interface ColorConfig {
     dark: DocsV1Read.RgbaColor;
@@ -304,29 +304,6 @@ function getRadixGrayVar(gray: RadixGray, scale: number): string {
     return `var(--${gray}-a${scale})`;
 }
 
-// const DARK_GRAY_COLOR_SAMPLES: Record<RadixGray, tinycolor.Instance> = {
-//     gray: tinycolor(gray.gray6),
-//     mauve: tinycolor(mauve.mauve6),
-//     slate: tinycolor(slate.slate6),
-//     sage: tinycolor(sage.sage6),
-//     olive: tinycolor(olive.olive6),
-//     sand: tinycolor(sand.sand6),
-// };
-
-// const LIGHT_GRAY_COLOR_SAMPLES: Record<RadixGray, tinycolor.Instance> = {
-//     gray: tinycolor(gray.gray3),
-//     mauve: tinycolor(mauve.mauve3),
-//     slate: tinycolor(slate.slate3),
-//     sage: tinycolor(sage.sage3),
-//     olive: tinycolor(olive.olive3),
-//     sand: tinycolor(sand.sand3),
-// };
-
-// const GRAY_COLOR_SAMPLES: Record<"light" | "dark", Record<RadixGray, tinycolor.Instance>> = {
-//     light: LIGHT_GRAY_COLOR_SAMPLES,
-//     dark: DARK_GRAY_COLOR_SAMPLES,
-// };
-
 const GRAY_COLORS = {
     gray: {
         1: tinycolor(gray.gray1),
@@ -427,4 +404,13 @@ function getClosestGrayColor(color: tinycolor.Instance): RadixGray {
         }
     }
     return closestColor;
+}
+
+export function getThemeColor(config: DocsV1Read.ThemeConfig): string {
+    const color = config.headerBackground ?? (config.background.type === "solid" ? config.background : undefined);
+    if (color != null) {
+        return tinycolor(color).toHexString();
+    }
+
+    return tinycolor(config.accentPrimary).toHexString();
 }

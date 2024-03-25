@@ -33,8 +33,9 @@
   "dependencies": {
     "@datadog/browser-logs": "^5.12.0",
     "@datadog/browser-rum": "^5.12.0",
-    "@fern-api/fdr-sdk": "0.60.0-1-g4795d27",
+    "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
+    "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@headlessui/react": "^1.7.18",
@@ -86,7 +87,6 @@
     "shiki": "^1.1.7",
     "style-to-object": "^1.0.5",
     "tinycolor2": "^1.6.0",
-    "title": "^3.5.3",
     "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0"
   },
@@ -112,7 +112,6 @@
     "@types/react-dom": "^18.2.18",
     "@types/react-test-renderer": "^18.0.7",
     "@types/tinycolor2": "^1.4.6",
-    "@types/title": "^3.4.3",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^0.8.0",

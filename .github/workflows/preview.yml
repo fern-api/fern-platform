@@ -43,7 +43,7 @@ jobs:
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
+        run: VERSION="$(scripts/git-version.sh)" vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Comment in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
@@ -58,12 +58,13 @@ jobs:
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/app.buildwithfern.com?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
-          ALIAS_DOMAINS=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
+          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v9/projects/fern-prod/domains?limit=50&teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H  "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+          ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
 
           echo "## PR Preview" > preview.txt
 
           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+            echo "Handling domain: $DOMAIN"
             if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
               echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
             fi

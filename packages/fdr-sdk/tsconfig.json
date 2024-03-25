@@ -1,5 +1,11 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "." },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "module": "esnext",
+    "isolatedModules": false,
+    "rootDir": "src"
+  },
   "include": ["./src/**/*"]
 }

@@ -1,4 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
@@ -9,6 +10,7 @@ import { FernScrollArea } from "../../components/FernScrollArea";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
+import { getSlugFromChildren } from "../../util/getSlugFromText";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
@@ -17,7 +19,6 @@ import {
     ResolvedWebSocketMessage,
     unwrapReference,
 } from "../../util/resolver";
-import { joinUrlSlugs } from "../../util/slug";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
@@ -370,7 +371,7 @@ function CardedSection({
     children: ReactNode | undefined;
     route: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
-    const anchorRoute = `${route}#${title}`.toLowerCase();
+    const anchorRoute = `${route}#${getSlugFromChildren(title)}`.toLowerCase();
     return (
         <section
             {...props}

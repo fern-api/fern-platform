@@ -1,10 +1,7 @@
 import { useMounted } from "@fern-ui/react-commons";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import Link from "next/link";
 import {
     AnchorHTMLAttributes,
-    Children,
     cloneElement,
     ComponentProps,
     createElement,
@@ -18,7 +15,9 @@ import {
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernCard } from "../components/FernCard";
+import { FernLink } from "../components/FernLink";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { getSlugFromChildren } from "../util/getSlugFromText";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
 
@@ -64,15 +63,6 @@ export const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) =
 };
 
 /**
- * @see https://github.com/remarkjs/react-markdown/issues/404#issuecomment-604019030
- */
-const flatten = (text: string, child: ReactNode): any => {
-    return typeof child === "string"
-        ? text + child
-        : Children.toArray((child as ReactElement).props.children).reduce(flatten, text);
-};
-
-/**
  * By default, next will use /host/current/slug in SSG.
  * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
  * @returns /basepath/current/slug
@@ -82,17 +72,13 @@ export function useCurrentPathname(): string {
     return `/${resolvedPath.fullSlug}`;
 }
 
-function getSlugFromChildren(children: ReactNode): string {
-    const text = Children.toArray(children).reduce(flatten, "");
-    return getSlugFromText(text);
-}
-
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
     const slug = getSlugFromChildren(props.children);
     return createElement(
         `h${level}`,
         {
             id: slug,
+            "data-anchor": slug,
             ...props,
             className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
         },
@@ -121,44 +107,16 @@ export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
     return <li {...rest} className={cn(className, "marker:text-inherit")} />;
 };
 
-const RelativePathAnchor: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const { resolvedPath } = useNavigationContext();
-    const cnCombined = cn("fern-mdx-link", className);
-    const newHref =
-        href != null ? new URL(href, `https://buildwithfern.com/${resolvedPath.fullSlug}`).pathname : undefined;
-
-    return (
-        <Link className={cnCombined} href={newHref ?? "#"} {...rest}>
-            {isValidElement(children) && isImgElement(children)
-                ? cloneElement<ImgProps>(children, { disableZoom: true })
-                : children}
-        </Link>
-    );
-};
-
 export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const isExternalUrl = href?.startsWith("http") || href?.startsWith("mailto:") || href?.startsWith("tel:");
-
-    if (!isExternalUrl && href != null && !href.startsWith("/")) {
-        return (
-            <RelativePathAnchor className={className} href={href} {...rest}>
-                {children}
-            </RelativePathAnchor>
-        );
-    }
-
     const cnCombined = cn("fern-mdx-link", className);
-
     const hideExternalLinkIcon = isValidElement(children) && (children.type === "img" || children.type === Img);
 
     return (
-        <Link className={cnCombined} href={href ?? "#"} target={isExternalUrl ? "_blank" : undefined} {...rest}>
+        <FernLink className={cnCombined} href={href ?? {}} {...rest} showExternalLinkIcon={!hideExternalLinkIcon}>
             {isValidElement(children) && isImgElement(children)
                 ? cloneElement<ImgProps>(children, { disableZoom: true })
                 : children}
-
-            {isExternalUrl && !hideExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
-        </Link>
+        </FernLink>
     );
 };
 
@@ -181,10 +139,3 @@ export const Img: FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest })
         </Zoom>
     );
 };
-
-export function getSlugFromText(text: string): string {
-    if (text == null) {
-        return "";
-    }
-    return text.toLowerCase().replace(/\W/g, "-").replace(/-+/g, "-");
-}

@@ -7,8 +7,13 @@
     "autoprefixer",
     "postcss",
     "postcss-import",
+    "@tailwindcss/typography",
+    "@tailwindcss/forms",
+    "tailwindcss",
     "jsonpath",
-    "cssnano"
+    "cssnano",
+    "node-fetch",
+    "@types/node-fetch"
   ],
   "ignore-patterns": ["lib"]
 }
