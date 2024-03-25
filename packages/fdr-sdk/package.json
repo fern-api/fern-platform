@@ -9,7 +9,7 @@
   "type": "module",
   "module": "lib/index.js",
   "dependencies": {
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.21-es",
     "marked": "^5.1.0",
     "tinycolor2": "^1.6.0",
     "url-join": "4.0.1",

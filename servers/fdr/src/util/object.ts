@@ -1,6 +1,8 @@
-import { isPlainObject as _isPlainObject } from "lodash";
+import lodash from "lodash";
+// eslint-disable-next-line jest/unbound-method
+const { isPlainObject  } = lodash;
 
-export const isPlainObject = _isPlainObject as (val: unknown) => val is Record<string, unknown>;
+export const isPlainObject2 = isPlainObject as (val: unknown) => val is Record<string, unknown>;
 
 /**
  * Deep clones the specified object omitting keys with `undefined` value.
@@ -20,7 +22,7 @@ function compactVal(val: unknown): unknown {
     if (Array.isArray(val)) {
         return val.filter((v) => v !== undefined).map((v) => compactVal(v));
     }
-    if (isPlainObject(val)) {
+    if (isPlainObject2(val)) {
         return compact(val);
     }
     return val;

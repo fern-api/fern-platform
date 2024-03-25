@@ -3,7 +3,9 @@ import { PrismaClient } from "@prisma/client";
 import { addHours, subHours } from "date-fns";
 import express from "express";
 import http from "http";
-import { uniqueId } from "lodash";
+import lodash from "lodash";
+// eslint-disable-next-line jest/unbound-method
+const { uniqueId } = lodash;
 import { register } from "../../api";
 import { FdrApplication } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";

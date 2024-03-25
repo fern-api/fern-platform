@@ -1,6 +1,8 @@
 import { visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
-import { kebabCase } from "lodash";
+import lodash from "lodash";
+// eslint-disable-next-line jest/unbound-method
+const { kebabCase } = lodash;
 import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Db } from "../../api";
