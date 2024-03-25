@@ -32,6 +32,7 @@
     "docs:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-prod",
     "docs-dev:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-dev",
     "docs:build": "pnpm --filter=@fern-ui/docs-bundle run build:fern-prod",
+    "docs:start": "pnpm --filter=@fern-ui/docs-bundle run start:fern-prod",
     "fdr:generate": "fern generate --api fdr"
   },
   "devDependencies": {

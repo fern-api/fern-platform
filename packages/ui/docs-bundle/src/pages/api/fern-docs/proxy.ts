@@ -18,7 +18,7 @@ async function dataURLtoBlob(dataUrl: string): Promise<Blob> {
         throw new Error("Invalid data URL");
     }
 
-    const mime = header?.match(/:(.*?);/)?.[1];
+    const mime = header.match(/:(.*?);/)?.[1];
     const bstr = atob(base64String);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
