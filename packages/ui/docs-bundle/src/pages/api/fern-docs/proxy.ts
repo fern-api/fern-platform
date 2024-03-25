@@ -4,6 +4,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { jsonResponse } from "../../../utils/serverResponse";
 
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
+export const maxDuration = 60 * 5; // 5 minutes
 
 async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
     if (body == null) {

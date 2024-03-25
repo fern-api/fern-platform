@@ -7,6 +7,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "test": "turbo test",
+    "test:playwright": "pnpm exec playwright test --debug",
     "clean": "turbo clean",
     "compile": "turbo compile",
     "codegen": "turbo codegen",
@@ -39,6 +40,7 @@
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.3",
     "@next/eslint-plugin-next": "^14.1.0",
+    "@playwright/test": "^1.42.1",
     "@types/is-ci": "^3.0.4",
     "@types/jest": "^29.5.11",
     "@types/lodash-es": "4.17.12",
@@ -48,6 +50,7 @@
     "@yarnpkg/sdks": "^3.1.0",
     "chalk": "^5.3.0",
     "depcheck": "^1.4.3",
+    "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.0.4",
     "eslint-config-prettier": "^9.1.0",
