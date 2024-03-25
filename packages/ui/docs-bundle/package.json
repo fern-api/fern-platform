@@ -29,14 +29,14 @@
     "build": "pnpm build:fern-dev",
     "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
     "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
-    "dev:fern-dev": "pnpm compile && pnpm env:fern-dev next dev",
-    "dev:fern-prod": "pnpm compile && pnpm env:fern-prod next dev",
-    "build:fern-dev": "pnpm compile && pnpm env:fern-dev next build",
-    "build:fern-prod": "pnpm compile && pnpm env:fern-prod next build",
-    "start:fern-dev": "pnpm compile && pnpm env:fern-dev next start",
-    "start:fern-prod": "pnpm compile && pnpm env:fern-prod next start",
-    "lint:fern-dev": "pnpm compile && pnpm env:fern-dev next lint",
-    "lint:fern-prod": "pnpm compile && pnpm env:fern-prod next lint"
+    "dev:fern-dev": "pnpm turbo compile && pnpm env:fern-dev next dev",
+    "dev:fern-prod": "pnpm turbo compile && pnpm env:fern-prod next dev",
+    "build:fern-dev": "pnpm turbo compile && pnpm env:fern-dev next build",
+    "build:fern-prod": "pnpm turbo compile && pnpm env:fern-prod next build",
+    "start:fern-dev": "pnpm turbo compile && pnpm env:fern-dev next start",
+    "start:fern-prod": "pnpm turbo compile && pnpm env:fern-prod next start",
+    "lint:fern-dev": "pnpm turbo compile && pnpm env:fern-dev next lint",
+    "lint:fern-prod": "pnpm turbo compile && pnpm env:fern-prod next lint"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",

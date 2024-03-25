@@ -90,8 +90,8 @@ jobs:
         # TODO: re-enable when moving to turbo
         # pnpm turbo --filter= docker:local
         run: |
-          pnpm --filter=@fern-platform/fdr test-db
-          pnpm --filter=@fern-platform/fdr test-ete
+          pnpm turbo --filter=@fern-platform/fdr test-db
+          pnpm turbo --filter=@fern-platform/fdr test-ete
 
       - name: Run tests
         run: pnpm test
