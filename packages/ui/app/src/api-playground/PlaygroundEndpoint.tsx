@@ -1,9 +1,10 @@
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { resolve } from "url";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -225,11 +226,18 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
             // eslint-disable-next-line no-console
             console.error(e);
             setResponse(failed(e));
-            capturePosthogEvent("api_playground_request_failed", {
-                endpointId: endpoint.id,
-                endpointName: endpoint.name,
-                method: endpoint.method,
-                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+
+            emitDatadogError(e, {
+                context: "ApiPlayground",
+                errorSource: "sendRequest",
+                errorDescription:
+                    "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
+                data: {
+                    endpointId: endpoint.id,
+                    endpointName: endpoint.name,
+                    method: endpoint.method,
+                    route: `/${joinUrlSlugs(...endpoint.slug)}`,
+                },
             });
         }
     }, [basePath, endpoint, formState]);

@@ -1,7 +1,8 @@
 import { forwardRef, useMemo } from "react";
-import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
+import { emitDatadogError } from "../analytics/datadogRum";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
+import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
@@ -32,6 +33,15 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
+            emitDatadogError(e, {
+                context: "FernSyntaxHighlighter",
+                errorSource: "highlightTokens",
+                errorDescription: "Error occurred while highlighting tokens",
+                data: {
+                    code,
+                    language,
+                },
+            });
             return createRawTokens(code, language);
         }
     }, [code, highlighter, language]);

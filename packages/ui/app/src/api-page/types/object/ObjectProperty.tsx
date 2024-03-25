@@ -15,8 +15,8 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import {
-    hasInternalTypeReference,
     InternalTypeReferenceDefinitions,
+    hasInternalTypeReference,
 } from "../type-reference/InternalTypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 
@@ -130,7 +130,7 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
                 <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
             )}
             {hasInternalTypeReference(property.valueShape, types) && (
-                <FernErrorBoundary type="object_property">
+                <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>
                         <InternalTypeReferenceDefinitions
                             shape={property.valueShape}

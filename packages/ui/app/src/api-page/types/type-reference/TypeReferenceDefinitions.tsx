@@ -33,7 +33,7 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
     isResponse,
 }) {
     return (
-        <FernErrorBoundary type="type_reference_definitions">
+        <FernErrorBoundary component="TypeReferenceDefinitions">
             <TypeDefinitionContextProvider onHoverProperty={onHoverProperty} isResponse={isResponse}>
                 <InternalTypeReferenceDefinitions
                     shape={shape}

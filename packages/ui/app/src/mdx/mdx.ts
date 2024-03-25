@@ -4,6 +4,7 @@ import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
@@ -78,6 +79,12 @@ export async function serializeMdxContent(
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.error(e);
+
+                emitDatadogError(e, {
+                    context: "MDX",
+                    errorSource: "serializeMdxContent",
+                    errorDescription: "Failed to serialize subtitle (excerpt) from frontmatter",
+                });
             }
         }
 
@@ -92,6 +99,13 @@ export async function serializeMdxContent(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
+
+        emitDatadogError(e, {
+            context: "MDX",
+            errorSource: "serializeMdxContent",
+            errorDescription: "Failed to serialize MDX content",
+        });
+
         return content;
     }
 }

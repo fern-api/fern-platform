@@ -3,6 +3,7 @@ import { SidebarNavigation } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { REGISTRY_SERVICE } from "./registry";
 
@@ -121,6 +122,13 @@ export function useCreateSearchService(
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error("Failed to initialize search service", e);
+
+            emitDatadogError(e, {
+                context: "SearchService",
+                errorSource: "useCreateSearchService",
+                errorDescription: "Failed to initialize search service",
+            });
+
             return { isAvailable: false };
         }
     }, [algoliaSearchIndex, navigation.currentVersionIndex, navigation.versions, searchInfo]);

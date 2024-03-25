@@ -3,12 +3,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { type SerializedMdxContent } from "../mdx/mdx";
 import { MdxContent } from "../mdx/MdxContent";
+import { type SerializedMdxContent } from "../mdx/mdx";
 import { type ResolvedPath } from "../util/ResolvedPath";
 import { Feedback } from "./Feedback";
 import { HTMLTableOfContents } from "./TableOfContents";
@@ -58,6 +59,12 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error rendering MDX to string", e);
+
+        emitDatadogError(e, {
+            context: "CustomDocsPage",
+            errorSource: "renderToString",
+            errorDescription: "Error occurred while rendering MDX to string for the table of contents",
+        });
     }
 
     const editThisPage =
@@ -78,7 +85,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                         }
                     />
 
-                    <FernErrorBoundary type="custom_docs_page_mdx">{mdxContent}</FernErrorBoundary>
+                    <FernErrorBoundary component="CustomDocsPage">{mdxContent}</FernErrorBoundary>
                     <BottomNavigationButtons />
                     <div className="h-20" />
                 </article>

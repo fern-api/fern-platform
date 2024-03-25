@@ -5,11 +5,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { renderToString } from "react-dom/server";
-import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { emitDatadogError } from "../../analytics/datadogRum";
 import { MdxContent } from "../../mdx/MdxContent";
+import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
+import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
@@ -221,7 +222,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
-    const activeDescription = convertToDescription(activeNavigatable, frontmatter);
+    const activeDescription = convertDescriptionToString(activeNavigatable, frontmatter);
 
     return (
         <NavigationContext.Provider
@@ -261,7 +262,7 @@ function convertToTitle(
     return frontmatter?.title ?? page?.title;
 }
 
-function convertToDescription(
+function convertDescriptionToString(
     page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
@@ -282,6 +283,14 @@ function convertToDescription(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error rendering MDX to string", e);
+
+        emitDatadogError(e, {
+            context: "NavigationContext",
+            errorSource: "convertDescriptionToString",
+            errorDescription:
+                "An error occurred while rendering the description (which is a serialized MDX content) to string for the meta description tag. This impacts SEO",
+        });
+
         return undefined;
     }
 }
