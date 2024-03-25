@@ -22,8 +22,8 @@ export const FernRadioGroup: FC<FernRadioGroupProps> = ({ options, className, co
                                     <RadioGroup.Indicator className="fern-radio-indicator" />
                                 </RadioGroup.Item>
                                 <div className="ml-2 flex-1">
-                                    <div className={cn("text-sm", item.labelClassName)}>{item.label}</div>
-                                    {item.helperText && <p className="t-muted mb-0 text-xs">{item.helperText}</p>}
+                                    <div className={cn("text-sm font-semibold", item.labelClassName)}>{item.label}</div>
+                                    {item.helperText && <p className="t-muted mb-0 text-sm">{item.helperText}</p>}
                                     {typeof item.children === "function"
                                         ? item.children(props.value === item.value)
                                         : item.children}
