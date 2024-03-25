@@ -9,6 +9,8 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
 jobs:
   check:
@@ -90,8 +92,8 @@ jobs:
         # TODO: re-enable when moving to turbo
         # pnpm turbo --filter= docker:local
         run: |
-          pnpm --filter=@fern-platform/fdr test-db
-          pnpm --filter=@fern-platform/fdr test-ete
+          pnpm turbo --filter=@fern-platform/fdr test-db
+          pnpm turbo --filter=@fern-platform/fdr test-ete
 
       - name: Run tests
         run: pnpm test
