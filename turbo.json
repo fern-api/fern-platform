@@ -29,15 +29,15 @@
     "format": {},
     "test": {
       // Test depends on own compile
-      "dependsOn": ["^build"]
+      "dependsOn": ["build"]
     },
     "test-db": {
       // Test depends on own compile
-      "dependsOn": ["^build"]
+      "dependsOn": ["build"]
     },
     "test-ete": {
       // Test depends on own compile
-      "dependsOn": ["^build"]
+      "dependsOn": ["build"]
     },
     "//#fdr:generate": {
       "inputs": ["fern/**"],
