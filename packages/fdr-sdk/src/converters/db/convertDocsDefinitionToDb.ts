@@ -1,4 +1,4 @@
-import { kebabCase } from "lodash";
+import lodash from "lodash";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -12,6 +12,8 @@ import {
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+// eslint-disable-next-line jest/unbound-method
+const { kebabCase } = lodash;
 
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;

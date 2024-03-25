@@ -549,7 +549,7 @@ importers:
         specifier: 3.7.2
         version: 3.7.2
       lodash:
-        specifier: ^4.17.21
+        specifier: ^4.17.21-es
         version: 4.17.21
       marked:
         specifier: ^5.1.0

@@ -8,6 +8,7 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.335.0",
     "@aws-sdk/s3-request-presigner": "^3.335.0",
@@ -66,11 +67,12 @@
     "db:migrate:local": "dotenv -e .env.local -- prisma migrate dev",
     "db:migrate:prod": "dotenv -e .env.prod -- prisma migrate deploy",
     "dev": "nodemon src/server.ts ",
+    "devjs": "node --experimental-specifier-resolution=node dist/server.js",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:prisma": "prisma format",
-    "docker:local": "dotenv -e .env.local -- ./create_docker.sh local",
+    "docker:local": "dotenv -e .env.test -- ./create_docker.sh local",
     "docker:dev": "dotenv -e .env.dev -- ./create_docker.sh",
     "docker:prod": "dotenv -e .env.prod -- ./create_docker.sh",
     "test": "jest src/__test__/unit-tests",
