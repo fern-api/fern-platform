@@ -9,7 +9,6 @@
     "isolatedModules": false,
     "paths": {
       "@prisma/client": ["../prisma/client"],
-      "@fern-api/fdr-sdk": ["../../packages/fdr-sdk"],
     },
   },
   "include": ["./src/**/*"],

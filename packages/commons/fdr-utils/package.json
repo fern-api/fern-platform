@@ -29,8 +29,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.65.171-18-g0ee639d9c",
-    "@fern-ui/core-utils": "workspace:^"
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

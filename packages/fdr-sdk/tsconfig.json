@@ -3,8 +3,9 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
+    "module": "esnext",
     "isolatedModules": false,
-    "rootDir": "."
+    "rootDir": "src"
   },
   "include": ["./src/**/*"]
 }
