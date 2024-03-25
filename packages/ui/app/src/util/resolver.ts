@@ -2,6 +2,7 @@ import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
+import { emitDatadogError } from "../analytics/datadogRum";
 import {
     endpointExampleToHttpRequestExample,
     sortKeysByShape,
@@ -536,11 +537,8 @@ async function resolveWebhookDefinition(
             availability: undefined,
         },
         examples: webhook.examples.map((example) => {
-            const sortedPayload = stripUndefines(sortKeysByShape(example.payload, payloadShape, resolvedTypes));
-            return {
-                payload: sortedPayload,
-                // hast: highlight(highlighter, JSON.stringify(sortedPayload, undefined, 2), "json"),
-            };
+            const sortedPayload = safeSortKeysByShape(example.payload, payloadShape, resolvedTypes);
+            return { payload: sortedPayload };
         }),
     };
 }
@@ -1129,7 +1127,7 @@ function resolveExampleEndpointRequest(
     return visitDiscriminatedUnion(requestBodyV3, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
         json: (json) => ({
             type: "json",
-            value: json.value != null ? stripUndefines(sortKeysByShape(json.value, shape, resolvedTypes)) : undefined,
+            value: json.value != null ? safeSortKeysByShape(json.value, shape, resolvedTypes) : undefined,
         }),
         form: (form) => ({
             type: "form",
@@ -1198,12 +1196,34 @@ function resolveExampleEndpointResponse(
     return visitDiscriminatedUnion(responseBodyV3, "type")._visit<ResolvedExampleEndpointResponse | undefined>({
         json: (json) => ({
             type: "json",
-            value: json.value != null ? stripUndefines(sortKeysByShape(json.value, shape, resolvedTypes)) : undefined,
+            value: json.value != null ? safeSortKeysByShape(json.value, shape, resolvedTypes) : undefined,
         }),
         filename: (filename) => ({ type: "filename", value: filename.value }),
         stream: (stream) => ({ type: "stream", value: stream.value }),
         _other: () => undefined,
     });
+}
+
+function safeSortKeysByShape(
+    value: unknown,
+    shape: ResolvedHttpResponseBodyShape | undefined,
+    resolvedTypes: Record<string, ResolvedTypeDefinition>,
+): unknown {
+    try {
+        return stripUndefines(sortKeysByShape(value, shape, resolvedTypes));
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to sort JSON keys by type shape", e);
+
+        emitDatadogError(e, {
+            context: "ApiPage",
+            errorSource: "sortKeysByShape",
+            errorDescription:
+                "Failed to sort and strip undefines from JSON value, indicating a bug in the resolver. This error should be investigated.",
+        });
+
+        return value;
+    }
 }
 
 function stripUndefines(obj: unknown): unknown {
