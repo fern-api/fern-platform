@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "module": "CommonJS",
+    "module": "esnext",
     "isolatedModules": false,
     "rootDir": "src"
   },
