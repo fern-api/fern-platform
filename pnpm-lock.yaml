@@ -251,7 +251,7 @@ importers:
         specifier: workspace:*
         version: link:../../fdr-sdk
       '@fern-ui/core-utils':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../core-utils
     devDependencies:
       '@types/jest':

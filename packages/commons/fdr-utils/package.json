@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/core-utils": "workspace:^"
+    "@fern-ui/core-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
