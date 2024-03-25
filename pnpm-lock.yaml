@@ -956,6 +956,9 @@ importers:
       next:
         specifier: ^14.1.1
         version: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
+      node-fetch:
+        specifier: 2.7.0
+        version: 2.7.0
       postcss-import:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
@@ -978,6 +981,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.26
+      '@types/node-fetch':
+        specifier: 2.6.9
+        version: 2.6.9
       '@types/react':
         specifier: ^18.0.20
         version: 18.2.67
