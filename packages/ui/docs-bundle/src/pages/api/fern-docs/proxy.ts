@@ -65,9 +65,16 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     const startTime = Date.now();
     try {
         const proxyRequest = (await req.json()) as ProxyRequest;
+        const headers = new Headers(proxyRequest.headers);
+
+        // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
+        if (headers.get("Content-Type")?.toLowerCase().includes("multipart/form-data")) {
+            headers.delete("Content-Type");
+        }
+
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
-            headers: new Headers(proxyRequest.headers),
+            headers,
             body: await buildRequestBody(proxyRequest.body),
         });
         let body = await response.text();
@@ -77,12 +84,12 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             // Ignore
         }
         const endTime = Date.now();
-        const headers = response.headers;
+        const responseHeaders = response.headers;
 
         return jsonResponse<ProxyResponse>(200, {
             error: false,
             response: {
-                headers: Object.fromEntries(headers.entries()),
+                headers: Object.fromEntries(responseHeaders.entries()),
                 ok: response.ok,
                 redirected: response.redirected,
                 status: response.status,
@@ -92,7 +99,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
                 body,
             },
             time: endTime - startTime,
-            size: headers.get("Content-Length"),
+            size: responseHeaders.get("Content-Length"),
         });
     } catch (err) {
         // eslint-disable-next-line no-console
