@@ -111,6 +111,11 @@ export function stringifyFetch(
     }
     const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
 
+    // TODO: ensure case insensitivity
+    if (headers["Content-Type"] === "multipart/form-data") {
+        delete headers["Content-Type"]; // fetch will set this automatically
+    }
+
     function buildFetch(body: string | undefined) {
         if (endpoint == null) {
             return "";
@@ -118,7 +123,7 @@ export function stringifyFetch(
         return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
             .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
             .join("")})
-const response = fetch("${buildEndpointUrl(endpoint, formState)}", {
+const response = await fetch("${buildEndpointUrl(endpoint, formState)}", {
   method: "${endpoint.method}",
   headers: ${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
 });
