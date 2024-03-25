@@ -11,7 +11,9 @@
     "@tailwindcss/forms",
     "tailwindcss",
     "jsonpath",
-    "cssnano"
+    "cssnano",
+    "node-fetch",
+    "@types/node-fetch"
   ],
   "ignore-patterns": ["lib"]
 }
