@@ -35,6 +35,8 @@ function FernRelativeLink(props: ComponentProps<typeof Link>) {
         const href = resolveRelativeUrl(router.asPath, formatUrlString(props.href));
         return <Link {...props} href={href} />;
     } else {
+        // TODO: in order for SEO to work correctly, we need to render this link on the server side
+        // which will require hacking the `Link` internal implementation
         return <a className={props.className}>{props.children}</a>;
     }
 }
