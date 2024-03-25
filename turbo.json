@@ -4,7 +4,7 @@
     "build": {
       // Build depends on own codegen and downstream build
       "outputs": ["lib/**", "dist/**"],
-      "dependsOn": ["^build", "codegen"]
+      "dependsOn": ["^compile", "^build", "codegen"]
     },
     "codegen": {
       // Don't cache codegen. We may not know all the outputs
