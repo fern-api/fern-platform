@@ -25,6 +25,12 @@ export function identifyUser(userId: string): void {
     });
 }
 
+export function registerPosthogProperties(properties: Record<string, unknown>): void {
+    safeAccessPosthog(() => {
+        posthog.register(properties);
+    });
+}
+
 export function resetPosthog(): void {
     safeAccessPosthog(() => {
         posthog.reset();

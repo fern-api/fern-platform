@@ -11,7 +11,7 @@
 }
 
 .fern-radio-item {
-    @apply ring-default relative mt-0.5 inline-block size-4 rounded-lg ring-1 ring-inset;
+    @apply ring-default relative mt-0.5 inline-block size-4 rounded-full ring-1 ring-inset;
 }
 
 .fern-radio-item:hover {
@@ -23,10 +23,11 @@
 }
 
 .fern-radio-indicator {
-    @apply size-4 bg-accent flex items-center justify-center rounded-lg;
+    @apply size-4 bg-accent flex items-center justify-center rounded-full;
 }
 
-.fern-radio-indicator:after {
-    @apply bg-background absolute size-2 rounded;
+.fern-radio-indicator::after {
+    @apply bg-background absolute size-2 rounded-full;
+
     content: "";
 }

@@ -1,19 +1,33 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import { FC, useCallback, useMemo, useRef, useState } from "react";
 import { FernButton } from "../components/FernButton";
+import { FernCheckbox } from "../components/FernCheckbox";
 import { FernDropdown } from "../components/FernDropdown";
+import { FernInput } from "../components/FernInput";
 import { FernRadioGroup } from "../components/FernRadioGroup";
 import { FernTextarea } from "../components/FernTextarea";
 
 interface FeedbackFormProps {
     feedback: "yes" | "no" | undefined;
-    onSubmit: (feedbackId: string, message: string) => void;
+    onSubmit: (feedback: {
+        feedbackId: string;
+        feedbackMessage: string;
+        email: string;
+        showEmailInput: boolean | "indeterminate";
+    }) => void;
 }
+
+const SHOW_EMAIL_INPUT_ATOM = atomWithStorage<boolean | "indeterminate">("feedback-show-email-input", false);
+const EMAIL_ATOM = atomWithStorage<string>("feedback-email", "");
 
 export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [feedbackId, setFeedbackId] = useState<string>();
     const [feedbackMessage, setFeedbackMessage] = useState<string>("");
+    const [showEmailInput, setShowEmailInput] = useAtom(SHOW_EMAIL_INPUT_ATOM);
+    const [email, setEmail] = useAtom(EMAIL_ATOM);
 
     const legend = feedback === "yes" ? "What did you like?" : feedback === "no" ? "What went wrong?" : "Feedback";
     const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
@@ -28,7 +42,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                     active ? (
                         <FernTextarea
                             ref={textareaRef}
-                            autoFocus={true}
+                            // autoFocus={true}
                             className="mt-2 w-full"
                             placeholder="(Optional) Tell us more about your experience"
                             onValueChange={setFeedbackMessage}
@@ -74,7 +88,12 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
         if (feedbackId == null) {
             return;
         }
-        onSubmit(feedbackId, feedbackMessage);
+        onSubmit({
+            feedbackId,
+            feedbackMessage,
+            email,
+            showEmailInput,
+        });
     };
 
     return (
@@ -87,6 +106,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                     value={feedbackId}
                     onValueChange={setFeedbackId}
                     options={feedbackOptions}
+                    autoFocus={true}
                 />
             ) : (
                 <FernTextarea
@@ -97,6 +117,27 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                     value={feedbackMessage}
                 />
             )}
+
+            <hr className="border-border-concealed my-4" />
+
+            <div className="mt-4">
+                <FernCheckbox
+                    label="Yes, it's okay to follow up by email."
+                    checked={showEmailInput}
+                    onCheckedChange={setShowEmailInput}
+                    autoFocus={false}
+                >
+                    {showEmailInput && (
+                        <FernInput
+                            className="mt-2"
+                            type="email"
+                            placeholder="yourname@email.com"
+                            value={email}
+                            onValueChange={setEmail}
+                        />
+                    )}
+                </FernCheckbox>
+            </div>
 
             <FernButton
                 full={true}

@@ -3,7 +3,7 @@ import cn from "clsx";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
-import { capturePosthogEvent } from "../analytics/posthog";
+import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
 import { FernButton } from "../components/FernButton";
 import { FeedbackForm } from "./FeedbackForm";
 import { FeedbackFormDialog } from "./FeedbackFormDialog";
@@ -51,11 +51,24 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     };
 
     const handleSubmitFeedback = useCallback(
-        (feedbackId: string, message: string) => {
+        ({
+            feedbackId,
+            feedbackMessage,
+            email,
+            showEmailInput,
+        }: {
+            feedbackId: string;
+            feedbackMessage: string;
+            email: string;
+            showEmailInput: boolean | "indeterminate";
+        }) => {
+            registerPosthogProperties({ email });
             capturePosthogEvent("feedback_submitted", {
                 satisfied: feedback === "yes" ? true : false,
                 feedback: feedbackId,
-                message,
+                message: feedbackMessage,
+                email,
+                allowFollowUpViaEmail: showEmailInput === true,
             });
             setSent(true);
         },
