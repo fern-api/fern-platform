@@ -8,9 +8,9 @@ sleep 5
 
 pnpm prisma migrate deploy
 
-pnpm jest -i src/__test__/db/
-JEST_EXIT_CODE=$?
+CI=true pnpm vitest src/__test__/db/ --globals
+VITEST_EXIT_CODE=$?
 
 docker-compose -f docker-compose.test.yml down
 
-exit $JEST_EXIT_CODE
+exit $VITEST_EXIT_CODE

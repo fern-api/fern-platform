@@ -2,9 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "pipeline": {
-    "build": {
+    "compile": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^build", "codegen", "//#fdr:generate"]
+      "dependsOn": ["^build", "^compile", "codegen", "//#fdr:generate"]
     }
   }
 }
