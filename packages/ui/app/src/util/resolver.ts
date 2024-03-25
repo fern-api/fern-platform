@@ -40,8 +40,7 @@ export async function resolveApiDefinition(
     );
 
     const withPackage = await resolveApiDefinitionPackage(
-        apiDefinition.auth,
-        apiDefinition.api,
+        apiDefinition,
         apiDefinition.api,
         apiDefinition,
         apiDefinition.types,
@@ -58,13 +57,11 @@ export async function resolveApiDefinition(
 }
 
 async function resolveApiDefinitionPackage(
-    auth: APIV1Read.ApiAuth | undefined,
-    apiSectionId: FdrAPI.ApiDefinitionId,
+    apiDefinition: FlattenedApiDefinition,
     id: APIV1Read.SubpackageId,
     package_: FlattenedApiDefinitionPackage | undefined,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
-    // highlighter: Highlighter,
 ): Promise<ResolvedWithApiDefinition> {
     if (package_ == null) {
         return {
@@ -78,19 +75,17 @@ async function resolveApiDefinitionPackage(
 
     const endpointsPromise = Promise.all(
         package_.endpoints.map((endpoint) =>
-            resolveEndpointDefinition(auth, apiSectionId, id, endpoint, types, resolvedTypes),
+            resolveEndpointDefinition(apiDefinition, id, endpoint, types, resolvedTypes),
         ),
     );
     const websocketsPromise = Promise.all(
-        package_.websockets.map((websocket) => resolveWebsocketChannel(auth, websocket, types)),
+        package_.websockets.map((websocket) => resolveWebsocketChannel(apiDefinition, websocket, types)),
     );
     const webhooksPromise = Promise.all(
         package_.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes)),
     );
     const subpackagesPromise = Promise.all(
-        package_.subpackages.map((subpackage) =>
-            resolveSubpackage(auth, apiSectionId, subpackage, types, resolvedTypes),
-        ),
+        package_.subpackages.map((subpackage) => resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes)),
     );
 
     const [endpoints, websockets, webhooks, subpackages] = await Promise.all([
@@ -110,21 +105,17 @@ async function resolveApiDefinitionPackage(
 }
 
 async function resolveSubpackage(
-    auth: APIV1Read.ApiAuth | undefined,
-    apiSectionId: FdrAPI.ApiDefinitionId,
+    apiDefinition: FlattenedApiDefinition,
     subpackage: FlattenedSubpackage,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
-    // highlighter: Highlighter,
 ): Promise<ResolvedSubpackage | undefined> {
     const { endpoints, webhooks, subpackages, websockets } = await resolveApiDefinitionPackage(
-        auth,
-        apiSectionId,
+        apiDefinition,
         subpackage.subpackageId,
         subpackage,
         types,
         resolvedTypes,
-        // highlighter,
     );
 
     if (
@@ -139,7 +130,7 @@ async function resolveSubpackage(
         availability: undefined,
         title: titleCase(subpackage.name),
         type: "subpackage",
-        apiSectionId,
+        apiSectionId: apiDefinition.api,
         id: subpackage.subpackageId,
         slug: subpackage.slug,
         endpoints,
@@ -150,8 +141,7 @@ async function resolveSubpackage(
 }
 
 async function resolveEndpointDefinition(
-    rootAuth: APIV1Read.ApiAuth | undefined,
-    apiSectionId: FdrAPI.ApiDefinitionId,
+    apiDefinition: FlattenedApiDefinition,
     apiPackageId: FdrAPI.ApiDefinitionId,
     endpoint: FlattenedEndpointDefinition,
     types: Record<string, APIV1Read.TypeDefinition>,
@@ -169,12 +159,13 @@ async function resolveEndpointDefinition(
                 valueShape,
                 description,
                 availability: parameter.availability,
+                hidden: false,
             };
         }),
     );
 
     const queryParametersPromise = Promise.all(
-        endpoint.queryParameters.map(async (parameter) => {
+        endpoint.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(parameter.type, types),
                 serializeMdxContent(parameter.description),
@@ -184,12 +175,13 @@ async function resolveEndpointDefinition(
                 valueShape,
                 description,
                 availability: parameter.availability,
+                hidden: false,
             };
         }),
     );
 
-    const headersPromise = Promise.all(
-        endpoint.headers.map(async (header) => {
+    const headersPromise = Promise.all([
+        ...endpoint.headers.map(async (header): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(header.type, types),
                 serializeMdxContent(header.description),
@@ -199,9 +191,23 @@ async function resolveEndpointDefinition(
                 valueShape,
                 description,
                 availability: header.availability,
+                hidden: false,
             };
         }),
-    );
+        ...apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(header.type, types),
+                serializeMdxContent(header.description),
+            ]);
+            return {
+                key: header.key,
+                valueShape,
+                description,
+                availability: header.availability,
+                hidden: true,
+            };
+        }),
+    ]);
 
     const errorsPromise = Promise.all(
         endpoint.errors.map(async (error): Promise<ResolvedError> => {
@@ -271,6 +277,7 @@ async function resolveEndpointDefinition(
                     },
                     description: undefined,
                     availability: undefined,
+                    hidden: false,
                 };
             }
             return {
@@ -280,7 +287,7 @@ async function resolveEndpointDefinition(
         }
     });
 
-    const { auth, headers } = mergeAuthAndHeaders(endpoint.authed, rootAuth, rawHeaders);
+    const { auth, headers } = mergeAuthAndHeaders(endpoint.authed, apiDefinition.auth, rawHeaders);
 
     const toRet: ResolvedEndpointDefinition = {
         name: endpoint.name,
@@ -289,7 +296,7 @@ async function resolveEndpointDefinition(
         description,
         auth,
         availability: endpoint.availability,
-        apiSectionId,
+        apiSectionId: apiDefinition.api,
         apiPackageId,
         environments: endpoint.environments,
         method: endpoint.method,
@@ -375,7 +382,7 @@ function mergeAuthAndHeaders(
 }
 
 async function resolveWebsocketChannel(
-    rootAuth: APIV1Read.ApiAuth | undefined,
+    apiDefinition: FlattenedApiDefinition,
     websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
 ): Promise<Promise<ResolvedWebSocketChannel>> {
@@ -386,11 +393,12 @@ async function resolveWebsocketChannel(
                 valueShape: await resolveTypeReference(parameter.type, types),
                 description: await serializeMdxContent(parameter.description),
                 availability: parameter.availability,
+                hidden: false,
             }),
         ),
     );
-    const headersPromise = Promise.all(
-        websocket.headers.map(async (header) => {
+    const headersPromise = Promise.all([
+        ...websocket.headers.map(async (header): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(header.type, types),
                 serializeMdxContent(header.description),
@@ -400,9 +408,23 @@ async function resolveWebsocketChannel(
                 valueShape,
                 description,
                 availability: header.availability,
+                hidden: false,
             };
         }),
-    );
+        ...apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
+            const [valueShape, description] = await Promise.all([
+                resolveTypeReference(header.type, types),
+                serializeMdxContent(header.description),
+            ]);
+            return {
+                key: header.key,
+                valueShape,
+                description,
+                availability: header.availability,
+                hidden: true,
+            };
+        }),
+    ]);
     const queryParametersPromise = Promise.all(
         websocket.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
@@ -414,6 +436,7 @@ async function resolveWebsocketChannel(
                 valueShape,
                 description,
                 availability: parameter.availability,
+                hidden: false,
             };
         }),
     );
@@ -440,7 +463,7 @@ async function resolveWebsocketChannel(
         messagesPromise,
     ]);
 
-    const { auth, headers } = mergeAuthAndHeaders(websocket.authed, rootAuth, rawHeaders);
+    const { auth, headers } = mergeAuthAndHeaders(websocket.authed, apiDefinition.auth, rawHeaders);
 
     return {
         auth,
@@ -487,12 +510,15 @@ async function resolveWebhookDefinition(
         resolvePayloadShape(webhook.payload.type, types),
         await serializeMdxContent(webhook.description),
         Promise.all(
-            webhook.headers.map(async (header) => ({
-                key: header.key,
-                valueShape: await resolveTypeReference(header.type, types),
-                description: await serializeMdxContent(header.description),
-                availability: header.availability,
-            })),
+            webhook.headers.map(
+                async (header): Promise<ResolvedObjectProperty> => ({
+                    key: header.key,
+                    valueShape: await resolveTypeReference(header.type, types),
+                    description: await serializeMdxContent(header.description),
+                    availability: header.availability,
+                    hidden: false,
+                }),
+            ),
         ),
     ]);
     return {
@@ -588,6 +614,7 @@ function resolveRequestBodyShape(
                                                   description,
                                                   availability: property.availability,
                                                   valueShape,
+                                                  hidden: false,
                                               };
                                           }
                                       }
@@ -866,6 +893,7 @@ function resolveObjectProperties(
                 valueShape,
                 description,
                 availability: property.availability,
+                hidden: false,
             };
         }),
     );
@@ -1297,6 +1325,7 @@ export interface ResolvedError extends WithMetadata {
 export interface ResolvedObjectProperty extends WithMetadata {
     key: APIV1Read.PropertyKey;
     valueShape: ResolvedTypeShape;
+    hidden: boolean; // should be hidden in API reference, but present in examples and API Playground
 }
 
 export interface ResolvedResponseBody extends WithMetadata {

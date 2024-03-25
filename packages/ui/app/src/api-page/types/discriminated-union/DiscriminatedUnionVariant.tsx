@@ -51,6 +51,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                     },
                     description: undefined,
                     availability: undefined,
+                    hidden: false,
                 },
                 ...dereferenceObjectProperties(unionVariant, types),
             ],
