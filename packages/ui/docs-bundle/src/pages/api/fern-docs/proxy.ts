@@ -7,6 +7,29 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60 * 5; // 5 minutes
 
+async function dataURLtoBlob(dataUrl: string): Promise<Blob> {
+    if (dataUrl.startsWith("http:") || dataUrl.startsWith("https:")) {
+        const response = await fetch(dataUrl);
+        return await response.blob();
+    }
+
+    const [header, base64String] = dataUrl.split(",");
+    if (header == null || base64String == null) {
+        throw new Error("Invalid data URL");
+    }
+
+    const mime = header?.match(/:(.*?);/)?.[1];
+    const bstr = atob(base64String);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new Blob([u8arr], { type: mime });
+}
+
 async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
     if (body == null) {
         return undefined;
@@ -22,7 +45,7 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
                     case "file":
                         if (value.value != null) {
                             const base64 = value.value.dataUrl;
-                            const blob = await (await fetch(base64)).blob();
+                            const blob = await dataURLtoBlob(base64);
                             const file = new File([blob], value.value.name, { type: value.value.type });
                             formData.append(key, file);
                         }
@@ -31,7 +54,7 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
                         const files = await Promise.all(
                             value.value.map(async (serializedFile) => {
                                 const base64 = serializedFile.dataUrl;
-                                const blob = await (await fetch(base64)).blob();
+                                const blob = await dataURLtoBlob(base64);
                                 return new File([blob], serializedFile.name, { type: serializedFile.type });
                             }),
                         );
@@ -52,7 +75,7 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
                 return undefined;
             }
             const base64 = body.value.dataUrl;
-            const blob = await (await fetch(base64)).blob();
+            const blob = await dataURLtoBlob(base64);
             return new File([blob], body.value.name, { type: body.value.type });
         }
         default:
