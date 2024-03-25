@@ -16,8 +16,8 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
             const urls = getNavigationRoot(
                 slug.split("/"),
                 fixture.baseUrl.basePath,
-                fixture.definition.apis,
                 fixture.definition.config.navigation,
+                fixture.definition.apis,
             );
 
             expect(stripForSnapshot(urls)).toMatchSnapshot();

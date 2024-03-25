@@ -37,10 +37,12 @@ const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
 export function getNavigationRoot(
     slugArray: string[],
     basePath: string | undefined,
-    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     nav: DocsV1Read.NavigationConfig,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
 ): Found | Redirect | undefined {
-    const root = resolveSidebarNodesRoot(nav, apis, basePath);
+    const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
+
+    const root = resolveSidebarNodesRoot(nav, apis, basePathSlug);
     const hits: { node: SidebarNodeRaw.VisitableNode; parents: SidebarNodeRaw.ParentNode[] }[] = [];
 
     visitSidebarNodeRaw(root, (node, parents) => {

@@ -160,7 +160,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(slug, basePath, docs.definition.apis, docsConfig.navigation);
+    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis);
 
     if (navigation == null) {
         // eslint-disable-next-line no-console

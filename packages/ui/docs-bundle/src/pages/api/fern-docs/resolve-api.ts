@@ -55,8 +55,8 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
         const navigation = getNavigationRoot(
             pathname.slice(1).split("/"),
             basePath,
-            docsDefinition.apis,
             docsDefinition.config.navigation,
+            docsDefinition.apis,
         );
 
         if (navigation == null || navigation.type === "redirect") {

@@ -145,10 +145,8 @@ function stringifyEndpointPathParts(path: APIV1Read.EndpointPathPart[]): string 
 export function resolveSidebarNodesRoot(
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
-    basePath: string | undefined,
+    basePathSlug: string[],
 ): SidebarNodeRaw.Root {
-    const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
-
     return {
         type: "root",
         slug: basePathSlug,

@@ -16,7 +16,7 @@ export function testGetAllUrlsFromDocsConfig(fixtureName: string): void {
             const urls = getAllUrlsFromDocsConfig(
                 fixture.baseUrl.domain,
                 fixture.baseUrl.basePath,
-                fixture.definition.config,
+                fixture.definition.config.navigation,
                 fixture.definition.apis,
             );
 
