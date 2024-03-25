@@ -9,6 +9,9 @@ env:
   WORKOS_API_KEY: ${{ secrets.WORKOS_STAGING_API_KEY }}
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_STAGING_CLIENT_ID }}
   JWT_SECRET_KEY: ${{ secrets.DEV_JWT_SECRET_KEY }}
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
 on:
   push:
     branches:
