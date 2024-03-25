@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig no-version-no-tabs gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > no-version-no-tabs > gets all urls from docs config 1`] = `
 [
   "/docs/api",
   "/docs/api/section-1",
@@ -13,11 +13,11 @@ exports[`getAllUrlsFromDocsConfig no-version-no-tabs gets all urls from docs con
 ]
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for / 1`] = `undefined`;
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for / 1`] = `undefined`;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs 1`] = `undefined`;
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs 1`] = `undefined`;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/page-6 1`] = `
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/page-6 1`] = `
 {
   "found": {
     "currentNode": {
@@ -39,14 +39,14 @@ exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api
 }
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/section-1 1`] = `
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-1 1`] = `
 {
   "redirect": "/docs/api/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/section-2 1`] = `
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -71,4 +71,4 @@ exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api
 }
 `;
 
-exports[`getNavigationRoot no-version-no-tabs gets navigation root for /docs/api/section-3 1`] = `undefined`;
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-3 1`] = `undefined`;

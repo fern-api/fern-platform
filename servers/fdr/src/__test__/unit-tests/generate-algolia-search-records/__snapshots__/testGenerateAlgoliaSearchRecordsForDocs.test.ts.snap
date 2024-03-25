@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generateAlgoliaSearchRecordsForDocs {"name":"candid"} 1`] = `
+exports[`generateAlgoliaSearchRecordsForDocs > {"name":"candid"} 1`] = `
 [
   {
     "content": "ENCOUNTERS
@@ -1320,7 +1320,7 @@ A schema of the response object can be found here: Change Healthcare Docs
 ]
 `;
 
-exports[`generateAlgoliaSearchRecordsForDocs {"name":"primer"} 1`] = `
+exports[`generateAlgoliaSearchRecordsForDocs > {"name":"primer"} 1`] = `
 [
   {
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
@@ -4920,7 +4920,7 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
 ]
 `;
 
-exports[`generateAlgoliaSearchRecordsForDocs {"name":"vellum"} 1`] = `
+exports[`generateAlgoliaSearchRecordsForDocs > {"name":"vellum"} 1`] = `
 [
   {
     "content": "When using an LLM, you input a prompt and get back a completion. However, in order for a prompt to be reusable, you’ll want to be

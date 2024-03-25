@@ -11,7 +11,6 @@ import {
 } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
-// eslint-disable-next-line jest/unbound-method
 const { isEqual, kebabCase, startCase } = lodash;
 
 export function convertAPIDefinitionToDb(

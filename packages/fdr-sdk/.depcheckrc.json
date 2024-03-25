@@ -1,4 +1,4 @@
 {
   "ignores": ["qs", "@types/qs", "form-data"],
-  "ignore-patterns": ["lib", "dist"]
+  "ignore-patterns": ["dist"]
 }

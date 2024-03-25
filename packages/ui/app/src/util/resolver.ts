@@ -1,5 +1,5 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/lib/converters/utils/WithoutQuestionMarks";
+import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import {
@@ -13,8 +13,8 @@ import {
     FlattenedApiDefinitionPackage,
     FlattenedEndpointDefinition,
     FlattenedSubpackage,
-    FlattenedWebhookDefinition,
     FlattenedWebSocketChannel,
+    FlattenedWebhookDefinition,
 } from "./flattenApiDefinition";
 
 export type WithDescription = { description: SerializedMdxContent | undefined };

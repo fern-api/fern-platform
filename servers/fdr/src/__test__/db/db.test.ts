@@ -4,8 +4,6 @@ import { addHours, subHours } from "date-fns";
 import express from "express";
 import http from "http";
 import lodash from "lodash";
-// eslint-disable-next-line jest/unbound-method
-const { uniqueId } = lodash;
 import { register } from "../../api";
 import { FdrApplication } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
@@ -19,6 +17,7 @@ import { getSnippetsService } from "../../controllers/snippets/getSnippetsServic
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { createMockFdrApplication } from "../mock";
 import { createApiDefinition, createMockDocs, createMockIndexSegment } from "./util";
+const { uniqueId } = lodash;
 
 type APIResponse<Success, Failure> = SuccessfulResponse<Success> | FailedResponse<Failure>;
 interface SuccessfulResponse<T> {

@@ -1,5 +1,4 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { SerializeOptions } from "next-mdx-remote/dist/types";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
@@ -27,6 +26,8 @@ export interface FernDocsFrontmatterInternal {
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
+
+type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
     remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkGemoji],

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CopyToClipboardButton renders correctly 1`] = `
+exports[`CopyToClipboardButton > renders correctly 1`] = `
 <button
   aria-disabled={false}
   className="group fern-copy-button fern-button minimal normal rounded square"

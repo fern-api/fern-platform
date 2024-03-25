@@ -1,6 +1,5 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "." },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../../loadable" }]
+  "extends": "@fern-platform/configs/tsconfig/react-library.json",
+  "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
+  "include": ["./src/**/*"]
 }

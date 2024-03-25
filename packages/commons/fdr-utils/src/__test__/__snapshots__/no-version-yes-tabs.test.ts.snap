@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig no-version-yes-tabs gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > no-version-yes-tabs > gets all urls from docs config 1`] = `
 [
   "/docs/api",
   "/docs/api/tab-1",
@@ -18,14 +18,14 @@ exports[`getAllUrlsFromDocsConfig no-version-yes-tabs gets all urls from docs co
 ]
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api 1`] = `
+exports[`getNavigationRoot > no-version-yes-tabs > gets navigation root for /docs/api 1`] = `
 {
   "redirect": "/docs/api/tab-1/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/page-2 1`] = `
+exports[`getNavigationRoot > no-version-yes-tabs > gets navigation root for /docs/api/page-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -50,9 +50,9 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/ap
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/section-1 1`] = `undefined`;
+exports[`getNavigationRoot > no-version-yes-tabs > gets navigation root for /docs/api/section-1 1`] = `undefined`;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-1 1`] = `
+exports[`getNavigationRoot > no-version-yes-tabs > gets navigation root for /docs/api/tab-1 1`] = `
 {
   "found": {
     "currentNode": {
@@ -77,7 +77,7 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/ap
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-2 1`] = `
+exports[`getNavigationRoot > no-version-yes-tabs > gets navigation root for /docs/api/tab-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -102,7 +102,7 @@ exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/ap
 }
 `;
 
-exports[`getNavigationRoot no-version-yes-tabs gets navigation root for /docs/api/tab-2/section-5 1`] = `
+exports[`getNavigationRoot > no-version-yes-tabs > gets navigation root for /docs/api/tab-2/section-5 1`] = `
 {
   "redirect": "/docs/api/tab-1",
   "type": "redirect",

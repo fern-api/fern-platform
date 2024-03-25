@@ -1,6 +1,6 @@
 {
-  "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "module": "CommonJS", "outDir": "lib", "rootDir": "src" },
+  "extends": "@fern-platform/configs/tsconfig/cli.json",
+  "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
   "include": ["./src/**/*"],
   "exclude": ["cdk.out"]
 }

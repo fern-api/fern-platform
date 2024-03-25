@@ -1,1 +1,1 @@
-{ "ignores": ["@types/jest", "@types/node", "@types/react"], "ignore-patterns": ["lib"] }
+{ "ignores": ["@fern-platform/configs", "@types/node", "@types/react"], "ignore-patterns": ["dist"] }
