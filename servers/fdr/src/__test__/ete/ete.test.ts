@@ -5,7 +5,6 @@ import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 const PORT = 8080;
 
 // We don't spin up the server in this test.
-// eslint-disable-next-line jest/no-disabled-tests
 it.skip("definition register", async () => {
     // register empty definition
     const healthResponse = await axios.get(`http://localhost:${PORT}/health`);

@@ -1,6 +1,6 @@
 {
   "ignores": [
-    "@types/jest",
+    "@fern-platform/configs",
     "@types/node",
     "@types/react",
     "@types/react-dom",
@@ -14,7 +14,9 @@
     "tailwindcss",
     "styled-jsx",
     "lodash-es",
-    "@types/lodash-es"
+    "@types/lodash-es",
+    "node-fetch",
+    "@types/node-fetch"
   ],
-  "ignore-patterns": ["lib"]
+  "ignore-patterns": ["dist"]
 }

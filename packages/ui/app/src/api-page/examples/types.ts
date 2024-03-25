@@ -4,13 +4,13 @@ import { keyBy, mapValues, noop } from "lodash-es";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { getEndpointEnvironmentUrl } from "../../util/endpoint";
 import {
-    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointRequest,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    dereferenceObjectProperties,
 } from "../../util/resolver";
 
 export interface HttpRequestExample {
@@ -295,6 +295,8 @@ export function sortKeysByShape(
                     if (property.type === "bodyProperty") {
                         return sortKeysByShape(v, property.valueShape, types);
                     }
+
+                    return undefined;
                 },
             );
         },

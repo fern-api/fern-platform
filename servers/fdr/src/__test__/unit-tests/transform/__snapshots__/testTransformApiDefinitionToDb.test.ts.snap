@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transformApiDefinitionToDb {"name":"candid"} 1`] = `
+exports[`transformApiDefinitionToDb > {"name":"candid"} 1`] = `
 {
   "auth": {
     "tokenName": "token",
@@ -78216,7 +78216,7 @@ Example: 1.1 is valid, 1.11 is not.
 }
 `;
 
-exports[`transformApiDefinitionToDb {"name":"cyclical-1"} 1`] = `
+exports[`transformApiDefinitionToDb > {"name":"cyclical-1"} 1`] = `
 {
   "auth": {
     "headerWireValue": "Authorization",
@@ -78427,7 +78427,7 @@ exports[`transformApiDefinitionToDb {"name":"cyclical-1"} 1`] = `
 }
 `;
 
-exports[`transformApiDefinitionToDb {"name":"realtime"} 1`] = `
+exports[`transformApiDefinitionToDb > {"name":"realtime"} 1`] = `
 {
   "auth": {
     "tokenName": "token",
@@ -78596,7 +78596,7 @@ exports[`transformApiDefinitionToDb {"name":"realtime"} 1`] = `
 }
 `;
 
-exports[`transformApiDefinitionToDb {"name":"string"} 1`] = `
+exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
 {
   "auth": {
     "headerWireValue": "Authorization",
@@ -79390,7 +79390,7 @@ This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyp
 }
 `;
 
-exports[`transformApiDefinitionToDb {"name":"vellum"} 1`] = `
+exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
 {
   "auth": {
     "headerWireValue": "X_API_KEY",

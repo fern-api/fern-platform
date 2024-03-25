@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig primer gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > primer > gets all urls from docs config 1`] = `
 [
   "primer.io/docs/api",
   "primer.io/docs/api/introduction",

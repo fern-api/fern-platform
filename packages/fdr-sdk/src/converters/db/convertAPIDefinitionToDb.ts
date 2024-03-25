@@ -1,8 +1,8 @@
 import lodash from "lodash";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { titleCase } from "../utils/titleCase";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
@@ -11,7 +11,6 @@ import {
 } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
-// eslint-disable-next-line jest/unbound-method
 const { isEqual, kebabCase, startCase } = lodash;
 
 export function convertAPIDefinitionToDb(

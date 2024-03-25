@@ -1,5 +1,5 @@
 import lodash from "lodash";
-// eslint-disable-next-line jest/unbound-method
+
 const { isPlainObject } = lodash;
 
 export const isPlainObject2 = isPlainObject as (val: unknown) => val is Record<string, unknown>;

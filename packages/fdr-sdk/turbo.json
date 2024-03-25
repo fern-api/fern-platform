@@ -3,8 +3,8 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
-      "outputs": ["lib/**", "dist/**"],
-      "dependsOn": ["^compile", "^build", "codegen", "//#fdr:generate"]
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build", "codegen", "//#fdr:generate"]
     }
   }
 }

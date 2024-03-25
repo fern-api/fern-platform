@@ -9,7 +9,7 @@ export function useIsScrolled(ref?: RefObject<HTMLDivElement>): boolean {
         } else if (typeof window !== "undefined") {
             return window.scrollY;
         }
-        return false;
+        return 0;
     }, [ref]);
 
     useEffect(() => {
