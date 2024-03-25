@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
 import { NextResponse, type NextRequest } from "next/server";
-import { jsonResponse } from "../../../utils/serverResponse";
+import { jsonResponse } from "../../../../utils/serverResponse";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -88,6 +88,10 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 405 });
     }
     const startTime = Date.now();
+
+    // eslint-disable-next-line no-console
+    console.log("Starting proxy request to", req.url);
+
     try {
         const proxyRequest = (await req.json()) as ProxyRequest;
         const headers = new Headers(proxyRequest.headers);
@@ -102,30 +106,44 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             headers,
             body: await buildRequestBody(proxyRequest.body),
         });
+
+        // eslint-disable-next-line no-console
+        console.log("Proxy request to", req.url, "completed with status", response.status);
+
         let body = await response.text();
+        const endTime = Date.now();
+
+        // eslint-disable-next-line no-console
+        console.log("Proxy request to", req.url, "recieved response body after", endTime - startTime, "milliseconds");
+
         try {
             body = JSON.parse(body);
-        } catch (_e) {
-            // Ignore
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log("Failed to parse response body as JSON, but will return it as text.");
+            // eslint-disable-next-line no-console
+            console.error(e);
         }
-        const endTime = Date.now();
         const responseHeaders = response.headers;
 
-        return jsonResponse<ProxyResponse>(200, {
-            error: false,
-            response: {
-                headers: Object.fromEntries(responseHeaders.entries()),
-                ok: response.ok,
-                redirected: response.redirected,
-                status: response.status,
-                statusText: response.statusText,
-                type: response.type,
-                url: response.url,
-                body,
+        return NextResponse.json(
+            {
+                error: false,
+                response: {
+                    headers: Object.fromEntries(responseHeaders.entries()),
+                    ok: response.ok,
+                    redirected: response.redirected,
+                    status: response.status,
+                    statusText: response.statusText,
+                    type: response.type,
+                    url: response.url,
+                    body,
+                },
+                time: endTime - startTime,
+                size: responseHeaders.get("Content-Length"),
             },
-            time: endTime - startTime,
-            size: responseHeaders.get("Content-Length"),
-        });
+            { status: 200 },
+        );
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
