@@ -7,7 +7,7 @@ test("multipart-form upload", async ({ request }) => {
     const base64Image = bitmap.toString("base64");
     const mimeType = "image/jpeg";
     const dataUrl = `data:${mimeType};base64,${base64Image}`;
-    const r = await request.post("http://localhost:3000/api/fern-docs/proxy", {
+    const r = await request.post("/api/fern-docs/proxy/rest", {
         data: {
             url: "https://api.hume.ai/v0/batch/jobs",
             method: "POST",

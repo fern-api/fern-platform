@@ -3,6 +3,7 @@ import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
+import { resolve } from "url";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -37,9 +38,9 @@ interface ProxyResponseWithMetadata {
     metadata: ProxyResponse.SerializableResponse;
 }
 
-function executeProxy(req: ProxyRequest, useCdn: boolean): Promise<ProxyResponseWithMetadata> {
+function executeProxy(req: ProxyRequest, basePath: string = ""): Promise<ProxyResponseWithMetadata> {
     const startTime = performance.now();
-    return fetch((useCdn ? "https://app.buildwithfern.com" : "") + "/api/fern-docs/proxy", {
+    return fetch(resolve(basePath, "/api/fern-docs/proxy/rest"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -69,8 +70,8 @@ interface ResponseChunk {
     time: number;
 }
 
-function executeProxyStream(req: ProxyRequest, useCdn: boolean): Promise<[Response, Stream<ResponseChunk>]> {
-    return fetch((useCdn ? "https://app.buildwithfern.com" : "") + "/api/fern-docs/proxy/stream", {
+function executeProxyStream(req: ProxyRequest, basePath: string = ""): Promise<[Response, Stream<ResponseChunk>]> {
+    return fetch(resolve(basePath, "/api/fern-docs/proxy/stream"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -105,8 +106,8 @@ interface FileDownloadResponse {
     size?: number;
 }
 
-async function executeFileDownload(req: ProxyRequest, useCdn: boolean): Promise<FileDownloadResponse> {
-    const r = await fetch((useCdn ? "https://app.buildwithfern.com" : "") + "/api/fern-docs/proxy/file", {
+async function executeFileDownload(req: ProxyRequest, basePath: string = ""): Promise<FileDownloadResponse> {
+    const r = await fetch(resolve(basePath, "/api/fern-docs/proxy/file"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -161,7 +162,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 body: await serializeFormStateBody(formState.body),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
-                const [res, stream] = await executeProxyStream(req, basePath != null);
+                const [res, stream] = await executeProxyStream(req, basePath);
                 for await (const item of stream) {
                     setResponse((lastValue) =>
                         loaded({
@@ -178,7 +179,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     );
                 }
             } else if (endpoint.responseBody?.shape.type === "fileDownload") {
-                const res = await executeFileDownload(req, basePath != null);
+                const res = await executeFileDownload(req, basePath);
                 if (res.ok) {
                     setResponse(
                         loaded({
@@ -196,7 +197,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     setResponse(failed(new Error(`Failed to download file: ${res.statusText}`)));
                 }
             } else {
-                const loadedResponse = await executeProxy(req, basePath != null);
+                const loadedResponse = await executeProxy(req, basePath);
                 if (!loadedResponse.result.error) {
                     setResponse(loaded({ type: "json", ...loadedResponse.result }));
                     capturePosthogEvent("api_playground_request_received", {
