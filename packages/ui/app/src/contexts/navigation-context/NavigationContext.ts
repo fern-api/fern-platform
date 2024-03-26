@@ -24,13 +24,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
         apis: {},
     },
-    navigation: {
-        sidebarNodes: [],
-        versions: [],
-        tabs: [],
-        currentVersionIndex: undefined,
-        currentTabIndex: undefined,
-    },
 });
 
 export interface NavigationContextValue {
