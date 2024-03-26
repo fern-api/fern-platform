@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-env": "^7.24.3",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.24.1",
     "@next/eslint-plugin-next": "^14.1.0",
