@@ -1206,7 +1206,7 @@ function resolveExampleEndpointResponse(
 
 function safeSortKeysByShape(
     value: unknown,
-    shape: ResolvedHttpResponseBodyShape | undefined,
+    shape: ResolvedTypeShape | ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape | null | undefined,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
 ): unknown {
     try {
