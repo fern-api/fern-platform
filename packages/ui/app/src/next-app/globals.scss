@@ -254,11 +254,6 @@
 
         .fern-sidebar-group {
             @apply max-lg:mx-0;
-            @apply my-1;
-        }
-
-        .fern-sidebar-heading + .fern-sidebar-group {
-            @apply mt-0;
         }
     }
 
