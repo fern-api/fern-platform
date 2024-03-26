@@ -221,7 +221,6 @@ function maybeParseInt(str: string | null | undefined): number | undefined {
 
 export function parseBlockMetaString(element: Element, defaultFallback: string): FernCodeMeta {
     let meta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "");
-    console.log(meta);
 
     const titleMatch = meta.match(/title="([^"]*)"/);
     const title = titleMatch?.[1];
