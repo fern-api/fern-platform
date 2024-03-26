@@ -39,35 +39,46 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
         case "json":
             return JSON.stringify(body.value);
         case "form-data": {
-            const formData = new FormData();
-            for (const [key, value] of Object.entries(body.value)) {
-                switch (value.type) {
-                    case "file":
-                        if (value.value != null) {
-                            const base64 = value.value.dataUrl;
-                            const blob = await dataURLtoBlob(base64);
-                            const file = new File([blob], value.value.name, { type: value.value.type });
-                            formData.append(key, file);
-                        }
-                        break;
-                    case "fileArray": {
-                        const files = await Promise.all(
-                            value.value.map(async (serializedFile) => {
-                                const base64 = serializedFile.dataUrl;
+            const formEntries = await Promise.all(
+                Object.entries(body.value).map(async ([key, value]) => {
+                    switch (value.type) {
+                        case "file":
+                            if (value.value != null) {
+                                const base64 = value.value.dataUrl;
                                 const blob = await dataURLtoBlob(base64);
-                                return new File([blob], serializedFile.name, { type: serializedFile.type });
-                            }),
-                        );
-                        files.forEach((file) => formData.append(key, file, file.name));
-                        break;
+                                const file = new File([blob], value.value.name, { type: value.value.type });
+                                return [key, file] as const;
+                            }
+                            return [key, null] as const;
+                        case "fileArray": {
+                            const files = await Promise.all(
+                                value.value.map(async (serializedFile) => {
+                                    const base64 = serializedFile.dataUrl;
+                                    const blob = await dataURLtoBlob(base64);
+                                    return new File([blob], serializedFile.name, { type: serializedFile.type });
+                                }),
+                            );
+                            return [key, files] as const;
+                        }
+                        case "json":
+                            return [key, JSON.stringify(value.value)] as const;
+                        default:
+                            assertNever(value);
                     }
-                    case "json":
-                        formData.append(key, JSON.stringify(value.value));
-                        break;
-                    default:
-                        assertNever(value);
+                }),
+            );
+
+            const formData = new FormData();
+            formEntries.forEach(([key, value]) => {
+                if (value == null) {
+                    return;
                 }
-            }
+                if (Array.isArray(value)) {
+                    value.forEach((file) => formData.append(key, file, file.name));
+                } else {
+                    formData.append(key, value);
+                }
+            });
             return formData;
         }
         case "octet-stream": {
@@ -87,13 +98,13 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
-    const startTime = Date.now();
 
     // eslint-disable-next-line no-console
     console.log("Starting proxy request to", req.url);
 
     try {
         const proxyRequest = (await req.json()) as ProxyRequest;
+        const requestBody = await buildRequestBody(proxyRequest.body);
         const headers = new Headers(proxyRequest.headers);
 
         // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
@@ -101,10 +112,12 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             headers.delete("Content-Type");
         }
 
+        const startTime = Date.now();
+
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
             headers,
-            body: await buildRequestBody(proxyRequest.body),
+            body: requestBody,
         });
 
         // eslint-disable-next-line no-console
@@ -147,12 +160,11 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        const endTime = Date.now();
 
         return jsonResponse<ProxyResponse>(500, {
             error: true,
             status: 500,
-            time: endTime - startTime,
+            time: -1,
             size: null,
         });
     }

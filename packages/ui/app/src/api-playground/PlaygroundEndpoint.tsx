@@ -160,7 +160,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(endpoint, formState),
-                body: await serializeFormStateBody(formState.body),
+                body: await serializeFormStateBody(formState.body, basePath),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
                 const [res, stream] = await executeProxyStream(req, basePath);
@@ -277,6 +277,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
 
 async function serializeFormStateBody(
     body: PlaygroundFormStateBody | undefined,
+    basePath: string | undefined,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
     if (body == null) {
         return undefined;
@@ -292,13 +293,15 @@ async function serializeFormStateBody(
                     case "file":
                         formDataValue[key] = {
                             type: "file",
-                            value: await serializeFile(value.value),
+                            value: await serializeFile(value.value, basePath),
                         };
                         break;
                     case "fileArray":
                         formDataValue[key] = {
                             type: "fileArray",
-                            value: (await Promise.all(value.value.map(serializeFile))).filter(isNonNullish),
+                            value: (
+                                await Promise.all(value.value.map((value) => serializeFile(value, basePath)))
+                            ).filter(isNonNullish),
                         };
                         break;
                     case "json":
@@ -311,22 +314,44 @@ async function serializeFormStateBody(
             return { type: "form-data", value: formDataValue };
         }
         case "octet-stream":
-            return { type: "octet-stream", value: await serializeFile(body.value) };
+            return { type: "octet-stream", value: await serializeFile(body.value, basePath) };
         default:
             assertNever(body);
     }
 }
 
-function blobToDataURL(blob: Blob) {
+async function blobToDataURL(file: File, basePath: string = "") {
+    // vercel edge function has a maximum request size of 4.5MB, so we need to upload large files to S3
+    // if blob is larger than 1MB, we will upload it to S3 and return the URL
+    // TODO: we should probably measure that the _entire_ request is less than 4.5MB
+    if (file.size > 1024 * 1024) {
+        const response = await fetch(resolve(basePath, `/api/fern-docs/upload?file=${encodeURIComponent(file.name)}`), {
+            method: "GET",
+        });
+
+        const { put, get } = (await response.json()) as { put: string; get: string };
+
+        await fetch(put, {
+            method: "PUT",
+            body: file,
+            headers: { "Content-Type": file.type },
+        });
+
+        return get;
+    }
+
     return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result as string);
         reader.onerror = reject;
-        reader.readAsDataURL(blob);
+        reader.readAsDataURL(file);
     });
 }
 
-async function serializeFile(file: File | undefined): Promise<SerializableFile | undefined> {
+async function serializeFile(
+    file: File | undefined,
+    basePath: string | undefined,
+): Promise<SerializableFile | undefined> {
     if (file == null) {
         return undefined;
     }
@@ -335,6 +360,6 @@ async function serializeFile(file: File | undefined): Promise<SerializableFile |
         lastModified: file.lastModified,
         size: file.size,
         type: file.type,
-        dataUrl: await blobToDataURL(file),
+        dataUrl: await blobToDataURL(file, basePath),
     };
 }
