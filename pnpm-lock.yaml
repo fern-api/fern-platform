@@ -563,8 +563,8 @@ importers:
         specifier: 2.7.0
         version: 2.7.0
       qs:
-        specifier: 6.11.2
-        version: 6.11.2
+        specifier: 6.12.0
+        version: 6.12.0
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
@@ -597,8 +597,8 @@ importers:
         specifier: 2.6.9
         version: 2.6.9
       '@types/qs':
-        specifier: 6.9.8
-        version: 6.9.8
+        specifier: 6.9.14
+        version: 6.9.14
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -6201,7 +6201,7 @@ packages:
     resolution: {integrity: sha512-oaYtiBirUOPQGSWNGPWnzyAFJ0BP3cwvN4oWZQY+zUBwpVIGsKUkpBpSztp74drYcjavs7SKFZ4DX1V2QeN8rg==}
     dependencies:
       '@types/node': 18.19.26
-      '@types/qs': 6.9.8
+      '@types/qs': 6.9.14
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
     dev: true
@@ -6211,7 +6211,7 @@ packages:
     dependencies:
       '@types/body-parser': 1.19.5
       '@types/express-serve-static-core': 4.17.43
-      '@types/qs': 6.9.8
+      '@types/qs': 6.9.14
       '@types/serve-static': 1.15.5
     dev: true
 
@@ -6369,8 +6369,8 @@ packages:
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
     dev: true
 
-  /@types/qs@6.9.8:
-    resolution: {integrity: sha512-u95svzDlTysU5xecFNTgfFG5RUWu1A9P0VzgpcIiGZA9iraHOdSzcxMxQ55DyeRaGCSxQi7LxXDI4rzq/MYfdg==}
+  /@types/qs@6.9.14:
+    resolution: {integrity: sha512-5khscbd3SwWMhFqylJBLQ0zIu7c1K6Vz0uBIt915BI3zV0q1nfjRQD3RqSBcPaO6PHEF4ov/t9y89fSiyThlPA==}
 
   /@types/range-parser@1.2.7:
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
@@ -10276,7 +10276,7 @@ packages:
       '@types/dom-speech-recognition': 0.0.1
       '@types/google.maps': 3.55.5
       '@types/hogan.js': 3.0.5
-      '@types/qs': 6.9.8
+      '@types/qs': 6.9.14
       algoliasearch: 4.22.1
       algoliasearch-helper: 3.16.3(algoliasearch@4.22.1)
       hogan.js: 3.0.2
@@ -12949,8 +12949,8 @@ packages:
       side-channel: 1.0.6
     dev: false
 
-  /qs@6.11.2:
-    resolution: {integrity: sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==}
+  /qs@6.12.0:
+    resolution: {integrity: sha512-trVZiI6RMOkO476zLGaBIzszOdFPnCCXHPG9kn0yuS1uz6xdVxPfZdB3vUig9pxPFDM9BRAgz/YUIVQ1/vuiUg==}
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.6
