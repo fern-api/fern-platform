@@ -1,24 +1,23 @@
-import { SidebarNode } from "@fern-ui/fdr-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FeatureFlags, useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import {
+    ResolvedApiDefinition,
+    ResolvedRootPackage,
     flattenRootPackage,
     isEndpoint,
     isWebSocket,
-    ResolvedApiDefinition,
-    ResolvedRootPackage,
 } from "../util/resolver";
 import {
+    PlaygroundSelectionState,
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,
-    PlaygroundSelectionState,
     usePlaygroundHeight,
 } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
@@ -49,11 +48,7 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
     {},
 );
 
-interface PlaygroundProps {
-    navigation: SidebarNode[];
-}
-
-export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
+export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
     const { domain, basePath, selectedSlug } = useNavigationContext();
@@ -166,7 +161,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
             }}
         >
             {children}
-            <PlaygroundDrawer navigation={navigation} apis={flattenedApis} />
+            <PlaygroundDrawer apis={flattenedApis} />
             {isPlaygroundOpen && hasPlayground && <div style={{ height: playgroundHeight }} />}
         </PlaygroundContext.Provider>
     );

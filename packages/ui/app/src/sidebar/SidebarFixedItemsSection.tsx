@@ -2,11 +2,10 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
 import { ThemeButton } from "../docs/ThemeButton";
-import { useOpenSearchDialog } from "./atom";
 import { SidebarSearchBar } from "./SidebarSearchBar";
+import { useOpenSearchDialog } from "./atom";
 
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
@@ -30,7 +29,6 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 }) => {
     const openSearchDialog = useOpenSearchDialog();
     const { layout, colors } = useDocsContext();
-    const { navigation } = useNavigationContext();
 
     const searchBar = useMemo(() => {
         return showSearchBar ? (
@@ -46,12 +44,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 
     const header = layout?.disableHeader && (
         <div className="h-header-height-real mx-2 hidden border-b border-transparent lg:flex lg:items-center lg:justify-between">
-            <HeaderLogoSection
-                logoHeight={logoHeight}
-                logoHref={logoHref}
-                versions={navigation.versions}
-                currentVersionIndex={navigation.currentVersionIndex}
-            />
+            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
             <div className="-mr-2">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
         </div>
     );

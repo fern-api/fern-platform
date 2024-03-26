@@ -1,4 +1,4 @@
-import { SidebarNavigation, SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
+import { SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
@@ -12,6 +12,7 @@ import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom"
 import { ResolvedPath } from "../../util/ResolvedPath";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
@@ -20,7 +21,6 @@ export declare namespace NavigationContextProvider {
         resolvedPath: ResolvedPath;
         domain: string;
         basePath: string | undefined;
-        navigation: SidebarNavigation;
         title: string | undefined;
     }>;
 }
@@ -90,15 +90,15 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     children,
     domain,
     basePath,
-    navigation,
     title,
 }) => {
+    const { sidebarNodes, versions, currentVersionIndex } = useDocsContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
         resolveActiveSidebarNode(
-            navigation.sidebarNodes,
+            sidebarNodes,
             resolvedPath.fullSlug.split("/").filter((str) => str.trim().length > 0),
         ),
     );
@@ -156,7 +156,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
-                setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+                setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, fullSlug.split("/")));
                 startScrollTracking(`/${fullSlug}`, true);
             },
             300,
@@ -171,7 +171,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, decodeURI(fullSlug).split("/")));
+        setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, decodeURI(fullSlug).split("/")));
         startScrollTracking(route);
     });
 
@@ -233,9 +233,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 resolvedPath,
-                activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
+                activeVersion: versions[currentVersionIndex ?? 0],
                 selectedSlug,
-                navigation,
             }}
         >
             <Head>

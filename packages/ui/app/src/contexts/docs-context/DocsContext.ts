@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { ColorsConfig } from "@fern-ui/fdr-utils";
+import { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import React from "react";
 
 export const DocsContext = React.createContext<DocsContextValue>({
@@ -14,9 +14,14 @@ export const DocsContext = React.createContext<DocsContextValue>({
     css: undefined,
     files: {},
     resolveFile: () => undefined,
+    currentTabIndex: undefined,
+    tabs: [],
+    currentVersionIndex: undefined,
+    versions: [],
+    sidebarNodes: [],
 });
 
-export interface DocsContextValue {
+export interface DocsContextValue extends SidebarNavigation {
     domain: string;
     basePath: string | undefined;
     layout: DocsV1Read.DocsLayoutConfig | undefined;

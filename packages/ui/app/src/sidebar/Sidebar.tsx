@@ -1,7 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarNavigation } from "@fern-ui/fdr-utils";
 import { Dialog, Transition } from "@headlessui/react";
-import cn from "clsx";
+import { clsx as cn } from "clsx";
 import { Fragment, memo, useRef } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
@@ -20,7 +19,6 @@ import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
 export interface SidebarProps {
     currentSlug: string[];
-    navigation: SidebarNavigation;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     searchInfo: DocsV1Read.SearchInfo;
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
@@ -31,7 +29,6 @@ export interface SidebarProps {
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
-    navigation,
     currentSlug,
     registerScrolledToPathListener,
     searchInfo,
@@ -41,25 +38,12 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     logoHref,
     showSearchBar,
 }) {
-    const { layout } = useDocsContext();
+    const { layout, tabs, currentTabIndex, sidebarNodes } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
     const { layoutBreakpoint } = useViewportContext();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const searchService = useSearchService();
-
-    const renderTabs = () => {
-        if (navigation.tabs.length === 0) {
-            return null;
-        }
-        return (
-            <ul className="mt-3 flex list-none flex-col">
-                {navigation.tabs.map((tab, idx) => (
-                    <SidebarTabButton key={idx} tab={tab} selected={idx === navigation.currentTabIndex} />
-                ))}
-            </ul>
-        );
-    };
 
     return (
         <nav
@@ -86,11 +70,21 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                     />
-                    {renderTabs()}
-                    <CollapseSidebarProvider nodes={navigation.sidebarNodes}>
+                    {tabs.length > 0 && (
+                        <ul
+                            className={cn("mt-3 flex list-none flex-col", {
+                                "lg:hidden": layout?.disableHeader !== true && layout?.tabsPlacement === "HEADER",
+                            })}
+                        >
+                            {tabs.map((tab, idx) => (
+                                <SidebarTabButton key={idx} tab={tab} selected={tab.index === currentTabIndex} />
+                            ))}
+                        </ul>
+                    )}
+                    <CollapseSidebarProvider>
                         <FernTooltipProvider>
                             <SidebarSection
-                                navigationItems={navigation.sidebarNodes}
+                                navigationItems={sidebarNodes}
                                 slug={currentSlug}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 depth={0}
@@ -112,10 +106,10 @@ function MobileSidebar(props: SidebarProps) {
 
     return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>
-            <Dialog onClose={closeMobileSidebar} className="top-header-height fixed inset-0">
+            <Dialog onClose={closeMobileSidebar} className="top-header-height-real fixed inset-0">
                 <Transition.Child
                     as="div"
-                    className="bg-background/50 top-header-height fixed inset-0 z-auto"
+                    className="bg-background/50 top-header-height-real fixed inset-0 z-auto"
                     enter="transition-opacity ease-linear duration-200"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"

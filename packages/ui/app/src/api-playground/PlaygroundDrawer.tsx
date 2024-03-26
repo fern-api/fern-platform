@@ -1,12 +1,11 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
@@ -25,7 +24,7 @@ import {
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
-import { PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
@@ -90,13 +89,15 @@ export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>
 }
 
 interface PlaygroundDrawerProps {
-    navigation: SidebarNode[];
     apis: Record<string, FlattenedRootPackage>;
 }
 
-export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }) => {
+export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
     const windowHeight = useWindowHeight();
+
+    const { sidebarNodes } = useDocsContext();
+    const apiGroups = useMemo(() => flattenApiSection(sidebarNodes), [sidebarNodes]);
 
     const matchedSection = selectionState != null ? apis[selectionState.api] : undefined;
 
@@ -285,7 +286,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
 
                             <div className="flex items-center justify-center">
                                 {selectionState != null ? (
-                                    <PlaygroundEndpointSelector navigation={navigation} />
+                                    <PlaygroundEndpointSelector apiGroups={apiGroups} />
                                 ) : (
                                     <h6 className="t-accent">Select an endpoint to get started</h6>
                                 )}
@@ -344,7 +345,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                             <TooltipProvider>
                                 <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
                                     <PlaygroundEndpointSelectorContent
-                                        navigation={navigation}
+                                        apiGroups={apiGroups}
                                         className="fern-card mb-6 min-h-0 shrink p-px"
                                     />
                                 </div>

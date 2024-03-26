@@ -281,7 +281,6 @@
 
     .fern-sidebar-link {
         @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
-        @apply no-underline hover:no-underline;
         @apply max-lg:rounded-none lg:rounded-lg;
     }
 
@@ -329,10 +328,6 @@
         > .fern-button {
             @apply rounded-lg shrink min-w-0;
         }
-    }
-
-    a.fern-button {
-        @apply no-underline hover:no-underline;
     }
 
     .fern-button {
@@ -737,10 +732,6 @@
         &.elevated {
             @apply shadow-card-elevated border-primary transition-all;
         }
-    }
-
-    a.fern-card {
-        @apply no-underline hover:no-underline;
     }
 
     .fern-input-focus {

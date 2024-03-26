@@ -6,6 +6,7 @@ import { useViewportContext } from "../contexts/viewport-context/useViewportCont
 import { useCloseMobileSidebar, useOpenMobileSidebar } from "../sidebar/atom";
 import { BgImageGradient } from "./BgImageGradient";
 import { Header } from "./Header";
+import { HeaderTabs } from "./HeaderTabs";
 import { useIsScrolled } from "./useIsScrolled";
 
 interface HeaderContainerProps {
@@ -21,7 +22,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({
     logoHeight,
     logoHref,
 }) => {
-    const { colors, layout } = useDocsContext();
+    const { colors, layout, tabs } = useDocsContext();
     const isScrolled = useIsScrolled();
     const { layoutBreakpoint } = useViewportContext();
     const openMobileSidebar = useOpenMobileSidebar();
@@ -48,27 +49,33 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({
         ),
         [colors],
     );
+
     return (
         <header id="fern-header">
             <div
-                className="bg-header border-concealed data-[border=show]:dark:shadow-header-dark h-header-height fixed inset-x-0 top-0 z-30 overflow-visible border-b shadow-none backdrop-blur-lg transition-shadow lg:backdrop-blur"
+                className="data-[border=show]:dark:shadow-header-dark fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg transition-shadow lg:backdrop-blur"
                 data-border={
                     isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         ? "show"
                         : "hide"
                 }
             >
-                {renderBackground()}
-                <Header
-                    className="max-w-page-width mx-auto"
-                    logoHeight={logoHeight}
-                    logoHref={logoHref}
-                    navbarLinks={navbarLinks}
-                    isMobileSidebarOpen={isMobileSidebarOpen}
-                    openMobileSidebar={openMobileSidebar}
-                    closeMobileSidebar={closeMobileSidebar}
-                    showSearchBar={layout?.searchbarPlacement === "HEADER"}
-                />
+                <div className="bg-header border-concealed h-header-height-real border-b">
+                    {renderBackground()}
+                    <Header
+                        className="max-w-page-width mx-auto"
+                        logoHeight={logoHeight}
+                        logoHref={logoHref}
+                        navbarLinks={navbarLinks}
+                        isMobileSidebarOpen={isMobileSidebarOpen}
+                        openMobileSidebar={openMobileSidebar}
+                        closeMobileSidebar={closeMobileSidebar}
+                        showSearchBar={layout?.searchbarPlacement === "HEADER"}
+                    />
+                </div>
+                {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
+                    <HeaderTabs />
+                )}
             </div>
         </header>
     );
