@@ -11,20 +11,16 @@ export function visitSidebarNode(
         pageGroup: (pageGroup) => {
             pageGroup.pages.forEach((page) => {
                 if (page.type !== "link") {
-                    visit(page, [...parentNodes, pageGroup]);
+                    visitSidebarNode(page, visit, parentNodes);
                 }
             });
         },
         apiSection: (apiSection) => {
             apiSection.items.forEach((item) => {
-                if (SidebarNode.isSubpackageSection(item)) {
-                    visitSidebarNode(item, visit, [...parentNodes, apiSection]);
-                } else {
-                    visit(item, [...parentNodes, apiSection]);
-                }
+                visitSidebarNode(item, visit, [...parentNodes, apiSection]);
             });
             if (apiSection.changelog) {
-                visit(apiSection.changelog, [...parentNodes, apiSection]);
+                visitSidebarNode(apiSection.changelog, visit, [...parentNodes, apiSection]);
             }
         },
         section: (section) => {
