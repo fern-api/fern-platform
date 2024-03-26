@@ -164,5 +164,5 @@ function findSiblings<T extends SidebarNodeRaw.ParentNode>(
         return { items: [], node: undefined };
     }
 
-    return { items: parent.items as T[], node: parents[navigationDepth] as T | undefined };
+    return { items: parent.items.filter(match) as T[], node: parents[navigationDepth] as T | undefined };
 }

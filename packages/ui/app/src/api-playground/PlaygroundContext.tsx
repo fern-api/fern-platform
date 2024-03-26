@@ -66,8 +66,8 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
         setPlaygroundHeight((currentHeight) => {
-            const halfWindowHeight: number = window.innerHeight / 2;
-            return currentHeight < halfWindowHeight ? halfWindowHeight : currentHeight;
+            const windowHeight: number = window.innerHeight;
+            return currentHeight < windowHeight ? windowHeight : currentHeight;
         });
         setPlaygroundOpen(true);
     }, [setPlaygroundHeight, setPlaygroundOpen]);

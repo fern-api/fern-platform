@@ -9,9 +9,9 @@ import { Markdown } from "../mdx/Markdown";
 import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
-    unwrapOptional,
     WithAvailability,
     WithDescription,
+    unwrapOptional,
 } from "../util/resolver";
 import { shouldRenderInline } from "./utils";
 
@@ -85,7 +85,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
     return (
         <div
             className={cn({
-                "flex gap-2": renderInline,
+                "flex gap-2 max-sm:flex-col": renderInline,
                 "space-y-2": !renderInline,
             })}
         >
