@@ -39,6 +39,8 @@
     "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.335.0",
+    "@aws-sdk/s3-request-presigner": "^3.335.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.1.0",
     "@fern-ui/core-utils": "workspace:*",
@@ -59,21 +61,21 @@
     "@fern-platform/configs": "workspace:*",
     "@next/bundle-analyzer": "^14.0.3",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node-fetch": "2.6.9",
     "@types/node": "^18.7.18",
+    "@types/node-fetch": "2.6.9",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
     "env-cmd": "toddbluhm/env-cmd",
     "eslint": "^8.56.0",
-    "vitest": "^1.4.0",
     "organize-imports-cli": "^0.10.0",
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
     "stylelint": "^16.1.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vitest": "^1.4.0"
   }
 }

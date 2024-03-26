@@ -2,9 +2,11 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
+import { resolve } from "url";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { FeatureFlags, useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import {
@@ -51,23 +53,9 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
-    const { domain, basePath, selectedSlug } = useNavigationContext();
+    const { basePath } = useDocsContext();
+    const { selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
-
-    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(isApiPlaygroundEnabled);
-
-    useEffect(() => {
-        if (!isPlaygroundEnabled) {
-            fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/feature-flags`, {
-                headers: { "x-fern-host": domain },
-                mode: "no-cors",
-            })
-                .then((r) => r.json())
-                .then((data: FeatureFlags) => setIsPlaygroundEnabled(data.isApiPlaygroundEnabled))
-                // eslint-disable-next-line no-console
-                .catch(console.error);
-        }
-    }, [basePath, domain, isPlaygroundEnabled]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
@@ -78,7 +66,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
         setPlaygroundHeight((currentHeight) => {
-            const halfWindowHeight = window.innerHeight / 2;
+            const halfWindowHeight: number = window.innerHeight / 2;
             return currentHeight < halfWindowHeight ? halfWindowHeight : currentHeight;
         });
         setPlaygroundOpen(true);
@@ -90,8 +78,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             let matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
                 const r = await fetch(
-                    "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
-                    { mode: "no-cors" },
+                    resolve(
+                        basePath ?? "",
+                        "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
+                    ),
                 );
 
                 const data: ResolvedRootPackage | null = await r.json();
@@ -141,10 +131,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 });
             }
         },
-        [expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
+        [basePath, expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
     );
 
-    if (!isPlaygroundEnabled) {
+    if (!isApiPlaygroundEnabled) {
         return <>{children}</>;
     }
 

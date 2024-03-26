@@ -931,6 +931,12 @@ importers:
 
   packages/ui/docs-bundle:
     dependencies:
+      '@aws-sdk/client-s3':
+        specifier: ^3.335.0
+        version: 3.537.0
+      '@aws-sdk/s3-request-presigner':
+        specifier: ^3.335.0
+        version: 3.537.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
