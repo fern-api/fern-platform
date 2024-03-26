@@ -137,7 +137,7 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "urlSlug": "page-5",
     },
     "currentTabIndex": -1,
-    "currentVersionIndex": 1,
+    "currentVersionIndex": 0,
   },
   "type": "found",
 }
@@ -172,7 +172,7 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "urlSlug": "page-6",
     },
     "currentTabIndex": -1,
-    "currentVersionIndex": 1,
+    "currentVersionIndex": 0,
   },
   "type": "found",
 }
@@ -207,7 +207,7 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "urlSlug": "page-9",
     },
     "currentTabIndex": -1,
-    "currentVersionIndex": 2,
+    "currentVersionIndex": 1,
   },
   "type": "found",
 }

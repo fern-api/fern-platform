@@ -25,6 +25,25 @@ describe("getNavigationRoot", () => {
             );
 
             expect(urls?.type === "found" ? urls.found.versions : []).toMatchSnapshot();
+            expect(urls?.type === "found" ? urls.found.currentVersionIndex : undefined).equal(0);
+        });
+
+        it("gets navigation root for /docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token", async () => {
+            const fixturePath = path.join(__dirname, "fixtures", "primer.json");
+
+            const content = fs.readFileSync(fixturePath, "utf-8");
+
+            const fixture = JSON.parse(content) as DocsV2Read.LoadDocsForUrlResponse;
+
+            const urls = getNavigationRoot(
+                "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token".split("/"),
+                fixture.baseUrl.basePath,
+                fixture.definition.config.navigation,
+                fixture.definition.apis,
+            );
+
+            expect(urls?.type === "found" ? urls.found.versions : []).toMatchSnapshot();
+            expect(urls?.type === "found" ? urls.found.currentVersionIndex : undefined).equal(2);
         });
     });
 });

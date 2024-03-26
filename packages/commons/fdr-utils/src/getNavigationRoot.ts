@@ -73,34 +73,39 @@ export function getNavigationRoot(
 
     const sidebarNodes = findSiblings<SidebarNodeRaw>(parents, isSidebarNodeRaw).items;
 
-    const tabs = findSiblings<SidebarNodeRaw.TabGroup>(
+    const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.TabGroup>(
         parents,
         (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup",
     );
 
-    const versions = findSiblings<SidebarNodeRaw.VersionGroup>(
+    const tabs = tabItems.map((tab) => ({
+        title: tab.title,
+        icon: tab.icon,
+        slug: tab.slug,
+        index: tab.index,
+    }));
+
+    const { items: versionItems, node: currentVerion } = findSiblings<SidebarNodeRaw.VersionGroup>(
         parents,
         (n): n is SidebarNodeRaw.VersionGroup => n.type === "versionGroup",
     );
 
+    const versions = versionItems
+        .map((version) => ({
+            id: version.id,
+            slug: version.slug,
+            index: version.index,
+            availability: version.availability,
+        }))
+        // get rid of duplicate version
+        .filter((version, idx) => version.index > 0 || version.index === idx);
+
     // const sidebarNodes = await Promise.all(rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)));
     const found: SidebarNavigationRaw = {
-        currentVersionIndex: versions.index,
-        versions: versions.items
-            .map((version) => ({
-                id: version.id,
-                slug: version.slug,
-                index: version.index,
-                availability: version.availability,
-            }))
-            // get rid of duplicate version
-            .filter((version, idx) => version.index > 0 || version.index === idx),
-        currentTabIndex: tabs.index,
-        tabs: tabs.items.map((tab) => ({
-            title: tab.title,
-            icon: tab.icon,
-            slug: tab.slug,
-        })),
+        currentVersionIndex: currentVerion?.index ?? -1,
+        versions,
+        currentTabIndex: currentTab?.index ?? -1,
+        tabs,
         sidebarNodes,
         currentNode: node,
     };
@@ -141,13 +146,13 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
 function findSiblings<T extends SidebarNodeRaw.ParentNode>(
     parents: readonly SidebarNodeRaw.ParentNode[],
     match: (node: SidebarNodeRaw.ParentNode) => node is T,
-): { items: readonly T[]; index: number } {
+): { items: readonly T[]; node: T | undefined } {
     const navigationDepth = parents.findIndex(match);
 
     const parent = parents[navigationDepth - 1] ?? parents[parents.length - 1];
 
     if (parent == null) {
-        return { items: [], index: -1 };
+        return { items: [], node: undefined };
     }
 
     if (
@@ -156,8 +161,8 @@ function findSiblings<T extends SidebarNodeRaw.ParentNode>(
         parent.type !== "versionGroup" &&
         parent.type !== "section"
     ) {
-        return { items: [], index: -1 };
+        return { items: [], node: undefined };
     }
 
-    return { items: parent.items as T[], index: parent.items.findIndex((node) => node === parents[navigationDepth]) };
+    return { items: parent.items as T[], node: parents[navigationDepth] as T | undefined };
 }

@@ -117,7 +117,7 @@ exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /do
       "urlSlug": "page-3",
     },
     "currentTabIndex": 0,
-    "currentVersionIndex": 1,
+    "currentVersionIndex": 0,
   },
   "type": "found",
 }

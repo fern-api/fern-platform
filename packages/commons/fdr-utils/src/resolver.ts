@@ -205,13 +205,14 @@ function resolveSidebarNodesVersionItems(
     parentSlugs: readonly string[],
 ): SidebarNodeRaw.VersionGroup["items"] {
     if (isUnversionedTabbedNavigationConfig(nav)) {
-        return nav.tabs.map((tab): SidebarNodeRaw.TabGroup => {
+        return nav.tabs.map((tab, index): SidebarNodeRaw.TabGroup => {
             const tabSlug = [...parentSlugs, ...tab.urlSlug.split("/")];
             return {
                 type: "tabGroup",
                 title: tab.title,
                 icon: tab.icon,
                 slug: tabSlug,
+                index,
                 items: resolveSidebarNodes(tab.items, apis, tabSlug, parentSlugs),
             };
         });
