@@ -10,7 +10,7 @@ export function visitSidebarNode(
     visitDiscriminatedUnion(node, "type")._visit({
         pageGroup: (pageGroup) => {
             pageGroup.pages.forEach((page) => {
-                if (SidebarNode.isPage(page)) {
+                if (page.type !== "link") {
                     visit(page, [...parentNodes, pageGroup]);
                 }
             });
