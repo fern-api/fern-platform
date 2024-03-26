@@ -265,7 +265,7 @@ function convertDescriptionToString(
     page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
-    const description = frontmatter?.description ?? page?.description ?? undefined;
+    const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
 
     if (description == null) {
         return;
