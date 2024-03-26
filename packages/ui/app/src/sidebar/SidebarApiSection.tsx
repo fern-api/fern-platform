@@ -1,10 +1,10 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
+import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
 import moment from "moment";
-import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
+import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { withStream } from "../commons/withStream";
@@ -79,6 +79,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 selected={isEqual(clientLibrariesSlug, selectedSlug)}
                 depth={Math.max(0, depth - 1)}
+                hidden={false}
             />
         );
     };
@@ -119,6 +120,8 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                                 </FernTooltip>
                             ) : null
                         }
+                        icon={item.icon}
+                        hidden={item.hidden}
                     />
                 ),
             )}
@@ -129,7 +132,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     registerScrolledToPathListener={registerScrolledToPathListener}
                     selected={isEqual(apiSection.changelog.slug, selectedSlug)}
                     depth={Math.max(0, depth - 1)}
-                    icon={<ActivityLogIcon />}
+                    icon={apiSection.changelog.icon ?? <ActivityLogIcon />}
                     rightElement={
                         shouldShowIndicator(apiSection.changelog) && (
                             <span className="relative flex size-2">
@@ -139,6 +142,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         )
                     }
                     tooltipContent={renderChangelogTooltip(apiSection.changelog)}
+                    hidden={apiSection.changelog.hidden}
                 />
             )}
         </ul>
@@ -205,6 +209,8 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             expanded={expanded}
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
+            icon={apiSection.icon}
+            hidden={apiSection.hidden}
         >
             {children}
         </SidebarSlugLink>

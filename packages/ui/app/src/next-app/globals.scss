@@ -244,12 +244,21 @@
         }
     }
 
+    .fern-sidebar-heading {
+        @apply flex min-h-[32px] lg:min-h-[36px];
+    }
+
     .fern-sidebar-group {
         @apply list-none;
         @apply max-lg:-mx-4;
 
         .fern-sidebar-group {
             @apply max-lg:mx-0;
+            @apply my-1;
+        }
+
+        .fern-sidebar-heading + .fern-sidebar-group {
+            @apply mt-0;
         }
     }
 

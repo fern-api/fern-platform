@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { range } from "lodash-es";
 import { FC, ReactNode } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { useCollapseSidebar } from "./CollapseSidebarContext";
 
 interface SidebarHeadingProps {
@@ -14,6 +15,7 @@ interface SidebarHeadingProps {
     rightElement?: ReactNode;
     hidden: boolean;
     icon: string | undefined;
+    children: ReactNode;
 }
 
 export const SidebarHeading: FC<SidebarHeadingProps> = ({
@@ -25,11 +27,17 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
     rightElement,
     hidden,
     icon,
+    children,
 }) => {
     const { checkExpanded } = useCollapseSidebar();
     const expanded = checkExpanded(slug);
-    return (
-        <div className={cn(className, "flex min-h-[32px] lg:min-h-[36px]")}>
+
+    if (hidden && !expanded) {
+        return null;
+    }
+
+    const heading = (
+        <div className={cn(className, "fern-sidebar-heading")}>
             {range(0, depth).map((i) => (
                 <div key={i} className={"flex-0 border-default h-full w-3 shrink-0 border-r"} />
             ))}
@@ -61,9 +69,21 @@ export const SidebarHeading: FC<SidebarHeadingProps> = ({
                 )}
                 onClick={toggleExpand}
             >
+                {icon != null && (
+                    <span className="mr-2">
+                        <RemoteFontAwesomeIcon icon={icon} />
+                    </span>
+                )}
                 <h6 className="m-0 flex-1 text-base leading-6 lg:text-sm lg:leading-5">{title}</h6>
                 {rightElement}
             </span>
         </div>
+    );
+
+    return (
+        <>
+            {heading}
+            {children}
+        </>
     );
 };

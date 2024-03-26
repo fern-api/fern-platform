@@ -86,7 +86,11 @@ export const CollapseSidebarProvider: FC<PropsWithChildren<{ nodes: readonly Sid
 
     const checkExpanded = useCallback(
         (expandableSlug: readonly string[]) =>
-            expanded.some((slug) => parentSlugMap.get(slug.join("/"))?.includes(expandableSlug.join("/"))),
+            expanded.some(
+                (slug) =>
+                    slug.join("/") === expandableSlug.join("/") ||
+                    parentSlugMap.get(slug.join("/"))?.includes(expandableSlug.join("/")),
+            ),
         [expanded, parentSlugMap],
     );
 
@@ -94,8 +98,10 @@ export const CollapseSidebarProvider: FC<PropsWithChildren<{ nodes: readonly Sid
         (slug: readonly string[]) => {
             setExpanded((expanded) => {
                 const childenToCollapse = parentToChildrenMap.get(slug.join("/")) ?? [];
-                if (expanded.some((s) => childenToCollapse.includes(s.join("/")))) {
-                    return expanded.filter((s) => !childenToCollapse.includes(s.join("/")));
+                if (expanded.some((s) => s.join("/") === slug.join("/") || childenToCollapse.includes(s.join("/")))) {
+                    return expanded.filter(
+                        (s) => s.join("/") !== slug.join("/") && !childenToCollapse.includes(s.join("/")),
+                    );
                 }
                 return [...expanded, [...slug]];
             });

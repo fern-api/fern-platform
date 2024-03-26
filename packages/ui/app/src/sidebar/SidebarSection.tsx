@@ -4,7 +4,6 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
@@ -14,7 +13,6 @@ export interface SidebarSectionProps {
     className?: string;
     navigationItems: SidebarNode[];
     slug: readonly string[];
-    hidden: boolean;
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
@@ -25,6 +23,7 @@ export interface SidebarSectionProps {
 
 interface ExpandableSidebarSectionProps extends SidebarSectionProps {
     title: string;
+    hidden: boolean;
     icon: string | undefined;
 }
 
@@ -49,15 +48,14 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
                 navigationItems={navigationItems}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 depth={depth + 1}
-                hidden={hidden}
             />
         ),
-        [expanded, slug, navigationItems, registerScrolledToPathListener, depth, hidden],
+        [expanded, slug, navigationItems, registerScrolledToPathListener, depth],
     );
 
     return (
         <SidebarSlugLink
-            icon={icon != null ? <RemoteFontAwesomeIcon icon={icon} /> : undefined}
+            icon={icon}
             className={className}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
@@ -133,11 +131,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                             registerScrolledToPathListener={registerScrolledToPathListener}
                                             title={page.title}
                                             selected={isEqual(selectedSlug, page.slug)}
-                                            icon={
-                                                page.icon != null ? (
-                                                    <RemoteFontAwesomeIcon icon={page.icon} />
-                                                ) : undefined
-                                            }
+                                            icon={page.icon}
                                             hidden={page.hidden}
                                         />
                                     ),
@@ -160,14 +154,14 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                         icon={section.icon}
                                         hidden={section.hidden}
                                         slug={section.slug}
-                                    />
-                                    <SidebarSection
-                                        slug={section.slug}
-                                        navigationItems={section.items}
-                                        registerScrolledToPathListener={registerScrolledToPathListener}
-                                        depth={depth + 1}
-                                        hidden={section.hidden}
-                                    />
+                                    >
+                                        <SidebarSection
+                                            slug={section.slug}
+                                            navigationItems={section.items}
+                                            registerScrolledToPathListener={registerScrolledToPathListener}
+                                            depth={depth + 1}
+                                        />
+                                    </SidebarHeading>
                                 </li>
                             );
                         } else {
@@ -200,13 +194,14 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                     slug={apiSection.slug}
                                     icon={apiSection.icon}
                                     hidden={apiSection.hidden}
-                                />
-                                <SidebarApiSection
-                                    slug={apiSection.slug}
-                                    apiSection={apiSection}
-                                    registerScrolledToPathListener={registerScrolledToPathListener}
-                                    depth={depth + 1}
-                                />
+                                >
+                                    <SidebarApiSection
+                                        slug={apiSection.slug}
+                                        apiSection={apiSection}
+                                        registerScrolledToPathListener={registerScrolledToPathListener}
+                                        depth={depth + 1}
+                                    />
+                                </SidebarHeading>
                             </li>
                         ) : (
                             <ExpandableSidebarApiSection

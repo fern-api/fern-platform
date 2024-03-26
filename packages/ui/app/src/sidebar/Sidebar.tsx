@@ -95,7 +95,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 depth={0}
                                 topLevel={true}
-                                hidden={false}
                             />
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>

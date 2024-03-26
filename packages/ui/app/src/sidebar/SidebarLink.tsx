@@ -14,12 +14,13 @@ import {
     useEffect,
     useRef,
 } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernTooltip } from "../components/FernTooltip";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
-    icon?: ReactElement;
+    icon?: ReactElement | string;
     slug?: string[];
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
@@ -156,7 +157,11 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                             ))}
                             {expandButton}
                             <span className="fern-sidebar-link-content">
-                                {icon != null && <span className="mr-2">{icon}</span>}
+                                {icon != null && (
+                                    <span className="mr-2">
+                                        {typeof icon === "string" ? <RemoteFontAwesomeIcon icon={icon} /> : icon}
+                                    </span>
+                                )}
                                 <span className="fern-sidebar-link-text">{title}</span>
                                 {rightElement}
                             </span>
