@@ -5,9 +5,9 @@ import { Fragment, ReactNode } from "react";
 import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
@@ -64,7 +64,11 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={file.key}
                                         description={undefined}
-                                        typeShorthand={file.isOptional ? "optional file" : "file"}
+                                        typeShorthand={
+                                            <span className="t-muted inline-flex items-baseline gap-2 text-xs">
+                                                {file.isOptional ? "optional file" : "file"}
+                                            </span>
+                                        }
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         route={route}
                                         availability={undefined}
@@ -75,7 +79,9 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         name={fileArray.key}
                                         description={undefined}
                                         typeShorthand={
-                                            fileArray.isOptional ? "optional list of files" : "list of files"
+                                            <span className="t-muted inline-flex items-baseline gap-2 text-xs">
+                                                {fileArray.isOptional ? "optional list of files" : "list of files"}
+                                            </span>
                                         }
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
                                         route={route}
