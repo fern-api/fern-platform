@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
-import { ReactElement, useMemo } from "react";
+import { ReactElement, ReactNode, useMemo } from "react";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
@@ -75,6 +75,24 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
         return null;
     }
 
+    function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
+        // If the basePath is present, it's not clear whether or not the site is hosted on a custom domain.
+        // In this case, we don't want to render the no-track script. If this changes, we should update this logic.
+        if (baseUrl.basePath != null && process.env.NODE_ENV === "production") {
+            return null;
+        }
+
+        if (
+            baseUrl.domain.includes("docs.dev.buildwithfern.com") ||
+            baseUrl.domain.includes("docs.staging.buildwithfern.com") ||
+            baseUrl.domain.includes(".docs.buildwithfern.com") ||
+            process.env.NODE_ENV !== "production"
+        ) {
+            return <meta name="robots" content="noindex, nofollow" />;
+        }
+        return null;
+    }
+
     return (
         <FeatureFlagContext.Provider value={featureFlags}>
             {/* 
@@ -104,6 +122,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                 {theme === "dark" && colors.dark != null && (
                     <meta name="theme-color" content={getThemeColor(colors.dark)} />
                 )}
+                {maybeRenderNoIndex(baseUrl)}
             </Head>
             <div className="min-h-screen w-full">
                 <BgImageGradient colors={colors} />
