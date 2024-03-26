@@ -22,6 +22,8 @@ exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -54,6 +56,8 @@ exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs
       "fullSlug": [
         "section-2",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-3.md",
       "slug": [
         "docs",

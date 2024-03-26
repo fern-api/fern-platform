@@ -97,6 +97,8 @@ exports[`getNavigationRoot > hume > gets navigation root for /support 1`] = `
       "fullSlug": [
         "support",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "docs/pages/documentation/introduction/support.mdx",
       "slug": [
         "support",

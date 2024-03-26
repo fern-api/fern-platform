@@ -38,6 +38,8 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "page-5.md",
       "slug": [
         "docs",
@@ -70,6 +72,8 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -95,6 +99,8 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -117,6 +123,8 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "page-5.md",
       "slug": [
         "docs",
@@ -150,6 +158,8 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -183,6 +193,8 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-9.md",
       "slug": [
         "docs",

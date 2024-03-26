@@ -114,6 +114,8 @@ exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-ma
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "pages/start/file-management.mdx",
       "slug": [
         "docs",
@@ -150,6 +152,8 @@ exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introdu
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "pages/index.mdx",
       "slug": [
         "docs",

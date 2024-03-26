@@ -62,6 +62,8 @@ exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /do
       "fullSlug": [
         "tab-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -101,6 +103,8 @@ exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /do
       "fullSlug": [
         "section-2",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-3.md",
       "slug": [
         "docs",
