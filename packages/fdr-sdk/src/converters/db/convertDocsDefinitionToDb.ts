@@ -167,6 +167,7 @@ export function transformNavigationItemForDb(
             return {
                 ...writeShape,
                 icon: writeShape.icon,
+                hidden: writeShape.hidden ?? false,
                 fullSlug: writeShape.fullSlug,
                 urlSlug: kebabCase(writeShape.title),
                 artifacts:
@@ -185,6 +186,8 @@ export function transformNavigationItemForDb(
                               pageId: writeShape.changelog.pageId,
                               urlSlug: writeShape.changelog.urlSlug,
                               fullSlug: writeShape.fullSlug,
+                              icon: writeShape.changelog.icon,
+                              hidden: writeShape.changelog.hidden ?? false,
                           }
                         : undefined,
             };
@@ -196,6 +199,7 @@ export function transformNavigationItemForDb(
                 icon: writeShape.icon,
                 urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
             };
         case "section":
             return {

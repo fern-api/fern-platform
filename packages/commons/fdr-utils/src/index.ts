@@ -8,4 +8,5 @@ export * from "./slug";
 export * from "./subpackage";
 export * from "./traverser";
 export * from "./types";
+export * from "./visitSidebarNode";
 export * from "./visitSidebarNodeRaw";

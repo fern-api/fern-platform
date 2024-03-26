@@ -48,6 +48,8 @@ function resolveSidebarNodeRawApiSection(
             description: endpoint.description,
             method: endpoint.method,
             stream: endpoint.response?.type.type === "stream",
+            icon: undefined,
+            hidden: false,
         }),
     );
     const websockets = subpackage.websockets.map(
@@ -59,6 +61,8 @@ function resolveSidebarNodeRawApiSection(
             slug: [...slug, ...websocket.urlSlug.split("/")],
             title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
             description: websocket.description,
+            icon: undefined,
+            hidden: false,
         }),
     );
     const webhooks = subpackage.webhooks.map(
@@ -70,6 +74,8 @@ function resolveSidebarNodeRawApiSection(
             slug: [...slug, ...webhook.urlSlug.split("/")],
             title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
             description: webhook.description,
+            icon: undefined,
+            hidden: false,
         }),
     );
 
@@ -135,6 +141,8 @@ function resolveSidebarNodeRawApiSection(
         artifacts: undefined,
         changelog: undefined,
         description: undefined, // TODO: add description here
+        icon: undefined,
+        hidden: false,
     };
 }
 
@@ -218,38 +226,36 @@ export function resolveSidebarNodes(
     parentSlugs: readonly string[], // parent slugs that are inherited from the parent node
     fixedSlugs: readonly string[], // basepath and version slugs
 ): SidebarNodeRaw[] {
-    const SidebarNodeRaws: SidebarNodeRaw[] = [];
+    const sidebarNodes: SidebarNodeRaw[] = [];
+
+    function pushPageGroup(item: SidebarNodeRaw.PageGroup["pages"][0]) {
+        const lastSidebarNode = sidebarNodes[sidebarNodes.length - 1];
+        if (lastSidebarNode != null && lastSidebarNode.type === "pageGroup") {
+            lastSidebarNode.pages.push(item);
+        } else {
+            sidebarNodes.push({
+                type: "pageGroup",
+                slug: parentSlugs,
+                pages: [item],
+            });
+        }
+    }
+
     for (const navigationItem of navigationItems) {
         visitDiscriminatedUnion(navigationItem, "type")._visit<void>({
             page: (page) => {
-                const lastSidebarNodeRaw = SidebarNodeRaws[SidebarNodeRaws.length - 1];
-                if (lastSidebarNodeRaw != null && lastSidebarNodeRaw.type === "pageGroup") {
-                    lastSidebarNodeRaw.pages.push({
-                        ...page,
-                        slug:
-                            page.fullSlug != null
-                                ? [...fixedSlugs, ...page.fullSlug]
-                                : [...parentSlugs, ...page.urlSlug.split("/")],
-                        type: "page",
-                        description: undefined,
-                    });
-                } else {
-                    SidebarNodeRaws.push({
-                        type: "pageGroup",
-                        slug: parentSlugs,
-                        pages: [
-                            {
-                                ...page,
-                                slug:
-                                    page.fullSlug != null
-                                        ? [...fixedSlugs, ...page.fullSlug]
-                                        : [...parentSlugs, ...page.urlSlug.split("/")],
-                                type: "page",
-                                description: undefined,
-                            },
-                        ],
-                    });
-                }
+                const resolvedPage: SidebarNodeRaw.Page = {
+                    ...page,
+                    slug:
+                        page.fullSlug != null
+                            ? [...fixedSlugs, ...page.fullSlug]
+                            : [...parentSlugs, ...page.urlSlug.split("/")],
+                    type: "page",
+                    description: undefined,
+                    icon: page.icon,
+                    hidden: page.hidden ?? false,
+                };
+                pushPageGroup(resolvedPage);
             },
             api: async (api) => {
                 const definition = apis[api.api];
@@ -270,7 +276,7 @@ export function resolveSidebarNodes(
                         definitionSlug,
                         definition.navigation,
                     );
-                    SidebarNodeRaws.push({
+                    sidebarNodes.push({
                         type: "apiSection",
                         api: api.api,
                         id: api.api,
@@ -296,9 +302,13 @@ export function resolveSidebarNodes(
                                           date: item.date,
                                           pageId: item.pageId,
                                       })),
+                                      icon: api.changelog.icon,
+                                      hidden: api.changelog.hidden ?? false,
                                   }
                                 : undefined,
                         description: undefined, // TODO: add description here
+                        icon: api.icon,
+                        hidden: api.hidden ?? false,
                     });
                 }
             },
@@ -309,29 +319,28 @@ export function resolveSidebarNodes(
                         : section.skipUrlSlug
                           ? parentSlugs
                           : [...parentSlugs, ...section.urlSlug.split("/")];
-                SidebarNodeRaws.push({
+                const resolvedSection: SidebarNodeRaw.Section = {
                     type: "section",
                     title: section.title,
                     slug: sectionSlug,
                     // if section.fullSlug is defined, the child slugs will be built from that, rather than from inherited parentSlugs
                     items: resolveSidebarNodes(section.items, apis, sectionSlug, fixedSlugs),
-                });
+                    icon: section.icon,
+                    hidden: section.hidden ?? false,
+                };
+
+                if (section.collapsed) {
+                    pushPageGroup(resolvedSection);
+                } else {
+                    sidebarNodes.push(resolvedSection);
+                }
             },
             link: (link) => {
-                const lastSidebarNodeRaw = SidebarNodeRaws[SidebarNodeRaws.length - 1];
-                if (lastSidebarNodeRaw != null && lastSidebarNodeRaw.type === "pageGroup") {
-                    lastSidebarNodeRaw.pages.push(link);
-                } else {
-                    SidebarNodeRaws.push({
-                        type: "pageGroup",
-                        slug: parentSlugs,
-                        pages: [link],
-                    });
-                }
+                pushPageGroup({ ...link, icon: link.icon });
             },
             _other: () => Promise.resolve(),
         });
     }
 
-    return SidebarNodeRaws;
+    return sidebarNodes;
 }

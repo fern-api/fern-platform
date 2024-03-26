@@ -68,7 +68,7 @@ export declare namespace SidebarNodeRaw {
     export interface PageGroup {
         type: "pageGroup";
         slug: readonly string[];
-        pages: (Page | Link)[];
+        pages: (Page | Link | Section)[];
     }
 
     export interface ChangelogPage extends Page {
@@ -91,6 +91,8 @@ export declare namespace SidebarNodeRaw {
         showErrors: boolean;
         changelog: ChangelogPage | undefined;
         description: string | undefined;
+        icon: string | undefined;
+        hidden: boolean;
     }
 
     export interface Section {
@@ -98,6 +100,8 @@ export declare namespace SidebarNodeRaw {
         title: string;
         slug: readonly string[];
         items: SidebarNodeRaw[];
+        icon: string | undefined;
+        hidden: boolean;
     }
 
     export interface Page {
@@ -106,12 +110,15 @@ export declare namespace SidebarNodeRaw {
         slug: string[];
         title: string;
         description: string | undefined;
+        icon: string | undefined;
+        hidden: boolean;
     }
 
     export interface Link {
         type: "link";
         title: string;
         url: string;
+        icon: string | undefined;
     }
 
     export interface WebSocketPage extends Page {
@@ -158,7 +165,7 @@ export declare namespace SidebarNode {
     }
 
     export interface PageGroup extends Omit<SidebarNodeRaw.PageGroup, "pages"> {
-        pages: (Page | SidebarNodeRaw.Link)[];
+        pages: (Page | SidebarNodeRaw.Link | Section)[];
     }
 
     export interface ChangelogPage extends Page, Omit<SidebarNodeRaw.ChangelogPage, keyof Page> {}
@@ -204,16 +211,20 @@ export declare namespace SidebarNode {
 }
 
 export const SidebarNode = {
-    isPage: (node: SidebarNode.Page | SidebarNodeRaw.Link): node is SidebarNode.Page => node.type === "page",
+    isPage: (node: SidebarNode.Page | SidebarNode.Section | SidebarNodeRaw.Link): node is SidebarNode.Page =>
+        node.type === "page",
     isApiPage: (node: SidebarNode.Page | SidebarNode.ApiSection): node is SidebarNode.ApiPage => "apiType" in node,
     isChangelogPage: (node: SidebarNode.Page): node is SidebarNode.ChangelogPage =>
         node.type === "page" && (node as SidebarNode.ChangelogPage).pageType === "changelog",
     isEndpointPage: (node: SidebarNode.Page): node is SidebarNode.EndpointPage =>
         node.type === "page" && "method" in node,
+    isSubpackageSection: (node: SidebarNode.ApiPageOrSubpackage): node is SidebarNode.SubpackageSection =>
+        node.type === "apiSection",
 };
 
 export const SidebarNodeRaw = {
-    isPage: (node: SidebarNodeRaw.Page | SidebarNodeRaw.Link): node is SidebarNodeRaw.Page => node.type === "page",
+    isPage: (node: SidebarNodeRaw.Page | SidebarNodeRaw.Section | SidebarNodeRaw.Link): node is SidebarNodeRaw.Page =>
+        node.type === "page",
     isApiPage: (node: SidebarNodeRaw.Page | SidebarNodeRaw.ApiSection): node is SidebarNodeRaw.ApiPage =>
         "apiType" in node,
     isChangelogPage: (node: SidebarNodeRaw.Page): node is SidebarNodeRaw.ChangelogPage =>

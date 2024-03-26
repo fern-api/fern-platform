@@ -10,13 +10,13 @@ import { useViewportContext } from "../contexts/viewport-context/useViewportCont
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarSection } from "./SidebarSection";
 import { SidebarTabButton } from "./SidebarTabButton";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
 export interface SidebarProps {
     currentSlug: string[];
@@ -87,7 +87,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         logoHref={logoHref}
                     />
                     {renderTabs()}
-                    <CollapseSidebarProvider>
+                    <CollapseSidebarProvider nodes={navigation.sidebarNodes}>
                         <FernTooltipProvider>
                             <SidebarSection
                                 navigationItems={navigation.sidebarNodes}
