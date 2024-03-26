@@ -68,12 +68,14 @@ export function checkIsRelativeUrl(url: UrlObject): boolean {
     }
 
     if (url.href == null) {
-        return false;
+        return true;
     }
 
     if (url.href.startsWith("/")) {
         return false;
     }
 
-    return url.href == null || url.href.startsWith(".") || url.href?.startsWith("#") || url.href?.startsWith("?");
+    return (
+        url.href.startsWith(".") || url.href.startsWith("#") || url.href.startsWith("?") || !url.href.startsWith("/")
+    );
 }

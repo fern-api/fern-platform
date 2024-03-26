@@ -7,7 +7,7 @@ import moment from "moment";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { withStream } from "../commons/withStream";
+import { StreamTag } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -107,13 +107,17 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         key={joinUrlSlugs(...item.slug)}
                         slug={item.slug}
                         shallow={shallow}
-                        title={item.apiType === "endpoint" && item.stream ? withStream(item.title) : item.title}
+                        title={item.title}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         selected={isEqual(item.slug, selectedSlug)}
                         depth={Math.max(0, depth - 1)}
                         rightElement={
                             item.apiType === "endpoint" ? (
-                                HTTP_METHOD_TAGS[item.method]
+                                item.stream ? (
+                                    <StreamTag small />
+                                ) : (
+                                    HTTP_METHOD_TAGS[item.method]
+                                )
                             ) : item.apiType === "websocket" ? (
                                 <FernTooltip content="WebSocket Channel">
                                     <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>

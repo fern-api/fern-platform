@@ -86,12 +86,15 @@ export function getNavigationRoot(
     // const sidebarNodes = await Promise.all(rawSidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)));
     const found: SidebarNavigationRaw = {
         currentVersionIndex: versions.index,
-        versions: versions.items.map((version) => ({
-            id: version.id,
-            slug: version.slug,
-            index: version.index,
-            availability: version.availability,
-        })),
+        versions: versions.items
+            .map((version) => ({
+                id: version.id,
+                slug: version.slug,
+                index: version.index,
+                availability: version.availability,
+            }))
+            // get rid of duplicate version
+            .filter((version, idx) => version.index > 0 || version.index === idx),
         currentTabIndex: tabs.index,
         tabs: tabs.items.map((tab) => ({
             title: tab.title,

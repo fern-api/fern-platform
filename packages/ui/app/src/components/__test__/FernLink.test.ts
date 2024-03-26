@@ -31,14 +31,14 @@ describe("checkIsRelativeUrl", () => {
         expect(checkIsRelativeUrl(toUrlObject("../../path"))).toBe(true);
         expect(checkIsRelativeUrl(toUrlObject("./path"))).toBe(true);
         expect(checkIsRelativeUrl({})).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("#hash"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("#"))).toBe(true);
+        expect(checkIsRelativeUrl(toUrlObject("?search"))).toBe(true);
     });
 
     it("returns false for absolute URLs", () => {
         expect(checkIsRelativeUrl(toUrlObject("/path"))).toBe(false);
         expect(checkIsRelativeUrl(toUrlObject("/#"))).toBe(false);
-        expect(checkIsRelativeUrl(toUrlObject("#hash"))).toBe(false);
-        expect(checkIsRelativeUrl(toUrlObject("#"))).toBe(false);
-        expect(checkIsRelativeUrl(toUrlObject("?search"))).toBe(false);
     });
 
     it("returns false for external URLs", () => {
