@@ -1,6 +1,7 @@
-import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
+import { visitSidebarNode } from "@fern-ui/fdr-utils";
 import { noop } from "lodash-es";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 interface CollapseSidebarContextValue {
@@ -38,15 +39,13 @@ function expandArray(arr: string[]): string[][] {
     return arr.map((_, idx) => arr.slice(0, idx + 1));
 }
 
-export const CollapseSidebarProvider: FC<PropsWithChildren<{ nodes: readonly SidebarNode[] }>> = ({
-    children,
-    nodes,
-}) => {
+export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
+    const { sidebarNodes } = useDocsContext();
     const { selectedSlug: selectedSlugString } = useNavigationContext();
 
     const parentSlugMap = useMemo(() => {
         const map = new Map<string, string[]>();
-        nodes.forEach((node) => {
+        sidebarNodes.forEach((node) => {
             visitSidebarNode(node, (visitedNode, parents) => {
                 map.set(
                     visitedNode.slug.join("/"),
@@ -55,11 +54,11 @@ export const CollapseSidebarProvider: FC<PropsWithChildren<{ nodes: readonly Sid
             });
         });
         return map;
-    }, [nodes]);
+    }, [sidebarNodes]);
 
     const parentToChildrenMap = useMemo(() => {
         const map = new Map<string, string[]>();
-        nodes.forEach((node) => {
+        sidebarNodes.forEach((node) => {
             visitSidebarNode(node, (visitedNode, parents) => {
                 if (parents.length > 0) {
                     const parentSlug = parents[parents.length - 1].slug.join("/");
@@ -72,7 +71,7 @@ export const CollapseSidebarProvider: FC<PropsWithChildren<{ nodes: readonly Sid
             });
         });
         return map;
-    }, [nodes]);
+    }, [sidebarNodes]);
 
     const selectedSlug = useMemo(() => selectedSlugString.split("/"), [selectedSlugString]);
     const [expanded, setExpanded] = useState<string[][]>(() => [

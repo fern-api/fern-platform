@@ -5,7 +5,7 @@ import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icon
 import cn from "clsx";
 import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { forwardRef, Fragment, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { withStream } from "../commons/withStream";
 import { Chip } from "../components/Chip";
@@ -18,7 +18,7 @@ import { usePlaygroundContext } from "./PlaygroundContext";
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface PlaygroundEndpointSelectorContentProps {
-    navigation: SidebarNode[];
+    apiGroups: ApiGroup[];
     closeDropdown?: () => void;
     selectedEndpoint?: SidebarNode.ApiPage;
     className?: string;
@@ -82,14 +82,12 @@ function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.A
 }
 
 export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, PlaygroundEndpointSelectorContentProps>(
-    function PlaygroundEndpointSelectorContent({ navigation, closeDropdown, selectedEndpoint, className }, ref) {
+    function PlaygroundEndpointSelectorContent({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) {
         const { setSelectionStateAndOpen } = usePlaygroundContext();
 
         const [filterValue, setFilterValue] = useState<string>("");
 
         const selectedItemRef = useRef<HTMLLIElement>(null);
-
-        const apiGroups = useMemo(() => flattenApiSection(navigation), [navigation]);
 
         const createSelectEndpoint = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
             setSelectionStateAndOpen({

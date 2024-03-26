@@ -4,6 +4,7 @@ import algolia, { SearchClient } from "algoliasearch";
 import cn from "clsx";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
@@ -81,10 +82,8 @@ interface FernInstantSearchProps {
 }
 
 function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstantSearchProps) {
-    const {
-        activeVersion,
-        navigation: { sidebarNodes },
-    } = useNavigationContext();
+    const { sidebarNodes } = useDocsContext();
+    const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebarNodes),
         [activeVersion, sidebarNodes],
@@ -111,10 +110,8 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (providedProps) => {
-    const {
-        activeVersion,
-        navigation: { sidebarNodes },
-    } = useNavigationContext();
+    const { sidebarNodes } = useDocsContext();
+    const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebarNodes),
         [activeVersion, sidebarNodes],

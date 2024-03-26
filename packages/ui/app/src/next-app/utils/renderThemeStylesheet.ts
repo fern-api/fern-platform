@@ -11,6 +11,7 @@ export function renderThemeStylesheet(
     layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
     css: DocsV1Read.CssConfig | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+    hasTabs: boolean,
 ): string {
     if (colorsConfig == null) {
         return "";
@@ -18,7 +19,7 @@ export function renderThemeStylesheet(
     // const bg = getBgVariables(backgroundImage, files);
     const { fontFaces, cssVariables: fonts, additionalCss } = getFontVariables(typography, files);
     const colors = getColorVariables(colorsConfig, files);
-    const { root: layout, "max-lg": layoutMaxLg } = getLayoutVariables(layoutConfig);
+    const { root: layout, "max-lg": layoutMaxLg } = getLayoutVariables(layoutConfig, hasTabs);
 
     const cssVariables = {
         ...fonts,

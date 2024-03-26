@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarNavigation } from "@fern-ui/fdr-utils";
+import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
@@ -56,7 +56,8 @@ export function useSearchService(): SearchService {
 export function useCreateSearchService(
     searchInfo: DocsV1Read.SearchInfo,
     algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined,
-    navigation: SidebarNavigation,
+    currentVersionIndex: number | undefined,
+    versions: SidebarVersionInfo[],
 ): void {
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
 
@@ -98,7 +99,7 @@ export function useCreateSearchService(
                     index: envConfig.algoliaSearchIndex,
                 };
             } else {
-                const currentVersion = navigation.versions[navigation.currentVersionIndex ?? 0];
+                const currentVersion = versions[currentVersionIndex ?? 0];
                 if (currentVersion == null) {
                     throw new Error("Inconsistent State: Received search info is versioned but docs are unversioned");
                 }
@@ -131,7 +132,7 @@ export function useCreateSearchService(
 
             return { isAvailable: false };
         }
-    }, [algoliaSearchIndex, navigation.currentVersionIndex, navigation.versions, searchInfo]);
+    }, [algoliaSearchIndex, currentVersionIndex, searchInfo, versions]);
 
     useEffect(() => {
         setSearchService(searchService);

@@ -1,17 +1,19 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { ColorsConfig } from "@fern-ui/fdr-utils";
+import { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import { PropsWithChildren, useCallback } from "react";
 import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
-    export type Props = PropsWithChildren<{
-        files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-        layout: DocsV1Read.DocsLayoutConfig | undefined;
-        typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
-        css: DocsV1Read.CssConfig | undefined;
-        colors: ColorsConfig;
-        baseUrl: DocsV2Read.BaseUrl;
-    }>;
+    export type Props = PropsWithChildren<
+        {
+            files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
+            layout: DocsV1Read.DocsLayoutConfig | undefined;
+            typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
+            css: DocsV1Read.CssConfig | undefined;
+            colors: ColorsConfig;
+            baseUrl: DocsV2Read.BaseUrl;
+        } & SidebarNavigation
+    >;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
@@ -21,6 +23,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     typography,
     css,
     colors,
+    currentTabIndex,
+    tabs,
+    currentVersionIndex,
+    versions,
+    sidebarNodes,
     children,
 }) => {
     const resolveFile = useCallback(
@@ -45,6 +52,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 css,
                 files,
                 resolveFile,
+                currentTabIndex,
+                tabs,
+                currentVersionIndex,
+                versions,
+                sidebarNodes,
             }}
         >
             {children}

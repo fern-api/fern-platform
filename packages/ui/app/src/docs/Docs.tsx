@@ -33,15 +33,15 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     logoHeight,
     logoHref,
 }) {
-    const { layout, colors } = useDocsContext();
-    const { registerScrolledToPathListener, selectedSlug, navigation } = useNavigationContext();
+    const { layout, colors, versions, currentVersionIndex } = useDocsContext();
+    const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
 
     // set up search service
-    useCreateSearchService(search, algoliaSearchIndex, navigation);
+    useCreateSearchService(search, algoliaSearchIndex, currentVersionIndex, versions);
 
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
@@ -60,7 +60,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const { layoutBreakpoint } = useViewportContext();
 
     return (
-        <PlaygroundContextProvider navigation={navigation.sidebarNodes}>
+        <PlaygroundContextProvider>
             <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
@@ -91,7 +91,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                 ? "fern-sidebar-container w-sidebar-width mt-header-height top-header-height h-vh-minus-header bg-sidebar border-concealed sticky hidden lg:block"
                                 : "fern-sidebar-container w-sidebar-width h-vh-minus-header bg-sidebar border-concealed fixed hidden lg:block"
                         }
-                        navigation={navigation}
                         currentSlug={currentSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         searchInfo={search}

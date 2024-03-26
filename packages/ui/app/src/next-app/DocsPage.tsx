@@ -7,8 +7,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { ReactElement, useMemo } from "react";
-import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
@@ -54,7 +54,9 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const js = useDeepCompareMemoize(pageProps.js);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const baseUrl = useDeepCompareMemoize(pageProps.baseUrl);
-    const navigation = useDeepCompareMemoize(pageProps.navigation);
+    const sidebarNodes = useDeepCompareMemoize(pageProps.navigation.sidebarNodes);
+    const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
+    const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
     const search = useDeepCompareMemoize(pageProps.search);
     const { resolvedTheme: theme } = useTheme();
@@ -62,8 +64,8 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const { title, favicon, logoHeight, logoHref, algoliaSearchIndex, resolvedPath } = pageProps;
 
     const stylesheet = useMemo(
-        () => renderThemeStylesheet(colors, typography, layout, css, files),
-        [colors, css, files, layout, typography],
+        () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
+        [colors, css, files, layout, tabs.length, typography],
     );
 
     if (baseUrl == null) {
@@ -112,10 +114,14 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     colors={colors}
                     typography={typography}
                     css={css}
+                    sidebarNodes={sidebarNodes}
+                    tabs={tabs}
+                    versions={versions}
+                    currentVersionIndex={pageProps.navigation.currentVersionIndex}
+                    currentTabIndex={pageProps.navigation.currentTabIndex}
                 >
                     <NavigationContextProvider
                         resolvedPath={resolvedPath} // this changes between pages
-                        navigation={navigation}
                         domain={baseUrl.domain}
                         basePath={baseUrl.basePath}
                         title={title}

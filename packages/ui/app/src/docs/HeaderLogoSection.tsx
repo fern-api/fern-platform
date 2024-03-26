@@ -1,5 +1,4 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { FernImage } from "../components/FernImage";
@@ -10,22 +9,10 @@ import { VersionDropdown } from "./VersionDropdown";
 export interface HeaderLogoSectionProps {
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
-
-    // currentTabIndex: number | undefined;
-    // tabs: SidebarTab[];
-    currentVersionIndex: number | undefined;
-    versions: SidebarVersionInfo[];
 }
 
-export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({
-    logoHeight,
-    logoHref,
-    // currentTabIndex,
-    // tabs,
-    currentVersionIndex,
-    versions,
-}) => {
-    const { colors, resolveFile } = useDocsContext();
+export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({ logoHeight, logoHref }) => {
+    const { colors, resolveFile, versions, currentVersionIndex } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
     const imageClassName = "max-h-full object-contain";
