@@ -34,6 +34,7 @@ interface SidebarSlugLinkProps {
     rightElement?: ReactNode;
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     tooltipContent?: ReactNode;
+    hidden: boolean;
 }
 
 type SidebarLinkProps = PropsWithChildren<
@@ -67,9 +68,15 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         tooltipContent,
         target,
         rel,
+        hidden,
     } = props;
+
+    if (hidden && !expanded && !selected) {
+        return null;
+    }
+
     const renderLink = (child: ReactElement) => {
-        const linkClassName = cn(linkClassNameProp, "fern-sidebar-link");
+        const linkClassName = cn(linkClassNameProp, "fern-sidebar-link", { "opacity-50": hidden });
 
         return href != null ? (
             <Link
@@ -143,7 +150,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                                     key={i}
                                     className={cn(
                                         "fern-sidebar-link-indent",
-                                        "transition-transform group-hover/sidebar:opacity-100 transition-opacity ease-out",
+                                        "group-hover/sidebar:opacity-100 transition-opacity ease-out",
                                     )}
                                 />
                             ))}

@@ -4,6 +4,7 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
+import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
@@ -13,6 +14,7 @@ export interface SidebarSectionProps {
     className?: string;
     navigationItems: SidebarNode[];
     slug: readonly string[];
+    hidden: boolean;
 
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
@@ -23,6 +25,7 @@ export interface SidebarSectionProps {
 
 interface ExpandableSidebarSectionProps extends SidebarSectionProps {
     title: string;
+    icon: string | undefined;
 }
 
 const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
@@ -32,6 +35,8 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
     navigationItems,
     registerScrolledToPathListener,
     depth,
+    icon,
+    hidden,
 }) => {
     const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
     const expanded = checkExpanded(slug);
@@ -44,13 +49,15 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
                 navigationItems={navigationItems}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 depth={depth + 1}
+                hidden={hidden}
             />
         ),
-        [expanded, navigationItems, registerScrolledToPathListener, slug, depth],
+        [expanded, slug, navigationItems, registerScrolledToPathListener, depth, hidden],
     );
 
     return (
         <SidebarSlugLink
+            icon={icon != null ? <RemoteFontAwesomeIcon icon={icon} /> : undefined}
             className={className}
             depth={Math.max(depth - 1, 0)}
             registerScrolledToPathListener={registerScrolledToPathListener}
@@ -58,6 +65,7 @@ const ExpandableSidebarSection: React.FC<ExpandableSidebarSectionProps> = ({
             expanded={expanded}
             toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
+            hidden={hidden}
         >
             {children}
         </SidebarSlugLink>
@@ -84,31 +92,57 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                     pageGroup: ({ pages }) => (
                         <Fragment key={idx}>
                             {pages.map((page, pageIdx) =>
-                                page.type === "page" ? (
-                                    <SidebarSlugLink
-                                        key={page.id}
-                                        className={cn({
-                                            "mt-6": topLevel && pageIdx === 0,
-                                        })}
-                                        slug={page.slug}
-                                        depth={Math.max(depth - 1, 0)}
-                                        registerScrolledToPathListener={registerScrolledToPathListener}
-                                        title={page.title}
-                                        selected={isEqual(selectedSlug, page.slug)}
-                                    />
-                                ) : (
-                                    <SidebarLink
-                                        key={pageIdx}
-                                        className={cn({
-                                            "mt-6": topLevel && pageIdx === 0,
-                                        })}
-                                        depth={Math.max(depth - 1, 0)}
-                                        title={page.title}
-                                        rightElement={<ExternalLinkIcon />}
-                                        href={page.url}
-                                        target={"_blank"}
-                                    />
-                                ),
+                                visitDiscriminatedUnion(page, "type")._visit({
+                                    link: (link) => (
+                                        <SidebarLink
+                                            key={pageIdx}
+                                            className={cn({
+                                                "mt-6": topLevel && pageIdx === 0,
+                                            })}
+                                            depth={Math.max(depth - 1, 0)}
+                                            title={link.title}
+                                            rightElement={<ExternalLinkIcon />}
+                                            href={link.url}
+                                            target={"_blank"}
+                                            hidden={false}
+                                        />
+                                    ),
+                                    section: (section) => (
+                                        <ExpandableSidebarSection
+                                            key={pageIdx}
+                                            title={section.title}
+                                            className={cn({
+                                                "mt-6": topLevel && pageIdx === 0,
+                                            })}
+                                            slug={section.slug}
+                                            navigationItems={section.items}
+                                            registerScrolledToPathListener={registerScrolledToPathListener}
+                                            depth={depth + 1}
+                                            icon={section.icon}
+                                            hidden={section.hidden}
+                                        />
+                                    ),
+                                    page: (page) => (
+                                        <SidebarSlugLink
+                                            key={pageIdx}
+                                            className={cn({
+                                                "mt-6": topLevel && pageIdx === 0,
+                                            })}
+                                            slug={page.slug}
+                                            depth={Math.max(depth - 1, 0)}
+                                            registerScrolledToPathListener={registerScrolledToPathListener}
+                                            title={page.title}
+                                            selected={isEqual(selectedSlug, page.slug)}
+                                            icon={
+                                                page.icon != null ? (
+                                                    <RemoteFontAwesomeIcon icon={page.icon} />
+                                                ) : undefined
+                                            }
+                                            hidden={page.hidden}
+                                        />
+                                    ),
+                                    _other: () => null,
+                                }),
                             )}
                         </Fragment>
                     ),
@@ -123,12 +157,16 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                         })}
                                         depth={depth}
                                         title={section.title}
+                                        icon={section.icon}
+                                        hidden={section.hidden}
+                                        slug={section.slug}
                                     />
                                     <SidebarSection
                                         slug={section.slug}
                                         navigationItems={section.items}
                                         registerScrolledToPathListener={registerScrolledToPathListener}
                                         depth={depth + 1}
+                                        hidden={section.hidden}
                                     />
                                 </li>
                             );
@@ -144,6 +182,8 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                     navigationItems={section.items}
                                     registerScrolledToPathListener={registerScrolledToPathListener}
                                     depth={depth}
+                                    icon={section.icon}
+                                    hidden={section.hidden}
                                 />
                             );
                         }
