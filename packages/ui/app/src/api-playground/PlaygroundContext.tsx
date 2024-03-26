@@ -131,7 +131,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 });
             }
         },
-        [expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
+        [basePath, expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
     );
 
     if (!isApiPlaygroundEnabled) {
