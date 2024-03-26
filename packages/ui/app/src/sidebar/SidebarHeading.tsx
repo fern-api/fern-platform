@@ -10,7 +10,7 @@ interface SidebarHeadingProps {
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
     depth: number;
     toggleExpand?: () => void;
-    slug: string[];
+    slug: readonly string[];
     rightElement?: ReactNode;
     hidden: boolean;
     icon: string | undefined;

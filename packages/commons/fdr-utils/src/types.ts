@@ -211,16 +211,20 @@ export declare namespace SidebarNode {
 }
 
 export const SidebarNode = {
-    isPage: (node: SidebarNode.Page | SidebarNodeRaw.Link): node is SidebarNode.Page => node.type === "page",
+    isPage: (node: SidebarNode.Page | SidebarNode.Section | SidebarNodeRaw.Link): node is SidebarNode.Page =>
+        node.type === "page",
     isApiPage: (node: SidebarNode.Page | SidebarNode.ApiSection): node is SidebarNode.ApiPage => "apiType" in node,
     isChangelogPage: (node: SidebarNode.Page): node is SidebarNode.ChangelogPage =>
         node.type === "page" && (node as SidebarNode.ChangelogPage).pageType === "changelog",
     isEndpointPage: (node: SidebarNode.Page): node is SidebarNode.EndpointPage =>
         node.type === "page" && "method" in node,
+    isSubpackageSection: (node: SidebarNode.ApiPageOrSubpackage): node is SidebarNode.SubpackageSection =>
+        node.type === "apiSection",
 };
 
 export const SidebarNodeRaw = {
-    isPage: (node: SidebarNodeRaw.Page | SidebarNodeRaw.Link): node is SidebarNodeRaw.Page => node.type === "page",
+    isPage: (node: SidebarNodeRaw.Page | SidebarNodeRaw.Section | SidebarNodeRaw.Link): node is SidebarNodeRaw.Page =>
+        node.type === "page",
     isApiPage: (node: SidebarNodeRaw.Page | SidebarNodeRaw.ApiSection): node is SidebarNodeRaw.ApiPage =>
         "apiType" in node,
     isChangelogPage: (node: SidebarNodeRaw.Page): node is SidebarNodeRaw.ChangelogPage =>

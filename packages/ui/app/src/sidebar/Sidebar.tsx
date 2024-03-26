@@ -87,7 +87,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         logoHref={logoHref}
                     />
                     {renderTabs()}
-                    <CollapseSidebarProvider>
+                    <CollapseSidebarProvider nodes={navigation.sidebarNodes}>
                         <FernTooltipProvider>
                             <SidebarSection
                                 navigationItems={navigation.sidebarNodes}

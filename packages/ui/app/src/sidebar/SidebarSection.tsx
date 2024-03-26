@@ -197,6 +197,9 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                     })}
                                     depth={depth}
                                     title={apiSection.title}
+                                    slug={apiSection.slug}
+                                    icon={apiSection.icon}
+                                    hidden={apiSection.hidden}
                                 />
                                 <SidebarApiSection
                                     slug={apiSection.slug}
