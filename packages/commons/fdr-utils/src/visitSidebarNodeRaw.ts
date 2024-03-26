@@ -10,21 +10,18 @@ export function visitSidebarNodeRaw(
     visitDiscriminatedUnion(node, "type")._visit({
         pageGroup: (pageGroup) => {
             pageGroup.pages.forEach((page) => {
-                if (SidebarNodeRaw.isPage(page)) {
-                    visit(page, [...parentNodes, pageGroup]);
+                if (page.type !== "link") {
+                    // pageGroup is a psuedo-node that should not be considered as a parent
+                    visitSidebarNodeRaw(page, visit, parentNodes);
                 }
             });
         },
         apiSection: (apiSection) => {
             apiSection.items.forEach((item) => {
-                if (SidebarNodeRaw.isSubpackageSection(item)) {
-                    visitSidebarNodeRaw(item, visit, [...parentNodes, apiSection]);
-                } else {
-                    visit(item, [...parentNodes, apiSection]);
-                }
+                visitSidebarNodeRaw(item, visit, [...parentNodes, apiSection]);
             });
             if (apiSection.changelog) {
-                visit(apiSection.changelog, [...parentNodes, apiSection]);
+                visitSidebarNodeRaw(apiSection.changelog, visit, [...parentNodes, apiSection]);
             }
         },
         section: (section) => {
