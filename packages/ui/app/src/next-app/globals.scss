@@ -178,30 +178,6 @@
         mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
     }
 
-    .playground-endpoint {
-        @apply flex min-w-0 flex-1 shrink items-start gap-2;
-        @apply border-default relative z-10 px-3 py-0 border-x;
-
-        // @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
-    }
-
-    .playground-endpoint-url {
-        @apply truncate break-all font-mono text-xs hover:whitespace-normal;
-        @apply py-1;
-    }
-
-    .playground-endpoint:hover .playground-endpoint-url {
-        @apply whitespace-normal;
-    }
-
-    .playground-endpoint-copy-button {
-        @apply hidden -mt-1;
-    }
-
-    .playground-endpoint:hover .playground-endpoint-copy-button {
-        @apply inline-block;
-    }
-
     .fern-dropdown {
         @apply relative z-50;
         @apply animate-popover;

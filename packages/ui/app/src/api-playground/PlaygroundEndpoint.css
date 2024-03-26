@@ -1,25 +1,19 @@
 .playground-endpoint {
     @apply flex min-w-0 flex-1 shrink items-start gap-2;
     @apply px-2 w-full;
-    /* @apply hover:overflow-visible; */
 }
 
 .playground-endpoint-url {
     @apply truncate break-all font-mono text-xs;
-    /* @apply hover:whitespace-normal; */
     @apply py-1;
 }
 
-.playground-endpoint:hover .playground-endpoint-url {
+/* .playground-endpoint:hover .playground-endpoint-url {
     @apply whitespace-normal;
-}
+} */
 
 .playground-endpoint-copy-button {
-    @apply hidden -mt-1;
-}
-
-.playground-endpoint:hover .playground-endpoint-copy-button {
-    @apply inline-block;
+    @apply -mt-1 ml-auto -mr-3;
 }
 
 .playground-endpoint-baseurl {
@@ -31,7 +25,7 @@
 }
 
 .mask-grad-top {
-    mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 24px);
+    mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
 }
 
 /* .mask-grad-bottom {
