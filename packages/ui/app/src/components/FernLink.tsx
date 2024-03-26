@@ -1,8 +1,8 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { ReactElement, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
+import { useNavigationContext } from "../contexts/navigation-context";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
@@ -28,17 +28,9 @@ export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps): Rea
 }
 
 function FernRelativeLink(props: ComponentProps<typeof Link>) {
-    const router = useRouter();
-    // SSG will render the route as /static/x.docs.buildwithfern.com/slug which is incorrect.
-    // We will delay the rendering of the link until the router is ready to ensure the correct pathname is used.
-    if (router.isReady) {
-        const href = resolveRelativeUrl(router.asPath, formatUrlString(props.href));
-        return <Link {...props} href={href} />;
-    } else {
-        // TODO: in order for SEO to work correctly, we need to render this link on the server side
-        // which will require hacking the `Link` internal implementation
-        return <a className={props.className}>{props.children}</a>;
-    }
+    const { selectedSlug } = useNavigationContext();
+    const href = resolveRelativeUrl(`/${selectedSlug}`, formatUrlString(props.href));
+    return <Link {...props} href={href} />;
 }
 
 export function toUrlObject(url: string | UrlObject): UrlObject {
