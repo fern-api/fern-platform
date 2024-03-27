@@ -48,23 +48,35 @@ types:
       - absolute
 
   SidebarOrHeaderPlacementWrite:
+    discriminated: false
+    union:
+      - SidebarOrHeaderPlacement
+      - SidebarOrHeaderPlacementDeprecated
+
+  ContentAlignmentWrite:
+    discriminated: false
+    union:
+      - ContentAlignment
+      - ContentAlignmentDeprecated
+
+  HeaderPositionWrite:
+    discriminated: false
+    union:
+      - HeaderPosition
+      - HeaderPositionDeprecated
+
+  SidebarOrHeaderPlacementDeprecated:
     enum:
-      - header
-      - sidebar
       - HEADER # deprecated
       - SIDEBAR # deprecated
 
-  ContentAlignmentWrite:
+  ContentAlignmentDeprecated:
     enum:
-      - center
-      - left
       - CENTER # deprecated
       - LEFT # deprecated
 
-  HeaderPositionWrite:
+  HeaderPositionDeprecated:
     enum:
-      - fixed
-      - absolute
       - FIXED # deprecated
       - ABSOLUTE # deprecated
 
