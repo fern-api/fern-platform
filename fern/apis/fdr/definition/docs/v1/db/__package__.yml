@@ -5,6 +5,11 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
+  commons: ../commons/commons.yml
+  links: ../commons/links.yml
+  typography: ../commons/typography.yml
+  colors: ../commons/colors.yml
+  layout: ../commons/layout.yml
 
 types:
   DocsDefinitionDb:
@@ -17,24 +22,24 @@ types:
     properties:
       pages: map<docsReadV1.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
-      colors: optional<docsReadV1.ColorsConfig>
+      colors: optional<colors.ColorsConfig>
 
   DocsDefinitionDbV2:
     properties:
       pages: map<docsReadV1.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
-      colors: optional<docsReadV1.ColorsConfig>
-      typography: optional<docsReadV1.DocsTypographyConfig>
+      colors: optional<colors.ColorsConfig>
+      typography: optional<typography.DocsTypographyConfig>
 
   DocsDefinitionDbV3:
     properties:
       pages: map<docsReadV1.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfoV2>
+      files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
 
   DocsDbConfig:
@@ -45,14 +50,14 @@ types:
       # logo
       logoHeight: optional<docsReadV1.Height>
       logoHref: optional<docsReadV1.Url>
-      favicon: optional<docsReadV1.FileId>
+      favicon: optional<commons.FileId>
 
       # styles
-      backgroundImage: optional<docsReadV1.FileId>
-      colorsV3: optional<docsReadV1.ColorsConfigV3>
-      navbarLinks: optional<list<docsReadV1.NavbarLink>>
-      layout: optional<docsReadV1.DocsLayoutConfig>
-      typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
+      backgroundImage: optional<commons.FileId>
+      colorsV3: optional<colors.ColorsConfigV3>
+      headerLinks: optional<links.HeaderLinksConfig>
+      layout: optional<layout.DocsLayoutConfig>
+      typographyV2: optional<typography.DocsTypographyConfigV2>
 
       # css and js
       css: optional<docsReadV1.CssConfig>
@@ -60,19 +65,22 @@ types:
 
       # deprecated
       logo:
-        type: optional<docsReadV1.FileId>
+        type: optional<commons.FileId>
         availability: deprecated
       logoV2:
-        type: optional<docsReadV1.LogoV2>
+        type: optional<commons.ThemedFileId>
         availability: deprecated
       colors:
-        type: optional<docsReadV1.ColorsConfig>
+        type: optional<colors.ColorsConfig>
         availability: deprecated
       colorsV2:
-        type: optional<docsReadV1.ColorsConfigV2>
+        type: optional<colors.ColorsConfigV2>
         availability: deprecated
       typography:
-        type: optional<docsReadV1.DocsTypographyConfig>
+        type: optional<typography.DocsTypographyConfig>
+        availability: deprecated
+      navbarLinks:
+        type: optional<list<links.NavbarLink>>
         availability: deprecated
 
   DbFileInfoV2:

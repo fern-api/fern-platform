@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+imports:
+  commons: ./commons.yml
+
 types:
   DocsTypographyConfig:
     properties:
@@ -16,7 +19,7 @@ types:
   FontConfig:
     properties:
       name: string
-      fontFile: FileId
+      fontFile: commons.FileId
 
   FontConfigV2:
     union:
@@ -40,7 +43,7 @@ types:
 
   CustomFontConfigVariant:
     properties:
-      fontFile: FileId
+      fontFile: commons.FileId
       weight: optional<list<string>>
       style: optional<list<FontStyle>>
 

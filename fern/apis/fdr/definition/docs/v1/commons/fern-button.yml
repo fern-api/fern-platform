@@ -23,7 +23,7 @@ types:
       icon: optional<string>
       rightIcon: optional<string>
       variant:
-        type: optional<AnchorButtonVariant>
+        type: optional<FernButtonVariant>
         docs: Defaults to filled
       intent:
         type: optional<Intent>

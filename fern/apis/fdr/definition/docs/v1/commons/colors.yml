@@ -13,7 +13,6 @@ types:
         type: optional<RgbaColor>
         availability: in-development
         docs: The secondary accent color is not yet supported.
-      background: optional<RgbaColor>
       border: optional<RgbaColor>
       sidebarBackground: optional<RgbaColor>
       headerBackground: optional<RgbaColor>
@@ -28,7 +27,7 @@ types:
       background: optional<RgbaColor>
 
   ThemeConfigRead:
-    extends: ThemeConfig
+    extends: ThemeConfigShared
     properties:
       background: BackgroundSolidOrGradient
 

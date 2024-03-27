@@ -118,7 +118,7 @@ types:
         type: optional<colors.ColorsConfigV2>
         availability: deprecated
       typography:
-        type: optional<DocsTypographyConfig>
+        type: optional<typography.DocsTypographyConfig>
         availability: deprecated
       navbarLinks:
         type: optional<list<links.NavbarLink>>
