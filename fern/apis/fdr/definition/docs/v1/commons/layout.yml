@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 types:
   DocsLayoutConfig:
     properties:
@@ -49,28 +51,22 @@ types:
     enum:
       - header
       - sidebar
-      - value: HEADER
-        availability: deprecated
-      - value: SIDEBAR
-        availability: deprecated
+      - HEADER # deprecated
+      - SIDEBAR # deprecated
 
   ContentAlignmentWrite:
     enum:
       - center
       - left
-      - value: CENTER
-        availability: deprecated
-      - value: LEFT
-        availability: deprecated
+      - CENTER # deprecated
+      - LEFT # deprecated
 
   HeaderPositionWrite:
     enum:
       - fixed
       - absolute
-      - value: FIXED
-        availability: deprecated
-      - value: ABSOLUTE
-        availability: deprecated
+      - FIXED # deprecated
+      - ABSOLUTE # deprecated
 
   PageWidthSizeConfig:
     union:

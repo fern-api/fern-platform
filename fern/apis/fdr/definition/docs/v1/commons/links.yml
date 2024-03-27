@@ -1,7 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 imports:
   fernButton: ./fern-button.yml
 
-type:
+types:
   HeaderLinksConfig:
     properties:
       links: list<fernButton.FernLinkButtonConfig>
