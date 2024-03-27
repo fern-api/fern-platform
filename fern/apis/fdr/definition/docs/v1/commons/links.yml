@@ -1,0 +1,22 @@
+imports:
+  fernButton: ./fern-button.yml
+
+type:
+  HeaderLinksConfig:
+    properties:
+      links: list<fernButton.FernLinkButtonConfig>
+
+  NavbarLink:
+    availability: deprecated
+    union:
+      filled: NavbarLinkMetadata
+      outlined: NavbarLinkMetadata
+      minimal: NavbarLinkMetadata
+      primary: NavbarLinkMetadata # -> outlined
+      secondary: NavbarLinkMetadata # -> minimal
+
+  NavbarLinkMetadata:
+    availability: deprecated
+    properties:
+      url: string
+      text: string

@@ -1,0 +1,51 @@
+types:
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  DocsTypographyConfigV2:
+    properties:
+      headingsFont: optional<FontConfigV2>
+      bodyFont: optional<FontConfigV2>
+      codeFont: optional<FontConfigV2>
+
+  FontConfig:
+    properties:
+      name: string
+      fontFile: FileId
+
+  # TODO: add support for google fonts
+  FontConfigV2:
+    union:
+      custom: CustomFontConfig
+
+  CustomFontConfig:
+    properties:
+      name: string
+      variants: list<CustomFontConfigVariant>
+      display: optional<FontDisplay>
+      fallback: optional<list<string>>
+
+      # declarations
+      fontVariationSettings: optional<string>
+
+  CustomFontConfigVariant:
+    properties:
+      fontFile: FileId
+      weight: optional<list<string>>
+      style: optional<list<FontStyle>>
+
+  FontStyle:
+    enum:
+      - normal
+      - italic
+
+  FontDisplay:
+    enum:
+      - auto
+      - block
+      - swap
+      - fallback
+      - optional

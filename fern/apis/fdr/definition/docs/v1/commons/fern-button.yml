@@ -1,0 +1,72 @@
+types:
+  FernLinkButtonConfig:
+    properties:
+      href: string
+      config: FernButtonConfig
+
+  FernButtonConfig:
+    union:
+      default: UnthemedFernButtonConfig
+      themed: ThemedFernButtonConfig
+
+  ThemedFernButtonConfig:
+    properties:
+      dark: UnthemedFernButtonConfig
+      light: UnthemedFernButtonConfig
+
+  UnthemedFernButtonConfig:
+    properties:
+      className: optional<string>
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      variant:
+        type: optional<AnchorButtonVariant>
+        docs: Defaults to filled
+      intent:
+        type: optional<Intent>
+        docs: Defaults to none
+      size:
+        type: optional<FernButtonSize>
+        docs: Defaults to normal
+      mono: optional<boolean>
+      rounded: optional<boolean>
+      onHover: optional<FernButtonHoverBehaviorConfig>
+
+  FernButtonHoverBehaviorConfig:
+    extends:
+      - TransitionConfig
+    properties:
+      rightIcon: optional<TransformConfig>
+
+  TransitionConfig:
+    properties:
+      durationMs: optional<double>
+      easing: optional<string>
+
+  TransformConfig:
+    properties:
+      scale: optional<double>
+      rotate: optional<double>
+      translateX: optional<double>
+      translateY: optional<double>
+
+  FernButtonVariant:
+    enum:
+      - filled
+      - outlined
+      - minimal
+
+  FernButtonSize:
+    enum:
+      - small
+      - normal
+      - large
+
+  Intent:
+    enum:
+      - none
+      - primary
+      - success
+      - warning
+      - danger

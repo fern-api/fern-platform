@@ -1,0 +1,75 @@
+types:
+  DocsLayoutConfig:
+    properties:
+      pageWidth: optional<PageWidthSizeConfig>
+      contentWidth: optional<SizeConfig>
+      sidebarWidth: optional<SizeConfig>
+      headerHeight: optional<SizeConfig>
+      searchbarPlacement: optional<SidebarOrHeaderPlacement>
+      tabsPlacement: optional<SidebarOrHeaderPlacement>
+      contentAlignment: optional<ContentAlignment>
+      headerPosition: optional<HeaderPosition>
+      disableHeader: optional<boolean>
+
+  DocsLayoutConfigWrite:
+    docs: All the same types as DocsLayoutConfig, but with deprecated enums.
+    properties:
+      pageWidth: optional<PageWidthSizeConfig>
+      contentWidth: optional<SizeConfig>
+      sidebarWidth: optional<SizeConfig>
+      headerHeight: optional<SizeConfig>
+      searchbarPlacement: optional<SidebarOrHeaderPlacementWrite>
+      tabsPlacement: optional<SidebarOrHeaderPlacementWrite>
+      contentAlignment: optional<ContentAlignmentWrite>
+      headerPosition: optional<HeaderPositionWrite>
+      disableHeader: optional<boolean>
+
+  SidebarOrHeaderPlacement:
+    enum:
+      - header
+      - sidebar
+
+  ContentAlignment:
+    enum:
+      - center
+      - left
+
+  HeaderPosition:
+    enum:
+      - fixed
+      - absolute
+
+  SidebarOrHeaderPlacementWrite:
+    extends: SidebarOrHeaderPlacement
+    enum:
+      - value: HEADER
+        availability: deprecated
+      - value: SIDEBAR
+        availability: deprecated
+
+  ContentAlignmentWrite:
+    extends: ContentAlignment
+    enum:
+      - value: CENTER
+        availability: deprecated
+      - value: LEFT
+        availability: deprecated
+
+  HeaderPositionWrite:
+    extends: HeaderPosition
+    enum:
+      - value: FIXED
+        availability: deprecated
+      - value: ABSOLUTE
+        availability: deprecated
+
+  PageWidthSizeConfig:
+    union:
+      px: double
+      rem: double
+      full: {}
+
+  SizeConfig:
+    union:
+      px: double
+      rem: double

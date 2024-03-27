@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ./commons.yml
+
+types:
+  ThemeConfigShared:
+    properties:
+      logo: optional<commons.FileId>
+      backgroundImage: optional<commons.FileId>
+      accentPrimary: RgbaColor
+      accentSecondary:
+        type: optional<RgbaColor>
+        availability: in-development
+        docs: The secondary accent color is not yet supported.
+      background: optional<RgbaColor>
+      border: optional<RgbaColor>
+      sidebarBackground: optional<RgbaColor>
+      headerBackground: optional<RgbaColor>
+      cardBackground: optional<RgbaColor>
+      contentBackground:
+        type: optional<RgbaColor>
+        availability: in-development
+
+  ThemeConfig:
+    extends: ThemeConfigShared
+    properties:
+      background: optional<RgbaColor>
+
+  ThemeConfigRead:
+    extends: ThemeConfig
+    properties:
+      background: BackgroundSolidOrGradient
+
+  ColorsConfig:
+    properties:
+      accentPrimary: optional<RgbaColor>
+
+  ColorsConfigV2:
+    properties:
+      accentPrimary: optional<ColorConfig>
+      background: optional<ColorConfig>
+
+  ColorsConfigV3:
+    union:
+      dark: ThemeConfig
+      light: ThemeConfig
+      darkAndLight: DarkAndLightModeConfig
+
+  ColorsConfigV3Read:
+    union:
+      dark: ThemeConfigRead
+      light: ThemeConfigRead
+      darkAndLight: DarkAndLightModeConfigRead
+
+  DarkAndLightModeConfig:
+    properties:
+      dark: ThemeConfig
+      light: ThemeConfig
+
+  DarkAndLightModeConfigRead:
+    properties:
+      dark: ThemeConfigRead
+      light: ThemeConfigRead
+
+  ColorConfig:
+    union:
+      unthemed: UnthemedColorConfig
+      themed: ThemedRgbaColor
+
+  UnthemedColorConfig:
+    properties:
+      color: optional<RgbaColor>
+
+  ThemedRgbaColor:
+    properties:
+      dark: optional<RgbaColor>
+      light: optional<RgbaColor>
+
+  RgbaColor:
+    properties:
+      r: integer
+      g: integer
+      b: integer
+      a: optional<double>
+
+  BackgroundSolidOrGradient:
+    availability: deprecated
+    union:
+      solid: RgbaColor
+      gradient: {}

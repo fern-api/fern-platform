@@ -1,0 +1,7 @@
+types:
+  FileId: string
+
+  ThemedFileId:
+    properties:
+      dark: optional<FileId>
+      light: optional<FileId>

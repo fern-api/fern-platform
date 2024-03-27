@@ -4,6 +4,11 @@ imports:
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
+  commons: ../commons/commons.yml
+  links: ../commons/links.yml
+  typography: ../commons/typography.yml
+  colors: ../commons/colors.yml
+  layout: ../commons/layout.yml
 
 service:
   base-path: /registry/docs
@@ -56,8 +61,6 @@ types:
       blurDataUrl: optional<string>
       alt: optional<string>
 
-  FileId: string
-
   Height: double
 
   AlgoliaSearchIndex: string
@@ -104,14 +107,20 @@ types:
 
   DocsDefinition:
     properties:
-      algoliaSearchIndex: optional<AlgoliaSearchIndex>
       pages: map<PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
-      files: map<FileId, Url>
-      filesV2: map<FileId, File>
+      filesV2: map<commons.FileId, File>
       id: optional<rootCommons.DocsConfigId>
       config: DocsConfig
       search: SearchInfo
+
+      # deprecated
+      algoliaSearchIndex:
+        type: optional<AlgoliaSearchIndex>
+        availability: deprecated
+      files:
+        type: map<commons.FileId, Url>
+        availability: deprecated
 
   PageContent:
     properties:
@@ -126,116 +135,36 @@ types:
       # logo
       logoHeight: optional<Height>
       logoHref: optional<Url>
-      favicon: optional<FileId>
+      favicon: optional<commons.FileId>
 
       # styles
-      colorsV3: optional<ColorsConfigV3>
-      navbarLinks: optional<list<NavbarLink>>
-      layout: optional<DocsLayoutConfig>
-      typographyV2: optional<DocsTypographyConfigV2>
+      colorsV3: optional<colors.ColorsConfigV3Read>
+      headerLinks: optional<links.HeaderLinksConfig>
+      layout: optional<layout.DocsLayoutConfig>
+      typographyV2: optional<typography.DocsTypographyConfigV2>
 
       # css and js
       css: optional<CssConfig>
       js: optional<JsConfig>
 
       # deprecated
-      backgroundImage: optional<FileId>
-      logoV2: optional<LogoV2>
+      backgroundImage: optional<commons.FileId>
+      logoV2: optional<commons.ThemedFileId>
       logo:
-        type: optional<FileId>
+        type: optional<commons.FileId>
         availability: deprecated
       colors:
-        type: optional<ColorsConfig>
+        type: optional<colors.ColorsConfig>
         availability: deprecated
       colorsV2:
-        type: optional<ColorsConfigV2>
+        type: optional<colors.ColorsConfigV2>
         availability: deprecated
       typography:
-        type: optional<DocsTypographyConfig>
+        type: optional<typography.DocsTypographyConfig>
         availability: deprecated
-
-  ColorsConfigV3:
-    union:
-      dark: ThemeConfig
-      light: ThemeConfig
-      darkAndLight: DarkAndLightModeConfig
-
-  ThemeConfig:
-    properties:
-      logo: optional<FileId>
-      backgroundImage: optional<FileId>
-      accentPrimary: RgbaColor
-      background: Background
-      border: optional<RgbaColor>
-      sidebarBackground: optional<RgbaColor>
-      headerBackground: optional<RgbaColor>
-      cardBackground: optional<RgbaColor>
-
-  DarkAndLightModeConfig:
-    properties:
-      dark: ThemeConfig
-      light: ThemeConfig
-
-  Background:
-    union:
-      solid: RgbaColor
-      gradient: {}
-
-  LogoV2:
-    properties:
-      dark: optional<FileId>
-      light: optional<FileId>
-
-  DocsTypographyConfig:
-    properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
-
-  DocsTypographyConfigV2:
-    properties:
-      headingsFont: optional<FontConfigV2>
-      bodyFont: optional<FontConfigV2>
-      codeFont: optional<FontConfigV2>
-
-  FontConfig:
-    properties:
-      name: string
-      fontFile: FileId
-
-  # TODO: add support for google fonts
-  FontConfigV2:
-    union:
-      custom: CustomFontConfig
-
-  CustomFontConfig:
-    properties:
-      name: string
-      variants: list<CustomFontConfigVariant>
-      display: optional<FontDisplay>
-      fallback: optional<list<string>>
-
-      # declarations
-      fontVariationSettings: optional<string>
-
-  CustomFontConfigVariant:
-    properties:
-      fontFile: FileId
-      weight: optional<list<string>>
-      style: optional<list<FontStyle>>
-
-  FontStyle:
-    enum:
-      - normal
-      - italic
-
-  FontDisplay:
-    enum:
-      - auto
-      - block
-      - swap
-      - fallback
-      - optional
+      navbarLinks:
+        type: optional<list<links.NavbarLink>>
+        availability: deprecated
 
   NavigationConfig:
     discriminated: false
@@ -342,21 +271,6 @@ types:
       icon: optional<string>
       url: string
 
-  NavbarLink:
-    union:
-      filled: NavbarLinkMetadata
-      outlined: NavbarLinkMetadata
-      minimal: NavbarLinkMetadata
-
-      # deprecated
-      primary: NavbarLinkMetadata # -> outlined
-      secondary: NavbarLinkMetadata # -> minimal
-
-  NavbarLinkMetadata:
-    properties:
-      url: string
-      text: string
-
   ApiSection:
     properties:
       title: string
@@ -398,36 +312,6 @@ types:
       collapsed: boolean
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
-
-  ColorsConfig:
-    properties:
-      accentPrimary: optional<RgbaColor>
-
-  ColorsConfigV2:
-    properties:
-      accentPrimary: optional<ColorConfig>
-      background: optional<ColorConfig>
-
-  ColorConfig:
-    union:
-      unthemed: ColorUnthemedConfig
-      themed: ColorThemedConfig
-
-  ColorUnthemedConfig:
-    properties:
-      color: optional<RgbaColor>
-
-  ColorThemedConfig:
-    properties:
-      dark: optional<RgbaColor>
-      light: optional<RgbaColor>
-
-  RgbaColor:
-    properties:
-      r: integer
-      g: integer
-      b: integer
-      a: optional<double>
 
   ApiArtifacts:
     properties:
@@ -554,7 +438,7 @@ types:
 
   JsFileConfig:
     properties:
-      fileId: FileId
+      fileId: commons.FileId
       strategy: optional<JsScriptStrategy>
 
   JsScriptStrategy:
