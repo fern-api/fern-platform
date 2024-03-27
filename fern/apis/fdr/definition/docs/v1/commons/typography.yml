@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 types:
   DocsTypographyConfig:
     properties:
@@ -16,10 +18,15 @@ types:
       name: string
       fontFile: FileId
 
-  # TODO: add support for google fonts
   FontConfigV2:
     union:
       custom: CustomFontConfig
+      google: GoogleFontConfig
+
+  GoogleFontConfig:
+    availability: in-development
+    properties:
+      name: string
 
   CustomFontConfig:
     properties:
