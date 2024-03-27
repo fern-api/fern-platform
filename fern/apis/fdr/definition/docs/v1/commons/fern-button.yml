@@ -41,8 +41,12 @@ types:
 
   TransitionConfig:
     properties:
-      durationMs: optional<double>
-      easing: optional<string>
+      durationMs:
+        type: optional<double>
+        docs: Defaults to 150
+      easing:
+        type: optional<string>
+        docs: defaults to `cubic-bezier(0.4, 0, 0.2, 1)`
 
   TransformConfig:
     properties:

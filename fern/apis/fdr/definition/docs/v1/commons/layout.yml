@@ -19,9 +19,15 @@ types:
       sidebarWidth: optional<SizeConfig>
       headerHeight: optional<SizeConfig>
       searchbarPlacement: optional<SidebarOrHeaderPlacementWrite>
-      tabsPlacement: optional<SidebarOrHeaderPlacementWrite>
-      contentAlignment: optional<ContentAlignmentWrite>
-      headerPosition: optional<HeaderPositionWrite>
+      tabsPlacement:
+        type: optional<SidebarOrHeaderPlacementWrite>
+        availability: pre-release
+      contentAlignment:
+        type: optional<ContentAlignmentWrite>
+        availability: in-development
+      headerPosition:
+        type: optional<HeaderPositionWrite>
+        availability: in-development
       disableHeader: optional<boolean>
 
   SidebarOrHeaderPlacement:
@@ -40,24 +46,27 @@ types:
       - absolute
 
   SidebarOrHeaderPlacementWrite:
-    extends: SidebarOrHeaderPlacement
     enum:
+      - header
+      - sidebar
       - value: HEADER
         availability: deprecated
       - value: SIDEBAR
         availability: deprecated
 
   ContentAlignmentWrite:
-    extends: ContentAlignment
     enum:
+      - center
+      - left
       - value: CENTER
         availability: deprecated
       - value: LEFT
         availability: deprecated
 
   HeaderPositionWrite:
-    extends: HeaderPosition
     enum:
+      - fixed
+      - absolute
       - value: FIXED
         availability: deprecated
       - value: ABSOLUTE
