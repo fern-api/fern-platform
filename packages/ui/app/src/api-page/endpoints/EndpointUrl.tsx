@@ -2,6 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
+import { parse } from "url";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
@@ -32,16 +33,19 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const renderPathParts = (parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
         if (showEnvironment && environment != null) {
+            const url = parse(environment);
             elements.push(
-                <span key="base-url" className="text-faded whitespace-nowrap max-sm:hidden">
-                    {environment}
+                <span key="protocol" className="whitespace-nowrap max-sm:hidden">
+                    <span className="text-faded">{url.protocol}</span>
+                    <span className="text-faded">{"//"}</span>
+                    <span className="t-muted">{url.host}</span>
                 </span>,
             );
         }
         parts.forEach((p, i) => {
             elements.push(
                 <span key={`separator-${i}`} className="text-faded">
-                    /
+                    {"/"}
                 </span>,
                 visitDiscriminatedUnion(p, "type")._visit({
                     literal: (literal) => {
