@@ -1,0 +1,37 @@
+name: Test FDR ETE
+
+on:
+  push:
+    paths:
+      - 'fern/apis/fdr/**'
+      - 'fern/fern.config.json'
+      - 'servers/fdr-deploy/**'
+      - 'servers/fdr/**'
+      - '.github/workflows/deploy-fdr.yml'
+      - 'packages/fdr-sdk/**'
+
+env:
+  PACKAGE_NAME: "@fern-platform/fdr"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+
+jobs: 
+  run: 
+    runs-on: ubuntu-latest    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+      
+      - name: Install
+        uses: ./.github/actions/install
+      
+      - name: Setup database
+        # TODO: re-enable when moving to turbo
+        # pnpm turbo --filter= docker:local
+        run: |
+          cd servers/fdr
+          pnpm run docker:local
+          pnpm run test:ete
+  
