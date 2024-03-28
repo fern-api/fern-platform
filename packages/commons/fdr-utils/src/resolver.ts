@@ -1,130 +1,76 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "./docs";
-import { isSubpackage } from "./subpackage";
+import {
+    FlattenedApiDefinitionPackage,
+    FlattenedApiDefinitionPackageItem,
+    flattenApiDefinition,
+} from "./flattenApiDefinition";
 import { SidebarNodeRaw } from "./types";
-
-function toApiType(apiType: APIV1Read.ApiNavigationConfigItem["type"]): SidebarNodeRaw.ApiPageOrSubpackage["apiType"] {
-    switch (apiType) {
-        case "endpointId":
-            return "endpoint";
-        case "websocketId":
-            return "websocket";
-        case "webhookId":
-            return "webhook";
-        case "subpackage":
-            return "subpackage";
-    }
-}
 
 function resolveSidebarNodeRawApiSection(
     api: FdrAPI.ApiId,
     id: string,
-    package_: APIV1Read.ApiDefinitionPackage | undefined,
+    subpackage: FlattenedApiDefinitionPackage,
     title: string,
-    subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     showErrors: boolean,
-    parentSlugs: readonly string[],
-    navigation: APIV1Read.ApiNavigationConfigRoot | APIV1Read.ApiNavigationConfigSubpackage | undefined,
 ): SidebarNodeRaw.ApiSection | undefined {
-    let subpackage: APIV1Read.ApiDefinitionPackage | undefined = package_;
-    while (subpackage?.pointsTo != null) {
-        subpackage = subpackagesMap[subpackage.pointsTo];
-    }
-    if (subpackage == null) {
-        return;
-    }
-    // the parentSlug comes from the parent package, ignoring all pointsTo rewriting
-    const slug =
-        package_ != null && isSubpackage(package_) ? [...parentSlugs, ...package_.urlSlug.split("/")] : parentSlugs;
-    const endpoints = subpackage.endpoints.map(
-        (endpoint): SidebarNodeRaw.EndpointPage => ({
-            type: "page",
-            apiType: "endpoint",
-            api,
-            id: endpoint.id,
-            slug: [...slug, ...endpoint.urlSlug.split("/")],
-            title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-            description: endpoint.description,
-            method: endpoint.method,
-            stream: endpoint.response?.type.type === "stream",
-            icon: undefined,
-            hidden: false,
-        }),
-    );
-    const websockets = subpackage.websockets.map(
-        (websocket): SidebarNodeRaw.WebSocketPage => ({
-            type: "page",
-            apiType: "websocket",
-            api,
-            id: websocket.id,
-            slug: [...slug, ...websocket.urlSlug.split("/")],
-            title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
-            description: websocket.description,
-            icon: undefined,
-            hidden: false,
-        }),
-    );
-    const webhooks = subpackage.webhooks.map(
-        (webhook): SidebarNodeRaw.WebhookPage => ({
-            type: "page",
-            apiType: "webhook",
-            api,
-            id: webhook.id,
-            slug: [...slug, ...webhook.urlSlug.split("/")],
-            title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-            description: webhook.description,
-            icon: undefined,
-            hidden: false,
-        }),
-    );
+    const items = subpackage.items
+        .map((item) =>
+            FlattenedApiDefinitionPackageItem.visit<SidebarNodeRaw.ApiPageOrSubpackage | undefined>(item, {
+                endpoint: (endpoint) => ({
+                    type: "page",
+                    apiType: "endpoint",
+                    api,
+                    id: endpoint.id,
+                    slug: endpoint.slug,
+                    title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+                    description: endpoint.description,
+                    method: endpoint.method,
+                    stream: endpoint.response?.type.type === "stream",
+                    icon: undefined,
+                    hidden: false,
+                }),
+                websocket: (websocket) => ({
+                    type: "page",
+                    apiType: "websocket",
+                    api,
+                    id: websocket.id,
+                    slug: websocket.slug,
+                    title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
+                    description: websocket.description,
+                    icon: undefined,
+                    hidden: false,
+                }),
+                webhook: (webhook) => ({
+                    type: "page",
+                    apiType: "webhook",
+                    api,
+                    id: webhook.id,
+                    slug: webhook.slug,
+                    title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+                    description: webhook.description,
+                    icon: undefined,
+                    hidden: false,
+                }),
+                subpackage: (subpackage) => {
+                    const resolvedSubpackage = resolveSidebarNodeRawApiSection(
+                        api,
+                        subpackage.subpackageId,
+                        subpackage,
+                        subpackage.name,
+                        showErrors,
+                    );
 
-    const subpackages = subpackage.subpackages
-        .map((innerSubpackageId): SidebarNodeRaw.SubpackageSection | undefined => {
-            const resolvedSubpackage = resolveSidebarNodeRawApiSection(
-                api,
-                innerSubpackageId,
-                subpackagesMap[innerSubpackageId],
-                titleCase(subpackagesMap[innerSubpackageId]?.name ?? ""),
-                subpackagesMap,
-                showErrors,
-                slug,
-                navigation?.items
-                    .filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
-                    .find((item) => item.subpackageId === innerSubpackageId),
-            );
-            if (resolvedSubpackage == null) {
-                return undefined;
-            }
-            return { ...resolvedSubpackage, apiType: "subpackage" };
-        })
+                    if (resolvedSubpackage == null) {
+                        return undefined;
+                    }
+
+                    return { ...resolvedSubpackage, apiType: "subpackage" };
+                },
+            }),
+        )
         .filter(isNonNullish);
-
-    // default sort
-    const items: SidebarNodeRaw.ApiPageOrSubpackage[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
-
-    if (navigation?.items != null) {
-        items.sort((a, b) => {
-            const aIndex = navigation.items.findIndex(
-                (item) =>
-                    toApiType(item.type) === a.apiType &&
-                    (item.type === "subpackage" ? item.subpackageId === a.id : item.value === a.id),
-            );
-            const bIndex = navigation.items.findIndex(
-                (item) =>
-                    toApiType(item.type) === b.apiType &&
-                    (item.type === "subpackage" ? item.subpackageId === b.id : item.value === b.id),
-            );
-
-            if (aIndex === -1) {
-                return 1;
-            }
-            if (bIndex === -1) {
-                return -1;
-            }
-            return aIndex - bIndex;
-        });
-    }
 
     if (items.length === 0) {
         return;
@@ -135,7 +81,7 @@ function resolveSidebarNodeRawApiSection(
         api,
         id,
         title,
-        slug,
+        slug: subpackage.slug,
         items,
         showErrors,
         artifacts: undefined,
@@ -267,15 +213,13 @@ export function resolveSidebarNodes(
                             : api.skipUrlSlug
                               ? parentSlugs
                               : [...parentSlugs, ...api.urlSlug.split("/")];
+                    const flattened = flattenApiDefinition(definition, definitionSlug);
                     const resolved = resolveSidebarNodeRawApiSection(
                         api.api,
                         api.api,
-                        definition.rootPackage,
+                        flattened,
                         api.title,
-                        definition.subpackages,
                         api.showErrors,
-                        definitionSlug,
-                        definition.navigation,
                     );
                     sidebarNodes.push({
                         type: "apiSection",
