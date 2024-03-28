@@ -4,7 +4,7 @@ cd ..
 docker-compose -f docker-compose.ete.yml up -d
 
 echo "Sleeping for 5s..."
-sleep 5
+sleep 10
 
 pnpm prisma migrate deploy
 

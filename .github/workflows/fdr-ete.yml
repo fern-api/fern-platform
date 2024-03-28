@@ -10,6 +10,12 @@ on:
       - '.github/workflows/deploy-fdr.yml'
       - 'packages/fdr-sdk/**'
 
+env:
+  PACKAGE_NAME: "@fern-platform/fdr"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+
 jobs: 
   run: 
     runs-on: ubuntu-latest    
