@@ -1,6 +1,5 @@
-import { getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
+import { flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
 import {
-    flattenApiDefinition,
     REGISTRY_SERVICE,
     resolveApiDefinition,
     serializeSidebarNodeDescriptionMdx,
