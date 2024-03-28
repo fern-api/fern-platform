@@ -77,6 +77,7 @@
     "docker:dev": "dotenv -e .env.dev -- ./create_docker.sh",
     "docker:prod": "dotenv -e .env.prod -- ./create_docker.sh",
     "test": "vitest src/__test__/unit-tests --globals",
+    "test:ete": "dotenv -e .env.ete -- ./scripts/ete-tests.sh",
     "lint": "eslint --max-warnings 0 src --ext .ts",
     "lint:fix": "pnpm lint --fix",
     "test-db": "dotenv -e .env.test -- ./scripts/db-tests.sh",
