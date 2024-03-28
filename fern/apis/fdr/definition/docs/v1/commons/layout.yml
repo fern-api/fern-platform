@@ -12,6 +12,7 @@ types:
       contentAlignment: optional<ContentAlignment>
       headerPosition: optional<HeaderPosition>
       disableHeader: optional<boolean>
+      disableLineNumbers: optional<boolean>
 
   DocsLayoutConfigWrite:
     docs: All the same types as DocsLayoutConfig, but with deprecated enums.
@@ -31,6 +32,7 @@ types:
         type: optional<HeaderPositionWrite>
         availability: in-development
       disableHeader: optional<boolean>
+      disableLineNumbers: optional<boolean>
 
   SidebarOrHeaderPlacement:
     enum:
