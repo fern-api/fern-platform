@@ -40,8 +40,6 @@ const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
     remarkPlugins: [remarkGfm, remarkGemoji],
     rehypePlugins: [rehypeSlug, rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
     format: "detect",
-    elementAttributeNameCase: "html",
-    stylePropertyNameCase: "css",
     /**
      * development=true is required to render MdxRemote from the client-side.
      * https://github.com/hashicorp/next-mdx-remote/issues/350
