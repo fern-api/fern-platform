@@ -1,12 +1,11 @@
 import cn from "clsx";
 import { Element } from "hast";
-import { camelCase, isEqual } from "lodash-es";
+import { isEqual } from "lodash-es";
 import { ReactNode, forwardRef, memo, useMemo } from "react";
-import StyleToObject from "style-to-object";
 import { visit } from "unist-util-visit";
-import { emitDatadogError } from "../analytics/datadogRum";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { HastToJSX } from "../mdx/common/HastToJsx";
+import { parseStringStyle } from "../util/parseStringStyle";
 import "./FernSyntaxHighlighter.css";
 import { HighlightedTokens } from "./fernShiki";
 
@@ -117,7 +116,7 @@ export const FernSyntaxHighlighterTokens = memo(
 
                 visit(tokens.hast, "element", (node) => {
                     if (node.tagName === "pre") {
-                        preStyle = parseStyle(node.properties.style) ?? {};
+                        preStyle = parseStringStyle(node.properties.style) ?? {};
                     }
                 });
                 return preStyle;
@@ -178,43 +177,4 @@ function flattenHighlightLines(highlightLines: HighlightLine[]): number[] {
         }
         return [lineNumber - 1];
     });
-}
-
-function parseStyle(value: unknown): Record<string, string> | undefined {
-    if (typeof value !== "string") {
-        return undefined;
-    }
-
-    const result: Record<string, string> = {};
-
-    try {
-        StyleToObject(value, replacer);
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Failed to parse style", e);
-
-        emitDatadogError(e, {
-            context: "FernSyntaxHighlighter",
-            errorSource: "parseStyle",
-            errorDescription: "Failed to parse style originating from shiki",
-            data: { value },
-        });
-
-        return undefined;
-    }
-
-    function replacer(name: string, value: string) {
-        let key = name;
-
-        if (key.slice(0, 2) !== "--") {
-            if (key.slice(0, 4) === "-ms-") {
-                key = "ms-" + key.slice(4);
-            }
-            key = camelCase(key);
-        }
-
-        result[key] = value;
-    }
-
-    return result;
 }
