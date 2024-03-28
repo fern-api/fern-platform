@@ -2,7 +2,7 @@
   "extends": "@fern-platform/configs/tsconfig/server.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "isolatedModules": false,
     "paths": {
       "@prisma/client": ["../prisma/client"],
