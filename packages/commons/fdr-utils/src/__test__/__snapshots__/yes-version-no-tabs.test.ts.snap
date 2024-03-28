@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig yes-version-no-tabs gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > yes-version-no-tabs > gets all urls from docs config 1`] = `
 [
   "/docs/api",
   "/docs/api/section-1",
@@ -26,18 +26,20 @@ exports[`getAllUrlsFromDocsConfig yes-version-no-tabs gets all urls from docs co
 ]
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api 1`] = `
 {
   "redirect": "/docs/api/page-5",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/page-5 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/page-5 1`] = `
 {
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "page-5.md",
       "slug": [
         "docs",
@@ -55,14 +57,14 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/section-1 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/section-1 1`] = `
 {
   "redirect": "/docs/api/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-1 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 1`] = `
 {
   "found": {
     "currentNode": {
@@ -70,6 +72,8 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -87,7 +91,7 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-1 2`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 2`] = `
 {
   "found": {
     "currentNode": {
@@ -95,6 +99,8 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -112,11 +118,13 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-1/page-5 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/page-5 1`] = `
 {
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "page-5.md",
       "slug": [
         "docs",
@@ -129,20 +137,20 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "urlSlug": "page-5",
     },
     "currentTabIndex": -1,
-    "currentVersionIndex": 1,
+    "currentVersionIndex": 0,
   },
   "type": "found",
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-1/section-1 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/section-1 1`] = `
 {
   "redirect": "/docs/api/version-1/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-1/version-1 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/version-1 1`] = `
 {
   "found": {
     "currentNode": {
@@ -150,6 +158,8 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -162,20 +172,20 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "urlSlug": "page-6",
     },
     "currentTabIndex": -1,
-    "currentVersionIndex": 1,
+    "currentVersionIndex": 0,
   },
   "type": "found",
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-2 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-2 1`] = `
 {
   "redirect": "/docs/api/version-2/page-7",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/api/version-2/version-1 1`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-2/version-1 1`] = `
 {
   "found": {
     "currentNode": {
@@ -183,6 +193,8 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "fullSlug": [
         "version-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-9.md",
       "slug": [
         "docs",
@@ -195,7 +207,7 @@ exports[`getNavigationRoot yes-version-no-tabs gets navigation root for /docs/ap
       "urlSlug": "page-9",
     },
     "currentTabIndex": -1,
-    "currentVersionIndex": 2,
+    "currentVersionIndex": 1,
   },
   "type": "found",
 }

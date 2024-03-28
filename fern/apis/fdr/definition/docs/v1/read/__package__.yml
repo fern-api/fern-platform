@@ -332,6 +332,7 @@ types:
       id: PageId
       title: string
       icon: optional<string>
+      hidden: optional<boolean>
       urlSlug: string
       fullSlug: optional<list<string>>
 
@@ -360,6 +361,7 @@ types:
     properties:
       title: string
       icon: optional<string>
+      hidden: optional<boolean>
       api: rootCommons.ApiDefinitionId
       urlSlug: string
       skipUrlSlug: boolean
@@ -374,6 +376,7 @@ types:
       icon:
         type: optional<string>
         docs: Defaults to ActivityLog icon
+      hidden: optional<boolean>
       description: optional<string>
       pageId: optional<PageId>
       items: list<ChangelogItem>

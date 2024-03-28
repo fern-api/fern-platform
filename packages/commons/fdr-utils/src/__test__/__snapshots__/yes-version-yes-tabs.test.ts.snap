@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig yes-version-yes-tabs gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > yes-version-yes-tabs > gets all urls from docs config 1`] = `
 [
   "/docs/api",
   "/docs/api/tab-1",
@@ -47,14 +47,14 @@ exports[`getAllUrlsFromDocsConfig yes-version-yes-tabs gets all urls from docs c
 ]
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api 1`] = `
 {
   "redirect": "/docs/api/tab-1/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/tab-1 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/tab-1 1`] = `
 {
   "found": {
     "currentNode": {
@@ -62,6 +62,8 @@ exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/a
       "fullSlug": [
         "tab-1",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-6.md",
       "slug": [
         "docs",
@@ -79,21 +81,21 @@ exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/a
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/tab-2 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/tab-2 1`] = `
 {
   "redirect": "/docs/api/tab-2/page-7",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/version-1 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/version-1 1`] = `
 {
   "redirect": "/docs/api/version-1/tab-1/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/version-1/section-2 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/version-1/section-2 1`] = `
 {
   "found": {
     "currentNode": {
@@ -101,6 +103,8 @@ exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/a
       "fullSlug": [
         "section-2",
       ],
+      "hidden": false,
+      "icon": undefined,
       "id": "page-3.md",
       "slug": [
         "docs",
@@ -113,27 +117,27 @@ exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/a
       "urlSlug": "page-3",
     },
     "currentTabIndex": 0,
-    "currentVersionIndex": 1,
+    "currentVersionIndex": 0,
   },
   "type": "found",
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/version-2 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/version-2 1`] = `
 {
   "redirect": "/docs/api/version-2/tab-1/section-1/page-1",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/version-2/tab-2 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/version-2/tab-2 1`] = `
 {
   "redirect": "/docs/api/version-2/tab-2/page-7",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot yes-version-yes-tabs gets navigation root for /docs/api/version-2/tab-2/section-5 1`] = `
+exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/version-2/tab-2/section-5 1`] = `
 {
   "redirect": "/docs/api/version-2/tab-1",
   "type": "redirect",

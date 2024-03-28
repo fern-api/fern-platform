@@ -2,23 +2,44 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
-import React, { PropsWithChildren, ReactElement, useEffect, useMemo } from "react";
+import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { capturePosthogEvent } from "../analytics/posthog";
+import { emitDatadogError } from "../analytics/datadogRum";
 
 export declare interface FernErrorBoundaryProps {
+    component?: string; // component displayName where the error occurred
     error: unknown;
     className?: string;
     resetErrorBoundary?: () => void;
-    type: string;
 }
 
-export function FernErrorTag({ error, className }: { error: string; className?: string }): ReactElement {
+export function FernErrorTag({
+    component,
+    error,
+    className,
+    errorDescription,
+}: {
+    component: string; // component displayName where the error occurred
+    error: unknown;
+    className?: string;
+    errorDescription?: string;
+}): ReactElement {
+    useEffect(() => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        emitDatadogError(error, {
+            context: component,
+            errorSource: "FernErrorTag",
+            errorDescription:
+                errorDescription ??
+                "An unknown UI error occurred. This renders a tag with an error message to the user. This could be a critical user-facing error that should be investigated.",
+        });
+    }, [component, error, errorDescription]);
     return (
         <div className={clsx(className ?? "my-4")}>
             <span className="bg-tag-danger t-danger inline-flex items-center gap-2 rounded-full px-2">
                 <ExclamationTriangleIcon />
-                <span>{error}</span>
+                <span>{stringifyError(error)}</span>
             </span>
         </div>
     );
@@ -31,11 +52,11 @@ export function stringifyError(error: unknown): string {
     if (error instanceof Error) {
         return error.message;
     }
-    return JSON.stringify(error);
+    return "An unknown error occurred";
 }
 
-export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
-    type,
+const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
+    component,
     className,
     error,
     resetErrorBoundary,
@@ -54,15 +75,7 @@ export const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
         };
     }, [resetErrorBoundary, router.events]);
 
-    const stringifiedError = useMemo(() => stringifyError(error), [error]);
-
-    useEffect(() => {
-        // eslint-disable-next-line no-console
-        console.error(error);
-        return capturePosthogEvent(`failed_to_render_${type}`, { error });
-    }, [error, type]);
-
-    return <FernErrorTag error={stringifiedError} className={className} />;
+    return <FernErrorTag error={error} className={className} component={component ?? "FernErrorBoundary"} />;
 };
 
 const getFallbackComponent = memoize(function getFallbackComponent(

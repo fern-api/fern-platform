@@ -49,4 +49,11 @@ packages/**/generated
 # turbo
 .turbo
 
+# storybook
 *storybook.log
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

@@ -9,13 +9,13 @@ module.exports = {
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/strict",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:jest/recommended",
+        "plugin:vitest/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:tailwindcss/recommended",
         "plugin:@next/next/recommended",
     ],
-    plugins: ["jest", "deprecation", "import", "eslint-plugin-tailwindcss"],
+    plugins: ["deprecation", "import", "eslint-plugin-tailwindcss"],
     env: {
         browser: true,
         es2021: true,
@@ -40,9 +40,6 @@ module.exports = {
         project: ["./tsconfig.eslint.json", "./packages/**/tsconfig.json"],
         allowAutomaticSingleRunInference: true,
         tsconfigRootDir: __dirname,
-    },
-    env: {
-        "jest/globals": true,
     },
     ignorePatterns: ["*.js", "*.jsx"],
     rules: {
@@ -79,7 +76,6 @@ module.exports = {
         "@typescript-eslint/no-invalid-void-type": "off",
         "@typescript-eslint/prefer-optional-chain": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
-        "jest/expect-expect": ["error", { assertFunctionNames: ["expect*"] }],
         "linebreak-style": ["error", "unix"],
         "no-console": "error",
         "no-empty": [
@@ -98,7 +94,6 @@ module.exports = {
         ],
         semi: ["error", "always"],
         indent: "off",
-        "jest/unbound-method": ["error"],
         "object-shorthand": ["error"],
         "deprecation/deprecation": "error",
         "import/no-internal-modules": [
@@ -125,10 +120,6 @@ module.exports = {
         {
             files: ["packages/fdr-sdk/**/*", "servers/fdr-deploy/**/*", "servers/fdr/**/*"],
             rules: {
-                "jest/expect-expect": "off",
-                "jest/valid-expect": "off",
-                "jest/no-standalone-expect": "off",
-                "jest/no-conditional-expect": "off",
                 "@typescript-eslint/explicit-module-boundary-types": "off",
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/no-unused-vars": "off",

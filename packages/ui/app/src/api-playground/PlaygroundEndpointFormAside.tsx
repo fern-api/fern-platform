@@ -207,9 +207,9 @@ export function PlaygroundEndpointFormAside({
                                             {dereferenceObjectProperties(shape, types)
                                                 .filter(
                                                     (property) =>
-                                                        formState != null &&
-                                                        isPlainObject(formState.body) &&
-                                                        !isUndefined(formState.body[property.key]),
+                                                        formState?.body?.value != null &&
+                                                        isPlainObject(formState.body.value) &&
+                                                        !isUndefined(formState.body.value[property.key]),
                                                 )
                                                 .map((param) => (
                                                     <li key={param.key} id={`link-to/body.${param.key}`}>

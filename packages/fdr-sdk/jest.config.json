@@ -1,7 +1,0 @@
-{
-  "testMatch": ["**/__test__/**/*.test.ts{,x}"],
-  "transform": {
-    "\\.[jt]sx?$": ["babel-jest", { "rootMode": "upward" }]
-  },
-  "transformIgnorePatterns": ["node_modules/(?!lodash-es)"]
-}

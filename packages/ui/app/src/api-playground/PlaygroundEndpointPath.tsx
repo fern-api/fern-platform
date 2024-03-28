@@ -33,10 +33,10 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 }) => {
     return (
         <div className="playground-endpoint">
-            <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink gap-2 rounded-[20px] px-4 py-2">
+            <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span className="playground-endpoint-url">
-                    <span className="playground-endpoint-baseurl">{environment?.baseUrl}</span>
+                    <span className="playground-endpoint-baseurl max-sm:hidden">{environment?.baseUrl}</span>
                     {path.map((part, idx) => {
                         return visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => <span key={idx}>{literal.value}</span>,
@@ -89,11 +89,13 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                 />
             </div>
 
-            <PlaygroundSendRequestButton
-                sendRequest={sendRequest}
-                sendRequestButtonLabel={sendRequestButtonLabel}
-                sendRequestIcon={sendRequestIcon}
-            />
+            <div className="max-sm:hidden">
+                <PlaygroundSendRequestButton
+                    sendRequest={sendRequest}
+                    sendRequestButtonLabel={sendRequestButtonLabel}
+                    sendRequestIcon={sendRequestIcon}
+                />
+            </div>
         </div>
     );
 };

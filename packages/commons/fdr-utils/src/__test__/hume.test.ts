@@ -1,3 +1,4 @@
+import { describe } from "vitest";
 import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 import { testGetNavigationRoot } from "./testGetNavigationRoot";
 

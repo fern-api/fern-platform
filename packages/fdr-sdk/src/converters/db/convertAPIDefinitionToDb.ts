@@ -1,4 +1,4 @@
-import { isEqual, kebabCase, startCase } from "lodash";
+import lodash from "lodash";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { assertNever } from "../utils/assertNever";
 import { titleCase } from "../utils/titleCase";
@@ -11,6 +11,7 @@ import {
 } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
+const { isEqual, kebabCase, startCase } = lodash;
 
 export function convertAPIDefinitionToDb(
     writeShape: APIV1Write.ApiDefinition,
@@ -105,6 +106,7 @@ function transformSubpackage({
         pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
+        displayName: writeShape.displayName,
         // htmlDescription,
         // descriptionContainsMarkdown: true,
         webhooks: webhooks ?? [],

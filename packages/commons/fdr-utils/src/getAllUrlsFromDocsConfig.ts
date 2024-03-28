@@ -6,10 +6,11 @@ import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
 export function getAllUrlsFromDocsConfig(
     host: string,
     basePath: string | undefined,
-    docsConfig: DocsV1Read.DocsConfig,
+    nav: DocsV1Read.NavigationConfig,
     apis: Record<string, APIV1Read.ApiDefinition>,
 ): string[] {
-    const root = resolveSidebarNodesRoot(docsConfig.navigation, apis, basePath);
+    const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
+    const root = resolveSidebarNodesRoot(nav, apis, basePathSlug);
     const visitedSlugs: string[] = [];
 
     visitSidebarNodeRaw(root, (node) => {

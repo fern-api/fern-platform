@@ -300,6 +300,7 @@ types:
     properties:
       title: string
       icon: optional<string>
+      hidden: optional<boolean>
       id: PageId
       urlSlugOverride: optional<string>
       fullSlug: optional<list<string>>
@@ -319,6 +320,7 @@ types:
       skipUrlSlug: optional<boolean>
       showErrors: optional<boolean>
       changelog: optional<ChangelogSection>
+      hidden: optional<boolean>
       fullSlug: optional<list<string>>
 
   ChangelogSection:
@@ -330,6 +332,7 @@ types:
       icon:
         type: optional<string>
         docs: Defaults to ActivityLog icon
+      hidden: optional<boolean>
       description: optional<string>
       pageId:
         type: optional<string>
@@ -343,6 +346,7 @@ types:
     properties:
       date: date
       pageId: string
+      hidden: optional<boolean>
 
   DocsSection:
     properties:

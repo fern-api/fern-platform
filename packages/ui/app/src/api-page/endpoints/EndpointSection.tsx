@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
-import { createElement, ReactNode, useRef } from "react";
+import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
@@ -39,7 +39,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
     return (
-        <FernErrorBoundary type="endpoint_section">
+        <FernErrorBoundary component="EndpointSection">
             <div ref={ref} data-route={anchorRoute.toLowerCase()} className="scroll-mt-header-height-padded">
                 <div className="group/anchor-container relative flex items-baseline justify-between gap-4 pb-3">
                     {createElement(

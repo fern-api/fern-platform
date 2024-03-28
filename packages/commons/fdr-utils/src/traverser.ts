@@ -64,6 +64,11 @@ function visitNode(
                     if (traverseState.next != null) {
                         return traverseState;
                     }
+                } else if (page.type === "section") {
+                    traverseState = visitNode(page, slug, traverseState, sectionTitleBreadcrumbs);
+                    if (traverseState.next != null) {
+                        return traverseState;
+                    }
                 }
             }
 

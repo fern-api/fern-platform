@@ -1,29 +1,8 @@
 import { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { FernErrorBoundaryInternal, FernErrorBoundaryProps } from "../components/FernErrorBoundary";
-import {
-    A,
-    HeadingRenderer,
-    // H1,
-    // H2,
-    // H3,
-    // H4,
-    // H5,
-    // H6,
-    Img,
-    Li,
-    Ol,
-    P,
-    Strong,
-    Table,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-    Ul,
-} from "./base-components";
+import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
+import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { Accordion } from "./components/Accordion";
 import { Availability } from "./components/Availability";
 import { Bleed } from "./components/Bleed";
@@ -66,7 +45,7 @@ export const JSX_COMPONENTS = {
     LaunchNote: LaunchNoteCallout,
     Icon: RemoteFontAwesomeIcon,
     MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
-        <FernErrorBoundaryInternal {...props} type="mdx" />
+        <FernErrorTag component="MdxErrorBoundary" {...props} />
     ),
     Tabs,
     AccordionGroup: Accordion,

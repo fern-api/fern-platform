@@ -87,7 +87,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
 
 export const CodeSnippetExample: FC<CodeSnippetExample.Props> = (props) => {
     return (
-        <FernErrorBoundary type="code_snippet_example">
+        <FernErrorBoundary component="CodeSnippetExample">
             <CodeSnippetExampleInternal {...props} />
         </FernErrorBoundary>
     );

@@ -1,16 +1,18 @@
-import { SidebarNavigation, SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
+import { SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { renderToString } from "react-dom/server";
-import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { emitDatadogError } from "../../analytics/datadogRum";
 import { MdxContent } from "../../mdx/MdxContent";
+import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
+import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 
@@ -19,7 +21,6 @@ export declare namespace NavigationContextProvider {
         resolvedPath: ResolvedPath;
         domain: string;
         basePath: string | undefined;
-        navigation: SidebarNavigation;
         title: string | undefined;
     }>;
 }
@@ -47,9 +48,14 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
     lastScrollY = window.scrollY;
+    let lastNode: HTMLElement | undefined;
     function handleObservation() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
+            if (lastNode !== node) {
+                lastActiveNavigatableOffsetTop = undefined;
+            }
+            lastNode = node;
             if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
                 node.scrollIntoView({ behavior: "auto" });
             }
@@ -89,20 +95,20 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     children,
     domain,
     basePath,
-    navigation,
     title,
 }) => {
+    const { sidebarNodes, versions, currentVersionIndex } = useDocsContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
     const [activeNavigatable, setActiveNavigatable] = useState(() =>
         resolveActiveSidebarNode(
-            navigation.sidebarNodes,
+            sidebarNodes,
             resolvedPath.fullSlug.split("/").filter((str) => str.trim().length > 0),
         ),
     );
 
-    const [, anchor] = resolvedPath.fullSlug.split("#");
+    const [, anchor] = router.asPath.split("#");
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
     const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
@@ -155,7 +161,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
-                setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, fullSlug.split("/")));
+                setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, fullSlug.split("/")));
                 startScrollTracking(`/${fullSlug}`, true);
             },
             300,
@@ -170,7 +176,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(resolveActiveSidebarNode(navigation.sidebarNodes, decodeURI(fullSlug).split("/")));
+        setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, decodeURI(fullSlug).split("/")));
         startScrollTracking(route);
     });
 
@@ -221,7 +227,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
-    const activeDescription = convertToDescription(activeNavigatable, frontmatter);
+    const activeDescription = convertDescriptionToString(activeNavigatable, frontmatter);
 
     return (
         <NavigationContext.Provider
@@ -232,9 +238,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 onScrollToPath,
                 registerScrolledToPathListener: scrollToPathListeners.registerListener,
                 resolvedPath,
-                activeVersion: navigation.versions[navigation.currentVersionIndex ?? 0],
+                activeVersion: versions[currentVersionIndex ?? 0],
                 selectedSlug,
-                navigation,
             }}
         >
             <Head>
@@ -261,11 +266,11 @@ function convertToTitle(
     return frontmatter?.title ?? page?.title;
 }
 
-function convertToDescription(
+function convertDescriptionToString(
     page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
-    const description = frontmatter?.description ?? page?.description ?? undefined;
+    const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
 
     if (description == null) {
         return;
@@ -282,6 +287,14 @@ function convertToDescription(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error rendering MDX to string", e);
+
+        emitDatadogError(e, {
+            context: "NavigationContext",
+            errorSource: "convertDescriptionToString",
+            errorDescription:
+                "An error occurred while rendering the description (which is a serialized MDX content) to string for the meta description tag. This impacts SEO",
+        });
+
         return undefined;
     }
 }

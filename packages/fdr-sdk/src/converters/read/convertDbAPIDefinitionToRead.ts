@@ -55,6 +55,7 @@ function transformSubpackage({
         // htmlDescription: dbShape.htmlDescription,
         webhooks: dbShape.webhooks ?? [],
         websockets: dbShape.websockets ?? [],
+        displayName: dbShape.displayName,
         // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     };
 }

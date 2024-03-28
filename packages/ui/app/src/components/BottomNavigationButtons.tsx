@@ -14,7 +14,7 @@ export const BottomNavigationButtons: FC<{ showPrev?: boolean }> = ({ showPrev =
     }
 
     return (
-        <div className="flex gap-6">
+        <div className="not-prose flex gap-6">
             {showPrev && leftNeighbor != null && <BottomNavigationButton neighbor={leftNeighbor} dir="prev" />}
             {rightNeighbor != null && <BottomNavigationButton neighbor={rightNeighbor} dir="next" />}
         </div>

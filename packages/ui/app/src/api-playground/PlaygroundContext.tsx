@@ -1,24 +1,25 @@
-import { SidebarNode } from "@fern-ui/fdr-utils";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
+import { resolve } from "url";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { FeatureFlags, useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import {
+    ResolvedApiDefinition,
+    ResolvedRootPackage,
     flattenRootPackage,
     isEndpoint,
     isWebSocket,
-    ResolvedApiDefinition,
-    ResolvedRootPackage,
 } from "../util/resolver";
 import {
+    PlaygroundSelectionState,
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,
-    PlaygroundSelectionState,
     usePlaygroundHeight,
 } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
@@ -49,30 +50,12 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
     {},
 );
 
-interface PlaygroundProps {
-    navigation: SidebarNode[];
-}
-
-export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> = ({ children, navigation }) => {
+export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
-    const { domain, basePath, selectedSlug } = useNavigationContext();
+    const { basePath } = useDocsContext();
+    const { selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
-
-    const [isPlaygroundEnabled, setIsPlaygroundEnabled] = useState<boolean>(isApiPlaygroundEnabled);
-
-    useEffect(() => {
-        if (!isPlaygroundEnabled) {
-            fetch(`${basePath != null ? `https://${domain}` : ""}/api/fern-docs/feature-flags`, {
-                headers: { "x-fern-host": domain },
-                mode: "no-cors",
-            })
-                .then((r) => r.json())
-                .then((data: FeatureFlags) => setIsPlaygroundEnabled(data.isApiPlaygroundEnabled))
-                // eslint-disable-next-line no-console
-                .catch(console.error);
-        }
-    }, [basePath, domain, isPlaygroundEnabled]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
@@ -83,8 +66,8 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
         setPlaygroundHeight((currentHeight) => {
-            const halfWindowHeight = window.innerHeight / 2;
-            return currentHeight < halfWindowHeight ? halfWindowHeight : currentHeight;
+            const windowHeight: number = window.innerHeight;
+            return currentHeight < windowHeight ? windowHeight : currentHeight;
         });
         setPlaygroundOpen(true);
     }, [setPlaygroundHeight, setPlaygroundOpen]);
@@ -95,8 +78,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
             let matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
                 const r = await fetch(
-                    "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
-                    { mode: "no-cors" },
+                    resolve(
+                        basePath ?? "",
+                        "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
+                    ),
                 );
 
                 const data: ResolvedRootPackage | null = await r.json();
@@ -146,10 +131,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
                 });
             }
         },
-        [expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
+        [basePath, expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
     );
 
-    if (!isPlaygroundEnabled) {
+    if (!isApiPlaygroundEnabled) {
         return <>{children}</>;
     }
 
@@ -166,7 +151,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren<PlaygroundProps>> =
             }}
         >
             {children}
-            <PlaygroundDrawer navigation={navigation} apis={flattenedApis} />
+            <PlaygroundDrawer apis={flattenedApis} />
             {isPlaygroundOpen && hasPlayground && <div style={{ height: playgroundHeight }} />}
         </PlaygroundContext.Provider>
     );

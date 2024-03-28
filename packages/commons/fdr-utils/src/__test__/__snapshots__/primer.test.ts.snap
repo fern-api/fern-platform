@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig primer gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > primer > gets all urls from docs config 1`] = `
 [
   "primer.io/docs/api",
   "primer.io/docs/api/introduction",
@@ -184,5 +184,93 @@ exports[`getAllUrlsFromDocsConfig primer gets all urls from docs config 1`] = `
   "primer.io/docs/api/v2/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
   "primer.io/docs/api/v2/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
   "primer.io/docs/api/v2/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+]
+`;
+
+exports[`getNavigationRoot > primer > gets navigation root for /docs/api/introduction/getting-started 1`] = `
+[
+  {
+    "availability": "Stable",
+    "id": "v2.3",
+    "index": 0,
+    "slug": [
+      "docs",
+      "api",
+    ],
+  },
+  {
+    "availability": null,
+    "id": "v2.2",
+    "index": 1,
+    "slug": [
+      "docs",
+      "api",
+      "v2.2",
+    ],
+  },
+  {
+    "availability": null,
+    "id": "v2.1",
+    "index": 2,
+    "slug": [
+      "docs",
+      "api",
+      "v2.1",
+    ],
+  },
+  {
+    "availability": null,
+    "id": "v2",
+    "index": 3,
+    "slug": [
+      "docs",
+      "api",
+      "v2",
+    ],
+  },
+]
+`;
+
+exports[`getNavigationRoot > primer > gets navigation root for /docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token 1`] = `
+[
+  {
+    "availability": "Stable",
+    "id": "v2.3",
+    "index": 0,
+    "slug": [
+      "docs",
+      "api",
+    ],
+  },
+  {
+    "availability": null,
+    "id": "v2.2",
+    "index": 1,
+    "slug": [
+      "docs",
+      "api",
+      "v2.2",
+    ],
+  },
+  {
+    "availability": null,
+    "id": "v2.1",
+    "index": 2,
+    "slug": [
+      "docs",
+      "api",
+      "v2.1",
+    ],
+  },
+  {
+    "availability": null,
+    "id": "v2",
+    "index": 3,
+    "slug": [
+      "docs",
+      "api",
+      "v2",
+    ],
+  },
 ]
 `;

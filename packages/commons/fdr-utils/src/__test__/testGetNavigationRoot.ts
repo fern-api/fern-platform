@@ -3,9 +3,8 @@ import fs from "fs";
 import path from "path";
 import { getNavigationRoot } from "../getNavigationRoot";
 
-// eslint-disable-next-line jest/no-export
 export function testGetNavigationRoot(fixtureName: string, slug: string): void {
-    // eslint-disable-next-line jest/valid-title
+    // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
         it("gets navigation root for /" + slug, async () => {
             const fixturePath = path.join(__dirname, "fixtures", `${fixtureName}.json`);
@@ -17,8 +16,8 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
             const urls = getNavigationRoot(
                 slug.split("/"),
                 fixture.baseUrl.basePath,
-                fixture.definition.apis,
                 fixture.definition.config.navigation,
+                fixture.definition.apis,
             );
 
             expect(stripForSnapshot(urls)).toMatchSnapshot();

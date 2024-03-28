@@ -1,10 +1,12 @@
 import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
-import { mapValues } from "lodash";
+import lodash from "lodash";
 import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService, FdrAPI } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { LoadDocsDefinitionByUrlResponse } from "../../../db";
 import { readBuffer } from "../../../util";
+
+const { mapValues } = lodash;
 
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({

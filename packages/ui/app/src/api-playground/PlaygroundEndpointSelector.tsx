@@ -1,24 +1,23 @@
-import { SidebarNode } from "@fern-ui/fdr-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import cn from "clsx";
-import { FC, Fragment, useCallback, useMemo, useRef } from "react";
+import { FC, Fragment, useCallback, useRef } from "react";
 import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
 import { usePlaygroundContext } from "./PlaygroundContext";
-import { flattenApiSection, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
+import { ApiGroup, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
 
 export interface PlaygroundEndpointSelectorProps {
-    navigation: SidebarNode[];
+    apiGroups: ApiGroup[];
     placeholderText?: string;
     buttonClassName?: string;
     disabled?: boolean;
 }
 
 export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = ({
-    navigation,
+    apiGroups,
     placeholderText,
     buttonClassName,
     disabled,
@@ -27,8 +26,6 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
     const { value: showDropdown, setFalse: closeDropdown, setValue: handleOpenChange } = useBooleanState(false);
 
     const selectedItemRef = useRef<HTMLLIElement>(null);
-
-    const apiGroups = useMemo(() => flattenApiSection(navigation), [navigation]);
 
     const { endpoint: selectedEndpoint, group: selectedGroup } = apiGroups
         .flatMap((group) => [
@@ -104,7 +101,7 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
                 <DropdownMenu.Portal>
                     <DropdownMenu.Content sideOffset={4} ref={determinePlacement} className="fern-dropdown rounded-xl">
                         <PlaygroundEndpointSelectorContent
-                            navigation={navigation}
+                            apiGroups={apiGroups}
                             closeDropdown={closeDropdown}
                             selectedEndpoint={selectedEndpoint}
                             className="h-full"

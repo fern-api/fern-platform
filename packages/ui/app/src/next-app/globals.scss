@@ -178,30 +178,6 @@
         mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
     }
 
-    .playground-endpoint {
-        @apply flex min-w-0 flex-1 shrink items-start gap-2;
-        @apply border-default relative z-10 px-3 py-0 border-x;
-
-        // @apply hover:self-start hover:overflow-visible hover:border-b hover:rounded-b-lg;
-    }
-
-    .playground-endpoint-url {
-        @apply truncate break-all font-mono text-xs hover:whitespace-normal;
-        @apply py-1;
-    }
-
-    .playground-endpoint:hover .playground-endpoint-url {
-        @apply whitespace-normal;
-    }
-
-    .playground-endpoint-copy-button {
-        @apply hidden -mt-1;
-    }
-
-    .playground-endpoint:hover .playground-endpoint-copy-button {
-        @apply inline-block;
-    }
-
     .fern-dropdown {
         @apply relative z-50;
         @apply animate-popover;
@@ -244,6 +220,10 @@
         }
     }
 
+    .fern-sidebar-heading {
+        @apply flex min-h-[32px] lg:min-h-[36px];
+    }
+
     .fern-sidebar-group {
         @apply list-none;
         @apply max-lg:-mx-4;
@@ -277,7 +257,6 @@
 
     .fern-sidebar-link {
         @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
-        @apply no-underline hover:no-underline;
         @apply max-lg:rounded-none lg:rounded-lg;
     }
 
@@ -325,10 +304,6 @@
         > .fern-button {
             @apply rounded-lg shrink min-w-0;
         }
-    }
-
-    a.fern-button {
-        @apply no-underline hover:no-underline;
     }
 
     .fern-button {
@@ -733,10 +708,6 @@
         &.elevated {
             @apply shadow-card-elevated border-primary transition-all;
         }
-    }
-
-    a.fern-card {
-        @apply no-underline hover:no-underline;
     }
 
     .fern-input-focus {

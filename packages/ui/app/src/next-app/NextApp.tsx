@@ -29,7 +29,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     return (
-        <FernErrorBoundary type="playground" className="flex h-screen items-center justify-center">
+        <FernErrorBoundary className="flex h-screen items-center justify-center">
             <ThemeProvider colors={pageProps.colors}>
                 <IsReadyProvider>
                     <DatadogInit />
@@ -58,7 +58,7 @@ const useInterceptNextDataHref = ({
     useEffect(() => {
         if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
             const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
-            // eslint-disable-next-line jest/unbound-method
+
             const originalGetDataHref = router.pageLoader.getDataHref;
             router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
                 const r = originalGetDataHref.call(router.pageLoader, ...args);

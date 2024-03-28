@@ -48,7 +48,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const urls = getAllUrlsFromDocsConfig(
             xFernHost,
             docs.baseUrl.basePath,
-            docs.definition.config,
+            docs.definition.config.navigation,
             docs.definition.apis,
         );
 

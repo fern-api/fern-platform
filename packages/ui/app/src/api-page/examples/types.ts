@@ -1,16 +1,17 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { keyBy, mapValues, noop } from "lodash-es";
+import { emitDatadogError } from "../../analytics/datadogRum";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { getEndpointEnvironmentUrl } from "../../util/endpoint";
 import {
-    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointRequest,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    dereferenceObjectProperties,
 } from "../../util/resolver";
 
 export interface HttpRequestExample {
@@ -86,6 +87,14 @@ export function stringifyHttpRequestExampleToCurl(request: HttpRequestExample): 
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
+
+        emitDatadogError(e, {
+            context: "ApiPage",
+            errorSource: "unsafeStringifyHttpRequestExampleToCurl",
+            errorDescription:
+                "Unable to stringify HTTP request example to curl. This is used to generate a curl command for the user to copy and paste into their terminal. When this fails, the user will not be able to see the curl command.",
+        });
+
         return "";
     }
 }
@@ -295,6 +304,8 @@ export function sortKeysByShape(
                     if (property.type === "bodyProperty") {
                         return sortKeysByShape(v, property.valueShape, types);
                     }
+
+                    return undefined;
                 },
             );
         },

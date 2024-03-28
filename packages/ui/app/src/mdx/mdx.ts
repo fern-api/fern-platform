@@ -1,10 +1,10 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { SerializeOptions } from "next-mdx-remote/dist/types";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
@@ -27,6 +27,8 @@ export interface FernDocsFrontmatterInternal {
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
+
+type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
     remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkGemoji],
@@ -77,6 +79,12 @@ export async function serializeMdxContent(
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.error(e);
+
+                emitDatadogError(e, {
+                    context: "MDX",
+                    errorSource: "serializeMdxContent",
+                    errorDescription: "Failed to serialize subtitle (excerpt) from frontmatter",
+                });
             }
         }
 
@@ -91,6 +99,13 @@ export async function serializeMdxContent(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
+
+        emitDatadogError(e, {
+            context: "MDX",
+            errorSource: "serializeMdxContent",
+            errorDescription: "Failed to serialize MDX content",
+        });
+
         return content;
     }
 }

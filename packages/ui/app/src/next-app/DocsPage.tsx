@@ -6,9 +6,9 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
-import { ReactElement, useMemo } from "react";
-import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
+import { ReactElement, ReactNode, useMemo } from "react";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
@@ -54,7 +54,9 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const js = useDeepCompareMemoize(pageProps.js);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const baseUrl = useDeepCompareMemoize(pageProps.baseUrl);
-    const navigation = useDeepCompareMemoize(pageProps.navigation);
+    const sidebarNodes = useDeepCompareMemoize(pageProps.navigation.sidebarNodes);
+    const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
+    const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
     const search = useDeepCompareMemoize(pageProps.search);
     const { resolvedTheme: theme } = useTheme();
@@ -62,14 +64,32 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const { title, favicon, logoHeight, logoHref, algoliaSearchIndex, resolvedPath } = pageProps;
 
     const stylesheet = useMemo(
-        () => renderThemeStylesheet(colors, typography, layout, css, files),
-        [colors, css, files, layout, typography],
+        () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
+        [colors, css, files, layout, tabs.length, typography],
     );
 
     if (baseUrl == null) {
         // eslint-disable-next-line no-console
         console.error("Fern Docs crashed. Reloading the page might fix the issue.");
         router.reload();
+        return null;
+    }
+
+    function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
+        // If the basePath is present, it's not clear whether or not the site is hosted on a custom domain.
+        // In this case, we don't want to render the no-track script. If this changes, we should update this logic.
+        if (baseUrl.basePath != null && process.env.NODE_ENV === "production") {
+            return null;
+        }
+
+        if (
+            baseUrl.domain.includes("docs.dev.buildwithfern.com") ||
+            baseUrl.domain.includes("docs.staging.buildwithfern.com") ||
+            baseUrl.domain.includes(".docs.buildwithfern.com") ||
+            process.env.NODE_ENV !== "production"
+        ) {
+            return <meta name="robots" content="noindex, nofollow" />;
+        }
         return null;
     }
 
@@ -102,6 +122,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                 {theme === "dark" && colors.dark != null && (
                     <meta name="theme-color" content={getThemeColor(colors.dark)} />
                 )}
+                {maybeRenderNoIndex(baseUrl)}
             </Head>
             <div className="min-h-screen w-full">
                 <BgImageGradient colors={colors} />
@@ -112,10 +133,14 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     colors={colors}
                     typography={typography}
                     css={css}
+                    sidebarNodes={sidebarNodes}
+                    tabs={tabs}
+                    versions={versions}
+                    currentVersionIndex={pageProps.navigation.currentVersionIndex}
+                    currentTabIndex={pageProps.navigation.currentTabIndex}
                 >
                     <NavigationContextProvider
                         resolvedPath={resolvedPath} // this changes between pages
-                        navigation={navigation}
                         domain={baseUrl.domain}
                         basePath={baseUrl.basePath}
                         title={title}

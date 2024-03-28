@@ -1,13 +1,14 @@
 import cn from "clsx";
 import { Element } from "hast";
 import { camelCase, isEqual } from "lodash-es";
-import { forwardRef, memo, ReactNode, useMemo } from "react";
+import { ReactNode, forwardRef, memo, useMemo } from "react";
 import StyleToObject from "style-to-object";
 import { visit } from "unist-util-visit";
+import { emitDatadogError } from "../analytics/datadogRum";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { HastToJSX } from "../mdx/common/HastToJsx";
-import { HighlightedTokens } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
+import { HighlightedTokens } from "./fernShiki";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
@@ -191,6 +192,14 @@ function parseStyle(value: unknown): Record<string, string> | undefined {
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Failed to parse style", e);
+
+        emitDatadogError(e, {
+            context: "FernSyntaxHighlighter",
+            errorSource: "parseStyle",
+            errorDescription: "Failed to parse style originating from shiki",
+            data: { value },
+        });
+
         return undefined;
     }
 

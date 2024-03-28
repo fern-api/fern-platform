@@ -53,6 +53,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const responseExpandAll = useBooleanState(false);
     const errorExpandAll = useBooleanState(false);
 
+    const headers = endpoint.headers.filter((header) => !header.hidden);
+
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
             {endpoint.pathParameters.length > 0 && (
@@ -79,14 +81,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </div>
                 </EndpointSection>
             )}
-            {endpoint.headers.length > 0 && (
+            {headers.length > 0 && (
                 <EndpointSection
                     title="Headers"
                     anchorIdParts={["request", "header"]}
                     route={"/" + endpoint.slug.join("/")}
                 >
                     <div>
-                        {endpoint.headers.map((parameter) => (
+                        {headers.map((parameter) => (
                             <div key={parameter.key}>
                                 <TypeComponentSeparator />
                                 <EndpointParameter

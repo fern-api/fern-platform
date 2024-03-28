@@ -42,6 +42,7 @@ const nextConfig = {
                  * This rewrite rule will ensure that /base/path/_next/data/* is rewritten to /_next/data/* on the server
                  */
                 { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
+                { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
                 /**
                  * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
                  * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that

@@ -1,31 +1,32 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import clsx from "clsx";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import {
     FlattenedRootPackage,
-    isEndpoint,
-    isWebSocket,
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
     ResolvedTypeDefinition,
     ResolvedWebSocketChannel,
+    isEndpoint,
+    isWebSocket,
 } from "../util/resolver";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
-import { PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
@@ -90,18 +91,21 @@ export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>
 }
 
 interface PlaygroundDrawerProps {
-    navigation: SidebarNode[];
     apis: Record<string, FlattenedRootPackage>;
 }
 
-export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }) => {
+export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
     const windowHeight = useWindowHeight();
+
+    const { sidebarNodes } = useDocsContext();
+    const apiGroups = useMemo(() => flattenApiSection(sidebarNodes), [sidebarNodes]);
 
     const matchedSection = selectionState != null ? apis[selectionState.api] : undefined;
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
+    const { layoutBreakpoint } = useViewportContext();
     const [height, setHeight] = usePlaygroundHeight();
 
     const setOffset = useCallback(
@@ -249,12 +253,99 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
         return null;
     }
 
+    const mobileHeader = (
+        <div className="grid h-10 grid-cols-2 gap-2 px-4">
+            <div className="flex items-center">
+                <div className="-ml-3">
+                    {selectionState != null ? (
+                        <PlaygroundEndpointSelector apiGroups={apiGroups} />
+                    ) : (
+                        <h6 className="t-accent">Select an endpoint to get started</h6>
+                    )}
+                </div>
+            </div>
+
+            <div className="flex items-center justify-end">
+                <FernTooltipProvider>
+                    <FernButtonGroup>
+                        <FernTooltip
+                            content={
+                                <span className="space-x-4">
+                                    <span>Close API Playground</span>
+                                    <span className="text-faded font-mono">CTRL + `</span>
+                                </span>
+                            }
+                        >
+                            <FernButton
+                                variant="minimal"
+                                className="-mr-3"
+                                icon={<Cross1Icon />}
+                                onClick={collapsePlayground}
+                                rounded
+                            />
+                        </FernTooltip>
+                    </FernButtonGroup>
+                </FernTooltipProvider>
+            </div>
+        </div>
+    );
+
+    const desktopHeader = (
+        <div className="grid h-10 grid-cols-3 gap-2 px-4">
+            <div className="flex items-center">
+                <span className="inline-flex items-baseline gap-2">
+                    <span className="t-accent text-sm font-semibold">API Playground</span>
+                    <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
+                        BETA
+                    </span>
+                </span>
+            </div>
+
+            <div className="flex items-center justify-center">
+                {selectionState != null ? (
+                    <PlaygroundEndpointSelector apiGroups={apiGroups} />
+                ) : (
+                    <h6 className="t-accent">Select an endpoint to get started</h6>
+                )}
+            </div>
+
+            <div className="flex items-center justify-end">
+                <FernTooltipProvider>
+                    <FernButtonGroup>
+                        <FernTooltip
+                            content={
+                                <span className="space-x-4">
+                                    <span>Close API Playground</span>
+                                    <span className="text-faded font-mono">CTRL + `</span>
+                                </span>
+                            }
+                        >
+                            <FernButton
+                                variant="minimal"
+                                className="-mr-2"
+                                icon={<Cross1Icon />}
+                                onClick={collapsePlayground}
+                                rounded
+                            />
+                        </FernTooltip>
+                    </FernButtonGroup>
+                </FernTooltipProvider>
+            </div>
+        </div>
+    );
+
     return (
         <Portal>
             <Transition
                 show={isPlaygroundOpen}
-                className="bg-background-translucent border-default max-h-vh-minus-header fixed inset-x-0 bottom-0 border-t backdrop-blur-xl"
-                style={{ height }}
+                className={clsx(
+                    "bg-background-translucent border-default fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur-xl",
+                    {
+                        "max-h-vh-minus-header": layoutBreakpoint !== "mobile",
+                        "h-screen": layoutBreakpoint === "mobile",
+                    },
+                )}
+                style={{ height: layoutBreakpoint !== "mobile" ? height : undefined }}
                 enter="ease-out transition-transform duration-300 transform"
                 enterFrom="translate-y-full"
                 enterTo="translate-y-0"
@@ -262,60 +353,20 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                 leaveFrom="translate-y-0"
                 leaveTo="translate-y-full"
             >
-                <div
-                    className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
-                    onMouseDown={handleVerticalResize}
-                >
-                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                    <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
-                        <div className="bg-accent h-1 w-10 rounded-full" />
-                    </div>
-                </div>
-                <div className="flex h-full flex-col rounded-lg">
-                    <div>
-                        <div className="grid h-10 grid-cols-3 gap-2 px-4">
-                            <div className="flex items-center">
-                                <span className="inline-flex items-baseline gap-2">
-                                    <span className="t-accent text-sm font-semibold">API Playground</span>
-                                    <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
-                                        BETA
-                                    </span>
-                                </span>
-                            </div>
-
-                            <div className="flex items-center justify-center">
-                                {selectionState != null ? (
-                                    <PlaygroundEndpointSelector navigation={navigation} />
-                                ) : (
-                                    <h6 className="t-accent">Select an endpoint to get started</h6>
-                                )}
-                            </div>
-
-                            <div className="flex items-center justify-end">
-                                <FernTooltipProvider>
-                                    <FernButtonGroup>
-                                        <FernTooltip
-                                            content={
-                                                <span className="space-x-4">
-                                                    <span>Close API Playground</span>
-                                                    <span className="text-faded font-mono">CTRL + `</span>
-                                                </span>
-                                            }
-                                        >
-                                            <FernButton
-                                                variant="minimal"
-                                                className="-mr-2"
-                                                icon={<Cross1Icon />}
-                                                onClick={collapsePlayground}
-                                                rounded
-                                            />
-                                        </FernTooltip>
-                                    </FernButtonGroup>
-                                </FernTooltipProvider>
-                            </div>
+                {layoutBreakpoint !== "mobile" && (
+                    <div
+                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
+                        onMouseDown={handleVerticalResize}
+                    >
+                        <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                        <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
+                            <div className="bg-accent h-1 w-10 rounded-full" />
                         </div>
                     </div>
-                    <FernErrorBoundary type="playground" className="flex h-full items-center justify-center">
+                )}
+                <div className="flex h-full flex-col rounded-lg">
+                    <div>{layoutBreakpoint === "mobile" ? mobileHeader : desktopHeader}</div>
+                    <FernErrorBoundary component="PlaygroundDrawer" className="flex h-full items-center justify-center">
                         {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
                             <PlaygroundEndpoint
                                 endpoint={matchedEndpoint}
@@ -344,7 +395,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ navigation, apis }
                             <TooltipProvider>
                                 <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
                                     <PlaygroundEndpointSelectorContent
-                                        navigation={navigation}
+                                        apiGroups={apiGroups}
                                         className="fern-card mb-6 min-h-0 shrink p-px"
                                     />
                                 </div>

@@ -1,4 +1,1 @@
-{
-  "ignores": ["@types/jest", "@types/node", "esbuild", "@yarnpkg/esbuild-plugin-pnp"],
-  "ignore-patterns": ["lib", "dist"]
-}
+{ "ignores": ["@fern-platform/configs", "@types/node"], "ignore-patterns": ["dist"] }

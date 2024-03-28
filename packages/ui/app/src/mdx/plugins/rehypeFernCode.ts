@@ -78,7 +78,10 @@ export function rehypeFernCode(): (tree: Root) => void {
             }
 
             if (isBlockCode(node) && node.data?.visited !== true) {
-                node.data = { visited: true };
+                if (node.data == null) {
+                    node.data = {};
+                }
+                node.data.visited = true;
                 const head = node.children.filter(isElement).find((child) => child.tagName === "code");
                 if (head != null) {
                     const code = getCode(head);
@@ -131,7 +134,10 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
             const title = jsxAttributes.find((attr) => attr.name === "title");
             visit(node, "element", (child) => {
                 if (child.tagName === "code" && child.data?.visited !== true) {
-                    child.data = { visited: true };
+                    if (child.data == null) {
+                        child.data = {};
+                    }
+                    child.data.visited = true;
                     const code = getCode(child);
                     const meta = parseBlockMetaString(child, "plaintext");
                     if (code != null) {
@@ -157,7 +163,10 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
 
     visit(nodeToVisit, "element", (child) => {
         if (child.tagName === "code" && child.data?.visited !== true) {
-            child.data = { visited: true };
+            if (child.data == null) {
+                child.data = {};
+            }
+            child.data.visited = true;
             const code = getCode(child);
             const meta = parseBlockMetaString(child, "plaintext");
             if (code != null) {

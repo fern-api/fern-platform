@@ -14,6 +14,7 @@ type Breakpoint = "root" | "max-lg";
 
 export function getLayoutVariables(
     layout: DocsV1Read.DocsLayoutConfig | undefined,
+    hasTabs: boolean,
 ): Record<Breakpoint, Record<string, string>> {
     const pageWidth =
         layout?.pageWidth == null
@@ -43,14 +44,19 @@ export function getLayoutVariables(
                   _other: () => "18rem",
               });
 
-    const headerHeight =
+    const headerHeightRem =
         layout?.headerHeight == null
-            ? "4rem"
+            ? 4
             : visitDiscriminatedUnion(layout.headerHeight, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  _other: () => "4rem",
+                  px: (px) => px.value / 16,
+                  rem: (rem) => rem.value,
+                  _other: () => 4,
               });
+
+    const headerTabsHeightRem =
+        hasTabs && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true ? 44 / 16 : 0;
+
+    const headerHeight = `${headerHeightRem + headerTabsHeightRem}rem`;
 
     const headerHeightPadded =
         layout?.headerHeight == null
@@ -68,7 +74,7 @@ export function getLayoutVariables(
             [CSS_VARIABLES.SPACING_SIDEBAR_WIDTH]: sidebarWidth,
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: layout?.disableHeader ? "0px" : headerHeight,
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT_PADDED]: layout?.disableHeader ? "1rem" : headerHeightPadded,
-            [CSS_VARIABLES.SPACING_HEADER_HEIGHT_REAL]: headerHeight,
+            [CSS_VARIABLES.SPACING_HEADER_HEIGHT_REAL]: `${headerHeightRem}rem`,
         },
         "max-lg": {
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: headerHeight,

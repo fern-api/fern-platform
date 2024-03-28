@@ -10,6 +10,7 @@ groups:
           path: ../../../servers/fdr/src/api/generated
         config:
           noSerdeLayer: true
+          outputEsm: true
       - name: fernapi/fern-typescript-node-sdk
         version: 0.12.8-rc0
         output:
@@ -20,6 +21,7 @@ groups:
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
+          outputEsm: true
   fiddle:
     audiences:
       - fiddle

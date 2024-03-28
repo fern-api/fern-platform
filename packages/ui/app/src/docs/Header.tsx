@@ -2,14 +2,13 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
-import { CSSProperties, forwardRef, memo, PropsWithChildren } from "react";
+import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context";
 import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
 import { useSearchService } from "../services/useSearchService";
-import { useOpenSearchDialog } from "../sidebar/atom";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
+import { useOpenSearchDialog } from "../sidebar/atom";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { ThemeButton } from "./ThemeButton";
 
@@ -42,7 +41,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     ref,
 ) {
     const { colors } = useDocsContext();
-    const { navigation } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const searchService = useSearchService();
@@ -82,23 +80,11 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     return (
         <nav
             aria-label="primary"
-            className={cn(
-                "flex justify-between items-center shrink-0 px-4 md:px-6 lg:px-8 shrink-0",
-                // this matches with the calc() in the EndpointContent examples section
-                "h-full",
-                className,
-            )}
+            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full", className)}
             ref={ref}
             style={style}
         >
-            <HeaderLogoSection
-                logoHeight={logoHeight}
-                logoHref={logoHref}
-                // tabs={navigation.tabs}
-                // currentTabIndex={navigation.currentTabIndex}
-                versions={navigation.versions}
-                currentVersionIndex={navigation.currentVersionIndex}
-            />
+            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
 
             {showSearchBar && (
                 <div

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig uploadcare gets all urls from docs config 1`] = `
+exports[`getAllUrlsFromDocsConfig > uploadcare > gets all urls from docs config 1`] = `
 [
   "uploadcare-preview-79798ef5-07dc-4ff0-928d-24b4c93ccd4d.docs.buildwithfern.com",
   "uploadcare-preview-79798ef5-07dc-4ff0-928d-24b4c93ccd4d.docs.buildwithfern.com/docs",
@@ -88,32 +88,34 @@ exports[`getAllUrlsFromDocsConfig uploadcare gets all urls from docs config 1`] 
 ]
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /api/url-api 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /api/url-api 1`] = `
 {
   "redirect": "/api/url-api/file-information/file-info-json",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /docs 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs 1`] = `
 {
   "redirect": "/docs/introduction/intro",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /docs/file-management 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management 1`] = `
 {
   "redirect": "/docs/file-management/overview",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /docs/file-management/overview 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management/overview 1`] = `
 {
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "pages/start/file-management.mdx",
       "slug": [
         "docs",
@@ -131,25 +133,27 @@ exports[`getNavigationRoot uploadcare gets navigation root for /docs/file-manage
 }
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /docs/integrations 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/integrations 1`] = `
 {
   "redirect": "/docs/integrations/all-integrations",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /docs/introduction 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction 1`] = `
 {
   "redirect": "/docs/introduction/intro",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot uploadcare gets navigation root for /docs/introduction/intro 1`] = `
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction/intro 1`] = `
 {
   "found": {
     "currentNode": {
       "description": undefined,
+      "hidden": false,
+      "icon": undefined,
       "id": "pages/index.mdx",
       "slug": [
         "docs",

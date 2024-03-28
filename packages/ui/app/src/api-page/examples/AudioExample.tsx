@@ -26,7 +26,7 @@ const AudioExampleInternal: FC<AudioExample.Props> = ({ ...props }) => {
 
 export const AudioExample: FC<AudioExample.Props> = (props) => {
     return (
-        <FernErrorBoundary type="audio_example">
+        <FernErrorBoundary component="AudioExample">
             <AudioExampleInternal {...props} />
         </FernErrorBoundary>
     );

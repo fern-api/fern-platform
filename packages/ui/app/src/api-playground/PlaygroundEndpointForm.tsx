@@ -3,9 +3,9 @@ import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import {
-    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedTypeDefinition,
+    dereferenceObjectProperties,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
@@ -170,7 +170,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     );
 
     return (
-        <div className="col-span-2 space-y-8 pb-20">
+        <div className="col-span-2 space-y-8 sm:pb-20">
             {endpoint.headers.length > 0 && (
                 <div>
                     <div className="mb-4 px-4">
@@ -237,7 +237,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <div className="mb-4 px-4">
                                     <h5 className="t-muted m-0">Body</h5>
                                 </div>
-                                <FernErrorTag error="File upload is not supported on this endpoint" />
+                                <FernErrorTag
+                                    component="PlaygroundEndpointForm"
+                                    error="File upload is not supported on this endpoint"
+                                />
                             </div>
                         ) : (
                             <div className="min-w-0 flex-1 shrink">

@@ -1,10 +1,7 @@
 {
-  "extends": "../../shared/tsconfig.shared.json",
+  "extends": "@fern-platform/configs/tsconfig/server.json",
   "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-    "module": "CommonJS",
-    "allowJs": true,
+    "outDir": "./dist",
     "rootDir": "./src",
     "isolatedModules": false,
     "paths": {

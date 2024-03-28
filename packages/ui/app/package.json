@@ -8,7 +8,7 @@
   },
   "private": true,
   "files": [
-    "lib"
+    "dist"
   ],
   "type": "module",
   "source": "src/index.ts",
@@ -18,7 +18,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "jest --passWithNoTests",
+    "test": "vitest --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -41,6 +41,7 @@
     "@headlessui/react": "^1.7.18",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-radio-group": "^1.1.3",
@@ -100,10 +101,10 @@
     "@storybook/nextjs": "^8.0.4",
     "@storybook/react": "^8.0.4",
     "@storybook/test": "^8.0.4",
+    "@fern-platform/configs": "workspace:*",
     "@testing-library/react": "^14.2.1",
     "@types/estree": "^1.0.5",
     "@types/hast": "^3.0.4",
-    "@types/jest": "^29.5.11",
     "@types/jsonpath": "^0.2.4",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
@@ -112,17 +113,19 @@
     "@types/react-dom": "^18.2.18",
     "@types/react-test-renderer": "^18.0.7",
     "@types/tinycolor2": "^1.4.6",
+    "@vitejs/plugin-react": "^4.2.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^0.8.0",
-    "jest": "^29.7.0",
+    "jsdom": "^24.0.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "react-test-renderer": "^18.2.0",
     "storybook": "^8.0.4",
     "stylelint": "^16.1.0",
-    "typescript": "4.9.5",
-    "vite": "^4.5.2"
+    "typescript": "5.4.3",
+    "vite": "^5.2.6",
+    "vitest": "^1.4.0"
   },
   "eslintConfig": {
     "extends": [

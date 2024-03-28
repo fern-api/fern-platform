@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { useRouter } from "next/router";
-import { FC, PropsWithChildren, ReactNode, useEffect, useState } from "react";
+import { FC, PropsWithChildren, ReactNode, useEffect, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SerializedMdxContent } from "../../mdx/mdx";
@@ -66,13 +66,22 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     const anchorRoute = `${route}#${anchorId}`;
     const router = useRouter();
     const [isActive, setIsActive] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setIsActive(router.asPath.endsWith(`${route}#${anchorId}`));
+        const active = router.asPath.endsWith(`${route}#${anchorId}`);
+        setIsActive(active);
+
+        if (active) {
+            setTimeout(() => {
+                ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+            }, 450);
+        }
     }, [router.asPath, anchorId, route]);
 
     return (
         <div
+            ref={ref}
             data-route={anchorRoute.toLowerCase()}
             className={cn("scroll-mt-header-height-padded relative flex flex-col gap-2 py-3", {
                 "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":

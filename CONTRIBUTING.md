@@ -50,7 +50,7 @@ To run the unit tests: `pnpm test`.
 
 To run the integration tests: `pnpm test:ete`.
 
-Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `pnpm test -u` and `pnpm test:ete -u`.
+Many of our tests rely on [Vite](https://vitejs.dev/) snapshots. To rewrite snapshots, use `-u`: `pnpm test -u` and `pnpm test:ete -u`.
 
 ### CLI
 

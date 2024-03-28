@@ -2,9 +2,9 @@ import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { buildUrl, getNavigationRoot } from "@fern-ui/fdr-utils";
 import {
-    convertNavigatableToResolvedPath,
     DocsPage,
     DocsPageResult,
+    convertNavigatableToResolvedPath,
     serializeSidebarNodeDescriptionMdx,
 } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
@@ -160,7 +160,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(slug, basePath, docs.definition.apis, docsConfig.navigation);
+    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis);
 
     if (navigation == null) {
         // eslint-disable-next-line no-console

@@ -1,6 +1,6 @@
 {
   "ignores": [
-    "@types/jest",
+    "@fern-platform/configs",
     "@types/node",
     "vite",
     "@types/react",
@@ -14,5 +14,5 @@
     "unist-util-visit",
     "@shikijs/transformers"
   ],
-  "ignore-patterns": ["lib"]
+  "ignore-patterns": ["dist"]
 }
