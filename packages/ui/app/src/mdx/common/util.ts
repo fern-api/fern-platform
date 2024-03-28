@@ -65,6 +65,11 @@ export function stringHasMarkdown(s: string): boolean {
         return true;
     }
 
+    // has plaintext links
+    if (s.match(/https?:\/\/|mailto:|tel:/)) {
+        return true;
+    }
+
     // has html or jsx tags
     if (s.includes("<")) {
         return true;
