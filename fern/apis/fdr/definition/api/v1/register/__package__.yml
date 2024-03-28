@@ -103,6 +103,7 @@ types:
     properties:
       subpackageId: SubpackageId
       name: string
+      displayName: optional<string>
 
   SubpackageId: string
 

@@ -78,6 +78,7 @@ types:
       subpackageId: SubpackageId
       name: string
       urlSlug: string
+      displayName: optional<string>
 
   SubpackageId: string
 
