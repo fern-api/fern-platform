@@ -6,5 +6,4 @@ export { NextApp } from "./next-app/NextApp";
 export { REGISTRY_SERVICE } from "./services/registry";
 export * from "./sidebar/serializer";
 export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
-export * from "./util/flattenApiDefinition";
 export * from "./util/resolver";

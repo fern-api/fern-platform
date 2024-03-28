@@ -1,6 +1,15 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import {
+    FlattenedApiDefinition,
+    FlattenedApiDefinitionPackage,
+    FlattenedApiDefinitionPackageItem,
+    FlattenedEndpointDefinition,
+    FlattenedSubpackage,
+    FlattenedWebSocketChannel,
+    FlattenedWebhookDefinition,
+} from "@fern-ui/fdr-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import { emitDatadogError } from "../analytics/datadogRum";
 import {
@@ -9,14 +18,6 @@ import {
     stringifyHttpRequestExampleToCurl,
 } from "../api-page/examples/types";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
-import {
-    FlattenedApiDefinition,
-    FlattenedApiDefinitionPackage,
-    FlattenedEndpointDefinition,
-    FlattenedSubpackage,
-    FlattenedWebSocketChannel,
-    FlattenedWebhookDefinition,
-} from "./flattenApiDefinition";
 
 export type WithDescription = { description: SerializedMdxContent | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
@@ -65,42 +66,24 @@ async function resolveApiDefinitionPackage(
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
 ): Promise<ResolvedWithApiDefinition> {
     if (package_ == null) {
-        return {
-            endpoints: [],
-            webhooks: [],
-            websockets: [],
-            subpackages: [],
-            slug: [],
-        };
+        return { items: [], slug: [] };
     }
 
-    const endpointsPromise = Promise.all(
-        package_.endpoints.map((endpoint) =>
-            resolveEndpointDefinition(apiDefinition, id, endpoint, types, resolvedTypes),
+    const maybeItems = await Promise.all(
+        package_.items.map((item) =>
+            FlattenedApiDefinitionPackageItem.visit<Promise<ResolvedPackageItem | undefined>>(item, {
+                endpoint: (endpoint) => resolveEndpointDefinition(apiDefinition, id, endpoint, types, resolvedTypes),
+                websocket: (websocket) => resolveWebsocketChannel(apiDefinition, websocket, types),
+                webhook: (webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes),
+                subpackage: (subpackage) => resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes),
+            }),
         ),
     );
-    const websocketsPromise = Promise.all(
-        package_.websockets.map((websocket) => resolveWebsocketChannel(apiDefinition, websocket, types)),
-    );
-    const webhooksPromise = Promise.all(
-        package_.webhooks.map((webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes)),
-    );
-    const subpackagesPromise = Promise.all(
-        package_.subpackages.map((subpackage) => resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes)),
-    );
 
-    const [endpoints, websockets, webhooks, subpackages] = await Promise.all([
-        endpointsPromise,
-        websocketsPromise,
-        webhooksPromise,
-        subpackagesPromise,
-    ]);
+    const items = maybeItems.filter(isNonNullish);
 
     return {
-        endpoints: mergeContentTypes(endpoints),
-        webhooks,
-        websockets,
-        subpackages: subpackages.filter(isNonNullish),
+        items,
         slug: package_.slug,
     };
 }
@@ -111,7 +94,7 @@ async function resolveSubpackage(
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
 ): Promise<ResolvedSubpackage | undefined> {
-    const { endpoints, webhooks, subpackages, websockets } = await resolveApiDefinitionPackage(
+    const { items } = await resolveApiDefinitionPackage(
         apiDefinition,
         subpackage.subpackageId,
         subpackage,
@@ -119,10 +102,7 @@ async function resolveSubpackage(
         resolvedTypes,
     );
 
-    if (
-        subpackage == null ||
-        (endpoints.length === 0 && webhooks.length === 0 && subpackages.length === 0 && websockets.length === 0)
-    ) {
+    if (subpackage == null || items.length === 0) {
         return undefined;
     }
     return {
@@ -134,10 +114,7 @@ async function resolveSubpackage(
         apiSectionId: apiDefinition.api,
         id: subpackage.subpackageId,
         slug: subpackage.slug,
-        endpoints,
-        websockets,
-        webhooks,
-        subpackages,
+        items,
     };
 }
 
@@ -291,6 +268,7 @@ async function resolveEndpointDefinition(
     const { auth, headers } = mergeAuthAndHeaders(endpoint.authed, apiDefinition.auth, rawHeaders);
 
     const toRet: ResolvedEndpointDefinition = {
+        type: "endpoint",
         name: endpoint.name,
         id: endpoint.id,
         slug: endpoint.slug,
@@ -386,7 +364,7 @@ async function resolveWebsocketChannel(
     apiDefinition: FlattenedApiDefinition,
     websocket: FlattenedWebSocketChannel,
     types: Record<string, APIV1Read.TypeDefinition>,
-): Promise<Promise<ResolvedWebSocketChannel>> {
+): Promise<ResolvedWebSocketChannel> {
     const pathParametersPromise = Promise.all(
         websocket.path.pathParameters.map(
             async (parameter): Promise<ResolvedObjectProperty> => ({
@@ -467,6 +445,7 @@ async function resolveWebsocketChannel(
     const { auth, headers } = mergeAuthAndHeaders(websocket.authed, apiDefinition.auth, rawHeaders);
 
     return {
+        type: "websocket",
         auth,
         environments: websocket.environments,
         id: websocket.id,
@@ -523,6 +502,7 @@ async function resolveWebhookDefinition(
         ),
     ]);
     return {
+        type: "webhook",
         name: webhook.name,
         description,
         availability: undefined,
@@ -932,30 +912,12 @@ export interface FlattenedRootPackage {
 
 export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedRootPackage {
     function getApiDefinitions(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiDefinition[] {
-        return [
-            ...apiPackage.endpoints.map(
-                (endpoint): ResolvedApiDefinition.Endpoint => ({
-                    type: "endpoint" as const,
-                    ...endpoint,
-                    package: apiPackage,
-                }),
-            ),
-            ...apiPackage.websockets.map(
-                (websocket): ResolvedApiDefinition.WebSocket => ({
-                    type: "websocket" as const,
-                    ...websocket,
-                    package: apiPackage,
-                }),
-            ),
-            ...apiPackage.webhooks.map(
-                (webhook): ResolvedApiDefinition.Webhook => ({
-                    type: "webhook" as const,
-                    ...webhook,
-                    package: apiPackage,
-                }),
-            ),
-            ...apiPackage.subpackages.flatMap(getApiDefinitions),
-        ];
+        return apiPackage.items.flatMap((item) => {
+            if (item.type === "subpackage") {
+                return getApiDefinitions(item);
+            }
+            return [{ ...item, package: apiPackage }];
+        });
     }
 
     return {
@@ -996,12 +958,37 @@ export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): i
 }
 
 export interface ResolvedWithApiDefinition {
-    endpoints: ResolvedEndpointDefinition[];
-    websockets: ResolvedWebSocketChannel[];
-    webhooks: ResolvedWebhookDefinition[];
-    subpackages: ResolvedSubpackage[];
+    items: ResolvedPackageItem[];
     slug: readonly string[];
 }
+
+export type ResolvedPackageItem =
+    | ResolvedEndpointDefinition
+    | ResolvedWebhookDefinition
+    | ResolvedWebSocketChannel
+    | ResolvedSubpackage;
+
+interface ResolvedPackageItemVisitor<T> {
+    endpoint(item: ResolvedEndpointDefinition): T;
+    webhook(item: ResolvedWebhookDefinition): T;
+    websocket(item: ResolvedWebSocketChannel): T;
+    subpackage(item: ResolvedSubpackage): T;
+}
+
+export const ResolvedPackageItem = {
+    visit: <T>(item: ResolvedPackageItem, visitor: ResolvedPackageItemVisitor<T>): T => {
+        switch (item.type) {
+            case "endpoint":
+                return visitor.endpoint(item);
+            case "webhook":
+                return visitor.webhook(item);
+            case "websocket":
+                return visitor.websocket(item);
+            case "subpackage":
+                return visitor.subpackage(item);
+        }
+    },
+};
 
 export type ResolvedApiDefinition =
     | ResolvedApiDefinition.Endpoint
@@ -1010,17 +997,14 @@ export type ResolvedApiDefinition =
 
 export declare namespace ResolvedApiDefinition {
     export interface Endpoint extends ResolvedEndpointDefinition {
-        type: "endpoint";
         package: ResolvedApiDefinitionPackage;
     }
 
     export interface Webhook extends ResolvedWebhookDefinition {
-        type: "webhook";
         package: ResolvedApiDefinitionPackage;
     }
 
     export interface WebSocket extends ResolvedWebSocketChannel {
-        type: "websocket";
         package: ResolvedApiDefinitionPackage;
     }
 }
@@ -1059,6 +1043,7 @@ export interface ResolvedRootPackage extends ResolvedWithApiDefinition {
 export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpackage;
 
 export interface ResolvedEndpointDefinition extends WithMetadata {
+    type: "endpoint";
     id: APIV1Read.EndpointId;
     apiSectionId: FdrAPI.ApiDefinitionId;
     apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
@@ -1369,6 +1354,7 @@ export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPa
 }
 
 export interface ResolvedWebSocketChannel {
+    type: "websocket";
     id: string;
     slug: string[];
     name: string | undefined;
@@ -1393,6 +1379,7 @@ export interface ResolvedWebSocketMessage extends WithMetadata {
 }
 
 export interface ResolvedWebhookDefinition extends WithMetadata {
+    type: "webhook";
     id: APIV1Read.WebhookId;
     slug: string[];
 
@@ -1638,27 +1625,30 @@ export async function unwrapOptionalRaw(
     return shape;
 }
 
+// This hack is no longer needed since it was introduced for Hume's demo only.
+// keeping this around in case we need to re-introduce it.
+
 // HACK: remove this function when we have a proper way to merge content types
-function mergeContentTypes(definitions: ResolvedEndpointDefinition[]): ResolvedEndpointDefinition[] {
-    const toRet: ResolvedEndpointDefinition[] = [];
+// function mergeContentTypes(definitions: ResolvedEndpointDefinition[]): ResolvedEndpointDefinition[] {
+//     const toRet: ResolvedEndpointDefinition[] = [];
 
-    definitions.forEach((definition) => {
-        if (!definition.id.endsWith("_multipart")) {
-            toRet.push(definition);
-        }
-    });
+//     definitions.forEach((definition) => {
+//         if (!definition.id.endsWith("_multipart")) {
+//             toRet.push(definition);
+//         }
+//     });
 
-    definitions.forEach((definition) => {
-        if (definition.id.endsWith("_multipart")) {
-            const baseId = definition.id.replace("_multipart", "");
-            const baseDefinition = toRet.find((def) => def.id === baseId);
-            if (baseDefinition) {
-                baseDefinition.requestBody = [...baseDefinition.requestBody, ...definition.requestBody];
-            } else {
-                toRet.push(definition);
-            }
-        }
-    });
+//     definitions.forEach((definition) => {
+//         if (definition.id.endsWith("_multipart")) {
+//             const baseId = definition.id.replace("_multipart", "");
+//             const baseDefinition = toRet.find((def) => def.id === baseId);
+//             if (baseDefinition) {
+//                 baseDefinition.requestBody = [...baseDefinition.requestBody, ...definition.requestBody];
+//             } else {
+//                 toRet.push(definition);
+//             }
+//         }
+//     });
 
-    return toRet;
-}
+//     return toRet;
+// }

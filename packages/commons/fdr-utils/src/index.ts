@@ -1,6 +1,7 @@
 export * from "./buildUrl";
 export * from "./definition-object-factory";
 export * from "./docs";
+export * from "./flattenApiDefinition";
 export * from "./getAllUrlsFromDocsConfig";
 export * from "./getNavigationRoot";
 export * from "./resolver";

@@ -78,19 +78,22 @@ export function findEndpoint({
     path: string;
 }): ResolvedEndpointDefinition | undefined {
     path = path.startsWith("/") ? path : `/${path}`;
-    for (const endpoint of api.endpoints) {
+    for (const item of api.items) {
         if (
-            (getPathFromEndpoint1(endpoint) === path || getPathFromEndpoint2(endpoint) === path) &&
-            endpoint.method === method
+            item.type === "endpoint" &&
+            (getPathFromEndpoint1(item) === path || getPathFromEndpoint2(item) === path) &&
+            item.method === method
         ) {
-            return endpoint;
+            return item;
         }
     }
 
-    for (const [_, subpackage] of Object.entries(api.subpackages)) {
-        const endpoint = findEndpoint({ api: subpackage, method, path });
-        if (endpoint) {
-            return endpoint;
+    for (const [_, subpackage] of Object.entries(api.items)) {
+        if (subpackage.type === "subpackage") {
+            const endpoint = findEndpoint({ api: subpackage, method, path });
+            if (endpoint) {
+                return endpoint;
+            }
         }
     }
 

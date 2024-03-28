@@ -1,11 +1,10 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarNode, findApiSection, traverseSidebarNodes } from "@fern-ui/fdr-utils";
+import { SidebarNode, findApiSection, flattenApiDefinition, traverseSidebarNodes } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { emitDatadogError } from "../analytics/datadogRum";
 import { FernDocsFrontmatterInternal, SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { flattenApiDefinition } from "./flattenApiDefinition";
 import { resolveApiDefinition } from "./resolver";
 
 function getFrontmatter(content: string): FernDocsFrontmatterInternal {
