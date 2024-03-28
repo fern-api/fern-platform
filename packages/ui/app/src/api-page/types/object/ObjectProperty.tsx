@@ -1,6 +1,6 @@
 import cn from "clsx";
 import { useRouter } from "next/router";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
@@ -36,12 +36,20 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
     const router = useRouter();
     const anchorId = getAnchorId(anchorIdParts);
     const [isActive, setIsActive] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setIsActive(router.asPath.endsWith(`${route}#${anchorId}`));
+        const active = router.asPath.endsWith(`${route}#${anchorId}`);
+        setIsActive(active);
+
+        if (active) {
+            setTimeout(() => {
+                ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+            }, 450);
+        }
     }, [router.asPath, anchorId, route]);
 
-    return <ObjectPropertyInternal anchorId={anchorId} isActive={isActive} {...props} />;
+    return <ObjectPropertyInternal ref={ref} anchorId={anchorId} isActive={isActive} {...props} />;
 };
 
 interface ObjectPropertyInternalProps extends ObjectProperty.Props {
@@ -49,16 +57,8 @@ interface ObjectPropertyInternalProps extends ObjectProperty.Props {
     isActive: boolean;
 }
 
-const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function ObjectPropertyInternal({
-    route,
-    property,
-    applyErrorStyles,
-    defaultExpandAll,
-    types,
-    anchorIdParts,
-    anchorId,
-    isActive,
-}) {
+const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectPropertyInternalProps>((props, ref) => {
+    const { route, property, applyErrorStyles, defaultExpandAll, types, anchorIdParts, anchorId, isActive } = props;
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -102,6 +102,7 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
 
     return (
         <div
+            ref={ref}
             data-route={anchorRoute.toLowerCase()}
             className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
@@ -147,3 +148,7 @@ const ObjectPropertyInternal = memo<ObjectPropertyInternalProps>(function Object
         </div>
     );
 });
+
+UnmemoizedObjectPropertyInternal.displayName = "UnmemoizedObjectPropertyInternal";
+
+export const ObjectPropertyInternal = memo(UnmemoizedObjectPropertyInternal);
