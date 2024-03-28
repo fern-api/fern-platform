@@ -36,7 +36,9 @@
     "start:fern-dev": "pnpm turbo build && pnpm env:fern-dev next start",
     "start:fern-prod": "pnpm turbo build && pnpm env:fern-prod next start",
     "lint:fern-dev": "pnpm turbo build && pnpm env:fern-dev next lint",
-    "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint"
+    "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.335.0",
@@ -58,8 +60,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.2.25",
     "@fern-platform/configs": "workspace:*",
     "@next/bundle-analyzer": "^14.0.3",
+    "@storybook/nextjs": "^8.0.5",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^18.7.18",
     "@types/node-fetch": "2.6.9",
