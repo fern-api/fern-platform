@@ -1,5 +1,6 @@
 import { Root } from "hast";
 import { visit } from "unist-util-visit";
+import { parseStringStyle } from "../../util/parseStringStyle";
 import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
 import { JSX_COMPONENTS } from "../mdx-components";
 import { valueToEstree } from "./to-estree";
@@ -25,6 +26,28 @@ export function rehypeSanitizeJSX(): (tree: Root) => void {
                         ),
                     ],
                     children: [],
+                });
+            }
+        });
+
+        visit(tree, (node) => {
+            if (isMdxJsxFlowElement(node)) {
+                node.attributes = node.attributes.map((attr) => {
+                    if (attr.type === "mdxJsxAttribute") {
+                        // convert class to className
+                        if (attr.name === "class") {
+                            return { ...attr, name: "className" };
+                        }
+
+                        // if the style attribute is a string, convert it to an object
+                        if (attr.name === "style") {
+                            if (typeof attr.value === "string") {
+                                return toAttribute("style", attr.value, valueToEstree(parseStringStyle(attr.value)));
+                            }
+                        }
+                    }
+
+                    return attr;
                 });
             }
         });

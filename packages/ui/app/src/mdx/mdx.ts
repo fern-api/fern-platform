@@ -1,14 +1,14 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
+import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
 import { emitDatadogError } from "../analytics/datadogRum";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
+import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
 export interface FernDocsFrontmatter {
     title?: string;
@@ -31,14 +31,22 @@ export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unkno
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
-    remarkPlugins: [remarkParse, remarkRehype, remarkGfm, remarkGemoji],
-    rehypePlugins: [rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
+    remarkRehypeOptions: {
+        handlers: {
+            heading: customHeadingHandler,
+        },
+    },
+
+    remarkPlugins: [remarkGfm, remarkGemoji],
+    rehypePlugins: [rehypeSlug, rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
     format: "detect",
+    elementAttributeNameCase: "html",
+    stylePropertyNameCase: "css",
     /**
      * development=true is required to render MdxRemote from the client-side.
      * https://github.com/hashicorp/next-mdx-remote/issues/350
      */
-    development: process.env.NODE_ENV !== "production",
+    // development: process.env.NODE_ENV !== "production",
 };
 
 /**

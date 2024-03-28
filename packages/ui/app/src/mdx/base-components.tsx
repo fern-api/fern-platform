@@ -17,7 +17,6 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { FernCard } from "../components/FernCard";
 import { FernLink } from "../components/FernLink";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { getSlugFromChildren } from "../util/getSlugFromText";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
 
@@ -73,16 +72,15 @@ export function useCurrentPathname(): string {
 }
 
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
-    const slug = getSlugFromChildren(props.children);
     return createElement(
         `h${level}`,
         {
-            id: slug,
-            "data-anchor": slug,
+            id: props.id,
+            "data-anchor": props.id,
             ...props,
             className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
         },
-        <AbsolutelyPositionedAnchor href={{ hash: slug, pathname: useCurrentPathname() }} />,
+        <AbsolutelyPositionedAnchor href={{ hash: props.id, pathname: useCurrentPathname() }} />,
         <span>{props.children}</span>,
     );
 };
