@@ -48,9 +48,14 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
     lastScrollY = window.scrollY;
+    let lastNode: HTMLElement | undefined;
     function handleObservation() {
         const { node } = getRouteNodeWithAnchor(route);
         if (node != null) {
+            if (lastNode !== node) {
+                lastActiveNavigatableOffsetTop = undefined;
+            }
+            lastNode = node;
             if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
                 node.scrollIntoView({ behavior: "auto" });
             }
@@ -103,7 +108,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         ),
     );
 
-    const [, anchor] = resolvedPath.fullSlug.split("#");
+    const [, anchor] = router.asPath.split("#");
     const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
     const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
