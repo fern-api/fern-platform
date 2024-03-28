@@ -48,3 +48,4 @@ types:
       subpackageId: readRoot.SubpackageId
       name: string
       urlSlug: string
+      displayName: optional<string>

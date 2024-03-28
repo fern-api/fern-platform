@@ -231,7 +231,7 @@ function flattenPackage(
             return {
                 type: "subpackage",
                 subpackageId: subpackage.subpackageId,
-                name: titleCase(subpackage.name),
+                name: subpackage.displayName ?? titleCase(subpackage.name),
                 description: subpackage.description,
                 ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageOrder),
             };

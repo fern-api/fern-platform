@@ -83,6 +83,7 @@ exports[`transformApiDefinitionToDb > {"name":"candid"} 1`] = `
   "subpackages": {
     "subpackage_adjustments": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -703,6 +704,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_auth": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "auth",
       "parent": undefined,
@@ -718,6 +720,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_auth/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": false,
@@ -918,6 +921,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_billing-notes": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -1132,6 +1136,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_bulk-claim-actions": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "bulk-claim-actions",
       "parent": undefined,
@@ -1147,6 +1152,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_bulk-claim-actions/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -1483,6 +1489,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_chargemasters": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "chargemasters",
       "parent": undefined,
@@ -1498,6 +1505,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_chargemasters/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -1681,6 +1689,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_claim": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "claim",
       "parent": undefined,
@@ -1696,6 +1705,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_claim-submission": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -2685,6 +2695,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_claim/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -3232,6 +3243,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_claims": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "claims",
       "parent": undefined,
@@ -3248,6 +3260,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_cms-1500": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "cms-1500",
       "parent": undefined,
@@ -3292,6 +3305,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_commons": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "commons",
       "parent": undefined,
@@ -3356,6 +3370,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_configurable-rules": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -5953,6 +5968,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_configurable-rules-types": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "configurable-rules-types",
       "parent": undefined,
@@ -6022,6 +6038,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_configurable-rules-variables": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -7736,6 +7753,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_contracts": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -9122,6 +9140,7 @@ value, overriding what was set before.
     },
     "subpackage_credentialing": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "credentialing",
       "parent": undefined,
@@ -9145,6 +9164,7 @@ value, overriding what was set before.
     },
     "subpackage_dashboards": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -9273,6 +9293,7 @@ value, overriding what was set before.
     },
     "subpackage_diagnoses": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -9648,6 +9669,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
     },
     "subpackage_encounter-providers": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "encounter-providers",
       "parent": undefined,
@@ -9663,6 +9685,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
     },
     "subpackage_encounter-providers/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -9895,6 +9918,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
     },
     "subpackage_encounter-summaries": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "encounter-summaries",
       "parent": undefined,
@@ -9910,6 +9934,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
     },
     "subpackage_encounter-summaries/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -10902,6 +10927,7 @@ or encounter external id.
     },
     "subpackage_encounter_timeline": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -11180,6 +11206,7 @@ or encounter external id.
     },
     "subpackage_encounters": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "encounters",
       "parent": undefined,
@@ -11195,6 +11222,7 @@ or encounter external id.
     },
     "subpackage_encounters-internal": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "encounters-internal",
       "parent": undefined,
@@ -11210,6 +11238,7 @@ or encounter external id.
     },
     "subpackage_encounters-internal/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -11698,6 +11727,7 @@ or encounter external id.
     },
     "subpackage_encounters/v4": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -17790,6 +17820,7 @@ submitted to the payor.
     },
     "subpackage_enrollments": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -19335,6 +19366,7 @@ submitted to the payor.
     },
     "subpackage_era": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "era",
       "parent": undefined,
@@ -19352,6 +19384,7 @@ submitted to the payor.
     },
     "subpackage_expected-network-status": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "expected-network-status",
       "parent": undefined,
@@ -19367,6 +19400,7 @@ submitted to the payor.
     },
     "subpackage_expected-network-status-tia": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "expected-network-status-tia",
       "parent": undefined,
@@ -19382,6 +19416,7 @@ submitted to the payor.
     },
     "subpackage_expected-network-status-tia/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -19817,6 +19852,7 @@ submitted to the payor.
     },
     "subpackage_expected-network-status/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -20038,6 +20074,7 @@ submitted to the payor.
     },
     "subpackage_exports": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "exports",
       "parent": undefined,
@@ -20053,6 +20090,7 @@ submitted to the payor.
     },
     "subpackage_exports/v3": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -20548,6 +20586,7 @@ Must be within 30 days of start_date.
     },
     "subpackage_fee-schedules": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "fee-schedules",
       "parent": undefined,
@@ -20564,6 +20603,7 @@ Must be within 30 days of start_date.
     },
     "subpackage_fee-schedules/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -20897,6 +20937,7 @@ Must be within 30 days of start_date.
     },
     "subpackage_fee-schedules/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -21481,6 +21522,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_guarantor": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "guarantor",
       "parent": undefined,
@@ -21496,6 +21538,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_guarantor/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -22151,6 +22194,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_identifiers": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "identifiers",
       "parent": undefined,
@@ -22175,6 +22219,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_individual": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -22458,6 +22503,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_insurance-adjustments": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "insurance-adjustments",
       "parent": undefined,
@@ -22473,6 +22519,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_insurance-adjustments/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -23280,6 +23327,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_insurance-card": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -23564,6 +23612,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_internal-api-testing": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "internal-api-testing",
       "parent": undefined,
@@ -23579,6 +23628,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_internal-api-testing/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -23975,6 +24025,7 @@ doesn't data wrangle the modeling into the presentation shape.
     },
     "subpackage_invoices": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -24838,6 +24889,7 @@ upon creation of the invoice.
     },
     "subpackage_managed-emr-configs": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "managed-emr-configs",
       "parent": undefined,
@@ -24853,6 +24905,7 @@ upon creation of the invoice.
     },
     "subpackage_managed-emr-configs/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -25908,6 +25961,7 @@ upon creation of the invoice.
     },
     "subpackage_organization-payers": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -26292,6 +26346,7 @@ upon creation of the invoice.
     },
     "subpackage_organization-providers": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "organization-providers",
       "parent": undefined,
@@ -26308,6 +26363,7 @@ upon creation of the invoice.
     },
     "subpackage_organization-providers/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -27306,6 +27362,7 @@ upon creation of the invoice.
     },
     "subpackage_organization-providers/v3": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -28345,6 +28402,7 @@ upon creation of the invoice.
     },
     "subpackage_organization-tags": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -29060,6 +29118,7 @@ upon creation of the invoice.
     },
     "subpackage_page-sessions": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -29168,6 +29227,7 @@ upon creation of the invoice.
     },
     "subpackage_patient-payment-configs": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -30325,6 +30385,7 @@ by the id, then 403 will be returned
     },
     "subpackage_patient-payments": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "patient-payments",
       "parent": undefined,
@@ -30341,6 +30402,7 @@ by the id, then 403 will be returned
     },
     "subpackage_patient-payments/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -31826,6 +31888,7 @@ by the id, then 403 will be returned
     },
     "subpackage_patient-payments/v3": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -33541,6 +33604,7 @@ current organization_id, then a response code of \`403\` will be returned.
     },
     "subpackage_patients": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -34218,6 +34282,7 @@ slashes.
     },
     "subpackage_payers": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -34483,6 +34548,7 @@ billing provider npi ("*") will be used in case the billing provider npi cannot 
 If all of the billing providers for an organization share the same third party payment processor account, then simple ["*"]
 as the billing_provider_npis should suffice.
 ",
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -36391,6 +36457,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_permissions": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "permissions",
       "parent": undefined,
@@ -36406,6 +36473,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_pipeline-commons": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "pipeline-commons",
       "parent": undefined,
@@ -36425,6 +36493,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_pipeline-configuration": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -36582,6 +36651,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_remits": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "remits",
       "parent": undefined,
@@ -36597,6 +36667,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_remits/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -37604,6 +37675,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_rules_engine_types": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "rules_engine_types",
       "parent": undefined,
@@ -37627,6 +37699,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_secondary-submission": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "secondary-submission",
       "parent": undefined,
@@ -37642,6 +37715,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_secondary-submission/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -38267,6 +38341,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_service-facility": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -38432,6 +38507,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_service-line-ledgers": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "service-line-ledgers",
       "parent": undefined,
@@ -38447,6 +38523,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_service-line-ledgers/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -38753,6 +38830,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_service-lines": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "service-lines",
       "parent": undefined,
@@ -38768,6 +38846,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_service-lines/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -39009,6 +39088,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_tags": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -39222,6 +39302,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_tasks": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "tasks",
       "parent": undefined,
@@ -39238,6 +39319,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_tasks/commons": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "commons",
       "parent": "subpackage_tasks",
@@ -39254,6 +39336,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_tasks/v3": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -39381,6 +39464,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_test-fern": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "test-fern",
       "parent": undefined,
@@ -39398,6 +39482,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_upload-validation": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "upload-validation",
       "parent": undefined,
@@ -39417,6 +39502,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_users": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "users",
       "parent": undefined,
@@ -39432,6 +39518,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_users/v2": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -40307,6 +40394,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_work-queues": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "work-queues",
       "parent": undefined,
@@ -40322,6 +40410,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_work-queues/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -40655,6 +40744,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_x12": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "x12",
       "parent": undefined,
@@ -40670,6 +40760,7 @@ customer page will be returned (this generally is a page listing the existing cu
     },
     "subpackage_x12/v1": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "v1",
       "parent": "subpackage_x12",
@@ -78240,6 +78331,7 @@ exports[`transformApiDefinitionToDb > {"name":"cyclical-1"} 1`] = `
   "subpackages": {
     "subpackage_transactions": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": false,
@@ -78450,6 +78542,7 @@ exports[`transformApiDefinitionToDb > {"name":"realtime"} 1`] = `
   "subpackages": {
     "subpackage_realtime": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [],
       "name": "realtime",
       "parent": undefined,
@@ -78620,6 +78713,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
   "subpackages": {
     "subpackage_lcf": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -81424,6 +81518,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
   "subpackages": {
     "subpackage_deployments": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -81566,6 +81661,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
     },
     "subpackage_documentIndexes": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -81771,6 +81867,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
     },
     "subpackage_documents": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -82444,6 +82541,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
     },
     "subpackage_modelVersions": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -82812,6 +82910,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
     },
     "subpackage_registeredPrompts": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -83200,6 +83299,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
     },
     "subpackage_sandboxes": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,
@@ -83520,6 +83620,7 @@ or overwritten with default values.",
     },
     "subpackage_testSuites": {
       "description": undefined,
+      "displayName": undefined,
       "endpoints": [
         {
           "authed": true,

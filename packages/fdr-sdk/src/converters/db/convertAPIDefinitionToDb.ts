@@ -106,6 +106,7 @@ function transformSubpackage({
         pointsTo: writeShape.pointsTo,
         urlSlug: kebabCase(writeShape.name),
         description: writeShape.description,
+        displayName: writeShape.displayName,
         // htmlDescription,
         // descriptionContainsMarkdown: true,
         webhooks: webhooks ?? [],
