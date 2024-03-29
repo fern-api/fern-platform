@@ -221,7 +221,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         }
                     />
                 </div>
-                <FernScrollArea className="min-h-0 flex-1 shrink">
+                <FernScrollArea rootClassName="min-h-0 flex-1 shrink">
                     <ul className="list-none">{renderedListItems}</ul>
                 </FernScrollArea>
             </div>

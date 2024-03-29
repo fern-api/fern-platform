@@ -6,10 +6,10 @@ import { FernButton } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
-import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
-import { PlaygroundWebSocketRequestFormState } from "./types";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
+import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
+import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketSessionFormProps {
     websocket: ResolvedWebSocketChannel;
@@ -125,7 +125,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                             <span className="font-mono text-sm">{connected ? "Connected" : "Not connected"}</span>
                         </span>
                     </div>
-                    <FernScrollArea className="flex-1 rounded-b-[inherit]">
+                    <FernScrollArea rootClassName="flex-1 rounded-b-[inherit]">
                         <WebSocketMessages messages={messages} />
                     </FernScrollArea>
                 </FernCard>

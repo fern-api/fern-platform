@@ -53,10 +53,10 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             aria-label="secondary"
         >
             <FernScrollArea
-                className="group/sidebar"
-                viewportClassName={cn("px-4 pb-12")}
+                rootClassName="group/sidebar"
+                className={cn("px-4 pb-12")}
                 scrollbars="vertical"
-                viewportRef={scrollRef}
+                ref={scrollRef}
             >
                 <SearchSidebar searchService={searchService}>
                     <SidebarFixedItemsSection
