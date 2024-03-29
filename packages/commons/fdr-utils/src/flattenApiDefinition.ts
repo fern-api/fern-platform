@@ -157,7 +157,7 @@ function flattenPackage(
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
-    order: DocsV1Read.ApiNavigationConfigItem[] | undefined,
+    subpackageInfo: APIV1Read.ApiNavigationConfigItem.Subpackage | undefined,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
@@ -241,7 +241,7 @@ function flattenPackage(
                 return;
             }
             const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
-            const subpackageOrder = order
+            const subpackageOrder = subpackageInfo?.items
                 ?.filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
                 .find((item) => item.subpackageId === subpackageId);
             return {
