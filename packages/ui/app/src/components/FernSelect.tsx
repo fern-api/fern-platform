@@ -1,66 +1,97 @@
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as Select from "@radix-ui/react-select";
 import classnames from "clsx";
-import { FC, forwardRef } from "react";
+import { FC, ReactNode, forwardRef } from "react";
 
-export const FernSelect: FC<Select.SelectProps> = () => (
-    <Select.Root>
-        <Select.Trigger
-            className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-[15px] text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
-            aria-label="Food"
-        >
-            <Select.Value placeholder="Select a fruit…" />
-            <Select.Icon className="text-violet11">
-                <ChevronDownIcon />
-            </Select.Icon>
-        </Select.Trigger>
-        <Select.Portal>
-            <Select.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
-                <Select.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-                    <ChevronUpIcon />
-                </Select.ScrollUpButton>
-                <Select.Viewport className="p-[5px]">
-                    <Select.Group>
-                        <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">Fruits</Select.Label>
-                        <FernSelectItem value="apple">Apple</FernSelectItem>
-                        <FernSelectItem value="banana">Banana</FernSelectItem>
-                        <FernSelectItem value="blueberry">Blueberry</FernSelectItem>
-                        <FernSelectItem value="grapes">Grapes</FernSelectItem>
-                        <FernSelectItem value="pineapple">Pineapple</FernSelectItem>
-                    </Select.Group>
+declare namespace FernSelect {
+    export interface ValueOption {
+        type: "value";
+        label?: ReactNode;
+        helperText?: ReactNode;
+        children?: ReactNode | ((active: boolean) => ReactNode);
+        value: string;
+        icon?: ReactNode;
+        rightElement?: ReactNode;
+        tooltip?: ReactNode;
+        className?: string;
+        labelClassName?: string;
+    }
+    export interface SeparatorOption {
+        type: "separator";
+    }
 
-                    <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
+    export type Option = ValueOption | SeparatorOption;
+    export interface Props extends Select.SelectProps {
+        options: Option[];
+        onValueChange?: (value: string) => void;
+        value?: string;
+        onOpen?: () => void;
+    }
+}
 
-                    <Select.Group>
-                        <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">
-                            Vegetables
-                        </Select.Label>
-                        <FernSelectItem value="aubergine">Aubergine</FernSelectItem>
-                        <FernSelectItem value="broccoli">Broccoli</FernSelectItem>
-                        <FernSelectItem value="carrot" disabled>
-                            Carrot
-                        </FernSelectItem>
-                        <FernSelectItem value="courgette">Courgette</FernSelectItem>
-                        <FernSelectItem value="leek">Leek</FernSelectItem>
-                    </Select.Group>
-
-                    <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
-
-                    <Select.Group>
-                        <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">Meat</Select.Label>
-                        <FernSelectItem value="beef">Beef</FernSelectItem>
-                        <FernSelectItem value="chicken">Chicken</FernSelectItem>
-                        <FernSelectItem value="lamb">Lamb</FernSelectItem>
-                        <FernSelectItem value="pork">Pork</FernSelectItem>
-                    </Select.Group>
-                </Select.Viewport>
-                <Select.ScrollDownButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
+export const FernSelect: FC<FernSelect.Props> = () => {
+    // const [isOpen, setOpen] = useState(false);
+    return (
+        <Select.Root>
+            <Select.Trigger
+                className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-[15px] text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+                aria-label="Food"
+            >
+                <Select.Value placeholder="Select a fruit…" />
+                <Select.Icon className="text-violet11">
                     <ChevronDownIcon />
-                </Select.ScrollDownButton>
-            </Select.Content>
-        </Select.Portal>
-    </Select.Root>
-);
+                </Select.Icon>
+            </Select.Trigger>
+            <Select.Portal>
+                <Select.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+                    <Select.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
+                        <ChevronUpIcon />
+                    </Select.ScrollUpButton>
+                    <Select.Viewport className="p-[5px]">
+                        <Select.Group>
+                            <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">
+                                Fruits
+                            </Select.Label>
+                            <FernSelectItem value="apple">Apple</FernSelectItem>
+                            <FernSelectItem value="banana">Banana</FernSelectItem>
+                            <FernSelectItem value="blueberry">Blueberry</FernSelectItem>
+                            <FernSelectItem value="grapes">Grapes</FernSelectItem>
+                            <FernSelectItem value="pineapple">Pineapple</FernSelectItem>
+                        </Select.Group>
+
+                        <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
+
+                        <Select.Group>
+                            <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">
+                                Vegetables
+                            </Select.Label>
+                            <FernSelectItem value="aubergine">Aubergine</FernSelectItem>
+                            <FernSelectItem value="broccoli">Broccoli</FernSelectItem>
+                            <FernSelectItem value="carrot" disabled>
+                                Carrot
+                            </FernSelectItem>
+                            <FernSelectItem value="courgette">Courgette</FernSelectItem>
+                            <FernSelectItem value="leek">Leek</FernSelectItem>
+                        </Select.Group>
+
+                        <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
+
+                        <Select.Group>
+                            <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">Meat</Select.Label>
+                            <FernSelectItem value="beef">Beef</FernSelectItem>
+                            <FernSelectItem value="chicken">Chicken</FernSelectItem>
+                            <FernSelectItem value="lamb">Lamb</FernSelectItem>
+                            <FernSelectItem value="pork">Pork</FernSelectItem>
+                        </Select.Group>
+                    </Select.Viewport>
+                    <Select.ScrollDownButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
+                        <ChevronDownIcon />
+                    </Select.ScrollDownButton>
+                </Select.Content>
+            </Select.Portal>
+        </Select.Root>
+    );
+};
 
 export const FernSelectItem = forwardRef<HTMLDivElement, Select.SelectItemProps>(function FernSelectItem(
     { children, className, ...props },

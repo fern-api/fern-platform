@@ -4,8 +4,8 @@ import { atom, useAtom } from "jotai";
 import { useCallback, useEffect, useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
-import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
 import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
+import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
 import { useNavigationContext } from "../../contexts/navigation-context";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { findEndpoint } from "../../util/processRequestSnippetComponents";
@@ -131,7 +131,6 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                         environment={endpoint.defaultEnvironment?.baseUrl}
                     />
                 }
-                type="primary"
                 actions={
                     clients.length > 1 ? (
                         <CodeExampleClientDropdown
@@ -205,7 +204,6 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
         <div className="mb-5 mt-3">
             <CodeSnippetExample
                 title="Response"
-                type="primary"
                 // actions={undefined}
                 code={responseJsonString}
                 language="json"
