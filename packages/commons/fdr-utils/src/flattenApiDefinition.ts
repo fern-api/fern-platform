@@ -1,4 +1,4 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, titleCase } from "@fern-ui/core-utils";
 
 export interface FlattenedParameter {
@@ -74,7 +74,8 @@ export type FlattenedApiDefinitionPackageItem =
     | FlattenedEndpointDefinition
     | FlattenedWebSocketChannel
     | FlattenedWebhookDefinition
-    | FlattenedSubpackage;
+    | FlattenedSubpackage
+    | DocsV1Read.ApiNavigationConfigItem.NavigationItem;
 
 export const FlattenedApiDefinitionPackageItem = {
     visit: <T>(
@@ -84,6 +85,7 @@ export const FlattenedApiDefinitionPackageItem = {
             websocket: (websocket: FlattenedWebSocketChannel) => T;
             webhook: (webhook: FlattenedWebhookDefinition) => T;
             subpackage: (subpackage: FlattenedSubpackage) => T;
+            navigationItem: (navigationItem: DocsV1Read.ApiNavigationConfigItem.NavigationItem) => T;
         },
     ): T => {
         switch (item.type) {
@@ -95,6 +97,8 @@ export const FlattenedApiDefinitionPackageItem = {
                 return visitor.webhook(item);
             case "subpackage":
                 return visitor.subpackage(item);
+            case "navigationItem":
+                return visitor.navigationItem(item);
         }
     },
     isSubpackage: (item: FlattenedApiDefinitionPackageItem): item is FlattenedSubpackage => item.type === "subpackage",
@@ -103,9 +107,20 @@ export const FlattenedApiDefinitionPackageItem = {
     isWebSocket: (item: FlattenedApiDefinitionPackageItem): item is FlattenedWebSocketChannel =>
         item.type === "websocket",
     isWebhook: (item: FlattenedApiDefinitionPackageItem): item is FlattenedWebhookDefinition => item.type === "webhook",
+    isNavigationItem: (
+        item: FlattenedApiDefinitionPackageItem,
+    ): item is DocsV1Read.ApiNavigationConfigItem.NavigationItem => item.type === "navigationItem",
 };
 
+export interface FlattenedApiSummaryPage {
+    id: DocsV1Read.PageId;
+    title: string;
+    description: string | undefined;
+    icon: string | undefined;
+}
+
 export interface FlattenedApiDefinitionPackage {
+    summary: FlattenedApiSummaryPage | undefined;
     items: FlattenedApiDefinitionPackageItem[];
     slug: readonly string[];
     usedTypes: readonly string[];
@@ -142,7 +157,7 @@ function flattenPackage(
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
-    order: APIV1Read.ApiNavigationConfigItem[] | undefined,
+    order: DocsV1Read.ApiNavigationConfigItem[] | undefined,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
@@ -151,6 +166,7 @@ function flattenPackage(
 
     if (currentPackage == null) {
         return {
+            summary: undefined,
             items: [],
             slug: parentSlugs,
             usedTypes: [],
@@ -227,24 +243,39 @@ function flattenPackage(
             const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
             const subpackageOrder = order
                 ?.filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
-                .find((item) => item.subpackageId === subpackageId)?.items;
+                .find((item) => item.subpackageId === subpackageId);
             return {
                 type: "subpackage",
                 subpackageId: subpackage.subpackageId,
                 name: subpackage.displayName ?? titleCase(subpackage.name),
                 description: subpackage.description,
-                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageOrder),
+                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageInfo),
             };
         })
         .filter(isNonNullish);
 
-    const items: FlattenedApiDefinitionPackageItem[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
+    const navigationItems =
+        order?.filter(
+            (item): item is DocsV1Read.ApiNavigationConfigItem.NavigationItem => item.type === "navigationItem",
+        ) ?? [];
+
+    const items: FlattenedApiDefinitionPackageItem[] = [
+        ...endpoints,
+        ...websockets,
+        ...webhooks,
+        ...subpackages,
+        ...navigationItems,
+    ];
 
     if (order != null && order.length > 0) {
         items.sort((a, b) => {
             const aIndex = order.findIndex((item) => {
                 if (item.type === "subpackage" && a.type === "subpackage") {
                     return item.subpackageId === a.subpackageId;
+                }
+
+                if (a.type === "navigationItem") {
+                    return item.type === "navigationItem" && item === a;
                 }
 
                 if (item.type !== "subpackage" && a.type !== "subpackage") {
@@ -255,6 +286,10 @@ function flattenPackage(
             const bIndex = order.findIndex((item) => {
                 if (item.type === "subpackage" && b.type === "subpackage") {
                     return item.subpackageId === b.subpackageId;
+                }
+
+                if (b.type === "navigationItem") {
+                    return item.type === "navigationItem" && item === b;
                 }
 
                 if (item.type !== "subpackage" && b.type !== "subpackage") {
@@ -277,5 +312,6 @@ function flattenPackage(
         items,
         slug: parentSlugs,
         usedTypes: currentPackage.types,
+        summary,
     };
 }
