@@ -81,9 +81,9 @@ export async function convertNavigatableToResolvedPath({
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug);
+        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug, undefined, traverseState.curr.title);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await resolveApiDefinition(flattenedApiDefinition);
+        const apiDefinition = await resolveApiDefinition(flattenedApiDefinition, pages);
         return {
             type: "api-page",
             fullSlug: traverseState.curr.slug.join("/"),
@@ -131,8 +131,8 @@ export async function convertNavigatableToResolvedPath({
             const resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
-                        return [apiName, await resolveApiDefinition(flattenedApiDefinition)];
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, apiName);
+                        return [apiName, await resolveApiDefinition(flattenedApiDefinition, pages)];
                     }),
                 ),
             );

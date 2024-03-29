@@ -1,6 +1,5 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
-import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import {
     FlattenedApiDefinition,
     FlattenedApiDefinitionPackage,
@@ -19,6 +18,10 @@ import {
 } from "../api-page/examples/types";
 import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
 
+type WithoutQuestionMarks<T> = {
+    [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
+};
+
 export type WithDescription = { description: SerializedMdxContent | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
@@ -29,10 +32,9 @@ export interface WithMetadata {
 
 export async function resolveApiDefinition(
     apiDefinition: FlattenedApiDefinition,
+    pages: Record<string, DocsV1Read.PageContent>,
     filteredTypes?: string[],
 ): Promise<ResolvedRootPackage> {
-    // const highlighter = await getHighlighterInstance();
-
     const resolvedTypes = Object.fromEntries(
         await Promise.all(
             Object.entries(filteredTypes != null ? pick(apiDefinition.types, filteredTypes) : apiDefinition.types).map(
@@ -47,7 +49,7 @@ export async function resolveApiDefinition(
         apiDefinition,
         apiDefinition.types,
         resolvedTypes,
-        // highlighter,
+        pages,
     );
     return {
         type: "rootPackage",
@@ -64,9 +66,18 @@ async function resolveApiDefinitionPackage(
     package_: FlattenedApiDefinitionPackage | undefined,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedWithApiDefinition> {
     if (package_ == null) {
-        return { items: [], slug: [] };
+        return {
+            items: [],
+            slug: [],
+            name: "",
+            title: undefined,
+            description: undefined,
+            icon: undefined,
+            summaryContent: undefined,
+        };
     }
 
     const maybeItems = await Promise.all(
@@ -75,7 +86,8 @@ async function resolveApiDefinitionPackage(
                 endpoint: (endpoint) => resolveEndpointDefinition(apiDefinition, id, endpoint, types, resolvedTypes),
                 websocket: (websocket) => resolveWebsocketChannel(apiDefinition, websocket, types),
                 webhook: (webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes),
-                subpackage: (subpackage) => resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes),
+                subpackage: (subpackage) => resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes, pages),
+                navigationItems: () => Promise.resolve(undefined), // TODO: handle this case
             }),
         ),
     );
@@ -85,6 +97,11 @@ async function resolveApiDefinitionPackage(
     return {
         items,
         slug: package_.slug,
+        name: package_.name,
+        title: package_.summary?.title,
+        description: await serializeMdxContent(package_.summary?.description),
+        icon: package_.summary?.icon,
+        summaryContent: await serializeMdxContent(package_.summary?.description),
     };
 }
 
@@ -93,23 +110,24 @@ async function resolveSubpackage(
     subpackage: FlattenedSubpackage,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedSubpackage | undefined> {
-    const { items } = await resolveApiDefinitionPackage(
-        apiDefinition,
-        subpackage.subpackageId,
-        subpackage,
-        types,
-        resolvedTypes,
-    );
+    const [{ items }, description, summaryContent] = await Promise.all([
+        resolveApiDefinitionPackage(apiDefinition, subpackage.subpackageId, subpackage, types, resolvedTypes, pages),
+        serializeMdxContent(subpackage.summary?.description ?? subpackage.description),
+        serializeMdxContent(subpackage.summary != null ? pages[subpackage.summary.id].markdown : undefined),
+    ]);
 
-    if (subpackage == null || items.length === 0) {
+    if (items.length === 0 && summaryContent == null) {
         return undefined;
     }
     return {
         name: subpackage.name,
-        description: await serializeMdxContent(subpackage.description),
+        description,
         availability: undefined,
-        title: titleCase(subpackage.name),
+        title: subpackage.summary?.title ?? subpackage.name,
+        icon: subpackage.summary?.icon,
+        summaryContent,
         type: "subpackage",
         apiSectionId: apiDefinition.api,
         id: subpackage.subpackageId,
@@ -894,7 +912,7 @@ export interface ResolvedPageMetadata {
 }
 
 export interface ResolvedNavigationItemApiSection
-    extends WithoutQuestionMarks<Omit<DocsV1Read.ApiSection, "urlSlug" | "artifacts">>,
+    extends WithoutQuestionMarks<Omit<DocsV1Read.ApiSection, "urlSlug" | "artifacts" | "title">>,
         ResolvedWithApiDefinition {
     type: "apiSection";
     auth: APIV1Read.ApiAuth | undefined;
@@ -958,6 +976,11 @@ export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): i
 }
 
 export interface ResolvedWithApiDefinition {
+    name: string;
+    title: string | undefined;
+    description: SerializedMdxContent | undefined;
+    icon: string | undefined;
+    summaryContent: SerializedMdxContent | undefined;
     items: ResolvedPackageItem[];
     slug: readonly string[];
 }

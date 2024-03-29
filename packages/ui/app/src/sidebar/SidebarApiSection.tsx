@@ -13,6 +13,7 @@ import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
+import { SidebarSection } from "./SidebarSection";
 
 export interface SidebarApiSectionProps {
     className?: string;
@@ -102,7 +103,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         depth={depth}
                         artifacts={undefined}
                     />
-                ) : (
+                ) : item.type === "page" ? (
                     <SidebarSlugLink
                         key={joinUrlSlugs(...item.slug)}
                         slug={item.slug}
@@ -126,6 +127,13 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         }
                         icon={item.icon}
                         hidden={item.hidden}
+                    />
+                ) : (
+                    <SidebarSection
+                        navigationItems={[item]}
+                        slug={item.slug}
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        depth={Math.max(0, depth - 1)}
                     />
                 ),
             )}

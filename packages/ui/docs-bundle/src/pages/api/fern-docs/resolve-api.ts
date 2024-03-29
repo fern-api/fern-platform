@@ -67,9 +67,19 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
         );
 
-        const apiSectionSlug = findApiSection(api, sidebarNodes)?.slug;
+        const apiSection = findApiSection(api, sidebarNodes);
 
-        res.status(200).json(await resolveApiDefinition(flattenApiDefinition(apiDefinition, apiSectionSlug ?? [])));
+        res.status(200).json(
+            await resolveApiDefinition(
+                flattenApiDefinition(
+                    apiDefinition,
+                    apiSection?.slug ?? [],
+                    undefined,
+                    apiSection?.type === "apiSection" ? apiSection.title : "",
+                ),
+                docsDefinition.pages,
+            ),
+        );
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

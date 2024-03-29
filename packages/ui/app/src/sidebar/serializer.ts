@@ -4,21 +4,30 @@ import { serializeMdxContent } from "../mdx/mdx";
 
 export async function serializeSidebarNodeDescriptionMdx(node: SidebarNodeRaw): Promise<SidebarNode> {
     return visitDiscriminatedUnion(node, "type")._visit<Promise<SidebarNode>>({
-        pageGroup: async (pageGroup) => ({
+        pageGroup: async (pageGroup): Promise<SidebarNode.PageGroup> => ({
             ...pageGroup,
             pages: await Promise.all(
-                pageGroup.pages.map(async (page) =>
-                    page.type === "page" ? await serializePageDescriptionMdx(page) : page,
+                pageGroup.pages.map(
+                    async (page): Promise<SidebarNode.PageGroup["pages"][0]> =>
+                        page.type === "page"
+                            ? await serializePageDescriptionMdx(page)
+                            : page.type === "section"
+                              ? await serializeSectionDescriptionMdx(page)
+                              : page,
                 ),
             ),
         }),
         apiSection: serializeApiSectionDescriptionMdx,
-        section: async (section) => ({
-            ...section,
-            items: await Promise.all(section.items.map(serializeSidebarNodeDescriptionMdx)),
-        }),
+        section: serializeSectionDescriptionMdx,
         _other: (node) => Promise.resolve(node as SidebarNode),
     });
+}
+
+async function serializeSectionDescriptionMdx(section: SidebarNodeRaw.Section): Promise<SidebarNode.Section> {
+    return {
+        ...section,
+        items: await Promise.all(section.items.map(serializeSidebarNodeDescriptionMdx)),
+    };
 }
 
 async function serializeApiSectionDescriptionMdx(
@@ -30,12 +39,15 @@ async function serializeApiSectionDescriptionMdx(
             apiSection.items.map((page) =>
                 page.type === "page"
                     ? serializePageDescriptionMdx<SidebarNode.ApiPage>(page)
-                    : (serializeApiSectionDescriptionMdx(page) as Promise<SidebarNode.SubpackageSection>),
+                    : page.type === "apiSection"
+                      ? (serializeApiSectionDescriptionMdx(page) as Promise<SidebarNode.SubpackageSection>)
+                      : serializeSidebarNodeDescriptionMdx(page),
             ),
         ),
         changelog: apiSection.changelog
             ? await serializePageDescriptionMdx<SidebarNode.ChangelogPage>(apiSection.changelog)
             : undefined,
+        summary: apiSection.summaryPage,
     };
 }
 

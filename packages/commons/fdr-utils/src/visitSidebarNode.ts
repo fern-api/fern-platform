@@ -16,6 +16,9 @@ export function visitSidebarNode(
             });
         },
         apiSection: (apiSection) => {
+            if (apiSection.summaryPage) {
+                visitSidebarNode(apiSection.summaryPage, visit, [...parentNodes, apiSection]);
+            }
             apiSection.items.forEach((item) => {
                 visitSidebarNode(item, visit, [...parentNodes, apiSection]);
             });

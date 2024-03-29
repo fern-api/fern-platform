@@ -81,6 +81,13 @@ function visitNode(
                 traverseState.sectionTitleBreadcrumbs = apiSectionBreadcrumbs;
             }
 
+            if (apiSection.summaryPage != null) {
+                traverseState = visitPage(apiSection.summaryPage, slug, traverseState, apiSectionBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
             if (apiSection.changelog != null) {
                 traverseState = visitPage(apiSection.changelog, slug, traverseState, apiSectionBreadcrumbs);
                 if (traverseState.next != null) {

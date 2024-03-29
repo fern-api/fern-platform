@@ -6,6 +6,7 @@ import {
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
 } from "../util/resolver";
+import { ApiPackageSummary } from "./ApiPackageSummary";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { WebSocket } from "./web-socket/WebSocket";
@@ -38,6 +39,12 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
 
     return (
         <>
+            <ApiPackageSummary
+                apiDefinition={apiDefinition}
+                breadcrumbs={breadcrumbs}
+                isLastInApi={isLastInParentPackage && items.length === 0}
+            />
+
             {items.map((item, idx) => (
                 <FernErrorBoundary component="ApiPackageContents" key={item.id}>
                     {ResolvedPackageItem.visit(item, {

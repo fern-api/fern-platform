@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, titleCase } from "@fern-ui/core-utils";
+import { isNonNullish, noop, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 
 export interface FlattenedParameter {
     key: string;
@@ -62,7 +62,6 @@ export interface FlattenedWebhookDefinition {
 export interface FlattenedSubpackage extends FlattenedApiDefinitionPackage {
     type: "subpackage";
     subpackageId: string;
-    name: string;
     description: string | undefined;
 }
 
@@ -70,12 +69,17 @@ export function isFlattenedSubpackage(package_: FlattenedApiDefinitionPackage): 
     return (package_ as FlattenedSubpackage).type === "subpackage";
 }
 
+export interface FlattenedNavigationItems {
+    type: "navigationItems";
+    items: DocsV1Read.ApiNavigationConfigItem.NavigationItem[];
+}
+
 export type FlattenedApiDefinitionPackageItem =
     | FlattenedEndpointDefinition
     | FlattenedWebSocketChannel
     | FlattenedWebhookDefinition
     | FlattenedSubpackage
-    | DocsV1Read.ApiNavigationConfigItem.NavigationItem;
+    | FlattenedNavigationItems;
 
 export const FlattenedApiDefinitionPackageItem = {
     visit: <T>(
@@ -85,7 +89,7 @@ export const FlattenedApiDefinitionPackageItem = {
             websocket: (websocket: FlattenedWebSocketChannel) => T;
             webhook: (webhook: FlattenedWebhookDefinition) => T;
             subpackage: (subpackage: FlattenedSubpackage) => T;
-            navigationItem: (navigationItem: DocsV1Read.ApiNavigationConfigItem.NavigationItem) => T;
+            navigationItems: (navigationItems: FlattenedNavigationItems) => T;
         },
     ): T => {
         switch (item.type) {
@@ -97,8 +101,8 @@ export const FlattenedApiDefinitionPackageItem = {
                 return visitor.webhook(item);
             case "subpackage":
                 return visitor.subpackage(item);
-            case "navigationItem":
-                return visitor.navigationItem(item);
+            case "navigationItems":
+                return visitor.navigationItems(item);
         }
     },
     isSubpackage: (item: FlattenedApiDefinitionPackageItem): item is FlattenedSubpackage => item.type === "subpackage",
@@ -107,9 +111,8 @@ export const FlattenedApiDefinitionPackageItem = {
     isWebSocket: (item: FlattenedApiDefinitionPackageItem): item is FlattenedWebSocketChannel =>
         item.type === "websocket",
     isWebhook: (item: FlattenedApiDefinitionPackageItem): item is FlattenedWebhookDefinition => item.type === "webhook",
-    isNavigationItem: (
-        item: FlattenedApiDefinitionPackageItem,
-    ): item is DocsV1Read.ApiNavigationConfigItem.NavigationItem => item.type === "navigationItem",
+    isNavigationItem: (item: FlattenedApiDefinitionPackageItem): item is FlattenedNavigationItems =>
+        item.type === "navigationItems",
 };
 
 export interface FlattenedApiSummaryPage {
@@ -120,6 +123,7 @@ export interface FlattenedApiSummaryPage {
 }
 
 export interface FlattenedApiDefinitionPackage {
+    name: string; // api name, or subpackage name
     summary: FlattenedApiSummaryPage | undefined;
     items: FlattenedApiDefinitionPackageItem[];
     slug: readonly string[];
@@ -136,12 +140,15 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
 export function flattenApiDefinition(
     apiDefinition: APIV1Read.ApiDefinition,
     parentSlugs: readonly string[],
+    navigation: DocsV1Read.ApiNavigationConfigRoot | undefined,
+    name: string,
 ): FlattenedApiDefinition {
     const package_ = flattenPackage(
         apiDefinition.rootPackage,
         apiDefinition.subpackages,
         parentSlugs,
-        apiDefinition.navigation?.items,
+        navigation ?? apiDefinition.navigation,
+        name,
     );
 
     return {
@@ -157,7 +164,8 @@ function flattenPackage(
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
-    subpackageInfo: APIV1Read.ApiNavigationConfigItem.Subpackage | undefined,
+    subpackageInfo: DocsV1Read.ApiNavigationConfigRoot | DocsV1Read.ApiNavigationConfigItem.Subpackage | undefined,
+    name: string,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
@@ -170,10 +178,11 @@ function flattenPackage(
             items: [],
             slug: parentSlugs,
             usedTypes: [],
+            name,
         };
     }
 
-    const endpoints = currentPackage.endpoints.map(
+    let endpoints = currentPackage.endpoints.map(
         (endpoint): FlattenedEndpointDefinition => ({
             type: "endpoint",
             id: endpoint.id,
@@ -197,7 +206,7 @@ function flattenPackage(
         }),
     );
 
-    const websockets = currentPackage.websockets.map(
+    let websockets = currentPackage.websockets.map(
         (websocket): FlattenedWebSocketChannel => ({
             type: "websocket",
             id: websocket.id,
@@ -218,7 +227,7 @@ function flattenPackage(
         }),
     );
 
-    const webhooks = currentPackage.webhooks.map(
+    let webhooks = currentPackage.webhooks.map(
         (webhook): FlattenedWebhookDefinition => ({
             type: "webhook",
             id: webhook.id,
@@ -234,7 +243,7 @@ function flattenPackage(
         }),
     );
 
-    const subpackages = currentPackage.subpackages
+    let subpackages = currentPackage.subpackages
         .map((subpackageId): FlattenedSubpackage | undefined => {
             const subpackage = subpackagesMap[subpackageId];
             if (subpackage == null) {
@@ -244,74 +253,70 @@ function flattenPackage(
             const innerSubpackageInfo = subpackageInfo?.items
                 ?.filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
                 .find((item) => item.subpackageId === subpackageId);
+            const name = subpackage.displayName ?? titleCase(subpackage.name);
             return {
                 type: "subpackage",
                 subpackageId: subpackage.subpackageId,
-                name: subpackage.displayName ?? titleCase(subpackage.name),
                 description: subpackage.description,
-                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, innerSubpackageInfo),
+                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, innerSubpackageInfo, name),
             };
         })
         .filter(isNonNullish);
 
-    const navigationItems =
-        subpackageInfo?.items.filter(
-            (item): item is DocsV1Read.ApiNavigationConfigItem.NavigationItem => item.type === "navigationItem",
-        ) ?? [];
+    const items: FlattenedApiDefinitionPackageItem[] = [];
 
-    const items: FlattenedApiDefinitionPackageItem[] = [
-        ...endpoints,
-        ...websockets,
-        ...webhooks,
-        ...subpackages,
-        ...navigationItems,
-    ];
-
-    if (subpackageInfo != null && subpackageInfo.items.length > 0) {
-        items.sort((a, b) => {
-            const aIndex = subpackageInfo.items.findIndex((item) => {
-                if (item.type === "subpackage" && a.type === "subpackage") {
-                    return item.subpackageId === a.subpackageId;
+    for (const item of subpackageInfo?.items ?? []) {
+        visitDiscriminatedUnion(item, "type")._visit({
+            subpackage: (subpackage) => {
+                const subpackageItem = subpackages.find((s) => s.subpackageId === subpackage.subpackageId);
+                if (subpackageItem != null) {
+                    subpackages = subpackages.filter((s) => s.subpackageId !== subpackage.subpackageId);
                 }
-
-                if (a.type === "navigationItem") {
-                    return item.type === "navigationItem" && item === a;
+            },
+            navigationItem: (navigationItem) => {
+                const lastItem = items[items.length - 1];
+                if (lastItem == null || lastItem.type !== "navigationItems") {
+                    items.push({ type: "navigationItems", items: [navigationItem] });
+                } else {
+                    lastItem.items.push(navigationItem);
                 }
-
-                if (item.type !== "subpackage" && a.type !== "subpackage") {
-                    return item.value === a.id;
+            },
+            endpointId: ({ value: endpointId }) => {
+                const endpoint = endpoints.find((endpoint) => endpoint.id === endpointId);
+                if (endpoint != null) {
+                    items.push(endpoint);
+                    endpoints = endpoints.filter((endpoint) => endpoint.id !== endpointId);
                 }
-                return false;
-            });
-            const bIndex = subpackageInfo.items.findIndex((item) => {
-                if (item.type === "subpackage" && b.type === "subpackage") {
-                    return item.subpackageId === b.subpackageId;
+            },
+            websocketId: ({ value: websocketId }) => {
+                const websocket = websockets.find((websocket) => websocket.id === websocketId);
+                if (websocket != null) {
+                    items.push(websocket);
+                    websockets = websockets.filter((websocket) => websocket.id !== websocketId);
                 }
-
-                if (b.type === "navigationItem") {
-                    return item.type === "navigationItem" && item === b;
+            },
+            webhookId: ({ value: webhookId }) => {
+                const webhook = webhooks.find((webhook) => webhook.id === webhookId);
+                if (webhook != null) {
+                    items.push(webhook);
+                    webhooks = webhooks.filter((webhook) => webhook.id !== webhookId);
                 }
-
-                if (item.type !== "subpackage" && b.type !== "subpackage") {
-                    return item.value === b.id;
-                }
-                return false;
-            });
-
-            if (aIndex === -1) {
-                return 1;
-            }
-            if (bIndex === -1) {
-                return -1;
-            }
-            return aIndex - bIndex;
+            },
+            _other: noop,
         });
     }
+
+    // add remaining items
+    items.push(...endpoints, ...websockets, ...webhooks, ...subpackages);
 
     return {
         items,
         slug: parentSlugs,
         usedTypes: currentPackage.types,
-        summary,
+        summary:
+            subpackageInfo?.summary != null
+                ? { description: undefined, icon: undefined, ...subpackageInfo.summary }
+                : undefined,
+        name,
     };
 }

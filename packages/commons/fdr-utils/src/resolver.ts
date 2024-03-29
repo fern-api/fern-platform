@@ -14,45 +14,54 @@ function resolveSidebarNodeRawApiSection(
     subpackage: FlattenedApiDefinitionPackage,
     title: string,
     showErrors: boolean,
+    apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    fixedSlugs: readonly string[],
 ): SidebarNodeRaw.ApiSection | undefined {
     const items = subpackage.items
-        .map((item) =>
-            FlattenedApiDefinitionPackageItem.visit<SidebarNodeRaw.ApiPageOrSubpackage | undefined>(item, {
-                endpoint: (endpoint) => ({
-                    type: "page",
-                    apiType: "endpoint",
-                    api,
-                    id: endpoint.id,
-                    slug: endpoint.slug,
-                    title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
-                    description: endpoint.description,
-                    method: endpoint.method,
-                    stream: endpoint.response?.type.type === "stream",
-                    icon: undefined,
-                    hidden: false,
-                }),
-                websocket: (websocket) => ({
-                    type: "page",
-                    apiType: "websocket",
-                    api,
-                    id: websocket.id,
-                    slug: websocket.slug,
-                    title: websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
-                    description: websocket.description,
-                    icon: undefined,
-                    hidden: false,
-                }),
-                webhook: (webhook) => ({
-                    type: "page",
-                    apiType: "webhook",
-                    api,
-                    id: webhook.id,
-                    slug: webhook.slug,
-                    title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
-                    description: webhook.description,
-                    icon: undefined,
-                    hidden: false,
-                }),
+        .flatMap((item) =>
+            FlattenedApiDefinitionPackageItem.visit<SidebarNodeRaw.ApiSectionItem[]>(item, {
+                endpoint: (endpoint) => [
+                    {
+                        type: "page",
+                        apiType: "endpoint",
+                        api,
+                        id: endpoint.id,
+                        slug: endpoint.slug,
+                        title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+                        description: endpoint.description,
+                        method: endpoint.method,
+                        stream: endpoint.response?.type.type === "stream",
+                        icon: undefined,
+                        hidden: false,
+                    },
+                ],
+                websocket: (websocket) => [
+                    {
+                        type: "page",
+                        apiType: "websocket",
+                        api,
+                        id: websocket.id,
+                        slug: websocket.slug,
+                        title:
+                            websocket.name != null ? websocket.name : stringifyEndpointPathParts(websocket.path.parts),
+                        description: websocket.description,
+                        icon: undefined,
+                        hidden: false,
+                    },
+                ],
+                webhook: (webhook) => [
+                    {
+                        type: "page",
+                        apiType: "webhook",
+                        api,
+                        id: webhook.id,
+                        slug: webhook.slug,
+                        title: webhook.name != null ? webhook.name : "/" + webhook.path.join("/"),
+                        description: webhook.description,
+                        icon: undefined,
+                        hidden: false,
+                    },
+                ],
                 subpackage: (subpackage) => {
                     const resolvedSubpackage = resolveSidebarNodeRawApiSection(
                         api,
@@ -60,14 +69,23 @@ function resolveSidebarNodeRawApiSection(
                         subpackage,
                         subpackage.name,
                         showErrors,
+                        apis,
+                        fixedSlugs,
                     );
 
                     if (resolvedSubpackage == null) {
-                        return undefined;
+                        return [];
                     }
 
-                    return { ...resolvedSubpackage, apiType: "subpackage" };
+                    return [{ ...resolvedSubpackage, apiType: "subpackage" }];
                 },
+                navigationItems: ({ items }) =>
+                    resolveSidebarNodes(
+                        items.map((item) => item.value),
+                        apis,
+                        subpackage.slug,
+                        fixedSlugs,
+                    ),
             }),
         )
         .filter(isNonNullish);
@@ -86,6 +104,7 @@ function resolveSidebarNodeRawApiSection(
         showErrors,
         artifacts: undefined,
         changelog: undefined,
+        summaryPage: undefined,
         description: undefined, // TODO: add description here
         icon: undefined,
         hidden: false,
@@ -213,13 +232,15 @@ export function resolveSidebarNodes(
                             : api.skipUrlSlug
                               ? parentSlugs
                               : [...parentSlugs, ...api.urlSlug.split("/")];
-                    const flattened = flattenApiDefinition(definition, definitionSlug);
+                    const flattened = flattenApiDefinition(definition, definitionSlug, api.navigation, api.title);
                     const resolved = resolveSidebarNodeRawApiSection(
                         api.api,
                         api.api,
                         flattened,
                         api.title,
                         api.showErrors,
+                        apis,
+                        fixedSlugs,
                     );
                     sidebarNodes.push({
                         type: "apiSection",
@@ -249,6 +270,19 @@ export function resolveSidebarNodes(
                                       })),
                                       icon: api.changelog.icon,
                                       hidden: api.changelog.hidden ?? false,
+                                  }
+                                : undefined,
+                        summaryPage:
+                            flattened.summary != null
+                                ? {
+                                      type: "page",
+                                      apiType: "summary",
+                                      id: flattened.summary.id,
+                                      slug: definitionSlug,
+                                      title: flattened.summary.title,
+                                      description: flattened.summary.description,
+                                      icon: flattened.summary.icon,
+                                      hidden: false,
                                   }
                                 : undefined,
                         description: undefined, // TODO: add description here
