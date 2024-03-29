@@ -44,29 +44,54 @@ const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
      * development=true is required to render MdxRemote from the client-side.
      * https://github.com/hashicorp/next-mdx-remote/issues/350
      */
-    // development: process.env.NODE_ENV !== "production",
+    development: process.env.NODE_ENV !== "production",
 };
+
+/**
+ * If the content is not markdown, it will be returned as is.
+ */
+export async function maybeSerializeMdxContent(
+    content: string,
+    options?: SerializeOptions["mdxOptions"],
+): Promise<SerializedMdxContent>;
+export async function maybeSerializeMdxContent(
+    content: string | undefined,
+    options?: SerializeOptions["mdxOptions"],
+): Promise<SerializedMdxContent | undefined>;
+export async function maybeSerializeMdxContent(
+    content: string | undefined,
+    options?: SerializeOptions["mdxOptions"],
+): Promise<SerializedMdxContent | undefined> {
+    if (content == null) {
+        return undefined;
+    }
+
+    if (!stringHasMarkdown(content)) {
+        return content;
+    }
+
+    return serializeMdxContent(content, options);
+}
 
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdxContent(content: string, forceMarkdown?: boolean): Promise<SerializedMdxContent>;
+export async function serializeMdxContent(
+    content: string,
+    options?: SerializeOptions["mdxOptions"],
+): Promise<SerializedMdxContent>;
 export async function serializeMdxContent(
     content: string | undefined,
-    forceMarkdown?: boolean,
+    options?: SerializeOptions["mdxOptions"],
 ): Promise<SerializedMdxContent | undefined>;
 export async function serializeMdxContent(
     content: string | undefined,
-    forceMarkdown?: boolean,
+    options: SerializeOptions["mdxOptions"] = {},
 ): Promise<SerializedMdxContent | undefined> {
     if (content == null) {
         return undefined;
     }
     try {
-        if (!stringHasMarkdown(content) && !forceMarkdown) {
-            return content;
-        }
-
         const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterInternal>(content, {
             scope: {},
             mdxOptions: MDX_OPTIONS,
@@ -79,7 +104,7 @@ export async function serializeMdxContent(
             try {
                 excerpt = await serialize(firstPass.frontmatter.excerpt, {
                     scope: {},
-                    mdxOptions: MDX_OPTIONS,
+                    mdxOptions: { ...MDX_OPTIONS, ...options },
                     parseFrontmatter: false,
                 });
             } catch (e) {
@@ -88,7 +113,7 @@ export async function serializeMdxContent(
 
                 emitDatadogError(e, {
                     context: "MDX",
-                    errorSource: "serializeMdxContent",
+                    errorSource: "maybeSerializeMdxContent",
                     errorDescription: "Failed to serialize subtitle (excerpt) from frontmatter",
                 });
             }
@@ -108,7 +133,7 @@ export async function serializeMdxContent(
 
         emitDatadogError(e, {
             context: "MDX",
-            errorSource: "serializeMdxContent",
+            errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",
         });
 

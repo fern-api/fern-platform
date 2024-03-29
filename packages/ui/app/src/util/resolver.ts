@@ -1,5 +1,4 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import {
     FlattenedApiDefinition,
@@ -17,7 +16,11 @@ import {
     sortKeysByShape,
     stringifyHttpRequestExampleToCurl,
 } from "../api-page/examples/types";
-import { SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
+import { SerializedMdxContent, maybeSerializeMdxContent } from "../mdx/mdx";
+
+type WithoutQuestionMarks<T> = {
+    [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
+};
 
 export type WithDescription = { description: SerializedMdxContent | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
@@ -107,7 +110,7 @@ async function resolveSubpackage(
     }
     return {
         name: subpackage.name,
-        description: await serializeMdxContent(subpackage.description),
+        description: await maybeSerializeMdxContent(subpackage.description),
         availability: undefined,
         title: subpackage.name, // titleCase() is already applied for FlattenedApiDefinition
         type: "subpackage",
@@ -130,7 +133,7 @@ async function resolveEndpointDefinition(
         endpoint.path.pathParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(parameter.type, types),
-                serializeMdxContent(parameter.description),
+                maybeSerializeMdxContent(parameter.description),
             ]);
             return {
                 key: parameter.key,
@@ -146,7 +149,7 @@ async function resolveEndpointDefinition(
         endpoint.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(parameter.type, types),
-                serializeMdxContent(parameter.description),
+                maybeSerializeMdxContent(parameter.description),
             ]);
             return {
                 key: parameter.key,
@@ -162,7 +165,7 @@ async function resolveEndpointDefinition(
         ...endpoint.headers.map(async (header): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(header.type, types),
-                serializeMdxContent(header.description),
+                maybeSerializeMdxContent(header.description),
             ]);
             return {
                 key: header.key,
@@ -175,7 +178,7 @@ async function resolveEndpointDefinition(
         ...apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(header.type, types),
-                serializeMdxContent(header.description),
+                maybeSerializeMdxContent(header.description),
             ]);
             return {
                 key: header.key,
@@ -193,7 +196,7 @@ async function resolveEndpointDefinition(
                 error.type != null
                     ? resolveTypeShape(undefined, error.type, types, undefined, undefined)
                     : ({ type: "unknown" } as ResolvedTypeDefinition),
-                serializeMdxContent(error.description),
+                maybeSerializeMdxContent(error.description),
             ]);
             return {
                 statusCode: error.statusCode,
@@ -205,12 +208,12 @@ async function resolveEndpointDefinition(
         }),
     );
 
-    const descriptionPromise = serializeMdxContent(endpoint.description);
+    const descriptionPromise = maybeSerializeMdxContent(endpoint.description);
 
     async function resolveRequestBody(request: APIV1Read.HttpRequest): Promise<ResolvedRequestBody> {
         const [shape, description] = await Promise.all([
             resolveRequestBodyShape(request.type, types),
-            serializeMdxContent(request.description),
+            maybeSerializeMdxContent(request.description),
         ]);
         return {
             contentType: request.contentType,
@@ -223,7 +226,7 @@ async function resolveEndpointDefinition(
     async function resolveResponseBody(response: APIV1Read.HttpResponse): Promise<ResolvedResponseBody> {
         const [shape, description] = await Promise.all([
             resolveResponseBodyShape(response.type, types),
-            serializeMdxContent(response.description),
+            maybeSerializeMdxContent(response.description),
         ]);
         return { shape, description, availability: undefined };
     }
@@ -370,7 +373,7 @@ async function resolveWebsocketChannel(
             async (parameter): Promise<ResolvedObjectProperty> => ({
                 key: parameter.key,
                 valueShape: await resolveTypeReference(parameter.type, types),
-                description: await serializeMdxContent(parameter.description),
+                description: await maybeSerializeMdxContent(parameter.description),
                 availability: parameter.availability,
                 hidden: false,
             }),
@@ -380,7 +383,7 @@ async function resolveWebsocketChannel(
         ...websocket.headers.map(async (header): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(header.type, types),
-                serializeMdxContent(header.description),
+                maybeSerializeMdxContent(header.description),
             ]);
             return {
                 key: header.key,
@@ -393,7 +396,7 @@ async function resolveWebsocketChannel(
         ...apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(header.type, types),
-                serializeMdxContent(header.description),
+                maybeSerializeMdxContent(header.description),
             ]);
             return {
                 key: header.key,
@@ -408,7 +411,7 @@ async function resolveWebsocketChannel(
         websocket.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(parameter.type, types),
-                serializeMdxContent(parameter.description),
+                maybeSerializeMdxContent(parameter.description),
             ]);
             return {
                 key: parameter.key,
@@ -423,7 +426,7 @@ async function resolveWebsocketChannel(
         websocket.messages.map(async ({ type, body, origin, displayName, description, availability }) => {
             const [resolvedBody, resolvedDescription] = await Promise.all([
                 resolvePayloadShape(body, types),
-                serializeMdxContent(description),
+                maybeSerializeMdxContent(description),
             ]);
             return {
                 type,
@@ -488,13 +491,13 @@ async function resolveWebhookDefinition(
 ): Promise<ResolvedWebhookDefinition> {
     const [payloadShape, description, headers] = await Promise.all([
         resolvePayloadShape(webhook.payload.type, types),
-        await serializeMdxContent(webhook.description),
+        await maybeSerializeMdxContent(webhook.description),
         Promise.all(
             webhook.headers.map(
                 async (header): Promise<ResolvedObjectProperty> => ({
                     key: header.key,
                     valueShape: await resolveTypeReference(header.type, types),
-                    description: await serializeMdxContent(header.description),
+                    description: await maybeSerializeMdxContent(header.description),
                     availability: header.availability,
                     hidden: false,
                 }),
@@ -513,7 +516,7 @@ async function resolveWebhookDefinition(
         headers,
         payload: {
             shape: payloadShape,
-            description: await serializeMdxContent(webhook.payload.description),
+            description: await maybeSerializeMdxContent(webhook.payload.description),
             availability: undefined,
         },
         examples: webhook.examples.map((example) => {
@@ -564,7 +567,7 @@ function resolveRequestBodyShape(
             value:
                 fileUpload.value != null
                     ? {
-                          description: await serializeMdxContent(fileUpload.value.description),
+                          description: await maybeSerializeMdxContent(fileUpload.value.description),
                           availability: fileUpload.value.availability,
                           name: fileUpload.value.name,
                           properties: await Promise.all(
@@ -583,7 +586,7 @@ function resolveRequestBodyShape(
                                           }
                                           case "bodyProperty": {
                                               const [description, valueShape] = await Promise.all([
-                                                  serializeMdxContent(property.description),
+                                                  maybeSerializeMdxContent(property.description),
                                                   resolveTypeReference(property.valueType, types),
                                               ]);
                                               return {
@@ -683,7 +686,7 @@ function resolveTypeShape(
             name,
             extends: object.extends,
             properties: await resolveObjectProperties(object, types),
-            description: await serializeMdxContent(description),
+            description: await maybeSerializeMdxContent(description),
             availability,
         }),
         enum: async (enum_) => ({
@@ -692,11 +695,11 @@ function resolveTypeShape(
             values: await Promise.all(
                 enum_.values.map(async (enumValue) => ({
                     value: enumValue.value,
-                    description: await serializeMdxContent(enumValue.description),
+                    description: await maybeSerializeMdxContent(enumValue.description),
                     availability: undefined,
                 })),
             ),
-            description: await serializeMdxContent(description),
+            description: await maybeSerializeMdxContent(description),
             availability,
         }),
         undiscriminatedUnion: async (undiscriminatedUnion) => ({
@@ -706,18 +709,18 @@ function resolveTypeShape(
                 undiscriminatedUnion.variants.map(async (variant) => ({
                     displayName: variant.displayName,
                     shape: await resolveTypeReference(variant.type, types),
-                    description: await serializeMdxContent(variant.description),
+                    description: await maybeSerializeMdxContent(variant.description),
                     availability: variant.availability,
                 })),
             ),
-            description: await serializeMdxContent(description),
+            description: await maybeSerializeMdxContent(description),
             availability,
         }),
         alias: async (alias) => ({
             type: "alias",
             name,
             shape: await resolveTypeReference(alias.value, types),
-            description: await serializeMdxContent(description),
+            description: await maybeSerializeMdxContent(description),
             availability,
         }),
         discriminatedUnion: async (discriminatedUnion) => {
@@ -730,11 +733,11 @@ function resolveTypeShape(
                         discriminantValue: variant.discriminantValue,
                         extends: variant.additionalProperties.extends,
                         properties: await resolveObjectProperties(variant.additionalProperties, types),
-                        description: await serializeMdxContent(variant.description),
+                        description: await maybeSerializeMdxContent(variant.description),
                         availability: variant.availability,
                     })),
                 ),
-                description: await serializeMdxContent(description),
+                description: await maybeSerializeMdxContent(description),
                 availability,
             };
         },
@@ -864,7 +867,7 @@ function resolveObjectProperties(
         object.properties.map(async (property): Promise<ResolvedObjectProperty> => {
             const [valueShape, description] = await Promise.all([
                 resolveTypeReference(property.valueType, types),
-                serializeMdxContent(property.description),
+                maybeSerializeMdxContent(property.description),
             ]);
             return {
                 key: property.key,

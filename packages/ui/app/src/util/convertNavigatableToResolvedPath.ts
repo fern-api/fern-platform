@@ -29,7 +29,7 @@ async function getSubtitle(
 
         const frontmatter = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
-            return await serializeMdxContent(frontmatter.excerpt, true);
+            return await serializeMdxContent(frontmatter.excerpt);
         }
         return undefined;
     } catch (e) {
@@ -95,7 +95,7 @@ export async function convertNavigatableToResolvedPath({
         };
     } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
-        const serializedMdxContent = pageContent != null ? await serializeMdxContent(pageContent.markdown, true) : null;
+        const serializedMdxContent = pageContent != null ? await serializeMdxContent(pageContent.markdown) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
         return {
             type: "changelog-page",
@@ -110,7 +110,7 @@ export async function convertNavigatableToResolvedPath({
                     return {
                         date: item.date,
                         dateString: moment(item.date).format("MMMM D, YYYY"),
-                        markdown: await serializeMdxContent(itemPageContent?.markdown ?? "", true),
+                        markdown: await serializeMdxContent(itemPageContent?.markdown ?? ""),
                         editThisPageUrl: itemPageContent?.editThisPageUrl ?? null,
                     };
                 }),
@@ -122,7 +122,7 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxContent(pageContent.markdown, true);
+        const serializedMdxContent = await serializeMdxContent(pageContent.markdown);
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||

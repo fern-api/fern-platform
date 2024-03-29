@@ -4,7 +4,7 @@ import { MdxContent } from "../MdxContent";
 import { serializeMdxContent } from "../mdx";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
-    const serializedContent = await serializeMdxContent(content, true);
+    const serializedContent = await serializeMdxContent(content, { development: false });
     const result = renderer.create(createElement(MdxContent, { mdx: serializedContent })).toJSON();
 
     assert(result != null);
@@ -13,7 +13,7 @@ async function renderMdxContent(content: string): Promise<renderer.ReactTestRend
     return result;
 }
 
-describe("serializeMdxContent", () => {
+describe("maybeSerializeMdxContent", () => {
     describe("custom html", () => {
         it("should render custom html", async () => {
             const result = await renderMdxContent("<div>Hello world!</div>");

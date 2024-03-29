@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, SidebarNodeRaw } from "@fern-ui/fdr-utils";
-import { serializeMdxContent } from "../mdx/mdx";
+import { maybeSerializeMdxContent } from "../mdx/mdx";
 
 export async function serializeSidebarNodeDescriptionMdx(node: SidebarNodeRaw): Promise<SidebarNode> {
     return visitDiscriminatedUnion(node, "type")._visit<Promise<SidebarNode>>({
@@ -45,6 +45,6 @@ async function serializePageDescriptionMdx<
 >({ description, ...page }: P): Promise<R> {
     return {
         ...page,
-        description: await serializeMdxContent(description),
+        description: await maybeSerializeMdxContent(description),
     } as unknown as R;
 }

@@ -21,17 +21,17 @@ export function stringHasMarkdown(s: string): boolean {
     }
 
     // has headings (using regex, match if any line starts with 1-6 #)
-    if (s.match(/^\s+#{1,6} .+/m)) {
+    if (s.match(/^\s*#{1,6} .+/m)) {
         return true;
     }
 
     // has list items or blockquotes
-    if (s.match(/^\s+[*->] .+/m)) {
+    if (s.match(/^\s*[*->] .+/m)) {
         return true;
     }
 
     // has numbered list items
-    if (s.match(/^\s+\d+\. .+/m)) {
+    if (s.match(/^\s*\d+\. .+/m)) {
         return true;
     }
 
@@ -41,7 +41,7 @@ export function stringHasMarkdown(s: string): boolean {
     }
 
     // has horizontal rules
-    if (s.match(/^\s+---+$/m)) {
+    if (s.match(/^\s*---+$/m)) {
         return true;
     }
 
