@@ -42,7 +42,10 @@ types:
       auth: optional<ApiAuth>
       globalHeaders: optional<list<endpoint.Header>>
       snippetsConfiguration: optional<SnippetsConfig>
-      navigation: optional<ApiNavigationConfigRoot>
+      navigation:
+        type: optional<ApiNavigationConfigRoot>
+        availability: deprecated
+        docs: Use the docs navigation instead.
 
   ApiNavigationConfigRoot:
     properties:

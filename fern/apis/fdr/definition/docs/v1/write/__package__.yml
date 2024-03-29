@@ -2,6 +2,7 @@
 
 imports:
   rootCommons: ../../../commons.yml
+  apiNav: ../commons/api-navigation.yml
 
 service:
   base-path: /registry/docs
@@ -322,6 +323,7 @@ types:
       changelog: optional<ChangelogSection>
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
+      navigation: optional<apiNav.ApiNavigationConfigRoot>
 
   ChangelogSection:
     properties:

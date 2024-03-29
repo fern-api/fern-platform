@@ -4,6 +4,7 @@ imports:
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
+  apiNav: ../commons/api-navigation.yml
 
 service:
   base-path: /registry/docs
@@ -369,6 +370,7 @@ types:
       showErrors: boolean
       changelog: optional<ChangelogSection>
       fullSlug: optional<list<string>>
+      navigation: optional<apiNav.ApiNavigationConfigRoot>
 
   ChangelogSection:
     properties:
