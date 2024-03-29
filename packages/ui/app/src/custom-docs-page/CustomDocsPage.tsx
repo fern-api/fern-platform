@@ -94,7 +94,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                 id="right-sidebar"
                 className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0  xl:block"
             >
-                <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
+                <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8" scrollbars="vertical">
                     <HTMLTableOfContents renderedHtml={mdxString} />
                     {editThisPage != null && (
                         <Link

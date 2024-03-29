@@ -4,6 +4,7 @@
 
 .fern-scroll-area-viewport {
     @apply h-full w-full shrink flex min-h-0;
+
     border-radius: inherit;
 
     > div {
@@ -15,9 +16,15 @@
     @apply flex select-none touch-none m-1 transition-all ease-out z-10 rounded-full;
     @apply bg-tag-default;
 }
+
+.fern-scroll-area-scrollbar[data-state="hidden"] {
+    @apply opacity-0;
+}
+
 .fern-scroll-area-scrollbar[data-orientation="vertical"] {
     @apply w-[4px] hover:w-[6px] my-[5px];
 }
+
 .fern-scroll-area-scrollbar[data-orientation="horizontal"] {
     @apply flex-col h-[4px] hover:h-[6px] mx-[5px];
 }
@@ -26,6 +33,7 @@
     @apply flex relative z-auto;
     @apply bg-border-accent-muted flex-1 rounded-full;
 }
+
 /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
 .fern-scroll-area-thumb::before {
     content: "";

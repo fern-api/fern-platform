@@ -43,34 +43,25 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     }
 
     const header = layout?.disableHeader && (
-        <div className="h-header-height-real mx-2 hidden border-b border-transparent lg:flex lg:items-center lg:justify-between">
+        <div className="h-header-height-real mx-3 hidden border-b border-transparent lg:flex lg:items-center lg:justify-between">
             <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
-            <div className="-mr-2">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
+            <div className="-mr-3">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
         </div>
     );
 
     return (
         <div
             className={cn(
-                "flex flex-col px-4 lg:backdrop-blur",
+                "flex flex-col px-4",
                 {
                     "lg:pt-4": !header,
                 },
-                // {
-                //     "border-b data-[border=show]:border-concealed data-[border=hide]:border-transparent": tabs != null,
-                // },
-                // {
-                //     "py-4 lg:pb-2": tabs != null,
-                // },
                 className,
             )}
             data-border={showBorder ? "show" : "hide"}
         >
             {header}
-
             {searchBar}
-
-            {/* <div className="from-background absolute inset-x-0 top-full -ml-4 mt-px h-8 bg-gradient-to-b" /> */}
         </div>
     );
 };

@@ -47,32 +47,31 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
 
     return (
         <nav
-            className={cn("h-full w-full", {
+            className={cn("h-full w-full flex flex-col", {
                 "lg:pl-1": layout?.disableHeader !== true,
             })}
             aria-label="secondary"
         >
+            <SidebarFixedItemsSection
+                searchInfo={searchInfo}
+                algoliaSearchIndex={algoliaSearchIndex}
+                showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
+                showSearchBar={showSearchBar}
+                logoHeight={logoHeight}
+                logoHref={logoHref}
+            />
             <FernScrollArea
-                rootClassName="group/sidebar"
-                className={cn("px-4 pb-12")}
+                rootClassName="flex-1"
+                className={cn("group/sidebar mask-grad-top-6 px-4 pb-12", {
+                    "overscroll-contain": layout?.disableHeader === true,
+                })}
                 scrollbars="vertical"
                 ref={scrollRef}
             >
                 <SearchSidebar searchService={searchService}>
-                    <SidebarFixedItemsSection
-                        className="z-10 -mx-4 lg:sticky lg:top-0"
-                        searchInfo={searchInfo}
-                        algoliaSearchIndex={algoliaSearchIndex}
-                        showBorder={
-                            isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
-                        }
-                        showSearchBar={showSearchBar}
-                        logoHeight={logoHeight}
-                        logoHref={logoHref}
-                    />
                     {tabs.length > 0 && (
                         <ul
-                            className={cn("mt-3 flex list-none flex-col", {
+                            className={cn("mt-4 flex list-none flex-col", {
                                 "lg:hidden": layout?.disableHeader !== true && layout?.tabsPlacement === "HEADER",
                             })}
                         >

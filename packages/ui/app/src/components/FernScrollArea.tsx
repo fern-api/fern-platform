@@ -23,25 +23,33 @@ export const FernScrollArea = forwardRef<HTMLDivElement, FernScrollArea.Props>((
         scrollbars = "both",
         type,
         dir,
-        scrollHideDelay,
+        scrollHideDelay = type !== "scroll" ? 0 : undefined,
         ...viewportProps
     } = props;
     return (
-        <ScrollArea.Root className={cn("fern-scroll-area", rootClassName)} ref={rootRef}>
+        <ScrollArea.Root
+            className={cn("fern-scroll-area", rootClassName)}
+            ref={rootRef}
+            type={type}
+            dir={dir}
+            scrollHideDelay={scrollHideDelay}
+        >
             <ScrollArea.Viewport ref={ref} className={cn("fern-scroll-area-viewport", className)} {...viewportProps}>
                 {children}
             </ScrollArea.Viewport>
             {scrollbars !== "horizontal" && (
-                <ScrollArea.Scrollbar orientation="vertical" className="fern-scroll-area-scrollbar">
+                <ScrollArea.Scrollbar orientation="vertical" className="fern-scroll-area-scrollbar" forceMount>
                     <ScrollArea.Thumb className="fern-scroll-area-thumb" />
                 </ScrollArea.Scrollbar>
             )}
             {scrollbars !== "vertical" && (
-                <ScrollArea.Scrollbar orientation="horizontal" className="fern-scroll-area-scrollbar">
+                <ScrollArea.Scrollbar orientation="horizontal" className="fern-scroll-area-scrollbar" forceMount>
                     <ScrollArea.Thumb className="fern-scroll-area-thumb" />
                 </ScrollArea.Scrollbar>
             )}
-            {props.scrollbars === "both" && <ScrollArea.Corner className="fern-scroll-area-corner" />}
+            {props.scrollbars !== "vertical" && props.scrollbars !== "horizontal" && (
+                <ScrollArea.Corner className="fern-scroll-area-corner" />
+            )}
         </ScrollArea.Root>
     );
 });
