@@ -388,9 +388,9 @@ types:
     union:
       navigationItem: NavigationItem
       subpackage: ApiNavigationConfigSubpackage
-      endpointId: common.EndpointId
-      websocketId: common.WebSocketId
-      webhookId: common.WebhookId
+      endpointId: commons.EndpointId
+      websocketId: commons.WebSocketId
+      webhookId: commons.WebhookId
 
   ApiNavigationConfigSubpackage:
     properties:
