@@ -29,11 +29,11 @@
 }
 
 .code-block-line-gutter {
-    @apply text-faded p-0 align-top w-0 select-none;
+    @apply p-0 align-top w-0 select-none;
 }
 
 .code-block-line-gutter > span {
-    @apply pl-3;
+    @apply pl-3 text-faded;
 }
 
 .code-block-line-content {
@@ -106,7 +106,7 @@
 }
 
 :is(.dark) .code-block-root,
-:is(.dark) .code-block-root span {
+:is(.dark) .code-block-root .code-block-line-content span {
     color: var(--shiki-dark) !important;
 
     /* background-color: var(--shiki-dark-bg) !important; */
