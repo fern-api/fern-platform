@@ -846,12 +846,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.0
         version: 4.0.0
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0
-      remark-rehype:
-        specifier: ^11.1.0
-        version: 11.1.0
       shiki:
         specifier: ^1.1.7
         version: 1.2.0
