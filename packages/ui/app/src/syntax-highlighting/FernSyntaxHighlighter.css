@@ -1,5 +1,6 @@
 .code-block-root {
     @apply overflow-hidden flex flex-col w-full;
+
     counter-reset: code-block-line;
     background-color: unset !important;
 }
@@ -28,21 +29,11 @@
 }
 
 .code-block-line-gutter {
-    @apply text-faded p-0 align-top w-0;
-    counter-increment: code-block-line;
+    @apply p-0 align-top w-0 select-none;
 }
 
-.code-block-line-gutter::before {
-    @apply pl-3;
-    content: counter(code-block-line);
-}
-
-.code-block-line-group.gutter-cli .code-block-line-gutter::before {
-    content: ">";
-}
-
-.code-block-line-group.gutter-cli .code-block-line:first-child .code-block-line-gutter::before {
-    content: "$";
+.code-block-line-gutter > span {
+    @apply pl-3 text-faded;
 }
 
 .code-block-line-content {
@@ -115,9 +106,11 @@
 }
 
 :is(.dark) .code-block-root,
-:is(.dark) .code-block-root span {
+:is(.dark) .code-block-root .code-block-line-content span {
     color: var(--shiki-dark) !important;
+
     /* background-color: var(--shiki-dark-bg) !important; */
+
     /* Optional, if you also want font styles */
     font-style: var(--shiki-dark-font-style) !important;
     font-weight: var(--shiki-dark-font-weight) !important;

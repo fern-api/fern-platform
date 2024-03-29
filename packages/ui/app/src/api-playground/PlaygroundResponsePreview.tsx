@@ -1,5 +1,6 @@
 import { FC, useEffect, useMemo, useRef } from "react";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
+import { ScrollToHandle } from "../syntax-highlighting/FernSyntaxHighlighterTokens";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 
 interface PlaygroundResponsePreviewProps {
@@ -16,7 +17,7 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
                   : JSON.stringify(response.response.body, null, 2),
         [response],
     );
-    const viewportRef = useRef<HTMLDivElement>(null);
+    const viewportRef = useRef<ScrollToHandle>(null);
 
     // const [shouldScroll, setShouldScroll] = useState(true);
 
@@ -24,7 +25,7 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
     useEffect(() => {
         const { current } = viewportRef;
         if (current && response.type === "stream") {
-            current.scrollTop = current.scrollHeight;
+            current.scrollToLast();
         }
     }, [response.type, responseJson]);
 

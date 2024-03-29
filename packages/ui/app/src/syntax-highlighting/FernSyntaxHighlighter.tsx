@@ -1,7 +1,8 @@
 import { forwardRef, useMemo } from "react";
 import { emitDatadogError } from "../analytics/datadogRum";
 import "./FernSyntaxHighlighter.css";
-import { FernSyntaxHighlighterTokens } from "./FernSyntaxHighlighterTokens";
+import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
+import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 
 // [number, number] is a range of lines to highlight
@@ -16,7 +17,7 @@ export interface FernSyntaxHighlighterProps {
     fontSize?: "sm" | "base" | "lg";
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
-    viewportRef?: React.RefObject<HTMLDivElement>;
+    viewportRef?: React.RefObject<ScrollToHandle>;
     maxLines?: number;
 }
 
@@ -46,7 +47,16 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
         }
     }, [code, highlighter, language]);
 
-    return <FernSyntaxHighlighterTokens ref={ref} tokens={tokens} {...innerProps} />;
+    const { maxLines } = innerProps;
+
+    const lines = code.split("\n").length;
+
+    const TokenRenderer =
+        (maxLines != null && lines <= maxLines + 100) || lines <= 500
+            ? FernSyntaxHighlighterTokens
+            : FernSyntaxHighlighterTokensVirtualized;
+
+    return <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />;
 });
 
 FernSyntaxHighlighter.displayName = "FernSyntaxHighlighter";

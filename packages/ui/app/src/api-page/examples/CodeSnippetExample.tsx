@@ -1,6 +1,7 @@
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
+import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
 import { getJsonLineNumbers } from "./getJsonLineNumbers";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
@@ -31,7 +32,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     ...props
 }) => {
     const codeBlockRef = createRef<HTMLPreElement>();
-    const viewportRef = createRef<HTMLDivElement>();
+    const viewportRef = createRef<ScrollToHandle>();
 
     useEffect(() => {
         if (measureHeight == null || codeBlockRef.current == null) {

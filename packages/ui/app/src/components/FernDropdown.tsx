@@ -60,7 +60,7 @@ export function FernDropdown({
     const renderDropdownContent = () => (
         <DropdownMenu.Content className="fern-dropdown" sideOffset={4} side={side} align={align}>
             <FernTooltipProvider>
-                <FernScrollArea className="min-h-0 shrink" viewportClassName="p-1" scrollbars="vertical">
+                <FernScrollArea rootClassName="min-h-0 shrink" className="p-1" scrollbars="vertical">
                     <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
                         {options.map((option, idx) =>
                             option.type === "value" ? (

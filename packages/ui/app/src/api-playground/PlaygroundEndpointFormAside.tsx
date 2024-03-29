@@ -140,9 +140,9 @@ export function PlaygroundEndpointFormAside({
     return (
         <aside className={cn("sticky top-0 flex flex-col", className)} style={{ maxHeight: scrollAreaHeight }}>
             <FernScrollArea
-                ref={scrollAreaRef}
-                className="min-h-0 shrink"
-                viewportClassName="py-6 pr-2 mask-grad-top"
+                rootRef={scrollAreaRef}
+                rootClassName="min-h-0 shrink"
+                className="mask-grad-top py-6 pr-2"
                 type="scroll"
                 scrollbars="vertical"
             >

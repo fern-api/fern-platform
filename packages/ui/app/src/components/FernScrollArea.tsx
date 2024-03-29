@@ -1,31 +1,34 @@
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import cn from "clsx";
 import { forwardRef, PropsWithChildren, RefObject } from "react";
-import { useIsReady } from "../contexts/useIsReady";
 import "./FernScrollArea.css";
 
-interface FernScrollAreaProps extends ScrollArea.ScrollAreaProps {
-    className?: string;
-    viewportClassName?: string;
-    viewportRef?: RefObject<HTMLDivElement>;
-    scrollbars?: "both" | "vertical" | "horizontal";
-}
-export const FernScrollArea = forwardRef<HTMLDivElement, PropsWithChildren<FernScrollAreaProps>>((props, ref) => {
-    const { children, className, viewportClassName, viewportRef, scrollbars = "both", ...innerProps } = props;
-    const hydrated = useIsReady();
-    if (!hydrated) {
-        const { type, dir, scrollHideDelay, ...divProps } = innerProps;
-        return (
-            <div className={cn("fern-scroll-area", className)} ref={ref} {...divProps}>
-                <div ref={viewportRef} className={cn("fern-scroll-area-viewport", viewportClassName)}>
-                    <div style={{ minWidth: "100%", display: "table" }}>{children}</div>
-                </div>
-            </div>
-        );
+export declare namespace FernScrollArea {
+    interface FernScrollAreaProps extends ScrollArea.ScrollAreaProps, Omit<ScrollArea.ScrollAreaViewportProps, "dir"> {
+        className?: string;
+        rootClassName?: string;
+        rootRef?: RefObject<HTMLDivElement>;
+        scrollbars?: "both" | "vertical" | "horizontal";
     }
+
+    export type Props = PropsWithChildren<FernScrollAreaProps>;
+}
+
+export const FernScrollArea = forwardRef<HTMLDivElement, FernScrollArea.Props>((props, ref) => {
+    const {
+        children,
+        className,
+        rootClassName,
+        rootRef,
+        scrollbars = "both",
+        type,
+        dir,
+        scrollHideDelay,
+        ...viewportProps
+    } = props;
     return (
-        <ScrollArea.Root className={cn("fern-scroll-area", className)} ref={ref} {...innerProps}>
-            <ScrollArea.Viewport ref={viewportRef} className={cn("fern-scroll-area-viewport", viewportClassName)}>
+        <ScrollArea.Root className={cn("fern-scroll-area", rootClassName)} ref={rootRef}>
+            <ScrollArea.Viewport ref={ref} className={cn("fern-scroll-area-viewport", className)} {...viewportProps}>
                 {children}
             </ScrollArea.Viewport>
             {scrollbars !== "horizontal" && (
