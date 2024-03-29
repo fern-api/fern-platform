@@ -3,7 +3,7 @@ import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx"
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import { unknownToString } from "../../api-playground/utils";
-import { CodeBlocks } from "../../mdx/components/CodeBlocks";
+import type { FernCodeGroup } from "../../components/FernCodeGroup";
 import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { valueToEstree } from "./to-estree";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
@@ -28,7 +28,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                 const codeBlockItems = visitCodeBlockNodes(node);
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
-                    name: "CodeBlocks",
+                    name: "CodeGroup",
                     attributes: [toAttribute("items", JSON.stringify(codeBlockItems), valueToEstree(codeBlockItems))],
                     children: [],
                 });
@@ -45,23 +45,10 @@ export function rehypeFernCode(): (tree: Root) => void {
                 const codeBlockItems = visitCodeBlockNodes(node);
                 if (codeBlockItems.length === 0) {
                     parent?.children.splice(index, 1);
-                } else if (
-                    codeBlockItems.length === 1 &&
-                    codeBlockItems[0] != null &&
-                    codeBlockItems[0].title == null
-                ) {
-                    parent?.children.splice(index, 1, {
-                        type: "mdxJsxFlowElement",
-                        name: "CodeBlock",
-                        attributes: Object.entries(codeBlockItems[0]).map(([key, value]) =>
-                            toAttribute(key, JSON.stringify(value), valueToEstree(value)),
-                        ),
-                        children: [],
-                    });
                 } else {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
-                        name: "CodeBlocks",
+                        name: "CodeGroup",
                         attributes: [
                             toAttribute("items", JSON.stringify(codeBlockItems), valueToEstree(codeBlockItems)),
                         ],
@@ -99,25 +86,14 @@ export function rehypeFernCode(): (tree: Root) => void {
                         highlightStyle: meta.focused ? "focus" : "highlight",
                         maxLines: meta.maxLines,
                     };
-                    if (meta.title == null) {
-                        parent?.children.splice(index, 1, {
-                            type: "mdxJsxFlowElement",
-                            name: "CodeBlock",
-                            // attributes: [toAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
-                            attributes: Object.entries(props).map(([key, value]) =>
-                                toAttribute(key, JSON.stringify(value), valueToEstree(value)),
-                            ),
-                            children: [],
-                        });
-                    } else {
-                        const itemsProps: [CodeBlocks.Item] = [{ ...props, title: meta.title }];
-                        parent?.children.splice(index, 1, {
-                            type: "mdxJsxFlowElement",
-                            name: "CodeBlocks",
-                            attributes: [toAttribute("items", JSON.stringify(itemsProps), valueToEstree(itemsProps))],
-                            children: [],
-                        });
-                    }
+
+                    const itemsProps: [FernCodeGroup.Item] = [{ ...props, title: meta.title }];
+                    parent?.children.splice(index, 1, {
+                        type: "mdxJsxFlowElement",
+                        name: "CodeGroup",
+                        attributes: [toAttribute("items", JSON.stringify(itemsProps), valueToEstree(itemsProps))],
+                        children: [],
+                    });
                 }
             }
         });
@@ -125,7 +101,7 @@ export function rehypeFernCode(): (tree: Root) => void {
 }
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
-    const codeBlockItems: CodeBlocks.Item[] = [];
+    const codeBlockItems: FernCodeGroup.Item[] = [];
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(

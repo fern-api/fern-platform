@@ -1,12 +1,11 @@
-import { createRef, FC, useCallback, useEffect, useMemo } from "react";
+import { createRef, forwardRef, useEffect, useImperativeHandle, useMemo } from "react";
+import { FernCodeBlock, FernCodeGroup } from "../../components/FernCodeGroup";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
-import { getJsonLineNumbers } from "./getJsonLineNumbers";
 import { JsonPropertyPath } from "./JsonPropertyPath";
-import { TitledExample } from "./TitledExample";
+import { getJsonLineNumbers } from "./getJsonLineNumbers";
 
 export declare namespace CodeSnippetExample {
-    export interface Props extends Omit<TitledExample.Props, "copyToClipboardText"> {
+    export interface Props extends FernCodeGroup.SingleItemProps {
         // hast: Root;
         id?: string;
         code: string;
@@ -15,40 +14,15 @@ export declare namespace CodeSnippetExample {
         json: unknown;
         jsonStartLine?: number;
         scrollAreaStyle?: React.CSSProperties;
-        measureHeight?: (height: number) => void;
     }
 }
 
-const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
-    id,
-    code,
-    language,
-    hoveredPropertyPath,
-    json,
-    jsonStartLine,
-    scrollAreaStyle,
-    measureHeight,
-    ...props
-}) => {
-    const codeBlockRef = createRef<HTMLPreElement>();
+const CodeSnippetExampleInternal = forwardRef<HTMLDivElement, CodeSnippetExample.Props>((props, ref) => {
+    const { id, code, language, hoveredPropertyPath, json, jsonStartLine, scrollAreaStyle, ...innerProps } = props;
     const viewportRef = createRef<HTMLDivElement>();
 
-    useEffect(() => {
-        if (measureHeight == null || codeBlockRef.current == null) {
-            return;
-        }
-
-        const resizeObserver = new ResizeObserver(([entry]) => {
-            if (entry != null) {
-                measureHeight(entry.contentRect.height);
-            }
-        });
-
-        resizeObserver.observe(codeBlockRef.current);
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, [codeBlockRef, measureHeight]);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(innerProps.viewportRef, () => viewportRef.current!);
 
     const requestHighlightLines = useMemo(() => {
         if (hoveredPropertyPath == null || hoveredPropertyPath.length === 0 || jsonStartLine === -1) {
@@ -69,26 +43,28 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     }, [requestHighlightLines, viewportRef]);
 
     return (
-        <TitledExample copyToClipboardText={useCallback(() => code, [code])} {...props}>
-            <FernSyntaxHighlighter
-                id={id}
-                className="rounded-t-0 rounded-b-[inherit]"
-                ref={codeBlockRef}
-                style={scrollAreaStyle}
-                viewportRef={viewportRef}
-                language={language}
-                fontSize="sm"
-                highlightLines={requestHighlightLines}
-                code={code}
-            />
-        </TitledExample>
+        <FernCodeBlock
+            {...innerProps}
+            id={id}
+            style={scrollAreaStyle}
+            language={language}
+            fontSize="sm"
+            code={code}
+            highlightLines={requestHighlightLines}
+            viewportRef={viewportRef}
+            ref={ref}
+        />
     );
-};
+});
 
-export const CodeSnippetExample: FC<CodeSnippetExample.Props> = (props) => {
+CodeSnippetExampleInternal.displayName = "CodeSnippetExampleInternal";
+
+export const CodeSnippetExample = forwardRef<HTMLDivElement, CodeSnippetExample.Props>((props, ref) => {
     return (
         <FernErrorBoundary component="CodeSnippetExample">
-            <CodeSnippetExampleInternal {...props} />
+            <CodeSnippetExampleInternal {...props} ref={ref} />
         </FernErrorBoundary>
     );
-};
+});
+
+CodeSnippetExample.displayName = "CodeSnippetExample";

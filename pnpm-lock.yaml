@@ -1034,6 +1034,9 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
+      postcss-hover-media-feature:
+        specifier: ^1.0.2
+        version: 1.0.2(postcss@8.4.31)
       prettier:
         specifier: ^3.2.4
         version: 3.2.4
@@ -1195,6 +1198,9 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
+      postcss-hover-media-feature:
+        specifier: ^1.0.2
+        version: 1.0.2(postcss@8.4.31)
       prettier:
         specifier: ^3.2.4
         version: 3.2.4
@@ -12491,7 +12497,7 @@ packages:
       postcss: 8.4.31
     dependencies:
       postcss: 8.4.31
-      postcss-selector-parser: 6.0.15
+      postcss-selector-parser: 6.0.16
       postcss-value-parser: 4.2.0
     dev: false
 
@@ -12554,6 +12560,16 @@ packages:
     dependencies:
       postcss: 8.4.31
     dev: false
+
+  /postcss-hover-media-feature@1.0.2(postcss@8.4.31):
+    resolution: {integrity: sha512-o5xDUqCQ4xtilWOcvo5LKYxFVSLWcBN0IlTqa0IJwAwHTd4pxKmX4c0fGIpgLQCcBB/+aFizt2NVWNGJWG4Izg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      postcss: 8.4.31
+    dependencies:
+      postcss: 8.4.31
+      postcss-selector-parser: 6.0.16
+    dev: true
 
   /postcss-import@15.1.0(postcss@8.4.31):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

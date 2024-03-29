@@ -1,0 +1,61 @@
+.fern-code-group {
+    @apply bg-card relative w-full rounded-lg shadow-sm;
+    @apply flex flex-col;
+
+    @apply after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''];
+
+    .fern-copy-button.floating {
+        @apply absolute z-20 transition opacity-0 right-1 top-1;
+    }
+
+    &:hover .fern-copy-button.floating {
+        @apply opacity-100;
+    }
+
+    .fern-code-group-header {
+        @apply bg-tag-default-soft rounded-t-[inherit];
+
+        @apply shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0];
+
+        > .fern-x-overflow {
+            @apply flex min-h-10 flex-shrink min-w-0;
+        }
+
+        .fern-copy-button:last-child {
+            @apply -mx-1;
+        }
+    }
+
+    .fern-code-group-body {
+        @apply flex-1 shrink min-h-0;
+        @apply rounded-b-[inherit];
+
+        &:first-child {
+            @apply rounded-t-[inherit];
+        }
+    }
+
+    .fern-code-group-tab-trigger {
+        @apply flex min-h-10 items-center px-2 py-1.5;
+
+        .fern-code-group-tab-trigger-content {
+            @apply relative t-muted whitespace-nowrap rounded px-2 py-1 text-sm;
+            @apply inline-flex items-center justify-center;
+        }
+
+        &[data-state="active"] {
+            @apply shadow-accent-primary shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)];
+        }
+
+        .invisible,
+        &[data-state="active"] .fern-code-group-tab-trigger-content {
+            @apply font-semibold t-default tracking-[-0.015em];
+        }
+
+        &:hover {
+            .fern-code-group-tab-trigger-content {
+                @apply bg-tag-default;
+            }
+        }
+    }
+}

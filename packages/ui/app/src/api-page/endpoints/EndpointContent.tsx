@@ -12,10 +12,10 @@ import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
-import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
+import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 const EndpointContentCodeSnippets = dynamic(
@@ -281,9 +281,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             "max-h-[150vh] md:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "md:pt-8 md:mt-0 md:top-header-height",
+                            "md:py-8 md:mt-0 md:top-header-height",
                         )}
-                        style={{ height: `${exampleHeight}px` }}
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets

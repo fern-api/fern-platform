@@ -1,20 +1,16 @@
 "use client";
-import dynamic from "next/dynamic";
+import clsx from "clsx";
 import { memo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
 import { AudioExample } from "../examples/AudioExample";
-import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
+import { CodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-
-const CodeSnippetExample = dynamic(
-    () => import("../examples/CodeSnippetExample").then(({ CodeSnippetExample }) => CodeSnippetExample),
-    { ssr: true },
-);
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -37,8 +33,6 @@ export declare namespace EndpointContentCodeSnippets {
     }
 }
 
-const TITLED_EXAMPLE_PADDING = 43;
-
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
     api,
     endpoint,
@@ -53,15 +47,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
-    requestHeight,
-    responseHeight,
 }) => {
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
 
     return (
         <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col gap-6">
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
-                <FernButtonGroup className="min-w-0 shrink">
+                <FernButtonGroup className="min-w-0 shrink-0">
                     {selectedClientGroup?.examples.map((example) => (
                         <FernButton
                             key={example.key}
@@ -81,19 +73,15 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 </FernButtonGroup>
             )}
             <CodeSnippetExample
+                className={clsx("min-h-0 flex-initial")}
                 title={
                     <EndpointUrlWithOverflow
+                        className="-m-1"
                         path={endpoint.path}
                         method={endpoint.method}
                         environment={endpoint.defaultEnvironment?.baseUrl}
                     />
                 }
-                // afterTitle={<span className="t-accent mx-1 px-1 text-xs">{selectedClient.name}</span>}
-                type="primary"
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-                // copyToClipboardText={() => requestCodeSnippet}
                 actions={
                     <>
                         <PlaygroundButton
@@ -102,7 +90,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                                 api,
                                 endpointId: endpoint.slug.join("/"),
                             }}
-                            // example={selectedClient.exampleCall}
                         />
                         {clients.length > 1 ? (
                             <CodeExampleClientDropdown
@@ -120,23 +107,19 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 jsonStartLine={
                     selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
-                scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
             {example.responseBody != null &&
                 (endpoint.responseBody?.shape.type === "fileDownload" ? (
                     <AudioExample title="Response" type={"primary"} />
                 ) : (
                     <CodeSnippetExample
+                        className={clsx("min-h-0 flex-initial")}
                         title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                        type={example.responseStatusCode >= 400 ? "warning" : "primary"}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
+                        intent={example.responseStatusCode >= 400 ? "danger" : "none"}
                         code={responseCodeSnippet}
                         language="json"
                         hoveredPropertyPath={hoveredResponsePropertyPath}
                         json={responseJson}
-                        scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
                     />
                 ))}
         </div>

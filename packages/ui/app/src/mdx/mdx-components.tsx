@@ -19,8 +19,7 @@ import {
 } from "./components/Callout";
 import { Card } from "./components/Card";
 import { Cards } from "./components/Cards";
-import { CodeBlock } from "./components/CodeBlock";
-import { CodeBlocks } from "./components/CodeBlocks";
+import { CodeGroup } from "./components/CodeGroup";
 import { Frame } from "./components/Frame";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
@@ -31,9 +30,7 @@ export const JSX_COMPONENTS = {
     Card,
     Cards,
     CardGroup: Cards,
-    CodeBlock,
-    CodeBlocks,
-    CodeGroup: CodeBlocks, // alias is handled in rehypeFernCode
+    CodeGroup, // aliases [CodeBlock, CodeBlocks] are handled in rehypeFernCode
     Callout,
     Info: InfoCallout,
     Warning: WarningCallout,
