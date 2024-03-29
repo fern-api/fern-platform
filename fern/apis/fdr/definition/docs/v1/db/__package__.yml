@@ -5,7 +5,7 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
-  apiNav: ../commons/api-navigation.yml
+  commons: ../commons/commons.yml
 
 types:
   DocsDefinitionDb:
@@ -150,7 +150,33 @@ types:
       changelog: optional<docsReadV1.ChangelogSection>
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
-      navigation: optional<apiNav.ApiNavigationConfigRoot>
+      navigation: optional<ApiNavigationConfigRoot>
+
+  ApiSummaryPageMetadata:
+    properties:
+      id: docsReadV1.PageId
+      title: string
+      description: optional<string>
+      icon: optional<string>
+
+  ApiNavigationConfigRoot:
+    properties:
+      summary: optional<ApiSummaryPageMetadata>
+      items: list<ApiNavigationConfigItem>
+
+  ApiNavigationConfigItem:
+    union:
+      navigationItem: NavigationItem
+      subpackage: ApiNavigationConfigSubpackage
+      endpointId: common.EndpointId
+      websocketId: common.WebSocketId
+      webhookId: common.WebhookId
+
+  ApiNavigationConfigSubpackage:
+    properties:
+      subpackageId: commons.SubpackageId
+      summary: optional<ApiSummaryPageMetadata>
+      items: list<ApiNavigationConfigItem>
 
   DocsSection:
     properties:

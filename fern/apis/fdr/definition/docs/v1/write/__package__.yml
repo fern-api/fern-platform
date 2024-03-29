@@ -2,7 +2,7 @@
 
 imports:
   rootCommons: ../../../commons.yml
-  apiNav: ../commons/api-navigation.yml
+  commons: ../commons/commons.yml
 
 service:
   base-path: /registry/docs
@@ -323,7 +323,33 @@ types:
       changelog: optional<ChangelogSection>
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
-      navigation: optional<apiNav.ApiNavigationConfigRoot>
+      navigation: optional<ApiNavigationConfigRoot>
+
+  ApiSummaryPageMetadata:
+    properties:
+      id: PageId
+      title: string
+      description: optional<string>
+      icon: optional<string>
+
+  ApiNavigationConfigRoot:
+    properties:
+      summary: optional<ApiSummaryPageMetadata>
+      items: list<ApiNavigationConfigItem>
+
+  ApiNavigationConfigItem:
+    union:
+      navigationItem: NavigationItem
+      subpackage: ApiNavigationConfigSubpackage
+      endpointId: common.EndpointId
+      websocketId: common.WebSocketId
+      webhookId: common.WebhookId
+
+  ApiNavigationConfigSubpackage:
+    properties:
+      subpackageId: commons.SubpackageId
+      summary: optional<ApiSummaryPageMetadata>
+      items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
     properties:
