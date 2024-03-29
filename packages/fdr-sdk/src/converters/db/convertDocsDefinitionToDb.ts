@@ -9,9 +9,9 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 const { kebabCase } = lodash;
 
 export interface S3FileInfo {
@@ -190,6 +190,7 @@ export function transformNavigationItemForDb(
                               hidden: writeShape.changelog.hidden ?? false,
                           }
                         : undefined,
+                navigation: transformApiNavigationTabForDb(writeShape.navigation),
             };
         case "page":
             return {
@@ -393,4 +394,36 @@ function transformColorsV3ForDb({
         default:
             assertNever(writeShape);
     }
+}
+
+function transformApiNavigationTabForDb(
+    writeShape: DocsV1Write.ApiNavigationConfigRoot | undefined,
+): WithoutQuestionMarks<DocsV1Db.ApiNavigationConfigRoot | undefined> {
+    if (writeShape == null) {
+        return undefined;
+    }
+
+    function transformNavigationConfigItemForDb(
+        item: DocsV1Write.ApiNavigationConfigItem,
+    ): DocsV1Db.ApiNavigationConfigItem {
+        if (item.type === "navigationItem") {
+            return {
+                type: "navigationItem",
+                value: transformNavigationItemForDb(item.value),
+            };
+        } else if (item.type === "subpackage") {
+            return {
+                type: "subpackage",
+                subpackageId: item.subpackageId,
+                summary: item.summary,
+                items: item.items.map((subpackageItem) => transformNavigationConfigItemForDb(subpackageItem)),
+            };
+        }
+        return item;
+    }
+
+    return {
+        summary: writeShape.summary,
+        items: writeShape.items.map((item) => transformNavigationConfigItemForDb(item)),
+    };
 }

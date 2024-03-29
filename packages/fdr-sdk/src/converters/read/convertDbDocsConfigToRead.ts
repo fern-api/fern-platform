@@ -1,8 +1,8 @@
 import lodash from "lodash";
 import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 const { kebabCase } = lodash;
 
@@ -148,6 +148,7 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
             return {
                 ...dbShape,
                 showErrors: dbShape.showErrors ?? false,
+                navigation: transformApiNavigationConfigToRead(dbShape.navigation),
             };
         case "page":
         case "link":
@@ -317,4 +318,36 @@ export function getColorsV3(docsDbConfig: DocsV1Db.DocsDbConfig): DocsV1Read.Col
         // fallback to dark and light
         return { type: "darkAndLight", dark, light };
     }
+}
+
+function transformApiNavigationConfigToRead(
+    config: DocsV1Db.ApiNavigationConfigRoot | undefined,
+): DocsV1Read.ApiNavigationConfigRoot | undefined {
+    if (config == null) {
+        return undefined;
+    }
+
+    function transformApiNavigationItemToRead(
+        item: DocsV1Db.ApiNavigationConfigItem,
+    ): DocsV1Read.ApiNavigationConfigItem {
+        if (item.type === "navigationItem") {
+            return {
+                type: "navigationItem",
+                value: transformNavigationItemForDb(item.value),
+            };
+        } else if (item.type === "subpackage") {
+            return {
+                type: "subpackage",
+                subpackageId: item.subpackageId,
+                summary: item.summary,
+                items: item.items.map((subpackageItem) => transformApiNavigationItemToRead(subpackageItem)),
+            };
+        }
+        return item;
+    }
+
+    return {
+        ...config,
+        items: config.items.map((item) => transformApiNavigationItemToRead(item)),
+    };
 }
