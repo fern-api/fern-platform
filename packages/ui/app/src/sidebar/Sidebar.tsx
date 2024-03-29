@@ -60,15 +60,15 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                 logoHeight={logoHeight}
                 logoHref={logoHref}
             />
-            <FernScrollArea
-                rootClassName="flex-1"
-                className={cn("group/sidebar mask-grad-top-6 px-4 pb-12", {
-                    "overscroll-contain": layout?.disableHeader === true,
-                })}
-                scrollbars="vertical"
-                ref={scrollRef}
-            >
-                <SearchSidebar searchService={searchService}>
+            <SearchSidebar searchService={searchService}>
+                <FernScrollArea
+                    rootClassName="flex-1"
+                    className={cn("group/sidebar mask-grad-top-6 px-4 pb-12", {
+                        "overscroll-contain": layout?.disableHeader === true,
+                    })}
+                    scrollbars="vertical"
+                    ref={scrollRef}
+                >
                     {tabs.length > 0 && (
                         <ul
                             className={cn("mt-4 flex list-none flex-col", {
@@ -92,9 +92,9 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
                     <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
-                </SearchSidebar>
-                <BuiltWithFern />
-            </FernScrollArea>
+                    <BuiltWithFern />
+                </FernScrollArea>
+            </SearchSidebar>
         </nav>
     );
 });

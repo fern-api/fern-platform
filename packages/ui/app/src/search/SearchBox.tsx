@@ -2,8 +2,8 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { atom, useSetAtom } from "jotai";
-import { forwardRef, ReactElement, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { useSearchBox, UseSearchBoxProps } from "react-instantsearch";
+import { ReactElement, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { UseSearchBoxProps, useSearchBox } from "react-instantsearch";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 
@@ -183,14 +183,16 @@ export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(func
                     onValueChange={setQuery}
                     leftIcon={<MagnifyingGlassIcon className="t-muted size-5" />}
                     rightElement={
-                        <FernButton
-                            variant="minimal"
-                            icon={<Cross1Icon className="t-muted" />}
-                            onClick={() => {
-                                setQuery("");
-                                inputRef.current?.focus();
-                            }}
-                        />
+                        inputValue.length > 0 && (
+                            <FernButton
+                                variant="minimal"
+                                icon={<Cross1Icon className="t-muted" />}
+                                onClick={() => {
+                                    setQuery("");
+                                    inputRef.current?.focus();
+                                }}
+                            />
+                        )
                     }
                     onFocus={onFocus}
                 />

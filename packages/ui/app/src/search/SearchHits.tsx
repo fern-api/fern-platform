@@ -143,7 +143,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     return (
-        <div className="mt-4">
+        <FernScrollArea className="mask-grad-top-4 px-2 pt-4">
             {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
@@ -155,6 +155,6 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                     hit={hit}
                 />
             ))}
-        </div>
+        </FernScrollArea>
     );
 };

@@ -309,7 +309,7 @@
     .fern-button {
         @apply transition-[background];
         @apply inline-flex items-center justify-center;
-        @apply rounded-xl lg:rounded-lg px-3 py-1 text-sm h-9 sm:h-8;
+        @apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;
         @apply cursor-default;
 
         &.multiline,
@@ -730,7 +730,7 @@
     .fern-numeric-input-group {
         @apply flex items-center overflow-hidden;
         @apply focus-within:fern-input-focus;
-        @apply ring-default rounded-[10px] md:rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-sm shadow-inner;
+        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
     }
 
     .fern-input-icon {
@@ -749,7 +749,7 @@
 
     .fern-input-group,
     .fern-numeric-input-group {
-        @apply h-9 md:h-8;
+        @apply h-10 sm:h-8;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step {
@@ -771,6 +771,7 @@
     .fern-input,
     .fern-textarea {
         @apply caret-accent-primary py-2 px-2.5 text-sm;
+        @apply max-sm:text-base;
     }
 
     input.fern-input::-webkit-outer-spin-button,

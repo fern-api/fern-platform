@@ -141,7 +141,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mt-4 flex-1" />
+            <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mx-4 mt-4" />
             <SearchMobileHits>{children}</SearchMobileHits>
         </InstantSearch>
     );
