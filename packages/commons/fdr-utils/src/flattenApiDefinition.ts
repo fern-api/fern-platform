@@ -241,7 +241,7 @@ function flattenPackage(
                 return;
             }
             const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
-            const subpackageOrder = subpackageInfo?.items
+            const innerSubpackageInfo = subpackageInfo?.items
                 ?.filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
                 .find((item) => item.subpackageId === subpackageId);
             return {
@@ -249,13 +249,13 @@ function flattenPackage(
                 subpackageId: subpackage.subpackageId,
                 name: subpackage.displayName ?? titleCase(subpackage.name),
                 description: subpackage.description,
-                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageInfo),
+                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, innerSubpackageInfo),
             };
         })
         .filter(isNonNullish);
 
     const navigationItems =
-        order?.filter(
+        subpackageInfo?.items.filter(
             (item): item is DocsV1Read.ApiNavigationConfigItem.NavigationItem => item.type === "navigationItem",
         ) ?? [];
 
@@ -267,9 +267,9 @@ function flattenPackage(
         ...navigationItems,
     ];
 
-    if (order != null && order.length > 0) {
+    if (subpackageInfo != null && subpackageInfo.items.length > 0) {
         items.sort((a, b) => {
-            const aIndex = order.findIndex((item) => {
+            const aIndex = subpackageInfo.items.findIndex((item) => {
                 if (item.type === "subpackage" && a.type === "subpackage") {
                     return item.subpackageId === a.subpackageId;
                 }
@@ -283,7 +283,7 @@ function flattenPackage(
                 }
                 return false;
             });
-            const bIndex = order.findIndex((item) => {
+            const bIndex = subpackageInfo.items.findIndex((item) => {
                 if (item.type === "subpackage" && b.type === "subpackage") {
                     return item.subpackageId === b.subpackageId;
                 }
