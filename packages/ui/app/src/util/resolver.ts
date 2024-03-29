@@ -1,6 +1,6 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { WithoutQuestionMarks } from "@fern-api/fdr-sdk/dist/converters/utils/WithoutQuestionMarks";
-import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import {
     FlattenedApiDefinition,
     FlattenedApiDefinitionPackage,
@@ -109,7 +109,7 @@ async function resolveSubpackage(
         name: subpackage.name,
         description: await serializeMdxContent(subpackage.description),
         availability: undefined,
-        title: titleCase(subpackage.name),
+        title: subpackage.name, // titleCase() is already applied for FlattenedApiDefinition
         type: "subpackage",
         apiSectionId: apiDefinition.api,
         id: subpackage.subpackageId,
