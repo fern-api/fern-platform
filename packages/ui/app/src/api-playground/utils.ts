@@ -2,7 +2,6 @@ import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/c
 import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
 import {
-    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
     ResolvedExampleEndpointRequest,
@@ -11,15 +10,17 @@ import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    ResolvedWebSocketChannel,
+    dereferenceObjectProperties,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import {
-    convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
     PlaygroundRequestFormState,
+    convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
 } from "./types";
 
 export function unknownToString(value: unknown): string {
@@ -329,6 +330,40 @@ function buildRedactedHeaders(
     const requestBody = endpoint.requestBody[0];
     if (endpoint.method !== "GET" && requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
+    }
+
+    return headers;
+}
+
+export function buildUnredactedHeadersWebsocket(
+    websocket: ResolvedWebSocketChannel,
+    formState: PlaygroundRequestFormState,
+): Record<string, string> {
+    const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
+
+    if (websocket.auth != null && formState.auth != null) {
+        const { auth } = websocket;
+        visitDiscriminatedUnion(formState.auth, "type")._visit({
+            bearerAuth: (bearerAuth) => {
+                if (auth.type === "bearerAuth") {
+                    headers["Authorization"] = `Bearer ${bearerAuth.token}`;
+                }
+            },
+            header: (header) => {
+                if (auth.type === "header") {
+                    const value = header.headers[auth.headerWireValue];
+                    if (value != null) {
+                        headers[auth.headerWireValue] = value;
+                    }
+                }
+            },
+            basicAuth: (basicAuth) => {
+                if (auth.type === "basicAuth") {
+                    headers["Authorization"] = `Basic ${btoa(`${basicAuth.username}:${basicAuth.password}`)}`;
+                }
+            },
+            _other: noop,
+        });
     }
 
     return headers;

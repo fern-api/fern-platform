@@ -3,11 +3,11 @@ import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, use
 import { Wifi, WifiOff } from "react-feather";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
-import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
+import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundWebSocketRequestFormState } from "./types";
-import { buildRequestUrl } from "./utils";
+import { buildRequestUrl, buildUnredactedHeadersWebsocket } from "./utils";
 
 interface PlaygroundWebSocketProps {
     websocket: ResolvedWebSocketChannel;
@@ -65,7 +65,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                     JSON.stringify({
                         type: "handshake",
                         url,
-                        headers: formState.headers,
+                        headers: buildUnredactedHeadersWebsocket(websocket, formState),
                     }),
                 );
             };
@@ -99,14 +99,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                 console.error(event);
             };
         });
-    }, [
-        formState.headers,
-        formState.pathParameters,
-        formState.queryParameters,
-        pushMessage,
-        websocket.defaultEnvironment?.baseUrl,
-        websocket.path,
-    ]);
+    }, [formState, pushMessage, websocket]);
 
     const handleSendMessage = useCallback(
         async (message: ResolvedWebSocketMessage, data: unknown) => {
