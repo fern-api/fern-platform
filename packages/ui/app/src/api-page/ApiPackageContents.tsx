@@ -6,9 +6,9 @@ import {
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
 } from "../util/resolver";
-import { ApiPackageSummary } from "./ApiPackageSummary";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
+import { ApiPackageSummary } from "./summary/ApiPackageSummary";
 import { WebSocket } from "./web-socket/WebSocket";
 import { Webhook } from "./webhooks/Webhook";
 

@@ -22,18 +22,20 @@ export declare namespace CustomDocsPage {
 }
 
 interface CustomDocsPageHeaderProps {
+    className?: string;
     sectionTitleBreadcrumbs: string[];
     title: string;
     excerpt: SerializedMdxContent | undefined;
 }
 
 export const CustomDocsPageHeader = ({
+    className,
     sectionTitleBreadcrumbs,
     title,
     excerpt,
 }: CustomDocsPageHeaderProps): ReactElement => {
     return (
-        <header className="mb-8">
+        <header className={className}>
             <div className="space-y-1">
                 <Breadcrumbs breadcrumbs={sectionTitleBreadcrumbs} />
 
@@ -76,6 +78,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
             <div className="w-full min-w-0 pt-8 lg:pr-8">
                 <article className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
                     <CustomDocsPageHeader
+                        className="mb-8"
                         title={resolvedPath.title}
                         sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
                         excerpt={

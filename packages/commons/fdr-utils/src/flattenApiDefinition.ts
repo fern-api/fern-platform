@@ -135,6 +135,56 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, APIV1Read.TypeDefinition>;
     globalHeaders: APIV1Read.Header[];
+
+    defaultEnvironment: APIV1Read.Environment | undefined;
+    environments: APIV1Read.Environment[];
+}
+
+function collectEnvironments(package_: FlattenedApiDefinitionPackage): {
+    defaultEnvironment: APIV1Read.Environment | undefined;
+    environments: APIV1Read.Environment[];
+} {
+    let defaultEnvironment: APIV1Read.Environment | undefined;
+    const environments: APIV1Read.Environment[] = [];
+    package_.items.forEach((item) => {
+        FlattenedApiDefinitionPackageItem.visit(item, {
+            endpoint: (endpoint) => {
+                if (defaultEnvironment == null) {
+                    defaultEnvironment = endpoint.defaultEnvironment;
+                }
+                endpoint.environments.forEach((environment) => {
+                    if (!environments.some((e) => e.id === environment.id)) {
+                        environments.push(environment);
+                    }
+                });
+            },
+            websocket: (websocket) => {
+                if (defaultEnvironment == null) {
+                    defaultEnvironment = websocket.defaultEnvironment;
+                }
+                websocket.environments.forEach((environment) => {
+                    if (!environments.some((e) => e.id === environment.id)) {
+                        environments.push(environment);
+                    }
+                });
+            },
+            webhook: noop,
+            subpackage: (subpackage) => {
+                const subpackageEnvironments = collectEnvironments(subpackage);
+                if (defaultEnvironment == null) {
+                    defaultEnvironment = subpackageEnvironments.defaultEnvironment;
+                }
+                subpackageEnvironments.environments.forEach((environment) => {
+                    if (!environments.some((e) => e.id === environment.id)) {
+                        environments.push(environment);
+                    }
+                });
+            },
+            navigationItems: noop,
+        });
+    });
+
+    return { defaultEnvironment, environments };
 }
 
 export function flattenApiDefinition(
@@ -151,12 +201,15 @@ export function flattenApiDefinition(
         name,
     );
 
+    const collectedEnvironments = collectEnvironments(package_);
+
     return {
         api: apiDefinition.id,
         auth: apiDefinition.auth,
         types: apiDefinition.types,
         globalHeaders: apiDefinition.globalHeaders ?? [],
         ...package_,
+        ...collectedEnvironments,
     };
 }
 

@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
 import { parse } from "url";
@@ -30,43 +30,6 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     useImperativeHandle(parentRef, () => ref.current!);
 
-    const renderPathParts = (parts: EndpointPathPart[]) => {
-        const elements: (ReactElement | null)[] = [];
-        if (showEnvironment && environment != null) {
-            const url = parse(environment);
-            elements.push(
-                <span key="protocol" className="whitespace-nowrap max-sm:hidden">
-                    <span className="text-faded">{url.protocol}</span>
-                    <span className="text-faded">{"//"}</span>
-                    <span className="t-muted">{url.host}</span>
-                </span>,
-            );
-        }
-        parts.forEach((p, i) => {
-            elements.push(
-                <span key={`separator-${i}`} className="text-faded">
-                    {"/"}
-                </span>,
-                visitDiscriminatedUnion(p, "type")._visit({
-                    literal: (literal) => {
-                        return (
-                            <span key={`part-${i}`} className="t-muted whitespace-nowrap">
-                                {literal.value}
-                            </span>
-                        );
-                    },
-                    pathParameter: (pathParameter) => (
-                        <span key={`part-${i}`} className="bg-accent-highlight t-accent whitespace-nowrap rounded px-1">
-                            :{pathParameter.name}
-                        </span>
-                    ),
-                    _other: () => null,
-                }),
-            );
-        });
-        return elements;
-    };
-
     return (
         <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
@@ -85,7 +48,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                     "text-sm": large,
                                 })}
                             >
-                                {renderPathParts(endpointPathParts)}
+                                {renderEndpointUrlPathParts(endpointPathParts, environment, showEnvironment)}
                             </span>
                         </span>
                     )}
@@ -94,3 +57,44 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         </div>
     );
 });
+
+export const renderEndpointUrlPathParts = (
+    parts: EndpointPathPart[],
+    environment?: string,
+    showEnvironment?: boolean,
+): ReactElement[] => {
+    const elements: (ReactElement | null)[] = [];
+    if (showEnvironment && environment != null) {
+        const url = parse(environment);
+        elements.push(
+            <span key="protocol" className="whitespace-nowrap max-sm:hidden">
+                <span className="text-faded">{url.protocol}</span>
+                <span className="text-faded">{"//"}</span>
+                <span className="t-muted">{url.host}</span>
+            </span>,
+        );
+    }
+    parts.forEach((p, i) => {
+        elements.push(
+            <span key={`separator-${i}`} className="text-faded">
+                {"/"}
+            </span>,
+            visitDiscriminatedUnion(p, "type")._visit({
+                literal: (literal) => {
+                    return (
+                        <span key={`part-${i}`} className="t-muted whitespace-nowrap">
+                            {literal.value}
+                        </span>
+                    );
+                },
+                pathParameter: (pathParameter) => (
+                    <span key={`part-${i}`} className="bg-accent-highlight t-accent whitespace-nowrap rounded px-1">
+                        :{pathParameter.name}
+                    </span>
+                ),
+                _other: () => null,
+            }),
+        );
+    });
+    return elements.filter(isNonNullish);
+};

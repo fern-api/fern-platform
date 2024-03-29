@@ -29,6 +29,7 @@ interface FernSyntaxHighlighterTokensCodeProps {
     fontSize?: "sm" | "base" | "lg";
     highlightLines?: HighlightLine[];
     highlightStyle?: "highlight" | "focus";
+    disableLineNumbers?: boolean;
 }
 
 export interface FernSyntaxHighlighterTokensProps extends FernSyntaxHighlighterTokensCodeProps {
@@ -39,7 +40,13 @@ export interface FernSyntaxHighlighterTokensProps extends FernSyntaxHighlighterT
 }
 
 const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProps>(
-    function FernSyntaxHighlighterTokensCode({ fontSize = "base", highlightLines, highlightStyle, tokens }) {
+    function FernSyntaxHighlighterTokensCode({
+        fontSize = "base",
+        highlightLines,
+        highlightStyle,
+        tokens,
+        disableLineNumbers,
+    }) {
         const highlightedLines = useMemo(() => flattenHighlightLines(highlightLines || []), [highlightLines]);
         const lines = useMemo(() => {
             const lines: Element[] = [];
@@ -83,7 +90,7 @@ const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProp
                                     })}
                                     key={lineNumber}
                                 >
-                                    <td className="code-block-line-gutter" />
+                                    {!disableLineNumbers && <td className="code-block-line-gutter" />}
                                     <td className="code-block-line-content">
                                         <HastToJSX hast={line} />
                                     </td>
@@ -106,46 +113,53 @@ const FernSyntaxHighlighterTokensCode = memo<FernSyntaxHighlighterTokensCodeProp
 );
 
 export const FernSyntaxHighlighterTokens = memo(
-    forwardRef<HTMLPreElement, FernSyntaxHighlighterTokensProps>(
-        (
-            { className, style, fontSize = "base", highlightLines, highlightStyle, viewportRef, tokens, maxLines },
-            ref,
-        ) => {
-            const preStyle = useMemo(() => {
-                let preStyle = {};
+    forwardRef<HTMLPreElement, FernSyntaxHighlighterTokensProps>((props, ref) => {
+        const {
+            className,
+            style,
+            fontSize = "base",
+            highlightLines,
+            highlightStyle,
+            viewportRef,
+            tokens,
+            maxLines,
+            disableLineNumbers,
+        } = props;
+        const preStyle = useMemo(() => {
+            let preStyle = {};
 
-                visit(tokens.hast, "element", (node) => {
-                    if (node.tagName === "pre") {
-                        preStyle = parseStringStyle(node.properties.style) ?? {};
-                    }
-                });
-                return preStyle;
-            }, [tokens.hast]);
+            visit(tokens.hast, "element", (node) => {
+                if (node.tagName === "pre") {
+                    preStyle = parseStringStyle(node.properties.style) ?? {};
+                }
+            });
+            return preStyle;
+        }, [tokens.hast]);
 
-            return (
-                <pre
-                    className={cn("code-block-root not-prose", className)}
-                    style={{ ...style, ...preStyle }}
-                    ref={ref}
-                    tabIndex={0}
+        return (
+            <pre
+                className={cn("code-block-root not-prose", className)}
+                style={{ ...style, ...preStyle }}
+                ref={ref}
+                tabIndex={0}
+            >
+                <FernScrollArea
+                    viewportRef={viewportRef}
+                    style={{
+                        maxHeight: getMaxHeight(fontSize, maxLines),
+                    }}
                 >
-                    <FernScrollArea
-                        viewportRef={viewportRef}
-                        style={{
-                            maxHeight: getMaxHeight(fontSize, maxLines),
-                        }}
-                    >
-                        <FernSyntaxHighlighterTokensCode
-                            tokens={tokens}
-                            fontSize={fontSize}
-                            highlightLines={highlightLines}
-                            highlightStyle={highlightStyle}
-                        />
-                    </FernScrollArea>
-                </pre>
-            );
-        },
-    ),
+                    <FernSyntaxHighlighterTokensCode
+                        tokens={tokens}
+                        fontSize={fontSize}
+                        highlightLines={highlightLines}
+                        highlightStyle={highlightStyle}
+                        disableLineNumbers={disableLineNumbers}
+                    />
+                </FernScrollArea>
+            </pre>
+        );
+    }),
     (prevProps, nextProps) => {
         return (
             prevProps.tokens === nextProps.tokens &&

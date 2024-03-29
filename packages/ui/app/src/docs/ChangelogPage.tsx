@@ -12,6 +12,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                 <article className="mx-auto w-fit break-words lg:ml-0 xl:mx-auto">
                     <section className="prose dark:prose-invert prose-h1:mt-[1.5em]">
                         <CustomDocsPageHeader
+                            className="mb-8"
                             title={resolvedPath.title}
                             sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
                             excerpt={

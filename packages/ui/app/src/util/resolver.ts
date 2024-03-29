@@ -57,6 +57,8 @@ export async function resolveApiDefinition(
         api: apiDefinition.api,
         auth: apiDefinition.auth,
         types: resolvedTypes,
+        defaultEnvironment: apiDefinition.defaultEnvironment,
+        environments: apiDefinition.environments,
     };
 }
 
@@ -1061,6 +1063,12 @@ export interface ResolvedRootPackage extends ResolvedWithApiDefinition {
     api: FdrAPI.ApiDefinitionId;
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, ResolvedTypeDefinition>;
+    defaultEnvironment: APIV1Read.Environment | undefined;
+    environments: APIV1Read.Environment[];
+}
+
+export function isResolvedRootPackage(item: ResolvedWithApiDefinition): item is ResolvedRootPackage {
+    return (item as ResolvedRootPackage).type === "rootPackage";
 }
 
 export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpackage;

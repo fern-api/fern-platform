@@ -1,16 +1,15 @@
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import { FC } from "react";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { FernScrollArea } from "../components/FernScrollArea";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useShouldHideFromSsg } from "../contexts/navigation-context/useNavigationContext";
-import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
-import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPackageItem, ResolvedWithApiDefinition } from "../util/resolver";
-import { EndpointUrlWithOverflow } from "./endpoints/EndpointUrlWithOverflow";
-import { TitledExample } from "./examples/TitledExample";
-import { useApiPageCenterElement } from "./useApiPageCenterElement";
+import { FernErrorBoundary } from "../../components/FernErrorBoundary";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
+import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { CustomDocsPageHeader } from "../../custom-docs-page/CustomDocsPage";
+import { MdxContent } from "../../mdx/MdxContent";
+import { ResolvedWithApiDefinition, isResolvedRootPackage } from "../../util/resolver";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { SummaryEndpointsCard } from "./SummaryEndpointsCard";
+import { SummaryEnvironmentCard } from "./SummaryEnvironmentCard";
 
 export declare namespace ApiPackageSummary {
     export interface Props {
@@ -48,10 +47,11 @@ const ApiPackageSummaryContent: FC<ApiPackageSummary.Props> = ({ apiDefinition, 
         >
             <article
                 className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
+                    "border-default border-b mb-px": !isLastInApi && !isApiScrollingDisabled,
                 })}
             >
                 <CustomDocsPageHeader
+                    className="pt-8"
                     title={apiDefinition.title ?? apiDefinition.name}
                     sectionTitleBreadcrumbs={breadcrumbs}
                     excerpt={undefined}
@@ -68,25 +68,13 @@ const ApiPackageSummaryContent: FC<ApiPackageSummary.Props> = ({ apiDefinition, 
                     </section>
                     <aside className="max-w-content-width">
                         <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height sticky flex flex-col gap-6 py-8">
-                            <TitledExample title={"Endpoints"} type="primary" disableClipboard={true}>
-                                <FernScrollArea>
-                                    {apiDefinition.items.map((item) =>
-                                        ResolvedPackageItem.visit(item, {
-                                            endpoint: (endpoint) => (
-                                                <div key={endpoint.id} className="mb-4">
-                                                    <EndpointUrlWithOverflow
-                                                        method={endpoint.method}
-                                                        path={endpoint.path}
-                                                    />
-                                                </div>
-                                            ),
-                                            webhook: () => null,
-                                            websocket: () => null,
-                                            subpackage: () => null,
-                                        }),
-                                    )}
-                                </FernScrollArea>
-                            </TitledExample>
+                            {isResolvedRootPackage(apiDefinition) && (
+                                <SummaryEnvironmentCard
+                                    defaultEnvironment={apiDefinition.defaultEnvironment}
+                                    environments={apiDefinition.environments}
+                                />
+                            )}
+                            <SummaryEndpointsCard items={apiDefinition.items} />
                         </div>
                     </aside>
                 </div>

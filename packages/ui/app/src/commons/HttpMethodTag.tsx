@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import cn from "clsx";
-import { memo } from "react";
+import { FC, memo } from "react";
 export declare namespace HttpMethodTag {
     export interface Props {
         method: FdrAPI.api.v1.read.HttpMethod;
@@ -9,10 +9,30 @@ export declare namespace HttpMethodTag {
     }
 }
 
-const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small = false, className }) => {
+export const WebSocketTag: FC<{ className?: string; small?: boolean }> = ({ className, small = false }) => {
     return (
         <span
-            className={cn(className, "uppercase font-mono flex items-center leading-none", {
+            className={cn(
+                className,
+                "uppercase font-mono inline-flex items-center leading-none bg-tag-default t-default",
+                {
+                    ["py-1 px-1.5 rounded-md h-5 text-[10px]"]: small,
+                    ["py-1 px-2 rounded-lg h-6 text-xs"]: !small,
+                },
+            )}
+            style={{
+                lineHeight: 1,
+            }}
+        >
+            WSS
+        </span>
+    );
+};
+
+const UnmemoizedHttpMethodTag: FC<HttpMethodTag.Props> = ({ method, small = false, className }) => {
+    return (
+        <span
+            className={cn(className, "uppercase font-mono inline-flex items-center leading-none", {
                 ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
                     method === FdrAPI.api.v1.read.HttpMethod.Get,
                 ["bg-method-post/10 text-method-post dark:bg-method-post-dark/10 dark:text-method-post-dark"]:

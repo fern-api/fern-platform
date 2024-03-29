@@ -81,7 +81,7 @@ export async function convertNavigatableToResolvedPath({
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug, undefined, traverseState.curr.title);
+        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug, undefined, apiSection.title);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
         const apiDefinition = await resolveApiDefinition(flattenedApiDefinition, pages);
         return {

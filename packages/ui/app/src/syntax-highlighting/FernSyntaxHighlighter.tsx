@@ -18,6 +18,7 @@ export interface FernSyntaxHighlighterProps {
     highlightStyle?: "highlight" | "focus";
     viewportRef?: React.RefObject<HTMLDivElement>;
     maxLines?: number;
+    disableLineNumbers?: boolean;
 }
 
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>((props, ref) => {

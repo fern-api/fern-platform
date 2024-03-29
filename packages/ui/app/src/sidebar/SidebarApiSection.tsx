@@ -6,7 +6,7 @@ import { isEqual, last, sortBy } from "lodash-es";
 import moment from "moment";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
-import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { HttpMethodTag, WebSocketTag } from "../commons/HttpMethodTag";
 import { StreamTag } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
@@ -121,7 +121,7 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                                 )
                             ) : item.apiType === "websocket" ? (
                                 <FernTooltip content="WebSocket Channel">
-                                    <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
+                                    <WebSocketTag small />
                                 </FernTooltip>
                             ) : null
                         }
@@ -129,12 +129,14 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         hidden={item.hidden}
                     />
                 ) : (
-                    <SidebarSection
-                        navigationItems={[item]}
-                        slug={item.slug}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
-                        depth={Math.max(0, depth - 1)}
-                    />
+                    <li>
+                        <SidebarSection
+                            navigationItems={[item]}
+                            slug={item.slug}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            depth={Math.max(0, depth - 1)}
+                        />
+                    </li>
                 ),
             )}
             {apiSection.changelog != null && (
