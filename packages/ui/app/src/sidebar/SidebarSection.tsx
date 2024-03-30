@@ -133,6 +133,8 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                             selected={isEqual(selectedSlug, page.slug)}
                                             icon={page.icon}
                                             hidden={page.hidden}
+                                            shallow={isEqual(selectedSlug, page.slug)}
+                                            scrollOnShallow={true}
                                         />
                                     ),
                                     _other: () => null,

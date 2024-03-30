@@ -29,7 +29,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     return (
-        <FernErrorBoundary className="flex h-screen items-center justify-center">
+        <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
             <ThemeProvider colors={pageProps.colors}>
                 <IsReadyProvider>
                     <DatadogInit />

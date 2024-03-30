@@ -36,6 +36,7 @@ interface SidebarSlugLinkProps {
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     tooltipContent?: ReactNode;
     hidden: boolean;
+    scrollOnShallow?: boolean;
 }
 
 type SidebarLinkProps = PropsWithChildren<
@@ -70,6 +71,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         target,
         rel,
         hidden,
+        scrollOnShallow,
     } = props;
 
     if (hidden && !expanded && !selected) {
@@ -91,7 +93,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                     }
                 }}
                 shallow={shallow}
-                scroll={!shallow}
+                scroll={scrollOnShallow || !shallow}
                 target={target}
                 rel={rel}
             >

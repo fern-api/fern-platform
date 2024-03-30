@@ -4,13 +4,14 @@ import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { emitDatadogError, emitDatadogErrorLog } from "../analytics/datadogRum";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
     error: unknown;
     className?: string;
     resetErrorBoundary?: () => void;
+    refreshOnError?: boolean;
 }
 
 export function FernErrorTag({
@@ -60,8 +61,17 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     className,
     error,
     resetErrorBoundary,
+    refreshOnError,
 }) => {
     const router = useRouter();
+
+    useEffect(() => {
+        if (refreshOnError) {
+            // eslint-disable-next-line no-console
+            emitDatadogErrorLog("Fern Docs crashed. Reloading the page might fix the issue.");
+            router.reload();
+        }
+    }, [refreshOnError, router]);
 
     useEffect(() => {
         const handleRouteChange = (_route: string, options: { shallow: boolean }) => {

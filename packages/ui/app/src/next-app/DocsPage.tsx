@@ -4,7 +4,6 @@ import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { useTheme } from "next-themes";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Script from "next/script";
 import { ReactElement, ReactNode, useMemo } from "react";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
@@ -45,7 +44,6 @@ export declare namespace DocsPage {
 }
 
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
-    const router = useRouter();
     const files = useDeepCompareMemoize(pageProps.files);
     const layout = useDeepCompareMemoize(pageProps.layout);
     const colors = useDeepCompareMemoize(pageProps.colors);
@@ -67,13 +65,6 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
         () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
         [colors, css, files, layout, tabs.length, typography],
     );
-
-    if (baseUrl == null) {
-        // eslint-disable-next-line no-console
-        console.error("Fern Docs crashed. Reloading the page might fix the issue.");
-        router.reload();
-        return null;
-    }
 
     function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
         // If the basePath is present, it's not clear whether or not the site is hosted on a custom domain.
