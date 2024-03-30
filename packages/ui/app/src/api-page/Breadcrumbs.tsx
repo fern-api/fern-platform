@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { Fragment, ReactElement } from "react";
 
-export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: string[] }): ReactElement | null {
+export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: readonly string[] }): ReactElement | null {
     if (breadcrumbs.length === 0) {
         return null;
     }

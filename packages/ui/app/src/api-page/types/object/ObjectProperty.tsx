@@ -151,4 +151,4 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
 
 UnmemoizedObjectPropertyInternal.displayName = "UnmemoizedObjectPropertyInternal";
 
-export const ObjectPropertyInternal = memo(UnmemoizedObjectPropertyInternal);
+const ObjectPropertyInternal = memo(UnmemoizedObjectPropertyInternal);

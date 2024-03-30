@@ -13,7 +13,7 @@ export declare namespace ApiSubpackage {
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: string[];
-        breadcrumbs: string[];
+        breadcrumbs: readonly string[];
     }
 }
 

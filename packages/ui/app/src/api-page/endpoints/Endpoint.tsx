@@ -9,7 +9,7 @@ export declare namespace Endpoint {
         api: string;
         showErrors: boolean;
         endpoint: ResolvedEndpointDefinition;
-        breadcrumbs: string[];
+        breadcrumbs: readonly string[];
         isLastInApi: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }

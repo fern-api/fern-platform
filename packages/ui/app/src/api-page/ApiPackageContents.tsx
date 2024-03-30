@@ -1,4 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
     isResolvedSubpackage,
@@ -30,11 +32,14 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
-    breadcrumbs = [],
+    breadcrumbs = EMPTY_ARRAY,
 }) => {
     const { items } = apiDefinition;
     const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
-    const currentBreadcrumbs = subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs;
+    const currentBreadcrumbs = useMemo(
+        () => (subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs),
+        [breadcrumbs, subpackageTitle],
+    );
 
     return (
         <>
