@@ -7,6 +7,7 @@ import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { IsReadyProvider } from "../contexts/useIsReady";
+import { SlugListenerContextProvider } from "../contexts/useSlugListener";
 import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
@@ -32,13 +33,15 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
             <ThemeProvider colors={pageProps.colors}>
                 <IsReadyProvider>
-                    <DatadogInit />
-                    <JotaiProvider store={store}>
-                        <ViewportContextProvider>
-                            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                            <Component {...pageProps} />
-                        </ViewportContextProvider>
-                    </JotaiProvider>
+                    <SlugListenerContextProvider>
+                        <DatadogInit />
+                        <JotaiProvider store={store}>
+                            <ViewportContextProvider>
+                                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                <Component {...pageProps} />
+                            </ViewportContextProvider>
+                        </JotaiProvider>
+                    </SlugListenerContextProvider>
                 </IsReadyProvider>
             </ThemeProvider>
         </FernErrorBoundary>

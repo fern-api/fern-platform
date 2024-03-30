@@ -12,7 +12,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;

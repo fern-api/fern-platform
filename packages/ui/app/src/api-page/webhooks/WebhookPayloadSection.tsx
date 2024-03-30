@@ -7,7 +7,7 @@ export declare namespace WebhookPayloadSection {
     export interface Props {
         payload: ResolvedPayload;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         types: Record<string, ResolvedTypeDefinition>;
     }

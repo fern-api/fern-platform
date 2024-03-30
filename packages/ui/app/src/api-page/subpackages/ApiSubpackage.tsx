@@ -12,8 +12,8 @@ export declare namespace ApiSubpackage {
         showErrors: boolean;
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
-        anchorIdParts: string[];
-        breadcrumbs: string[];
+        anchorIdParts: readonly string[];
+        breadcrumbs: readonly string[];
     }
 }
 

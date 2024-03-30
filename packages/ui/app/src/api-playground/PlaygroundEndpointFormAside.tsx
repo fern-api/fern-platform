@@ -38,7 +38,10 @@ interface PlaygroundEndpointFormAsideProps {
 
 export const FOCUSED_PARAMETER_ATOM = atom<string | undefined>(undefined);
 
-function resolveBreadcrumbs(formState: PlaygroundRequestFormState | undefined, breadcrumbs: string[] = []): unknown {
+function resolveBreadcrumbs(
+    formState: PlaygroundRequestFormState | undefined,
+    breadcrumbs: readonly string[] = [],
+): unknown {
     if (formState == null) {
         return undefined;
     }
@@ -92,7 +95,7 @@ export function PlaygroundEndpointFormAside({
         }
     }, [focusedParameter]);
 
-    function renderPropertyPreview(property: ResolvedObjectProperty, id: string, breadcrumbs: string[] = []) {
+    function renderPropertyPreview(property: ResolvedObjectProperty, id: string, breadcrumbs: readonly string[] = []) {
         const isFocused = focusedParameter === id;
         const shape = unwrapOptional(property.valueShape, types);
         return (

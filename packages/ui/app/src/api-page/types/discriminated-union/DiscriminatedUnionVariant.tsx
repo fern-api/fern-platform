@@ -3,9 +3,9 @@ import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import {
-    dereferenceObjectProperties,
     ResolvedDiscriminatedUnionShapeVariant,
     ResolvedTypeDefinition,
+    dereferenceObjectProperties,
 } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
@@ -20,7 +20,7 @@ export declare namespace DiscriminatedUnionVariant {
     export interface Props {
         discriminant: string;
         unionVariant: ResolvedDiscriminatedUnionShapeVariant;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;

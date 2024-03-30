@@ -27,7 +27,7 @@ export interface PlaygroundEndpointSelectorContentProps {
 export interface ApiGroup {
     api: FdrAPI.ApiId;
     id: string;
-    breadcrumbs: string[];
+    breadcrumbs: readonly string[];
     items: SidebarNode.ApiPage[];
 }
 

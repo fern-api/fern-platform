@@ -1,6 +1,6 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
-import { PropsWithChildren, useCallback } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 import { DocsContext } from "./DocsContext";
 
 export declare namespace DocsContextProvider {
@@ -43,21 +43,38 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
     return (
         <DocsContext.Provider
-            value={{
-                domain: baseUrl.domain,
-                basePath: baseUrl.basePath,
-                layout,
-                colors,
-                typography,
-                css,
-                files,
-                resolveFile,
-                currentTabIndex,
-                tabs,
-                currentVersionIndex,
-                versions,
-                sidebarNodes,
-            }}
+            value={useMemo(
+                () => ({
+                    domain: baseUrl.domain,
+                    basePath: baseUrl.basePath,
+                    layout,
+                    colors,
+                    typography,
+                    css,
+                    files,
+                    resolveFile,
+                    currentTabIndex,
+                    tabs,
+                    currentVersionIndex,
+                    versions,
+                    sidebarNodes,
+                }),
+                [
+                    baseUrl.basePath,
+                    baseUrl.domain,
+                    colors,
+                    css,
+                    currentTabIndex,
+                    currentVersionIndex,
+                    files,
+                    layout,
+                    resolveFile,
+                    sidebarNodes,
+                    tabs,
+                    typography,
+                    versions,
+                ],
+            )}
         >
             {children}
         </DocsContext.Provider>

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { ViewportContext } from "./ViewportContext";
 
 /*
@@ -86,5 +86,11 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
         };
     }, []);
 
-    return <ViewportContext.Provider value={{ layoutBreakpoint, viewportSize }}>{children}</ViewportContext.Provider>;
+    return (
+        <ViewportContext.Provider
+            value={useMemo(() => ({ layoutBreakpoint, viewportSize }), [layoutBreakpoint, viewportSize])}
+        >
+            {children}
+        </ViewportContext.Provider>
+    );
 };

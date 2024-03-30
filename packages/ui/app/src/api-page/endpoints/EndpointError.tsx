@@ -1,13 +1,13 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { memo, MouseEventHandler } from "react";
+import { MouseEventHandler, memo } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
 import {
-    dereferenceObjectProperties,
     ResolvedError,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    dereferenceObjectProperties,
     unwrapReference,
 } from "../../util/resolver";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -24,7 +24,7 @@ export declare namespace EndpointError {
         isSelected: boolean;
         onClick: MouseEventHandler<HTMLButtonElement>;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         availability: APIV1Read.Availability | null | undefined;
         defaultExpandAll?: boolean;

@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
@@ -39,7 +40,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showEr
                 showErrors={showErrors}
                 apiDefinition={initialApi}
                 isLastInParentPackage={true}
-                anchorIdParts={[]}
+                anchorIdParts={EMPTY_ARRAY}
             />
 
             {isApiScrollingDisabled && (
