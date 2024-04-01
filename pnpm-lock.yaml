@@ -950,8 +950,8 @@ importers:
         specifier: ^3.335.0
         version: 3.537.0
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.335.0
-        version: 3.537.0
+        specifier: ^3.540.0
+        version: 3.540.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
@@ -1223,8 +1223,8 @@ importers:
         specifier: ^3.335.0
         version: 3.537.0
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.335.0
-        version: 3.537.0
+        specifier: ^3.540.0
+        version: 3.540.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../packages/fdr-sdk
@@ -2081,8 +2081,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/s3-request-presigner@3.537.0:
-    resolution: {integrity: sha512-jG3u9PTl9LpMFr+AY4jx4HvN3+qCFN5vy45U4E8zPagsQ4MbEseUcYpyyC9SHo+3DIgAJQLNV8Zv3LrtdiB5vQ==}
+  /@aws-sdk/s3-request-presigner@3.540.0:
+    resolution: {integrity: sha512-alm+PiQOzAIfNrabxOG/Fk9uimQq8VCdqmhRvZRG7iDwtl4yrW+ZinoDssWFUgeZgPZQTymLcslC2hvMKHgY9g==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-sdk/signature-v4-multi-region': 3.535.0
