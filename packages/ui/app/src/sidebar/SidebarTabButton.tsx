@@ -31,10 +31,12 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                                 "bg-card group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:border-transparent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent",
                             )}
                         >
-                            <RemoteFontAwesomeIcon
-                                className="bg-text-muted group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background size-3.5"
-                                icon={tab.icon}
-                            />
+                            {tab.icon != null && (
+                                <RemoteFontAwesomeIcon
+                                    className="bg-text-muted group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background size-3.5"
+                                    icon={tab.icon}
+                                />
+                            )}
                         </div>
                     </div>
                     <span className="truncate font-medium">{tab.title}</span>
