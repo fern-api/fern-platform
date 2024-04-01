@@ -16,10 +16,12 @@ export function HeaderTabs(): ReactElement {
                             data-state={tab.index === currentTabIndex ? "active" : "inactive"}
                         >
                             <div className="flex min-w-0 items-center justify-start space-x-2">
-                                <RemoteFontAwesomeIcon
-                                    className="bg-text-muted group-hover/tab-button:bg-text-default group-data-[state=active]/tab-button:bg-accent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent size-3.5"
-                                    icon={tab.icon}
-                                />
+                                {tab.icon && (
+                                    <RemoteFontAwesomeIcon
+                                        className="bg-text-muted group-hover/tab-button:bg-text-default group-data-[state=active]/tab-button:bg-accent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent size-3.5"
+                                        icon={tab.icon}
+                                    />
+                                )}
                                 <span className="truncate font-medium">{tab.title}</span>
                             </div>
                         </Link>
