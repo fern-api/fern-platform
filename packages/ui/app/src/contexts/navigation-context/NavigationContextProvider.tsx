@@ -303,13 +303,18 @@ const resolveActiveSidebarNode = memoize(
     (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
         const hits: SidebarNode.Page[] = [];
 
-        sidebarNodes.forEach((node) => {
+        for (const node of sidebarNodes) {
             visitSidebarNode(node, (n) => {
                 if (n.type === "page" && n.slug.join("/") === fullSlug.join("/")) {
                     hits.push(n);
+                    return false;
                 }
+                return true;
             });
-        });
+            if (hits.length > 0) {
+                break;
+            }
+        }
 
         return hits[0];
     },

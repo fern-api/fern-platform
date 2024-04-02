@@ -1,50 +1,86 @@
-import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNodeRaw } from "./types";
 
 export function visitSidebarNodeRaw(
     node: SidebarNodeRaw.VisitableNode,
-    visit: (node: SidebarNodeRaw.VisitableNode, parents: SidebarNodeRaw.ParentNode[]) => void,
+    visit: (node: SidebarNodeRaw.VisitableNode, parents: SidebarNodeRaw.ParentNode[]) => void | boolean | "skip",
     parentNodes: SidebarNodeRaw.ParentNode[] = [],
-): void {
-    visit(node, parentNodes);
-    visitDiscriminatedUnion(node, "type")._visit({
+): boolean {
+    const flag = visit(node, parentNodes);
+    if (flag === true || flag == null) {
+        // continue visiting
+    } else if (flag === "skip") {
+        // skip visiting children of this node
+        return true;
+    } else if (flag === false) {
+        // exit
+        return false;
+    }
+
+    return visitDiscriminatedUnion(node, "type")._visit<boolean>({
         pageGroup: (pageGroup) => {
-            pageGroup.pages.forEach((page) => {
+            for (const page of pageGroup.pages) {
                 if (page.type !== "link") {
-                    // pageGroup is a psuedo-node that should not be considered as a parent
-                    visitSidebarNodeRaw(page, visit, parentNodes);
+                    const flag = visitSidebarNodeRaw(page, visit, parentNodes);
+                    if (flag === false) {
+                        return false;
+                    }
                 }
-            });
+            }
+            return true;
         },
         apiSection: (apiSection) => {
-            apiSection.items.forEach((item) => {
-                visitSidebarNodeRaw(item, visit, [...parentNodes, apiSection]);
-            });
-            if (apiSection.changelog) {
-                visitSidebarNodeRaw(apiSection.changelog, visit, [...parentNodes, apiSection]);
+            for (const item of apiSection.items) {
+                const flag = visitSidebarNodeRaw(item, visit, [...parentNodes, apiSection]);
+                if (flag === false) {
+                    return false;
+                }
             }
+            if (apiSection.changelog) {
+                const flag = visitSidebarNodeRaw(apiSection.changelog, visit, [...parentNodes, apiSection]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
         section: (section) => {
-            section.items.forEach((item) => {
-                visitSidebarNodeRaw(item, visit, [...parentNodes, section]);
-            });
+            for (const item of section.items) {
+                const flag = visitSidebarNodeRaw(item, visit, [...parentNodes, section]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
         versionGroup: (versionGroup) => {
-            versionGroup.items.forEach((item) => {
-                visitSidebarNodeRaw(item, visit, [...parentNodes, versionGroup]);
-            });
+            for (const item of versionGroup.items) {
+                const flag = visitSidebarNodeRaw(item, visit, [...parentNodes, versionGroup]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
         tabGroup: (tabGroup) => {
-            tabGroup.items.forEach((item) => {
-                visitSidebarNodeRaw(item, visit, [...parentNodes, tabGroup]);
-            });
+            for (const item of tabGroup.items) {
+                const flag = visitSidebarNodeRaw(item, visit, [...parentNodes, tabGroup]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
-        page: noop,
+        page: () => true,
         root: (root) => {
-            root.items.forEach((item) => {
-                visitSidebarNodeRaw(item, visit, [root, ...parentNodes]);
-            });
+            for (const item of root.items) {
+                const flag = visitSidebarNodeRaw(item, visit, [root, ...parentNodes]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
-        _other: noop,
+        _other: () => true,
     });
 }

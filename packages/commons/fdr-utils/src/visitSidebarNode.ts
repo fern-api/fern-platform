@@ -1,34 +1,59 @@
-import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "./types";
 
 export function visitSidebarNode(
     node: SidebarNode | SidebarNode.Page,
-    visit: (node: SidebarNode | SidebarNode.Page, parents: SidebarNode[]) => void,
+    visit: (node: SidebarNode | SidebarNode.Page, parents: SidebarNode[]) => void | boolean | "skip",
     parentNodes: SidebarNode[] = [],
-): void {
-    visit(node, parentNodes);
-    visitDiscriminatedUnion(node, "type")._visit({
+): boolean {
+    const flag = visit(node, parentNodes);
+    if (flag === true || flag == null) {
+        // continue visiting
+    } else if (flag === "skip") {
+        // skip visiting children of this node
+        return true;
+    } else if (flag === false) {
+        // exit
+        return false;
+    }
+
+    return visitDiscriminatedUnion(node, "type")._visit<boolean>({
         pageGroup: (pageGroup) => {
-            pageGroup.pages.forEach((page) => {
+            for (const page of pageGroup.pages) {
                 if (page.type !== "link") {
-                    visitSidebarNode(page, visit, parentNodes);
+                    const flag = visitSidebarNode(page, visit, parentNodes);
+                    if (flag === false) {
+                        return false;
+                    }
                 }
-            });
+            }
+            return true;
         },
         apiSection: (apiSection) => {
-            apiSection.items.forEach((item) => {
-                visitSidebarNode(item, visit, [...parentNodes, apiSection]);
-            });
-            if (apiSection.changelog) {
-                visitSidebarNode(apiSection.changelog, visit, [...parentNodes, apiSection]);
+            for (const item of apiSection.items) {
+                const flag = visitSidebarNode(item, visit, [...parentNodes, apiSection]);
+                if (flag === false) {
+                    return false;
+                }
             }
+            if (apiSection.changelog) {
+                const flag = visitSidebarNode(apiSection.changelog, visit, [...parentNodes, apiSection]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
         section: (section) => {
-            section.items.forEach((item) => {
-                visitSidebarNode(item, visit, [...parentNodes, section]);
-            });
+            for (const item of section.items) {
+                const flag = visitSidebarNode(item, visit, [...parentNodes, section]);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
         },
-        page: noop,
-        _other: noop,
+        page: () => true,
+        _other: () => true,
     });
 }
