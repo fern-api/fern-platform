@@ -10,7 +10,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { FernTabs } from "../components/FernTabs";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -52,7 +52,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {

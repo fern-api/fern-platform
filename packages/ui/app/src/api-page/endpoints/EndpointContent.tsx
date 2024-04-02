@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useViewportContext } from "../../contexts/viewport-context/useViewportContext";
+import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useViewportSize } from "../../hooks/useViewportSize";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
@@ -76,7 +76,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 }) => {
     const router = useRouter();
     const { layout } = useDocsContext();
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
     const viewportSize = useViewportSize();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
     const { ref: containerRef } = useInView({

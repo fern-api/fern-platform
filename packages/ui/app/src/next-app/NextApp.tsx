@@ -6,9 +6,9 @@ import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { SlugListenerContextProvider } from "../contexts/useSlugListener";
-import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
@@ -36,10 +36,10 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                     <SlugListenerContextProvider>
                         <DatadogInit />
                         <JotaiProvider store={store}>
-                            <ViewportContextProvider>
+                            <LayoutBreakpointProvider>
                                 <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
                                 <Component {...pageProps} />
-                            </ViewportContextProvider>
+                            </LayoutBreakpointProvider>
                         </JotaiProvider>
                     </SlugListenerContextProvider>
                 </IsReadyProvider>

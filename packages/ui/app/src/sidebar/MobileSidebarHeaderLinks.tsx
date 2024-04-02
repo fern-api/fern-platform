@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;
@@ -37,7 +37,7 @@ interface MobileSidebarHeaderLinksProps {
 
 export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLinksProps): ReactElement | null {
     const { layout } = useDocsContext();
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
     }

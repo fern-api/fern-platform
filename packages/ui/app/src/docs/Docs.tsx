@@ -5,8 +5,8 @@ import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useCreateSearchService } from "../services/useSearchService";
 import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
 import { DocsMainContent } from "./DocsMainContent";
@@ -57,7 +57,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     const currentSlug = useMemo(() => selectedSlug?.split("/") ?? [], [selectedSlug]);
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
 
     return (
         <PlaygroundContextProvider>

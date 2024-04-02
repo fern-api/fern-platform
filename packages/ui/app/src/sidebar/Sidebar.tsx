@@ -5,7 +5,7 @@ import { Fragment, memo, useRef } from "react";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
@@ -41,7 +41,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     const { layout, tabs, currentTabIndex, sidebarNodes } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const searchService = useSearchService();
 
@@ -131,7 +131,7 @@ function MobileSidebar(props: SidebarProps) {
 }
 
 export const Sidebar = memo<SidebarProps & { className: string }>(function Sidebar({ className, ...props }) {
-    const { layoutBreakpoint: breakpoint } = useViewportContext();
+    const { layoutBreakpoint: breakpoint } = useLayoutBreakpoint();
     if (["lg", "xl", "2xl"].includes(breakpoint)) {
         return (
             <div className={className}>

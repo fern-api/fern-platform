@@ -1,5 +1,5 @@
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { ViewportContext } from "./ViewportContext";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { LayoutBreakpoint } from "./LayoutBreakpoint";
 
 /*
 theme: {
@@ -22,7 +22,7 @@ theme: {
 }
 */
 
-export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+export const LayoutBreakpointProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
     const [layoutBreakpoint, setBreakpoint] = useState<"mobile" | "sm" | "md" | "lg" | "xl" | "2xl">("lg");
 
     useEffect(() => {
@@ -75,7 +75,5 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
         };
     }, []);
 
-    const value = useMemo(() => ({ layoutBreakpoint }), [layoutBreakpoint]);
-
-    return <ViewportContext.Provider value={value}>{children}</ViewportContext.Provider>;
+    return <LayoutBreakpoint.Provider value={layoutBreakpoint}>{children}</LayoutBreakpoint.Provider>;
 };
