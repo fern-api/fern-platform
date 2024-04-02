@@ -8,7 +8,7 @@ import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
-import { SlugListenerContextProvider } from "../contexts/useRouteListener";
+import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
@@ -33,7 +33,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
             <ThemeProvider colors={pageProps.colors}>
                 <IsReadyProvider>
-                    <SlugListenerContextProvider>
+                    <RouteListenerContextProvider>
                         <DatadogInit />
                         <JotaiProvider store={store}>
                             <LayoutBreakpointProvider>
@@ -41,7 +41,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                                 <Component {...pageProps} />
                             </LayoutBreakpointProvider>
                         </JotaiProvider>
-                    </SlugListenerContextProvider>
+                    </RouteListenerContextProvider>
                 </IsReadyProvider>
             </ThemeProvider>
         </FernErrorBoundary>
