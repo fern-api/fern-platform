@@ -5,6 +5,7 @@ import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBou
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
+import { Badge } from "./components/Badge";
 import { Bleed } from "./components/Bleed";
 import { Button, ButtonGroup } from "./components/Button";
 import {
@@ -33,6 +34,7 @@ export const JSX_COMPONENTS = {
     // fern components
     AccordionGroup,
     Availability,
+    Badge,
     Bleed,
     Button,
     ButtonGroup,
