@@ -1,13 +1,12 @@
 import { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { FernButtonGroup } from "../components/FernButton";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
 import { Bleed } from "./components/Bleed";
-import { Button } from "./components/Button";
+import { Button, ButtonGroup } from "./components/Button";
 import {
     Callout,
     CheckCallout,
@@ -35,7 +34,7 @@ export const JSX_COMPONENTS = {
     Availability,
     Bleed,
     Button,
-    ButtonGroup: FernButtonGroup,
+    ButtonGroup,
     Callout,
     Card,
     CardGroup,

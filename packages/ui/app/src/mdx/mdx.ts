@@ -16,6 +16,7 @@ export interface FernDocsFrontmatter {
     editThisPageUrl?: string;
     image?: string;
     excerpt?: SerializedMdxContent;
+    layout?: "overview" | "guide";
 }
 
 export interface FernDocsFrontmatterInternal {
@@ -24,6 +25,7 @@ export interface FernDocsFrontmatterInternal {
     editThisPageUrl?: string;
     image?: string;
     excerpt?: string;
+    layout?: "overview" | "guide";
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;

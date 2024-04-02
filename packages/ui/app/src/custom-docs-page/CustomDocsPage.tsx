@@ -1,3 +1,4 @@
+import { clsx as cn } from "clsx";
 import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -67,6 +68,11 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
         });
     }
 
+    const layout =
+        (typeof resolvedPath.serializedMdxContent !== "string"
+            ? resolvedPath.serializedMdxContent.frontmatter.layout
+            : undefined) ?? "guide";
+
     const editThisPage =
         typeof resolvedPath.serializedMdxContent !== "string"
             ? resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl
@@ -74,7 +80,15 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
     return (
         <div className="relative flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="z-10 w-full min-w-0 pt-8 lg:pr-8">
-                <article className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
+                <article
+                    className={cn(
+                        "prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 mx-auto w-full break-words lg:ml-0 xl:mx-auto pb-20",
+                        {
+                            "max-w-content-width": layout === "guide",
+                            "max-w-content-wide-width": layout === "overview",
+                        },
+                    )}
+                >
                     <CustomDocsPageHeader
                         title={resolvedPath.title}
                         sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
@@ -86,27 +100,28 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
                     />
 
                     <FernErrorBoundary component="CustomDocsPage">{mdxContent}</FernErrorBoundary>
-                    <BottomNavigationButtons />
-                    <div className="h-20" />
+                    {layout === "guide" && <BottomNavigationButtons />}
                 </article>
             </div>
             <aside
                 id="right-sidebar"
-                className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0 xl:block"
+                className="top-header-height h-vh-minus-header w-sidebar-width sticky hidden shrink-0 xl:block"
             >
-                <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8" scrollbars="vertical">
-                    <HTMLTableOfContents renderedHtml={mdxString} />
-                    {editThisPage != null && (
-                        <Link
-                            href={editThisPage}
-                            target="_blank"
-                            className="t-muted hover:t-default my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
-                        >
-                            Edit this page
-                        </Link>
-                    )}
-                    <Feedback className="sticky top-full" />
-                </FernScrollArea>
+                {layout === "guide" && (
+                    <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8" scrollbars="vertical">
+                        <HTMLTableOfContents renderedHtml={mdxString} />
+                        {editThisPage != null && (
+                            <Link
+                                href={editThisPage}
+                                target="_blank"
+                                className="t-muted hover:t-default my-3 block hyphens-auto break-words py-1.5 text-sm leading-5 no-underline transition hover:no-underline"
+                            >
+                                Edit this page
+                            </Link>
+                        )}
+                        <Feedback className="sticky top-full" />
+                    </FernScrollArea>
+                )}
             </aside>
         </div>
     );
