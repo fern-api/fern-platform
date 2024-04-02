@@ -3,9 +3,11 @@ import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
-import { Accordion } from "./components/Accordion";
+import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
+import { Badge } from "./components/Badge";
 import { Bleed } from "./components/Bleed";
+import { Button, ButtonGroup } from "./components/Button";
 import {
     Callout,
     CheckCallout,
@@ -18,23 +20,45 @@ import {
     WarningCallout,
 } from "./components/Callout";
 import { Card } from "./components/Card";
-import { Cards } from "./components/Cards";
+import { CardGroup } from "./components/CardGroup";
 import { CodeBlock } from "./components/CodeBlock";
-import { CodeBlocks } from "./components/CodeBlocks";
+import { CodeGroup } from "./components/CodeGroup";
+import { Column, ColumnGroup } from "./components/ColumnGroup";
 import { Frame } from "./components/Frame";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
-import { Tabs } from "./components/Tabs";
+import { TabGroup } from "./components/Tabs";
+import { Tooltip } from "./components/Tooltip";
 
 export const JSX_COMPONENTS = {
+    // fern components
+    AccordionGroup,
     Availability,
-    Card,
-    Cards,
-    CardGroup: Cards,
-    CodeBlock,
-    CodeBlocks,
-    CodeGroup: CodeBlocks, // alias is handled in rehypeFernCode
+    Badge,
+    Bleed,
+    Button,
+    ButtonGroup,
     Callout,
+    Card,
+    CardGroup,
+    CodeBlock,
+    CodeGroup, // note: alias is handled in rehypeFernCode
+    Column,
+    ColumnGroup,
+    EndpointRequestSnippet,
+    EndpointResponseSnippet,
+    Frame,
+    Icon: RemoteFontAwesomeIcon,
+    Steps,
+    TabGroup,
+    Tooltip,
+
+    // aliased for backwards compatibility
+    Cards: CardGroup,
+    CodeBlocks: CodeGroup,
+    Tabs: TabGroup,
+
+    // callout aliases
     Info: InfoCallout,
     Warning: WarningCallout,
     Success: SuccessCallout,
@@ -43,17 +67,11 @@ export const JSX_COMPONENTS = {
     Tip: TipCallout,
     Check: CheckCallout,
     LaunchNote: LaunchNoteCallout,
-    Icon: RemoteFontAwesomeIcon,
+
+    // error boundary
     MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
         <FernErrorTag component="MdxErrorBoundary" {...props} />
     ),
-    Tabs,
-    AccordionGroup: Accordion,
-    Steps,
-    EndpointRequestSnippet,
-    EndpointResponseSnippet,
-    Frame,
-    Bleed,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {

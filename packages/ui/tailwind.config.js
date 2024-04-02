@@ -18,6 +18,7 @@ module.exports = {
             spacing: {
                 "page-width": "var(--spacing-page-width)",
                 "content-width": "var(--spacing-content-width)",
+                "content-wide-width": "var(--spacing-content-wide-width)",
                 "endpoint-width": "calc(var(--spacing-content-width) * 2 + 3rem)",
                 "sidebar-width": "var(--spacing-sidebar-width)",
                 "header-height-real": "var(--spacing-header-height-real)",
@@ -156,6 +157,15 @@ module.exports = {
                         },
                         "tbody td[rowspan]:first-child + td, tfoot td[rowspan]:first-child + td": {
                             paddingLeft: 0,
+                        },
+                        p: {
+                            maxWidth: "var(--spacing-content-width)",
+                        },
+                        ol: {
+                            maxWidth: "var(--spacing-content-width)",
+                        },
+                        ul: {
+                            maxWidth: "var(--spacing-content-width)",
                         },
                     },
                 },

@@ -683,10 +683,10 @@ importers:
     dependencies:
       '@datadog/browser-logs':
         specifier: ^5.12.0
-        version: 5.12.0(@datadog/browser-rum@5.12.0)
+        version: 5.12.0(@datadog/browser-rum@5.13.0)
       '@datadog/browser-rum':
-        specifier: ^5.12.0
-        version: 5.12.0(@datadog/browser-logs@5.12.0)
+        specifier: ^5.13.0
+        version: 5.13.0(@datadog/browser-logs@5.12.0)
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
@@ -742,8 +742,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(@types/react-dom@18.2.22)(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)
       '@shikijs/transformers':
-        specifier: ^1.1.7
-        version: 1.2.0
+        specifier: ^1.2.2
+        version: 1.2.2
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
@@ -3647,7 +3647,11 @@ packages:
     resolution: {integrity: sha512-DVV64OqKMxfJXvHJrHjcCji0guytLGBun9jf7tugXN1ylMNurloV5sF1KW1W1Pb0BuEMiJsuyz1DEIqZHO3z0w==}
     dev: false
 
-  /@datadog/browser-logs@5.12.0(@datadog/browser-rum@5.12.0):
+  /@datadog/browser-core@5.13.0:
+    resolution: {integrity: sha512-5WciDj4IqpfaFZViJNXxovmDQiwoPZ/UWq4WMW7YafG22XNjrc6XbL5PWuAaG6fqcYFW0peE8g56ji5O78vMSA==}
+    dev: false
+
+  /@datadog/browser-logs@5.12.0(@datadog/browser-rum@5.13.0):
     resolution: {integrity: sha512-acS4JexEUi5ACJg5nWoXMug26hC9g+t+mNDjMEtpEJbMSRfxdCwxTlHr8G+gYIVAICp63hUYue3Rfs9uQC08ow==}
     peerDependencies:
       '@datadog/browser-rum': 5.12.0
@@ -3656,26 +3660,26 @@ packages:
         optional: true
     dependencies:
       '@datadog/browser-core': 5.12.0
-      '@datadog/browser-rum': 5.12.0(@datadog/browser-logs@5.12.0)
+      '@datadog/browser-rum': 5.13.0(@datadog/browser-logs@5.12.0)
     dev: false
 
-  /@datadog/browser-rum-core@5.12.0:
-    resolution: {integrity: sha512-JHOH3ZBjtnFYA7TMFOE3hUQurubC9ISidhrFvZf+gxbqtYGt8HTqe7pwJpOW2xqfQn1Us3lZyui8/LHayUZLdg==}
+  /@datadog/browser-rum-core@5.13.0:
+    resolution: {integrity: sha512-MbDbg+ciQlYd2c0gE21Jw1P4R/liLIzPQW96iJGpUBG67ScfYjKyNS0GnKtLwak9rcQJInv3FODhgr2DUfm88w==}
     dependencies:
-      '@datadog/browser-core': 5.12.0
+      '@datadog/browser-core': 5.13.0
     dev: false
 
-  /@datadog/browser-rum@5.12.0(@datadog/browser-logs@5.12.0):
-    resolution: {integrity: sha512-k6U4LoUTDozkACHwp9Wk99fTSsKdr9fGxAKAdsco9kAnlCX0QOjbkF/taIincAeMvePRf0BVK+HIUaHZQ9YVLQ==}
+  /@datadog/browser-rum@5.13.0(@datadog/browser-logs@5.12.0):
+    resolution: {integrity: sha512-3xRyKp4rnMWMNhoy/pd8uDpQsNO3dh3nivNk5MzaxKo+mLsJUGFtj9nIq/jN38jl1tOEFbFMcgvCo15bkdHeQw==}
     peerDependencies:
-      '@datadog/browser-logs': 5.12.0
+      '@datadog/browser-logs': 5.13.0
     peerDependenciesMeta:
       '@datadog/browser-logs':
         optional: true
     dependencies:
-      '@datadog/browser-core': 5.12.0
-      '@datadog/browser-logs': 5.12.0(@datadog/browser-rum@5.12.0)
-      '@datadog/browser-rum-core': 5.12.0
+      '@datadog/browser-core': 5.13.0
+      '@datadog/browser-logs': 5.12.0(@datadog/browser-rum@5.13.0)
+      '@datadog/browser-rum-core': 5.13.0
     dev: false
 
   /@discoveryjs/json-ext@0.5.7:
@@ -5496,10 +5500,14 @@ packages:
     resolution: {integrity: sha512-OlFvx+nyr5C8zpcMBnSGir0YPD6K11uYhouqhNmm1qLiis4GA7SsGtu07r9gKS9omks8RtQqHrJL4S+lqWK01A==}
     dev: false
 
-  /@shikijs/transformers@1.2.0:
-    resolution: {integrity: sha512-xKn7DtA65DQV4FOfYsrvqM80xOy2xuXnxWWKsZmHv1VII/IOuDUDsWDu3KnpeLH6wqNJWp1GRoNUsHR1aw/VhQ==}
+  /@shikijs/core@1.2.2:
+    resolution: {integrity: sha512-GXbTyNP6HlxpyWMR4eirW54Cxp84nVuivcV5hGVBgKnIl+UmD4AJgCX1uXuNRcFFAw58lB3HqryuezIc0iCLgw==}
+    dev: false
+
+  /@shikijs/transformers@1.2.2:
+    resolution: {integrity: sha512-GL03TlMh9oBeBLU5pcYBKpZnZZVdXSJ4ec7EQ/uw9+NrVaHs6qTjVN8F/0mvKd+sXLbBga8XZWDdob5F5tx5lw==}
     dependencies:
-      shiki: 1.2.0
+      shiki: 1.2.2
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -13773,6 +13781,12 @@ packages:
     resolution: {integrity: sha512-xLhiTMOIUXCv5DqJ4I70GgQCtdlzsTqFLZWcMHHG3TAieBUbvEGthdrlPDlX4mL/Wszx9C6rEcxU6kMlg4YlxA==}
     dependencies:
       '@shikijs/core': 1.2.0
+    dev: false
+
+  /shiki@1.2.2:
+    resolution: {integrity: sha512-nqazfFgrU+DBLqk4+WjmGQz8sVWkcUcGriHqSM2zGk0GhjirVz4FyJ3AABEx91OpjGiKpuKBg2diYfRfQG3Fbg==}
+    dependencies:
+      '@shikijs/core': 1.2.2
     dev: false
 
   /side-channel@1.0.6:

@@ -9,12 +9,12 @@ export interface TabProps {
     children: ReactNode;
 }
 
-export interface TabsProps {
+export interface TabGroupProps {
     tabs: TabProps[];
     toc?: boolean;
 }
 
-export const Tabs: FC<TabsProps> = ({ tabs, toc: parentToc = true }) => {
+export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => {
     const [activeTab, setActiveTab] = useState("0");
     const router = useRouter();
     const anchor = router.asPath.split("#")[1];

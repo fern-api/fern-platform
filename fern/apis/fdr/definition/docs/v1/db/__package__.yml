@@ -111,7 +111,7 @@ types:
   NavigationTab:
     properties:
       title: string
-      icon: string
+      icon: optional<string>
       items: list<NavigationItem>
       urlSlug: string
 

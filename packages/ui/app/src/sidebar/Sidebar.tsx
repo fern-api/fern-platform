@@ -80,7 +80,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             ))}
                         </ul>
                     )}
-                    <CollapseSidebarProvider>
+                    <CollapseSidebarProvider navigationItems={sidebarNodes}>
                         <FernTooltipProvider>
                             <SidebarSection
                                 navigationItems={sidebarNodes}
@@ -105,7 +105,7 @@ function MobileSidebar(props: SidebarProps) {
 
     return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>
-            <Dialog onClose={closeMobileSidebar} className="top-header-height-real fixed inset-0">
+            <Dialog onClose={closeMobileSidebar} className="top-header-height-real fixed inset-0 z-20">
                 <Transition.Child
                     as="div"
                     className="bg-background/50 top-header-height-real fixed inset-0 z-auto"

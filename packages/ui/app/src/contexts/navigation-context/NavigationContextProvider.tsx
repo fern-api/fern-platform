@@ -1,4 +1,4 @@
-import { SidebarNode, traverseSidebarNodes } from "@fern-ui/fdr-utils";
+import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
@@ -314,7 +314,22 @@ function convertDescriptionToString(
 
 const resolveActiveSidebarNode = memoize(
     (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
-        return traverseSidebarNodes(sidebarNodes, fullSlug).curr;
+        const hits: SidebarNode.Page[] = [];
+
+        for (const node of sidebarNodes) {
+            visitSidebarNode(node, (n) => {
+                if (n.type === "page" && n.slug.join("/") === fullSlug.join("/")) {
+                    hits.push(n);
+                    return false;
+                }
+                return true;
+            });
+            if (hits.length > 0) {
+                break;
+            }
+        }
+
+        return hits[0];
     },
     (_sidebarNodes, fullSlug) => fullSlug.join("/"),
 );

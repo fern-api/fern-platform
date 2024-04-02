@@ -25,7 +25,7 @@ export interface SidebarVersionInfo {
 
 export interface SidebarTab {
     title: string;
-    icon: string;
+    icon?: string;
     index: number;
     slug: readonly string[];
 }

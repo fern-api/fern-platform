@@ -4,6 +4,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 const CSS_VARIABLES = {
     SPACING_PAGE_WIDTH: "--spacing-page-width",
     SPACING_CONTENT_WIDTH: "--spacing-content-width",
+    SPACING_CONTENT_WIDE_WIDTH: "--spacing-content-wide-width",
     SPACING_SIDEBAR_WIDTH: "--spacing-sidebar-width",
     SPACING_HEADER_HEIGHT: "--spacing-header-height",
     SPACING_HEADER_HEIGHT_PADDED: "--spacing-header-height-padded",
@@ -26,14 +27,16 @@ export function getLayoutVariables(
                   _other: () => "88rem",
               });
 
-    const contentWidth =
+    const contentWidthRem =
         layout?.contentWidth == null
-            ? "44rem"
+            ? 44
             : visitDiscriminatedUnion(layout.contentWidth, "type")._visit({
-                  px: (px) => `${px.value}px`,
-                  rem: (rem) => `${rem.value}rem`,
-                  _other: () => "44rem",
+                  px: (px) => px.value / 16,
+                  rem: (rem) => rem.value,
+                  _other: () => 44,
               });
+
+    const contentWideWidthRem = (contentWidthRem * 3) / 2 + 0.5;
 
     const sidebarWidth =
         layout?.sidebarWidth == null
@@ -70,7 +73,8 @@ export function getLayoutVariables(
     return {
         root: {
             [CSS_VARIABLES.SPACING_PAGE_WIDTH]: pageWidth,
-            [CSS_VARIABLES.SPACING_CONTENT_WIDTH]: contentWidth,
+            [CSS_VARIABLES.SPACING_CONTENT_WIDTH]: `${contentWidthRem}rem`,
+            [CSS_VARIABLES.SPACING_CONTENT_WIDE_WIDTH]: `${contentWideWidthRem}rem`,
             [CSS_VARIABLES.SPACING_SIDEBAR_WIDTH]: sidebarWidth,
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: layout?.disableHeader ? "0px" : headerHeight,
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT_PADDED]: layout?.disableHeader ? "1rem" : headerHeightPadded,
