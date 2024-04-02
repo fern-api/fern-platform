@@ -8,7 +8,7 @@ import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
-import { SlugListenerContextProvider } from "../contexts/useSlugListener";
+import { SlugListenerContextProvider } from "../contexts/useRouteListener";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";

@@ -3,7 +3,7 @@ import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { useSlugListener } from "../../contexts/useSlugListener";
+import { useRouteListener } from "../../contexts/useRouteListener";
 import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
@@ -68,7 +68,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
-    useSlugListener(route.slice(1), (anchor) => {
+    useRouteListener(route, (anchor) => {
         const isActive = anchor === anchorId;
         setIsActive(isActive);
         if (isActive) {

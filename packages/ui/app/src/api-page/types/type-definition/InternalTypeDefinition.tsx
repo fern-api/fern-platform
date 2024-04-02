@@ -5,7 +5,7 @@ import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
-import { useSlugListener } from "../../../contexts/useSlugListener";
+import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
 import {
@@ -128,7 +128,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useSlugListener(route.slice(1), (anchor) => {
+    useRouteListener(route, (anchor) => {
         const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
         if (isActive) {
             setCollapsed(false);

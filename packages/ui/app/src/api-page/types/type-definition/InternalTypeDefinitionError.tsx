@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { useSlugListener } from "../../../contexts/useSlugListener";
+import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
 import {
@@ -120,7 +120,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useSlugListener(route.slice(1), (anchor) => {
+    useRouteListener(route, (anchor) => {
         const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
         if (isActive) {
             setCollapsed(false);
