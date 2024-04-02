@@ -131,7 +131,7 @@ function MobileSidebar(props: SidebarProps) {
 }
 
 export const Sidebar = memo<SidebarProps & { className: string }>(function Sidebar({ className, ...props }) {
-    const { layoutBreakpoint: breakpoint } = useLayoutBreakpoint();
+    const breakpoint = useLayoutBreakpoint();
     if (["lg", "xl", "2xl"].includes(breakpoint)) {
         return (
             <div className={className}>
