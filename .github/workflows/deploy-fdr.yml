@@ -107,7 +107,7 @@ jobs:
 
       - name: Publish FDR SDK
         run: |
-          git_version="$(scripts/git-version.sh)"
+          git_version="$(scripts/fdr-version.sh)"
           cd packages/fdr-sdk
           mv package.json package.json.tmp
           version_replace="s/0.0.0/${git_version}/"
