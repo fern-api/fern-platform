@@ -10,22 +10,17 @@ import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
-export interface FernDocsFrontmatter {
-    title?: string;
-    description?: string;
-    editThisPageUrl?: string;
-    image?: string;
-    excerpt?: SerializedMdxContent;
-    layout?: "overview" | "guide";
-}
-
-export interface FernDocsFrontmatterInternal {
+export interface FernDocsFrontmatterRaw {
     title?: string;
     description?: string;
     editThisPageUrl?: string;
     image?: string;
     excerpt?: string;
     layout?: "overview" | "guide";
+}
+
+export interface FernDocsFrontmatter extends Omit<FernDocsFrontmatterRaw, "excerpt"> {
+    excerpt?: MDXRemoteSerializeResult | string;
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
@@ -55,15 +50,15 @@ const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
 export async function maybeSerializeMdxContent(
     content: string,
     options?: SerializeOptions["mdxOptions"],
-): Promise<SerializedMdxContent>;
+): Promise<MDXRemoteSerializeResult | string>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
     options?: SerializeOptions["mdxOptions"],
-): Promise<SerializedMdxContent | undefined>;
+): Promise<MDXRemoteSerializeResult | string | undefined>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
     options?: SerializeOptions["mdxOptions"],
-): Promise<SerializedMdxContent | undefined> {
+): Promise<MDXRemoteSerializeResult | string | undefined> {
     if (content == null) {
         return undefined;
     }
@@ -72,21 +67,40 @@ export async function maybeSerializeMdxContent(
         return content;
     }
 
-    return serializeMdxContent(content, options);
+    try {
+        const firstPass = await serialize(content, {
+            scope: {},
+            mdxOptions: { ...MDX_OPTIONS, ...options },
+            parseFrontmatter: false,
+        });
+
+        return firstPass;
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+
+        emitDatadogError(e, {
+            context: "MDX",
+            errorSource: "maybeSerializeMdxContent",
+            errorDescription: "Failed to serialize MDX content",
+        });
+
+        return content;
+    }
 }
 
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdxContent(
+export async function serializeMdxWithFrontmatter(
     content: string,
     options?: SerializeOptions["mdxOptions"],
 ): Promise<SerializedMdxContent>;
-export async function serializeMdxContent(
+export async function serializeMdxWithFrontmatter(
     content: string | undefined,
     options?: SerializeOptions["mdxOptions"],
 ): Promise<SerializedMdxContent | undefined>;
-export async function serializeMdxContent(
+export async function serializeMdxWithFrontmatter(
     content: string | undefined,
     options: SerializeOptions["mdxOptions"] = {},
 ): Promise<SerializedMdxContent | undefined> {
@@ -94,13 +108,13 @@ export async function serializeMdxContent(
         return undefined;
     }
     try {
-        const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterInternal>(content, {
+        const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterRaw>(content, {
             scope: {},
             mdxOptions: MDX_OPTIONS,
             parseFrontmatter: true,
         });
 
-        let excerpt: SerializedMdxContent | undefined = firstPass.frontmatter?.excerpt;
+        let excerpt: MDXRemoteSerializeResult | string | undefined = firstPass.frontmatter?.excerpt;
 
         if (firstPass.frontmatter?.excerpt) {
             try {

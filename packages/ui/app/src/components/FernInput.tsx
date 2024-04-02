@@ -1,7 +1,7 @@
 import cn from "clsx";
-import { DetailedHTMLProps, forwardRef, InputHTMLAttributes } from "react";
+import { ComponentProps, forwardRef } from "react";
 
-export interface FernInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+export interface FernInputProps extends ComponentProps<"input"> {
     inputClassName?: string;
     leftIcon?: React.ReactNode;
     rightElement?: React.ReactNode;

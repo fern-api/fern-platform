@@ -10,23 +10,24 @@ import {
     FlattenedWebhookDefinition,
 } from "@fern-ui/fdr-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
 import {
     endpointExampleToHttpRequestExample,
     sortKeysByShape,
     stringifyHttpRequestExampleToCurl,
 } from "../api-page/examples/types";
-import { SerializedMdxContent, maybeSerializeMdxContent } from "../mdx/mdx";
+import { maybeSerializeMdxContent } from "../mdx/mdx";
 
 type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
 };
 
-export type WithDescription = { description: SerializedMdxContent | undefined };
+export type WithDescription = { description: MDXRemoteSerializeResult | string | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 export interface WithMetadata {
-    description: SerializedMdxContent | undefined;
+    description: MDXRemoteSerializeResult | string | undefined;
     availability: APIV1Read.Availability | undefined;
 }
 

@@ -1,17 +1,8 @@
 import cn from "clsx";
-import {
-    Children,
-    DetailedHTMLProps,
-    HTMLAttributes,
-    PropsWithChildren,
-    ReactElement,
-    useCallback,
-    useRef,
-    useState,
-} from "react";
+import { Children, ComponentProps, PropsWithChildren, ReactElement, useCallback, useRef, useState } from "react";
 import { useHorizontalSplitPane, useVerticalSplitPane } from "./useSplitPlane";
 
-interface VerticalSplitPaneProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface VerticalSplitPaneProps extends ComponentProps<"div"> {
     aboveClassName?: string;
     belowClassName?: string;
 }
@@ -68,7 +59,7 @@ export function VerticalSplitPane({
     );
 }
 
-interface HorizontalSplitPaneProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface HorizontalSplitPaneProps extends ComponentProps<"div"> {
     leftClassName?: string;
     rightClassName?: string;
     rizeBarHeight?: number;

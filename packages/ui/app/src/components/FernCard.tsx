@@ -1,6 +1,6 @@
 import cn from "clsx";
 import { LinkProps } from "next/link";
-import { DetailedHTMLProps, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
+import { ComponentProps, forwardRef, PropsWithChildren } from "react";
 import { FernLink } from "./FernLink";
 
 interface FernCardProps {
@@ -17,22 +17,23 @@ export const FernLinkCard = forwardRef<HTMLAnchorElement, PropsWithChildren<Fern
     },
 );
 
-export const FernCard = forwardRef<HTMLDivElement, DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>>(
-    function FernCard({ children, className, ...props }, ref) {
-        return (
-            <div
-                className={cn(
-                    "fern-card",
-                    {
-                        interactive: props.onClick != null || props.onClickCapture != null,
-                    },
-                    className,
-                )}
-                {...props}
-                ref={ref}
-            >
-                {children}
-            </div>
-        );
-    },
-);
+export const FernCard = forwardRef<HTMLDivElement, ComponentProps<"div">>(function FernCard(
+    { children, className, ...props },
+    ref,
+) {
+    return (
+        <div
+            className={cn(
+                "fern-card",
+                {
+                    interactive: props.onClick != null || props.onClickCapture != null,
+                },
+                className,
+            )}
+            {...props}
+            ref={ref}
+        >
+            {children}
+        </div>
+    );
+});

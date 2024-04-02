@@ -1,7 +1,7 @@
 import cn from "clsx";
-import { DetailedHTMLProps, forwardRef, InputHTMLAttributes, useEffect, useImperativeHandle, useRef } from "react";
+import { ComponentProps, forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
-interface FernTextareaProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
+interface FernTextareaProps extends ComponentProps<"textarea"> {
     onValueChange?: (value: string) => void;
     value?: string;
     minLines?: number;

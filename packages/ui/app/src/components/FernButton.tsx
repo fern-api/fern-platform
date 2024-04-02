@@ -1,14 +1,6 @@
 import cn from "clsx";
 import Link from "next/link";
-import {
-    ButtonHTMLAttributes,
-    ComponentProps,
-    DetailedHTMLProps,
-    forwardRef,
-    PropsWithChildren,
-    ReactNode,
-    useRef,
-} from "react";
+import { ComponentProps, forwardRef, PropsWithChildren, ReactNode, useRef } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernLink } from "./FernLink";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
@@ -33,7 +25,7 @@ interface FernButtonSharedProps {
 }
 
 export interface FernButtonProps
-    extends Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref">,
+    extends Omit<ComponentProps<"button">, "ref">,
         PropsWithChildren<FernButtonSharedProps> {}
 
 interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> {}

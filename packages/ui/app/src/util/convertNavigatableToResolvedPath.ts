@@ -9,11 +9,11 @@ import {
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { emitDatadogError } from "../analytics/datadogRum";
-import { FernDocsFrontmatterInternal, SerializedMdxContent, serializeMdxContent } from "../mdx/mdx";
+import { FernDocsFrontmatterRaw, SerializedMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
 
-function getFrontmatter(content: string): FernDocsFrontmatterInternal {
+function getFrontmatter(content: string): FernDocsFrontmatterRaw {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
     const frontmatter = content.match(frontmatterMatcher)?.[0];
     if (frontmatter == null) {
@@ -35,7 +35,7 @@ async function getSubtitle(
 
         const frontmatter = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
-            return await serializeMdxContent(frontmatter.excerpt);
+            return await serializeMdxWithFrontmatter(frontmatter.excerpt);
         }
         return undefined;
     } catch (e) {
@@ -101,7 +101,8 @@ export async function convertNavigatableToResolvedPath({
         };
     } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
-        const serializedMdxContent = pageContent != null ? await serializeMdxContent(pageContent.markdown) : null;
+        const serializedMdxContent =
+            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
         return {
             type: "changelog-page",
@@ -113,11 +114,13 @@ export async function convertNavigatableToResolvedPath({
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
+                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "");
+                    const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
                     return {
                         date: item.date,
                         dateString: moment(item.date).format("MMMM D, YYYY"),
-                        markdown: await serializeMdxContent(itemPageContent?.markdown ?? ""),
-                        editThisPageUrl: itemPageContent?.editThisPageUrl ?? null,
+                        markdown,
+                        editThisPageUrl: frontmatter.editThisPageUrl ?? itemPageContent?.editThisPageUrl ?? null,
                     };
                 }),
             ),
@@ -128,7 +131,7 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxContent(pageContent.markdown);
+        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown);
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
@@ -148,7 +151,7 @@ export async function convertNavigatableToResolvedPath({
                 title: frontmatter.title ?? traverseState.curr.title,
                 sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
                 serializedMdxContent,
-                editThisPageUrl: pageContent.editThisPageUrl ?? null,
+                editThisPageUrl: frontmatter.editThisPageUrl ?? pageContent.editThisPageUrl ?? null,
                 neighbors,
                 apis: resolvedApis,
             };

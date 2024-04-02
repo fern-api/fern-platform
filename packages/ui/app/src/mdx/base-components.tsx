@@ -2,15 +2,13 @@ import { useMounted } from "@fern-ui/react-commons";
 import cn from "clsx";
 import {
     AnchorHTMLAttributes,
+    Children,
     cloneElement,
     ComponentProps,
     createElement,
-    DetailedHTMLProps,
     FC,
-    ImgHTMLAttributes,
     isValidElement,
     ReactElement,
-    ReactNode,
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
@@ -111,19 +109,25 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
 
     return (
         <FernLink className={cnCombined} href={href ?? {}} {...rest} showExternalLinkIcon={!hideExternalLinkIcon}>
-            {isValidElement(children) && isImgElement(children)
-                ? cloneElement<ImgProps>(children, { disableZoom: true })
-                : children}
+            {Children.map(children, (child) =>
+                !isValidElement(child)
+                    ? child
+                    : isImgElement(child)
+                      ? cloneElement<ImgProps>(child, { disableZoom: true })
+                      : child.type === "img"
+                        ? createElement(Img, { ...child.props, disableZoom: true })
+                        : child,
+            )}
         </FernLink>
     );
 };
 
-interface ImgProps extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
+interface ImgProps extends ComponentProps<"img"> {
     disableZoom?: boolean;
 }
 
-function isImgElement(element: ReactNode): element is ReactElement<ImgProps> {
-    return isValidElement(element) && element.type === Img;
+function isImgElement(element: ReactElement): element is ReactElement<ImgProps> {
+    return element.type === Img;
 }
 
 export const Img: FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest }) => {

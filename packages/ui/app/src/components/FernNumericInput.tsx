@@ -2,10 +2,9 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import {
-    DetailedHTMLProps,
-    forwardRef,
-    InputHTMLAttributes,
+    ComponentProps,
     MouseEventHandler,
+    forwardRef,
     useCallback,
     useEffect,
     useImperativeHandle,
@@ -14,8 +13,7 @@ import {
 } from "react";
 import { FernButton } from "./FernButton";
 
-export interface FernNumericInputProps
-    extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+export interface FernNumericInputProps extends ComponentProps<"input"> {
     inputClassName?: string;
     onValueChange?: (value: number) => void;
     value?: number;
