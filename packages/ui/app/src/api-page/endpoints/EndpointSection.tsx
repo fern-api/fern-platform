@@ -1,10 +1,10 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -15,7 +15,7 @@ export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
         title: ReactNode;
-        description?: SerializedMdxContent | undefined;
+        description?: MDXRemoteSerializeResult | string | undefined;
         anchorIdParts: readonly string[];
         route: string;
         expandAll?: () => void;

@@ -1,16 +1,6 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 
-interface FernDocsFrontmatter {
-    title?: string;
-    description?: string;
-    editThisPageUrl?: string;
-    image?: string;
-    excerpt?: SerializedMdxContent;
-}
-
-type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
-
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;
     dark: DocsV1Read.ThemeConfig | undefined;
@@ -174,7 +164,7 @@ export declare namespace SidebarNode {
     export interface ApiSection extends Omit<SidebarNodeRaw.ApiSection, "items" | "changelog" | "description"> {
         items: ApiPageOrSubpackage[];
         changelog: ChangelogPage | undefined;
-        description: SerializedMdxContent | undefined;
+        description: MDXRemoteSerializeResult | string | undefined;
     }
 
     export interface Section extends Omit<SidebarNodeRaw.Section, "items"> {
@@ -182,7 +172,7 @@ export declare namespace SidebarNode {
     }
 
     export interface Page extends Omit<SidebarNodeRaw.Page, "description"> {
-        description: SerializedMdxContent | undefined;
+        description: MDXRemoteSerializeResult | string | undefined;
     }
 
     export interface WebSocketPage extends Page {

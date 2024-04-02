@@ -10,7 +10,7 @@ import {
     FlattenedWebhookDefinition,
 } from "@fern-ui/fdr-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
 import {
     endpointExampleToHttpRequestExample,

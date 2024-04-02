@@ -1,12 +1,13 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { type SerializedMdxContent } from "../mdx/mdx";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import type { SerializedMdxContent } from "../mdx/mdx";
 import { ResolvedRootPackage } from "./resolver";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
         fullSlug: string;
         title: string;
-        excerpt: SerializedMdxContent | undefined;
+        excerpt: MDXRemoteSerializeResult | string | undefined;
     }
 
     export interface Neighbors {

@@ -1,4 +1,5 @@
 import { clsx as cn } from "clsx";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -25,7 +26,7 @@ export declare namespace CustomDocsPage {
 interface CustomDocsPageHeaderProps {
     sectionTitleBreadcrumbs: string[];
     title: string;
-    excerpt: SerializedMdxContent | undefined;
+    excerpt: MDXRemoteSerializeResult | string | undefined;
 }
 
 export const CustomDocsPageHeader = ({

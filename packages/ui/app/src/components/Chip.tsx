@@ -1,13 +1,13 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
-import { SerializedMdxContent } from "../mdx/mdx";
 import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {
     name: string;
-    description?: SerializedMdxContent | undefined;
+    description?: MDXRemoteSerializeResult | string | undefined;
     small?: boolean;
 };
 

@@ -1,10 +1,10 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useRouteListener } from "../../contexts/useRouteListener";
-import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -14,7 +14,7 @@ import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
-        description: SerializedMdxContent | undefined;
+        description: MDXRemoteSerializeResult | string | undefined;
         shape: ResolvedTypeShape;
         anchorIdParts: readonly string[];
         route: string;
@@ -24,7 +24,7 @@ export declare namespace EndpointParameter {
 
     export interface ContentProps {
         name: string;
-        description: SerializedMdxContent | undefined;
+        description: MDXRemoteSerializeResult | string | undefined;
         typeShorthand: ReactNode;
         anchorIdParts: readonly string[];
         route: string;

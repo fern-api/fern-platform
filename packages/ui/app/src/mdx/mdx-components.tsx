@@ -1,4 +1,4 @@
-import { MDXRemoteProps } from "next-mdx-remote";
+import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
