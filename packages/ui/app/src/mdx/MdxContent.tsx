@@ -25,7 +25,12 @@ export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx
 
     return (
         <FernErrorBoundary component="MdxContent">
-            <MDXRemote {...mdx} components={COMPONENTS}></MDXRemote>
+            <MDXRemote
+                scope={mdx.scope}
+                frontmatter={mdx.frontmatter}
+                compiledSource={mdx.compiledSource}
+                components={COMPONENTS}
+            />
         </FernErrorBoundary>
     );
 });
