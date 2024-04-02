@@ -311,7 +311,9 @@ function buildRedactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = obfuscateSecret(value);
+                        headers[auth.headerWireValue] = obfuscateSecret(
+                            auth.prefix != null ? `${auth.prefix} ${value}` : value,
+                        );
                     }
                 }
             },
@@ -387,7 +389,7 @@ export function buildUnredactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = value;
+                        headers[auth.headerWireValue] = auth.prefix != null ? `${auth.prefix} ${value}` : value;
                     }
                 }
             },
