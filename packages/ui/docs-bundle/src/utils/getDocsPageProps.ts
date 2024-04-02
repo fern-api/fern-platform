@@ -183,7 +183,7 @@ async function convertDocsToDocsPageProps({
     );
 
     const resolvedPath = await convertNavigatableToResolvedPath({
-        slug,
+        currentNode: navigation.found.currentNode,
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,

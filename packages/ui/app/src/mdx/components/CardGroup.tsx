@@ -1,13 +1,13 @@
 import cn from "clsx";
 import { FC, type PropsWithChildren } from "react";
 
-export declare namespace Cards {
+export declare namespace CardGroup {
     export interface Props {
         cols?: number; // default 2, max 6
     }
 }
 
-export const Cards: FC<PropsWithChildren<Cards.Props>> = ({ children, cols = 2 }) => {
+export const CardGroup: FC<PropsWithChildren<CardGroup.Props>> = ({ children, cols = 2 }) => {
     return (
         <div
             className={cn("grid gap-4 sm:gap-6 mb-6 mt-4", {

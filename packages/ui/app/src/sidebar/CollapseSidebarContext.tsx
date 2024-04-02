@@ -1,4 +1,4 @@
-import { visitSidebarNode } from "@fern-ui/fdr-utils";
+import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { noop } from "lodash-es";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -39,7 +39,11 @@ function expandArray(arr: string[]): string[][] {
     return arr.map((_, idx) => arr.slice(0, idx + 1));
 }
 
-export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
+export const CollapseSidebarProvider: FC<
+    PropsWithChildren<{
+        navigationItems: SidebarNode[];
+    }>
+> = ({ children, navigationItems }) => {
     const { sidebarNodes } = useDocsContext();
     const { selectedSlug: selectedSlugString } = useNavigationContext();
 
@@ -107,6 +111,14 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
         },
         [parentToChildrenMap],
     );
+
+    if (
+        navigationItems.length === 1 &&
+        navigationItems[0].type === "pageGroup" &&
+        navigationItems[0].pages.length === 1
+    ) {
+        return null;
+    }
 
     return (
         <CollapseSidebarContext.Provider value={{ expanded, selectedSlug, setExpanded, checkExpanded, toggleExpanded }}>

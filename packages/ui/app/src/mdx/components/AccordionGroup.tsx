@@ -1,6 +1,6 @@
 import * as RadixAccordion from "@radix-ui/react-accordion";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
-import { NextRouter, withRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { FC, ReactNode, useCallback, useEffect, useState } from "react";
 import { getSlugFromText } from "../../util/getSlugFromText";
 
@@ -10,13 +10,14 @@ export interface AccordionItemProps {
     children: ReactNode;
 }
 
-export interface AccordionPropsWithRouter {
+export interface AccordionGroupProps {
     items: AccordionItemProps[];
     router: NextRouter;
     toc?: boolean;
 }
 
-const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], toc: parentToc = true, router }) => {
+export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: parentToc = true }) => {
+    const router = useRouter();
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const anchor = router.asPath.split("#")[1];
     useEffect(() => {
@@ -78,5 +79,3 @@ const AccordionInternal: FC<AccordionPropsWithRouter> = ({ items = [], toc: pare
         </RadixAccordion.Root>
     );
 };
-
-export const Accordion = withRouter(AccordionInternal);

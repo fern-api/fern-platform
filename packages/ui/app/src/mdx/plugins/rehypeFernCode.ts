@@ -3,8 +3,8 @@ import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx"
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import { unknownToString } from "../../api-playground/utils";
-import { CodeBlocks } from "../../mdx/components/CodeBlocks";
 import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
+import type { CodeGroup } from "../components/CodeGroup";
 import { valueToEstree } from "./to-estree";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
@@ -110,7 +110,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                             children: [],
                         });
                     } else {
-                        const itemsProps: [CodeBlocks.Item] = [{ ...props, title: meta.title }];
+                        const itemsProps: [CodeGroup.Item] = [{ ...props, title: meta.title }];
                         parent?.children.splice(index, 1, {
                             type: "mdxJsxFlowElement",
                             name: "CodeBlocks",
@@ -125,7 +125,7 @@ export function rehypeFernCode(): (tree: Root) => void {
 }
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
-    const codeBlockItems: CodeBlocks.Item[] = [];
+    const codeBlockItems: CodeGroup.Item[] = [];
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(
