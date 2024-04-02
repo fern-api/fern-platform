@@ -799,8 +799,8 @@ importers:
         specifier: ^4.4.1
         version: 4.4.1(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)
       next-themes:
-        specifier: ^0.2.1
-        version: 0.2.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^0.3.0
+        version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
       node-html-parser:
         specifier: ^6.1.12
         version: 6.1.12
@@ -950,8 +950,8 @@ importers:
         specifier: ^3.335.0
         version: 3.537.0
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.335.0
-        version: 3.537.0
+        specifier: ^3.540.0
+        version: 3.540.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
@@ -1223,8 +1223,8 @@ importers:
         specifier: ^3.335.0
         version: 3.537.0
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.335.0
-        version: 3.537.0
+        specifier: ^3.540.0
+        version: 3.540.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../packages/fdr-sdk
@@ -2081,8 +2081,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/s3-request-presigner@3.537.0:
-    resolution: {integrity: sha512-jG3u9PTl9LpMFr+AY4jx4HvN3+qCFN5vy45U4E8zPagsQ4MbEseUcYpyyC9SHo+3DIgAJQLNV8Zv3LrtdiB5vQ==}
+  /@aws-sdk/s3-request-presigner@3.540.0:
+    resolution: {integrity: sha512-alm+PiQOzAIfNrabxOG/Fk9uimQq8VCdqmhRvZRG7iDwtl4yrW+ZinoDssWFUgeZgPZQTymLcslC2hvMKHgY9g==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-sdk/signature-v4-multi-region': 3.535.0
@@ -11881,14 +11881,12 @@ packages:
       react: 18.2.0
     dev: true
 
-  /next-themes@0.2.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
+  /next-themes@0.3.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}
     peerDependencies:
-      next: '*'
-      react: '*'
-      react-dom: '*'
+      react: ^16.8 || ^17 || ^18
+      react-dom: ^16.8 || ^17 || ^18
     dependencies:
-      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
