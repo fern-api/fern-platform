@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export function useViewportSize(): { width: number; height: number } {
     const [width, setViewportWidth] = useState<number>(() => (typeof window !== "undefined" ? window.innerWidth : 0));
@@ -6,7 +6,7 @@ export function useViewportSize(): { width: number; height: number } {
         typeof window !== "undefined" ? window.innerHeight : 0,
     );
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (typeof window === "undefined") {
             return;
         }
@@ -24,8 +24,5 @@ export function useViewportSize(): { width: number; height: number } {
         };
     }, []);
 
-    return {
-        width,
-        height,
-    };
+    return { width, height };
 }

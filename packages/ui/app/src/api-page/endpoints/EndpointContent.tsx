@@ -2,11 +2,11 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
-import { FC, forwardRef, memo, useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useSlugListener } from "../../contexts/useSlugListener";
 import { useViewportContext } from "../../contexts/viewport-context/useViewportContext";
 import { useViewportSize } from "../../hooks/useViewportSize";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
@@ -14,7 +14,7 @@ import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } fro
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../examples/code-example";
+import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
@@ -64,7 +64,7 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
     return undefined;
 }
 
-const UnmemoizedEndpointContent: FC<EndpointContent.Props> = ({
+export const EndpointContent: React.FC<EndpointContent.Props> = ({
     api,
     showErrors,
     endpoint,
@@ -74,11 +74,11 @@ const UnmemoizedEndpointContent: FC<EndpointContent.Props> = ({
     isInViewport: initiallyInViewport,
     types,
 }) => {
+    const router = useRouter();
     const { layout } = useDocsContext();
     const { layoutBreakpoint } = useViewportContext();
     const viewportSize = useViewportSize();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
-
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
@@ -100,8 +100,8 @@ const UnmemoizedEndpointContent: FC<EndpointContent.Props> = ({
 
     const [selectedError, setSelectedError] = useState<ResolvedError | undefined>();
 
-    useSlugListener(endpoint.slug.join("/"), (anchor) => {
-        const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
+    useEffect(() => {
+        const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(router.asPath.split("#")[1]);
         if (statusCodeOrName != null) {
             const error = endpoint.errors.find((e) =>
                 typeof statusCodeOrName === "number"
@@ -112,7 +112,8 @@ const UnmemoizedEndpointContent: FC<EndpointContent.Props> = ({
                 setSelectedError(error);
             }
         }
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const examples = useMemo(() => {
         if (selectedError == null) {
@@ -208,203 +209,105 @@ const UnmemoizedEndpointContent: FC<EndpointContent.Props> = ({
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
 
     return (
-        <EndpointContentMemoized
+        <div
+            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
+            onClick={() => setSelectedError(undefined)}
             ref={containerRef}
-            api={api}
-            showErrors={showErrors}
-            endpoint={endpoint}
-            breadcrumbs={breadcrumbs}
-            hideBottomSeparator={hideBottomSeparator}
-            setContainerRef={setContainerRef}
-            isInViewport={isInViewport}
-            types={types}
-            setSelectedError={setSelectedError}
-            hoveredRequestPropertyPath={hoveredRequestPropertyPath}
-            hoveredResponsePropertyPath={hoveredResponsePropertyPath}
-            onHoverRequestProperty={onHoverRequestProperty}
-            onHoverResponseProperty={onHoverResponseProperty}
-            selectedError={selectedError}
-            contentType={contentType}
-            setContentType={setContentType}
-            clients={clients}
-            selectedClient={selectedClient}
-            setSelectedExampleClientAndScrollToTop={setSelectedExampleClientAndScrollToTop}
-            requestJson={requestJson}
-            responseJson={responseJson}
-            responseCodeSnippet={responseCodeSnippet}
-            requestHeight={requestHeight}
-            responseHeight={responseHeight}
-            exampleHeight={exampleHeight}
-        />
-    );
-};
-
-export const EndpointContent = memo(UnmemoizedEndpointContent);
-
-interface EndpointContentMemoizedProps {
-    api: string;
-    showErrors: boolean;
-    endpoint: ResolvedEndpointDefinition;
-    breadcrumbs: readonly string[];
-    hideBottomSeparator?: boolean;
-    setContainerRef: (ref: HTMLElement | null) => void;
-    isInViewport: boolean;
-    types: Record<string, ResolvedTypeDefinition>;
-    setSelectedError: (error: ResolvedError | undefined) => void;
-    hoveredRequestPropertyPath?: JsonPropertyPath;
-    hoveredResponsePropertyPath?: JsonPropertyPath;
-    onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => void;
-    onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => void;
-    selectedError?: ResolvedError;
-    contentType: string | undefined;
-    setContentType: (contentType: string | undefined) => void;
-    clients: CodeExampleGroup[];
-    selectedClient: CodeExample;
-    setSelectedExampleClientAndScrollToTop: (nextClient: CodeExample) => void;
-    requestJson?: unknown;
-    responseJson?: unknown;
-    responseCodeSnippet: string;
-    requestHeight: number;
-    responseHeight: number;
-    exampleHeight: number;
-}
-
-const EndpointContentMemoized = memo(
-    forwardRef<HTMLDivElement, EndpointContentMemoizedProps>((props, ref) => {
-        const { layoutBreakpoint } = useViewportContext();
-        const {
-            api,
-            showErrors,
-            endpoint,
-            breadcrumbs,
-            hideBottomSeparator,
-            setContainerRef,
-            isInViewport,
-            types,
-            setSelectedError,
-            hoveredRequestPropertyPath,
-            hoveredResponsePropertyPath,
-            onHoverRequestProperty,
-            onHoverResponseProperty,
-            selectedError,
-            contentType,
-            setContentType,
-            clients,
-            selectedClient,
-            setSelectedExampleClientAndScrollToTop,
-            requestJson,
-            responseJson,
-            responseCodeSnippet,
-            requestHeight,
-            responseHeight,
-            exampleHeight,
-        } = props;
-
-        return (
+        >
             <div
-                className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
-                onClick={() => setSelectedError(undefined)}
-                ref={ref}
+                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
+                    "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                })}
+                ref={setContainerRef}
+                data-route={`/${endpoint.slug.join("/")}`}
             >
-                <div
-                    className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
-                        "border-default border-b mb-px pb-20": !hideBottomSeparator,
-                    })}
-                    ref={setContainerRef}
-                    data-route={`/${endpoint.slug.join("/")}`}
-                >
-                    <div className="space-y-1 pb-2 pt-8">
-                        <Breadcrumbs breadcrumbs={breadcrumbs} />
-                        <div>
-                            {endpoint.responseBody?.shape.type === "stream" ? (
-                                withStream(<h1 className="my-0 inline leading-tight">{endpoint.title}</h1>)
-                            ) : (
-                                <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
-                            )}
-                            {endpoint.availability != null && (
-                                <span className="relative">
-                                    <EndpointAvailabilityTag
-                                        className="absolute -top-1.5 left-2.5 inline-block"
-                                        availability={endpoint.availability}
-                                    />
-                                </span>
-                            )}
-                        </div>
-                        <EndpointUrlWithOverflow
-                            path={endpoint.path}
-                            method={endpoint.method}
-                            environment={endpoint.defaultEnvironment?.baseUrl}
-                            showEnvironment
-                            large
-                        />
+                <div className="space-y-1 pb-2 pt-8">
+                    <Breadcrumbs breadcrumbs={breadcrumbs} />
+                    <div>
+                        {endpoint.responseBody?.shape.type === "stream" ? (
+                            withStream(<h1 className="my-0 inline leading-tight">{endpoint.title}</h1>)
+                        ) : (
+                            <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
+                        )}
+                        {endpoint.availability != null && (
+                            <span className="relative">
+                                <EndpointAvailabilityTag
+                                    className="absolute -top-1.5 left-2.5 inline-block"
+                                    availability={endpoint.availability}
+                                />
+                            </span>
+                        )}
                     </div>
-                    <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
-                        <div
-                            className="max-w-content-width flex min-w-0 flex-1 flex-col"
-                            style={{
-                                minHeight: ["mobile", "sm"].includes(layoutBreakpoint)
-                                    ? undefined
-                                    : `${exampleHeight}px`,
-                            }}
-                        >
-                            <ApiPageDescription
-                                className="mt-8 text-base leading-6"
-                                description={endpoint.description}
-                                isMarkdown={true}
+                    <EndpointUrlWithOverflow
+                        path={endpoint.path}
+                        method={endpoint.method}
+                        environment={endpoint.defaultEnvironment?.baseUrl}
+                        showEnvironment
+                        large
+                    />
+                </div>
+                <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
+                    <div
+                        className="max-w-content-width flex min-w-0 flex-1 flex-col"
+                        style={{
+                            minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
+                        }}
+                    >
+                        <ApiPageDescription
+                            className="mt-8 text-base leading-6"
+                            description={endpoint.description}
+                            isMarkdown={true}
+                        />
+
+                        <div className="mt-12 first:mt-8">
+                            <EndpointContentLeft
+                                endpoint={endpoint}
+                                showErrors={showErrors}
+                                onHoverRequestProperty={onHoverRequestProperty}
+                                onHoverResponseProperty={onHoverResponseProperty}
+                                selectedError={selectedError}
+                                setSelectedError={setSelectedError}
+                                contentType={contentType}
+                                setContentType={setContentType}
+                                types={types}
                             />
-
-                            <div className="mt-12 first:mt-8">
-                                <EndpointContentLeft
-                                    endpoint={endpoint}
-                                    showErrors={showErrors}
-                                    onHoverRequestProperty={onHoverRequestProperty}
-                                    onHoverResponseProperty={onHoverResponseProperty}
-                                    selectedError={selectedError}
-                                    setSelectedError={setSelectedError}
-                                    contentType={contentType}
-                                    setContentType={setContentType}
-                                    types={types}
-                                />
-                            </div>
                         </div>
+                    </div>
 
-                        <div
-                            className={cn(
-                                "max-w-content-width",
-                                "md:flex-1 md:sticky md:self-start",
-                                "mt-12",
-                                // the 4rem is the same as the h-10 as the Header
-                                "max-h-[150vh] md:max-h-vh-minus-header",
-                                "flex",
-                                // header offset
-                                "md:pt-8 md:mt-0 md:top-header-height",
-                            )}
-                            style={{ height: `${exampleHeight}px` }}
-                        >
-                            {isInViewport && (
-                                <EndpointContentCodeSnippets
-                                    api={api}
-                                    endpoint={endpoint}
-                                    example={selectedClient.exampleCall}
-                                    clients={clients}
-                                    selectedClient={selectedClient}
-                                    onClickClient={setSelectedExampleClientAndScrollToTop}
-                                    requestCodeSnippet={selectedClient.code}
-                                    requestCurlJson={requestJson}
-                                    responseCodeSnippet={responseCodeSnippet}
-                                    responseJson={responseJson}
-                                    hoveredRequestPropertyPath={hoveredRequestPropertyPath}
-                                    hoveredResponsePropertyPath={hoveredResponsePropertyPath}
-                                    requestHeight={requestHeight}
-                                    responseHeight={responseHeight}
-                                />
-                            )}
-                        </div>
+                    <div
+                        className={cn(
+                            "max-w-content-width",
+                            "md:flex-1 md:sticky md:self-start",
+                            "mt-12",
+                            // the 4rem is the same as the h-10 as the Header
+                            "max-h-[150vh] md:max-h-vh-minus-header",
+                            "flex",
+                            // header offset
+                            "md:pt-8 md:mt-0 md:top-header-height",
+                        )}
+                        style={{ height: `${exampleHeight}px` }}
+                    >
+                        {isInViewport && (
+                            <EndpointContentCodeSnippets
+                                api={api}
+                                endpoint={endpoint}
+                                example={selectedClient.exampleCall}
+                                clients={clients}
+                                selectedClient={selectedClient}
+                                onClickClient={setSelectedExampleClientAndScrollToTop}
+                                requestCodeSnippet={selectedClient.code}
+                                requestCurlJson={requestJson}
+                                responseCodeSnippet={responseCodeSnippet}
+                                responseJson={responseJson}
+                                hoveredRequestPropertyPath={hoveredRequestPropertyPath}
+                                hoveredResponsePropertyPath={hoveredResponsePropertyPath}
+                                requestHeight={requestHeight}
+                                responseHeight={responseHeight}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
-        );
-    }),
-);
-
-EndpointContentMemoized.displayName = "EndpointContentMemoized";
+        </div>
+    );
+};
