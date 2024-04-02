@@ -387,7 +387,7 @@ export function buildUnredactedHeaders(
                 if (auth.type === "header") {
                     const value = header.headers[auth.headerWireValue];
                     if (value != null) {
-                        headers[auth.headerWireValue] = value;
+                        headers[auth.headerWireValue] = auth.prefix != null ? `${auth.prefix} ${value}` : value;
                     }
                 }
             },

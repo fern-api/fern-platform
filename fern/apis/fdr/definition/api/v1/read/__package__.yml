@@ -101,6 +101,9 @@ types:
     properties:
       nameOverride: optional<string>
       headerWireValue: string
+      prefix: 
+        type: optional<string>
+        docs: The prefix that comes before the header
 
 errors:
   ApiDoesNotExistError:
