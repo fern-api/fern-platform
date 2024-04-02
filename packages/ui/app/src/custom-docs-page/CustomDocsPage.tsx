@@ -72,8 +72,8 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
             ? resolvedPath.serializedMdxContent.frontmatter.editThisPageUrl ?? resolvedPath?.editThisPageUrl
             : undefined;
     return (
-        <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
-            <div className="w-full min-w-0 pt-8 lg:pr-8">
+        <div className="relative flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
+            <div className="z-10 w-full min-w-0 pt-8 lg:pr-8">
                 <article className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-content-width mx-auto w-full break-words lg:ml-0 xl:mx-auto">
                     <CustomDocsPageHeader
                         title={resolvedPath.title}
@@ -92,7 +92,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ resolvedPath })
             </div>
             <aside
                 id="right-sidebar"
-                className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0  xl:block"
+                className="top-header-height h-vh-minus-header sticky hidden w-[18rem] shrink-0 xl:block"
             >
                 <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8" scrollbars="vertical">
                     <HTMLTableOfContents renderedHtml={mdxString} />

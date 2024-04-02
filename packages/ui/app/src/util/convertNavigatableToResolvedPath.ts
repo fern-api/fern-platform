@@ -1,5 +1,11 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarNode, findApiSection, flattenApiDefinition, traverseSidebarNodes } from "@fern-ui/fdr-utils";
+import {
+    SidebarNode,
+    SidebarNodeRaw,
+    findApiSection,
+    flattenApiDefinition,
+    traverseSidebarNodes,
+} from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
 import { emitDatadogError } from "../analytics/datadogRum";
@@ -51,16 +57,16 @@ async function getSubtitle(
 
 export async function convertNavigatableToResolvedPath({
     sidebarNodes,
-    slug,
+    currentNode,
     apis,
     pages,
 }: {
     sidebarNodes: SidebarNode[];
-    slug: string[];
+    currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
 }): Promise<ResolvedPath | undefined> {
-    const traverseState = traverseSidebarNodes(sidebarNodes, slug);
+    const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
     if (traverseState.curr == null) {
         return;
@@ -68,7 +74,7 @@ export async function convertNavigatableToResolvedPath({
 
     const neighbors = await getNeighbors(traverseState, pages);
 
-    if (slug.join("/") !== traverseState.curr.slug.join("/")) {
+    if (currentNode.slug.join("/") !== traverseState.curr.slug.join("/")) {
         return {
             type: "redirect",
             fullSlug: traverseState.curr.slug.join("/"),

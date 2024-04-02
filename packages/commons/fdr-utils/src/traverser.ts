@@ -1,13 +1,19 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNode } from "./types";
+import { SidebarNode, SidebarNodeRaw } from "./types";
 
-function matchSlug(slug: readonly string[], nodeSlug: readonly string[]): boolean {
+function partialMatchSlug(slug: readonly string[], nodeSlug: readonly string[]): boolean {
     for (let i = 0; i < slug.length; i++) {
         if (slug[i] !== nodeSlug[i]) {
             return false;
         }
     }
     return true;
+}
+
+function matchCurrentNode(currentNode: SidebarNodeRaw.VisitableNode, page: SidebarNode.Page): boolean {
+    return (
+        currentNode.type === "page" && currentNode.slug.join("/") === page.slug.join("/") && currentNode.id === page.id
+    );
 }
 
 interface TraverseState {
@@ -19,7 +25,7 @@ interface TraverseState {
 
 function visitPage(
     page: SidebarNode.Page,
-    slug: string[],
+    currentNode: SidebarNodeRaw.VisitableNode,
     traverseState: TraverseState,
     sectionTitleBreadcrumbs: string[],
 ): TraverseState {
@@ -27,7 +33,7 @@ function visitPage(
         return traverseState;
     }
     if (traverseState.curr == null) {
-        if (matchSlug(slug, page.slug)) {
+        if (matchCurrentNode(currentNode, page)) {
             traverseState.curr = page;
             traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
         } else {
@@ -41,7 +47,7 @@ function visitPage(
 
 function visitNode(
     node: SidebarNode,
-    slug: string[],
+    currentNode: SidebarNodeRaw.VisitableNode,
     traverseState: TraverseState,
     sectionTitleBreadcrumbs: string[],
 ): TraverseState {
@@ -51,38 +57,38 @@ function visitNode(
 
     return visitDiscriminatedUnion(node, "type")._visit({
         pageGroup: (pageGroup) => {
-            if (matchSlug(slug, pageGroup.slug) && slug.length < pageGroup.slug.length) {
-                traverseState.curr = pageGroup.pages.find((page) => page.type === "page") as
-                    | SidebarNode.Page
-                    | undefined;
-                traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
-            }
-
             for (const page of pageGroup.pages) {
                 if (page.type === "page") {
-                    traverseState = visitPage(page, slug, traverseState, sectionTitleBreadcrumbs);
+                    traverseState = visitPage(page, currentNode, traverseState, sectionTitleBreadcrumbs);
                     if (traverseState.next != null) {
                         return traverseState;
                     }
                 } else if (page.type === "section") {
-                    traverseState = visitNode(page, slug, traverseState, sectionTitleBreadcrumbs);
+                    traverseState = visitNode(page, currentNode, traverseState, sectionTitleBreadcrumbs);
                     if (traverseState.next != null) {
                         return traverseState;
                     }
                 }
             }
 
+            if (
+                partialMatchSlug(currentNode.slug, pageGroup.slug) &&
+                currentNode.slug.length < pageGroup.slug.length &&
+                traverseState.curr == null
+            ) {
+                traverseState.curr = pageGroup.pages.find((page) => page.type === "page") as
+                    | SidebarNode.Page
+                    | undefined;
+                traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
+            }
+
             return traverseState;
         },
         apiSection: (apiSection) => {
             const apiSectionBreadcrumbs = [...sectionTitleBreadcrumbs, apiSection.title];
-            if (matchSlug(slug, apiSection.slug) && slug.length < apiSection.slug.length) {
-                traverseState.curr = apiSection.items[0]?.type === "page" ? apiSection.items[0] : undefined;
-                traverseState.sectionTitleBreadcrumbs = apiSectionBreadcrumbs;
-            }
 
             if (apiSection.changelog != null) {
-                traverseState = visitPage(apiSection.changelog, slug, traverseState, apiSectionBreadcrumbs);
+                traverseState = visitPage(apiSection.changelog, currentNode, traverseState, apiSectionBreadcrumbs);
                 if (traverseState.next != null) {
                     return traverseState;
                 }
@@ -90,20 +96,23 @@ function visitNode(
 
             for (const apiPage of apiSection.items) {
                 if (apiPage.type === "page") {
-                    traverseState = visitPage(apiPage, slug, traverseState, apiSectionBreadcrumbs);
+                    traverseState = visitPage(apiPage, currentNode, traverseState, apiSectionBreadcrumbs);
                     if (traverseState.next != null) {
                         return traverseState;
                     }
                 } else {
-                    traverseState = visitNode(apiPage, slug, traverseState, apiSectionBreadcrumbs);
+                    traverseState = visitNode(apiPage, currentNode, traverseState, apiSectionBreadcrumbs);
                     if (traverseState.next != null) {
                         return traverseState;
                     }
                 }
             }
-
-            if (matchSlug(slug, apiSection.slug) && slug.length < apiSection.slug.length) {
-                traverseState.curr = apiSection.changelog;
+            if (
+                partialMatchSlug(currentNode.slug, apiSection.slug) &&
+                currentNode.slug.length < apiSection.slug.length
+            ) {
+                traverseState.curr =
+                    apiSection.changelog ?? (apiSection.items[0]?.type === "page" ? apiSection.items[0] : undefined);
                 traverseState.sectionTitleBreadcrumbs = apiSectionBreadcrumbs;
             }
 
@@ -111,7 +120,10 @@ function visitNode(
         },
         section: (section) => {
             for (const item of section.items) {
-                traverseState = visitNode(item, slug, traverseState, [...sectionTitleBreadcrumbs, section.title]);
+                traverseState = visitNode(item, currentNode, traverseState, [
+                    ...sectionTitleBreadcrumbs,
+                    section.title,
+                ]);
                 if (traverseState.next != null) {
                     return traverseState;
                 }
@@ -123,7 +135,10 @@ function visitNode(
     });
 }
 
-export function traverseSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]): TraverseState {
+export function traverseSidebarNodes(
+    sidebarNodes: SidebarNode[],
+    currentNode: SidebarNodeRaw.VisitableNode,
+): TraverseState {
     let traverseState: TraverseState = {
         prev: undefined,
         curr: undefined,
@@ -131,7 +146,7 @@ export function traverseSidebarNodes(sidebarNodes: SidebarNode[], slug: string[]
         sectionTitleBreadcrumbs: [],
     };
     for (const node of sidebarNodes) {
-        traverseState = visitNode(node, slug, traverseState, []);
+        traverseState = visitNode(node, currentNode, traverseState, []);
         if (traverseState.next != null) {
             break;
         }

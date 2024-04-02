@@ -17,6 +17,7 @@ export const INTRINSIC_JSX_TAGS = [
     "button",
     "canvas",
     "caption",
+    "center",
     "cite",
     "code",
     "col",

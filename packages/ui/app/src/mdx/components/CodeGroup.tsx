@@ -4,7 +4,7 @@ import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
-export declare namespace CodeBlocks {
+export declare namespace CodeGroup {
     export interface Item extends FernSyntaxHighlighterProps {
         title?: string;
     }
@@ -14,7 +14,7 @@ export declare namespace CodeBlocks {
     }
 }
 
-export const CodeBlocks: React.FC<React.PropsWithChildren<CodeBlocks.Props>> = ({ items }) => {
+export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items }) => {
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     const containerClass =

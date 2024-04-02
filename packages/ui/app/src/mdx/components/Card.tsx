@@ -8,6 +8,7 @@ export declare namespace Card {
     export interface Props {
         title: string;
         icon?: unknown;
+        iconSize?: number; // size in 0.25rem increments. default is 4.
         color?: string; // ignored if lightModeColor and darkModeColor are set
         darkModeColor?: string;
         lightModeColor?: string;
@@ -21,6 +22,7 @@ export declare namespace Card {
 export const Card: React.FC<Card.Props> = ({
     title,
     icon,
+    iconSize,
     color,
     darkModeColor,
     lightModeColor,
@@ -42,9 +44,18 @@ export const Card: React.FC<Card.Props> = ({
                     color={color}
                     darkModeColor={darkModeColor}
                     lightModeColor={lightModeColor}
+                    size={iconSize}
                 />
             ) : isValidElement(icon) ? (
-                <span className="card-icon">{icon}</span>
+                <span
+                    className="card-icon"
+                    style={{
+                        width: iconSize != null ? `${iconSize * 4}px` : undefined,
+                        height: iconSize != null ? `${iconSize * 4}px` : undefined,
+                    }}
+                >
+                    {icon}
+                </span>
             ) : null}
             <div>
                 <div className="t-default text-base font-semibold">{title}</div>
