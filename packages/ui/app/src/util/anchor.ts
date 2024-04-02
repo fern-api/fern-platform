@@ -1,4 +1,4 @@
-export function getAnchorId(anchorIdParts: string[]): string {
+export function getAnchorId(anchorIdParts: readonly string[]): string {
     return anchorIdParts.map((anchorId) => encodeURI(anchorId)).join(".");
 }
 

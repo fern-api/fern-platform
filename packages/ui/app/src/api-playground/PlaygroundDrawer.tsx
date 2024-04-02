@@ -12,7 +12,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {
     FlattenedRootPackage,
     ResolvedApiDefinition,
@@ -105,7 +105,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
     const [height, setHeight] = usePlaygroundHeight();
 
     const setOffset = useCallback(

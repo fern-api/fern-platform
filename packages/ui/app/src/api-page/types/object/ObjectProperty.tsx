@@ -1,9 +1,9 @@
 import cn from "clsx";
-import { useRouter } from "next/router";
-import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
+import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -23,7 +23,7 @@ import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 export declare namespace ObjectProperty {
     export interface Props {
         property: ResolvedObjectProperty;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         applyErrorStyles: boolean;
         defaultExpandAll?: boolean;
@@ -33,21 +33,19 @@ export declare namespace ObjectProperty {
 
 export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
     const { route, anchorIdParts } = props;
-    const router = useRouter();
     const anchorId = getAnchorId(anchorIdParts);
-    const [isActive, setIsActive] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const active = router.asPath.endsWith(`${route}#${anchorId}`);
-        setIsActive(active);
-
-        if (active) {
+    const [isActive, setIsActive] = useState(false);
+    useRouteListener(route, (anchor) => {
+        const isActive = anchor === anchorId;
+        setIsActive(isActive);
+        if (isActive) {
             setTimeout(() => {
                 ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
             }, 450);
         }
-    }, [router.asPath, anchorId, route]);
+    });
 
     return <ObjectPropertyInternal ref={ref} anchorId={anchorId} isActive={isActive} {...props} />;
 };
@@ -99,7 +97,6 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     }, [contextValue, jsonPropertyPath]);
 
     const anchorRoute = `${route}#${anchorId}`;
-
     return (
         <div
             ref={ref}

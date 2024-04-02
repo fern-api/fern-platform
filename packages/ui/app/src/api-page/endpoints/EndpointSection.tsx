@@ -16,7 +16,7 @@ export declare namespace EndpointSection {
         headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
         title: ReactNode;
         description?: SerializedMdxContent | undefined;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         expandAll?: () => void;
         collapseAll?: () => void;

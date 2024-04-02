@@ -6,8 +6,9 @@ import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
-import { ViewportContextProvider } from "../contexts/viewport-context/ViewportContextProvider";
+import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
@@ -32,13 +33,15 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
             <ThemeProvider colors={pageProps.colors}>
                 <IsReadyProvider>
-                    <DatadogInit />
-                    <JotaiProvider store={store}>
-                        <ViewportContextProvider>
-                            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                            <Component {...pageProps} />
-                        </ViewportContextProvider>
-                    </JotaiProvider>
+                    <RouteListenerContextProvider>
+                        <DatadogInit />
+                        <JotaiProvider store={store}>
+                            <LayoutBreakpointProvider>
+                                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                <Component {...pageProps} />
+                            </LayoutBreakpointProvider>
+                        </JotaiProvider>
+                    </RouteListenerContextProvider>
                 </IsReadyProvider>
             </ThemeProvider>
         </FernErrorBoundary>

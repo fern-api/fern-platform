@@ -10,7 +10,7 @@ export declare namespace EndpointResponseSection {
     export interface Props {
         responseBody: ResolvedResponseBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;

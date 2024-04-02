@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import cn from "clsx";
 import { FC, Fragment, PropsWithChildren, RefObject, useEffect, useRef } from "react";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
+import { useViewportSize } from "../hooks/useViewportSize";
 
 interface FeedbackFormDialogProps {
     className?: string;
@@ -34,7 +34,7 @@ export const FeedbackFormDialog: FC<PropsWithChildren<FeedbackFormDialogProps>> 
     onClose,
 }) => {
     const modalRef = useRef<HTMLDivElement>();
-    const { viewportSize } = useViewportContext();
+    const viewportSize = useViewportSize();
 
     useEffect(() => {
         if (!show) {

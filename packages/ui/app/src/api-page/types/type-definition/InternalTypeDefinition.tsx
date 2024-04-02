@@ -1,11 +1,11 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { useRouter } from "next/router";
 import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
+import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
 import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
 import {
@@ -24,7 +24,7 @@ export declare namespace InternalTypeDefinition {
     export interface Props {
         typeShape: ResolvedTypeDefinition;
         isCollapsible: boolean;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
@@ -46,8 +46,6 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     defaultExpandAll = false,
     types,
 }) {
-    const router = useRouter();
-
     const collapsableContent = useMemo(
         () =>
             visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
@@ -115,7 +113,6 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const matchesAnchorLink = router.asPath.startsWith(`${route}#${anchorIdSoFar}.`);
     const {
         value: isCollapsed,
         toggleValue: toggleIsCollapsed,
@@ -127,9 +124,16 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     }, [defaultExpandAll, setCollapsed]);
 
     useEffect(() => {
-        setCollapsed(!matchesAnchorLink && !defaultExpandAll);
+        setCollapsed(!defaultExpandAll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useRouteListener(route, (anchor) => {
+        const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
+        if (isActive) {
+            setCollapsed(false);
+        }
+    });
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

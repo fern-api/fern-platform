@@ -14,7 +14,7 @@ export declare namespace EndpointRequestSection {
     export interface Props {
         requestBody: ResolvedRequestBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;

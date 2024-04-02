@@ -1,10 +1,12 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
-    isResolvedSubpackage,
     ResolvedPackageItem,
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
+    isResolvedSubpackage,
 } from "../util/resolver";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
@@ -18,23 +20,26 @@ export declare namespace ApiPackageContents {
         showErrors: boolean;
         apiDefinition: ResolvedWithApiDefinition;
         isLastInParentPackage: boolean;
-        anchorIdParts: string[];
-        breadcrumbs?: string[];
+        anchorIdParts: readonly string[];
+        breadcrumbs?: readonly string[];
     }
 }
 
-export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
+const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     api,
     types,
     showErrors,
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
-    breadcrumbs = [],
+    breadcrumbs = EMPTY_ARRAY,
 }) => {
     const { items } = apiDefinition;
     const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
-    const currentBreadcrumbs = subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs;
+    const currentBreadcrumbs = useMemo(
+        () => (subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs),
+        [breadcrumbs, subpackageTitle],
+    );
 
     return (
         <>
@@ -85,3 +90,5 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({
         </>
     );
 };
+
+export const ApiPackageContents = memo(UnmemoizedApiPackageContents);

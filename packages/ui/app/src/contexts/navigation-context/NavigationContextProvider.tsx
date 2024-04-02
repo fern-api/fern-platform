@@ -3,7 +3,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { renderToString } from "react-dom/server";
 import { emitDatadogError } from "../../analytics/datadogRum";
 import { MdxContent } from "../../mdx/MdxContent";
@@ -231,16 +231,29 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     return (
         <NavigationContext.Provider
-            value={{
-                domain,
-                basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
-                activeNavigatable,
-                onScrollToPath,
-                registerScrolledToPathListener: scrollToPathListeners.registerListener,
-                resolvedPath,
-                activeVersion: versions[currentVersionIndex ?? 0],
-                selectedSlug,
-            }}
+            value={useMemo(
+                () => ({
+                    domain,
+                    basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
+                    activeNavigatable,
+                    onScrollToPath,
+                    registerScrolledToPathListener: scrollToPathListeners.registerListener,
+                    resolvedPath,
+                    activeVersion: versions[currentVersionIndex ?? 0],
+                    selectedSlug,
+                }),
+                [
+                    activeNavigatable,
+                    basePath,
+                    currentVersionIndex,
+                    domain,
+                    onScrollToPath,
+                    resolvedPath,
+                    scrollToPathListeners.registerListener,
+                    selectedSlug,
+                    versions,
+                ],
+            )}
         >
             <Head>
                 {activeTitle != null && <title>{title != null ? `${activeTitle} – ${title}` : activeTitle}</title>}

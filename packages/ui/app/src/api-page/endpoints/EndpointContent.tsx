@@ -7,15 +7,16 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useViewportContext } from "../../contexts/viewport-context/useViewportContext";
+import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useViewportSize } from "../../hooks/useViewportSize";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
-import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
+import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 const EndpointContentCodeSnippets = dynamic(
@@ -28,7 +29,7 @@ export declare namespace EndpointContent {
         api: string;
         showErrors: boolean;
         endpoint: ResolvedEndpointDefinition;
-        breadcrumbs: string[];
+        breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
         isInViewport: boolean;
@@ -75,7 +76,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 }) => {
     const router = useRouter();
     const { layout } = useDocsContext();
-    const { layoutBreakpoint, viewportSize } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
+    const viewportSize = useViewportSize();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
     const { ref: containerRef } = useInView({
         onChange: setIsInViewport,

@@ -74,7 +74,7 @@ function getIconForTypeReference(
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
         unionVariant: ResolvedUndiscriminatedUnionShapeVariant;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         applyErrorStyles: boolean;
         route: string;
         defaultExpandAll?: boolean;

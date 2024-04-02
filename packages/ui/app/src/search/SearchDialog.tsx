@@ -5,8 +5,8 @@ import cn from "clsx";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { useViewportContext } from "../contexts/viewport-context/useViewportContext";
 import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
@@ -22,7 +22,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const { fromHeader } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
 
     const searchService = useSearchService();
     const isSearchDialogOpen = useIsSearchDialogOpen();
@@ -120,7 +120,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const { searchService, children } = providedProps;
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
-    const { layoutBreakpoint } = useViewportContext();
+    const layoutBreakpoint = useLayoutBreakpoint();
 
     useEffect(() => {
         if (searchService.isAvailable) {

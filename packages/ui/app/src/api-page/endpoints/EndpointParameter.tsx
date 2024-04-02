@@ -1,9 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
-import { useRouter } from "next/router";
-import { FC, PropsWithChildren, ReactNode, useEffect, useRef, useState } from "react";
+import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
+import { useRouteListener } from "../../contexts/useRouteListener";
 import { SerializedMdxContent } from "../../mdx/mdx";
 import { getAnchorId } from "../../util/anchor";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
@@ -16,7 +16,7 @@ export declare namespace EndpointParameter {
         name: string;
         description: SerializedMdxContent | undefined;
         shape: ResolvedTypeShape;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         availability: APIV1Read.Availability | null | undefined;
         types: Record<string, ResolvedTypeDefinition>;
@@ -26,22 +26,14 @@ export declare namespace EndpointParameter {
         name: string;
         description: SerializedMdxContent | undefined;
         typeShorthand: ReactNode;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         route: string;
         availability: APIV1Read.Availability | null | undefined;
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
-    name,
-    description,
-    anchorIdParts,
-    route,
-    shape,
-    availability,
-    types,
-}) => {
-    return (
+export const EndpointParameter = memo<EndpointParameter.Props>(
+    ({ name, description, anchorIdParts, route, shape, availability, types }) => (
         <EndpointParameterContent
             name={name}
             description={description}
@@ -50,8 +42,17 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
             route={route}
             availability={availability}
         />
-    );
-};
+    ),
+    (prev, next) =>
+        prev.name === next.name &&
+        prev.description === next.description &&
+        prev.route === next.route &&
+        prev.availability === next.availability &&
+        prev.shape === next.shape &&
+        prev.anchorIdParts.join("/") === next.anchorIdParts.join("/"),
+);
+
+EndpointParameter.displayName = "EndpointParameter";
 
 export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.ContentProps>> = ({
     name,
@@ -64,20 +65,18 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
     const anchorRoute = `${route}#${anchorId}`;
-    const router = useRouter();
-    const [isActive, setIsActive] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const active = router.asPath.endsWith(`${route}#${anchorId}`);
-        setIsActive(active);
-
-        if (active) {
+    const [isActive, setIsActive] = useState(false);
+    useRouteListener(route, (anchor) => {
+        const isActive = anchor === anchorId;
+        setIsActive(isActive);
+        if (isActive) {
             setTimeout(() => {
                 ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
             }, 450);
         }
-    }, [router.asPath, anchorId, route]);
+    });
 
     return (
         <div

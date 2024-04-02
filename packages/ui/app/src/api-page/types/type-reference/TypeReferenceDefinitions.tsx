@@ -11,7 +11,7 @@ export declare namespace TypeReferenceDefinitions {
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: string[];
+        anchorIdParts: readonly string[];
         className?: string;
         route: string;
         defaultExpandAll?: boolean;
