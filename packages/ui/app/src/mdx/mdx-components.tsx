@@ -27,6 +27,7 @@ import { Frame } from "./components/Frame";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
 import { TabGroup } from "./components/Tabs";
+import { Tooltip } from "./components/Tooltip";
 
 export const JSX_COMPONENTS = {
     // fern components
@@ -48,6 +49,7 @@ export const JSX_COMPONENTS = {
     Icon: RemoteFontAwesomeIcon,
     Steps,
     TabGroup,
+    Tooltip,
 
     // aliased for backwards compatibility
     Cards: CardGroup,
