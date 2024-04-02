@@ -112,6 +112,8 @@ export const CollapseSidebarProvider: FC<
         [parentToChildrenMap],
     );
 
+    // If there is only one pageGroup with only one page, hide the sidebar content
+    // this is useful for tabs that only have one page
     if (
         navigationItems.length === 1 &&
         navigationItems[0].type === "pageGroup" &&
