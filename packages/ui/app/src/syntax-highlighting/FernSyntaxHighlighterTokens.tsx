@@ -68,8 +68,12 @@ export const FernSyntaxHighlighterTokens = memo(
                             });
                         }
                     },
-                    clientHeight: scrollAreaRef.current?.clientHeight ?? 0,
-                    scrollHeight: scrollAreaRef.current?.scrollHeight ?? 0,
+                    get clientHeight() {
+                        return scrollAreaRef.current?.clientHeight ?? 0;
+                    },
+                    get scrollHeight() {
+                        return scrollAreaRef.current?.scrollHeight ?? 0;
+                    },
                 }),
             );
 
@@ -79,7 +83,9 @@ export const FernSyntaxHighlighterTokens = memo(
                 visit(tokens.hast, "element", (node) => {
                     if (node.tagName === "pre") {
                         preStyle = parseStringStyle(node.properties.style) ?? {};
+                        return false; // stop traversing
                     }
+                    return true;
                 });
                 return preStyle;
             }, [tokens.hast]);

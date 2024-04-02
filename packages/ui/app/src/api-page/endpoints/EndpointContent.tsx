@@ -8,6 +8,7 @@ import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useSlugListener } from "../../contexts/useSlugListener";
 import { useViewportContext } from "../../contexts/viewport-context/useViewportContext";
+import { useViewportSize } from "../../hooks/useViewportSize";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -74,7 +75,8 @@ const UnmemoizedEndpointContent: FC<EndpointContent.Props> = ({
     types,
 }) => {
     const { layout } = useDocsContext();
-    const { layoutBreakpoint, viewportSize } = useViewportContext();
+    const { layoutBreakpoint } = useViewportContext();
+    const viewportSize = useViewportSize();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
 
     const { ref: containerRef } = useInView({

@@ -24,19 +24,11 @@ theme: {
 
 export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
     const [layoutBreakpoint, setBreakpoint] = useState<"mobile" | "sm" | "md" | "lg" | "xl" | "2xl">("lg");
-    const [viewportSize, setViewportSize] = useState<{ height: number; width: number }>({ height: 0, width: 0 });
 
     useEffect(() => {
         if (window == null) {
             return;
         }
-
-        const handleResize = () => {
-            setViewportSize({
-                height: window.innerHeight,
-                width: document.body.clientWidth,
-            });
-        };
 
         const mobile = window.matchMedia("(max-width: 639px)");
         const sm = window.matchMedia("(min-width: 640px)");
@@ -65,10 +57,8 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
             });
         };
 
-        handleResize();
         handleBreakpointChange();
 
-        window.addEventListener("resize", handleResize);
         mobile.addEventListener("change", handleBreakpointChange);
         sm.addEventListener("change", handleBreakpointChange);
         md.addEventListener("change", handleBreakpointChange);
@@ -82,15 +72,10 @@ export const ViewportContextProvider: React.FC<PropsWithChildren<unknown>> = ({ 
             lg.removeEventListener("change", handleBreakpointChange);
             xl.removeEventListener("change", handleBreakpointChange);
             xxl.removeEventListener("change", handleBreakpointChange);
-            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
-    return (
-        <ViewportContext.Provider
-            value={useMemo(() => ({ layoutBreakpoint, viewportSize }), [layoutBreakpoint, viewportSize])}
-        >
-            {children}
-        </ViewportContext.Provider>
-    );
+    const value = useMemo(() => ({ layoutBreakpoint }), [layoutBreakpoint]);
+
+    return <ViewportContext.Provider value={value}>{children}</ViewportContext.Provider>;
 };
