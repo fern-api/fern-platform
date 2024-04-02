@@ -8,8 +8,9 @@ import {
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
-import { FernDocsFrontmatterRaw, SerializedMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
+import { FernDocsFrontmatterRaw, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
 
@@ -26,7 +27,7 @@ function getFrontmatter(content: string): FernDocsFrontmatterRaw {
 async function getSubtitle(
     node: SidebarNode.Page,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<SerializedMdxContent | undefined> {
+): Promise<MDXRemoteSerializeResult | string | undefined> {
     try {
         const content = pages[node.id]?.markdown;
         if (content == null) {
@@ -35,7 +36,7 @@ async function getSubtitle(
 
         const frontmatter = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
-            return await serializeMdxWithFrontmatter(frontmatter.excerpt);
+            return await maybeSerializeMdxContent(frontmatter.excerpt);
         }
         return undefined;
     } catch (e) {
