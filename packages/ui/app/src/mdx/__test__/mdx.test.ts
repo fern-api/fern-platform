@@ -4,7 +4,7 @@ import { MdxContent } from "../MdxContent";
 import { serializeMdxWithFrontmatter } from "../mdx";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
-    const serializedContent = await serializeMdxWithFrontmatter(content, { development: true });
+    const serializedContent = await serializeMdxWithFrontmatter(content, { development: false });
     const result = renderer.create(createElement(MdxContent, { mdx: serializedContent })).toJSON();
 
     assert(result != null);

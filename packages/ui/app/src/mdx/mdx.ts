@@ -112,7 +112,7 @@ export async function serializeMdxWithFrontmatter(
     try {
         const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterRaw>(content, {
             scope: {},
-            mdxOptions: MDX_OPTIONS,
+            mdxOptions: { ...MDX_OPTIONS, ...options },
             parseFrontmatter: true,
         });
 
