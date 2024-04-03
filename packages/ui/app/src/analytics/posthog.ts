@@ -9,11 +9,10 @@ function safeAccessPosthog(run: () => void): void {
 }
 
 function getPosthogUIHost(baseUrl: DocsV2Read.BaseUrl): string {
-    if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "development") {
-        return `http://${process.env.NEXT_PUBLIC_VERCEL_URL}${baseUrl.basePath ?? ""}/api/fern-docs/ingest`;
-    }
+    // window.location.host is required for subpath rewrite support.
+    const host = typeof window !== "undefined" ? window.location.host : baseUrl.domain;
 
-    return `https://${baseUrl.domain}${baseUrl.basePath ?? ""}/api/fern-docs/ingest`;
+    return `https://${host}${baseUrl.basePath ?? ""}/api/fern-docs/ingest`;
 }
 
 export function initializePosthog(baseUrl: DocsV2Read.BaseUrl): void {
