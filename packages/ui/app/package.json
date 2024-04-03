@@ -29,8 +29,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^5.13.0",
-    "@datadog/browser-rum": "^5.13.0",
+    "@datadog/browser-logs": "^5.14.0",
+    "@datadog/browser-rum": "^5.14.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
