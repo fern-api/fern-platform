@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { createStore, Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
@@ -30,21 +31,23 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     return (
-        <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-            <ThemeProvider colors={pageProps.colors}>
-                <IsReadyProvider>
-                    <RouteListenerContextProvider>
-                        <DatadogInit />
-                        <JotaiProvider store={store}>
-                            <LayoutBreakpointProvider>
-                                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                                <Component {...pageProps} />
-                            </LayoutBreakpointProvider>
-                        </JotaiProvider>
-                    </RouteListenerContextProvider>
-                </IsReadyProvider>
-            </ThemeProvider>
-        </FernErrorBoundary>
+        <TooltipProvider>
+            <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                <ThemeProvider colors={pageProps.colors}>
+                    <IsReadyProvider>
+                        <RouteListenerContextProvider>
+                            <DatadogInit />
+                            <JotaiProvider store={store}>
+                                <LayoutBreakpointProvider>
+                                    <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                    <Component {...pageProps} />
+                                </LayoutBreakpointProvider>
+                            </JotaiProvider>
+                        </RouteListenerContextProvider>
+                    </IsReadyProvider>
+                </ThemeProvider>
+            </FernErrorBoundary>
+        </TooltipProvider>
     );
 }
 
