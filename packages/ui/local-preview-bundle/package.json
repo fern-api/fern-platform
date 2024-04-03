@@ -28,10 +28,12 @@
     "depcheck": "depcheck",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npx serve@latest out",
     "lint": "next lint"
   },
   "dependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@tailwindcss/forms": "^0.5.7",
     "cssnano": "^6.0.3",
