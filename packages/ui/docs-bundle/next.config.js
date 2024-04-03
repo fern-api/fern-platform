@@ -3,7 +3,7 @@ const assetPrefix = process.env.CDN_URI != null ? new URL("/", process.env.CDN_U
 const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["@fern-ui/ui"],
-    productionBrowserSourceMaps: true,
+    productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],

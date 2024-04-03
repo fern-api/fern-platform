@@ -98,7 +98,7 @@ async function getDocsPageProps(
     }
 
     const sidebarNodes = await Promise.all(
-        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node, { development: true })),
+        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
     );
 
     const resolvedPath = await convertNavigatableToResolvedPath({
@@ -106,7 +106,6 @@ async function getDocsPageProps(
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
-        options: { development: true },
     });
 
     if (resolvedPath == null) {
