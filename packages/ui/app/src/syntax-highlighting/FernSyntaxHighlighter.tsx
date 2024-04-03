@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { forwardRef, useMemo } from "react";
 import { emitDatadogError } from "../analytics/datadogRum";
 import "./FernSyntaxHighlighter.css";
-import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
+import { ScrollToHandle } from "./FernSyntaxHighlighterTokens";
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 
 const FernSyntaxHighlighterTokensVirtualized = dynamic(
@@ -10,7 +10,13 @@ const FernSyntaxHighlighterTokensVirtualized = dynamic(
         import("./FernSyntaxHighlighterTokensVirtualized").then(
             ({ FernSyntaxHighlighterTokensVirtualized }) => FernSyntaxHighlighterTokensVirtualized,
         ),
-    {},
+    { ssr: true },
+);
+
+const FernSyntaxHighlighterTokens = dynamic(
+    () =>
+        import("./FernSyntaxHighlighterTokens").then(({ FernSyntaxHighlighterTokens }) => FernSyntaxHighlighterTokens),
+    { ssr: true },
 );
 
 // [number, number] is a range of lines to highlight
