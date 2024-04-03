@@ -19,7 +19,6 @@ const store = createStore();
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
     useEffect(() => {
         initializePosthog(pageProps.baseUrl);
-        console.log(pageProps.baseUrl);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
