@@ -122,6 +122,8 @@ const nextConfig = {
     },
     env: {
         VERSION: process.env.VERSION,
+        NEXT_PUBLIC_VERCEL_ENV: process.env.VERCEL_ENV,
+        NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
     },
 };
 
