@@ -48,7 +48,7 @@ jobs:
   deploy-local-preview-prod:
     needs: [deploy-local-preview-dev]
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/ui@')
     container:
       image: cimg/node:18.18.2
     steps:

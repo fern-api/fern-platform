@@ -42,13 +42,8 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Get Tag
-        id: tag
-        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
-        shell: bash
-
       - name: Build Project Artifacts
-        run: VERSION="${{ steps.tag.outputs.TAG_NAME }}" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: VERSION="$(scripts/git-version.sh)" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         run: |
@@ -83,7 +78,7 @@ jobs:
         run: |
           datadog-ci sourcemaps upload ./packages/ui/docs-bundle/.next/static \
           --service=docs-frontend \
-          --release-version=${{ steps.tag.outputs.TAG_NAME }} \
+          --release-version="$(scripts/git-version.sh)" \
           --minified-path-prefix=https://app.buildwithfern.com/_next/static
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
