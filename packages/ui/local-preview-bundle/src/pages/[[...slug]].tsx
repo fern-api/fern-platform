@@ -3,24 +3,41 @@ import { getNavigationRoot } from "@fern-ui/fdr-utils";
 import {
     DocsPage,
     DocsPageResult,
+    NextApp,
     convertNavigatableToResolvedPath,
     serializeSidebarNodeDescriptionMdx,
 } from "@fern-ui/ui";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 
 export default function LocalPreviewDocs(): ReactElement {
     const router = useRouter();
+
+    const [docs, setDocs] = useState<DocsV2Read.LoadDocsForUrlResponse | null>(null);
+
+    useEffect(() => {
+        async function loadData() {
+            const docs = await loadDocsForUrl();
+            setDocs(docs);
+        }
+        void loadData();
+
+        const websocket = new WebSocket(`ws://localhost:${process.env.PORT ?? 3000}`);
+        websocket.onmessage = () => {
+            void loadData();
+        };
+    }, []);
+
     const [docsProps, setDocsProps] = useState<DocsPage.Props | null>(null);
 
     useEffect(() => {
-        if (router.asPath === "[[...slug]]") {
+        if (docs == null) {
             return;
         }
-        async function loadData() {
-            const props = await getDocsPageProps(router.asPath.split("/"));
+        const slug = router.query.slug == null ? [] : (router.query.slug as string[]);
+        void getDocsPageProps(docs, slug).then((props) => {
             // eslint-disable-next-line no-console
-            console.debug("getDocsPageProps", props);
+            console.debug(props);
             if (props.type === "props") {
                 setDocsProps(props.props);
             } else if (props.type === "notFound") {
@@ -28,28 +45,30 @@ export default function LocalPreviewDocs(): ReactElement {
             } else if (props.type === "redirect") {
                 void router.replace(props.redirect.destination);
             }
-        }
-        void loadData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [router.asPath]);
+        });
+    }, [docs, router]);
 
     if (docsProps == null) {
-        return <div>Loading...</div>;
+        return <></>;
     }
 
-    return <DocsPage {...docsProps} />;
+    return <NextApp router={router as Router} pageProps={docsProps} Component={DocsPage} />;
 }
 
 async function loadDocsForUrl() {
-    const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", { method: "POST" });
+    const response = await fetch(`http://localhost:${process.env.PORT ?? 3000}/v2/registry/docs/load-with-url`, {
+        method: "POST",
+    });
 
     const docs: DocsV2Read.LoadDocsForUrlResponse = await response.json();
 
     return docs;
 }
 
-async function getDocsPageProps(slug: string[]): Promise<DocsPageResult<DocsPage.Props>> {
-    const docs = await loadDocsForUrl();
+async function getDocsPageProps(
+    docs: DocsV2Read.LoadDocsForUrlResponse,
+    slug: string[],
+): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
@@ -79,7 +98,7 @@ async function getDocsPageProps(slug: string[]): Promise<DocsPageResult<DocsPage
     }
 
     const sidebarNodes = await Promise.all(
-        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
+        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node, { development: true })),
     );
 
     const resolvedPath = await convertNavigatableToResolvedPath({
@@ -87,6 +106,7 @@ async function getDocsPageProps(slug: string[]): Promise<DocsPageResult<DocsPage
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
+        options: { development: true },
     });
 
     if (resolvedPath == null) {

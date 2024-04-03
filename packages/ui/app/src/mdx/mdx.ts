@@ -27,7 +27,9 @@ export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unkno
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
-const MDX_OPTIONS: SerializeOptions["mdxOptions"] = {
+export type SerializeMdxOptions = SerializeOptions["mdxOptions"];
+
+const MDX_OPTIONS: SerializeMdxOptions = {
     remarkRehypeOptions: {
         handlers: {
             heading: customHeadingHandler,

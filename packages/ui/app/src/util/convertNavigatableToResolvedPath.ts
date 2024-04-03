@@ -10,7 +10,12 @@ import grayMatter from "gray-matter";
 import moment from "moment";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
-import { FernDocsFrontmatterRaw, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
+import {
+    FernDocsFrontmatterRaw,
+    SerializeMdxOptions,
+    maybeSerializeMdxContent,
+    serializeMdxWithFrontmatter,
+} from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
 
@@ -61,11 +66,13 @@ export async function convertNavigatableToResolvedPath({
     currentNode,
     apis,
     pages,
+    options,
 }: {
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
+    options?: SerializeMdxOptions;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -103,7 +110,7 @@ export async function convertNavigatableToResolvedPath({
     } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
         const serializedMdxContent =
-            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown) : null;
+            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, options) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
         return {
             type: "changelog-page",
@@ -115,7 +122,7 @@ export async function convertNavigatableToResolvedPath({
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "");
+                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", options);
                     const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
                     return {
                         date: item.date,
@@ -132,7 +139,7 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown);
+        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, options);
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
