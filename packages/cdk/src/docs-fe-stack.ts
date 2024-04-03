@@ -7,7 +7,7 @@ import { Construct } from "constructs";
 import * as fs from "fs";
 import path from "path";
 
-const LOCAL_PREVIEW_BUNDLE_OUT_DIR = path.resolve("../ui/local-preview-bundle/.next");
+const LOCAL_PREVIEW_BUNDLE_OUT_DIR = path.resolve(__dirname, "../ui/local-preview-bundle/.next");
 
 export class DocsFeStack extends Stack {
     constructor(scope: Construct, id: string, environmentType: EnvironmentType, props?: StackProps) {
@@ -32,7 +32,9 @@ export class DocsFeStack extends Stack {
             },
         });
 
-        const local_preview_bundle_dist_zip = path.resolve(`../ui/local-preview-bundle/dist/${id}.zip`);
+        const local_preview_bundle_dist_zip = path.resolve(__dirname, `../ui/local-preview-bundle/dist/${id}.zip`);
+
+        validateFolderIsNextJsBuildFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR);
 
         void zipFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR, local_preview_bundle_dist_zip).then(() => {
             new BucketDeployment(this, "deploy-local-preview-bundle", {
@@ -47,6 +49,18 @@ export class DocsFeStack extends Stack {
 function mkdir(dir: string) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
+    }
+}
+
+function validateFolderIsNextJsBuildFolder(sourceFolder: string) {
+    // test that source folder exists and is a folder
+    if (!fs.existsSync(sourceFolder) || !fs.statSync(sourceFolder).isDirectory()) {
+        throw new Error(`${sourceFolder} does not exist`);
+    }
+
+    // contains BUILD_ID file
+    if (!fs.existsSync(path.join(sourceFolder, "BUILD_ID"))) {
+        throw new Error(`${sourceFolder} does not contain a BUILD_ID file`);
     }
 }
 
