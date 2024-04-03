@@ -26,7 +26,8 @@
     "archiver": "^6.0.1",
     "aws-cdk-lib": "^2.122.0",
     "axios": "^1.6.5",
-    "constructs": "^10.3.0"
+    "constructs": "^10.3.0",
+    "tsx": "^4.7.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
