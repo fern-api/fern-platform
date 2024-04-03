@@ -71,6 +71,16 @@ const nextConfig = {
 
                 // backwards compatibility with currently deployed FDR
                 { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },
+
+                // posthog rewrites
+                {
+                    source: "/api/fern-docs/ingest/static/:path*",
+                    destination: "https://us-assets.i.posthog.com/static/:path*",
+                },
+                {
+                    source: "/api/fern-docs/ingest/:path*",
+                    destination: "https://us.i.posthog.com/:path*",
+                },
             ],
             fallback: [
                 /**

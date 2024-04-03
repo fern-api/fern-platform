@@ -18,7 +18,8 @@ const store = createStore();
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
     useEffect(() => {
-        initializePosthog();
+        initializePosthog(pageProps.baseUrl);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // This is a hack to handle edge-cases related to multitenant subpath rendering:

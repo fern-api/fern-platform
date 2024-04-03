@@ -1,3 +1,4 @@
+import { DocsV2Read } from "@fern-api/fdr-sdk";
 import posthog from "posthog-js";
 
 let IS_POSTHOG_INITIALIZED = false;
@@ -7,11 +8,19 @@ function safeAccessPosthog(run: () => void): void {
     }
 }
 
-export function initializePosthog(): void {
+function getPosthogUIHost(baseUrl: DocsV2Read.BaseUrl): string {
+    // window.location.host is required for subpath rewrite support.
+    const host = typeof window !== "undefined" ? window.location.host : baseUrl.domain;
+
+    return `https://${host}${baseUrl.basePath ?? ""}/api/fern-docs/ingest`;
+}
+
+export function initializePosthog(baseUrl: DocsV2Read.BaseUrl): void {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
     if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
         posthog.init(apiKey, {
-            api_host: "https://app.posthog.com",
+            ui_host: "https://app.posthog.com",
+            api_host: getPosthogUIHost(baseUrl),
             loaded: () => {
                 IS_POSTHOG_INITIALIZED = true;
             },
