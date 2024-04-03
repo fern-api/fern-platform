@@ -27,11 +27,11 @@ jobs:
         uses: ./.github/actions/install
       - name: Build local preview bundle
         run: |
-          ls packages/ui/local-preview-bundle
+          ls -a packages/ui/local-preview-bundle
           pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Synthesize local preview bundle
         run: |
-          ls packages/ui/local-preview-bundle
+          ls -a packages/ui/local-preview-bundle
           pnpm --filter=@fern-ui/cdk run synth:dev2
 
   deploy-local-preview-dev:
