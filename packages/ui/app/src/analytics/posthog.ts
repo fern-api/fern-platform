@@ -20,8 +20,8 @@ export function initializePosthog(baseUrl: DocsV2Read.BaseUrl): void {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
     if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
         posthog.init(apiKey, {
-            api_host: "https://app.posthog.com",
-            ui_host: getPosthogUIHost(baseUrl),
+            ui_host: "https://app.posthog.com",
+            api_host: getPosthogUIHost(baseUrl),
             loaded: () => {
                 IS_POSTHOG_INITIALIZED = true;
             },
