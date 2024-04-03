@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "export",
     transpilePackages: ["@fern-ui/ui"],
     productionBrowserSourceMaps: true,
     experimental: {
