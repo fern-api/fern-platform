@@ -1,6 +1,6 @@
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
-import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/types";
+import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
@@ -15,6 +15,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
+import { unknownToString } from "../util/unknownToString";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
@@ -22,22 +23,6 @@ import {
     PlaygroundRequestFormState,
     convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
 } from "./types";
-
-export function unknownToString(value: unknown): string {
-    if (typeof value === "string") {
-        return value;
-    }
-    if (typeof value === "boolean") {
-        return value ? "true" : "false";
-    }
-    if (typeof value === "number") {
-        return value.toString();
-    }
-    if (value == null) {
-        return "";
-    }
-    return JSON.stringify(value);
-}
 
 export function castToRecord(value: unknown): Record<string, unknown> {
     if (!isPlainObject(value)) {
@@ -764,3 +749,4 @@ export function shouldRenderInline(
         _other: () => false,
     });
 }
+export { unknownToString };

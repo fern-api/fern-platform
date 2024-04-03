@@ -12,11 +12,9 @@ import {
 import { mapValues, pick, sortBy } from "lodash-es";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
-import {
-    endpointExampleToHttpRequestExample,
-    sortKeysByShape,
-    stringifyHttpRequestExampleToCurl,
-} from "../api-page/examples/types";
+import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample";
+import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
+import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import { maybeSerializeMdxContent } from "../mdx/mdx";
 
 type WithoutQuestionMarks<T> = {
@@ -1237,7 +1235,7 @@ function resolveCodeSnippets(
     let toRet: ResolvedCodeSnippet[] = [];
 
     const curlCode = stringifyHttpRequestExampleToCurl(
-        endpointExampleToHttpRequestExample(endpoint, example, requestBody),
+        convertEndpointExampleToHttpRequestExample(endpoint, example, requestBody),
     );
 
     toRet.push({
