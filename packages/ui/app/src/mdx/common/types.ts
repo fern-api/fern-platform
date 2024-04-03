@@ -1,4 +1,4 @@
-import { Root } from "hast";
+import type { Root } from "hast";
 
 export interface CodeBlockItem {
     // language: string;

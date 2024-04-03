@@ -1,5 +1,5 @@
-import { Element } from "hast";
-import { Heading } from "mdast";
+import type { Element } from "hast";
+import type { Heading } from "mdast";
 import { State } from "mdast-util-to-hast";
 
 export function customHeadingHandler(state: State, node: Heading): Element {

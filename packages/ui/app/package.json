@@ -29,7 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^5.12.0",
+    "@datadog/browser-logs": "^5.13.0",
     "@datadog/browser-rum": "^5.13.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
@@ -54,7 +54,6 @@
     "algoliasearch": "^4.22.1",
     "clsx": "^2.1.0",
     "gray-matter": "^4.0.3",
-    "hast": "^1.0.0",
     "hast-util-to-estree": "^3.1.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",
@@ -62,7 +61,6 @@
     "jotai": "^2.7.0",
     "jsonpath": "^1.1.1",
     "lodash-es": "^4.17.21",
-    "mdast": "^3.0.0",
     "mdast-util-mdx-jsx": "^3.1.0",
     "mdast-util-to-hast": "^13.1.0",
     "moment": "^2.30.1",

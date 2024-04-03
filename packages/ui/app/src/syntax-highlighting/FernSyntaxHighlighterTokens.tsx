@@ -1,5 +1,5 @@
 import cn from "clsx";
-import { Element } from "hast";
+import type { Element } from "hast";
 import { isEqual } from "lodash-es";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { visit } from "unist-util-visit";

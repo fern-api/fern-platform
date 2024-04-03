@@ -1,5 +1,5 @@
 import cn from "clsx";
-import { Element } from "hast";
+import type { Element } from "hast";
 import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 import { visit } from "unist-util-visit";

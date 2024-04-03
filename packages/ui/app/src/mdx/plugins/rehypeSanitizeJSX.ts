@@ -1,4 +1,4 @@
-import { Root } from "hast";
+import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../../util/parseStringStyle";
 import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";

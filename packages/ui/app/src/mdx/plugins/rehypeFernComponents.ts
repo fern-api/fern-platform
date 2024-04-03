@@ -1,4 +1,4 @@
-import { Element, Root } from "hast";
+import type { Element, Root } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { visit } from "unist-util-visit";
 import { valueToEstree, wrapChildren } from "./to-estree";

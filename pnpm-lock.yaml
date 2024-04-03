@@ -682,11 +682,11 @@ importers:
   packages/ui/app:
     dependencies:
       '@datadog/browser-logs':
-        specifier: ^5.12.0
-        version: 5.12.0(@datadog/browser-rum@5.13.0)
+        specifier: ^5.13.0
+        version: 5.14.0(@datadog/browser-rum@5.13.0)
       '@datadog/browser-rum':
         specifier: ^5.13.0
-        version: 5.13.0(@datadog/browser-logs@5.12.0)
+        version: 5.13.0(@datadog/browser-logs@5.14.0)
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
@@ -756,9 +756,6 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
-      hast:
-        specifier: ^1.0.0
-        version: 1.0.0
       hast-util-to-estree:
         specifier: ^3.1.0
         version: 3.1.0
@@ -780,9 +777,6 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      mdast:
-        specifier: ^3.0.0
-        version: 3.0.0
       mdast-util-mdx-jsx:
         specifier: ^3.1.0
         version: 3.1.2
@@ -3649,24 +3643,24 @@ packages:
       kuler: 2.0.0
     dev: false
 
-  /@datadog/browser-core@5.12.0:
-    resolution: {integrity: sha512-DVV64OqKMxfJXvHJrHjcCji0guytLGBun9jf7tugXN1ylMNurloV5sF1KW1W1Pb0BuEMiJsuyz1DEIqZHO3z0w==}
-    dev: false
-
   /@datadog/browser-core@5.13.0:
     resolution: {integrity: sha512-5WciDj4IqpfaFZViJNXxovmDQiwoPZ/UWq4WMW7YafG22XNjrc6XbL5PWuAaG6fqcYFW0peE8g56ji5O78vMSA==}
     dev: false
 
-  /@datadog/browser-logs@5.12.0(@datadog/browser-rum@5.13.0):
-    resolution: {integrity: sha512-acS4JexEUi5ACJg5nWoXMug26hC9g+t+mNDjMEtpEJbMSRfxdCwxTlHr8G+gYIVAICp63hUYue3Rfs9uQC08ow==}
+  /@datadog/browser-core@5.14.0:
+    resolution: {integrity: sha512-sr02NfURpidS+FW9JaIDwqG8JfeqNy2GjPhzxZ7q3IITktX0wNxEq+IhwJDfB+2G/2iT9t7WgFBshx/e3Rb0Ow==}
+    dev: false
+
+  /@datadog/browser-logs@5.14.0(@datadog/browser-rum@5.13.0):
+    resolution: {integrity: sha512-ZHTpl/c62OA9iy2HCfJD/1hKwgZPg7/xvKVSNbqF21SniTtxT8hs7InFU8YP9knwrhIkg2RC5TE4hBZCe99D3g==}
     peerDependencies:
-      '@datadog/browser-rum': 5.12.0
+      '@datadog/browser-rum': 5.14.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
     dependencies:
-      '@datadog/browser-core': 5.12.0
-      '@datadog/browser-rum': 5.13.0(@datadog/browser-logs@5.12.0)
+      '@datadog/browser-core': 5.14.0
+      '@datadog/browser-rum': 5.13.0(@datadog/browser-logs@5.14.0)
     dev: false
 
   /@datadog/browser-rum-core@5.13.0:
@@ -3675,7 +3669,7 @@ packages:
       '@datadog/browser-core': 5.13.0
     dev: false
 
-  /@datadog/browser-rum@5.13.0(@datadog/browser-logs@5.12.0):
+  /@datadog/browser-rum@5.13.0(@datadog/browser-logs@5.14.0):
     resolution: {integrity: sha512-3xRyKp4rnMWMNhoy/pd8uDpQsNO3dh3nivNk5MzaxKo+mLsJUGFtj9nIq/jN38jl1tOEFbFMcgvCo15bkdHeQw==}
     peerDependencies:
       '@datadog/browser-logs': 5.13.0
@@ -3684,7 +3678,7 @@ packages:
         optional: true
     dependencies:
       '@datadog/browser-core': 5.13.0
-      '@datadog/browser-logs': 5.12.0(@datadog/browser-rum@5.13.0)
+      '@datadog/browser-logs': 5.14.0(@datadog/browser-rum@5.13.0)
       '@datadog/browser-rum-core': 5.13.0
     dev: false
 
@@ -10127,11 +10121,6 @@ packages:
     dependencies:
       '@types/hast': 3.0.4
 
-  /hast@1.0.0:
-    resolution: {integrity: sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==}
-    deprecated: Renamed to rehype
-    dev: false
-
   /hastscript@9.0.0:
     resolution: {integrity: sha512-jzaLBGavEDKHrc5EfFImKN7nZKKBdSLIdGvCwDZ9TfzbF2ffXiov8CKE445L2Z1Ek2t/m4SKQ2j6Ipv7NyUolw==}
     dependencies:
@@ -11300,11 +11289,6 @@ packages:
     resolution: {integrity: sha512-0H44vDimn51F0YwvxSJSm0eCDOJTRlmN0R1yBh4HLj9wiV1Dn0QoXGbvFAWj2hSItVTlCmBF1hqKlIyUBVFLPg==}
     dependencies:
       '@types/mdast': 4.0.3
-
-  /mdast@3.0.0:
-    resolution: {integrity: sha512-xySmf8g4fPKMeC07jXGz971EkLbWAJ83s4US2Tj9lEdnZ142UP5grN73H1Xd3HzrdbU5o9GYYP/y8F9ZSwLE9g==}
-    deprecated: '`mdast` was renamed to `remark`'
-    dev: false
 
   /mdn-data@2.0.28:
     resolution: {integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==}

@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import type { Expression, Program } from "estree";
-import { ElementContent, Root } from "hast";
+import type { ElementContent, Root } from "hast";
 import { toEstree } from "hast-util-to-estree";
 import { h } from "hastscript";
 import { unified } from "unified";
