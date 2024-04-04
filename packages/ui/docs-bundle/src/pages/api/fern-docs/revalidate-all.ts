@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-ui/core-utils";
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
@@ -51,7 +52,7 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
+        const xFernHost = getHostFromBody(req.body) ?? req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
         if (typeof xFernHost !== "string") {
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
@@ -103,3 +104,15 @@ const handler: NextApiHandler = async (
 };
 
 export default handler;
+
+function getHostFromBody(body: unknown): string | undefined {
+    if (body == null || !isPlainObject(body)) {
+        return undefined;
+    }
+
+    if (typeof body.host === "string") {
+        return body.host;
+    }
+
+    return undefined;
+}
