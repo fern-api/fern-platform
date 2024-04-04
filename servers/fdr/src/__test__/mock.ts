@@ -4,7 +4,7 @@ import { type FdrServices } from "../app/FdrApplication";
 import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
 import { OrgIdsResponse } from "../services/auth/AuthService";
-import { RevalidatedPaths, RevalidatorService } from "../services/revalidator/RevalidatorService";
+import { RevalidatedPathsResponse, RevalidatorService } from "../services/revalidator/RevalidatorService";
 import {
     FailedToDeleteIndexSegment,
     FailedToRegisterDocsNotification,
@@ -82,10 +82,12 @@ class MockSlackService implements SlackService {
 }
 
 class MockRevalidatorService implements RevalidatorService {
-    async revalidate(_params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPaths> {
+    async revalidate(_params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPathsResponse> {
         return {
-            successfulRevalidations: [],
-            failedRevalidations: [],
+            response: {
+                successfulRevalidations: [],
+                failedRevalidations: [],
+            },
             revalidationFailed: false,
         };
     }

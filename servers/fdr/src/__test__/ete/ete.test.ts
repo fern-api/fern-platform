@@ -21,7 +21,7 @@ it("revalidates a custom docs domain", async () => {
 
     expect(revalidationResult.revalidationFailed).toEqual(false);
 
-    expect(revalidationResult.failedRevalidations.length).toEqual(0);
+    expect(revalidationResult.response?.failedRevalidations.length).toEqual(0);
 
-    expect(revalidationResult.successfulRevalidations.length).toBeGreaterThan(0);
+    expect(revalidationResult.response?.successfulRevalidations.length).toBeGreaterThan(0);
 });
