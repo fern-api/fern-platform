@@ -29,7 +29,6 @@ export declare namespace DocsPage {
         logoHref: DocsV1Read.Url | undefined;
 
         search: DocsV1Read.SearchInfo;
-        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
 
@@ -38,18 +37,15 @@ export declare namespace DocsPage {
 }
 
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
-    const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
-    const search = useDeepCompareMemoize(pageProps.search);
-    const colors = useDeepCompareMemoize(pageProps.colors);
 
-    const { baseUrl, title, layout, logoHeight, logoHref, algoliaSearchIndex, resolvedPath } = pageProps;
+    const { baseUrl, title, layout, logoHeight, logoHref, resolvedPath } = pageProps;
 
     return (
         <FeatureFlagContext.Provider value={featureFlags}>
             <DocsContextProvider {...pageProps}>
                 <div className="min-h-screen w-full">
-                    <BgImageGradient colors={colors} />
+                    <BgImageGradient />
                     <NavigationContextProvider
                         resolvedPath={resolvedPath} // this changes between pages
                         domain={baseUrl.domain}
@@ -57,13 +53,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                         title={title}
                     >
                         <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
-                        <Docs
-                            logoHeight={logoHeight}
-                            logoHref={logoHref}
-                            navbarLinks={navbarLinks}
-                            search={search}
-                            algoliaSearchIndex={algoliaSearchIndex}
-                        />
+                        <Docs logoHeight={logoHeight} logoHref={logoHref} />
                     </NavigationContextProvider>
                 </div>
             </DocsContextProvider>

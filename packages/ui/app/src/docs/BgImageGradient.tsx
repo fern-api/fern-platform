@@ -1,16 +1,16 @@
-import { ColorsConfig } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import { FC } from "react";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import "./BgImageGradient.css";
 
 export declare namespace BgImageGradient {
     export interface Props {
         className?: string;
-        colors: ColorsConfig;
     }
 }
 
-export const BgImageGradient: FC<BgImageGradient.Props> = ({ className, colors }) => {
+export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
+    const { colors } = useDocsContext();
     const darkBackground = colors.dark?.background;
     const lightBackground = colors.light?.background;
     const darkBackgroundImage = colors.dark?.backgroundImage;

@@ -31,12 +31,8 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
     );
 };
 
-interface MobileSidebarHeaderLinksProps {
-    navbarLinks: DocsV1Read.NavbarLink[] | undefined;
-}
-
-export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLinksProps): ReactElement | null {
-    const { layout } = useDocsContext();
+export function MobileSidebarHeaderLinks(): ReactElement | null {
+    const { layout, navbarLinks } = useDocsContext();
     const layoutBreakpoint = useLayoutBreakpoint();
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;

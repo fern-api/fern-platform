@@ -15,25 +15,16 @@ import { HeaderContainer } from "./HeaderContainer";
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 interface DocsProps {
-    navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
-    search: DocsV1Read.SearchInfo;
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
     ssr: true,
 });
 
-export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
-    search,
-    algoliaSearchIndex,
-    navbarLinks,
-    logoHeight,
-    logoHref,
-}) {
-    const { layout, colors, versions, currentVersionIndex } = useDocsContext();
+export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
+    const { layout, colors, currentVersionIndex } = useDocsContext();
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
 
@@ -41,7 +32,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     useMessageHandler();
 
     // set up search service
-    useCreateSearchService(search, algoliaSearchIndex, currentVersionIndex, versions);
+    useCreateSearchService(currentVersionIndex);
 
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
@@ -65,7 +56,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
-                        navbarLinks={navbarLinks}
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                     />
@@ -93,9 +83,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         }
                         currentSlug={currentSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
-                        searchInfo={search}
-                        algoliaSearchIndex={algoliaSearchIndex}
-                        navbarLinks={navbarLinks}
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                         showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
