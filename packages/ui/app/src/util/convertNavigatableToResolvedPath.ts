@@ -11,15 +11,15 @@ import moment from "moment";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
 import {
-    FernDocsFrontmatterRaw,
-    SerializeMdxOptions,
+    FernDocsFrontmatter,
+    FernSerializeMdxOptions,
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
 import { resolveApiDefinition } from "./resolver";
 
-function getFrontmatter(content: string): FernDocsFrontmatterRaw {
+function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
     const frontmatter = content.match(frontmatterMatcher)?.[0];
     if (frontmatter == null) {
@@ -29,6 +29,7 @@ function getFrontmatter(content: string): FernDocsFrontmatterRaw {
     return gm.data;
 }
 
+// TODO: delete this before this PR is merged!!!
 async function getSubtitle(
     node: SidebarNode.Page,
     pages: Record<string, DocsV1Read.PageContent>,
@@ -66,13 +67,13 @@ export async function convertNavigatableToResolvedPath({
     currentNode,
     apis,
     pages,
-    options,
+    mdxOptions,
 }: {
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
-    options?: SerializeMdxOptions;
+    mdxOptions?: FernSerializeMdxOptions;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -110,7 +111,7 @@ export async function convertNavigatableToResolvedPath({
     } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
         const serializedMdxContent =
-            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, options) : null;
+            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
         return {
             type: "changelog-page",
@@ -122,7 +123,7 @@ export async function convertNavigatableToResolvedPath({
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", options);
+                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", mdxOptions);
                     const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
                     return {
                         date: item.date,
@@ -139,7 +140,7 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, options);
+        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions);
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||

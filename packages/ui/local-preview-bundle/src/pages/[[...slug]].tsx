@@ -106,6 +106,9 @@ async function getDocsPageProps(
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
+        mdxOptions: {
+            showError: true,
+        },
     });
 
     if (resolvedPath == null) {

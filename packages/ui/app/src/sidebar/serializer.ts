@@ -1,10 +1,10 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, SidebarNodeRaw } from "@fern-ui/fdr-utils";
-import { SerializeMdxOptions, maybeSerializeMdxContent } from "../mdx/mdx";
+import { FernSerializeMdxOptions, maybeSerializeMdxContent } from "../mdx/mdx";
 
 export async function serializeSidebarNodeDescriptionMdx(
     node: SidebarNodeRaw,
-    options?: SerializeMdxOptions,
+    options?: FernSerializeMdxOptions,
 ): Promise<SidebarNode> {
     return visitDiscriminatedUnion(node, "type")._visit<Promise<SidebarNode>>({
         pageGroup: async (pageGroup) => ({
@@ -26,7 +26,7 @@ export async function serializeSidebarNodeDescriptionMdx(
 
 async function serializeApiSectionDescriptionMdx(
     apiSection: SidebarNodeRaw.ApiSection,
-    options?: SerializeMdxOptions,
+    options?: FernSerializeMdxOptions,
 ): Promise<SidebarNode.ApiSection> {
     return {
         ...apiSection,
@@ -46,7 +46,7 @@ async function serializeApiSectionDescriptionMdx(
 async function serializePageDescriptionMdx<
     R extends SidebarNode.Page,
     P extends SidebarNodeRaw.Page = SidebarNodeRaw.Page,
->({ description, ...page }: P, options?: SerializeMdxOptions): Promise<R> {
+>({ description, ...page }: P, options?: FernSerializeMdxOptions): Promise<R> {
     return {
         ...page,
         description: await maybeSerializeMdxContent(description, options),

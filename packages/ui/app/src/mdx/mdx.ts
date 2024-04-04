@@ -28,9 +28,9 @@ export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unkno
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
-export type SerializeMdxOptions = SerializeOptions["mdxOptions"];
+type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
-type FernSerializeMdxOptions = SerializeMdxOptions & {
+export type FernSerializeMdxOptions = SerializeMdxOptions & {
     renderLayout?: boolean;
     showError?: boolean;
 };
