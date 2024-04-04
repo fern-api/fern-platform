@@ -1,6 +1,7 @@
 name: Deploy local preview
 
 on:
+  pull_request: {}
   push:
     branches: [main]
     tags: ["*"]
@@ -37,6 +38,7 @@ jobs:
   deploy-local-preview-dev:
     needs: [dryrun-deploy-local-preview-dev]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     container:
       image: cimg/node:18.18.2
     steps:

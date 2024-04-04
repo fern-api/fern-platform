@@ -3,7 +3,7 @@
   "pipeline": {
     "build": {
       // Build depends on own codegen and downstream build/compile
-      "outputs": ["dist/**"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "dependsOn": ["^build", "^compile", "codegen"]
     },
     "codegen": {
