@@ -77,15 +77,16 @@ export class FdrApplication {
         this.docsDefinitionCache = new DocsDefinitionCacheImpl(this, this.dao);
 
         if ("prepareStackTrace" in Error) {
-            Error.prepareStackTrace = (err, stack) => JSON.stringify({
-                message: err.message,
-                stack: stack.map(frame => ({
-                file: frame.getFileName(),
-                function: frame.getFunctionName(),
-                column: frame.getColumnNumber(),
-                line: frame.getLineNumber()
-                }))
-            });
+            Error.prepareStackTrace = (err, stack) =>
+                JSON.stringify({
+                    message: err.message,
+                    stack: stack.map((frame) => ({
+                        file: frame.getFileName(),
+                        function: frame.getFunctionName(),
+                        column: frame.getColumnNumber(),
+                        line: frame.getLineNumber(),
+                    })),
+                });
         }
     }
 }
