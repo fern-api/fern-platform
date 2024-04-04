@@ -37,6 +37,36 @@ export function rehypeFernComponents(): (tree: Root) => void {
                 }
             }
         });
+
+        visit(tree, (node, index, parent) => {
+            if (index == null || parent == null) {
+                return;
+            }
+
+            if (isMdxJsxFlowElement(node) && node.name === "iframe") {
+                // check that iframe is a youtube video
+
+                const src = node.attributes.find(
+                    (attr) => attr.type === "mdxJsxAttribute" && attr.name === "src",
+                )?.value;
+                if (src != null && typeof src === "string" && src.startsWith("https://www.youtube.com/embed/")) {
+                    // regex to match youtube video id
+                    // https://www.youtube.com/embed/VIDEO_ID?...
+                    // https://www.youtube.com/embed/VIDEO_ID
+
+                    const youtubeEmbedRegex = /https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9_-]+)/;
+                    const match = youtubeEmbedRegex.exec(src)?.[1];
+                    if (match != null) {
+                        parent.children.splice(index, 1, {
+                            type: "mdxJsxFlowElement",
+                            name: "YoutubeVideo",
+                            attributes: [toAttribute("videoId", match, valueToEstree(match))],
+                            children: [],
+                        });
+                    }
+                }
+            }
+        });
     };
 }
 

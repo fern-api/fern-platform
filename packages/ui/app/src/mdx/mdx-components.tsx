@@ -29,6 +29,7 @@ import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/Re
 import { Steps } from "./components/Steps";
 import { TabGroup } from "./components/Tabs";
 import { Tooltip } from "./components/Tooltip";
+import { YoutubeVideo } from "./components/YoutubeVideo";
 
 export const JSX_COMPONENTS = {
     // fern components
@@ -52,6 +53,7 @@ export const JSX_COMPONENTS = {
     Steps,
     TabGroup,
     Tooltip,
+    YoutubeVideo,
 
     // aliased for backwards compatibility
     Cards: CardGroup,
