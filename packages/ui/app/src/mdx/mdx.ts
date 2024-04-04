@@ -6,6 +6,7 @@ import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
+import type { PluggableList } from "unified";
 import { emitDatadogError } from "../analytics/datadogRum";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
@@ -29,47 +30,48 @@ type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 export type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
-const getDefaultMdxOptions = (): Exclude<SerializeMdxOptions, undefined> => ({
-    remarkRehypeOptions: {
-        handlers: {
-            heading: customHeadingHandler,
-        },
-    },
-
-    remarkPlugins: [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji],
-    rehypePlugins: [rehypeSlug, rehypeToc, rehypeKatex, rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
-    format: "mdx",
-    /**
-     * development=true is required to render MdxRemote from the client-side.
-     * https://github.com/hashicorp/next-mdx-remote/issues/350
-     */
-    development: process.env.NODE_ENV !== "production",
-});
-
 type FernSerializeMdxOptions = SerializeMdxOptions & {
     renderLayout?: boolean;
+    showError?: boolean;
 };
 
-function withDefaultMdxOptions({ renderLayout, ...options }: FernSerializeMdxOptions = {}): SerializeMdxOptions {
-    return {
-        remarkRehypeOptions: {
-            ...options.remarkRehypeOptions,
-            handlers: {
-                heading: customHeadingHandler,
-                ...options.remarkRehypeOptions?.handlers,
-            },
+function withDefaultMdxOptions({
+    renderLayout,
+    showError,
+    ...options
+}: FernSerializeMdxOptions = {}): SerializeMdxOptions {
+    const remarkRehypeOptions = {
+        ...options.remarkRehypeOptions,
+        handlers: {
+            heading: customHeadingHandler,
+            ...options.remarkRehypeOptions?.handlers,
         },
+    };
 
-        remarkPlugins: [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji, ...(options.remarkPlugins ?? [])],
-        rehypePlugins: [
-            rehypeSlug,
-            rehypeKatex,
-            rehypeFernCode,
-            rehypeFernComponents,
-            ...(options.rehypePlugins ?? []),
-            ...(renderLayout ? [rehypeFernLayout] : []),
-            rehypeSanitizeJSX,
-        ],
+    const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
+
+    if (options.remarkPlugins != null) {
+        remarkPlugins.push(...options.remarkPlugins);
+    }
+
+    const rehypePlugins: PluggableList = [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents];
+
+    if (options.rehypePlugins != null) {
+        rehypePlugins.push(...options.rehypePlugins);
+    }
+
+    if (renderLayout) {
+        rehypePlugins.push([rehypeFernLayout, { test: "test" }]);
+    }
+
+    // Always sanitize JSX at the end.
+    rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
+
+    return {
+        ...options,
+        remarkRehypeOptions,
+        remarkPlugins,
+        rehypePlugins,
         format: "mdx",
         /**
          * development=true is required to render MdxRemote from the client-side.
@@ -84,15 +86,15 @@ function withDefaultMdxOptions({ renderLayout, ...options }: FernSerializeMdxOpt
  */
 export async function maybeSerializeMdxContent(
     content: string,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
 ): Promise<MDXRemoteSerializeResult | string>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
 ): Promise<MDXRemoteSerializeResult | string | undefined>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
-    mdxOptions: SerializeOptions["mdxOptions"] = {},
+    mdxOptions: FernSerializeMdxOptions = {},
 ): Promise<MDXRemoteSerializeResult | string | undefined> {
     if (content == null) {
         return undefined;
@@ -127,15 +129,15 @@ export async function maybeSerializeMdxContent(
  */
 export async function serializeMdxWithFrontmatter(
     content: string,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
 ): Promise<SerializedMdxContent>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
 ): Promise<SerializedMdxContent | undefined>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
-    mdxOptions: SerializeOptions["mdxOptions"] = {},
+    mdxOptions: FernSerializeMdxOptions = {},
 ): Promise<SerializedMdxContent | undefined> {
     if (content == null) {
         return undefined;

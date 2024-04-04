@@ -12,7 +12,7 @@ interface FoundHeading {
     id: string;
 }
 
-export function rehypeFernLayout(): (tree: Root, vfile: VFile) => void {
+export function rehypeFernLayout(opts: { test: string }): (tree: Root, vfile: VFile) => void {
     return (tree, vfile) => {
         // const matter = vfile.data.matter as FernDocsFrontmatter;
         const headings: FoundHeading[] = [];

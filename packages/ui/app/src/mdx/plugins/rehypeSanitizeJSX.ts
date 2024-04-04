@@ -6,7 +6,7 @@ import { JSX_COMPONENTS } from "../mdx-components";
 import { valueToEstree } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
-export function rehypeSanitizeJSX(): (tree: Root) => void {
+export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean } = {}): (tree: Root) => void {
     const SUPPORTED_JSX_TAGS = [...Object.keys(JSX_COMPONENTS), ...INTRINSIC_JSX_TAGS];
     return function (tree: Root): void {
         visit(tree, (node, index, parent) => {
@@ -15,18 +15,22 @@ export function rehypeSanitizeJSX(): (tree: Root) => void {
             }
 
             if (isMdxJsxFlowElement(node) && node.name != null && !SUPPORTED_JSX_TAGS.includes(node.name)) {
-                parent?.children.splice(index, 1, {
-                    type: "mdxJsxFlowElement",
-                    name: "MdxErrorBoundary",
-                    attributes: [
-                        toAttribute(
-                            "error",
-                            `Unsupported JSX tag: <${node.name} />`,
-                            valueToEstree(`Unsupported JSX tag: <${node.name} />`),
-                        ),
-                    ],
-                    children: [],
-                });
+                if (!showErrors) {
+                    parent?.children.splice(index, 1);
+                } else {
+                    parent?.children.splice(index, 1, {
+                        type: "mdxJsxFlowElement",
+                        name: "MdxErrorBoundary",
+                        attributes: [
+                            toAttribute(
+                                "error",
+                                `Unsupported JSX tag: <${node.name} />`,
+                                valueToEstree(`Unsupported JSX tag: <${node.name} />`),
+                            ),
+                        ],
+                        children: [],
+                    });
+                }
             }
         });
 
