@@ -1,22 +1,11 @@
+import { FernRevalidation, FernRevalidationClient } from "@fern-fern/revalidation-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
-export interface RevalidatePathSuccessResult {
-    success: true;
-    url: string;
-}
-
-export interface RevalidatePathErrorResult {
-    success: false;
-    url: string;
-    message: string;
-}
-
-export type RevalidatedPaths = {
-    successfulRevalidations: RevalidatePathSuccessResult[];
-    failedRevalidations: RevalidatePathErrorResult[];
+export type RevalidatedPathsResponse = {
+    response?: FernRevalidation.RevalidateAllV2Response;
     revalidationFailed: boolean;
 };
 
@@ -25,7 +14,7 @@ export interface RevalidatorService {
         fernUrl: ParsedBaseUrl;
         baseUrl: ParsedBaseUrl;
         app: FdrApplication;
-    }): Promise<RevalidatedPaths>;
+    }): Promise<RevalidatedPathsResponse>;
 }
 
 export class RevalidatorServiceImpl implements RevalidatorService {
@@ -60,45 +49,27 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         fernUrl: ParsedBaseUrl;
         baseUrl: ParsedBaseUrl;
         app?: FdrApplication;
-    }): Promise<RevalidatedPaths> {
-        let successfulRevalidations: RevalidatePathSuccessResult[] = [];
-        let failedRevalidations: RevalidatePathErrorResult[] = [];
+    }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
-
         try {
-            const hostname = baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname;
-            const queryParams = baseUrl.path != null ? `?basePath=${baseUrl.path}` : "";
-            const res = await this.axiosInstance.post(
-                `https://${hostname}/api/revalidate-all${queryParams}`,
-                undefined,
-                {
-                    timeout: 1000 * 300, // 5 minutes (matches vercel timeout)
-                    headers: {
-                        "x-fern-host": baseUrl.hostname,
-                    },
-                },
-            );
-
-            if (res.status >= 400) {
-                revalidationFailed = true;
-            }
-
-            const data = res.data;
-            if (data.successfulRevalidations != null) {
-                successfulRevalidations = data.successfulRevalidations;
-            }
-            if (data.failedRevalidations != null) {
-                failedRevalidations = data.failedRevalidations;
-            }
+            const client = new FernRevalidationClient({
+                environment: baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname,
+            });
+            const response = await client.revalidateAllV2({
+                host: baseUrl.hostname,
+            });
+            return {
+                response,
+                revalidationFailed: false,
+            };
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);
             revalidationFailed = true;
-        }
 
-        return {
-            failedRevalidations,
-            successfulRevalidations,
-            revalidationFailed,
-        };
+            return {
+                response: undefined,
+                revalidationFailed: true,
+            };
+        }
     }
 }

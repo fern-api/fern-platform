@@ -8,6 +8,9 @@ navigation:
   - api: FDR API Reference
     api-name: FDR
     display-errors: true
+  - api: Revalidation API Reference
+    api-name: revalidation
+    display-errors: true
 
 colors:
   accentPrimary:
