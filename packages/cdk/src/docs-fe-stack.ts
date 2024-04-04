@@ -7,7 +7,7 @@ import { Construct } from "constructs";
 import * as fs from "fs";
 import path from "path";
 
-const LOCAL_PREVIEW_BUNDLE_OUT_DIR = path.resolve(__dirname, "../../ui/local-preview-bundle/out");
+const LOCAL_PREVIEW_BUNDLE_OUT_DIR = path.resolve(__dirname, "../../ui/local-preview-bundle/.next");
 
 export class DocsFeStack extends Stack {
     constructor(scope: Construct, id: string, environmentType: EnvironmentType, props?: StackProps) {

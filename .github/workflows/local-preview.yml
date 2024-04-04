@@ -1,6 +1,7 @@
 name: Deploy local preview
 
 on:
+  pull_request: {}
   push:
     branches: [main]
     tags: ["*"]
@@ -26,17 +27,14 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: |
-          pnpm turbo --filter=@fern-ui/local-preview-bundle build
-          ls -a packages/ui/local-preview-bundle
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Synthesize local preview bundle
-        run: |
-          ls -a packages/ui/local-preview-bundle
-          pnpm --filter=@fern-ui/cdk run synth:dev2
+        run: pnpm --filter=@fern-ui/cdk run synth:dev2
 
   deploy-local-preview-dev:
     needs: [dryrun-deploy-local-preview-dev]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     container:
       image: cimg/node:18.18.2
     steps:
@@ -49,13 +47,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: |
-          ls packages/ui/local-preview-bundle
-          ENABLE_SOURCE_MAPS=true pnpm turbo --filter=@fern-ui/local-preview-bundle build
+        run: ENABLE_SOURCE_MAPS=true pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: |
-          ls packages/ui/local-preview-bundle
-          pnpm --filter=@fern-ui/cdk run deploy:dev2
+        run: pnpm --filter=@fern-ui/cdk run deploy:dev2
 
   deploy-local-preview-prod:
     needs: [deploy-local-preview-dev]
