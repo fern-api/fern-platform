@@ -8,25 +8,29 @@ import {
     serializeSidebarNodeDescriptionMdx,
 } from "@fern-ui/ui";
 import { Router, useRouter } from "next/router";
+import type { GetServerSideProps } from "next/types";
 import { ReactElement, useEffect, useState } from "react";
 
-export default function LocalPreviewDocs(): ReactElement {
+export default function LocalPreviewDocs({ port }: { port: number }): ReactElement {
     const router = useRouter();
 
     const [docs, setDocs] = useState<DocsV2Read.LoadDocsForUrlResponse | null>(null);
 
     useEffect(() => {
         async function loadData() {
-            const docs = await loadDocsForUrl();
+            const docs = await loadDocsForUrl(port);
             setDocs(docs);
         }
         void loadData();
 
-        const websocket = new WebSocket(`ws://localhost:${process.env.PORT ?? 3000}`);
+        const websocket = new WebSocket(`ws://localhost:${port}`);
         websocket.onmessage = () => {
             void loadData();
         };
-    }, []);
+        return () => {
+            websocket.close();
+        };
+    }, [port]);
 
     const [docsProps, setDocsProps] = useState<DocsPage.Props | null>(null);
 
@@ -55,8 +59,16 @@ export default function LocalPreviewDocs(): ReactElement {
     return <NextApp router={router as Router} pageProps={docsProps} Component={DocsPage} />;
 }
 
-async function loadDocsForUrl() {
-    const response = await fetch(`http://localhost:${process.env.PORT ?? 3000}/v2/registry/docs/load-with-url`, {
+export const getServerSideProps: GetServerSideProps<{ port: number }> = async () => {
+    return {
+        props: {
+            port: parseInt(process.env.PORT ?? "3000", 10),
+        },
+    };
+};
+
+async function loadDocsForUrl(port: number) {
+    const response = await fetch(`http://localhost:${port}/v2/registry/docs/load-with-url`, {
         method: "POST",
     });
 
