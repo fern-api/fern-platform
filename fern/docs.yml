@@ -6,7 +6,7 @@ navigation:
   - page: Home
     path: ./docs/pages/welcome.mdx
   - api: FDR API Reference
-    api-name: FDR
+    api-name: fdr
     display-errors: true
   - api: Revalidation API Reference
     api-name: revalidation
