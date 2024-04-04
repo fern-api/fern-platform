@@ -11,18 +11,12 @@ import { useIsScrolled } from "./useIsScrolled";
 
 interface HeaderContainerProps {
     isMobileSidebarOpen: boolean;
-    navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
 }
 
-export const HeaderContainer: FC<HeaderContainerProps> = ({
-    isMobileSidebarOpen,
-    navbarLinks,
-    logoHeight,
-    logoHref,
-}) => {
-    const { colors, layout, tabs } = useDocsContext();
+export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen, logoHeight, logoHref }) => {
+    const { colors, layout, tabs, navbarLinks } = useDocsContext();
     const isScrolled = useIsScrolled();
     const layoutBreakpoint = useLayoutBreakpoint();
     const openMobileSidebar = useOpenMobileSidebar();

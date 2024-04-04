@@ -10,7 +10,6 @@ import { useOpenSearchDialog } from "./atom";
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
-        searchInfo: DocsV1Read.SearchInfo;
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
         showBorder?: boolean;

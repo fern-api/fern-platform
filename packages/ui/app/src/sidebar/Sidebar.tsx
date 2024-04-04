@@ -20,8 +20,6 @@ import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 export interface SidebarProps {
     currentSlug: string[];
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-    searchInfo: DocsV1Read.SearchInfo;
-    navbarLinks: DocsV1Read.NavbarLink[] | undefined;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     showSearchBar?: boolean;
@@ -30,8 +28,6 @@ export interface SidebarProps {
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
     currentSlug,
     registerScrolledToPathListener,
-    searchInfo,
-    navbarLinks,
     logoHeight,
     logoHref,
     showSearchBar,
@@ -51,7 +47,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             aria-label="secondary"
         >
             <SidebarFixedItemsSection
-                searchInfo={searchInfo}
                 showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
                 showSearchBar={showSearchBar}
                 logoHeight={logoHeight}
@@ -88,7 +83,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             />
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
-                    <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
+                    <MobileSidebarHeaderLinks />
                     <BuiltWithFern />
                 </FernScrollArea>
             </SearchSidebar>

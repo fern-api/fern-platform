@@ -25,6 +25,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
     const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const searchInfo = useDeepCompareMemoize(pageProps.search);
+    const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const { resolvedTheme: theme } = useTheme();
 
     const { baseUrl, title, favicon } = pageProps;
@@ -63,6 +64,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             versions,
             sidebarNodes,
             searchInfo,
+            navbarLinks,
         }),
         [
             baseUrl.basePath,
@@ -79,6 +81,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             typography,
             versions,
             searchInfo,
+            navbarLinks,
         ],
     );
 
