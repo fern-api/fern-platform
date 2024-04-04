@@ -17,7 +17,7 @@ import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
 
 const CONTAINER_NAME = "fern-definition-registry";
-const SERVICE_NAME = "fdr";  
+const SERVICE_NAME = "fdr";
 
 export class FdrDeployStack extends Stack {
     constructor(
