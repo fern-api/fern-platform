@@ -1,7 +1,7 @@
 import { WebClient } from "@slack/web-api";
 import winston from "winston";
 import type { FdrApplication, FdrConfig } from "../../app";
-import { RevalidatedPaths } from "../revalidator/RevalidatorService";
+import { RevalidatedPathsResponse } from "../revalidator/RevalidatorService";
 
 export interface FailedToRegisterDocsNotification {
     domain: string;
@@ -10,7 +10,7 @@ export interface FailedToRegisterDocsNotification {
 
 export interface FailedToRevalidatePathsNotification {
     domain: string;
-    paths: RevalidatedPaths;
+    paths: RevalidatedPathsResponse;
 }
 
 export interface FailedToDeleteIndexSegment {
@@ -70,14 +70,15 @@ export class SlackServiceImpl implements SlackService {
 
     async notifyFailedToRevalidatePaths(request: FailedToRevalidatePathsNotification): Promise<void> {
         try {
-            if (request.paths.failedRevalidations.length > 0) {
+            const failedRevalidations = request.paths.response?.failedRevalidations;
+            if (failedRevalidations != null && failedRevalidations.length > 0) {
                 const { ts } = await this.client.chat.postMessage({
                     channel: "#engineering-notifs",
-                    text: `:rotating_light: \`${request.domain}\` encountered ${request.paths.failedRevalidations.length} revalidation failurs. }`,
+                    text: `:rotating_light: \`${request.domain}\` encountered ${failedRevalidations.length} revalidation failurs. }`,
                     blocks: [],
                 });
-                const failedUrlsMessage = `The following paths failed:\n ${request.paths.failedRevalidations
-                    .map((e) => `${e.url} : ${e.message}`)
+                const failedUrlsMessage = `The following paths failed:\n ${failedRevalidations
+                    .map((e) => `${(e as any).url} : ${(e as any).message}`)
                     .join("\n")}`;
                 await this.client.chat.postMessage({
                     channel: "#engineering-notifs",
