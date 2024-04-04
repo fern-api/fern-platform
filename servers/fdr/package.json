@@ -14,6 +14,7 @@
     "@aws-sdk/s3-request-presigner": "^3.540.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.1.0",
+    "@fern-fern/revalidation-sdk": "0.0.2",
     "@prisma/client": "5.11.0",
     "@slack/web-api": "^6.9.0",
     "@ungap/url-search-params": "0.2.2",

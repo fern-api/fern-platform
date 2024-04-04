@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /api/fern-docs
+  endpoints:
+    revalidateAllV2:
+      path: /revalidate-all/v2
+      docs: Revalidates a docs website
+      display-name: Revalidate a docs instance
+      method: POST
+      request:
+        name: CreateRevalidateAllV2Request
+        headers: 
+          x-fern-host: 
+            type: string
+            docs: |
+              The host you want to revalidate the docs for.
+        query-parameters:
+          basePath:
+            type: string
+            docs: |
+              The base path of the docs you want to revalidate.
+        body:
+          properties:
+            host:
+              type: string
+              docs: |
+                The host you want to revalidate the docs for.
+      response: RevalidateAllV2Response
+
+types:
+  RevalidateAllV2Response:
+    properties:
+      successfulRevalidations: list<SuccessfulRevalidations>
+      failedRevalidations: list<unknown>
+
+  SuccessfulRevalidations:
+    properties:
+      success: string
+      url: string

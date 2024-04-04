@@ -60,7 +60,7 @@ jobs:
 
       - name: 🪴 Generate Fern SDKs
         run: |
-          pnpm fern generate --local --group local --log-level debug
+          pnpm fern generate --local --api fdr --group local --log-level debug
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
@@ -133,7 +133,7 @@ jobs:
 
       - name: 🪴 Generate Code
         run: |
-          pnpm fern generate --local --group local --log-level debug
+          pnpm fern generate --local --api fdr --group local --log-level debug
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 

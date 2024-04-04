@@ -192,9 +192,13 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                             baseUrl,
                             app,
                         });
-                        if (results.failedRevalidations.length === 0 && !results.revalidationFailed) {
+                        if (
+                            results.response != null &&
+                            results.response.failedRevalidations.length === 0 &&
+                            !results.revalidationFailed
+                        ) {
                             app.logger.info(
-                                `Successfully revalidated ${results.successfulRevalidations.length} paths.`,
+                                `Successfully revalidated ${results.response.successfulRevalidations.length} paths.`,
                             );
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({
