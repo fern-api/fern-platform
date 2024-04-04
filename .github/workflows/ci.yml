@@ -85,7 +85,7 @@ jobs:
 
       - name: Codegen
         run: |
-          pnpm fern generate --local
+          pnpm fern generate --local --api fdr
           pnpm turbo --filter=@fern-platform/fdr codegen
 
       - name: Run tests
