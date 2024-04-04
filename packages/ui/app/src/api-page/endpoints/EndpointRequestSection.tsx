@@ -63,7 +63,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                 file: (file) => (
                                     <EndpointParameterContent
                                         name={file.key}
-                                        description={undefined}
+                                        description={file.description}
                                         typeShorthand={
                                             <span className="t-muted inline-flex items-baseline gap-2 text-xs">
                                                 {file.isOptional ? "optional file" : "file"}
@@ -71,13 +71,13 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         }
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         route={route}
-                                        availability={undefined}
+                                        availability={file.availability}
                                     />
                                 ),
                                 fileArray: (fileArray) => (
                                     <EndpointParameterContent
                                         name={fileArray.key}
-                                        description={undefined}
+                                        description={fileArray.description}
                                         typeShorthand={
                                             <span className="t-muted inline-flex items-baseline gap-2 text-xs">
                                                 {fileArray.isOptional ? "optional list of files" : "list of files"}
@@ -85,7 +85,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         }
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
                                         route={route}
-                                        availability={undefined}
+                                        availability={fileArray.availability}
                                     />
                                 ),
                                 bodyProperty: (bodyProperty) => (
