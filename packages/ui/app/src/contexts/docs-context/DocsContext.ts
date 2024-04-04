@@ -19,6 +19,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
     currentVersionIndex: undefined,
     versions: [],
     sidebarNodes: [],
+    searchInfo: undefined,
 });
 
 export interface DocsContextValue extends SidebarNavigation {
@@ -29,6 +30,7 @@ export interface DocsContextValue extends SidebarNavigation {
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
     css: DocsV1Read.CssConfig | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
+    searchInfo: DocsV1Read.SearchInfo | undefined;
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;
 }

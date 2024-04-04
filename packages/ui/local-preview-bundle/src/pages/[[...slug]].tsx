@@ -162,7 +162,6 @@ async function getDocsPageProps(
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
         search: docs.definition.search,
-        algoliaSearchIndex: docs.definition.algoliaSearchIndex,
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {

@@ -11,7 +11,6 @@ export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
         searchInfo: DocsV1Read.SearchInfo;
-        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
         showBorder?: boolean;

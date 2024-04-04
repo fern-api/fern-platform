@@ -21,7 +21,6 @@ export interface SidebarProps {
     currentSlug: string[];
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     searchInfo: DocsV1Read.SearchInfo;
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
     navbarLinks: DocsV1Read.NavbarLink[] | undefined;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
@@ -32,7 +31,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
     currentSlug,
     registerScrolledToPathListener,
     searchInfo,
-    algoliaSearchIndex,
     navbarLinks,
     logoHeight,
     logoHref,
@@ -54,7 +52,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
         >
             <SidebarFixedItemsSection
                 searchInfo={searchInfo}
-                algoliaSearchIndex={algoliaSearchIndex}
                 showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
                 showSearchBar={showSearchBar}
                 logoHeight={logoHeight}
