@@ -57,6 +57,8 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             });
             const response = await client.revalidateAllV2({
                 host: baseUrl.hostname,
+                basePath: baseUrl.path != null ? `?basePath=${baseUrl.path}` : "",
+                xFernHost: baseUrl.hostname,
             });
             return {
                 response,
