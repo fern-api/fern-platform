@@ -37,7 +37,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen,
                     `}
                 </style>
                 <div className={cn(className, "clipped-background")}>
-                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" colors={colors} />
+                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
                 </div>
             </>
         ),
