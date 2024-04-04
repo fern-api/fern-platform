@@ -10,10 +10,11 @@ import { emitDatadogError } from "../analytics/datadogRum";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
+import { rehypeFernLayout } from "./plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
-export interface FernDocsFrontmatterRaw {
+export interface FernDocsFrontmatter {
     title?: string;
     description?: string;
     editThisPageUrl?: string;
@@ -22,17 +23,13 @@ export interface FernDocsFrontmatterRaw {
     layout?: "overview" | "guide";
 }
 
-export interface FernDocsFrontmatter extends Omit<FernDocsFrontmatterRaw, "excerpt"> {
-    excerpt?: MDXRemoteSerializeResult | string;
-}
-
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 export type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
-const MDX_OPTIONS: Exclude<SerializeMdxOptions, undefined> = {
+const getDefaultMdxOptions = (): Exclude<SerializeMdxOptions, undefined> => ({
     remarkRehypeOptions: {
         handlers: {
             heading: customHeadingHandler,
@@ -40,29 +37,45 @@ const MDX_OPTIONS: Exclude<SerializeMdxOptions, undefined> = {
     },
 
     remarkPlugins: [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji],
-    rehypePlugins: [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
+    rehypePlugins: [rehypeSlug, rehypeToc, rehypeKatex, rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
     format: "mdx",
     /**
      * development=true is required to render MdxRemote from the client-side.
      * https://github.com/hashicorp/next-mdx-remote/issues/350
      */
     development: process.env.NODE_ENV !== "production",
+});
+
+type FernSerializeMdxOptions = SerializeMdxOptions & {
+    renderLayout?: boolean;
 };
 
-function withDefaultMdxOptions(options: SerializeMdxOptions = {}): SerializeMdxOptions {
+function withDefaultMdxOptions({ renderLayout, ...options }: FernSerializeMdxOptions = {}): SerializeMdxOptions {
     return {
-        ...MDX_OPTIONS,
-        ...options,
-        remarkPlugins: [...(MDX_OPTIONS.remarkPlugins ?? []), ...(options.remarkPlugins ?? [])],
-        rehypePlugins: [...(MDX_OPTIONS.rehypePlugins ?? []), ...(options.rehypePlugins ?? [])],
         remarkRehypeOptions: {
-            ...MDX_OPTIONS.remarkRehypeOptions,
             ...options.remarkRehypeOptions,
             handlers: {
-                ...MDX_OPTIONS.remarkRehypeOptions?.handlers,
+                heading: customHeadingHandler,
                 ...options.remarkRehypeOptions?.handlers,
             },
         },
+
+        remarkPlugins: [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji, ...(options.remarkPlugins ?? [])],
+        rehypePlugins: [
+            rehypeSlug,
+            rehypeKatex,
+            rehypeFernCode,
+            rehypeFernComponents,
+            ...(options.rehypePlugins ?? []),
+            ...(renderLayout ? [rehypeFernLayout] : []),
+            rehypeSanitizeJSX,
+        ],
+        format: "mdx",
+        /**
+         * development=true is required to render MdxRemote from the client-side.
+         * https://github.com/hashicorp/next-mdx-remote/issues/350
+         */
+        development: process.env.NODE_ENV !== "production",
     };
 }
 
@@ -128,41 +141,11 @@ export async function serializeMdxWithFrontmatter(
         return undefined;
     }
     try {
-        const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterRaw>(content, {
+        return await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
             scope: {},
-            mdxOptions: withDefaultMdxOptions(mdxOptions),
+            mdxOptions: withDefaultMdxOptions({ ...mdxOptions, renderLayout: true }),
             parseFrontmatter: true,
         });
-
-        let excerpt: MDXRemoteSerializeResult | string | undefined = firstPass.frontmatter?.excerpt;
-
-        if (firstPass.frontmatter?.excerpt) {
-            try {
-                excerpt = await serialize(firstPass.frontmatter.excerpt, {
-                    scope: {},
-                    mdxOptions: withDefaultMdxOptions(mdxOptions),
-                    parseFrontmatter: false,
-                });
-            } catch (e) {
-                // eslint-disable-next-line no-console
-                console.error(e);
-
-                emitDatadogError(e, {
-                    context: "MDX",
-                    errorSource: "maybeSerializeMdxContent",
-                    errorDescription: "Failed to serialize subtitle (excerpt) from frontmatter",
-                });
-            }
-        }
-
-        return {
-            frontmatter: {
-                ...firstPass.frontmatter,
-                excerpt,
-            },
-            compiledSource: firstPass.compiledSource,
-            scope: firstPass.scope,
-        };
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);

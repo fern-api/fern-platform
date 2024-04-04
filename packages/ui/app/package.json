@@ -56,6 +56,7 @@
     "gray-matter": "^4.0.3",
     "hast-util-to-estree": "^3.1.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
+    "hast-util-to-string": "^3.0.0",
     "hastscript": "^9.0.0",
     "instantsearch.js": "^4.63.0",
     "jotai": "^2.7.0",
@@ -90,7 +91,8 @@
     "style-to-object": "^1.0.5",
     "tinycolor2": "^1.6.0",
     "unified": "^11.0.4",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "vfile": "^6.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

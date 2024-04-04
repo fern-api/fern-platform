@@ -2,6 +2,7 @@ import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
+import { TableOfContents } from "../custom-docs-page/TableOfContents";
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
@@ -53,7 +54,7 @@ export const JSX_COMPONENTS = {
     TabGroup,
     Tooltip,
 
-    // aliased for backwards compatibility
+    // deprecated, aliased for backwards compatibility
     Cards: CardGroup,
     CodeBlocks: CodeGroup,
     Tabs: TabGroup,
@@ -68,7 +69,10 @@ export const JSX_COMPONENTS = {
     Check: CheckCallout,
     LaunchNote: LaunchNoteCallout,
 
-    // error boundary
+    // layout components (internal use only)
+    TableOfContents,
+
+    // error boundary (internal use only)
     MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
         <FernErrorTag component="MdxErrorBoundary" {...props} />
     ),
