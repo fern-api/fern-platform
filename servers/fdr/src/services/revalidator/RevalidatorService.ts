@@ -53,8 +53,9 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         let revalidationFailed = false;
         try {
             const client = new FernRevalidationClient({
-                environment: baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname,
+                environment: baseUrl.path != null ? `https://${fernUrl.hostname}` : `https://${baseUrl.hostname}`,
             });
+            console.log(baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname);
             const response = await client.revalidateAllV2({
                 host: baseUrl.hostname,
                 basePath: baseUrl.path != null ? `?basePath=${baseUrl.path}` : "",
@@ -67,7 +68,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);
             revalidationFailed = true;
-
+            console.log(e);
             return {
                 response: undefined,
                 revalidationFailed: true,
