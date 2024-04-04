@@ -1,23 +1,10 @@
-import dynamic from "next/dynamic";
 import { forwardRef, useMemo } from "react";
 import { emitDatadogError } from "../analytics/datadogRum";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "./FernSyntaxHighlighter.css";
-import { ScrollToHandle } from "./FernSyntaxHighlighterTokens";
+import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
+import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
-
-const FernSyntaxHighlighterTokensVirtualized = dynamic(
-    () =>
-        import("./FernSyntaxHighlighterTokensVirtualized").then(
-            ({ FernSyntaxHighlighterTokensVirtualized }) => FernSyntaxHighlighterTokensVirtualized,
-        ),
-    { ssr: true },
-);
-
-const FernSyntaxHighlighterTokens = dynamic(
-    () =>
-        import("./FernSyntaxHighlighterTokens").then(({ FernSyntaxHighlighterTokens }) => FernSyntaxHighlighterTokens),
-    { ssr: true },
-);
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];
@@ -70,7 +57,11 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
             ? FernSyntaxHighlighterTokens
             : FernSyntaxHighlighterTokensVirtualized;
 
-    return <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />;
+    return (
+        <FernErrorBoundary>
+            <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />
+        </FernErrorBoundary>
+    );
 });
 
 FernSyntaxHighlighter.displayName = "FernSyntaxHighlighter";
