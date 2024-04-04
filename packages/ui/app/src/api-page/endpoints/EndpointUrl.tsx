@@ -20,6 +20,7 @@ export declare namespace EndpointUrl {
     }>;
 }
 
+// TODO: this component needs a refresh
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
     { path, method, environment, showEnvironment, large, className },
     parentRef,
@@ -41,6 +42,20 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     <span className="t-muted">{url.host}</span>
                 </span>,
             );
+
+            url.pathname?.split("/").forEach((part, i) => {
+                if (part.trim().length === 0) {
+                    return;
+                }
+                elements.push(
+                    <span key={`separator-base-${i}`} className="text-faded">
+                        {"/"}
+                    </span>,
+                    <span key={`part-base-${i}`} className="text-faded whitespace-nowrap">
+                        {part}
+                    </span>,
+                );
+            });
         }
         parts.forEach((p, i) => {
             elements.push(
@@ -73,7 +88,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
             <div className={cn("flex items-center")}>
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
                     {(onClick) => (
-                        <span
+                        <button
                             className={cn(
                                 "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-default",
                             )}
@@ -87,7 +102,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             >
                                 {renderPathParts(endpointPathParts)}
                             </span>
-                        </span>
+                        </button>
                     )}
                 </CopyToClipboardButton>
             </div>
