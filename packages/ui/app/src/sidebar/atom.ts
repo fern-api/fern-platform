@@ -26,7 +26,7 @@ export function useMessageHandler(): void {
                 event.source?.postMessage("mobileSidebarOpened", { targetOrigin: event.origin });
             } else if (event.data === "toggleTheme") {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
-                event.data?.postMessage("themeToggled", { targetOrigin: event.origin });
+                event.source?.postMessage("themeToggled", { targetOrigin: event.origin });
             } else if (event.data === "setSystemTheme") {
                 setTheme("system");
                 event.source?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
