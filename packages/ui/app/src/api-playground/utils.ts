@@ -47,7 +47,7 @@ function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<st
         .map((part) => {
             if (part.type === "pathParameter") {
                 const stateValue = unknownToString(pathParameters?.[part.key]);
-                return stateValue.length > 0 ? encodeURI(stateValue) : ":" + part.key;
+                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.key;
             }
             return part.value;
         })
