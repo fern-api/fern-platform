@@ -53,44 +53,41 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             layout = "reference";
         }
 
-        const footer =
-            layout === "guide"
-                ? h(
-                      "footer",
-                      { class: "mt-12" },
-                      h(
-                          "div",
-                          { class: "flex sm:justify-between max-sm:flex-col gap-4" },
-                          h(
-                              "div",
-                              matter?.["hide-feedback"]
-                                  ? undefined
-                                  : { type: "mdxJsxFlowElement", name: "Feedback", children: [], attributes: [] },
-                          ),
-                          props?.editThisPageUrl != null
-                              ? h("div", {
-                                    type: "mdxJsxFlowElement",
-                                    name: "Button",
-                                    children: [],
-                                    attributes: [
-                                        toAttribute("href", props?.editThisPageUrl),
-                                        toAttribute("icon", "duotone pen-to-square"),
-                                        toAttribute("text", "Edit this page"),
-                                        toAttribute("outlined", true),
-                                    ],
-                                })
-                              : undefined,
-                      ),
-                      matter?.["hide-nav-links"]
-                          ? undefined
-                          : {
-                                type: "mdxJsxFlowElement",
-                                name: "BottomNavigationButtons",
-                                children: [],
-                                attributes: [],
-                            },
-                  )
-                : undefined;
+        const footer = h(
+            "footer",
+            { class: "mt-12" },
+            h(
+                "div",
+                { class: "flex sm:justify-between max-sm:flex-col gap-4" },
+                h(
+                    "div",
+                    matter?.["hide-feedback"]
+                        ? undefined
+                        : { type: "mdxJsxFlowElement", name: "Feedback", children: [], attributes: [] },
+                ),
+                props?.editThisPageUrl != null
+                    ? h("div", {
+                          type: "mdxJsxFlowElement",
+                          name: "Button",
+                          children: [],
+                          attributes: [
+                              toAttribute("href", props?.editThisPageUrl),
+                              toAttribute("icon", "duotone pen-to-square"),
+                              toAttribute("text", "Edit this page"),
+                              toAttribute("outlined", true),
+                          ],
+                      })
+                    : undefined,
+            ),
+            matter?.["hide-nav-links"] || layout === "overview"
+                ? undefined
+                : {
+                      type: "mdxJsxFlowElement",
+                      name: "BottomNavigationButtons",
+                      children: [],
+                      attributes: [],
+                  },
+        );
 
         const articleClassName = cn("mx-auto w-full break-words lg:ml-0 xl:mx-auto pb-20", {
             "max-w-content-width": layout === "guide",
@@ -106,31 +103,24 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             header,
             aside.length === 0
                 ? h("section", { class: proseClassName }, [...tree.children, footer])
-                : h(
-                      "div",
-                      { class: "md:grid md:grid-cols-2 md:gap-8 lg:gap-12" },
+                : [
                       h(
-                          "section",
-                          {
-                              class: cn(proseClassName, "max-content-width"),
-                          },
-                          ...tree.children,
-                          footer,
-                      ),
-                      h(
-                          "aside",
-                          {
-                              class: cn(proseClassName, "max-content-width"),
-                          },
+                          "div",
+                          { class: "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12" },
+                          h("section", { class: proseClassName }, ...tree.children, footer),
                           h(
-                              "div",
-                              {
-                                  class: "max-h-vh-minus-header scroll-mt-header-height top-header-height sticky -my-8 py-8",
-                              },
-                              aside,
+                              "aside",
+                              { class: proseClassName },
+                              h(
+                                  "div",
+                                  {
+                                      class: "md:max-h-vh-minus-header scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
+                                  },
+                                  aside,
+                              ),
                           ),
                       ),
-                  ),
+                  ],
         );
 
         return h(
