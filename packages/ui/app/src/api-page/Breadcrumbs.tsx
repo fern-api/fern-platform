@@ -11,7 +11,9 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: readonly string[] })
                 {breadcrumbs.map((breadcrumb, idx) => (
                     <Fragment key={idx}>
                         {idx > 0 && <ChevronRightIcon className="text-faded mx-0.5" />}
-                        <span className="t-accent shrink truncate whitespace-nowrap text-sm">{breadcrumb}</span>
+                        <span className="t-accent shrink truncate whitespace-nowrap text-sm leading-none">
+                            {breadcrumb}
+                        </span>
                     </Fragment>
                 ))}
             </span>

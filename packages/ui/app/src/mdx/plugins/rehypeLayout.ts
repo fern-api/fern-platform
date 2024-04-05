@@ -19,7 +19,7 @@ export interface PageHeaderProps {
 export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
         const matter = vfile.data.matter as FernDocsFrontmatter | undefined;
-        const layout = matter?.layout ?? "guide";
+        let layout = matter?.layout ?? "guide";
 
         props = mergePropsWithMatter(props, matter);
 
@@ -33,7 +33,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                     attributes: [toAttribute("breadcrumbs", props.breadcrumbs)],
                     children: [],
                 },
-                h("div", h("h1", { class: "my-0 inline-block leading-tight" }, props.title)),
+                h("div", { class: "mt-1" }, h("h1", { class: "leading-tight" }, props.title)),
             );
             const excerpt =
                 props.excerpt != null
@@ -46,20 +46,14 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             header = h("header", { class: "mb-8" }, heading, excerpt);
         }
 
-        const article = h(
-            "article",
-            {
-                class: cn(
-                    "prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 mx-auto w-full break-words lg:ml-0 xl:mx-auto pb-20",
-                    {
-                        "max-w-content-width": layout === "guide",
-                        "max-w-content-wide-width": layout === "overview",
-                        "max-w-content-width md:max-w-endpoint-width": layout === "reference",
-                    },
-                ),
-            },
-            header,
-            ...tree.children,
+        const aside = collectAsideContent(tree);
+
+        // If there is an aside, enforce reference layout
+        if (aside.length > 0) {
+            layout = "reference";
+        }
+
+        const footer =
             layout === "guide"
                 ? h(
                       "footer",
@@ -84,7 +78,47 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                       ),
                       { type: "mdxJsxFlowElement", name: "BottomNavigationButtons", children: [], attributes: [] },
                   )
-                : undefined,
+                : undefined;
+
+        const articleClassName = cn("mx-auto w-full break-words lg:ml-0 xl:mx-auto pb-20", {
+            "max-w-content-width": layout === "guide",
+            "max-w-content-wide-width": layout === "overview",
+            "max-w-content-width md:max-w-endpoint-width": layout === "reference",
+        });
+
+        const proseClassName = "prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0";
+
+        const article = h(
+            "article",
+            { class: articleClassName },
+            header,
+            aside.length === 0
+                ? h("section", { class: proseClassName }, [...tree.children, footer])
+                : h(
+                      "div",
+                      { class: "md:grid md:grid-cols-2 md:gap-8 lg:gap-12" },
+                      h(
+                          "section",
+                          {
+                              class: cn(proseClassName, "max-content-width"),
+                          },
+                          ...tree.children,
+                          footer,
+                      ),
+                      h(
+                          "aside",
+                          {
+                              class: cn(proseClassName, "max-content-width"),
+                          },
+                          h(
+                              "div",
+                              {
+                                  class: "max-h-vh-minus-header scroll-mt-header-height top-header-height sticky -my-8 py-8",
+                              },
+                              aside,
+                          ),
+                      ),
+                  ),
         );
 
         return h(
@@ -135,5 +169,25 @@ function parseMarkdown(markdown: string): ElementContent[] {
         }
         return true;
     });
+    return elements;
+}
+
+function collectAsideContent(tree: Root): ElementContent[] {
+    const elements: ElementContent[] = [];
+
+    visit(tree, (node, index, parent) => {
+        if (node.type === "mdxJsxFlowElement" && node.name === "Aside") {
+            elements.push(...node.children);
+
+            // Remove the aside node from the parent
+            if (index != null) {
+                parent?.children.splice(index, 1);
+            }
+
+            return "skip";
+        }
+        return true;
+    });
+
     return elements;
 }
