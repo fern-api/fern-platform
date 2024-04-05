@@ -12,7 +12,7 @@ import { toAttribute } from "./utils";
 export interface PageHeaderProps {
     breadcrumbs: string[];
     title: string;
-    excerpt?: string;
+    subtitle?: string;
     editThisPageUrl?: string;
 }
 
@@ -35,15 +35,15 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                 },
                 h("div", { class: "mt-1" }, h("h1", { class: "leading-tight" }, props.title)),
             );
-            const excerpt =
-                props.excerpt != null
+            const subtitle =
+                props.subtitle != null
                     ? h(
                           "div",
                           { class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7" },
-                          ...parseMarkdown(props.excerpt),
+                          ...parseMarkdown(props.subtitle),
                       )
                     : undefined;
-            header = h("header", { class: "mb-8" }, heading, excerpt);
+            header = h("header", { class: "mb-8" }, heading, subtitle);
         }
 
         const aside = collectAsideContent(tree);
@@ -61,7 +61,12 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                       h(
                           "div",
                           { class: "flex sm:justify-between max-sm:flex-col gap-4" },
-                          h("div", { type: "mdxJsxFlowElement", name: "Feedback", children: [], attributes: [] }),
+                          h(
+                              "div",
+                              matter?.["hide-feedback"]
+                                  ? undefined
+                                  : { type: "mdxJsxFlowElement", name: "Feedback", children: [], attributes: [] },
+                          ),
                           props?.editThisPageUrl != null
                               ? h("div", {
                                     type: "mdxJsxFlowElement",
@@ -76,7 +81,14 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                                 })
                               : undefined,
                       ),
-                      { type: "mdxJsxFlowElement", name: "BottomNavigationButtons", children: [], attributes: [] },
+                      matter?.["hide-nav-links"]
+                          ? undefined
+                          : {
+                                type: "mdxJsxFlowElement",
+                                name: "BottomNavigationButtons",
+                                children: [],
+                                attributes: [],
+                            },
                   )
                 : undefined;
 
@@ -129,7 +141,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                 ? h(
                       "aside",
                       { class: "top-header-height h-vh-minus-header w-sidebar-width sticky hidden shrink-0 xl:block" },
-                      matter?.hideToc !== true
+                      matter?.["hide-toc"] !== true
                           ? {
                                 type: "mdxJsxFlowElement",
                                 name: "ScrollArea",
@@ -154,8 +166,8 @@ function mergePropsWithMatter(
     return {
         ...props,
         title: matter.title ?? props.title,
-        excerpt: matter.excerpt ?? props.excerpt,
-        editThisPageUrl: matter.editThisPageUrl ?? props.editThisPageUrl,
+        subtitle: matter.subtitle ?? matter.excerpt ?? props.subtitle,
+        editThisPageUrl: matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? props.editThisPageUrl,
     };
 }
 

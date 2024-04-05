@@ -38,13 +38,57 @@ type OverviewLayout = "overview";
 type ReferenceLayout = "reference";
 
 export interface FernDocsFrontmatter {
+    /**
+     * The layout of the page. This will determine the width of the content.
+     * Defaults to "guide"
+     */
+    layout?: GuideLayout | OverviewLayout | ReferenceLayout;
+
+    /**
+     * The title of the page. If not set, the title will inherit what's set in the sidebar.
+     * This is also used for the <title> tag in the HTML.
+     */
     title?: string;
+
+    /**
+     * The description of the page. This is used for the <meta name="description"> tag in the HTML.
+     */
     description?: string;
-    editThisPageUrl?: string;
+
+    /**
+     * The subtitle of the page. This is a markdown string that is rendered below the title.
+     * If `description` is not set, this will be used for the <meta name="description"> tag in the HTML.
+     */
+    subtitle?: string;
+
+    /**
+     * The URL to the page's image. This is used for the <meta property="og:image"> tag in the HTML.
+     */
     image?: string;
-    excerpt?: string;
-    layout?: GuideLayout | OverviewLayout | ReferenceLayout; // Default is "guide"
-    hideToc?: boolean;
+
+    /**
+     * Renders an "Edit this page" link at the bottom of the page.
+     */
+    "edit-this-page-url"?: string;
+
+    /**
+     * Hides the table of contents.
+     */
+    "hide-toc"?: boolean;
+
+    /**
+     * Hides the (prev, next) navigation links at the bottom of the page.
+     */
+    "hide-nav-links"?: boolean;
+
+    /**
+     * Hides the feedback form at the bottom of the page.
+     */
+    "hide-feedback"?: boolean;
+
+    // deprecated:
+    editThisPageUrl?: string; // use "edit-this-page-url" instead
+    excerpt?: string; // use subtitle instead
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;

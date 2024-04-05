@@ -17,7 +17,7 @@ import {
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { resolveApiDefinition } from "./resolver";
+import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
@@ -29,7 +29,6 @@ function getFrontmatter(content: string): FernDocsFrontmatter {
     return gm.data;
 }
 
-// TODO: delete this before this PR is merged!!!
 async function getSubtitle(
     node: SidebarNode.Page,
     pages: Record<string, DocsV1Read.PageContent>,
@@ -119,19 +118,16 @@ export async function convertNavigatableToResolvedPath({
             title: frontmatter.title ?? traverseState.curr.title,
             sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             markdown: serializedMdxContent,
-            editThisPageUrl: pageContent?.editThisPageUrl ?? null,
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
                     const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", {
                         ...mdxOptions,
                     });
-                    const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
                     return {
                         date: item.date,
                         dateString: moment(item.date).format("MMMM D, YYYY"),
                         markdown,
-                        editThisPageUrl: frontmatter.editThisPageUrl ?? itemPageContent?.editThisPageUrl ?? null,
                     };
                 }),
             ),
@@ -151,11 +147,13 @@ export async function convertNavigatableToResolvedPath({
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
+
+        let resolvedApis: Record<string, ResolvedRootPackage> = {};
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
-            const resolvedApis = Object.fromEntries(
+            resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
                         const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
@@ -163,26 +161,14 @@ export async function convertNavigatableToResolvedPath({
                     }),
                 ),
             );
-            return {
-                type: "custom-markdown-page",
-                fullSlug: traverseState.curr.slug.join("/"),
-                title: frontmatter.title ?? traverseState.curr.title,
-                sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
-                serializedMdxContent,
-                editThisPageUrl: frontmatter.editThisPageUrl ?? pageContent.editThisPageUrl ?? null,
-                neighbors,
-                apis: resolvedApis,
-            };
         }
         return {
             type: "custom-markdown-page",
             fullSlug: traverseState.curr.slug.join("/"),
             title: frontmatter.title ?? traverseState.curr.title,
-            sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             serializedMdxContent,
-            editThisPageUrl: pageContent.editThisPageUrl ?? null,
             neighbors,
-            apis: {},
+            apis: resolvedApis,
         };
     }
 }
