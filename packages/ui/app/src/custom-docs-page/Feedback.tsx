@@ -91,7 +91,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
         <div className={className} ref={ref}>
             {!sent ? (
                 <div className="flex items-center justify-start gap-4">
-                    <span className="t-muted text-sm">Was this page helpful?</span>
+                    <span className="t-muted text-sm font-medium">Was this page helpful?</span>
                     <FernButtonGroup>
                         <FernButton
                             icon={<ThumbsUp className="opacity-60" />}

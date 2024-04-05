@@ -31,13 +31,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                     attributes: [toAttribute("items", codeBlockItems)],
                     children: [],
                 });
-            }
-        });
-
-        // match only CodeBlock
-        visit(tree, (node, index, parent) => {
-            if (index == null) {
-                return;
+                return "skip";
             }
 
             if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
@@ -63,16 +57,11 @@ export function rehypeFernCode(): (tree: Root) => void {
                         children: [],
                     });
                 }
-            }
-        });
-
-        // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
-        visit(tree, "element", (node, index, parent) => {
-            if (index == null) {
-                return;
+                return "skip";
             }
 
-            if (isBlockCode(node) && node.data?.visited !== true) {
+            // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
+            if (isElement(node) && isBlockCode(node) && node.data?.visited !== true) {
                 node.data = { visited: true, ...node.data };
                 const head = node.children.filter(isElement).find((child) => child.tagName === "code");
                 if (head != null) {
@@ -110,6 +99,8 @@ export function rehypeFernCode(): (tree: Root) => void {
                     }
                 }
             }
+
+            return true;
         });
     };
 }
@@ -145,14 +136,13 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                     }
                 }
             });
+            return "skip";
         }
-    });
 
-    visit(nodeToVisit, "element", (child) => {
-        if (child.tagName === "code" && child.data?.visited !== true) {
-            child.data = { visited: true, ...child.data };
-            const code = getCode(child);
-            const meta = parseBlockMetaString(child, "plaintext");
+        if (isElement(node) && node.tagName === "code" && node.data?.visited !== true) {
+            node.data = { visited: true, ...node.data };
+            const code = getCode(node);
+            const meta = parseBlockMetaString(node, "plaintext");
             if (code != null) {
                 codeBlockItems.push({
                     code,
@@ -164,6 +154,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                 });
             }
         }
+        return true;
     });
     return codeBlockItems;
 }
