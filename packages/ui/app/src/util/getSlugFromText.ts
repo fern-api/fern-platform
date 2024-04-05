@@ -1,15 +1,9 @@
+import { slug } from "github-slugger";
 import { Children, isValidElement, ReactNode } from "react";
-
-export function getSlugFromText(text: string): string {
-    if (text == null) {
-        return "";
-    }
-    return text.toLowerCase().replace(/\W/g, "-").replace(/-+/g, "-");
-}
 
 export function getSlugFromChildren(children: ReactNode): string {
     const text = Children.toArray(children).reduce(flatten, "");
-    return getSlugFromText(text);
+    return slug(text);
 }
 
 /**

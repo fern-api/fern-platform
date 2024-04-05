@@ -756,9 +756,15 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      hast-util-heading-rank:
+        specifier: ^3.0.0
+        version: 3.0.0
       hast-util-to-estree:
         specifier: ^3.1.0
         version: 3.1.0

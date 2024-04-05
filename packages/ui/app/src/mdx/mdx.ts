@@ -15,13 +15,35 @@ import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
+/**
+ * The layout used for guides. This is the default layout.
+ * Guides are typically long-form content that is meant to be read from start to finish.
+ */
+type GuideLayout = "guide";
+
+/**
+ * The layout used for overview pages.
+ * Overview pages are typically meant to be a landing page for a section of the documentation.
+ * These pages are 50% wider than guide pages, and is best used with <Column> components.
+ */
+type OverviewLayout = "overview";
+
+/**
+ * The layout used for reference pages.
+ * Reference pages are the widest layout and are best used for tables and other wide content.
+ * Refrence pages are 2x the width of guide pages, and should be paired with <Aside> component.
+ * Aside will generate a sticky right-hand column for the page, which is useful for code snippets.
+ * Table of contents are always hidden on reference pages.
+ */
+type ReferenceLayout = "reference";
+
 export interface FernDocsFrontmatter {
     title?: string;
     description?: string;
     editThisPageUrl?: string;
     image?: string;
     excerpt?: string;
-    layout?: "overview" | "guide";
+    layout?: GuideLayout | OverviewLayout | ReferenceLayout; // Default is "guide"
     hideToc?: boolean;
 }
 

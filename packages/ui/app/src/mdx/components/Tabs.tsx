@@ -1,7 +1,7 @@
 import * as RadixTabs from "@radix-ui/react-tabs";
+import { slug } from "github-slugger";
 import { useRouter } from "next/router";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { getSlugFromText } from "../../util/getSlugFromText";
 
 export interface TabProps {
     title: string;
@@ -20,7 +20,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
     const anchor = router.asPath.split("#")[1];
     useEffect(() => {
         if (anchor != null) {
-            const anchorTab = tabs.findIndex((tab) => getSlugFromText(tab.title) === anchor);
+            const anchorTab = tabs.findIndex((tab) => slug(tab.title) === anchor);
             if (anchorTab >= 0) {
                 setActiveTab(anchorTab.toString());
             }
@@ -31,13 +31,13 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
         <RadixTabs.Root value={activeTab} onValueChange={setActiveTab}>
             <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b">
                 {tabs.map(({ title, toc = parentToc }, idx) => {
-                    const slug = getSlugFromText(title);
+                    const id = slug(title);
                     return (
                         <RadixTabs.Trigger key={idx} value={idx.toString()} asChild>
                             <h6
                                 className="text-default data-[state=active]:border-accent-primary data-[state=active]:t-accent hover:border-default scroll-mt-header-height-padded -mb-px flex max-w-max cursor-default whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
-                                id={slug}
-                                data-anchor={toc ? slug : undefined}
+                                id={id}
+                                data-anchor={toc ? id : undefined}
                             >
                                 {title}
                             </h6>

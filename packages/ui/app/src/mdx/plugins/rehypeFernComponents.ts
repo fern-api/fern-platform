@@ -16,6 +16,10 @@ export function rehypeFernComponents(): (tree: Root) => void {
                     transformTabs(node, index, parent);
                 }
 
+                if (node.name === "TabGroup" && node.children.length > 0) {
+                    transformTabs(node, index, parent);
+                }
+
                 if (node.name === "AccordionGroup" && node.children.length > 0) {
                     transformAccordionGroup(node, index, parent);
                 }
@@ -52,7 +56,7 @@ function transformTabs(
 
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
-        name: "Tabs",
+        name: "TabGroup",
         attributes: [toAttribute("tabs", tabs)],
         children: [],
     });
@@ -68,8 +72,8 @@ function transformTabItem(
 
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
-        name: "Tabs",
-        attributes: [toAttribute("tabs", tabs)],
+        name: "TabGroup",
+        attributes: [toAttribute("tabs", tabs), ...node.attributes],
         children: [],
     });
 }
@@ -87,7 +91,7 @@ function transformAccordionGroup(
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
         name: "AccordionGroup",
-        attributes: [toAttribute("items", items)],
+        attributes: [toAttribute("items", items), ...node.attributes],
         children: [],
     });
 }
