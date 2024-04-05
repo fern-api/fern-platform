@@ -143,6 +143,7 @@ module.exports = {
                 DEFAULT: {
                     css: {
                         color: "#000000",
+                        maxWidth: "var(--spacing-content-width)",
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
                         "--tw-prose-hr": "var(--border)",
