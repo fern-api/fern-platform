@@ -102,7 +102,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             { class: articleClassName },
             header,
             aside.length === 0
-                ? h("section", { class: proseClassName }, [...tree.children, footer])
+                ? h("section", { class: cn(proseClassName, "max-w-full") }, [...tree.children, footer])
                 : [
                       h(
                           "div",
