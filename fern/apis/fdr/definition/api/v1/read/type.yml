@@ -141,11 +141,17 @@ types:
       fileArray: FilePropertyArray
 
   FilePropertySingle:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PropertyKey
       isOptional: boolean
 
   FilePropertyArray:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PropertyKey
       isOptional: boolean

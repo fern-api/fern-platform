@@ -574,12 +574,14 @@ function resolveRequestBodyShape(
                                   async (property): Promise<ResolvedFileUploadRequestProperty> => {
                                       switch (property.type) {
                                           case "file": {
+                                              const description = await maybeSerializeMdxContent(
+                                                  property.value.description,
+                                              );
                                               return {
                                                   type: property.value.type,
                                                   key: property.value.key,
-                                                  // TODO: support description and availability
-                                                  description: undefined,
-                                                  availability: undefined,
+                                                  description,
+                                                  availability: property.value.availability,
                                                   isOptional: property.value.isOptional,
                                               };
                                           }
@@ -1498,12 +1500,26 @@ export interface ResolvedReferenceShape extends WithMetadata {
 }
 
 export declare namespace ResolvedFileUploadRequestProperty {
+    interface FileProperty extends WithMetadata {
+        type: "file";
+        key: string;
+        isOptional: boolean;
+    }
+    interface FileArrayProperty extends WithMetadata {
+        type: "fileArray";
+        key: string;
+        isOptional: boolean;
+    }
+
     interface BodyProperty extends ResolvedObjectProperty {
         type: "bodyProperty";
     }
 }
 
-export type ResolvedFileUploadRequestProperty = APIV1Read.FileProperty | ResolvedFileUploadRequestProperty.BodyProperty;
+export type ResolvedFileUploadRequestProperty =
+    | ResolvedFileUploadRequestProperty.FileProperty
+    | ResolvedFileUploadRequestProperty.FileArrayProperty
+    | ResolvedFileUploadRequestProperty.BodyProperty;
 
 export interface ResolvedFileUploadRequest extends WithMetadata {
     name: string;
