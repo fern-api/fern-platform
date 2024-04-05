@@ -98,13 +98,11 @@ type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
 export type FernSerializeMdxOptions = SerializeMdxOptions & {
-    renderLayout?: boolean;
     pageHeader?: PageHeaderProps;
     showError?: boolean;
 };
 
 function withDefaultMdxOptions({
-    renderLayout,
     pageHeader,
     showError,
     ...options
@@ -129,7 +127,7 @@ function withDefaultMdxOptions({
         rehypePlugins.push(...options.rehypePlugins);
     }
 
-    if (renderLayout) {
+    if (pageHeader != null) {
         rehypePlugins.push([rehypeFernLayout, pageHeader]);
     }
 
@@ -137,16 +135,16 @@ function withDefaultMdxOptions({
     rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
 
     return {
-        ...options,
-        remarkRehypeOptions,
-        remarkPlugins,
-        rehypePlugins,
-        format: "mdx",
         /**
          * development=true is required to render MdxRemote from the client-side.
          * https://github.com/hashicorp/next-mdx-remote/issues/350
          */
         development: process.env.NODE_ENV !== "production",
+        ...options,
+        remarkRehypeOptions,
+        remarkPlugins,
+        rehypePlugins,
+        format: "mdx",
     };
 }
 
@@ -214,7 +212,7 @@ export async function serializeMdxWithFrontmatter(
     try {
         return await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
             scope: {},
-            mdxOptions: withDefaultMdxOptions({ ...mdxOptions, renderLayout: true }),
+            mdxOptions: withDefaultMdxOptions(mdxOptions),
             parseFrontmatter: true,
         });
     } catch (e) {
