@@ -49,6 +49,9 @@ export function makeToc(tree: Root): ElementContent {
             // node.attributes.find(attr => attr.type === "mdxJsxAttribute" && attr.name === "toc")?.data;
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
+            const tocAttr = attributes.find((attr) => attr.name === "toc");
+            const parentSkipToc =
+                tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }
@@ -56,7 +59,8 @@ export function makeToc(tree: Root): ElementContent {
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
-                    if (item.title.trim().length === 0 || item.toc === false) {
+                    const skipToc = parentSkipToc ? item.toc !== true : false;
+                    if (item.title.trim().length === 0 || skipToc) {
                         return;
                     }
                     headings.push({ depth: 6, id: slug(item.title), title: item.title });
@@ -72,9 +76,9 @@ export function makeToc(tree: Root): ElementContent {
             // console.log(node);
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "items");
-            // const tocAttr = attributes.find((attr) => attr.name === "toc");
-
-            // const parentSkipToc = tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
+            const tocAttr = attributes.find((attr) => attr.name === "toc");
+            const parentSkipToc =
+                tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
 
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
@@ -83,7 +87,8 @@ export function makeToc(tree: Root): ElementContent {
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
-                    if (item.title.trim().length === 0 || item.toc === false) {
+                    const skipToc = parentSkipToc ? item.toc !== true : false;
+                    if (item.title.trim().length === 0 || skipToc) {
                         return;
                     }
                     headings.push({ depth: 6, id: slug(item.title), title: item.title });
