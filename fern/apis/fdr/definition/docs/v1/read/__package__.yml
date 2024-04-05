@@ -383,6 +383,7 @@ types:
       endpointId: commons.EndpointId
       websocketId: commons.WebSocketId
       webhookId: commons.WebhookId
+      page: PageMetadata
 
   ApiNavigationConfigSubpackage:
     properties:

@@ -432,6 +432,8 @@ function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
                   summaryPage: transformPageNavigationItemForDb(item.summaryPage),
                   items: transformItems(item.items),
               }
-            : item;
+            : item.type === "page"
+              ? transformPageNavigationItemForDb(item)
+              : item;
     });
 }
