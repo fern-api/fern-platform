@@ -11,15 +11,15 @@ import moment from "moment";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
 import {
-    FernDocsFrontmatterRaw,
-    SerializeMdxOptions,
+    FernDocsFrontmatter,
+    FernSerializeMdxOptions,
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { resolveApiDefinition } from "./resolver";
+import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
 
-function getFrontmatter(content: string): FernDocsFrontmatterRaw {
+function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
     const frontmatter = content.match(frontmatterMatcher)?.[0];
     if (frontmatter == null) {
@@ -66,13 +66,13 @@ export async function convertNavigatableToResolvedPath({
     currentNode,
     apis,
     pages,
-    options,
+    mdxOptions,
 }: {
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
-    options?: SerializeMdxOptions;
+    mdxOptions?: FernSerializeMdxOptions;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -110,7 +110,7 @@ export async function convertNavigatableToResolvedPath({
     } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
         const serializedMdxContent =
-            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, options) : null;
+            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
         return {
             type: "changelog-page",
@@ -118,17 +118,16 @@ export async function convertNavigatableToResolvedPath({
             title: frontmatter.title ?? traverseState.curr.title,
             sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             markdown: serializedMdxContent,
-            editThisPageUrl: pageContent?.editThisPageUrl ?? null,
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", options);
-                    const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
+                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", {
+                        ...mdxOptions,
+                    });
                     return {
                         date: item.date,
                         dateString: moment(item.date).format("MMMM D, YYYY"),
                         markdown,
-                        editThisPageUrl: frontmatter.editThisPageUrl ?? itemPageContent?.editThisPageUrl ?? null,
                     };
                 }),
             ),
@@ -139,13 +138,22 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, options);
+        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
+            ...mdxOptions,
+            pageHeader: {
+                title: traverseState.curr.title,
+                breadcrumbs: traverseState.sectionTitleBreadcrumbs,
+                editThisPageUrl: pageContent.editThisPageUrl,
+            },
+        });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
+
+        let resolvedApis: Record<string, ResolvedRootPackage> = {};
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
-            const resolvedApis = Object.fromEntries(
+            resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
                         const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
@@ -153,26 +161,14 @@ export async function convertNavigatableToResolvedPath({
                     }),
                 ),
             );
-            return {
-                type: "custom-markdown-page",
-                fullSlug: traverseState.curr.slug.join("/"),
-                title: frontmatter.title ?? traverseState.curr.title,
-                sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
-                serializedMdxContent,
-                editThisPageUrl: frontmatter.editThisPageUrl ?? pageContent.editThisPageUrl ?? null,
-                neighbors,
-                apis: resolvedApis,
-            };
         }
         return {
             type: "custom-markdown-page",
             fullSlug: traverseState.curr.slug.join("/"),
             title: frontmatter.title ?? traverseState.curr.title,
-            sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             serializedMdxContent,
-            editThisPageUrl: pageContent.editThisPageUrl ?? null,
             neighbors,
-            apis: {},
+            apis: resolvedApis,
         };
     }
 }

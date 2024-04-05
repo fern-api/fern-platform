@@ -1,8 +1,8 @@
 import * as RadixAccordion from "@radix-ui/react-accordion";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
+import { slug } from "github-slugger";
 import { NextRouter, useRouter } from "next/router";
 import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { getSlugFromText } from "../../util/getSlugFromText";
 
 export interface AccordionItemProps {
     title: string;
@@ -22,7 +22,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
     const anchor = router.asPath.split("#")[1];
     useEffect(() => {
         if (anchor != null) {
-            const anchorTab = items.findIndex((tab) => getSlugFromText(tab.title) === anchor);
+            const anchorTab = items.findIndex((tab) => slug(tab.title) === anchor);
             if (anchorTab >= 0) {
                 setActiveTabs((prev) => (prev.includes(anchorTab.toString()) ? prev : [...prev, anchorTab.toString()]));
             }
@@ -36,7 +36,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                 if (added[0] != null) {
                     const addedItem = items[parseInt(added[0])];
                     if (addedItem != null) {
-                        void router.replace(router.asPath.split("#")[0] + "#" + getSlugFromText(addedItem.title));
+                        void router.replace(router.asPath.split("#")[0] + "#" + slug(addedItem.title));
                     }
                 }
                 return nextActiveTabs;
@@ -53,19 +53,19 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
             onValueChange={handleValueChange}
         >
             {items.map(({ title, toc = parentToc, children }, idx) => {
-                const slug = getSlugFromText(title);
+                const id = slug(title);
                 return (
                     <RadixAccordion.Item
                         key={idx}
                         value={idx.toString()}
                         className="scroll-mt-header-height-padded first:rounded-t-[inherit] last:rounded-b-[inherit]"
-                        id={slug}
+                        id={id}
                     >
                         <RadixAccordion.Trigger className="hover:bg-tag-default group flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors data-[state=open]:rounded-b-none">
                             <ChevronRightIcon className="t-muted ease-shift duration-400 size-4 transition-transform group-data-[state=open]:rotate-90" />
                             <h6
                                 className="t-default m-0 -mb-px flex max-w-max whitespace-nowrap text-base leading-6"
-                                data-anchor={toc ? slug : undefined}
+                                data-anchor={toc ? id : undefined}
                             >
                                 {title}
                             </h6>

@@ -26,12 +26,10 @@ export declare namespace ResolvedPath {
         title: string;
         sectionTitleBreadcrumbs: string[];
         markdown: SerializedMdxContent | null;
-        editThisPageUrl: string | null;
         items: {
             date: string;
             dateString: string;
             markdown: SerializedMdxContent;
-            editThisPageUrl: string | null;
         }[];
         neighbors: Neighbors;
     }
@@ -40,9 +38,7 @@ export declare namespace ResolvedPath {
         type: "custom-markdown-page";
         fullSlug: string;
         title: string;
-        sectionTitleBreadcrumbs: string[];
         serializedMdxContent: SerializedMdxContent;
-        editThisPageUrl: string | null;
         neighbors: Neighbors;
         // TODO: downselect apis to only the fields we need
         apis: Record<string, ResolvedRootPackage>;

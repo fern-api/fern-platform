@@ -1,7 +1,12 @@
 import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
+import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
+import { FernScrollArea } from "../components/FernScrollArea";
+import { Feedback } from "../custom-docs-page/Feedback";
+import { TableOfContents } from "../custom-docs-page/TableOfContents";
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
@@ -38,6 +43,7 @@ export const JSX_COMPONENTS = {
     Bleed,
     Button,
     ButtonGroup,
+    Breadcrumbs,
     Callout,
     Card,
     CardGroup,
@@ -48,12 +54,14 @@ export const JSX_COMPONENTS = {
     EndpointRequestSnippet,
     EndpointResponseSnippet,
     Frame,
+    Feedback,
     Icon: RemoteFontAwesomeIcon,
+    ScrollArea: FernScrollArea,
     Steps,
     TabGroup,
     Tooltip,
 
-    // aliased for backwards compatibility
+    // deprecated, aliased for backwards compatibility
     Cards: CardGroup,
     CodeBlocks: CodeGroup,
     Tabs: TabGroup,
@@ -68,7 +76,11 @@ export const JSX_COMPONENTS = {
     Check: CheckCallout,
     LaunchNote: LaunchNoteCallout,
 
-    // error boundary
+    // layout components (internal use only)
+    TableOfContents,
+    BottomNavigationButtons,
+
+    // error boundary (internal use only)
     MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
         <FernErrorTag component="MdxErrorBoundary" {...props} />
     ),

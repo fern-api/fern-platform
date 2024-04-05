@@ -1,14 +1,13 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
-import cn from "clsx";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
 import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
-import { FernButton } from "../components/FernButton";
+import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FeedbackForm } from "./FeedbackForm";
 import { FeedbackFormDialog } from "./FeedbackFormDialog";
 
-interface FeedbackProps {
+export interface FeedbackProps {
     className?: string;
 }
 
@@ -89,32 +88,30 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     }, []);
 
     return (
-        <div className={cn("mt-12", className)} ref={ref}>
+        <div className={className} ref={ref}>
             {!sent ? (
-                <div className="flex items-center justify-start gap-2">
-                    <span className="t-muted text-xs">Was this page helpful?</span>
-                    <span className="inline-flex items-center">
+                <div className="flex items-center justify-start gap-4">
+                    <span className="t-muted text-sm font-medium">Was this page helpful?</span>
+                    <FernButtonGroup>
                         <FernButton
-                            icon={<ThumbsUp />}
-                            variant="minimal"
+                            icon={<ThumbsUp className="opacity-60" />}
+                            variant="outlined"
                             intent={feedback === "yes" ? "success" : "none"}
                             onClick={handleYes}
                             active={feedback === "yes"}
-                            size="small"
                         >
                             Yes
                         </FernButton>
                         <FernButton
-                            icon={<ThumbsDown />}
-                            variant="minimal"
+                            icon={<ThumbsDown className="opacity-60" />}
+                            variant="outlined"
                             intent={feedback === "no" ? "danger" : "none"}
                             onClick={handleNo}
                             active={feedback === "no"}
-                            size="small"
                         >
                             No
                         </FernButton>
-                    </span>
+                    </FernButtonGroup>
                 </div>
             ) : (
                 <div className="flex h-6 items-center">

@@ -756,15 +756,24 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      hast-util-heading-rank:
+        specifier: ^3.0.0
+        version: 3.0.0
       hast-util-to-estree:
         specifier: ^3.1.0
         version: 3.1.0
       hast-util-to-jsx-runtime:
         specifier: ^2.3.0
         version: 2.3.0
+      hast-util-to-string:
+        specifier: ^3.0.0
+        version: 3.0.0
       hastscript:
         specifier: ^9.0.0
         version: 9.0.0
@@ -780,6 +789,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      mdast-util-from-markdown:
+        specifier: ^2.0.0
+        version: 2.0.0
       mdast-util-mdx-jsx:
         specifier: ^3.1.0
         version: 3.1.2
@@ -798,9 +810,6 @@ importers:
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
-      node-html-parser:
-        specifier: ^6.1.12
-        version: 6.1.12
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -870,6 +879,9 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
+      vfile:
+        specifier: ^6.0.1
+        version: 6.0.1
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -10223,11 +10235,6 @@ packages:
       space-separated-tokens: 2.0.2
     dev: false
 
-  /he@1.2.0:
-    resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
-    hasBin: true
-    dev: false
-
   /hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
     hasBin: true
@@ -12117,13 +12124,6 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
-    dev: false
-
-  /node-html-parser@6.1.12:
-    resolution: {integrity: sha512-/bT/Ncmv+fbMGX96XG9g05vFt43m/+SYKIs9oAemQVYyVcZmDAI2Xq/SbNcpOA35eF0Zk2av3Ksf+Xk8Vt8abA==}
-    dependencies:
-      css-select: 5.1.0
-      he: 1.2.0
     dev: false
 
   /node-releases@2.0.14:

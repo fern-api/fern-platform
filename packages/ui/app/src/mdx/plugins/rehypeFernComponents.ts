@@ -1,7 +1,7 @@
 import type { Element, Root } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { visit } from "unist-util-visit";
-import { valueToEstree, wrapChildren } from "./to-estree";
+import { wrapChildren } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeFernComponents(): (tree: Root) => void {
@@ -13,6 +13,10 @@ export function rehypeFernComponents(): (tree: Root) => void {
 
             if (isMdxJsxFlowElement(node) && node.name != null) {
                 if (node.name === "Tabs" && node.children.length > 0) {
+                    transformTabs(node, index, parent);
+                }
+
+                if (node.name === "TabGroup" && node.children.length > 0) {
                     transformTabs(node, index, parent);
                 }
 
@@ -52,8 +56,8 @@ function transformTabs(
 
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
-        name: "Tabs",
-        attributes: [toAttribute("tabs", JSON.stringify(tabs), valueToEstree(tabs))],
+        name: "TabGroup",
+        attributes: [toAttribute("tabs", tabs)],
         children: [],
     });
 }
@@ -68,8 +72,8 @@ function transformTabItem(
 
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
-        name: "Tabs",
-        attributes: [toAttribute("tabs", JSON.stringify(tabs), valueToEstree(tabs))],
+        name: "TabGroup",
+        attributes: [toAttribute("tabs", tabs), ...node.attributes],
         children: [],
     });
 }
@@ -87,7 +91,7 @@ function transformAccordionGroup(
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
         name: "AccordionGroup",
-        attributes: [toAttribute("items", JSON.stringify(items), valueToEstree(items))],
+        attributes: [toAttribute("items", items), ...node.attributes],
         children: [],
     });
 }
@@ -103,7 +107,7 @@ function transformAccordion(
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
         name: "AccordionGroup",
-        attributes: [toAttribute("items", JSON.stringify(items), valueToEstree(items))],
+        attributes: [toAttribute("items", items)],
         children: [],
     });
 }
