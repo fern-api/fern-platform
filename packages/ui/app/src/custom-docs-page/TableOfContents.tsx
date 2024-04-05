@@ -73,7 +73,7 @@ function TableOfContentsList({
             className={cn("list-none", {
                 "pl-4": indent,
                 [rootClassName ?? ""]: !indent,
-                "pt-3 pb-4 border-b border-default": !indent,
+                "pt-3 pb-4": !indent,
             })}
             style={!indent ? rootStyle : undefined}
         >

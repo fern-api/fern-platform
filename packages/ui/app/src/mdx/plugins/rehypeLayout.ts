@@ -13,6 +13,7 @@ export interface PageHeaderProps {
     breadcrumbs: string[];
     title: string;
     excerpt?: string;
+    editThisPageUrl?: string;
 }
 
 export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
@@ -59,6 +60,31 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             },
             header,
             ...tree.children,
+            layout === "guide"
+                ? h(
+                      "footer",
+                      { class: "mt-12" },
+                      h(
+                          "div",
+                          { class: "flex sm:justify-between max-sm:flex-col gap-4" },
+                          h("div", { type: "mdxJsxFlowElement", name: "Feedback", children: [], attributes: [] }),
+                          props?.editThisPageUrl != null
+                              ? h("div", {
+                                    type: "mdxJsxFlowElement",
+                                    name: "Button",
+                                    children: [],
+                                    attributes: [
+                                        toAttribute("href", props?.editThisPageUrl),
+                                        toAttribute("icon", "duotone pen-to-square"),
+                                        toAttribute("text", "Edit this page"),
+                                        toAttribute("outlined", true),
+                                    ],
+                                })
+                              : undefined,
+                      ),
+                      { type: "mdxJsxFlowElement", name: "BottomNavigationButtons", children: [], attributes: [] },
+                  )
+                : undefined,
         );
 
         return h(
@@ -95,6 +121,7 @@ function mergePropsWithMatter(
         ...props,
         title: matter.title ?? props.title,
         excerpt: matter.excerpt ?? props.excerpt,
+        editThisPageUrl: matter.editThisPageUrl ?? props.editThisPageUrl,
     };
 }
 

@@ -147,6 +147,7 @@ export async function convertNavigatableToResolvedPath({
             pageHeader: {
                 title: traverseState.curr.title,
                 breadcrumbs: traverseState.sectionTitleBreadcrumbs,
+                editThisPageUrl: pageContent.editThisPageUrl,
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;

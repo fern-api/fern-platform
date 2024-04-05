@@ -2,8 +2,10 @@ import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
 import { FernScrollArea } from "../components/FernScrollArea";
+import { Feedback } from "../custom-docs-page/Feedback";
 import { TableOfContents } from "../custom-docs-page/TableOfContents";
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
@@ -52,6 +54,7 @@ export const JSX_COMPONENTS = {
     EndpointRequestSnippet,
     EndpointResponseSnippet,
     Frame,
+    Feedback,
     Icon: RemoteFontAwesomeIcon,
     ScrollArea: FernScrollArea,
     Steps,
@@ -75,6 +78,7 @@ export const JSX_COMPONENTS = {
 
     // layout components (internal use only)
     TableOfContents,
+    BottomNavigationButtons,
 
     // error boundary (internal use only)
     MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
