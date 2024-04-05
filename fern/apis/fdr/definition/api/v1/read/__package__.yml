@@ -37,7 +37,10 @@ types:
           If empty, assume false. 
           Whether or not endpoints are being served at different 
           base urls (i.e. https://a.com and https://b.com)
-      navigation: optional<ApiNavigationConfigRoot>
+      navigation:
+        type: optional<ApiNavigationConfigRoot>
+        availability: deprecated
+        docs: Use the docs navigation instead.
       globalHeaders: optional<list<endpoint.Header>>
 
   ApiNavigationConfigRoot:
@@ -101,7 +104,7 @@ types:
     properties:
       nameOverride: optional<string>
       headerWireValue: string
-      prefix: 
+      prefix:
         type: optional<string>
         docs: The prefix that comes before the header
 
