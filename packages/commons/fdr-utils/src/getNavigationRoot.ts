@@ -39,10 +39,11 @@ export function getNavigationRoot(
     basePath: string | undefined,
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
 ): Found | Redirect | undefined {
     const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
 
-    const root = resolveSidebarNodesRoot(nav, apis, basePathSlug);
+    const root = resolveSidebarNodesRoot(nav, apis, pages, basePathSlug);
     const hits: { node: SidebarNodeRaw.VisitableNode; parents: SidebarNodeRaw.ParentNode[] }[] = [];
 
     visitSidebarNodeRaw(root, (node, parents) => {
@@ -133,6 +134,10 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     }
 
     if (node.type === "apiSection") {
+        if (node.hasSummaryPage) {
+            // go to the summary page directly (no need to redirect)
+            return undefined;
+        }
         const firstChild = node.items[0] ?? node.changelog;
         return resolveRedirect(firstChild, from);
     }

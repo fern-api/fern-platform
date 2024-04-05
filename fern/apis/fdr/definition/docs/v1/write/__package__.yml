@@ -327,7 +327,6 @@ types:
 
   ApiNavigationConfigRoot:
     properties:
-      summaryPage: optional<PageMetadata>
       items: list<ApiNavigationConfigItem>
 
   ApiNavigationConfigItem:
@@ -341,7 +340,6 @@ types:
   ApiNavigationConfigSubpackage:
     properties:
       subpackageId: commons.SubpackageId
-      summaryPage: optional<PageMetadata>
       items: list<ApiNavigationConfigItem>
 
   ChangelogSection:

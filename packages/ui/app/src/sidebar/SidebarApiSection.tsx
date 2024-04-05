@@ -112,16 +112,18 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         selected={isEqual(item.slug, selectedSlug)}
                         depth={Math.max(0, depth - 1)}
                         rightElement={
-                            item.apiType === "endpoint" ? (
-                                item.stream ? (
-                                    <StreamTag small />
-                                ) : (
-                                    HTTP_METHOD_TAGS[item.method]
-                                )
-                            ) : item.apiType === "websocket" ? (
-                                <FernTooltip content="WebSocket Channel">
-                                    <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
-                                </FernTooltip>
+                            SidebarNode.isApiPage(item) ? (
+                                item.apiType === "endpoint" ? (
+                                    item.stream ? (
+                                        <StreamTag small />
+                                    ) : (
+                                        HTTP_METHOD_TAGS[item.method]
+                                    )
+                                ) : item.apiType === "websocket" ? (
+                                    <FernTooltip content="WebSocket Channel">
+                                        <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
+                                    </FernTooltip>
+                                ) : null
                             ) : null
                         }
                         icon={item.icon}
@@ -215,6 +217,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
             icon={apiSection.icon}
             hidden={apiSection.hidden}
+            slug={apiSection.hasSummaryPage ? slug : undefined}
         >
             {children}
         </SidebarSlugLink>

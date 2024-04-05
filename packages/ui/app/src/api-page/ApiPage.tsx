@@ -1,4 +1,3 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
@@ -7,18 +6,15 @@ import { useIsReady } from "../contexts/useIsReady";
 import { APIS } from "../sidebar/atom";
 import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
-import { ApiArtifacts } from "./artifacts/ApiArtifacts";
-import { areApiArtifactsNonEmpty } from "./artifacts/areApiArtifactsNonEmpty";
 
 export declare namespace ApiPage {
     export interface Props {
         initialApi: ResolvedRootPackage;
-        artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
     }
 }
 
-export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showErrors }) => {
+export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => {
     const hydrated = useIsReady();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const setDefinitions = useSetAtom(APIS);
@@ -30,10 +26,6 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, artifacts, showEr
 
     return (
         <div className="min-h-0 pb-36">
-            {artifacts != null && areApiArtifactsNonEmpty(artifacts) && (
-                <ApiArtifacts apiArtifacts={artifacts} apiDefinition={initialApi} />
-            )}
-
             <ApiPackageContents
                 api={initialApi.api}
                 types={initialApi.types}

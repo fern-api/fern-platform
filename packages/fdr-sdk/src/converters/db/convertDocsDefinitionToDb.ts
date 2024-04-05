@@ -418,7 +418,6 @@ function transformApiSectionNavigationForDb(
         return undefined;
     }
     return {
-        summaryPage: transformPageNavigationItemForDb(writeShape.summaryPage),
         items: transformItems(writeShape.items),
     };
 }
@@ -429,7 +428,6 @@ function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
             ? {
                   type: "subpackage",
                   subpackageId: item.subpackageId,
-                  summaryPage: transformPageNavigationItemForDb(item.summaryPage),
                   items: transformItems(item.items),
               }
             : item.type === "page"

@@ -21,7 +21,7 @@ import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
     icon?: ReactElement | string;
-    slug?: string[];
+    slug?: readonly string[];
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
