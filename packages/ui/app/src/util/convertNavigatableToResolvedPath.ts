@@ -123,7 +123,9 @@ export async function convertNavigatableToResolvedPath({
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", mdxOptions);
+                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", {
+                        ...mdxOptions,
+                    });
                     const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
                     return {
                         date: item.date,
@@ -140,7 +142,13 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions);
+        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
+            ...mdxOptions,
+            pageHeader: {
+                title: traverseState.curr.title,
+                breadcrumbs: traverseState.sectionTitleBreadcrumbs,
+            },
+        });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||

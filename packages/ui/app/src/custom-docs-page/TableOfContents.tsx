@@ -1,6 +1,5 @@
 import cn from "clsx";
 import { useRouter } from "next/router";
-import { parse } from "node-html-parser";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { FernLink } from "../components/FernLink";
 
@@ -18,10 +17,10 @@ export declare namespace TableOfContents {
     }
 }
 
-export const HTMLTableOfContents: React.FC<TableOfContents.HTMLProps> = ({ className, renderedHtml, style }) => {
-    const tableOfContents = useMemo(() => generateTableOfContents(renderedHtml), [renderedHtml]);
-    return <TableOfContents className={className} style={style} tableOfContents={tableOfContents} />;
-};
+// export const HTMLTableOfContents: React.FC<TableOfContents.HTMLProps> = ({ className, renderedHtml, style }) => {
+//     const tableOfContents = useMemo(() => generateTableOfContents(renderedHtml), [renderedHtml]);
+//     return <TableOfContents className={className} style={style} tableOfContents={tableOfContents} />;
+// };
 
 let anchorJustSet = false;
 let anchorJustSetTimeout: number;
@@ -192,59 +191,59 @@ export interface TableOfContentsItem {
     children: TableOfContentsItem[];
 }
 
-function generateTableOfContents(html: string): TableOfContentsItem[] {
-    const doc = parse(html);
-    const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
+// function generateTableOfContents(html: string): TableOfContentsItem[] {
+//     const doc = parse(html);
+//     const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
-    const parsedHeadings = Array.from(headings)
-        .map((heading) => ({
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            depth: parseInt(heading.tagName[1]!),
-            text: heading.textContent?.trim() ?? "",
-            id: heading.getAttribute("data-anchor")?.trim() ?? "",
-        }))
-        .filter((heading) => heading.id.length > 0);
+//     const parsedHeadings = Array.from(headings)
+//         .map((heading) => ({
+//             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+//             depth: parseInt(heading.tagName[1]!),
+//             text: heading.textContent?.trim() ?? "",
+//             id: heading.getAttribute("data-anchor")?.trim() ?? "",
+//         }))
+//         .filter((heading) => heading.id.length > 0);
 
-    const minDepth = Math.min(...parsedHeadings.map((heading) => heading.depth));
+//     const minDepth = Math.min(...parsedHeadings.map((heading) => heading.depth));
 
-    return makeTree(parsedHeadings, minDepth);
-}
+//     return makeTree(parsedHeadings, minDepth);
+// }
 
-const makeTree = (
-    headings: {
-        depth: number;
-        text: string;
-        id: string;
-    }[],
-    depth: number = 1,
-): TableOfContentsItem[] => {
-    const tree: TableOfContentsItem[] = [];
+// const makeTree = (
+//     headings: {
+//         depth: number;
+//         text: string;
+//         id: string;
+//     }[],
+//     depth: number = 1,
+// ): TableOfContentsItem[] => {
+//     const tree: TableOfContentsItem[] = [];
 
-    while (headings.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const firstToken = headings[0]!;
+//     while (headings.length > 0) {
+//         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+//         const firstToken = headings[0]!;
 
-        // if the next heading is at a higher level
-        if (firstToken.depth < depth) {
-            break;
-        }
+//         // if the next heading is at a higher level
+//         if (firstToken.depth < depth) {
+//             break;
+//         }
 
-        if (firstToken.depth === depth) {
-            const token = headings.shift();
-            if (token != null) {
-                tree.push({
-                    simpleString: token.text.trim(),
-                    anchorString: token.id.trim(),
-                    children: makeTree(headings, depth + 1),
-                });
-            }
-        } else {
-            tree.push(...makeTree(headings, depth + 1));
-        }
-    }
+//         if (firstToken.depth === depth) {
+//             const token = headings.shift();
+//             if (token != null) {
+//                 tree.push({
+//                     simpleString: token.text.trim(),
+//                     anchorString: token.id.trim(),
+//                     children: makeTree(headings, depth + 1),
+//                 });
+//             }
+//         } else {
+//             tree.push(...makeTree(headings, depth + 1));
+//         }
+//     }
 
-    return tree;
-};
+//     return tree;
+// };
 
 function getAllAnchorStrings(tableOfContents: TableOfContentsItem[]): string[] {
     return tableOfContents.flatMap((item) => [item.anchorString, ...getAllAnchorStrings(item.children)]);

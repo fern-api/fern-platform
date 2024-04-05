@@ -1,9 +1,13 @@
-import type { Root } from "hast";
+import { clsx as cn } from "clsx";
+import type { Element, ElementContent, Root } from "hast";
 import { toString } from "hast-util-to-string";
+import { h } from "hastscript";
+import { fromMarkdown } from "mdast-util-from-markdown";
+import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
 import { TableOfContentsItem } from "../../custom-docs-page/TableOfContents";
-import { valueToEstree } from "./to-estree";
+import { FernDocsFrontmatter } from "../mdx";
 import { toAttribute } from "./utils";
 
 interface FoundHeading {
@@ -12,10 +16,40 @@ interface FoundHeading {
     id: string;
 }
 
-export function rehypeFernLayout(opts: { test: string }): (tree: Root, vfile: VFile) => void {
-    return (tree, vfile) => {
-        // const matter = vfile.data.matter as FernDocsFrontmatter;
+export interface PageHeaderProps {
+    breadcrumbs: string[];
+    title: string;
+    excerpt?: string;
+}
+
+export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
+    return async (tree, vfile) => {
+        const matter = vfile.data.matter as FernDocsFrontmatter | undefined;
+        props = mergePropsWithMatter(props, matter);
         const headings: FoundHeading[] = [];
+
+        let header: Element | null = null;
+        if (props != null) {
+            const heading = h(
+                "div",
+                {
+                    type: "mdxJsxFlowElement",
+                    name: "Breadcrumbs",
+                    attributes: [toAttribute("breadcrumbs", props.breadcrumbs)],
+                    children: [],
+                },
+                h("div", h("h1", { class: "my-0 inline-block leading-tight" }, props.title)),
+            );
+            const excerpt =
+                props.excerpt != null
+                    ? h(
+                          "div",
+                          { class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7" },
+                          ...parseMarkdown(props.excerpt),
+                      )
+                    : null;
+            header = h("header", { class: "mb-8" }, heading, excerpt);
+        }
 
         visit(tree, (node) => {
             if (node.type === "element" && ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.tagName)) {
@@ -33,16 +67,62 @@ export function rehypeFernLayout(opts: { test: string }): (tree: Root, vfile: VF
         });
 
         const minDepth = Math.min(...headings.map((heading) => heading.depth));
-        const tableOfContents = makeTree(headings, minDepth);
 
-        tree.children.unshift({
+        const tableOfContents: ElementContent = {
             type: "mdxJsxFlowElement",
             name: "TableOfContents",
-            attributes: [
-                toAttribute("tableOfContents", JSON.stringify(tableOfContents), valueToEstree(tableOfContents)),
-            ],
+            attributes: [toAttribute("tableOfContents", makeTree(headings, minDepth))],
             children: [],
-        });
+        };
+
+        const layout = matter?.layout ?? "guide";
+        const article = h(
+            "article",
+            {
+                class: cn(
+                    "prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 mx-auto w-full break-words lg:ml-0 xl:mx-auto pb-20",
+                    {
+                        "max-w-content-width": layout === "guide",
+                        "max-w-content-wide-width": layout === "overview",
+                    },
+                ),
+            },
+            header,
+            ...tree.children,
+        );
+
+        return h(
+            "div",
+            { class: "relative flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0" },
+            h("div", { class: "z-10 w-full min-w-0 pt-8 lg:pr-8" }, article),
+            h(
+                "aside",
+                { class: "top-header-height h-vh-minus-header w-sidebar-width sticky hidden shrink-0 xl:block" },
+                matter?.hideToc !== true
+                    ? {
+                          type: "mdxJsxFlowElement",
+                          name: "ScrollArea",
+                          attributes: [toAttribute("className", "px-4 pb-12 pt-8 lg:pr-8")],
+                          children: [tableOfContents],
+                      }
+                    : undefined,
+            ),
+        );
+    };
+}
+
+function mergePropsWithMatter(
+    props: PageHeaderProps | undefined,
+    matter: FernDocsFrontmatter | undefined,
+): PageHeaderProps | undefined {
+    if (matter == null || props == null) {
+        return props;
+    }
+
+    return {
+        ...props,
+        title: matter.title ?? props.title,
+        excerpt: matter.excerpt ?? props.excerpt,
     };
 }
 
@@ -73,4 +153,17 @@ function makeTree(headings: FoundHeading[], depth: number = 1): TableOfContentsI
     }
 
     return tree;
+}
+
+function parseMarkdown(markdown: string): ElementContent[] {
+    const processed = toHast(fromMarkdown(markdown));
+    const elements: ElementContent[] = [];
+    visit(processed, (node) => {
+        if (node.type === "element" || node.type === "text") {
+            elements.push(node);
+            return "skip";
+        }
+        return true;
+    });
+    return elements;
 }

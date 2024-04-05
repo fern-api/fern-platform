@@ -3,7 +3,6 @@ import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../../util/parseStringStyle";
 import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
 import { JSX_COMPONENTS } from "../mdx-components";
-import { valueToEstree } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean } = {}): (tree: Root) => void {
@@ -21,13 +20,7 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "MdxErrorBoundary",
-                        attributes: [
-                            toAttribute(
-                                "error",
-                                `Unsupported JSX tag: <${node.name} />`,
-                                valueToEstree(`Unsupported JSX tag: <${node.name} />`),
-                            ),
-                        ],
+                        attributes: [toAttribute("error", `Unsupported JSX tag: <${node.name} />`)],
                         children: [],
                     });
                 }
@@ -46,7 +39,7 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                         // if the style attribute is a string, convert it to an object
                         if (attr.name === "style") {
                             if (typeof attr.value === "string") {
-                                return toAttribute("style", attr.value, valueToEstree(parseStringStyle(attr.value)));
+                                return toAttribute("style", parseStringStyle(attr.value));
                             }
                         }
                     }

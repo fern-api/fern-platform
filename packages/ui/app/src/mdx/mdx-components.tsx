@@ -1,7 +1,9 @@
 import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
+import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
+import { FernScrollArea } from "../components/FernScrollArea";
 import { TableOfContents } from "../custom-docs-page/TableOfContents";
 import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
@@ -39,6 +41,7 @@ export const JSX_COMPONENTS = {
     Bleed,
     Button,
     ButtonGroup,
+    Breadcrumbs,
     Callout,
     Card,
     CardGroup,
@@ -50,6 +53,7 @@ export const JSX_COMPONENTS = {
     EndpointResponseSnippet,
     Frame,
     Icon: RemoteFontAwesomeIcon,
+    ScrollArea: FernScrollArea,
     Steps,
     TabGroup,
     Tooltip,

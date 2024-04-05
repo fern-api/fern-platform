@@ -11,7 +11,7 @@ import { emitDatadogError } from "../analytics/datadogRum";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
-import { rehypeFernLayout } from "./plugins/rehypeLayout";
+import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
@@ -22,6 +22,7 @@ export interface FernDocsFrontmatter {
     image?: string;
     excerpt?: string;
     layout?: "overview" | "guide";
+    hideToc?: boolean;
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
@@ -32,11 +33,13 @@ type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
 export type FernSerializeMdxOptions = SerializeMdxOptions & {
     renderLayout?: boolean;
+    pageHeader?: PageHeaderProps;
     showError?: boolean;
 };
 
 function withDefaultMdxOptions({
     renderLayout,
+    pageHeader,
     showError,
     ...options
 }: FernSerializeMdxOptions = {}): SerializeMdxOptions {
@@ -61,7 +64,7 @@ function withDefaultMdxOptions({
     }
 
     if (renderLayout) {
-        rehypePlugins.push([rehypeFernLayout, { test: "test" }]);
+        rehypePlugins.push([rehypeFernLayout, pageHeader]);
     }
 
     // Always sanitize JSX at the end.
