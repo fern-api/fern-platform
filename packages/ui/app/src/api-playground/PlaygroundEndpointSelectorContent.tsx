@@ -120,7 +120,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         <div className="bg-background-translucent sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
-                                    {idx > 0 && <SlashIcon className="text-faded mx-0.5 size-3" />}
+                                    {idx > 0 && <SlashIcon className="mx-0.5 size-3 text-faded" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                                         {breadcrumb}
                                     </span>
@@ -235,7 +235,7 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="bg-accent-highlight t-default" key={idx}>
+            <mark className="t-default bg-accent-highlight" key={idx}>
                 {part}
             </mark>
         ) : (

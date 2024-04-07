@@ -66,7 +66,7 @@ export function FernDropdown({
                             option.type === "value" ? (
                                 <FernDropdownItemValue key={option.value} option={option} value={value} />
                             ) : (
-                                <DropdownMenu.Separator key={idx} className="bg-border-default mx-2 my-1 h-px" />
+                                <DropdownMenu.Separator key={idx} className="mx-2 my-1 h-px bg-border-default" />
                             ),
                         )}
                     </DropdownMenu.RadioGroup>

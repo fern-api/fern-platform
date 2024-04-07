@@ -10,7 +10,7 @@ import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
-    return <div className="t-muted justify flex h-24 w-full flex-col items-center py-3">{children}</div>;
+    return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;
 };
 
 export const SearchHits: React.FC = () => {
@@ -139,7 +139,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     if (hits.length === 0) {
-        return <div className="t-muted justify flex w-full flex-col items-center py-3">No results found</div>;
+        return <div className="justify t-muted flex w-full flex-col items-center py-3">No results found</div>;
     }
 
     return (

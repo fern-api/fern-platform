@@ -118,7 +118,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                 />
             )}
 
-            <hr className="border-border-concealed my-4" />
+            <hr className="my-4 border-border-concealed" />
 
             <div className="mt-4">
                 <FernCheckbox

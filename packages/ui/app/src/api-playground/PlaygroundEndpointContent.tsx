@@ -174,11 +174,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         >
                             status: {response.value.response.status}
                         </span>
-                        <span className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}>
+                        <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
                             time: {round(response.value.time, 2)}ms
                         </span>
                         {response.value.type === "json" && !isEmpty(response.value.size) && (
-                            <span className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}>
+                            <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
                                 size: {response.value.size}b
                             </span>
                         )}

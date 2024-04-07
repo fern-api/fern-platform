@@ -427,7 +427,6 @@ module.exports = {
     future: {
         hoverOnlyWhenSupported: true,
     },
-    content: ["./**/*.{html,js,ts,tsx,jsx,mdx}"],
 };
 
 // https://stackoverflow.com/a/72831219/4238485
