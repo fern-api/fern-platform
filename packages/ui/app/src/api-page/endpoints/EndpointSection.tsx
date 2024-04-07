@@ -1,7 +1,7 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import dynamic from "next/dynamic";
-import { ReactNode, createElement, useRef } from "react";
+import { createElement, ReactNode, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";

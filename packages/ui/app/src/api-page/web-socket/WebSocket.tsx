@@ -17,15 +17,15 @@ import {
     ResolvedUndiscriminatedUnionShapeVariant,
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
-    unwrapReference,
+    unwrapReference
 } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
 import { TitledExample } from "../examples/TitledExample";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 

@@ -13,10 +13,10 @@ import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
+import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 const EndpointContentCodeSnippets = dynamic(

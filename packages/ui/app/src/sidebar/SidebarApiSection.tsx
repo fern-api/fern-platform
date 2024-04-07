@@ -1,10 +1,10 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
+import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
 import moment from "moment";
-import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { StreamTag } from "../commons/withStream";

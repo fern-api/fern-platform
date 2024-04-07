@@ -5,9 +5,7 @@ import {
     FlattenedApiDefinitionPackage,
     FlattenedApiDefinitionPackageItem,
     FlattenedEndpointDefinition,
-    FlattenedSubpackage,
-    FlattenedWebSocketChannel,
-    FlattenedWebhookDefinition,
+    FlattenedSubpackage, FlattenedWebhookDefinition, FlattenedWebSocketChannel
 } from "@fern-ui/fdr-utils";
 import { mapValues, pick, sortBy } from "lodash-es";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";

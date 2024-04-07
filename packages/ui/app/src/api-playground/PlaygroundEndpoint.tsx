@@ -1,6 +1,6 @@
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { resolve } from "url";
@@ -19,7 +19,7 @@ import type {
     ProxyRequest,
     ProxyResponse,
     SerializableFile,
-    SerializableFormDataEntryValue,
+    SerializableFormDataEntryValue
 } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";

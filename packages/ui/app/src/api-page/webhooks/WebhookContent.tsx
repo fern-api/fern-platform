@@ -8,9 +8,9 @@ import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
-import { useWebhookContext } from "./webhook-context/useWebhookContext";
 
 const WebhookExample = dynamic(
     () => import("./webhook-examples/WebhookExample").then(({ WebhookExample }) => WebhookExample),

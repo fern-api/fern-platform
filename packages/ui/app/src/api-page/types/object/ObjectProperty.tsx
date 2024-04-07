@@ -12,11 +12,10 @@ import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext,
+    useTypeDefinitionContext
 } from "../context/TypeDefinitionContext";
 import {
-    InternalTypeReferenceDefinitions,
-    hasInternalTypeReference,
+    hasInternalTypeReference, InternalTypeReferenceDefinitions
 } from "../type-reference/InternalTypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 

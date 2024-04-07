@@ -1,10 +1,10 @@
 import { forwardRef, useMemo } from "react";
 import { emitDatadogError } from "../analytics/datadogRum";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
 import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
-import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];

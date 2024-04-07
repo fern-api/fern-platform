@@ -2,14 +2,11 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import {
-    ComponentProps,
-    MouseEventHandler,
-    forwardRef,
-    useCallback,
+    ComponentProps, forwardRef, MouseEventHandler, useCallback,
     useEffect,
     useImperativeHandle,
     useRef,
-    useState,
+    useState
 } from "react";
 import { FernButton } from "./FernButton";
 

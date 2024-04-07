@@ -1,10 +1,8 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import {
-    SidebarNode,
-    SidebarNodeRaw,
     findApiSection,
-    flattenApiDefinition,
-    traverseSidebarNodes,
+    flattenApiDefinition, SidebarNode,
+    SidebarNodeRaw, traverseSidebarNodes
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import moment from "moment";
@@ -14,10 +12,10 @@ import {
     FernDocsFrontmatter,
     FernSerializeMdxOptions,
     maybeSerializeMdxContent,
-    serializeMdxWithFrontmatter,
+    serializeMdxWithFrontmatter
 } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
+import { resolveApiDefinition, ResolvedRootPackage } from "./resolver";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;

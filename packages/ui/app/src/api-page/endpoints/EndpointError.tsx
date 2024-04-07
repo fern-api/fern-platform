@@ -1,14 +1,12 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { MouseEventHandler, memo } from "react";
+import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
 import {
-    ResolvedError,
+    dereferenceObjectProperties, ResolvedError,
     ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    dereferenceObjectProperties,
-    unwrapReference,
+    ResolvedTypeShape, unwrapReference
 } from "../../util/resolver";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

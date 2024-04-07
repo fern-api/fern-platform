@@ -2,8 +2,8 @@ import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement } from "react";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { MdxContent } from "../mdx/MdxContent";
 import { type SerializedMdxContent } from "../mdx/mdx";
+import { MdxContent } from "../mdx/MdxContent";
 import { type ResolvedPath } from "../util/ResolvedPath";
 
 export declare namespace CustomDocsPage {

@@ -5,7 +5,7 @@ import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icon
 import cn from "clsx";
 import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, Fragment, ReactElement, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { withStream } from "../commons/withStream";
 import { Chip } from "../components/Chip";

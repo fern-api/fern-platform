@@ -12,7 +12,7 @@ import {
     ReactElement,
     ReactNode,
     useEffect,
-    useRef,
+    useRef
 } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernTooltip } from "../components/FernTooltip";

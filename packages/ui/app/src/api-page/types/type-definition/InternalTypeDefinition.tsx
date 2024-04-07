@@ -1,17 +1,17 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
+import { memo, ReactElement, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
+import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext,
+    useTypeDefinitionContext
 } from "../context/TypeDefinitionContext";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { ObjectProperty } from "../object/ObjectProperty";

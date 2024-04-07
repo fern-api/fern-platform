@@ -2,25 +2,22 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
 import { resolve } from "url";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { APIS } from "../sidebar/atom";
 import {
-    ResolvedApiDefinition,
-    ResolvedRootPackage,
     flattenRootPackage,
     isEndpoint,
-    isWebSocket,
+    isWebSocket, ResolvedApiDefinition,
+    ResolvedRootPackage
 } from "../util/resolver";
 import {
-    PlaygroundSelectionState,
     createFormStateKey,
-    getInitialEndpointRequestFormStateWithExample,
-    usePlaygroundHeight,
+    getInitialEndpointRequestFormStateWithExample, PlaygroundSelectionState, usePlaygroundHeight
 } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 

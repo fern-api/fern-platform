@@ -14,25 +14,23 @@ import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {
-    FlattenedRootPackage,
-    ResolvedApiDefinition,
+    FlattenedRootPackage, isEndpoint,
+    isWebSocket, ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
     ResolvedTypeDefinition,
-    ResolvedWebSocketChannel,
-    isEndpoint,
-    isWebSocket,
+    ResolvedWebSocketChannel
 } from "../util/resolver";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
+import { flattenApiSection, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundRequestFormAuth,
-    PlaygroundWebSocketRequestFormState,
+    PlaygroundWebSocketRequestFormState
 } from "./types";
 import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";

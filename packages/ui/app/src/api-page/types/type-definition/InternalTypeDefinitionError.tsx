@@ -3,11 +3,11 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
+import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext,
+    useTypeDefinitionContext
 } from "../context/TypeDefinitionContext";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { EnumValue } from "../enum/EnumValue";

@@ -19,10 +19,10 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
+import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundEndpointContentProps {
     endpoint: ResolvedEndpointDefinition;

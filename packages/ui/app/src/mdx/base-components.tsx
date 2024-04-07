@@ -8,7 +8,7 @@ import {
     createElement,
     FC,
     isValidElement,
-    ReactElement,
+    ReactElement
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";

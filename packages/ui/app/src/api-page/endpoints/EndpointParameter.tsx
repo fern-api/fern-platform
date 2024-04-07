@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
+import { FC, memo, PropsWithChildren, ReactNode, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useRouteListener } from "../../contexts/useRouteListener";

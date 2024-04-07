@@ -7,7 +7,7 @@ import {
     ExclamationTriangleIcon,
     InfoCircledIcon,
     RocketIcon,
-    StarIcon,
+    StarIcon
 } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, isValidElement, PropsWithChildren, ReactElement } from "react";
