@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-platform.git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/app"
   },
   "private": true,
@@ -30,7 +30,8 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "pnpx chromatic --project-token=chpt_e5ec706c2923fdd"
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.14.0",
@@ -54,7 +55,6 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@shikijs/transformers": "^1.2.2",
-    "@storybook/addon-postcss": "^2.0.0",
     "@types/nprogress": "^0.2.3",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.1.0",
@@ -126,6 +126,7 @@
     "@types/react-test-renderer": "^18.0.7",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-react": "^4.2.1",
+    "chromatic": "^11.3.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^0.8.0",
@@ -144,5 +145,9 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/fern-api/fern-platform/issues"
+  },
+  "homepage": "https://github.com/fern-api/fern-platform#readme"
 }

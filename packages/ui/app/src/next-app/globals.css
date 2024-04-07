@@ -716,13 +716,13 @@
 
     .fern-input {
         @apply form-input w-full;
-        @apply border-none bg-transparent #{!important};
-        @apply outline-none ring-0 #{!important};
+        @apply border-none bg-transparent !important;
+        @apply outline-none ring-0 !important;
     }
 
     .fern-textarea {
         @apply form-textarea resize-none w-full;
-        @apply outline-none ring-0 bg-transparent border-none #{!important};
+        @apply outline-none ring-0 bg-transparent border-none !important;
     }
 
     .fern-textarea-group,

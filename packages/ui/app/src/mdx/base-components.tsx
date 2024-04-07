@@ -16,7 +16,7 @@ import { FernCard } from "../components/FernCard";
 import { FernLink } from "../components/FernLink";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { onlyText } from "../util/onlyText";
-import "./base-components.scss";
+import "./base-components.css";
 
 export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     return (
