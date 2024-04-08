@@ -1,4 +1,4 @@
-import { App } from "@octokit/app";
+import { App } from "octokit";
 import { Env } from "../env";
 import { dashboard, setupGithubApp } from "./octokit";
 

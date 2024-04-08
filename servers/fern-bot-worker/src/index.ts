@@ -1,6 +1,6 @@
 import SmeeClient from "smee-client";
 import { Env } from "./env";
-import { handleIncomingRequest } from "./github/octokit_hooks";
+import { handleIncomingRequest } from "./github/octokitHooks";
 
 if (process.env.NODE_ENV !== "production") {
     const smee = new SmeeClient({

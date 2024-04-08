@@ -1,4 +1,4 @@
-import { App } from "@octokit/app";
+import { App } from "octokit";
 import { Env } from "../env";
 
 export const dashboard = async (app: App): Promise<Response> => {
