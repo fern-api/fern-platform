@@ -28,10 +28,13 @@ export class GitCommander {
         this.identityGitOptions = identityGitOptions;
     }
 
-    async checkout(ref: string, startPoint?: string): Promise<void> {
+    async checkout(ref: string, startPoint?: string, options?: string[]): Promise<void> {
         const args = ["checkout", "--progress"];
         if (startPoint) {
             args.push("-B", ref, startPoint);
+        } else if (options) {
+            args.push(...options);
+            args.push(ref);
         } else {
             args.push(ref);
         }
@@ -275,6 +278,15 @@ export class GitCommander {
         result.stdout = stdout;
         result.stderr = stderr;
         return result;
+    }
+
+    async tryFetch(remote: string, branch: string): Promise<boolean> {
+        try {
+            await this.fetch([`${branch}:refs/remotes/${remote}/${branch}`], remote, ["--force"]);
+            return true;
+        } catch {
+            return false;
+        }
     }
 }
 

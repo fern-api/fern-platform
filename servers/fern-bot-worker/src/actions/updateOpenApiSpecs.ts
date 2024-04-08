@@ -41,9 +41,15 @@ async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Prom
     }
 
     const git = await GitCommander.create(repoDir, ghAuth);
-    // Clone the repo to repoDir
+    // Clone the repo to repoDir and update the branch
     await git.clone(repository.clone_url);
-    // TODO: Update + checkout or create the branch
+    git.setWorkingDirectory(fullRepoPath);
+    if (!(await git.tryFetch(branchRemoteName, OPENAPI_UPDATE_BRANCH))) {
+        await git.checkout(OPENAPI_UPDATE_BRANCH, undefined, ["-b"]);
+        await git.exec(["merge", "-X", "theirs", `${branchRemoteName}/${repository.default_branch}`]);
+    } else {
+        await git.checkout(OPENAPI_UPDATE_BRANCH, undefined, []);
+    }
 
     // Parse the generators config
     const generatorConfig = await loadRawGeneratorsConfiguration(fullRepoPath);
