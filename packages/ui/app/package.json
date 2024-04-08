@@ -51,7 +51,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@shikijs/transformers": "^1.2.2",
     "@types/nprogress": "^0.2.3",
-    "algoliasearch": "^4.22.1",
+    "algoliasearch": "^4.23.2",
     "clsx": "^2.1.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
