@@ -2,12 +2,14 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { noop } from "instantsearch.js/es/lib/utils";
 import { useRouter } from "next/router";
 import {
-    createContext, PropsWithChildren,
-    ReactElement, useCallback,
+    createContext,
+    PropsWithChildren,
+    ReactElement,
+    useCallback,
     useContext,
     useEffect,
     useRef,
-    useTransition
+    useTransition,
 } from "react";
 
 type ListenerFn = (anchor?: string) => void;

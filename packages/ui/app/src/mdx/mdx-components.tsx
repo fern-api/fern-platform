@@ -22,7 +22,7 @@ import {
     NoteCallout,
     SuccessCallout,
     TipCallout,
-    WarningCallout
+    WarningCallout,
 } from "./components/Callout";
 import { Card } from "./components/Card";
 import { CardGroup } from "./components/CardGroup";

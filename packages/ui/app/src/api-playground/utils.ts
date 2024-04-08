@@ -2,7 +2,8 @@ import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/c
 import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import {
-    dereferenceObjectProperties, ResolvedEndpointDefinition,
+    dereferenceObjectProperties,
+    ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
     ResolvedExampleEndpointRequest,
     ResolvedFormValue,
@@ -10,15 +11,17 @@ import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-    ResolvedWebSocketChannel, unwrapReference,
-    visitResolvedHttpRequestBodyShape
+    ResolvedWebSocketChannel,
+    unwrapReference,
+    visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { unknownToString } from "../util/unknownToString";
 import {
-    convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest, PlaygroundEndpointRequestFormState,
+    convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
+    PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
-    PlaygroundRequestFormState
+    PlaygroundRequestFormState,
 } from "./types";
 
 export function castToRecord(value: unknown): Record<string, unknown> {

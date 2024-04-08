@@ -5,11 +5,12 @@ import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { FernCard } from "../../components/FernCard";
 import {
-    dereferenceObjectProperties, ResolvedEndpointDefinition,
+    dereferenceObjectProperties,
+    ResolvedEndpointDefinition,
     ResolvedError,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
-    ResolvedTypeDefinition
+    ResolvedTypeDefinition,
 } from "../../util/resolver";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";

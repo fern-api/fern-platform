@@ -1,10 +1,11 @@
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { keyBy, mapValues } from "lodash-es";
 import {
-    dereferenceObjectProperties, ResolvedHttpRequestBodyShape,
+    dereferenceObjectProperties,
+    ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
-    ResolvedTypeShape
+    ResolvedTypeShape,
 } from "../../util/resolver";
 
 function sortKeysBy(obj: Record<string, unknown>, order: string[]) {

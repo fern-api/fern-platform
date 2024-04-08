@@ -4,9 +4,11 @@ import cn from "clsx";
 import { memo, MouseEventHandler } from "react";
 import { FernCollapse } from "../../components/FernCollapse";
 import {
-    dereferenceObjectProperties, ResolvedError,
+    dereferenceObjectProperties,
+    ResolvedError,
     ResolvedTypeDefinition,
-    ResolvedTypeShape, unwrapReference
+    ResolvedTypeShape,
+    unwrapReference,
 } from "../../util/resolver";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

@@ -3,9 +3,11 @@ import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import {
-    dereferenceObjectProperties, ResolvedEndpointDefinition,
-    ResolvedTypeDefinition, unwrapReference,
-    visitResolvedHttpRequestBodyShape
+    dereferenceObjectProperties,
+    ResolvedEndpointDefinition,
+    ResolvedTypeDefinition,
+    unwrapReference,
+    visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";

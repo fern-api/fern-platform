@@ -18,7 +18,7 @@ import {
     ResolvedTypeDefinition,
     unwrapOptional,
     unwrapReference,
-    visitResolvedHttpRequestBodyShape
+    visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 

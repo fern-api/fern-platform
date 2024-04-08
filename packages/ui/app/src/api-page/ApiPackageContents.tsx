@@ -3,9 +3,10 @@ import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
-    isResolvedSubpackage, ResolvedPackageItem,
+    isResolvedSubpackage,
+    ResolvedPackageItem,
     ResolvedTypeDefinition,
-    ResolvedWithApiDefinition
+    ResolvedWithApiDefinition,
 } from "../util/resolver";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";

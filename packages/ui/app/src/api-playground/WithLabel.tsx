@@ -8,8 +8,10 @@ import { FernTooltip } from "../components/FernTooltip";
 import { Markdown } from "../mdx/Markdown";
 import {
     ResolvedObjectProperty,
-    ResolvedTypeDefinition, unwrapOptional, WithAvailability,
-    WithDescription
+    ResolvedTypeDefinition,
+    unwrapOptional,
+    WithAvailability,
+    WithDescription,
 } from "../util/resolver";
 import { shouldRenderInline } from "./utils";
 

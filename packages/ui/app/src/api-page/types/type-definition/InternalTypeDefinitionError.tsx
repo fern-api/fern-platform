@@ -7,7 +7,7 @@ import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../ut
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
-    useTypeDefinitionContext
+    useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { EnumValue } from "../enum/EnumValue";

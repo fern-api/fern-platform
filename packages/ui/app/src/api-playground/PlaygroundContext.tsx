@@ -12,12 +12,15 @@ import { APIS } from "../sidebar/atom";
 import {
     flattenRootPackage,
     isEndpoint,
-    isWebSocket, ResolvedApiDefinition,
-    ResolvedRootPackage
+    isWebSocket,
+    ResolvedApiDefinition,
+    ResolvedRootPackage,
 } from "../util/resolver";
 import {
     createFormStateKey,
-    getInitialEndpointRequestFormStateWithExample, PlaygroundSelectionState, usePlaygroundHeight
+    getInitialEndpointRequestFormStateWithExample,
+    PlaygroundSelectionState,
+    usePlaygroundHeight,
 } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 
