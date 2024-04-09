@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
 import { IndexSegment } from "../../../services/algolia";
+import { provideRevalidationClient } from "../../../services/revalidator/provideRevalidationClient";
 import { type S3FileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
@@ -138,6 +139,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     orgId: docsRegistrationInfo.orgId,
                 });
 
+                // get previous slugs, some of which need to be invalidated
+                let previousSlugs: string[] = [];
+                try {
+                    const client = provideRevalidationClient(docsRegistrationInfo.fernUrl);
+                    previousSlugs = await client.listSlugs();
+                } catch (e) {
+                    // this is not a critical error, so we just log it. It's possible that the domain has never been registered before, or is a private docs instance.
+                    app.logger.warn(`Failed to get previous slugs for ${docsRegistrationInfo.fernUrl.getFullUrl()}`, e);
+                }
+
                 app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Transforming Docs Definition to DB`);
                 const dbDocsDefinition = convertDocsDefinitionToDb({
                     writeShape: req.body.docsDefinition,
@@ -188,9 +199,10 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     urls.map(async (baseUrl) => {
                         const results = await app.services.revalidator.revalidate({
                             // treat staging URL as its own fernURL to handle basepath revalidation
-                            fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
+                            // fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
                             baseUrl,
                             app,
+                            oldSlugs: previousSlugs,
                         });
                         if (
                             results.response != null &&
