@@ -1,9 +1,8 @@
-import { FernRevalidation } from "@fern-fern/revalidation-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
-import { RevalidatePathResult, isFailureResult, isSuccessResult } from "../../../../utils/revalidate-types";
+import { toValidPathname } from "../../../../utils/toValidPathname";
 
 function getHostFromUrl(url: string | undefined): string | undefined {
     if (url == null) {
@@ -17,9 +16,35 @@ export const config = {
     maxDuration: 300,
 };
 
+type RevalidatePathResult = RevalidatePathSuccessResult | RevalidatePathErrorResult;
+
+interface RevalidatePathSuccessResult {
+    success: true;
+    url: string;
+}
+
+function isSuccessResult(result: RevalidatePathResult): result is RevalidatePathSuccessResult {
+    return result.success;
+}
+
+interface RevalidatePathErrorResult {
+    success: false;
+    url: string;
+    message: string;
+}
+
+function isFailureResult(result: RevalidatePathResult): result is RevalidatePathErrorResult {
+    return !result.success;
+}
+
+type RevalidatedPaths = {
+    successfulRevalidations: RevalidatePathSuccessResult[];
+    failedRevalidations: RevalidatePathErrorResult[];
+};
+
 const handler: NextApiHandler = async (
     req: NextApiRequest,
-    res: NextApiResponse<FernRevalidation.BulkRevalidateResponse>,
+    res: NextApiResponse<RevalidatedPaths>,
 ): Promise<unknown> => {
     if (req.method !== "POST") {
         return res.status(405).json({ successfulRevalidations: [], failedRevalidations: [] });
@@ -31,8 +56,14 @@ const handler: NextApiHandler = async (
         if (typeof xFernHost !== "string") {
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
+        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-        const docs = await loadWithUrl(buildUrl({ host: xFernHost }));
+        const docs = await loadWithUrl(
+            buildUrl({
+                host: hostWithoutTrailingSlash,
+                pathname: toValidPathname(req.query.basePath),
+            }),
+        );
 
         if (docs == null) {
             // return notFoundResponse();

@@ -1,6 +1,7 @@
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 function getHostFromUrl(url: string | undefined): string | undefined {
     if (url == null) {
@@ -54,8 +55,14 @@ const handler: NextApiHandler = async (
         if (typeof xFernHost !== "string") {
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
+        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-        const docs = await loadWithUrl(buildUrl({ host: xFernHost }));
+        const docs = await loadWithUrl(
+            buildUrl({
+                host: hostWithoutTrailingSlash,
+                pathname: toValidPathname(req.query.basePath),
+            }),
+        );
 
         if (docs == null) {
             // return notFoundResponse();

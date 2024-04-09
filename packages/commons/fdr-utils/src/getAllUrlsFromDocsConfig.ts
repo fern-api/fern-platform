@@ -9,15 +9,6 @@ export function getAllUrlsFromDocsConfig(
     nav: DocsV1Read.NavigationConfig,
     apis: Record<string, APIV1Read.ApiDefinition>,
 ): string[] {
-    const slugs = getAllSlugsFromDocsConfig(basePath, nav, apis);
-    return slugs.map((slug) => buildUrl({ host, pathname: slug }));
-}
-
-export function getAllSlugsFromDocsConfig(
-    basePath: string | undefined,
-    nav: DocsV1Read.NavigationConfig,
-    apis: Record<string, APIV1Read.ApiDefinition>,
-): string[] {
     const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
     const root = resolveSidebarNodesRoot(nav, apis, basePathSlug);
     const visitedSlugs: string[] = [];
@@ -26,5 +17,5 @@ export function getAllSlugsFromDocsConfig(
         visitedSlugs.push(node.slug.join("/"));
     });
 
-    return Array.from(new Set(visitedSlugs));
+    return Array.from(new Set(visitedSlugs.map((slug) => buildUrl({ host, pathname: slug }))));
 }

@@ -1,15 +1,8 @@
-import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { jsonResponse, notFoundResponse } from "../../../utils/serverResponse";
-
-/**
- * sitemap.xml generates a sitemap for the given host. This endpoint is used by search engines to index the site.
- * We cache this response for 24 hours to avoid unnecessary load on the server. Since SEO is slow to update, this is acceptable.
- */
+import { notFoundResponse } from "../../../utils/serverResponse";
 
 export const runtime = "edge";
-export const revalidate = 60 * 60 * 24; // 24 hours
+export const revalidate = 60 * 60 * 24;
 
 function getHostFromUrl(url: string | undefined): string | undefined {
     if (url == null) {
@@ -20,28 +13,29 @@ function getHostFromUrl(url: string | undefined): string | undefined {
 }
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    let xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
-
-    if (xFernHost?.includes("localhost")) {
-        xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
-    }
+    const xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
 
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return notFoundResponse();
     }
 
-    const docs = await loadWithUrl(buildUrl({ host: xFernHost }));
+    const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-    if (docs == null) {
-        return jsonResponse(404, []);
+    const hostnameAndProtocol = req.nextUrl.host.includes("localhost")
+        ? "http://localhost:3000"
+        : `https://${hostWithoutTrailingSlash}`;
+
+    const sitemapResponse = await fetch(`${hostnameAndProtocol}/api/fern-docs/sitemap`, {
+        headers: { "x-fern-host": xFernHost },
+    });
+
+    if (sitemapResponse.status !== 200) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch docs", sitemapResponse.status, sitemapResponse.statusText);
+        return notFoundResponse();
     }
 
-    const urls = getAllUrlsFromDocsConfig(
-        xFernHost,
-        docs.baseUrl.basePath,
-        docs.definition.config.navigation,
-        docs.definition.apis,
-    );
+    const urls: string[] = await sitemapResponse.json();
 
     const sitemap = getSitemapXml(urls.map((url) => `https://${url}`));
 

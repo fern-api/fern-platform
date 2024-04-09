@@ -4,24 +4,6 @@ service:
   auth: false
   base-path: /api/fern-docs
   endpoints:
-    bulkRevalidate:
-      path: /revalidate-bulk
-      docs: Revalidates a list of URLs
-      display-name: Revalidate a list of URLs
-      method: POST
-      request:
-        name: BulkRevalidateRequest
-        body:
-          properties:
-            host:
-              type: string
-              docs: |
-                The host you want to revalidate the docs for.
-            slugs:
-              type: list<string>
-              docs: |
-                The paths to revalidate, sans initial slash. i.e. `path/to/page`
-      response: BulkRevalidateResponse
     revalidateAllV2:
       path: /revalidate-all/v2
       docs: Revalidates a docs website
@@ -29,41 +11,31 @@ service:
       method: POST
       request:
         name: CreateRevalidateAllV2Request
-        headers:
-          x-fern-host:
+        headers: 
+          x-fern-host: 
             type: string
             docs: |
               The host you want to revalidate the docs for.
+        query-parameters:
+          basePath:
+            type: string
+            docs: |
+              The base path of the docs you want to revalidate.
         body:
           properties:
             host:
               type: string
               docs: |
                 The host you want to revalidate the docs for.
-      response: BulkRevalidateResponse
-    listSlugs:
-      path: /list-slugs
-      display-name: Get all slugs for docs site
-      method: GET
-      request:
-        name: GetSitemapRequest
-        headers:
-          x-fern-host: optional<string>
-      response: list<string>
+      response: RevalidateAllV2Response
 
 types:
-  BulkRevalidateResponse:
+  RevalidateAllV2Response:
     properties:
-      successfulRevalidations: list<SuccessfulRevalidation>
-      failedRevalidations: list<FailedRevalidation>
+      successfulRevalidations: list<SuccessfulRevalidations>
+      failedRevalidations: list<unknown>
 
-  SuccessfulRevalidation:
+  SuccessfulRevalidations:
     properties:
-      success: literal<true>
+      success: string
       url: string
-
-  FailedRevalidation:
-    properties:
-      success: literal<false>
-      url: string
-      message: optional<string>

@@ -33,7 +33,6 @@ navigation:
             path: ./content/overview/home/getting-started.mdx
           - page: Components
             path: ./content/components.mdx
-            # hidden: true
       - section: OpenAPI
         contents:
           - page: Importing OpenAPI
