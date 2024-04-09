@@ -7,7 +7,7 @@ import { isNonNullish, titleCase } from "@fern-ui/core-utils";
  *  - The docs config also may inject supplementary mdx pages into the package structure.
  *  - The items are then ordered according to the docs config.
  *  - All optional keys are turned into strict nullable properties.
- * 
+ *
  * This "flattening" operation should be relatively cheap, and is consumed by two resolvers:
  *  - the sidebar node resolver (which renders the sidebar navigation on every page)
  *  - the full resolver (which should only run on api reference pages, since it's expensive and data-rich)
