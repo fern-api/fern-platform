@@ -9,9 +9,9 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 const { kebabCase } = lodash;
 
 export interface S3FileInfo {
@@ -190,17 +190,10 @@ export function transformNavigationItemForDb(
                               hidden: writeShape.changelog.hidden ?? false,
                           }
                         : undefined,
+                navigation: transformApiSectionNavigationForDb(writeShape.navigation),
             };
         case "page":
-            return {
-                type: "page",
-                id: writeShape.id,
-                title: writeShape.title,
-                icon: writeShape.icon,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
-                fullSlug: writeShape.fullSlug,
-                hidden: writeShape.hidden ?? false,
-            };
+            return transformPageNavigationItemForDb(writeShape);
         case "section":
             return {
                 type: "section",
@@ -393,4 +386,52 @@ function transformColorsV3ForDb({
         default:
             assertNever(writeShape);
     }
+}
+
+function transformPageNavigationItemForDb(
+    writeShape: DocsV1Write.PageMetadata,
+): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page>;
+function transformPageNavigationItemForDb(
+    writeShape: DocsV1Write.PageMetadata | undefined,
+): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined;
+function transformPageNavigationItemForDb(
+    writeShape: DocsV1Write.PageMetadata | undefined,
+): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined {
+    if (writeShape == null) {
+        return undefined;
+    }
+    return {
+        type: "page",
+        id: writeShape.id,
+        title: writeShape.title,
+        icon: writeShape.icon,
+        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+        fullSlug: writeShape.fullSlug,
+        hidden: writeShape.hidden ?? false,
+    };
+}
+
+function transformApiSectionNavigationForDb(
+    writeShape: DocsV1Write.ApiNavigationConfigRoot | undefined,
+): DocsV1Db.ApiSection["navigation"] | undefined {
+    if (writeShape == null) {
+        return undefined;
+    }
+    return {
+        items: transformItems(writeShape.items),
+    };
+}
+
+function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
+    return items.map((item): DocsV1Read.ApiNavigationConfigItem => {
+        return item.type === "subpackage"
+            ? {
+                  type: "subpackage",
+                  subpackageId: item.subpackageId,
+                  items: transformItems(item.items),
+              }
+            : item.type === "page"
+              ? transformPageNavigationItemForDb(item)
+              : item;
+    });
 }

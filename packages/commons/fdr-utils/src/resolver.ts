@@ -14,6 +14,7 @@ function resolveSidebarNodeRawApiSection(
     subpackage: FlattenedApiDefinitionPackage,
     title: string,
     showErrors: boolean,
+    pages: Record<string, DocsV1Read.PageContent>,
 ): SidebarNodeRaw.ApiSection | undefined {
     const items = subpackage.items
         .map((item) =>
@@ -60,6 +61,7 @@ function resolveSidebarNodeRawApiSection(
                         subpackage,
                         subpackage.name,
                         showErrors,
+                        pages,
                     );
 
                     if (resolvedSubpackage == null) {
@@ -68,6 +70,15 @@ function resolveSidebarNodeRawApiSection(
 
                     return { ...resolvedSubpackage, apiType: "subpackage" };
                 },
+                page: (page) => ({
+                    type: "page",
+                    id: page.id,
+                    slug: page.slug,
+                    title: page.title,
+                    description: undefined,
+                    icon: page.icon,
+                    hidden: page.hidden,
+                }),
             }),
         )
         .filter(isNonNullish);
@@ -89,6 +100,7 @@ function resolveSidebarNodeRawApiSection(
         description: undefined, // TODO: add description here
         icon: undefined,
         hidden: false,
+        hasSummaryPage: subpackage.summaryPageId != null,
     };
 }
 
@@ -99,18 +111,20 @@ function stringifyEndpointPathParts(path: APIV1Read.EndpointPathPart[]): string 
 export function resolveSidebarNodesRoot(
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
     basePathSlug: string[],
 ): SidebarNodeRaw.Root {
     return {
         type: "root",
         slug: basePathSlug,
-        items: resolveSidebarNodesRootItems(nav, apis, basePathSlug),
+        items: resolveSidebarNodesRootItems(nav, apis, pages, basePathSlug),
     };
 }
 
 function resolveSidebarNodesRootItems(
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
     parentSlugs: readonly string[],
 ): SidebarNodeRaw.Root["items"] {
     if (isVersionedNavigationConfig(nav)) {
@@ -124,7 +138,7 @@ function resolveSidebarNodesRootItems(
                     slug: parentSlugs,
                     index,
                     availability: version.availability ?? null,
-                    items: resolveSidebarNodesVersionItems(version.config, apis, parentSlugs),
+                    items: resolveSidebarNodesVersionItems(version.config, apis, pages, parentSlugs),
                 });
             }
 
@@ -135,19 +149,20 @@ function resolveSidebarNodesRootItems(
                 slug: versionSlug,
                 index,
                 availability: version.availability ?? null,
-                items: resolveSidebarNodesVersionItems(version.config, apis, versionSlug),
+                items: resolveSidebarNodesVersionItems(version.config, apis, pages, versionSlug),
             });
         });
 
         return toRet;
     }
 
-    return resolveSidebarNodesVersionItems(nav, apis, parentSlugs);
+    return resolveSidebarNodesVersionItems(nav, apis, pages, parentSlugs);
 }
 
 function resolveSidebarNodesVersionItems(
     nav: DocsV1Read.UnversionedNavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
     parentSlugs: readonly string[],
 ): SidebarNodeRaw.VersionGroup["items"] {
     if (isUnversionedTabbedNavigationConfig(nav)) {
@@ -159,17 +174,18 @@ function resolveSidebarNodesVersionItems(
                 icon: tab.icon,
                 slug: tabSlug,
                 index,
-                items: resolveSidebarNodes(tab.items, apis, tabSlug, parentSlugs),
+                items: resolveSidebarNodes(tab.items, apis, pages, tabSlug, parentSlugs),
             };
         });
     }
 
-    return resolveSidebarNodes(nav.items, apis, parentSlugs, parentSlugs);
+    return resolveSidebarNodes(nav.items, apis, pages, parentSlugs, parentSlugs);
 }
 
 export function resolveSidebarNodes(
     navigationItems: DocsV1Read.NavigationItem[],
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
     parentSlugs: readonly string[], // parent slugs that are inherited from the parent node
     fixedSlugs: readonly string[], // basepath and version slugs
 ): SidebarNodeRaw[] {
@@ -213,13 +229,14 @@ export function resolveSidebarNodes(
                             : api.skipUrlSlug
                               ? parentSlugs
                               : [...parentSlugs, ...api.urlSlug.split("/")];
-                    const flattened = flattenApiDefinition(definition, definitionSlug);
+                    const flattened = flattenApiDefinition(definition, definitionSlug, api.navigation);
                     const resolved = resolveSidebarNodeRawApiSection(
                         api.api,
                         api.api,
                         flattened,
                         api.title,
                         api.showErrors,
+                        pages,
                     );
                     sidebarNodes.push({
                         type: "apiSection",
@@ -254,6 +271,7 @@ export function resolveSidebarNodes(
                         description: undefined, // TODO: add description here
                         icon: api.icon,
                         hidden: api.hidden ?? false,
+                        hasSummaryPage: flattened.summaryPageId != null,
                     });
                 }
             },
@@ -269,7 +287,7 @@ export function resolveSidebarNodes(
                     title: section.title,
                     slug: sectionSlug,
                     // if section.fullSlug is defined, the child slugs will be built from that, rather than from inherited parentSlugs
-                    items: resolveSidebarNodes(section.items, apis, sectionSlug, fixedSlugs),
+                    items: resolveSidebarNodes(section.items, apis, pages, sectionSlug, fixedSlugs),
                     icon: section.icon,
                     hidden: section.hidden ?? false,
                 };

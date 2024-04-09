@@ -1,5 +1,17 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, titleCase } from "@fern-ui/core-utils";
+
+/**
+ * Flattened API Definition lightly transforms the APIV1Read.ApiDefinition into a more usable format:
+ *  - We flatten the API package structure into a list of items, so that it's order is consistent throughout the fern docs.
+ *  - The docs config also may inject supplementary mdx pages into the package structure.
+ *  - The items are then ordered according to the docs config.
+ *  - All optional keys are turned into strict nullable properties.
+ *
+ * This "flattening" operation should be relatively cheap, and is consumed by two resolvers:
+ *  - the sidebar node resolver (which renders the sidebar navigation on every page)
+ *  - the full resolver (which should only run on api reference pages, since it's expensive and data-rich)
+ */
 
 export interface FlattenedParameter {
     key: string;
@@ -66,6 +78,15 @@ export interface FlattenedSubpackage extends FlattenedApiDefinitionPackage {
     description: string | undefined;
 }
 
+export interface FlattenedPageMetadata {
+    type: "page";
+    id: DocsV1Read.PageId;
+    slug: readonly string[];
+    title: string;
+    icon: string | undefined;
+    hidden: boolean;
+}
+
 export function isFlattenedSubpackage(package_: FlattenedApiDefinitionPackage): package_ is FlattenedSubpackage {
     return (package_ as FlattenedSubpackage).type === "subpackage";
 }
@@ -74,7 +95,8 @@ export type FlattenedApiDefinitionPackageItem =
     | FlattenedEndpointDefinition
     | FlattenedWebSocketChannel
     | FlattenedWebhookDefinition
-    | FlattenedSubpackage;
+    | FlattenedSubpackage
+    | FlattenedPageMetadata;
 
 export const FlattenedApiDefinitionPackageItem = {
     visit: <T>(
@@ -84,6 +106,7 @@ export const FlattenedApiDefinitionPackageItem = {
             websocket: (websocket: FlattenedWebSocketChannel) => T;
             webhook: (webhook: FlattenedWebhookDefinition) => T;
             subpackage: (subpackage: FlattenedSubpackage) => T;
+            page: (page: FlattenedPageMetadata) => T;
         },
     ): T => {
         switch (item.type) {
@@ -95,6 +118,8 @@ export const FlattenedApiDefinitionPackageItem = {
                 return visitor.webhook(item);
             case "subpackage":
                 return visitor.subpackage(item);
+            case "page":
+                return visitor.page(item);
         }
     },
     isSubpackage: (item: FlattenedApiDefinitionPackageItem): item is FlattenedSubpackage => item.type === "subpackage",
@@ -103,9 +128,11 @@ export const FlattenedApiDefinitionPackageItem = {
     isWebSocket: (item: FlattenedApiDefinitionPackageItem): item is FlattenedWebSocketChannel =>
         item.type === "websocket",
     isWebhook: (item: FlattenedApiDefinitionPackageItem): item is FlattenedWebhookDefinition => item.type === "webhook",
+    isPage: (item: FlattenedApiDefinitionPackageItem): item is FlattenedPageMetadata => item.type === "page",
 };
 
 export interface FlattenedApiDefinitionPackage {
+    summaryPageId: DocsV1Read.PageId | undefined;
     items: FlattenedApiDefinitionPackageItem[];
     slug: readonly string[];
     usedTypes: readonly string[];
@@ -121,12 +148,13 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
 export function flattenApiDefinition(
     apiDefinition: APIV1Read.ApiDefinition,
     parentSlugs: readonly string[],
+    navigation: DocsV1Read.ApiNavigationConfigRoot | undefined,
 ): FlattenedApiDefinition {
     const package_ = flattenPackage(
         apiDefinition.rootPackage,
         apiDefinition.subpackages,
         parentSlugs,
-        apiDefinition.navigation?.items,
+        navigation ?? toConfigRoot(apiDefinition.navigation),
     );
 
     return {
@@ -142,7 +170,7 @@ function flattenPackage(
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
-    order: APIV1Read.ApiNavigationConfigItem[] | undefined,
+    order: DocsV1Read.ApiNavigationConfigRoot | undefined,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
@@ -154,6 +182,7 @@ function flattenPackage(
             items: [],
             slug: parentSlugs,
             usedTypes: [],
+            summaryPageId: undefined,
         };
     }
 
@@ -218,6 +247,10 @@ function flattenPackage(
         }),
     );
 
+    const orderedSubpackageItems = order?.items?.filter(
+        (item): item is DocsV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage",
+    );
+
     const subpackages = currentPackage.subpackages
         .map((subpackageId): FlattenedSubpackage | undefined => {
             const subpackage = subpackagesMap[subpackageId];
@@ -225,9 +258,7 @@ function flattenPackage(
                 return;
             }
             const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
-            const subpackageOrder = order
-                ?.filter((item): item is APIV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage")
-                .find((item) => item.subpackageId === subpackageId)?.items;
+            const subpackageOrder = orderedSubpackageItems?.find((item) => item.subpackageId === subpackageId);
             return {
                 type: "subpackage",
                 subpackageId: subpackage.subpackageId,
@@ -238,26 +269,64 @@ function flattenPackage(
         })
         .filter(isNonNullish);
 
-    const items: FlattenedApiDefinitionPackageItem[] = [...endpoints, ...websockets, ...webhooks, ...subpackages];
+    const pages =
+        order?.items
+            ?.filter((item): item is DocsV1Read.ApiNavigationConfigItem.Page => item.type === "page")
+            .map((item): FlattenedPageMetadata => {
+                return {
+                    type: "page",
+                    id: item.id,
+                    slug: item.fullSlug ?? [...parentSlugs, item.urlSlug],
+                    title: item.title,
+                    icon: item.icon,
+                    hidden: item.hidden ?? false,
+                };
+            }) ?? [];
 
-    if (order != null && order.length > 0) {
+    const items: FlattenedApiDefinitionPackageItem[] = [
+        ...endpoints,
+        ...websockets,
+        ...webhooks,
+        ...subpackages,
+        ...pages,
+    ];
+
+    if (order != null && order.items.length > 0) {
         items.sort((a, b) => {
-            const aIndex = order.findIndex((item) => {
+            const aIndex = order.items.findIndex((item) => {
                 if (item.type === "subpackage" && a.type === "subpackage") {
                     return item.subpackageId === a.subpackageId;
                 }
 
-                if (item.type !== "subpackage" && a.type !== "subpackage") {
+                if (item.type === "page" && a.type === "page") {
+                    return item.id === a.id;
+                }
+
+                if (
+                    item.type !== "subpackage" &&
+                    a.type !== "subpackage" &&
+                    item.type !== "page" &&
+                    a.type !== "page"
+                ) {
                     return item.value === a.id;
                 }
                 return false;
             });
-            const bIndex = order.findIndex((item) => {
+            const bIndex = order.items.findIndex((item) => {
                 if (item.type === "subpackage" && b.type === "subpackage") {
                     return item.subpackageId === b.subpackageId;
                 }
 
-                if (item.type !== "subpackage" && b.type !== "subpackage") {
+                if (item.type === "page" && b.type === "page") {
+                    return item.id === b.id;
+                }
+
+                if (
+                    item.type !== "subpackage" &&
+                    b.type !== "subpackage" &&
+                    item.type !== "page" &&
+                    b.type !== "page"
+                ) {
                     return item.value === b.id;
                 }
                 return false;
@@ -277,5 +346,12 @@ function flattenPackage(
         items,
         slug: parentSlugs,
         usedTypes: currentPackage.types,
+        summaryPageId: order?.summaryPageId,
     };
+}
+
+function toConfigRoot(
+    root: APIV1Read.ApiNavigationConfigRoot | undefined,
+): DocsV1Read.ApiNavigationConfigRoot | undefined {
+    return root;
 }

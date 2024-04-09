@@ -4,6 +4,7 @@ imports:
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
+  commons: ../commons/commons.yml
 
 service:
   base-path: /registry/docs
@@ -369,6 +370,26 @@ types:
       showErrors: boolean
       changelog: optional<ChangelogSection>
       fullSlug: optional<list<string>>
+      navigation: optional<ApiNavigationConfigRoot>
+
+  ApiNavigationConfigRoot:
+    properties:
+      summaryPageId: optional<PageId>
+      items: list<ApiNavigationConfigItem>
+
+  ApiNavigationConfigItem:
+    union:
+      subpackage: ApiNavigationConfigSubpackage
+      endpointId: commons.EndpointId
+      websocketId: commons.WebSocketId
+      webhookId: commons.WebhookId
+      page: PageMetadata
+
+  ApiNavigationConfigSubpackage:
+    properties:
+      summaryPageId: optional<PageId>
+      subpackageId: commons.SubpackageId
+      items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
     properties:

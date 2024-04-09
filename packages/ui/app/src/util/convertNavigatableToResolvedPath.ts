@@ -95,15 +95,20 @@ export async function convertNavigatableToResolvedPath({
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug);
+        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug, api.navigation);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await resolveApiDefinition(flattenedApiDefinition);
+        const apiDefinition = await resolveApiDefinition(
+            traverseState.curr.title,
+            flattenedApiDefinition,
+            pages,
+            mdxOptions,
+        );
         return {
             type: "api-page",
             fullSlug: traverseState.curr.slug.join("/"),
             api: traverseState.curr.api,
             apiDefinition,
-            artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
+            // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiSection.showErrors,
             neighbors,
         };
@@ -153,11 +158,12 @@ export async function convertNavigatableToResolvedPath({
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
+            const title = traverseState.curr.title;
             resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
-                        return [apiName, await resolveApiDefinition(flattenedApiDefinition)];
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined);
+                        return [apiName, await resolveApiDefinition(title, flattenedApiDefinition, pages, mdxOptions)];
                     }),
                 ),
             );

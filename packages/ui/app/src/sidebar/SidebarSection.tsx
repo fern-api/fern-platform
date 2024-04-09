@@ -187,23 +187,44 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                     apiSection: (apiSection) =>
                         depth === 0 ? (
                             <li key={apiSection.id}>
-                                <SidebarHeading
-                                    className={cn({
-                                        "mt-6": topLevel,
-                                    })}
-                                    depth={depth}
-                                    title={apiSection.title}
-                                    slug={apiSection.slug}
-                                    icon={apiSection.icon}
-                                    hidden={apiSection.hidden}
-                                >
-                                    <SidebarApiSection
+                                {apiSection.hasSummaryPage ? (
+                                    <SidebarSlugLink
+                                        className={cn({
+                                            "mt-6": topLevel,
+                                        })}
+                                        depth={depth}
+                                        title={apiSection.title}
                                         slug={apiSection.slug}
-                                        apiSection={apiSection}
+                                        icon={apiSection.icon}
+                                        hidden={apiSection.hidden}
                                         registerScrolledToPathListener={registerScrolledToPathListener}
-                                        depth={depth + 1}
-                                    />
-                                </SidebarHeading>
+                                    >
+                                        <SidebarApiSection
+                                            slug={apiSection.slug}
+                                            apiSection={apiSection}
+                                            registerScrolledToPathListener={registerScrolledToPathListener}
+                                            depth={depth + 1}
+                                        />
+                                    </SidebarSlugLink>
+                                ) : (
+                                    <SidebarHeading
+                                        className={cn({
+                                            "mt-6": topLevel,
+                                        })}
+                                        depth={depth}
+                                        title={apiSection.title}
+                                        slug={apiSection.slug}
+                                        icon={apiSection.icon}
+                                        hidden={apiSection.hidden}
+                                    >
+                                        <SidebarApiSection
+                                            slug={apiSection.slug}
+                                            apiSection={apiSection}
+                                            registerScrolledToPathListener={registerScrolledToPathListener}
+                                            depth={depth + 1}
+                                        />
+                                    </SidebarHeading>
+                                )}
                             </li>
                         ) : (
                             <ExpandableSidebarApiSection

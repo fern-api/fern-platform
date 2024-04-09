@@ -1,5 +1,5 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import {
     FlattenedApiDefinition,
     FlattenedApiDefinitionPackage,
@@ -9,13 +9,18 @@ import {
     FlattenedWebSocketChannel,
     FlattenedWebhookDefinition,
 } from "@fern-ui/fdr-utils";
-import { mapValues, pick, sortBy } from "lodash-es";
+import { mapValues, sortBy } from "lodash-es";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
 import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
-import { maybeSerializeMdxContent } from "../mdx/mdx";
+import {
+    FernSerializeMdxOptions,
+    SerializedMdxContent,
+    maybeSerializeMdxContent,
+    serializeMdxWithFrontmatter,
+} from "../mdx/mdx";
 
 type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
@@ -30,26 +35,39 @@ export interface WithMetadata {
 }
 
 export async function resolveApiDefinition(
+    title: string,
     apiDefinition: FlattenedApiDefinition,
-    filteredTypes?: string[],
+    pages: Record<string, DocsV1Read.PageContent>,
+    mdxOptions: FernSerializeMdxOptions | undefined,
+    // filteredTypes?: string[],
 ): Promise<ResolvedRootPackage> {
     // const highlighter = await getHighlighterInstance();
 
+    // const resolvedTypes = Object.fromEntries(
+    //     await Promise.all(
+    //         Object.entries(filteredTypes != null ? pick(apiDefinition.types, filteredTypes) : apiDefinition.types).map(
+    //             async ([key, value]) => [key, await resolveTypeDefinition(value, apiDefinition.types)],
+    //         ),
+    //     ),
+    // );
     const resolvedTypes = Object.fromEntries(
         await Promise.all(
-            Object.entries(filteredTypes != null ? pick(apiDefinition.types, filteredTypes) : apiDefinition.types).map(
-                async ([key, value]) => [key, await resolveTypeDefinition(value, apiDefinition.types)],
-            ),
+            Object.entries(apiDefinition.types).map(async ([key, value]) => [
+                key,
+                await resolveTypeDefinition(value, apiDefinition.types),
+            ]),
         ),
     );
 
     const withPackage = await resolveApiDefinitionPackage(
         apiDefinition,
+        title,
         apiDefinition.api,
         apiDefinition,
         apiDefinition.types,
         resolvedTypes,
-        // highlighter,
+        pages,
+        mdxOptions,
     );
     return {
         type: "rootPackage",
@@ -62,10 +80,13 @@ export async function resolveApiDefinition(
 
 async function resolveApiDefinitionPackage(
     apiDefinition: FlattenedApiDefinition,
+    title: string,
     id: APIV1Read.SubpackageId,
     package_: FlattenedApiDefinitionPackage | undefined,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
+    mdxOptions: FernSerializeMdxOptions | undefined,
 ): Promise<ResolvedWithApiDefinition> {
     if (package_ == null) {
         return { items: [], slug: [] };
@@ -77,12 +98,55 @@ async function resolveApiDefinitionPackage(
                 endpoint: (endpoint) => resolveEndpointDefinition(apiDefinition, id, endpoint, types, resolvedTypes),
                 websocket: (websocket) => resolveWebsocketChannel(apiDefinition, websocket, types),
                 webhook: (webhook) => resolveWebhookDefinition(webhook, types, resolvedTypes),
-                subpackage: (subpackage) => resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes),
+                subpackage: (subpackage) =>
+                    resolveSubpackage(apiDefinition, subpackage, types, resolvedTypes, pages, mdxOptions),
+                page: async (page) => {
+                    const pageContent = pages[page.id];
+                    if (pageContent == null) {
+                        return undefined;
+                    }
+                    return {
+                        type: "page",
+                        id: page.id,
+                        slug: item.slug,
+                        title: page.title,
+                        markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
+                            ...mdxOptions,
+                            pageHeader: {
+                                title: page.title,
+                                breadcrumbs: [], // TODO: implement breadcrumbs
+                                editThisPageUrl: pageContent.editThisPageUrl,
+                                hideNavLinks: true,
+                                layout: "reference",
+                            },
+                        }),
+                    };
+                },
             }),
         ),
     );
 
     const items = maybeItems.filter(isNonNullish);
+
+    if (apiDefinition.summaryPageId != null && pages[apiDefinition.summaryPageId] != null) {
+        const pageContent = pages[apiDefinition.summaryPageId];
+        items.unshift({
+            type: "page",
+            id: apiDefinition.summaryPageId,
+            slug: apiDefinition.slug,
+            title,
+            markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
+                ...mdxOptions,
+                pageHeader: {
+                    title,
+                    breadcrumbs: [], // TODO: implement breadcrumbs
+                    editThisPageUrl: pageContent.editThisPageUrl,
+                    hideNavLinks: true,
+                    layout: "reference",
+                },
+            }),
+        });
+    }
 
     return {
         items,
@@ -95,13 +159,18 @@ async function resolveSubpackage(
     subpackage: FlattenedSubpackage,
     types: Record<string, APIV1Read.TypeDefinition>,
     resolvedTypes: Record<string, ResolvedTypeDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
+    mdxOptions: FernSerializeMdxOptions | undefined,
 ): Promise<ResolvedSubpackage | undefined> {
     const { items } = await resolveApiDefinitionPackage(
         apiDefinition,
+        subpackage.name,
         subpackage.subpackageId,
         subpackage,
         types,
         resolvedTypes,
+        pages,
+        mdxOptions,
     );
 
     if (subpackage == null || items.length === 0) {
@@ -881,20 +950,21 @@ function resolveObjectProperties(
     );
 }
 
-export type ResolvedNavigationItem =
-    | ResolvedNavigationItemPageGroup
-    | ResolvedNavigationItemApiSection
-    | ResolvedNavigationItemSection;
+// export type ResolvedNavigationItem =
+//     | ResolvedNavigationItemPageGroup
+//     | ResolvedNavigationItemApiSection
+//     | ResolvedNavigationItemSection;
 
-export interface ResolvedNavigationItemPageGroup {
-    type: "pageGroup";
-    pages: ResolvedPageMetadata[];
-}
+// export interface ResolvedNavigationItemPageGroup {
+//     type: "pageGroup";
+//     pages: ResolvedPageMetadata[];
+// }
 
 export interface ResolvedPageMetadata {
     id: DocsV1Read.PageId;
-    slug: string[];
+    slug: readonly string[];
     title: string;
+    markdown: SerializedMdxContent;
 }
 
 export interface ResolvedNavigationItemApiSection
@@ -920,6 +990,9 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
             if (item.type === "subpackage") {
                 return getApiDefinitions(item);
             }
+            if (item.type === "page") {
+                return [];
+            }
             return [{ ...item, package: apiPackage }];
         });
     }
@@ -931,48 +1004,54 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
     };
 }
 
-export function isResolvedNavigationItemApiSection(
-    item: ResolvedNavigationItem,
-): item is ResolvedNavigationItemApiSection {
-    return item.type === "apiSection";
-}
+// export function isResolvedNavigationItemApiSection(
+//     item: ResolvedNavigationItem,
+// ): item is ResolvedNavigationItemApiSection {
+//     return item.type === "apiSection";
+// }
 
-export function crawlResolvedNavigationItemApiSections(
-    items: ResolvedNavigationItem[],
-): ResolvedNavigationItemApiSection[] {
-    const packages: ResolvedNavigationItemApiSection[] = [];
-    for (const item of items) {
-        if (isResolvedNavigationItemApiSection(item)) {
-            packages.push(item);
-        } else if (item.type === "section") {
-            packages.push(...crawlResolvedNavigationItemApiSections(item.items));
-        }
-    }
-    return packages;
-}
+// export function crawlResolvedNavigationItemApiSections(
+//     items: ResolvedNavigationItem[],
+// ): ResolvedNavigationItemApiSection[] {
+//     const packages: ResolvedNavigationItemApiSection[] = [];
+//     for (const item of items) {
+//         if (isResolvedNavigationItemApiSection(item)) {
+//             packages.push(item);
+//         } else if (item.type === "section") {
+//             packages.push(...crawlResolvedNavigationItemApiSections(item.items));
+//         }
+//     }
+//     return packages;
+// }
 
-export interface ResolvedNavigationItemSection extends Omit<DocsV1Read.DocsSection, "items" | "urlSlug"> {
-    type: "section";
-    items: ResolvedNavigationItem[];
-    slug: string[];
-}
+// export interface ResolvedNavigationItemSection extends Omit<DocsV1Read.DocsSection, "items" | "urlSlug"> {
+//     type: "section";
+//     items: ResolvedNavigationItem[];
+//     slug: string[];
+// }
 
-export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): item is ResolvedNavigationItemSection {
-    return item.type === "section";
-}
+// export function isResolvedNavigationItemSection(item: ResolvedNavigationItem): item is ResolvedNavigationItemSection {
+//     return item.type === "section";
+// }
 
 export interface ResolvedWithApiDefinition {
     items: ResolvedPackageItem[];
     slug: readonly string[];
 }
 
+export interface ResolvedApiPageMetadata extends ResolvedPageMetadata {
+    type: "page";
+}
+
 export type ResolvedPackageItem =
+    | ResolvedApiPageMetadata
     | ResolvedEndpointDefinition
     | ResolvedWebhookDefinition
     | ResolvedWebSocketChannel
     | ResolvedSubpackage;
 
 interface ResolvedPackageItemVisitor<T> {
+    page(item: ResolvedPageMetadata): T;
     endpoint(item: ResolvedEndpointDefinition): T;
     webhook(item: ResolvedWebhookDefinition): T;
     websocket(item: ResolvedWebSocketChannel): T;
@@ -990,6 +1069,10 @@ export const ResolvedPackageItem = {
                 return visitor.websocket(item);
             case "subpackage":
                 return visitor.subpackage(item);
+            case "page":
+                return visitor.page(item);
+            default:
+                assertNever(item);
         }
     },
 };

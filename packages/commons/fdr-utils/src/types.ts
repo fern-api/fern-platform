@@ -84,6 +84,7 @@ export declare namespace SidebarNodeRaw {
         description: string | undefined;
         icon: string | undefined;
         hidden: boolean;
+        hasSummaryPage: boolean;
     }
 
     export interface Section {
@@ -98,7 +99,7 @@ export declare namespace SidebarNodeRaw {
     export interface Page {
         type: "page";
         id: string;
-        slug: string[];
+        slug: readonly string[];
         title: string;
         description: string | undefined;
         icon: string | undefined;
@@ -135,7 +136,7 @@ export declare namespace SidebarNodeRaw {
 
     export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
 
-    export type ApiPageOrSubpackage = ApiPage | SubpackageSection;
+    export type ApiPageOrSubpackage = ApiPage | SubpackageSection | Page;
 }
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
@@ -198,7 +199,7 @@ export declare namespace SidebarNode {
 
     export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
 
-    export type ApiPageOrSubpackage = ApiPage | SubpackageSection;
+    export type ApiPageOrSubpackage = ApiPage | SubpackageSection | Page;
 }
 
 export const SidebarNode = {
