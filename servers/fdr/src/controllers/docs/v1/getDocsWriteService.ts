@@ -2,7 +2,6 @@ import { convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Write, DocsV1WriteService, FdrAPI } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { LOGGER } from "../../../app/FdrApplication";
 import { type S3FileInfo } from "../../../services/s3";
 import { writeBuffer } from "../../../util";
 
@@ -54,7 +53,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
                 writeShape: req.body.docsDefinition,
                 files: docsRegistrationInfo.s3FileInfos,
             });
-            LOGGER.info(
+            app.logger.info(
                 `Docs for ${docsRegistrationInfo.orgId} has references to apis ${Array.from(
                     dbDocsDefinition.referencedApis,
                 ).join(", ")}`,
