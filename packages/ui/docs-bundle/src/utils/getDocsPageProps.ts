@@ -46,7 +46,8 @@ export async function getDocsPageProps(
         return { type: "notFound", notFound: true };
     }
 
-    const url = buildUrl({ host: xFernHost });
+    const pathname = decodeURI(slug != null ? slug.join("/") : "");
+    const url = buildUrl({ host: xFernHost, pathname });
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
@@ -89,7 +90,7 @@ export async function getPrivateDocsPageProps(
 
     const registryService = getRegistryServiceWithToken(`workos_${token}`);
 
-    const url = buildUrl({ host: xFernHost });
+    const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
 
     if (!docs.ok) {

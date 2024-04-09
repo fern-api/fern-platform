@@ -1,15 +1,10 @@
-import { buildUrl, getAllSlugsFromDocsConfig } from "@fern-ui/fdr-utils";
+import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
-
-/**
- * list-slugs generates all the slugs for the given host.
- * Unlike sitemap.xml, this endpoint is used during revalidation, and should never be cached.
- */
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 export const runtime = "edge";
-export const dynamic = "force-dynamic"; // force dynamic to avoid caching
 
 function getHostFromUrl(url: string | undefined): string | undefined {
     if (url == null) {
@@ -42,19 +37,22 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     try {
-        const docs = await loadWithUrl(buildUrl({ host: xFernHost }));
+        const docs = await loadWithUrl(
+            buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) }),
+        );
 
         if (docs == null) {
             return jsonResponse(404, [], headers);
         }
 
-        const slugs = getAllSlugsFromDocsConfig(
+        const urls = getAllUrlsFromDocsConfig(
+            xFernHost,
             docs.baseUrl.basePath,
             docs.definition.config.navigation,
             docs.definition.apis,
         );
 
-        return jsonResponse(200, slugs, headers);
+        return jsonResponse(200, urls, headers);
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

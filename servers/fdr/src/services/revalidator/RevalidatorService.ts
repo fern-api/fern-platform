@@ -1,21 +1,19 @@
-import { FernRevalidation } from "@fern-fern/revalidation-sdk";
+import { FernRevalidation, FernRevalidationClient } from "@fern-fern/revalidation-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
-import { provideRevalidationClient } from "./provideRevalidationClient";
 
 export type RevalidatedPathsResponse = {
-    response?: FernRevalidation.BulkRevalidateResponse;
+    response?: FernRevalidation.RevalidateAllV2Response;
     revalidationFailed: boolean;
 };
 
 export interface RevalidatorService {
     revalidate(params: {
-        // fernUrl: ParsedBaseUrl;
+        fernUrl: ParsedBaseUrl;
         baseUrl: ParsedBaseUrl;
         app: FdrApplication;
-        oldSlugs?: string[];
     }): Promise<RevalidatedPathsResponse>;
 }
 
@@ -31,10 +29,10 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     /**
      * NOTE on basepath revalidation:
      *
-     * As of ui@0.62.0 (https://github.com/fern-api/fern-platform/pull/572) basepath revalidation is directly supported. Example:
-     * POST https://custom-domain.com/path/api/fern-docs/revalidate-all/v2 where `https://custom-domain.com/path` is the full environment URL.
-     *
-     * Since custom-domain.com is a rewrite to org.docs.buildwithfern.com, there's one caveat to keep in mind:
+     * When the baseUrl.path is not null, this means we are revalidating a custom domain which has configured subpath rewriting.
+     * In this case, we don't have access to /api/revalidate-all and revalidation would fail.
+     * Instead, we can hit https://org.docs.buildwithfern.com/api/revalidate-all?basePath=/path where the x-fern-host is set to custom-domain.com.
+     * This works because custom-domain.com/path is rewritten to org.docs.buildwithfern.com/path
      *
      * Example prefetch request:
      * https://custom-domain.com/path/_next/data/.../static/custom-domain.com/path.json is rewritten to:
@@ -44,29 +42,28 @@ export class RevalidatorServiceImpl implements RevalidatorService {
      */
 
     public async revalidate({
-        // fernUrl,
+        fernUrl,
         baseUrl,
         app,
-        oldSlugs = [],
     }: {
-        // fernUrl: ParsedBaseUrl;
+        fernUrl: ParsedBaseUrl;
         baseUrl: ParsedBaseUrl;
         app?: FdrApplication;
-        oldSlugs?: string[];
     }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
         try {
-            const client = provideRevalidationClient(baseUrl);
-
-            const newSlugs = await client.listSlugs({ xFernHost: baseUrl.hostname });
-
-            // we need to revalidate all paths that have ever been generated, before and after docs registration:
-            const slugs = Array.from(new Set([...oldSlugs, ...newSlugs]));
-            const response = await client.bulkRevalidate({ host: baseUrl.hostname, slugs });
-
+            const client = new FernRevalidationClient({
+                environment: baseUrl.path != null ? `https://${fernUrl.hostname}` : `https://${baseUrl.hostname}`,
+            });
+            console.log(baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname);
+            const response = await client.revalidateAllV2({
+                host: baseUrl.hostname,
+                basePath: baseUrl.path != null ? `?basePath=${baseUrl.path}` : "",
+                xFernHost: baseUrl.hostname,
+            });
             return {
                 response,
-                revalidationFailed,
+                revalidationFailed: false,
             };
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);
@@ -74,7 +71,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             console.log(e);
             return {
                 response: undefined,
-                revalidationFailed,
+                revalidationFailed: true,
             };
         }
     }
