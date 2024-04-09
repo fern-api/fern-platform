@@ -59,7 +59,7 @@ export class SlackServiceImpl implements SlackService {
     async notify(message: string, err: unknown): Promise<void> {
         try {
             await this.client.chat.postMessage({
-                channel: "#engineering-notifs",
+                channel: "#activity",
                 text: `:rotating_light: Encountered failure in FDR: ${message}.\n ${stringifyError(err)}`,
                 blocks: [],
             });
