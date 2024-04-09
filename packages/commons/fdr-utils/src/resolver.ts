@@ -100,7 +100,7 @@ function resolveSidebarNodeRawApiSection(
         description: undefined, // TODO: add description here
         icon: undefined,
         hidden: false,
-        hasSummaryPage: pages[id] != null,
+        hasSummaryPage: subpackage.summaryPageId != null,
     };
 }
 
@@ -271,7 +271,7 @@ export function resolveSidebarNodes(
                         description: undefined, // TODO: add description here
                         icon: api.icon,
                         hidden: api.hidden ?? false,
-                        hasSummaryPage: pages[api.api] != null,
+                        hasSummaryPage: flattened.summaryPageId != null,
                     });
                 }
             },
