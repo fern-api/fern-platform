@@ -33,7 +33,7 @@ export const CustomDocsPageHeader = ({
             </div>
 
             {excerpt != null && (
-                <div className="prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7">
+                <div className="prose prose-lg mt-2 leading-7 prose-p:t-muted dark:prose-invert">
                     <MdxContent mdx={excerpt} />
                 </div>
             )}

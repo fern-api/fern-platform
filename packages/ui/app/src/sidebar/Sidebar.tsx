@@ -97,17 +97,17 @@ function MobileSidebar(props: SidebarProps) {
 
     return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>
-            <Dialog onClose={closeMobileSidebar} className="top-header-height-real fixed inset-0 z-20">
+            <Dialog onClose={closeMobileSidebar} className="fixed inset-0 top-header-height-real z-20">
                 <Transition.Child
                     as="div"
-                    className="bg-background/50 top-header-height-real fixed inset-0 z-auto"
+                    className="fixed inset-0 top-header-height-real z-auto bg-background/50"
                     enter="transition-opacity ease-linear duration-200"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
                 />
                 <Transition.Child
                     as={Dialog.Panel}
-                    className="border-concealed bg-background-translucent absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
+                    className="bg-background-translucent border-concealed absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
                     enter="transition ease-in-out duration-300 transform"
                     enterFrom="opacity-0 sm:opacity-100 sm:translate-y-0 sm:-translate-x-full"
                     enterTo="opacity-100 translate-x-0 translate-y-0"
