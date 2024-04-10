@@ -1,6 +1,6 @@
 import cn from "clsx";
 import { ComponentProps, ReactElement } from "react";
-import "./Steps.css";
+import "./Steps.scss";
 
 export function Steps({ children, className, ...props }: ComponentProps<"div">): ReactElement {
     return (

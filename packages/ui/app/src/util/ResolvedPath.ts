@@ -1,4 +1,3 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import type { SerializedMdxContent } from "../mdx/mdx";
 import { ResolvedRootPackage } from "./resolver";
@@ -49,7 +48,6 @@ export declare namespace ResolvedPath {
         fullSlug: string;
         api: string;
         apiDefinition: ResolvedRootPackage;
-        artifacts: DocsV1Read.ApiArtifacts | null;
         showErrors: boolean;
         neighbors: Neighbors;
     }

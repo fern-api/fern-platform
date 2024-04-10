@@ -9,9 +9,9 @@ import { Markdown } from "../mdx/Markdown";
 import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
-    unwrapOptional,
     WithAvailability,
     WithDescription,
+    unwrapOptional,
 } from "../util/resolver";
 import { shouldRenderInline } from "./utils";
 

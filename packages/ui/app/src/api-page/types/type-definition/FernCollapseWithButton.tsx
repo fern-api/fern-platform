@@ -3,7 +3,7 @@ import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, useState } from "react";
 import { FernButton, FernButtonProps } from "../../../components/FernButton";
 import { FernCollapse } from "../../../components/FernCollapse";
-import "./FernCollapseWithButton.css";
+import "./FernCollapseWithButton.scss";
 
 interface FernCollapseWithButtonProps {
     isOpen: boolean;

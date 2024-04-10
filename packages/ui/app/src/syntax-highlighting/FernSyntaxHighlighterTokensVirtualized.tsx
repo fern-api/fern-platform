@@ -8,9 +8,9 @@ import { HastToJSX } from "../mdx/common/HastToJsx";
 import { parseStringStyle } from "../util/parseStringStyle";
 import "./FernSyntaxHighlighter.css";
 import {
-    fernSyntaxHighlighterTokenPropsAreEqual,
     FernSyntaxHighlighterTokensProps,
     ScrollToHandle,
+    fernSyntaxHighlighterTokenPropsAreEqual,
 } from "./FernSyntaxHighlighterTokens";
 import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils";
 

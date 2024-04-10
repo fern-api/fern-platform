@@ -1,9 +1,9 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import {
-    findApiSection,
-    flattenApiDefinition,
     SidebarNode,
     SidebarNodeRaw,
+    findApiSection,
+    flattenApiDefinition,
     traverseSidebarNodes,
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
@@ -17,7 +17,7 @@ import {
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
-import { resolveApiDefinition, ResolvedRootPackage } from "./resolver";
+import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
@@ -62,12 +62,14 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
+    rawSidebarNodes,
     sidebarNodes,
     currentNode,
     apis,
     pages,
     mdxOptions,
 }: {
+    rawSidebarNodes: readonly SidebarNodeRaw[];
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
@@ -91,19 +93,24 @@ export async function convertNavigatableToResolvedPath({
 
     if (SidebarNode.isApiPage(traverseState.curr)) {
         const api = apis[traverseState.curr.api];
-        const apiSection = findApiSection(traverseState.curr.api, sidebarNodes);
+        const apiSection = findApiSection(traverseState.curr.api, rawSidebarNodes);
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await resolveApiDefinition(flattenedApiDefinition);
+        const apiDefinition = await resolveApiDefinition(
+            traverseState.curr.title,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            apiSection.flattenedApiDefinition!,
+            pages,
+            mdxOptions,
+        );
         return {
             type: "api-page",
             fullSlug: traverseState.curr.slug.join("/"),
             api: traverseState.curr.api,
             apiDefinition,
-            artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
+            // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiSection.showErrors,
             neighbors,
         };
@@ -153,11 +160,12 @@ export async function convertNavigatableToResolvedPath({
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
+            const title = traverseState.curr.title;
             resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
-                        return [apiName, await resolveApiDefinition(flattenedApiDefinition)];
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined);
+                        return [apiName, await resolveApiDefinition(title, flattenedApiDefinition, pages, mdxOptions)];
                     }),
                 ),
             );

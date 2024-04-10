@@ -15,8 +15,8 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import {
-    hasInternalTypeReference,
     InternalTypeReferenceDefinitions,
+    hasInternalTypeReference,
 } from "../type-reference/InternalTypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 

@@ -50,11 +50,11 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                             )}
                         >
                             {message.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
-                                <span className="t-success inline-block shrink-0 rounded-full bg-tag-success p-0.5">
+                                <span className="bg-tag-success t-success inline-block shrink-0 rounded-full p-0.5">
                                     <ArrowUpIcon />
                                 </span>
                             ) : message.origin === APIV1Read.WebSocketMessageOrigin.Server ? (
-                                <span className="t-accent-aaa inline-block shrink-0 rounded-full bg-tag-primary p-0.5">
+                                <span className="bg-tag-primary t-accent-aaa inline-block shrink-0 rounded-full p-0.5">
                                     <ArrowDownIcon />
                                 </span>
                             ) : null}
@@ -67,7 +67,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                     // "justify-end": event.action === "recieve",
                                 })}
                             >
-                                <span className="t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none">
+                                <span className="bg-tag-default t-muted h-5 rounded-md px-1.5 py-1 text-xs leading-none">
                                     {message.displayName ?? message.type}
                                 </span>
                             </span>
@@ -83,7 +83,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 aria-hidden
                             />
                         </Accordion.Trigger>
-                        <Accordion.Content className="overflow-hidden data-[state=closed]:animate-slide-up data-[state=open]:animate-slide-down">
+                        <Accordion.Content className="data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up overflow-hidden">
                             <div className="group/cb-container relative">
                                 <FernSyntaxHighlighter
                                     className="w-0 min-w-full overflow-y-auto"

@@ -22,6 +22,7 @@ describe("getNavigationRoot", () => {
                 fixture.baseUrl.basePath,
                 fixture.definition.config.navigation,
                 fixture.definition.apis,
+                {},
             );
 
             expect(urls?.type === "found" ? urls.found.versions : []).toMatchSnapshot();
@@ -40,6 +41,7 @@ describe("getNavigationRoot", () => {
                 fixture.baseUrl.basePath,
                 fixture.definition.config.navigation,
                 fixture.definition.apis,
+                {},
             );
 
             expect(urls?.type === "found" ? urls.found.versions : []).toMatchSnapshot();

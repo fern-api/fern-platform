@@ -43,6 +43,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
         const docsDefinition = docs.body.definition;
         const basePath = docs.body.baseUrl.basePath;
+        const pages = docs.body.definition.pages;
 
         const apiDefinition = docsDefinition.apis[api];
 
@@ -56,6 +57,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             basePath,
             docsDefinition.config.navigation,
             docsDefinition.apis,
+            pages,
         );
 
         if (navigation == null || navigation.type === "redirect") {
@@ -67,9 +69,16 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
         );
 
-        const apiSectionSlug = findApiSection(api, sidebarNodes)?.slug;
+        const apiSection = findApiSection(api, sidebarNodes);
 
-        res.status(200).json(await resolveApiDefinition(flattenApiDefinition(apiDefinition, apiSectionSlug ?? [])));
+        res.status(200).json(
+            await resolveApiDefinition(
+                apiSection?.title ?? "",
+                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined),
+                pages,
+                undefined,
+            ),
+        );
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
@@ -79,7 +88,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
 export default resolveApiHandler;
 
-function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode | undefined {
+function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
     for (const node of sidebarNodes) {
         if (node.type === "apiSection" && node.api === api) {
             return node;

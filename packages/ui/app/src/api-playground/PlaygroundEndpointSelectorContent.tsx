@@ -5,7 +5,7 @@ import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icon
 import cn from "clsx";
 import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { forwardRef, Fragment, ReactElement, useImperativeHandle, useRef, useState } from "react";
+import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { withStream } from "../commons/withStream";
 import { Chip } from "../components/Chip";
@@ -120,7 +120,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         <div className="bg-background-translucent sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
-                                    {idx > 0 && <SlashIcon className="mx-0.5 size-3 text-faded" />}
+                                    {idx > 0 && <SlashIcon className="text-faded mx-0.5 size-3" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                                         {breadcrumb}
                                     </span>
@@ -235,7 +235,7 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="t-default bg-accent-highlight" key={idx}>
+            <mark className="bg-accent-highlight t-default" key={idx}>
                 {part}
             </mark>
         ) : (

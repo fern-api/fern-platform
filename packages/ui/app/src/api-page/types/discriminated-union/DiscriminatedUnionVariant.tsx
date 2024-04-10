@@ -3,9 +3,9 @@ import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import {
-    dereferenceObjectProperties,
     ResolvedDiscriminatedUnionShapeVariant,
     ResolvedTypeDefinition,
+    dereferenceObjectProperties,
 } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";

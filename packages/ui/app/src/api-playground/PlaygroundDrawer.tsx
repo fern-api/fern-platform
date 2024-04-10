@@ -15,18 +15,18 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {
     FlattenedRootPackage,
-    isEndpoint,
-    isWebSocket,
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
     ResolvedTypeDefinition,
     ResolvedWebSocketChannel,
+    isEndpoint,
+    isWebSocket,
 } from "../util/resolver";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
-import { flattenApiSection, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
     PlaygroundEndpointRequestFormState,
@@ -272,7 +272,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                             content={
                                 <span className="space-x-4">
                                     <span>Close API Playground</span>
-                                    <span className="font-mono text-faded">CTRL + `</span>
+                                    <span className="text-faded font-mono">CTRL + `</span>
                                 </span>
                             }
                         >
@@ -295,7 +295,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             <div className="flex items-center">
                 <span className="inline-flex items-baseline gap-2">
                     <span className="t-accent text-sm font-semibold">API Playground</span>
-                    <span className="t-accent flex h-5 items-center rounded-md bg-tag-primary px-1.5 py-1 font-mono text-xs uppercase">
+                    <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
                         BETA
                     </span>
                 </span>
@@ -316,7 +316,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                             content={
                                 <span className="space-x-4">
                                     <span>Close API Playground</span>
-                                    <span className="font-mono text-faded">CTRL + `</span>
+                                    <span className="text-faded font-mono">CTRL + `</span>
                                 </span>
                             }
                         >

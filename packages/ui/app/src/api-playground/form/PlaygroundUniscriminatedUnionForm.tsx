@@ -90,7 +90,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                 </FernDropdown>
             )}
             {selectedVariant != null && (
-                <div className="border-l border-border-default-soft pl-4">
+                <div className="border-border-default-soft border-l pl-4">
                     <PlaygroundTypeReferenceForm
                         id={`${id}[${internalSelectedVariant}]`}
                         shape={selectedVariant.shape}

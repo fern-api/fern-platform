@@ -1,6 +1,6 @@
 import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { noop } from "lodash-es";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 

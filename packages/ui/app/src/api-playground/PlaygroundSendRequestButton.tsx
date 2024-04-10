@@ -15,7 +15,7 @@ export const PlaygroundSendRequestButton: FC<PlaygroundSendRequestButtonProps> =
 }) => {
     return (
         <FernButton
-            className="group relative overflow-hidden font-semibold after:absolute after:inset-y-0 after:w-8 after:animate-shine after:bg-white/50 after:blur after:content-['']"
+            className="after:animate-shine group relative overflow-hidden font-semibold after:absolute after:inset-y-0 after:w-8 after:bg-white/50 after:blur after:content-['']"
             rightIcon={sendRequestIcon}
             onClick={sendRequest}
             intent="primary"

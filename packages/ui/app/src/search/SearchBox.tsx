@@ -2,8 +2,8 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { atom, useSetAtom } from "jotai";
-import { forwardRef, ReactElement, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { useSearchBox, UseSearchBoxProps } from "react-instantsearch";
+import { ReactElement, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { UseSearchBoxProps, useSearchBox } from "react-instantsearch";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 

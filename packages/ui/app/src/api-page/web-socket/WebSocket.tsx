@@ -24,8 +24,8 @@ import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
 import { TitledExample } from "../examples/TitledExample";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
@@ -103,7 +103,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
 
     return (
         <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
+            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
             ref={setTargetRef}
             data-route={route.toLowerCase()}
         >
@@ -137,7 +137,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                 title={
                                     <span className="inline-flex items-center gap-2">
                                         {"Handshake"}
-                                        <span className="inline-block rounded-full bg-tag-default p-1">
+                                        <span className="bg-tag-default inline-block rounded-full p-1">
                                             <Wifi className="t-muted size-[15px]" strokeWidth={1.5} />
                                         </span>
                                     </span>
@@ -239,7 +239,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     title={
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
-                                            <span className="t-success inline-block rounded-full bg-tag-success p-1">
+                                            <span className="bg-tag-success t-success inline-block rounded-full p-1">
                                                 <ArrowUpIcon />
                                             </span>
                                         </span>
@@ -274,7 +274,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     title={
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
-                                            <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
+                                            <span className="bg-tag-primary t-accent-aaa inline-block rounded-full p-1">
                                                 <ArrowDownIcon />
                                             </span>
                                         </span>
@@ -307,7 +307,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                     </section>
                     <aside className="max-w-content-width">
                         {example != null && example.messages.length > 0 && (
-                            <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
+                            <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height sticky flex flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     type={"primary"}
@@ -380,7 +380,7 @@ function CardedSection({
             data-route={anchorRoute}
             className="border-default divide-default -mx-4 divide-y rounded-xl border"
         >
-            <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
+            <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">

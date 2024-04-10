@@ -5,9 +5,9 @@ import { Fragment, ReactNode } from "react";
 import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {

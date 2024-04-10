@@ -6,13 +6,13 @@ import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { renderToString } from "react-dom/server";
 import { emitDatadogError } from "../../analytics/datadogRum";
-import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { MdxContent } from "../../mdx/MdxContent";
+import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { ResolvedPath } from "../../util/ResolvedPath";
-import { useDocsContext } from "../docs-context/useDocsContext";
+import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 import { useSlugListeners } from "./useSlugListeners";
 

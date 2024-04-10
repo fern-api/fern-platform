@@ -13,7 +13,7 @@ import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
-import "./globals.css";
+import "./globals.scss";
 
 const store = createStore();
 

@@ -147,6 +147,7 @@ async function convertDocsToDocsPageProps({
     const docsDefinition = docs.definition;
     const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
+    const pages = docs.definition.pages;
 
     const redirect = getRedirectForPath(xFernHost, `/${slug.join("/")}`);
 
@@ -160,7 +161,7 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis);
+    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis, pages);
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
@@ -184,6 +185,7 @@ async function convertDocsToDocsPageProps({
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
+        rawSidebarNodes: navigation.found.sidebarNodes,
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,

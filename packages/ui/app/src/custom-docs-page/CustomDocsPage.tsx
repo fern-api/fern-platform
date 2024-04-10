@@ -2,8 +2,8 @@ import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement } from "react";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { type SerializedMdxContent } from "../mdx/mdx";
 import { MdxContent } from "../mdx/MdxContent";
+import { type SerializedMdxContent } from "../mdx/mdx";
 import { type ResolvedPath } from "../util/ResolvedPath";
 
 export declare namespace CustomDocsPage {
@@ -33,7 +33,7 @@ export const CustomDocsPageHeader = ({
             </div>
 
             {excerpt != null && (
-                <div className="prose prose-lg mt-2 leading-7 prose-p:t-muted dark:prose-invert">
+                <div className="prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7">
                     <MdxContent mdx={excerpt} />
                 </div>
             )}
