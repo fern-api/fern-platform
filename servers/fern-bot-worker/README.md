@@ -1,5 +1,7 @@
 # Fern Bot
 
+https://github.com/organizations/fern-api/settings/apps
+
 > [!NOTE]
 >
 > This was created via Cloudflare's Wrangle CLI, so linking that documentation here for SA: https://developers.cloudflare.com/workers/wrangler/
