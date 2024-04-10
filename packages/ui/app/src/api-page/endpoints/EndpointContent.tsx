@@ -13,10 +13,10 @@ import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
-import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { convertNameToAnchorPart, EndpointContentLeft } from "./EndpointContentLeft";
+import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 const EndpointContentCodeSnippets = dynamic(
@@ -210,7 +210,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
+            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
             onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >
@@ -248,7 +248,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 </div>
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
-                        className="flex min-w-0 max-w-content-width flex-1 flex-col"
+                        className="max-w-content-width flex min-w-0 flex-1 flex-col"
                         style={{
                             minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}

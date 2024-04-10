@@ -3,8 +3,8 @@ import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { WebhookContent } from "./WebhookContent";
+import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 
 export declare namespace Webhook {
     export interface Props {

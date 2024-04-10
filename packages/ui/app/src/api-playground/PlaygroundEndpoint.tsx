@@ -1,6 +1,6 @@
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { failed, Loadable, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { resolve } from "url";

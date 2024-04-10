@@ -6,10 +6,10 @@ import { FernButton } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
-import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
-import { PlaygroundWebSocketRequestFormState } from "./types";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
+import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
+import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketSessionFormProps {
     websocket: ResolvedWebSocketChannel;

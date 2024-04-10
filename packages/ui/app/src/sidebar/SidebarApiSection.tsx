@@ -1,10 +1,10 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
+import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
 import moment from "moment";
-import { memo, ReactElement, ReactNode, useCallback, useMemo } from "react";
+import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { StreamTag } from "../commons/withStream";
@@ -112,16 +112,18 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         selected={isEqual(item.slug, selectedSlug)}
                         depth={Math.max(0, depth - 1)}
                         rightElement={
-                            item.apiType === "endpoint" ? (
-                                item.stream ? (
-                                    <StreamTag small />
-                                ) : (
-                                    HTTP_METHOD_TAGS[item.method]
-                                )
-                            ) : item.apiType === "websocket" ? (
-                                <FernTooltip content="WebSocket Channel">
-                                    <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
-                                </FernTooltip>
+                            SidebarNode.isApiPage(item) ? (
+                                item.apiType === "endpoint" ? (
+                                    item.stream ? (
+                                        <StreamTag small />
+                                    ) : (
+                                        HTTP_METHOD_TAGS[item.method]
+                                    )
+                                ) : item.apiType === "websocket" ? (
+                                    <FernTooltip content="WebSocket Channel">
+                                        <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
+                                    </FernTooltip>
+                                ) : null
                             ) : null
                         }
                         icon={item.icon}
@@ -215,6 +217,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
             icon={apiSection.icon}
             hidden={apiSection.hidden}
+            slug={apiSection.summaryPage != null ? slug : undefined}
         >
             {children}
         </SidebarSlugLink>

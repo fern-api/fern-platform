@@ -3,11 +3,12 @@ import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
-    isResolvedSubpackage,
     ResolvedPackageItem,
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
+    isResolvedSubpackage,
 } from "../util/resolver";
+import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { WebSocket } from "./web-socket/WebSocket";
@@ -82,6 +83,12 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 isLastInParentPackage={isLastInParentPackage && idx === items.length - 1}
                                 anchorIdParts={anchorIdParts}
                                 breadcrumbs={currentBreadcrumbs}
+                            />
+                        ),
+                        page: (page) => (
+                            <ApiSectionMarkdownPage
+                                page={page}
+                                hideBottomSeparator={isLastInParentPackage && idx === items.length - 1}
                             />
                         ),
                     })}

@@ -51,7 +51,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     <span key={`separator-base-${i}`} className="text-faded">
                         {"/"}
                     </span>,
-                    <span key={`part-base-${i}`} className="whitespace-nowrap text-faded">
+                    <span key={`part-base-${i}`} className="text-faded whitespace-nowrap">
                         {part}
                     </span>,
                 );
@@ -71,7 +71,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                         );
                     },
                     pathParameter: (pathParameter) => (
-                        <span key={`part-${i}`} className="t-accent bg-accent-highlight whitespace-nowrap rounded px-1">
+                        <span key={`part-${i}`} className="bg-accent-highlight t-accent whitespace-nowrap rounded px-1">
                             :{pathParameter.name}
                         </span>
                     ),

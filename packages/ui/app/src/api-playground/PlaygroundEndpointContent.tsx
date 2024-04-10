@@ -19,10 +19,10 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
+import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
-import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundEndpointContentProps {
     endpoint: ResolvedEndpointDefinition;
@@ -174,11 +174,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         >
                             status: {response.value.response.status}
                         </span>
-                        <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
+                        <span className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}>
                             time: {round(response.value.time, 2)}ms
                         </span>
                         {response.value.type === "json" && !isEmpty(response.value.size) && (
-                            <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
+                            <span className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}>
                                 size: {response.value.size}b
                             </span>
                         )}

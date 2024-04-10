@@ -30,10 +30,10 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
 
                     {resolvedPath.items.map((item) => (
                         <section key={item.date} id={item.date} className="flex items-start">
-                            <div className="prose relative mr-8 w-content-width flex-1 dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 first:prose-h2:mt-0">
+                            <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h2:mt-0 first:prose-h1:mt-0 w-content-width relative mr-8 flex-1">
                                 <div className="absolute -right-4 flex h-full w-[10px] items-start justify-center">
                                     <div className="bg-accent z-10 h-2 w-2 rounded-full" />
-                                    <div className="z-5 absolute h-full w-0.5 bg-border-default" />
+                                    <div className="bg-border-default z-5 absolute h-full w-0.5" />
                                 </div>
                                 <div className="pb-16">
                                     {

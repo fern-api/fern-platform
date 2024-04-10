@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import renderer from "react-test-renderer";
-import { serializeMdxWithFrontmatter } from "../mdx";
 import { MdxContent } from "../MdxContent";
+import { serializeMdxWithFrontmatter } from "../mdx";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
     const serializedContent = await serializeMdxWithFrontmatter(content, { development: false });

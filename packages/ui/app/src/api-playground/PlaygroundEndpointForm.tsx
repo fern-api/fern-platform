@@ -3,9 +3,9 @@ import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import {
-    dereferenceObjectProperties,
     ResolvedEndpointDefinition,
     ResolvedTypeDefinition,
+    dereferenceObjectProperties,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../util/resolver";

@@ -3,7 +3,7 @@ import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
 import { useRouteListener } from "../../../contexts/useRouteListener";
 import { getAnchorId } from "../../../util/anchor";
-import { dereferenceObjectProperties, ResolvedTypeDefinition } from "../../../util/resolver";
+import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

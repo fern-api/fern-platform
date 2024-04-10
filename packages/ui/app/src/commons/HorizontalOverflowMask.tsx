@@ -1,6 +1,6 @@
 import cn from "clsx";
 import React, { PropsWithChildren, useEffect, useImperativeHandle, useRef, useState } from "react";
-import "./HorizontalOverflowMask.css";
+import "./HorizontalOverflowMask.scss";
 
 export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWithChildren<{ className?: string }>>(
     function HorizontalOverflowMask({ children, className }, parentRef) {

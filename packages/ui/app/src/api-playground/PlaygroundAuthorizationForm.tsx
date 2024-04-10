@@ -274,7 +274,7 @@ export function PlaygroundAuthorizationFormCard({
                     text="Authenticate with your API key to send a real request"
                     icon={<Key />}
                     rightIcon={
-                        <span className="flex items-center rounded-[4px] bg-tag-success p-1 font-mono text-xs uppercase leading-none text-intent-success">
+                        <span className="bg-tag-success text-intent-success flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
                             Connect
                         </span>
                     }
@@ -290,7 +290,7 @@ export function PlaygroundAuthorizationFormCard({
                     text="Authenticate with your API key to send a real request"
                     icon={<Key />}
                     rightIcon={
-                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                        <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
                             Connect
                         </span>
                     }

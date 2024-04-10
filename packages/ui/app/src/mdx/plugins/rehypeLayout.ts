@@ -11,17 +11,22 @@ import { toAttribute } from "./utils";
 
 export interface PageHeaderProps {
     breadcrumbs: string[];
+
+    // the following are defaults, can be overridden by frontmatter
     title: string;
     subtitle?: string;
     editThisPageUrl?: string;
+
+    // the following are overrides that "forces" a config regardless of frontmatter
+    layout?: FernDocsFrontmatter["layout"]; // sometimes we need to force a layout, e.g. reference layout for endpoints
+    hideNavLinks?: boolean;
 }
 
 export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
         const matter = vfile.data.matter as FernDocsFrontmatter | undefined;
-        let layout = matter?.layout ?? "guide";
-
         props = mergePropsWithMatter(props, matter);
+        let layout = props?.layout ?? "guide";
 
         let header: Element | null = null;
         if (props != null) {
@@ -79,7 +84,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                       })
                     : undefined,
             ),
-            matter?.["hide-nav-links"] || layout === "overview"
+            props?.hideNavLinks || layout === "overview"
                 ? undefined
                 : {
                       type: "mdxJsxFlowElement",
@@ -114,7 +119,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                               h(
                                   "div",
                                   {
-                                      class: "md:max-h-vh-minus-header scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
+                                      class: "scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
                                   },
                                   aside,
                               ),
@@ -158,6 +163,8 @@ function mergePropsWithMatter(
         title: matter.title ?? props.title,
         subtitle: matter.subtitle ?? matter.excerpt ?? props.subtitle,
         editThisPageUrl: matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? props.editThisPageUrl,
+        layout: props.layout ?? matter.layout,
+        hideNavLinks: props.hideNavLinks ?? matter["hide-nav-links"],
     };
 }
 
