@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "../src/next-app/globals.css";
+import "./variables.css";
 
 const preview: Preview = {
     parameters: {
