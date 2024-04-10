@@ -1,7 +1,7 @@
 import { Expression } from "estree";
 import { SKIP as ESTREE_SKIP, visit as visitEstree } from "estree-util-visit";
 import type { ElementContent, Root } from "hast";
-import { visit } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 import { parseStringStyle } from "../../util/parseStringStyle";
 import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
 import { JSX_COMPONENTS } from "../mdx-components";
@@ -22,6 +22,7 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                     } else {
                         parent?.children.splice(index, 1, mdxErrorBoundary(node.name));
                     }
+                    return SKIP;
                 } else {
                     node.attributes = node.attributes.map((attr) => {
                         if (
@@ -53,6 +54,7 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                     });
                 }
             }
+            return;
         });
 
         visit(tree, (node) => {
