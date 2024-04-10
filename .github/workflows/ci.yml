@@ -89,6 +89,7 @@ jobs:
         # Chromatic CI config: https://www.chromatic.com/docs/github-actions/
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: packages/ui/app
 
   test:
     runs-on: ubuntu-latest

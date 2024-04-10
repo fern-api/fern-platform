@@ -31,7 +31,7 @@
     "depcheck": "depcheck",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "pnpx chromatic --project-token=chpt_e5ec706c2923fdd"
+    "chromatic": "pnpx chromatic --project-token=chpt_48b3c560025e978"
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.14.0",
