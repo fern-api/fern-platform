@@ -9,9 +9,9 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 const { kebabCase } = lodash;
 
 export interface S3FileInfo {
@@ -419,19 +419,21 @@ function transformApiSectionNavigationForDb(
     }
     return {
         items: transformItems(writeShape.items),
+        summaryPageId: writeShape.summaryPageId,
     };
 }
 
 function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
     return items.map((item): DocsV1Read.ApiNavigationConfigItem => {
-        return item.type === "subpackage"
-            ? {
-                  type: "subpackage",
-                  subpackageId: item.subpackageId,
-                  items: transformItems(item.items),
-              }
-            : item.type === "page"
-              ? transformPageNavigationItemForDb(item)
-              : item;
+        if (item.type === "subpackage") {
+            return {
+                type: "subpackage",
+                subpackageId: item.subpackageId,
+                items: transformItems(item.items),
+            };
+        } else if (item.type === "page") {
+            return transformPageNavigationItemForDb(item);
+        }
+        return item;
     });
 }

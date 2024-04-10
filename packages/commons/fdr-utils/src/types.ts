@@ -1,5 +1,6 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { FlattenedApiDefinition } from "./flattenApiDefinition";
 
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;
@@ -84,7 +85,8 @@ export declare namespace SidebarNodeRaw {
         description: string | undefined;
         icon: string | undefined;
         hidden: boolean;
-        hasSummaryPage: boolean;
+        summaryPage: ApiSummaryPage | undefined;
+        flattenedApiDefinition: FlattenedApiDefinition | undefined;
     }
 
     export interface Section {
@@ -130,11 +132,16 @@ export declare namespace SidebarNodeRaw {
         stream?: boolean;
     }
 
+    export interface ApiSummaryPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "summary";
+    }
+
     export interface SubpackageSection extends ApiSection {
         apiType: "subpackage";
     }
 
-    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
+    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage | ApiSummaryPage;
 
     export type ApiPageOrSubpackage = ApiPage | SubpackageSection | Page;
 }
@@ -162,9 +169,14 @@ export declare namespace SidebarNode {
 
     export interface ChangelogPage extends Page, Omit<SidebarNodeRaw.ChangelogPage, keyof Page> {}
 
-    export interface ApiSection extends Omit<SidebarNodeRaw.ApiSection, "items" | "changelog" | "description"> {
+    export interface ApiSection
+        extends Omit<
+            SidebarNodeRaw.ApiSection,
+            "items" | "changelog" | "description" | "flattenedApiDefinition" | "summaryPage"
+        > {
         items: ApiPageOrSubpackage[];
         changelog: ChangelogPage | undefined;
+        summaryPage: ApiSummaryPage | undefined;
         description: MDXRemoteSerializeResult | string | undefined;
     }
 
@@ -193,11 +205,16 @@ export declare namespace SidebarNode {
         stream?: boolean;
     }
 
+    export interface ApiSummaryPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "summary";
+    }
+
     export interface SubpackageSection extends ApiSection {
         apiType: "subpackage";
     }
 
-    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
+    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage | ApiSummaryPage;
 
     export type ApiPageOrSubpackage = ApiPage | SubpackageSection | Page;
 }

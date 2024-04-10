@@ -119,7 +119,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                               h(
                                   "div",
                                   {
-                                      class: "md:max-h-vh-minus-header scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
+                                      class: "scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
                                   },
                                   aside,
                               ),
