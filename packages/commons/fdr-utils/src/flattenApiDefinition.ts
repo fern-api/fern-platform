@@ -272,16 +272,16 @@ function flattenPackage(
     const pages =
         order?.items
             ?.filter((item): item is DocsV1Read.ApiNavigationConfigItem.Page => item.type === "page")
-            .map((item): FlattenedPageMetadata => {
-                return {
+            .map(
+                (item): FlattenedPageMetadata => ({
                     type: "page",
                     id: item.id,
                     slug: item.fullSlug ?? [...parentSlugs, item.urlSlug],
                     title: item.title,
                     icon: item.icon,
                     hidden: item.hidden ?? false,
-                };
-            }) ?? [];
+                }),
+            ) ?? [];
 
     const items: FlattenedApiDefinitionPackageItem[] = [
         ...endpoints,

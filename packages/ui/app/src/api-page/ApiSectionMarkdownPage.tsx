@@ -26,7 +26,7 @@ export const ApiSectionMarkdownPage = ({
     return (
         <div
             className={clsx("scroll-mt-header-height-padded", {
-                "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                "border-default border-b mb-px": !hideBottomSeparator,
             })}
             ref={setTargetRef}
             data-route={`/${slug}`}

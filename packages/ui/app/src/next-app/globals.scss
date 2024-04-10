@@ -240,7 +240,11 @@
     .fern-sidebar-link-container {
         @apply items-stretch relative flex min-h-[36px];
         @apply data-[state=active]:t-accent-aaa;
-        @apply data-[state=inactive]:hover:t-accent-aaa data-[state=inactive]:t-muted;
+        @apply data-[state=inactive]:hover:t-accent-aaa;
+
+        &:not(.top-level) {
+            @apply data-[state=inactive]:t-muted;
+        }
     }
 
     .fern-sidebar-link-indent {

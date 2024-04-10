@@ -100,7 +100,21 @@ function resolveSidebarNodeRawApiSection(
         description: undefined, // TODO: add description here
         icon: undefined,
         hidden: false,
-        hasSummaryPage: subpackage.summaryPageId != null,
+        summaryPage:
+            subpackage.summaryPageId != null
+                ? {
+                      type: "page",
+                      id: subpackage.summaryPageId,
+                      slug: subpackage.slug,
+                      title,
+                      description: undefined,
+                      icon: undefined,
+                      hidden: false,
+                      apiType: "summary",
+                      api,
+                  }
+                : undefined,
+        flattenedApiDefinition: undefined, // only the top-level api section should have this
     };
 }
 
@@ -271,7 +285,21 @@ export function resolveSidebarNodes(
                         description: undefined, // TODO: add description here
                         icon: api.icon,
                         hidden: api.hidden ?? false,
-                        hasSummaryPage: flattened.summaryPageId != null,
+                        summaryPage:
+                            flattened.summaryPageId != null
+                                ? {
+                                      type: "page",
+                                      id: flattened.summaryPageId,
+                                      slug: definitionSlug,
+                                      title: api.title,
+                                      description: undefined,
+                                      icon: api.icon,
+                                      hidden: api.hidden ?? false,
+                                      apiType: "summary",
+                                      api: api.api,
+                                  }
+                                : undefined,
+                        flattenedApiDefinition: flattened,
                     });
                 }
             },

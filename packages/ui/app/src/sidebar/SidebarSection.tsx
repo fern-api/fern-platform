@@ -187,17 +187,19 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                     apiSection: (apiSection) =>
                         depth === 0 ? (
                             <li key={apiSection.id}>
-                                {apiSection.hasSummaryPage ? (
+                                {apiSection.summaryPage != null ? (
                                     <SidebarSlugLink
-                                        className={cn({
+                                        className={cn("top-level", {
                                             "mt-6": topLevel,
                                         })}
                                         depth={depth}
-                                        title={apiSection.title}
-                                        slug={apiSection.slug}
-                                        icon={apiSection.icon}
-                                        hidden={apiSection.hidden}
+                                        title={apiSection.summaryPage.title}
+                                        as={"h6"}
+                                        slug={apiSection.summaryPage.slug}
+                                        icon={apiSection.summaryPage.icon}
+                                        hidden={apiSection.summaryPage.hidden}
                                         registerScrolledToPathListener={registerScrolledToPathListener}
+                                        selected={isEqual(selectedSlug, apiSection.summaryPage.slug)}
                                     >
                                         <SidebarApiSection
                                             slug={apiSection.slug}

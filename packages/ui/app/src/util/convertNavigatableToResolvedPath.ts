@@ -62,12 +62,14 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
+    rawSidebarNodes,
     sidebarNodes,
     currentNode,
     apis,
     pages,
     mdxOptions,
 }: {
+    rawSidebarNodes: readonly SidebarNodeRaw[];
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
@@ -91,15 +93,15 @@ export async function convertNavigatableToResolvedPath({
 
     if (SidebarNode.isApiPage(traverseState.curr)) {
         const api = apis[traverseState.curr.api];
-        const apiSection = findApiSection(traverseState.curr.api, sidebarNodes);
+        const apiSection = findApiSection(traverseState.curr.api, rawSidebarNodes);
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug, api.navigation);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
         const apiDefinition = await resolveApiDefinition(
             traverseState.curr.title,
-            flattenedApiDefinition,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            apiSection.flattenedApiDefinition!,
             pages,
             mdxOptions,
         );

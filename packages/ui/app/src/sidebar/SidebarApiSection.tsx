@@ -217,7 +217,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
             icon={apiSection.icon}
             hidden={apiSection.hidden}
-            slug={apiSection.hasSummaryPage ? slug : undefined}
+            slug={apiSection.summaryPage != null ? slug : undefined}
         >
             {children}
         </SidebarSlugLink>

@@ -134,11 +134,7 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     }
 
     if (node.type === "apiSection") {
-        if (node.hasSummaryPage) {
-            // go to the summary page directly (no need to redirect)
-            return undefined;
-        }
-        const firstChild = node.items[0] ?? node.changelog;
+        const firstChild = node.summaryPage ?? node.items[0] ?? node.changelog;
         return resolveRedirect(firstChild, from);
     }
 

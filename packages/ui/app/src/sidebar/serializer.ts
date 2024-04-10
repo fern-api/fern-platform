@@ -25,7 +25,7 @@ export async function serializeSidebarNodeDescriptionMdx(
 }
 
 async function serializeApiSectionDescriptionMdx(
-    apiSection: SidebarNodeRaw.ApiSection,
+    { flattenedApiDefinition, ...apiSection }: SidebarNodeRaw.ApiSection,
     options?: FernSerializeMdxOptions,
 ): Promise<SidebarNode.ApiSection> {
     return {
@@ -39,6 +39,9 @@ async function serializeApiSectionDescriptionMdx(
         ),
         changelog: apiSection.changelog
             ? await serializePageDescriptionMdx<SidebarNode.ChangelogPage>(apiSection.changelog, options)
+            : undefined,
+        summaryPage: apiSection.summaryPage
+            ? await serializePageDescriptionMdx<SidebarNode.ApiSummaryPage>(apiSection.summaryPage, options)
             : undefined,
     };
 }

@@ -121,6 +121,7 @@ async function getDocsPageProps(
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
+        rawSidebarNodes: navigation.found.sidebarNodes,
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,

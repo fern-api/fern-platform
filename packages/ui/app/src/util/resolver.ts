@@ -128,12 +128,12 @@ async function resolveApiDefinitionPackage(
 
     const items = maybeItems.filter(isNonNullish);
 
-    if (apiDefinition.summaryPageId != null && pages[apiDefinition.summaryPageId] != null) {
-        const pageContent = pages[apiDefinition.summaryPageId];
+    if (package_.summaryPageId != null && pages[package_.summaryPageId] != null) {
+        const pageContent = pages[package_.summaryPageId];
         items.unshift({
             type: "page",
-            id: apiDefinition.summaryPageId,
-            slug: apiDefinition.slug,
+            id: package_.summaryPageId,
+            slug: package_.slug,
             title,
             markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
                 ...mdxOptions,
