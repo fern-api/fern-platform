@@ -173,6 +173,7 @@ function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode
     }
 
     return `Last updated ${moment(latestChange.date).parseZone().calendar({
+        // TODO: move all moment.js utils to a separate package
         sameDay: "[today]",
         nextDay: "[tomorrow]",
         nextWeek: "dddd",
