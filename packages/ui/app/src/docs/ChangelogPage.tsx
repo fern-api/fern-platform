@@ -47,7 +47,9 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 </div>
                             </div>
                             <div className="-mt-2 w-[18rem]">
-                                <span className="t-muted text-base">{moment(item.date).format("MMM DD YYYY")}</span>
+                                <span className="t-muted text-base">
+                                    {moment(item.date).parseZone().format("MMM DD YYYY")}
+                                </span>
                             </div>
                         </section>
                     ))}

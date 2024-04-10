@@ -172,7 +172,14 @@ function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode
         return null;
     }
 
-    return `Last updated ${moment(latestChange.date).fromNow()}`;
+    return `Last updated ${moment(latestChange.date).parseZone().calendar({
+        sameDay: "[today]",
+        nextDay: "[tomorrow]",
+        nextWeek: "dddd",
+        lastDay: "[yesterday]",
+        lastWeek: "[last] dddd",
+        sameElse: "DD/MM/YYYY",
+    })}`;
 }
 
 interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {

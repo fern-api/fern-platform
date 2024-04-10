@@ -133,7 +133,7 @@ export async function convertNavigatableToResolvedPath({
                     });
                     return {
                         date: item.date,
-                        dateString: moment(item.date).format("MMMM D, YYYY"),
+                        dateString: moment(item.date).parseZone().format("MMMM D, YYYY"),
                         markdown,
                     };
                 }),
