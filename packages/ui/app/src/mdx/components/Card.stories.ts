@@ -14,11 +14,14 @@ const meta: Meta<typeof Card> = {
     // More on argTypes: https://storybook.js.org/docs/api/argtypes
     argTypes: {
         title: { control: "text" },
+        icon: { control: "text" },
+        iconSize: { control: "number" },
         color: { control: "color" },
         darkModeColor: { control: "color" },
         lightModeColor: { control: "color" },
         iconPosition: { control: "inline-radio", options: ["top", "left"] },
         href: { control: "text" },
+        badge: { control: "text" },
     },
     args: {
         title: "Card Title",
