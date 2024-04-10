@@ -45,7 +45,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
     return (
         <>
             {valueAsList.length > 0 && (
-                <ul className="divide-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="border-default divide-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {valueAsList.map((item, idx) => (
                         <li
                             key={idx}
@@ -56,7 +56,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                         >
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
+                                    <span className="t-muted min-w-6 rounded-xl bg-tag-default p-1 text-center text-xs font-semibold uppercase">
                                         {idx + 1}
                                     </span>
                                 </label>

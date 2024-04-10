@@ -55,7 +55,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
             >
                 <Transition.Child
                     as="div"
-                    className="bg-background/50 fixed inset-0 z-0 backdrop-blur-sm"
+                    className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm"
                     enter="transition-opacity ease-linear duration-200"
                     enterFrom="opacity-0 backdrop-blur-none"
                     enterTo="opacity-100 backdrop-blur-sm"
@@ -90,7 +90,7 @@ function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstan
     );
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <div className="border-default bg-background-translucent flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
+            <div className="bg-background-translucent border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
                     placeholder={placeholder}

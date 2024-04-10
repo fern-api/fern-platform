@@ -47,7 +47,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen,
     return (
         <header id="fern-header">
             <div
-                className="data-[border=show]:dark:shadow-header-dark fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg transition-shadow lg:backdrop-blur"
+                className="fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg transition-shadow data-[border=show]:dark:shadow-header-dark lg:backdrop-blur"
                 data-border={
                     isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         ? "show"
@@ -57,7 +57,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen,
                 <div className="bg-header border-concealed h-header-height-real border-b">
                     {renderBackground()}
                     <Header
-                        className="max-w-page-width mx-auto"
+                        className="mx-auto max-w-page-width"
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                         navbarLinks={navbarLinks}

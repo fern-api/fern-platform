@@ -38,7 +38,7 @@ export function FernErrorTag({
     }, [component, error, errorDescription]);
     return (
         <div className={clsx(className ?? "my-4")}>
-            <span className="bg-tag-danger t-danger inline-flex items-center gap-2 rounded-full px-2">
+            <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
                 <ExclamationTriangleIcon />
                 <span>{stringifyError(error)}</span>
             </span>
