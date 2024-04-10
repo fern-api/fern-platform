@@ -85,7 +85,13 @@ async function getDocsPageProps(
     const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
 
-    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis);
+    const navigation = getNavigationRoot(
+        slug,
+        basePath,
+        docsConfig.navigation,
+        docs.definition.apis,
+        docs.definition.pages,
+    );
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
@@ -115,6 +121,7 @@ async function getDocsPageProps(
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
+        rawSidebarNodes: navigation.found.sidebarNodes,
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
