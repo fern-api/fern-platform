@@ -13,6 +13,10 @@ export class SdkIdFactory {
         return `go|${sdk.githubRepo}|${sdk.version}`;
     }
 
+    public static fromRuby(sdk: FdrAPI.RubySdk): string {
+        return `ruby|${sdk.gem}|${sdk.version}`;
+    }
+
     public static fromJava(sdk: FdrAPI.JavaSdk): string {
         return `java|${sdk.group}|${sdk.artifact}|${sdk.version}`;
     }

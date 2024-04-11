@@ -41,6 +41,7 @@ types:
       python: PythonSDKSnippetCreate
       go: GoSDKSnippetsCreate
       java: JavaSDKSnippetsCreate
+      ruby: RubySDKSnippetsCreate
 
   TypescriptSDKSnippetsCreate:
     properties:
@@ -56,6 +57,11 @@ types:
     properties:
       sdk: snippets.GoSDK
       snippets: list<SingleGoSnippetCreate>
+
+  RubySDKSnippetsCreate:
+    properties:
+      sdk: snippets.RubySDK
+      snippets: list<SingleRubySnippetCreate>
 
   JavaSDKSnippetsCreate:
     properties:
@@ -79,6 +85,11 @@ types:
       endpoint: snippets.EndpointIdentifier
       snippet: GoSnippetCode
 
+  SingleRubySnippetCreate:
+    properties:
+      endpoint: snippets.EndpointIdentifier
+      snippet: RubySnippetCode
+
   SingleJavaSnippetCreate:
     properties:
       endpoint: snippets.EndpointIdentifier
@@ -96,6 +107,10 @@ types:
       sync_client: string
 
   GoSnippetCode:
+    properties:
+      client: string
+
+  RubySnippetCode:
     properties:
       client: string
 

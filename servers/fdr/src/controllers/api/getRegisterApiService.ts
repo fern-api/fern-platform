@@ -34,6 +34,9 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             if (snippetsConfigurationWithSdkIds.goSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
             }
+            if (snippetsConfigurationWithSdkIds.rubySdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
+            }
             const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(sdkIds);
             const apiDefinitionId = uuidv4();
             const snippetHolder = new SDKSnippetHolder({
