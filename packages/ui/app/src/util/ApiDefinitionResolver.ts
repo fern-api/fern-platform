@@ -15,8 +15,8 @@ import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
+import { ApiTypeResolver } from "./ApiTypeResolver";
 import {
-    NonOptionalTypeShapeWithReference,
     ResolvedCodeSnippet,
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
@@ -29,7 +29,6 @@ import {
     ResolvedHttpResponseBodyShape,
     ResolvedObjectProperty,
     ResolvedPackageItem,
-    ResolvedReferenceShape,
     ResolvedRequestBody,
     ResolvedResponseBody,
     ResolvedRootPackage,
@@ -58,17 +57,17 @@ export class ApiDefinitionResolver {
         return resolver.resolveApiDefinition(title, mdxOptions);
     }
 
-    private apiDefinition: FlattenedApiDefinition;
-    private pages: Record<string, DocsV1Read.PageContent>;
+    private apiTypeResolver;
     private resolvedTypes: Record<string, ResolvedTypeDefinition> = {};
 
     private constructor(
-        apiDefinition: FlattenedApiDefinition,
-        pages: Record<string, DocsV1Read.PageContent>,
+        private apiDefinition: FlattenedApiDefinition,
+        private pages: Record<string, DocsV1Read.PageContent>,
         // filteredTypes?: string[],
     ) {
         this.apiDefinition = apiDefinition;
         this.pages = pages;
+        this.apiTypeResolver = new ApiTypeResolver(apiDefinition.types);
     }
 
     private async resolveApiDefinition(
@@ -85,14 +84,7 @@ export class ApiDefinitionResolver {
         //         ),
         //     ),
         // );
-        this.resolvedTypes = Object.fromEntries(
-            await Promise.all(
-                Object.entries(this.apiDefinition.types).map(async ([key, value]) => [
-                    key,
-                    await this.resolveTypeDefinition(value),
-                ]),
-            ),
-        );
+        this.resolvedTypes = await this.apiTypeResolver.resolve();
 
         const withPackage = await this.resolveApiDefinitionPackage(
             title,
@@ -214,7 +206,7 @@ export class ApiDefinitionResolver {
         const pathParametersPromise = await Promise.all(
             endpoint.path.pathParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(parameter.type),
+                    this.apiTypeResolver.resolveTypeReference(parameter.type),
                     maybeSerializeMdxContent(parameter.description),
                 ]);
                 return {
@@ -230,7 +222,7 @@ export class ApiDefinitionResolver {
         const queryParametersPromise = Promise.all(
             endpoint.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(parameter.type),
+                    this.apiTypeResolver.resolveTypeReference(parameter.type),
                     maybeSerializeMdxContent(parameter.description),
                 ]);
                 return {
@@ -246,7 +238,7 @@ export class ApiDefinitionResolver {
         const headersPromise = Promise.all([
             ...endpoint.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -259,7 +251,7 @@ export class ApiDefinitionResolver {
             }),
             ...this.apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -276,7 +268,7 @@ export class ApiDefinitionResolver {
             endpoint.errors.map(async (error): Promise<ResolvedError> => {
                 const [shape, description] = await Promise.all([
                     error.type != null
-                        ? this.resolveTypeShape(undefined, error.type, undefined, undefined)
+                        ? this.apiTypeResolver.resolveTypeShape(undefined, error.type, undefined, undefined)
                         : ({ type: "unknown" } as ResolvedTypeDefinition),
                     maybeSerializeMdxContent(error.description),
                 ]);
@@ -437,7 +429,7 @@ export class ApiDefinitionResolver {
             websocket.path.pathParameters.map(
                 async (parameter): Promise<ResolvedObjectProperty> => ({
                     key: parameter.key,
-                    valueShape: await this.resolveTypeReference(parameter.type),
+                    valueShape: await this.apiTypeResolver.resolveTypeReference(parameter.type),
                     description: await maybeSerializeMdxContent(parameter.description),
                     availability: parameter.availability,
                     hidden: false,
@@ -447,7 +439,7 @@ export class ApiDefinitionResolver {
         const headersPromise = Promise.all([
             ...websocket.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -460,7 +452,7 @@ export class ApiDefinitionResolver {
             }),
             ...this.apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -475,7 +467,7 @@ export class ApiDefinitionResolver {
         const queryParametersPromise = Promise.all(
             websocket.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(parameter.type),
+                    this.apiTypeResolver.resolveTypeReference(parameter.type),
                     maybeSerializeMdxContent(parameter.description),
                 ]);
                 return {
@@ -556,7 +548,7 @@ export class ApiDefinitionResolver {
                 webhook.headers.map(
                     async (header): Promise<ResolvedObjectProperty> => ({
                         key: header.key,
-                        valueShape: await this.resolveTypeReference(header.type),
+                        valueShape: await this.apiTypeResolver.resolveTypeReference(header.type),
                         description: await maybeSerializeMdxContent(header.description),
                         availability: header.availability,
                         hidden: false,
@@ -594,11 +586,11 @@ export class ApiDefinitionResolver {
                 type: "object",
                 name: undefined,
                 extends: object.extends,
-                properties: await this.resolveObjectProperties(object),
+                properties: await this.apiTypeResolver.resolveObjectProperties(object),
                 description: undefined,
                 availability: undefined,
             }),
-            reference: (reference) => this.resolveTypeReference(reference.value),
+            reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
             _other: () =>
                 Promise.resolve({
                     type: "unknown",
@@ -614,7 +606,7 @@ export class ApiDefinitionResolver {
                 type: "object",
                 name: undefined,
                 extends: object.extends,
-                properties: await this.resolveObjectProperties(object),
+                properties: await this.apiTypeResolver.resolveObjectProperties(object),
                 description: undefined,
                 availability: undefined,
             }),
@@ -645,7 +637,7 @@ export class ApiDefinitionResolver {
                                               case "bodyProperty": {
                                                   const [description, valueShape] = await Promise.all([
                                                       maybeSerializeMdxContent(property.description),
-                                                      this.resolveTypeReference(property.valueType),
+                                                      this.apiTypeResolver.resolveTypeReference(property.valueType),
                                                   ]);
                                                   return {
                                                       type: "bodyProperty",
@@ -664,7 +656,7 @@ export class ApiDefinitionResolver {
                         : undefined,
             }),
             bytes: (bytes) => Promise.resolve(bytes),
-            reference: (reference) => this.resolveTypeReference(reference.value),
+            reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
             _other: () =>
                 Promise.resolve({
                     type: "unknown",
@@ -685,19 +677,19 @@ export class ApiDefinitionResolver {
                     type: "object",
                     name: undefined,
                     extends: object.extends,
-                    properties: await this.resolveObjectProperties(object),
+                    properties: await this.apiTypeResolver.resolveObjectProperties(object),
                     description: undefined,
                     availability: undefined,
                 }),
                 fileDownload: (fileDownload) => fileDownload,
                 streamingText: (streamingText) => streamingText,
                 streamCondition: (streamCondition) => streamCondition,
-                reference: (reference) => this.resolveTypeReference(reference.value),
+                reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
                 stream: async (stream) => {
                     if (stream.shape.type === "reference") {
                         return {
                             type: "stream",
-                            value: await this.resolveTypeReference(stream.shape.value),
+                            value: await this.apiTypeResolver.resolveTypeReference(stream.shape.value),
                         };
                     }
                     return {
@@ -706,172 +698,13 @@ export class ApiDefinitionResolver {
                             type: "object",
                             name: undefined,
                             extends: stream.shape.extends,
-                            properties: await this.resolveObjectProperties(stream.shape),
+                            properties: await this.apiTypeResolver.resolveObjectProperties(stream.shape),
                             description: undefined,
                             availability: undefined,
                         },
                     };
                 },
                 _other: () => ({ type: "unknown", availability: undefined, description: undefined }),
-            }),
-        );
-    }
-
-    resolveTypeDefinition(typeDefinition: APIV1Read.TypeDefinition): Promise<ResolvedTypeDefinition> {
-        return this.resolveTypeShape(
-            typeDefinition.name,
-            typeDefinition.shape,
-            typeDefinition.description,
-            typeDefinition.availability,
-        );
-    }
-
-    resolveTypeShape(
-        name: string | undefined,
-        typeShape: APIV1Read.TypeShape,
-        description?: string,
-        availability?: APIV1Read.Availability,
-    ): Promise<ResolvedTypeDefinition> {
-        return visitDiscriminatedUnion(typeShape, "type")._visit<Promise<ResolvedTypeDefinition>>({
-            object: async (object) => ({
-                type: "object",
-                name,
-                extends: object.extends,
-                properties: await this.resolveObjectProperties(object),
-                description: await maybeSerializeMdxContent(description),
-                availability,
-            }),
-            enum: async (enum_) => ({
-                type: "enum",
-                name,
-                values: await Promise.all(
-                    enum_.values.map(async (enumValue) => ({
-                        value: enumValue.value,
-                        description: await maybeSerializeMdxContent(enumValue.description),
-                        availability: undefined,
-                    })),
-                ),
-                description: await maybeSerializeMdxContent(description),
-                availability,
-            }),
-            undiscriminatedUnion: async (undiscriminatedUnion) => ({
-                type: "undiscriminatedUnion",
-                name,
-                variants: await Promise.all(
-                    undiscriminatedUnion.variants.map(async (variant) => ({
-                        displayName: variant.displayName,
-                        shape: await this.resolveTypeReference(variant.type),
-                        description: await maybeSerializeMdxContent(variant.description),
-                        availability: variant.availability,
-                    })),
-                ),
-                description: await maybeSerializeMdxContent(description),
-                availability,
-            }),
-            alias: async (alias) => ({
-                type: "alias",
-                name,
-                shape: await this.resolveTypeReference(alias.value),
-                description: await maybeSerializeMdxContent(description),
-                availability,
-            }),
-            discriminatedUnion: async (discriminatedUnion) => {
-                return {
-                    type: "discriminatedUnion",
-                    name,
-                    discriminant: discriminatedUnion.discriminant,
-                    variants: await Promise.all(
-                        discriminatedUnion.variants.map(async (variant) => ({
-                            discriminantValue: variant.discriminantValue,
-                            extends: variant.additionalProperties.extends,
-                            properties: await this.resolveObjectProperties(variant.additionalProperties),
-                            description: await maybeSerializeMdxContent(variant.description),
-                            availability: variant.availability,
-                        })),
-                    ),
-                    description: await maybeSerializeMdxContent(description),
-                    availability,
-                };
-            },
-            _other: () =>
-                Promise.resolve({
-                    type: "unknown",
-                    availability: undefined,
-                    description: undefined,
-                }),
-        });
-    }
-
-    resolveTypeReference(typeReference: APIV1Read.TypeReference): Promise<ResolvedTypeShape> {
-        return Promise.resolve(
-            visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeShape | Promise<ResolvedTypeShape>>({
-                literal: (literal) => ({
-                    ...literal.value,
-                    description: undefined,
-                    availability: undefined,
-                }),
-                unknown: (unknown) => ({
-                    ...unknown,
-                    availability: undefined,
-                    description: undefined,
-                }),
-                optional: async (optional) => ({
-                    type: "optional",
-                    shape: await this.unwrapOptionalRaw(await this.resolveTypeReference(optional.itemType)),
-                    availability: undefined,
-                    defaultsTo: undefined,
-                    description: undefined,
-                }),
-                list: async (list) => ({
-                    type: "list",
-                    shape: await this.resolveTypeReference(list.itemType),
-                    availability: undefined,
-                    description: undefined,
-                }),
-                set: async (set) => ({
-                    type: "set",
-                    shape: await this.resolveTypeReference(set.itemType),
-                    availability: undefined,
-                    description: undefined,
-                }),
-                map: async (map) => ({
-                    type: "map",
-                    keyShape: await this.resolveTypeReference(map.keyType),
-                    valueShape: await this.resolveTypeReference(map.valueType),
-                    availability: undefined,
-                    description: undefined,
-                }),
-                id: ({ value: typeId }): ResolvedReferenceShape | APIV1Read.TypeReference.Unknown => {
-                    const typeDefinition = this.apiDefinition.types[typeId];
-                    if (typeDefinition == null) {
-                        return { type: "unknown" };
-                    }
-                    return { type: "reference", typeId };
-                },
-                primitive: (primitive) => ({
-                    type: primitive.value.type,
-                    description: undefined,
-                    availability: undefined,
-                }),
-                _other: () => ({ type: "unknown", availability: undefined, description: undefined }),
-            }),
-        );
-    }
-
-    resolveObjectProperties(object: APIV1Read.ObjectType): Promise<ResolvedObjectProperty[]> {
-        return Promise.all(
-            object.properties.map(async (property): Promise<ResolvedObjectProperty> => {
-                const [valueShape, description] = await Promise.all([
-                    this.resolveTypeReference(property.valueType),
-                    maybeSerializeMdxContent(property.description),
-                ]);
-                return {
-                    key: property.key,
-                    valueShape,
-                    description,
-                    availability: property.availability,
-                    hidden: false,
-                };
             }),
         );
     }
@@ -1009,13 +842,6 @@ export class ApiDefinitionResolver {
         }
 
         return language;
-    }
-
-    async unwrapOptionalRaw(shape: ResolvedTypeShape): Promise<NonOptionalTypeShapeWithReference> {
-        if (shape.type === "optional") {
-            return this.unwrapOptionalRaw(shape.shape);
-        }
-        return shape;
     }
 
     resolveExampleEndpointRequest(
