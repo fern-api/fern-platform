@@ -1,0 +1,3022 @@
+{
+  "id": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+  "rootPackage": {
+    "endpoints": [],
+    "subpackages": ["subpackage_affiliate", "subpackage_categories", "subpackage_commons", "subpackage_merchants"],
+    "types": [],
+    "webhooks": [],
+    "websockets": []
+  },
+  "types": {
+    "type_affiliate:AffiliateOfferResponse": {
+      "name": "AffiliateOfferResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_id",
+            "valueType": {
+              "type": "id",
+              "value": "type_commons:MongoId"
+            }
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "id",
+              "value": "type_affiliate:AffiliateOfferStatus"
+            }
+          },
+          {
+            "key": "logoUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "exclusions",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bannerImgUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "merchantBaseURL",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "description",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "createdDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "lastModified",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "offers",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_affiliate:AffiliateOffer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_affiliate:AffiliateOffer": {
+      "name": "AffiliateOffer",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "status",
+            "valueType": {
+              "type": "id",
+              "value": "type_affiliate:AffiliateOfferStatus"
+            }
+          },
+          {
+            "key": "_id",
+            "valueType": {
+              "type": "id",
+              "value": "type_commons:MongoId"
+            }
+          },
+          {
+            "key": "category",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "commissionType",
+            "valueType": {
+              "type": "id",
+              "value": "type_affiliate:CommissionType"
+            }
+          },
+          {
+            "key": "totalCommission",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          },
+          {
+            "key": "rank",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "createdDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "lastModified",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_affiliate:CommissionType": {
+      "name": "CommissionType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "PERCENT"
+          },
+          {
+            "value": "FLAT"
+          }
+        ]
+      }
+    },
+    "type_affiliate:AffiliateOfferStatus": {
+      "name": "AffiliateOfferStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "INACTIVE"
+          }
+        ]
+      }
+    },
+    "type_categories:ListCategoryResponse": {
+      "name": "ListCategoryResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "categories",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_categories:Category"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_categories:Category": {
+      "name": "Category",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_id",
+            "valueType": {
+              "type": "id",
+              "value": "type_commons:MongoId"
+            }
+          },
+          {
+            "key": "subCategories",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "primaryCategory",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "createdDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "lastModified",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_categories:CreateOrUpdateCategoryRequest": {
+      "name": "CreateOrUpdateCategoryRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "subCategories",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "primaryCategory",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_commons:MongoId": {
+      "description": "The unique identifier for a document in the database",
+      "name": "MongoId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "type_commons:CategoryOption": {
+      "name": "CategoryOption",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "Arts & Entertainment"
+          },
+          {
+            "value": "Baby Kids & Toys"
+          },
+          {
+            "value": "Books & Digital Media"
+          },
+          {
+            "value": "Clothing Shoes & Accessories"
+          },
+          {
+            "value": "Computers Electronics & Software"
+          },
+          {
+            "value": "Convenience"
+          },
+          {
+            "value": "Gas"
+          },
+          {
+            "value": "Department Stores"
+          },
+          {
+            "value": "Food & Beverage"
+          },
+          {
+            "value": "Health & Beauty"
+          },
+          {
+            "value": "Home & Garden"
+          },
+          {
+            "value": "Miscellaneous"
+          },
+          {
+            "value": "Occasions & Gifts"
+          },
+          {
+            "value": "Pets"
+          },
+          {
+            "value": "Sports & Outdoors"
+          },
+          {
+            "value": "Supplies & Services"
+          },
+          {
+            "value": "Travel"
+          }
+        ]
+      }
+    },
+    "type_commons:Source": {
+      "name": "Source",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "NATIONAL"
+          },
+          {
+            "value": "LOCAL"
+          }
+        ]
+      }
+    },
+    "type_merchants:Merchant": {
+      "name": "Merchant",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_id",
+            "valueType": {
+              "type": "id",
+              "value": "type_commons:MongoId"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "description",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "websiteURL",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "imgUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "bannerImgUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "category",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "acceptedCards",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "source",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "createdDate",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "lastModified",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "offers",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_merchants:Offer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_merchants:Offer": {
+      "name": "Offer",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_id",
+            "valueType": {
+              "type": "id",
+              "value": "type_commons:MongoId"
+            }
+          },
+          {
+            "key": "terms",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "redeemableOnce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "offerType",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "commissionType",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "startDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "expirationDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "isTargeted",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "key": "createdDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "lastModified",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          },
+          {
+            "key": "totalCommission",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "isLocationSpecific",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "key": "source",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "merchantId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_commons:MongoId"
+              }
+            }
+          },
+          {
+            "key": "issuersCommission",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "usersCommission",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "minTransactionAmount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "maxTransactionAmount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "minRewardAmount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "maxRewardAmount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "boostedOffers",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_merchants:Offer"
+                }
+              }
+            }
+          },
+          {
+            "key": "baselineOffer",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_merchants:Offer"
+              }
+            }
+          },
+          {
+            "key": "merchant",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_merchants:Merchant"
+              }
+            }
+          },
+          {
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "displayAlways",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "experimentBuildStatus",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "imgUrl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "bannerImgUrl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_affiliate": {
+      "subpackageId": "subpackage_affiliate",
+      "name": "affiliate",
+      "endpoints": [
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "get-offers",
+          "method": "GET",
+          "id": "getOffers",
+          "name": "Get Offers",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/affiliate"
+              },
+              {
+                "type": "literal",
+                "value": "/offers"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "X-VERSION",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_affiliate:AffiliateOfferResponse"
+                }
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 403
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 403
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "examples": [
+            {
+              "path": "/affiliate/offers",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "_id": "string",
+                  "status": "ACTIVE",
+                  "logoUrl": "string",
+                  "type": "string",
+                  "exclusions": "string",
+                  "bannerImgUrl": "string",
+                  "name": "string",
+                  "merchantBaseURL": "string",
+                  "description": "string",
+                  "createdDate": "2023-01-01T00:00:00Z",
+                  "lastModified": "2023-01-01T00:00:00Z",
+                  "offers": [
+                    {
+                      "status": "ACTIVE",
+                      "_id": "string",
+                      "category": "string",
+                      "commissionType": "PERCENT",
+                      "totalCommission": 1,
+                      "rank": 0,
+                      "createdDate": "2023-01-01T00:00:00Z",
+                      "lastModified": "2023-01-01T00:00:00Z"
+                    }
+                  ]
+                }
+              ],
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "_id": "string",
+                    "status": "ACTIVE",
+                    "logoUrl": "string",
+                    "type": "string",
+                    "exclusions": "string",
+                    "bannerImgUrl": "string",
+                    "name": "string",
+                    "merchantBaseURL": "string",
+                    "description": "string",
+                    "createdDate": "2023-01-01T00:00:00Z",
+                    "lastModified": "2023-01-01T00:00:00Z",
+                    "offers": [
+                      {
+                        "status": "ACTIVE",
+                        "_id": "string",
+                        "category": "string",
+                        "commissionType": "PERCENT",
+                        "totalCommission": 1,
+                        "rank": 0,
+                        "createdDate": "2023-01-01T00:00:00Z",
+                        "lastModified": "2023-01-01T00:00:00Z"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/affiliate/offers",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "responseStatusCode": 403,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/affiliate/offers",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "responseStatusCode": 500,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Returns a list of Affiliate offers provided by Kard",
+          "authed": true
+        }
+      ],
+      "types": [
+        "type_affiliate:AffiliateOfferResponse",
+        "type_affiliate:AffiliateOffer",
+        "type_affiliate:CommissionType",
+        "type_affiliate:AffiliateOfferStatus"
+      ],
+      "subpackages": [],
+      "urlSlug": "affiliate",
+      "webhooks": [],
+      "websockets": []
+    },
+    "subpackage_categories": {
+      "subpackageId": "subpackage_categories",
+      "name": "categories",
+      "endpoints": [
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "search",
+          "method": "GET",
+          "id": "search",
+          "name": "Search",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/categories/v2"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "X-VERSION",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_categories:ListCategoryResponse"
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "examples": [
+            {
+              "path": "/categories/v2",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "categories": [
+                  {
+                    "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                    "primaryCategory": "Books",
+                    "subCategories": ["Non Fiction", "Fiction"],
+                    "createdDate": "2020-08-20T00:00:00Z",
+                    "lastModified": "2020-08-20T00:00:00Z"
+                  }
+                ]
+              },
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "categories": [
+                    {
+                      "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                      "primaryCategory": "Books",
+                      "subCategories": ["Non Fiction", "Fiction"],
+                      "createdDate": "2020-08-20T00:00:00Z",
+                      "lastModified": "2020-08-20T00:00:00Z"
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "responseStatusCode": 403,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Retrieve a list of categories",
+          "authed": true
+        },
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "find-by-subcategory",
+          "method": "GET",
+          "id": "findBySubcategory",
+          "name": "Find By Subcategory",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "subcategory",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/categories/v2"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "subcategory"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "X-VERSION",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_categories:ListCategoryResponse"
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "examples": [
+            {
+              "path": "/categories/v2/Non Fiction",
+              "pathParameters": {
+                "subcategory": "Non Fiction"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "categories": [
+                  {
+                    "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                    "primaryCategory": "Books",
+                    "subCategories": ["Non Fiction", "Fiction"],
+                    "createdDate": "2020-08-20T00:00:00Z",
+                    "lastModified": "2020-08-20T00:00:00Z"
+                  }
+                ]
+              },
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "categories": [
+                    {
+                      "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                      "primaryCategory": "Books",
+                      "subCategories": ["Non Fiction", "Fiction"],
+                      "createdDate": "2020-08-20T00:00:00Z",
+                      "lastModified": "2020-08-20T00:00:00Z"
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2/Does not match",
+              "pathParameters": {
+                "subcategory": "Does not match"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "categories": []
+              },
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "categories": []
+                }
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2/:subcategory",
+              "pathParameters": {
+                "subcategory": ":subcategory"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "responseStatusCode": 403,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Get a list of categories that contain the requested subcategory.",
+          "authed": true
+        },
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "create",
+          "method": "POST",
+          "id": "create",
+          "name": "Create",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/categories/v2"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "X-VERSION",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "request": {
+            "contentType": "application/json",
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_categories:CreateOrUpdateCategoryRequest"
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_categories:Category"
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "examples": [
+            {
+              "path": "/categories/v2",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "primaryCategory": "Books",
+                "subCategories": ["Non Fiction", "Fiction"]
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                "primaryCategory": "Books",
+                "subCategories": ["Non Fiction", "Fiction"],
+                "createdDate": "2020-08-20T00:00:00Z",
+                "lastModified": "2020-08-20T00:00:00Z"
+              },
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "primaryCategory": "Books",
+                  "subCategories": ["Non Fiction", "Fiction"]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                  "primaryCategory": "Books",
+                  "subCategories": ["Non Fiction", "Fiction"],
+                  "createdDate": "2020-08-20T00:00:00Z",
+                  "lastModified": "2020-08-20T00:00:00Z"
+                }
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "requestBody": {
+                "subCategories": ["string"],
+                "primaryCategory": "string"
+              },
+              "responseStatusCode": 403,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "subCategories": ["string"],
+                  "primaryCategory": "string"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Create a new category",
+          "authed": true
+        },
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "remove",
+          "method": "DELETE",
+          "id": "remove",
+          "name": "Remove",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/categories/v2"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "X-VERSION",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "examples": [
+            {
+              "path": "/categories/v2/commons.MongoId.Sample",
+              "pathParameters": {
+                "id": "commons.MongoId.Sample"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "commons.MongoId.Sample",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "commons.MongoId.Sample"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "responseStatusCode": 403,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Remove a category by id",
+          "authed": true
+        },
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "update",
+          "method": "PUT",
+          "id": "update",
+          "name": "Update",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/categories/v2"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "X-VERSION",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "request": {
+            "contentType": "application/json",
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_categories:CreateOrUpdateCategoryRequest"
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_categories:Category"
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 403
+            }
+          ],
+          "examples": [
+            {
+              "path": "/categories/v2/commons.MongoId.Sample",
+              "pathParameters": {
+                "id": "commons.MongoId.Sample"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "primaryCategory": "Books",
+                "subCategories": ["Non Fiction", "Fiction"]
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                "primaryCategory": "Books",
+                "subCategories": ["Non Fiction", "Fiction"],
+                "createdDate": "2020-08-20T00:00:00Z",
+                "lastModified": "2020-08-20T00:00:00Z"
+              },
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "primaryCategory": "Books",
+                  "subCategories": ["Non Fiction", "Fiction"]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "_id": "5f3e3e3e3e3e3e3e3e3e3e3e",
+                  "primaryCategory": "Books",
+                  "subCategories": ["Non Fiction", "Fiction"],
+                  "createdDate": "2020-08-20T00:00:00Z",
+                  "lastModified": "2020-08-20T00:00:00Z"
+                }
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "requestBody": {
+                "subCategories": ["string"],
+                "primaryCategory": "string"
+              },
+              "responseStatusCode": 404,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "subCategories": ["string"],
+                  "primaryCategory": "string"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/categories/v2/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string",
+                "X-VERSION": "string"
+              },
+              "requestBody": {
+                "subCategories": ["string"],
+                "primaryCategory": "string"
+              },
+              "responseStatusCode": 403,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "subCategories": ["string"],
+                  "primaryCategory": "string"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Update a category by id",
+          "authed": true
+        }
+      ],
+      "types": [
+        "type_categories:ListCategoryResponse",
+        "type_categories:Category",
+        "type_categories:CreateOrUpdateCategoryRequest"
+      ],
+      "subpackages": [],
+      "urlSlug": "categories",
+      "webhooks": [],
+      "websockets": []
+    },
+    "subpackage_commons": {
+      "subpackageId": "subpackage_commons",
+      "name": "commons",
+      "endpoints": [],
+      "types": ["type_commons:MongoId", "type_commons:CategoryOption", "type_commons:Source"],
+      "subpackages": [],
+      "urlSlug": "commons",
+      "webhooks": [],
+      "websockets": []
+    },
+    "subpackage_merchants": {
+      "subpackageId": "subpackage_merchants",
+      "name": "merchants",
+      "endpoints": [
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "get-merchants",
+          "method": "GET",
+          "id": "getMerchants",
+          "name": "Get Merchants",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/rewards"
+              },
+              {
+                "type": "literal",
+                "value": "/merchant"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "page",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            {
+              "key": "limit",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            {
+              "key": "source",
+              "type": {
+                "type": "id",
+                "value": "type_commons:Source"
+              }
+            },
+            {
+              "key": "category",
+              "type": {
+                "type": "id",
+                "value": "type_commons:CategoryOption"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_merchants:Merchant"
+                }
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "examples": [
+            {
+              "path": "/rewards/merchant",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "source": "NATIONAL",
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "_id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "websiteURL": "string",
+                  "imgUrl": "string",
+                  "bannerImgUrl": "string",
+                  "category": "string",
+                  "acceptedCards": ["string"],
+                  "source": "string",
+                  "createdDate": "2023-01-01T00:00:00Z",
+                  "lastModified": "2023-01-01T00:00:00Z",
+                  "offers": [
+                    {
+                      "_id": "string",
+                      "terms": "string",
+                      "redeemableOnce": true,
+                      "name": "string",
+                      "offerType": "string",
+                      "commissionType": "string",
+                      "startDate": "2023-01-01T00:00:00Z",
+                      "expirationDate": "2023-01-01T00:00:00Z",
+                      "isTargeted": true,
+                      "createdDate": "2023-01-01T00:00:00Z",
+                      "lastModified": "2023-01-01T00:00:00Z",
+                      "totalCommission": 0,
+                      "isLocationSpecific": true,
+                      "source": "string",
+                      "merchantId": "string",
+                      "issuersCommission": 0,
+                      "usersCommission": 0,
+                      "minTransactionAmount": 0,
+                      "maxTransactionAmount": 0,
+                      "minRewardAmount": 0,
+                      "maxRewardAmount": 0,
+                      "boostedOffers": [],
+                      "merchant": {
+                        "_id": "string",
+                        "name": "string",
+                        "description": "string",
+                        "websiteURL": "string",
+                        "imgUrl": "string",
+                        "bannerImgUrl": "string",
+                        "category": "string",
+                        "acceptedCards": ["string"],
+                        "source": "string",
+                        "createdDate": "2023-01-01T00:00:00Z",
+                        "lastModified": "2023-01-01T00:00:00Z",
+                        "offers": []
+                      },
+                      "category": "string",
+                      "displayAlways": true,
+                      "experimentBuildStatus": "string",
+                      "imgUrl": "string",
+                      "bannerImgUrl": "string"
+                    }
+                  ]
+                }
+              ],
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "_id": "string",
+                    "name": "string",
+                    "description": "string",
+                    "websiteURL": "string",
+                    "imgUrl": "string",
+                    "bannerImgUrl": "string",
+                    "category": "string",
+                    "acceptedCards": ["string"],
+                    "source": "string",
+                    "createdDate": "2023-01-01T00:00:00Z",
+                    "lastModified": "2023-01-01T00:00:00Z",
+                    "offers": [
+                      {
+                        "_id": "string",
+                        "terms": "string",
+                        "redeemableOnce": true,
+                        "name": "string",
+                        "offerType": "string",
+                        "commissionType": "string",
+                        "startDate": "2023-01-01T00:00:00Z",
+                        "expirationDate": "2023-01-01T00:00:00Z",
+                        "isTargeted": true,
+                        "createdDate": "2023-01-01T00:00:00Z",
+                        "lastModified": "2023-01-01T00:00:00Z",
+                        "totalCommission": 0,
+                        "isLocationSpecific": true,
+                        "source": "string",
+                        "merchantId": "string",
+                        "issuersCommission": 0,
+                        "usersCommission": 0,
+                        "minTransactionAmount": 0,
+                        "maxTransactionAmount": 0,
+                        "minRewardAmount": 0,
+                        "maxRewardAmount": 0,
+                        "boostedOffers": [],
+                        "merchant": {
+                          "_id": "string",
+                          "name": "string",
+                          "description": "string",
+                          "websiteURL": "string",
+                          "imgUrl": "string",
+                          "bannerImgUrl": "string",
+                          "category": "string",
+                          "acceptedCards": ["string"],
+                          "source": "string",
+                          "createdDate": "2023-01-01T00:00:00Z",
+                          "lastModified": "2023-01-01T00:00:00Z",
+                          "offers": []
+                        },
+                        "category": "string",
+                        "displayAlways": true,
+                        "experimentBuildStatus": "string",
+                        "imgUrl": "string",
+                        "bannerImgUrl": "string"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "source": "NATIONAL",
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 400,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "source": "NATIONAL",
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 500,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Request Rewards Merchants",
+          "authed": true
+        },
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "get-merchant-by-id",
+          "method": "GET",
+          "id": "getMerchantById",
+          "name": "Get Merchant By Id",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/rewards"
+              },
+              {
+                "type": "literal",
+                "value": "/merchant/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_merchants:Merchant"
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "examples": [
+            {
+              "path": "/rewards/merchant/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "_id": "string",
+                "name": "string",
+                "description": "string",
+                "websiteURL": "string",
+                "imgUrl": "string",
+                "bannerImgUrl": "string",
+                "category": "string",
+                "acceptedCards": ["string"],
+                "source": "string",
+                "createdDate": "2023-01-01T00:00:00Z",
+                "lastModified": "2023-01-01T00:00:00Z",
+                "offers": [
+                  {
+                    "_id": "string",
+                    "terms": "string",
+                    "redeemableOnce": true,
+                    "name": "string",
+                    "offerType": "string",
+                    "commissionType": "string",
+                    "startDate": "2023-01-01T00:00:00Z",
+                    "expirationDate": "2023-01-01T00:00:00Z",
+                    "isTargeted": true,
+                    "createdDate": "2023-01-01T00:00:00Z",
+                    "lastModified": "2023-01-01T00:00:00Z",
+                    "totalCommission": 0,
+                    "isLocationSpecific": true,
+                    "source": "string",
+                    "merchantId": "string",
+                    "issuersCommission": 0,
+                    "usersCommission": 0,
+                    "minTransactionAmount": 0,
+                    "maxTransactionAmount": 0,
+                    "minRewardAmount": 0,
+                    "maxRewardAmount": 0,
+                    "boostedOffers": [],
+                    "merchant": {
+                      "_id": "string",
+                      "name": "string",
+                      "description": "string",
+                      "websiteURL": "string",
+                      "imgUrl": "string",
+                      "bannerImgUrl": "string",
+                      "category": "string",
+                      "acceptedCards": ["string"],
+                      "source": "string",
+                      "createdDate": "2023-01-01T00:00:00Z",
+                      "lastModified": "2023-01-01T00:00:00Z",
+                      "offers": []
+                    },
+                    "category": "string",
+                    "displayAlways": true,
+                    "experimentBuildStatus": "string",
+                    "imgUrl": "string",
+                    "bannerImgUrl": "string"
+                  }
+                ]
+              },
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "_id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "websiteURL": "string",
+                  "imgUrl": "string",
+                  "bannerImgUrl": "string",
+                  "category": "string",
+                  "acceptedCards": ["string"],
+                  "source": "string",
+                  "createdDate": "2023-01-01T00:00:00Z",
+                  "lastModified": "2023-01-01T00:00:00Z",
+                  "offers": [
+                    {
+                      "_id": "string",
+                      "terms": "string",
+                      "redeemableOnce": true,
+                      "name": "string",
+                      "offerType": "string",
+                      "commissionType": "string",
+                      "startDate": "2023-01-01T00:00:00Z",
+                      "expirationDate": "2023-01-01T00:00:00Z",
+                      "isTargeted": true,
+                      "createdDate": "2023-01-01T00:00:00Z",
+                      "lastModified": "2023-01-01T00:00:00Z",
+                      "totalCommission": 0,
+                      "isLocationSpecific": true,
+                      "source": "string",
+                      "merchantId": "string",
+                      "issuersCommission": 0,
+                      "usersCommission": 0,
+                      "minTransactionAmount": 0,
+                      "maxTransactionAmount": 0,
+                      "minRewardAmount": 0,
+                      "maxRewardAmount": 0,
+                      "boostedOffers": [],
+                      "merchant": {
+                        "_id": "string",
+                        "name": "string",
+                        "description": "string",
+                        "websiteURL": "string",
+                        "imgUrl": "string",
+                        "bannerImgUrl": "string",
+                        "category": "string",
+                        "acceptedCards": ["string"],
+                        "source": "string",
+                        "createdDate": "2023-01-01T00:00:00Z",
+                        "lastModified": "2023-01-01T00:00:00Z",
+                        "offers": []
+                      },
+                      "category": "string",
+                      "displayAlways": true,
+                      "experimentBuildStatus": "string",
+                      "imgUrl": "string",
+                      "bannerImgUrl": "string"
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 400,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 404,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant/:id",
+              "pathParameters": {
+                "id": ":id"
+              },
+              "queryParameters": {},
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 500,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Request Rewards Merchants by Id",
+          "authed": true
+        },
+        {
+          "environments": [
+            {
+              "id": "Dev",
+              "baseUrl": "https://rewards-api.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            },
+            {
+              "id": "Danj",
+              "baseUrl": "https://danj.dev-us-east-1-001.rewards-platform.getkard.engineering"
+            }
+          ],
+          "defaultEnvironment": "Dev",
+          "urlSlug": "get-merchants-by-user",
+          "method": "GET",
+          "id": "getMerchantsByUser",
+          "name": "Get Merchants By User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "referringPartnerUserId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/rewards"
+              },
+              {
+                "type": "literal",
+                "value": "/merchant/user/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "referringPartnerUserId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "page",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            {
+              "key": "limit",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            {
+              "key": "category",
+              "type": {
+                "type": "id",
+                "value": "type_commons:CategoryOption"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_merchants:Merchant"
+                }
+              }
+            }
+          },
+          "errors": [
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 400
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500
+            }
+          ],
+          "examples": [
+            {
+              "path": "/rewards/merchant/user/:referringPartnerUserId",
+              "pathParameters": {
+                "referringPartnerUserId": ":referringPartnerUserId"
+              },
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "_id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "websiteURL": "string",
+                  "imgUrl": "string",
+                  "bannerImgUrl": "string",
+                  "category": "string",
+                  "acceptedCards": ["string"],
+                  "source": "string",
+                  "createdDate": "2023-01-01T00:00:00Z",
+                  "lastModified": "2023-01-01T00:00:00Z",
+                  "offers": [
+                    {
+                      "_id": "string",
+                      "terms": "string",
+                      "redeemableOnce": true,
+                      "name": "string",
+                      "offerType": "string",
+                      "commissionType": "string",
+                      "startDate": "2023-01-01T00:00:00Z",
+                      "expirationDate": "2023-01-01T00:00:00Z",
+                      "isTargeted": true,
+                      "createdDate": "2023-01-01T00:00:00Z",
+                      "lastModified": "2023-01-01T00:00:00Z",
+                      "totalCommission": 0,
+                      "isLocationSpecific": true,
+                      "source": "string",
+                      "merchantId": "string",
+                      "issuersCommission": 0,
+                      "usersCommission": 0,
+                      "minTransactionAmount": 0,
+                      "maxTransactionAmount": 0,
+                      "minRewardAmount": 0,
+                      "maxRewardAmount": 0,
+                      "boostedOffers": [],
+                      "merchant": {
+                        "_id": "string",
+                        "name": "string",
+                        "description": "string",
+                        "websiteURL": "string",
+                        "imgUrl": "string",
+                        "bannerImgUrl": "string",
+                        "category": "string",
+                        "acceptedCards": ["string"],
+                        "source": "string",
+                        "createdDate": "2023-01-01T00:00:00Z",
+                        "lastModified": "2023-01-01T00:00:00Z",
+                        "offers": []
+                      },
+                      "category": "string",
+                      "displayAlways": true,
+                      "experimentBuildStatus": "string",
+                      "imgUrl": "string",
+                      "bannerImgUrl": "string"
+                    }
+                  ]
+                }
+              ],
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "_id": "string",
+                    "name": "string",
+                    "description": "string",
+                    "websiteURL": "string",
+                    "imgUrl": "string",
+                    "bannerImgUrl": "string",
+                    "category": "string",
+                    "acceptedCards": ["string"],
+                    "source": "string",
+                    "createdDate": "2023-01-01T00:00:00Z",
+                    "lastModified": "2023-01-01T00:00:00Z",
+                    "offers": [
+                      {
+                        "_id": "string",
+                        "terms": "string",
+                        "redeemableOnce": true,
+                        "name": "string",
+                        "offerType": "string",
+                        "commissionType": "string",
+                        "startDate": "2023-01-01T00:00:00Z",
+                        "expirationDate": "2023-01-01T00:00:00Z",
+                        "isTargeted": true,
+                        "createdDate": "2023-01-01T00:00:00Z",
+                        "lastModified": "2023-01-01T00:00:00Z",
+                        "totalCommission": 0,
+                        "isLocationSpecific": true,
+                        "source": "string",
+                        "merchantId": "string",
+                        "issuersCommission": 0,
+                        "usersCommission": 0,
+                        "minTransactionAmount": 0,
+                        "maxTransactionAmount": 0,
+                        "minRewardAmount": 0,
+                        "maxRewardAmount": 0,
+                        "boostedOffers": [],
+                        "merchant": {
+                          "_id": "string",
+                          "name": "string",
+                          "description": "string",
+                          "websiteURL": "string",
+                          "imgUrl": "string",
+                          "bannerImgUrl": "string",
+                          "category": "string",
+                          "acceptedCards": ["string"],
+                          "source": "string",
+                          "createdDate": "2023-01-01T00:00:00Z",
+                          "lastModified": "2023-01-01T00:00:00Z",
+                          "offers": []
+                        },
+                        "category": "string",
+                        "displayAlways": true,
+                        "experimentBuildStatus": "string",
+                        "imgUrl": "string",
+                        "bannerImgUrl": "string"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant/user/:referringPartnerUserId",
+              "pathParameters": {
+                "referringPartnerUserId": ":referringPartnerUserId"
+              },
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 400,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant/user/:referringPartnerUserId",
+              "pathParameters": {
+                "referringPartnerUserId": ":referringPartnerUserId"
+              },
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 404,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            },
+            {
+              "path": "/rewards/merchant/user/:referringPartnerUserId",
+              "pathParameters": {
+                "referringPartnerUserId": ":referringPartnerUserId"
+              },
+              "queryParameters": {
+                "page": 0,
+                "limit": 0,
+                "category": "Arts & Entertainment"
+              },
+              "headers": {
+                "X-API-VERSION": "string"
+              },
+              "responseStatusCode": 500,
+              "responseBody": "string",
+              "codeExamples": {
+                "nodeAxios": ""
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ],
+          "description": "Request Rewards Merchants by User",
+          "authed": true
+        }
+      ],
+      "types": ["type_merchants:Merchant", "type_merchants:Offer"],
+      "subpackages": [],
+      "urlSlug": "merchants",
+      "webhooks": [],
+      "websockets": []
+    }
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
+  "hasMultipleBaseUrls": false,
+  "globalHeaders": [
+    {
+      "key": "X-API-VERSION",
+      "type": {
+        "type": "optional",
+        "itemType": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}
