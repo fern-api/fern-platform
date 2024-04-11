@@ -5,9 +5,9 @@ import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, u
 import { parse } from "url";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { ResolvedEndpointPathParts } from "../../resolver/types";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
-import { ResolvedEndpointPathParts } from "../../util/resolver";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{

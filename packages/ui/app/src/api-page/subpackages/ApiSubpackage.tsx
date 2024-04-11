@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../util/resolver";
+import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";

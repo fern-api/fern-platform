@@ -3,7 +3,7 @@
  */
 
 import { render, screen } from "@testing-library/react";
-import { ResolvedEndpointPathParts } from "../../../util/resolver";
+import { ResolvedEndpointPathParts } from "../../../resolver/types";
 import { EndpointUrl } from "../EndpointUrl";
 
 function lit(value: string): ResolvedEndpointPathParts.Literal {

@@ -14,7 +14,7 @@ import {
     dereferenceObjectProperties,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/types";
 import { unknownToString } from "../util/unknownToString";
 import {
     PlaygroundEndpointRequestFormState,

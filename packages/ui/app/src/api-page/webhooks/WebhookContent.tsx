@@ -1,7 +1,7 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import React, { useCallback } from "react";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { EndpointParameter } from "../endpoints/EndpointParameter";

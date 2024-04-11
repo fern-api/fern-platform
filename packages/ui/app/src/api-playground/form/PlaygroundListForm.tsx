@@ -2,7 +2,7 @@ import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { memo, useCallback } from "react";
 import { FernButton } from "../../components/FernButton";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getDefaultValueForType, shouldRenderInline } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 

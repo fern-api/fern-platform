@@ -4,7 +4,7 @@ import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { MdxContent } from "../mdx/MdxContent";
 import { type SerializedMdxContent } from "../mdx/mdx";
-import { type ResolvedPath } from "../util/ResolvedPath";
+import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace CustomDocsPage {
     export interface Props {

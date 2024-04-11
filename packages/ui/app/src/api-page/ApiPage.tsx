@@ -3,8 +3,8 @@ import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useIsReady } from "../contexts/useIsReady";
+import { ResolvedRootPackage } from "../resolver/types";
 import { APIS } from "../sidebar/atom";
-import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
 
 export declare namespace ApiPage {

@@ -4,8 +4,8 @@ import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositione
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useRouteListener } from "../../../contexts/useRouteListener";
+import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";

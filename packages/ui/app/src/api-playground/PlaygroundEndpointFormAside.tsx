@@ -19,7 +19,7 @@ import {
     unwrapOptional,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/types";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {

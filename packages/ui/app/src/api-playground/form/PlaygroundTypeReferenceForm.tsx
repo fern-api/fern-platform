@@ -12,7 +12,7 @@ import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     unwrapReference,
-} from "../../util/resolver";
+} from "../../resolver/types";
 import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
 import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormAside";
 import { WithLabel } from "../WithLabel";

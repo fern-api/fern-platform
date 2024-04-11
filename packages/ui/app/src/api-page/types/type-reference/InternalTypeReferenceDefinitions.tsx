@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";

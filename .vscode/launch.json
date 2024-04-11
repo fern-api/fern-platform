@@ -9,20 +9,23 @@
       "request": "launch",
       "name": "Debug current test file",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "run",
-        "--inspect-brk",
-        "jest",
-        "--runInBand",
-        "--testPathPattern",
-        "${file}",
-        "--coverage",
-        "false"
-      ],
+      "runtimeArgs": ["run", "test", "--", "--debug", "${file}"],
       "port": 9229,
       "cwd": "${workspaceFolder}",
       "timeout": 10000,
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug with Chrome",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm docs:dev",
+      "cwd": "${workspaceFolder}/packages/ui/docs-bundle",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
     }
   ]
 }

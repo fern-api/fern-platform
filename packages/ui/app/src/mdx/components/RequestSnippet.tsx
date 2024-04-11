@@ -4,12 +4,12 @@ import { atom, useAtom } from "jotai";
 import { useCallback, useEffect, useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
-import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
 import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
+import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
 import { useNavigationContext } from "../../contexts/navigation-context";
+import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { findEndpoint } from "../../util/processRequestSnippetComponents";
-import { ResolvedEndpointDefinition } from "../../util/resolver";
 
 export declare namespace RequestSnippet {
     export interface Props {

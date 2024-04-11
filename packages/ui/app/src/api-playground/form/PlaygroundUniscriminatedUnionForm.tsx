@@ -4,7 +4,7 @@ import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
 import { FernSegmentedControl } from "../../components/FernSegmentedControl";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
 import { getDefaultValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 

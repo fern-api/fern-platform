@@ -11,7 +11,7 @@ import {
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
-} from "../../util/resolver";
+} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";

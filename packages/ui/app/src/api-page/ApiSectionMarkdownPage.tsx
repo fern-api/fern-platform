@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ReactElement } from "react";
 import { useShouldHideFromSsg } from "../contexts/navigation-context/useNavigationContext";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPageMetadata } from "../util/resolver";
+import { ResolvedPageMetadata } from "../resolver/types";
 import { useApiPageCenterElement } from "./useApiPageCenterElement";
 
 export const ApiSectionMarkdownPage = ({
