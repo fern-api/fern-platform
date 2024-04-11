@@ -1,4 +1,4 @@
-import { Expression } from "estree";
+import type { Expression } from "estree";
 import { SKIP as ESTREE_SKIP, visit as visitEstree } from "estree-util-visit";
 import type { ElementContent, Root } from "hast";
 import { SKIP, visit } from "unist-util-visit";
