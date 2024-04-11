@@ -1365,6 +1365,17 @@ function resolveCodeSnippets(
         });
     }
 
+    if (example.codeExamples.rubySdk != null) {
+        toRet.push({
+            name: undefined,
+            language: "ruby",
+            install: example.codeExamples.rubySdk.install,
+            code: example.codeExamples.rubySdk.client,
+            // hast: highlight(highlighter, code, "ruby"),
+            generated: true,
+        });
+    }
+
     example.codeSamples.forEach((codeSample) => {
         const language = cleanLanguage(codeSample.language);
         // Remove any generated code snippets with the same language
