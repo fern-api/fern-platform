@@ -2,8 +2,12 @@ import { useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useContext } from "react";
 import { FernLink } from "../components/FernLink";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FernLogo } from "./FernLogo";
+
+const BUILT_WITH_FERN_TOOLTIP_CONTENT = "SDKs and Docs for your API";
 
 export declare namespace BuiltWithFern {
     export interface Props {
@@ -12,6 +16,7 @@ export declare namespace BuiltWithFern {
 }
 
 export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
+    const { domain } = useDocsContext();
     const { isWhitelabeled } = useContext(FeatureFlagContext);
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
@@ -20,22 +25,21 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     }
 
     return (
-        <FernLink
-            href="https://buildwithfern.com"
-            className={cn("flex cursor-pointer items-center space-x-2 lg:px-3 py-3 mt-4 !no-underline", className)}
-            {...containerCallbacks}
-        >
-            <div className="size-4">
-                <FernLogo fill={isHovering ? undefined : "rgb(82, 82, 82)"} />
-            </div>
-            <div
-                className={cn("whitespace-nowrap text-xs transition", {
-                    "t-muted": isHovering,
-                    "text-text-disabled": !isHovering,
-                })}
-            >
-                Built with Fern
-            </div>
-        </FernLink>
+        <div className="absolute inset-x-0 bottom-0 z-50 my-8 flex justify-center">
+            <FernTooltipProvider>
+                <FernTooltip content={BUILT_WITH_FERN_TOOLTIP_CONTENT} side="top">
+                    <span>
+                        <FernLink
+                            href={`https://buildwithfern.com/?utm_campaign=buildWith&utm_medium=docs&utm_source=${encodeURIComponent(domain)}`}
+                            className={cn("inline-flex items-center gap-2", className)}
+                            {...containerCallbacks}
+                        >
+                            <span className={cn("text-xs t-muted whitespace-nowrap")}>Built with</span>
+                            <FernLogo muted={!isHovering} className="-mt-0.5 h-4 transition" />
+                        </FernLink>
+                    </span>
+                </FernTooltip>
+            </FernTooltipProvider>
+        </div>
     );
 };
