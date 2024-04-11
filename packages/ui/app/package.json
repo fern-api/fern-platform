@@ -59,6 +59,7 @@
     "@types/nprogress": "^0.2.3",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.1.0",
+    "estree-util-visit": "^2.0.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "hast-util-heading-rank": "^3.0.0",
