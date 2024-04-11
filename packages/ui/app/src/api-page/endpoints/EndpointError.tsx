@@ -9,7 +9,7 @@ import {
     ResolvedTypeShape,
     dereferenceObjectProperties,
     unwrapReference,
-} from "../../util/resolver";
+} from "../../resolver/types";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";

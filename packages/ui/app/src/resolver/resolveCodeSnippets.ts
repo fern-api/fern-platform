@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
-import { ResolvedCodeSnippet, ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "./resolver";
+import { ResolvedCodeSnippet, ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "./types";
 
 export function resolveCodeSnippets(
     endpoint: ResolvedEndpointDefinition,
@@ -83,4 +83,25 @@ export function resolveCodeSnippets(
     });
 
     return toRet;
+}
+
+function cleanLanguage(language: string): string {
+    language = language.toLowerCase().trim();
+    if (["node", "nodejs", "js", "javascript"].includes(language)) {
+        return "javascript";
+    }
+
+    if (["py", "python"].includes(language)) {
+        return "python";
+    }
+
+    if (["ts", "typescript", "ts-node"].includes(language)) {
+        return "typescript";
+    }
+
+    if (["go", "golang"].includes(language)) {
+        return "go";
+    }
+
+    return language;
 }

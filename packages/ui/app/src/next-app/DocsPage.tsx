@@ -8,7 +8,7 @@ import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvide
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
-import { type ResolvedPath } from "../util/ResolvedPath";
+import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace DocsPage {
     export interface Props {

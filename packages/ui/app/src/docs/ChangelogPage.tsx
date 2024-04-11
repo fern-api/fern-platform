@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../util/ResolvedPath";
+import { ResolvedPath } from "../resolver/ResolvedPath";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     return (
@@ -30,10 +30,10 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
 
                     {resolvedPath.items.map((item) => (
                         <section key={item.date} id={item.date} className="flex items-start">
-                            <div className="prose relative mr-8 w-content-width flex-1 dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 first:prose-h2:mt-0">
+                            <div className="prose w-content-width dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 first:prose-h2:mt-0 relative mr-8 flex-1">
                                 <div className="absolute -right-4 flex h-full w-[10px] items-start justify-center">
                                     <div className="bg-accent z-10 h-2 w-2 rounded-full" />
-                                    <div className="z-5 absolute h-full w-0.5 bg-border-default" />
+                                    <div className="z-5 bg-border-default absolute h-full w-0.5" />
                                 </div>
                                 <div className="pb-16">
                                     {

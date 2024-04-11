@@ -16,9 +16,9 @@ import {
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
-import { ApiDefinitionResolver } from "./ApiDefinitionResolver";
-import type { ResolvedPath } from "./ResolvedPath";
-import { ResolvedRootPackage } from "./resolver";
+import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import type { ResolvedPath } from "../resolver/ResolvedPath";
+import { ResolvedRootPackage } from "../resolver/types";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;

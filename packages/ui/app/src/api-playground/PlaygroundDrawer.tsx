@@ -22,7 +22,7 @@ import {
     ResolvedWebSocketChannel,
     isEndpoint,
     isWebSocket,
-} from "../util/resolver";
+} from "../resolver/types";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";

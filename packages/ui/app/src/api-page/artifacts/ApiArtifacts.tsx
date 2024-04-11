@@ -1,16 +1,16 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { API_ARTIFACTS_TITLE } from "../../config";
-import { ResolvedWithApiDefinition } from "../../util/resolver";
+import { ResolvedWithApiDefinition } from "../../resolver/types";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { SdkCard } from "./SdkCard";
+import { SdkCardLayout } from "./SdkCardLayout";
 import { DotNetLogo } from "./sdk-logos/DotNetLogo";
 import { GoLogo } from "./sdk-logos/GoLogo";
 import { JavaLogo } from "./sdk-logos/JavaLogo";
 import { PythonLogo } from "./sdk-logos/PythonLogo";
 import { RubyLogo } from "./sdk-logos/RubyLogo";
-import { SdkCard } from "./SdkCard";
-import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace ApiArtifacts {
     export interface Props {

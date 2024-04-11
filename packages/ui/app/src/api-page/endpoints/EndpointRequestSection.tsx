@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
-import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
+import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";

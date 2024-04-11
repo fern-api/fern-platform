@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional, unwrapReference } from "../../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional, unwrapReference } from "../../../resolver/types";
 
 export interface TypeShorthandOptions {
     plural?: boolean;

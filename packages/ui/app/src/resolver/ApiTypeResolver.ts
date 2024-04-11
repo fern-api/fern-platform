@@ -8,7 +8,7 @@ import {
     ResolvedReferenceShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-} from "./resolver";
+} from "./types";
 
 export class ApiTypeResolver {
     public constructor(private types: Record<string, APIV1Read.TypeDefinition>) {}

@@ -37,7 +37,7 @@ import {
     ResolvedWebhookDefinition,
     ResolvedWithApiDefinition,
     stringifyResolvedEndpointPathParts,
-} from "./resolver";
+} from "./types";
 
 interface MergedAuthAndHeaders {
     auth: APIV1Read.ApiAuth | undefined;
@@ -748,27 +748,6 @@ export class ApiDefinitionResolver {
 
     stripUndefines(obj: unknown): unknown {
         return JSON.parse(JSON.stringify(obj));
-    }
-
-    cleanLanguage(language: string): string {
-        language = language.toLowerCase().trim();
-        if (["node", "nodejs", "js", "javascript"].includes(language)) {
-            return "javascript";
-        }
-
-        if (["py", "python"].includes(language)) {
-            return "python";
-        }
-
-        if (["ts", "typescript", "ts-node"].includes(language)) {
-            return "typescript";
-        }
-
-        if (["go", "golang"].includes(language)) {
-            return "go";
-        }
-
-        return language;
     }
 
     resolveExampleEndpointRequest(
