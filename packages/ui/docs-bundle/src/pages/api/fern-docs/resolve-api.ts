@@ -1,7 +1,7 @@
 import { flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
 import {
+    ApiDefinitionResolver,
     REGISTRY_SERVICE,
-    resolveApiDefinition,
     serializeSidebarNodeDescriptionMdx,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
@@ -72,7 +72,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
         const apiSection = findApiSection(api, sidebarNodes);
 
         res.status(200).json(
-            await resolveApiDefinition(
+            await ApiDefinitionResolver.resolve(
                 apiSection?.title ?? "",
                 flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined),
                 pages,

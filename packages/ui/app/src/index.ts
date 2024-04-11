@@ -5,5 +5,6 @@ export * from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";
 export { REGISTRY_SERVICE } from "./services/registry";
 export * from "./sidebar/serializer";
+export { ApiDefinitionResolver } from "./util/ApiDefinitionResolver";
 export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
 export * from "./util/resolver";
