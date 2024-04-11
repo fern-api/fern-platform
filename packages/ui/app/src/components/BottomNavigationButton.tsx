@@ -14,7 +14,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     return (
         <FernLinkCard className="my-12 flex flex-1 items-center rounded-xl p-6" href={`/${neighbor.fullSlug}`}>
             {dir === "prev" && (
-                <span className="sm-4 t-muted sm:border-default inline-flex items-center gap-2 py-2.5 text-sm sm:mr-6 sm:border-r sm:pr-6">
+                <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:mr-6 sm:border-r sm:pr-6">
                     <ChevronLeftIcon />
                     <span className="hidden leading-none sm:inline">Go Back</span>
                 </span>
@@ -23,13 +23,13 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                 <div className="text-base font-semibold">{neighbor.title}</div>
 
                 {neighbor.excerpt && (
-                    <div className="prose prose-sm prose-p:t-muted dark:prose-invert prose-p:m-0 prose-p:leading-snug mt-1 font-normal">
+                    <div className="prose prose-sm mt-1 font-normal prose-p:t-muted dark:prose-invert prose-p:m-0 prose-p:leading-snug">
                         <MdxContent mdx={neighbor.excerpt} />
                     </div>
                 )}
             </div>
             {dir === "next" && (
-                <span className="sm-4 t-muted sm:border-default inline-flex items-center gap-2 py-2.5 text-sm sm:ml-6 sm:border-l sm:pl-6">
+                <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:ml-6 sm:border-l sm:pl-6">
                     <span className="hidden leading-none sm:inline">Up Next</span>
                     <ChevronRightIcon />
                 </span>
