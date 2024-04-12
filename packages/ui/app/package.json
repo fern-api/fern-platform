@@ -128,6 +128,7 @@
     "@types/react-test-renderer": "^18.0.7",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
@@ -135,6 +136,7 @@
     "jsdom": "^24.0.0",
     "next-router-mock": "^0.9.13",
     "organize-imports-cli": "^0.10.0",
+    "postcss-import": "^16.0.1",
     "prettier": "^3.2.4",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.74.1",
@@ -142,7 +144,7 @@
     "stylelint": "^16.1.0",
     "typescript": "5.4.3",
     "vite": "^5.2.6",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   },
   "eslintConfig": {
     "extends": [

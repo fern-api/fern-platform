@@ -7,12 +7,23 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug current test file",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "test", "--", "--debug", "${file}"],
-      "port": 9229,
-      "cwd": "${workspaceFolder}",
-      "timeout": 10000,
+      "name": "Debug Current Test File",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}"],
+      "smartStep": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current Test",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}", "--testName", "${input:TestName}"],
+      "smartStep": true,
       "console": "integratedTerminal"
     },
     {
