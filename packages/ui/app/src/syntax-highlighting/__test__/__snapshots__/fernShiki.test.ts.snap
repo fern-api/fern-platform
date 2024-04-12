@@ -1,0 +1,141 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`highlightTokens > should highlight tokens 1`] = `
+{
+  "code": "const a = 1;",
+  "hast": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "const a = 1;",
+                      },
+                    ],
+                    "properties": {},
+                    "tagName": "span",
+                    "type": "element",
+                  },
+                ],
+                "properties": {
+                  "class": "line",
+                },
+                "tagName": "span",
+                "type": "element",
+              },
+            ],
+            "properties": {},
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": {
+          "class": "shiki shiki-themes min-light material-theme-darker",
+          "style": "background-color:#ffffff;--shiki-dark-bg:#212121;color:#24292eff;--shiki-dark:#EEFFFF",
+          "tabindex": "0",
+        },
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "type": "root",
+  },
+  "lang": "txt",
+}
+`;
+
+exports[`highlightTokens > should transform diff notation 1`] = `
+{
+  "code": "const a = 1; // [!code --]
+const b = 2; // [!code ++]",
+  "hast": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "const a = 1;",
+                      },
+                    ],
+                    "properties": {},
+                    "tagName": "span",
+                    "type": "element",
+                  },
+                ],
+                "properties": {
+                  "class": [
+                    "line",
+                    "diff",
+                    "remove",
+                  ],
+                },
+                "tagName": "span",
+                "type": "element",
+              },
+              {
+                "type": "text",
+                "value": "
+",
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "const b = 2;",
+                      },
+                    ],
+                    "properties": {},
+                    "tagName": "span",
+                    "type": "element",
+                  },
+                ],
+                "properties": {
+                  "class": [
+                    "line",
+                    "diff",
+                    "add",
+                  ],
+                },
+                "tagName": "span",
+                "type": "element",
+              },
+            ],
+            "properties": {},
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": {
+          "class": [
+            "shiki",
+            "shiki-themes",
+            "min-light",
+            "material-theme-darker",
+            "has-diff",
+          ],
+          "style": "background-color:#ffffff;--shiki-dark-bg:#212121;color:#24292eff;--shiki-dark:#EEFFFF",
+          "tabindex": "0",
+        },
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "type": "root",
+  },
+  "lang": "txt",
+}
+`;

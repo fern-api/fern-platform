@@ -1,7 +1,7 @@
 import cn from "clsx";
 import type { Element } from "hast";
 import { isEqual } from "lodash-es";
-import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
+import { ReactElement, forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { visit } from "unist-util-visit";
 import { FernScrollArea } from "../components/FernScrollArea";
 import { HastToJSX } from "../mdx/common/HastToJsx";
@@ -90,7 +90,6 @@ export const FernSyntaxHighlighterTokens = memo(
                 return preStyle;
             }, [tokens.hast]);
 
-            const highlightedLines = useMemo(() => flattenHighlightLines(highlightLines ?? []), [highlightLines]);
             const lines = useMemo(() => {
                 const lines: Element[] = [];
                 visit(tokens.hast, "element", (node) => {
@@ -105,13 +104,101 @@ export const FernSyntaxHighlighterTokens = memo(
                 return lines;
             }, [tokens.hast]);
 
+            const highlightedLines = useMemo(() => {
+                const toRet: number[] = [];
+                if (highlightStyle !== "focus") {
+                    toRet.push(...flattenHighlightLines(highlightLines ?? []));
+                }
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (isStringOrArray(line.properties.class)) {
+                        if (line.properties.class.includes("highlighted")) {
+                            toRet.push(i);
+                        }
+                    }
+                }
+
+                return toRet;
+            }, [highlightLines, highlightStyle, lines]);
+
+            const focusedLines = useMemo(() => {
+                const toRet: number[] = [];
+                if (highlightStyle === "focus") {
+                    toRet.push(...flattenHighlightLines(highlightLines ?? []));
+                }
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (isStringOrArray(line.properties.class)) {
+                        if (line.properties.class.includes("focused")) {
+                            toRet.push(i);
+                        }
+                    }
+                }
+
+                return toRet;
+            }, [highlightLines, highlightStyle, lines]);
+
+            const preClassNames = useMemo(() => {
+                const classNames: string[] = [];
+
+                visit(tokens.hast, "element", (node) => {
+                    if (node.tagName === "pre") {
+                        if (typeof node.properties.class === "string") {
+                            classNames.push(...node.properties.class.split(" "));
+                        } else if (Array.isArray(node.properties.class)) {
+                            classNames.push(...(node.properties.class as string[]));
+                        }
+                        return false; // stop traversing
+                    }
+                    return true;
+                });
+
+                if (highlightedLines.length > 0 && !classNames.includes("has-highlighted")) {
+                    classNames.push("has-highlighted");
+                }
+
+                if (focusedLines.length > 0 && !classNames.includes("has-focused")) {
+                    classNames.push("has-focused");
+                }
+
+                if (tokens.lang === "plaintext" || tokens.lang === "text" || tokens.lang === "txt") {
+                    classNames.push("plaintext");
+                }
+
+                return classNames;
+            }, [focusedLines.length, highlightedLines.length, tokens.hast, tokens.lang]);
+
             const lang = tokens.lang;
             const gutterCli = lang === "cli" || lang === "shell" || lang === "bash";
             const plaintext = tokens.lang === "plaintext" || tokens.lang === "text" || tokens.lang === "txt";
 
+            const lineNumbers = useMemo<number[]>(() => {
+                let addCount = 0;
+                let removeCount = 0;
+                return lines.map((line): number => {
+                    if (hasDiffRemove(line)) {
+                        removeCount++;
+                        return removeCount;
+                    } else {
+                        removeCount = addCount;
+                    }
+
+                    addCount++;
+                    removeCount++;
+                    return addCount;
+                });
+            }, [lines]);
+
+            const renderRow = useMemo(
+                () => createRowRenderer(plaintext, gutterCli, preClassNames.includes("has-diff"), lineNumbers),
+                [plaintext, gutterCli, preClassNames, lineNumbers],
+            );
+
             return (
                 <pre
-                    className={cn("code-block-root not-prose", className)}
+                    className={cn("code-block-root not-prose", className, preClassNames)}
                     style={{ ...style, ...preStyle }}
                     ref={ref}
                     tabIndex={0}
@@ -125,15 +212,7 @@ export const FernSyntaxHighlighterTokens = memo(
                             })}
                         >
                             <div className="code-block-inner">
-                                <table
-                                    className={cn("code-block-line-group", {
-                                        "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
-                                        plaintext:
-                                            tokens.lang === "plaintext" ||
-                                            tokens.lang === "text" ||
-                                            tokens.lang === "txt",
-                                    })}
-                                >
+                                <table className={cn("code-block-line-group")}>
                                     {!plaintext && (
                                         <colgroup>
                                             <col className="w-fit" />
@@ -143,25 +222,13 @@ export const FernSyntaxHighlighterTokens = memo(
                                     <tbody>
                                         {lines.map((line, lineNumber) => (
                                             <tr
-                                                className={cn("code-block-line", {
-                                                    highlight: highlightedLines.includes(lineNumber),
+                                                className={cn("code-block-line", line.properties.class, {
+                                                    highlighted: highlightedLines.includes(lineNumber),
+                                                    focused: focusedLines.includes(lineNumber),
                                                 })}
                                                 key={lineNumber}
                                             >
-                                                {!plaintext && (
-                                                    <td className="code-block-line-gutter">
-                                                        <span>
-                                                            {gutterCli
-                                                                ? lineNumber === 0
-                                                                    ? "$"
-                                                                    : ">"
-                                                                : lineNumber + 1}
-                                                        </span>
-                                                    </td>
-                                                )}
-                                                <td className="code-block-line-content">
-                                                    <HastToJSX hast={line} />
-                                                </td>
+                                                {renderRow(lineNumber, line)}
                                             </tr>
                                         ))}
                                     </tbody>
@@ -176,3 +243,53 @@ export const FernSyntaxHighlighterTokens = memo(
     fernSyntaxHighlighterTokenPropsAreEqual,
 );
 FernSyntaxHighlighterTokens.displayName = "FernSyntaxHighlighterTokens";
+
+export function createRowRenderer(
+    plaintext: boolean,
+    gutterCli: boolean,
+    hasDiff: boolean,
+    lineNumbers: number[],
+): (lineNumber: number, line: Element) => ReactElement {
+    return function rowRenderer(i: number, line: Element) {
+        const lineNumber = lineNumbers[i];
+        return (
+            <>
+                {!plaintext && (
+                    <td className="code-block-line-gutter">
+                        <span>{gutterCli ? (lineNumber === 1 ? "$" : ">") : lineNumber}</span>
+                    </td>
+                )}
+                {hasDiff && (
+                    <td className="code-block-line-diff">
+                        {hasDiffAdd(line) ? <span>{"+"}</span> : hasDiffRemove(line) ? <span>{"-"}</span> : null}
+                    </td>
+                )}
+                <td className="code-block-line-content">
+                    {line.children.map((child, i) => (
+                        <HastToJSX hast={child} key={i} />
+                    ))}
+                </td>
+            </>
+        );
+    };
+}
+
+function hasDiffAdd(line: Element): boolean {
+    return (
+        isStringOrArray(line.properties.class) &&
+        line.properties.class.includes("diff") &&
+        line.properties.class.includes("add")
+    );
+}
+
+function hasDiffRemove(line: Element): boolean {
+    return (
+        isStringOrArray(line.properties.class) &&
+        line.properties.class.includes("diff") &&
+        line.properties.class.includes("remove")
+    );
+}
+
+function isStringOrArray(value: unknown): value is string | string[] {
+    return typeof value === "string" || Array.isArray(value);
+}

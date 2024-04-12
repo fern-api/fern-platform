@@ -1,22 +1,24 @@
 import cn from "clsx";
 import type { Element } from "hast";
-import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 import { visit } from "unist-util-visit";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { HastToJSX } from "../mdx/common/HastToJsx";
 import { parseStringStyle } from "../util/parseStringStyle";
 import "./FernSyntaxHighlighter.css";
 import {
     FernSyntaxHighlighterTokensProps,
     ScrollToHandle,
+    createRowRenderer,
     fernSyntaxHighlighterTokenPropsAreEqual,
 } from "./FernSyntaxHighlighterTokens";
 import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils";
 
 interface CodeBlockContext {
     fontSize: "sm" | "base" | "lg";
-    highlightStyle: "highlight" | "focus" | undefined;
+    // highlightStyle: "highlight" | "focus" | undefined;
+    hasHighlighted: boolean;
+    hasFocused: boolean;
     highlightedLines: number[];
     lang: string;
 }
@@ -24,8 +26,6 @@ interface CodeBlockContext {
 const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { context?: CodeBlockContext }>(
     ({ children, context, ...props }, ref) => {
         const fontSize = context?.fontSize ?? "base";
-        const highlightStyle = context?.highlightStyle;
-        const highlightedLines = context?.highlightedLines ?? [];
         const lang = context?.lang ?? "plaintext";
         const plaintext = lang === "plaintext" || lang === "text" || lang === "txt";
 
@@ -40,7 +40,8 @@ const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { con
                 <div className="code-block-inner">
                     <table
                         className={cn("code-block-line-group", {
-                            "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
+                            "has-highlighted": context?.hasHighlighted,
+                            "has-focused": context?.hasFocused,
                         })}
                         {...props}
                         ref={ref}
@@ -129,6 +130,19 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
             return preStyle;
         }, [tokens.hast]);
 
+        const preClassName = useMemo(() => {
+            let className: string | undefined;
+
+            visit(tokens.hast, "element", (node) => {
+                if (node.tagName === "pre" && typeof node.properties.class === "string") {
+                    className = node.properties.class;
+                    return false; // stop traversing
+                }
+                return true;
+            });
+            return className;
+        }, [tokens.hast]);
+
         const lines = useMemo(() => {
             const lines: Element[] = [];
             visit(tokens.hast, "element", (node) => {
@@ -147,7 +161,8 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
             () => ({
                 fontSize,
                 lang: tokens.lang,
-                highlightStyle,
+                hasHighlighted: highlightStyle === "highlight",
+                hasFocused: highlightStyle === "focus",
                 highlightedLines: flattenHighlightLines(highlightLines ?? []),
             }),
             [fontSize, highlightLines, highlightStyle, tokens.lang],
@@ -157,25 +172,11 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
         const gutterCli = lang === "cli" || lang === "shell" || lang === "bash";
         const plaintext = tokens.lang === "plaintext" || tokens.lang === "text" || tokens.lang === "txt";
 
-        const itemContent = useCallback(
-            (lineNumber: number, line: Element) => (
-                <>
-                    {!plaintext && (
-                        <td className="code-block-line-gutter">
-                            <span>{gutterCli ? (lineNumber === 0 ? "$" : ">") : lineNumber + 1}</span>
-                        </td>
-                    )}
-                    <td className="code-block-line-content">
-                        <HastToJSX hast={line} />
-                    </td>
-                </>
-            ),
-            [gutterCli, plaintext],
-        );
+        const renderRow = useMemo(() => createRowRenderer(gutterCli, plaintext), [gutterCli, plaintext]);
 
         return (
             <pre
-                className={cn("code-block-root not-prose", className)}
+                className={cn("code-block-root not-prose", className, preClassName)}
                 style={{ ...style, ...preStyle }}
                 ref={ref}
                 tabIndex={0}
@@ -189,7 +190,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
                     data={lines}
                     // initialItemCount={lines.length}
                     fixedItemHeight={getLineHeight(fontSize)}
-                    itemContent={itemContent}
+                    itemContent={renderRow}
                     overscan={1000}
                 />
             </pre>

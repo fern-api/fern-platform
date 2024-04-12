@@ -1,3 +1,10 @@
+import {
+    transformerNotationDiff,
+    transformerNotationErrorLevel,
+    transformerNotationFocus,
+    transformerNotationHighlight,
+    transformerNotationWordHighlight,
+} from "@shikijs/transformers";
 import type { Root } from "hast";
 import { h } from "hastscript";
 import { memoize } from "lodash-es";
@@ -72,6 +79,14 @@ export function highlightTokens(highlighter: Highlighter, code: string, rawLang:
             light: LIGHT_THEME,
             dark: DARK_THEME,
         },
+        transformers: [
+            // transformerTwoslash(),
+            transformerNotationDiff(),
+            transformerNotationHighlight(),
+            transformerNotationWordHighlight(),
+            transformerNotationErrorLevel(),
+            transformerNotationFocus(),
+        ],
     }) as Root;
     return { code, lang, hast };
 }

@@ -74,12 +74,16 @@ module.exports = {
 
                 "intent-default": "var(--grayscale-a11)",
                 "intent-default-lightened": "var(--grayscale-a12)",
+                "intent-default-highlight-faded": "var(--grayscale-a3)",
                 "intent-warning": "var(--amber-a11)",
                 "intent-warning-lightened": "var(--amber-a12)",
+                "intent-warning-highlight-faded": "var(--amber-a3)",
                 "intent-success": "var(--green-a11)",
                 "intent-success-lightened": "var(--green-a12)",
+                "intent-success-highlight-faded": "var(--green-a3)",
                 "intent-danger": "var(--red-a11)",
                 "intent-danger-lightened": "var(--red-a12)",
+                "intent-danger-highlight-faded": "var(--red-a3)",
                 "intent-info": "var(--blue-a11)",
                 "intent-info-lightened": "var(--blue-a12)",
 
