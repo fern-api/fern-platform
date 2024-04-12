@@ -7,7 +7,7 @@ import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FernLogo } from "./FernLogo";
 
-const BUILT_WITH_FERN_TOOLTIP_CONTENT = "SDKs and Docs for your API";
+const BUILT_WITH_FERN_TOOLTIP_CONTENT = "Handcrafted SDKs and Docs for your API";
 
 export declare namespace BuiltWithFern {
     export interface Props {
@@ -25,7 +25,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     }
 
     return (
-        <div className="absolute inset-x-0 bottom-0 z-50 my-8 flex justify-center">
+        <div className="absolute bottom-0 left-[50%] z-50 my-8 flex w-fit translate-x-[-50%] justify-center">
             <FernTooltipProvider>
                 <FernTooltip content={BUILT_WITH_FERN_TOOLTIP_CONTENT} side="top">
                     <span>
