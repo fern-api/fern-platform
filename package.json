@@ -65,7 +65,7 @@
     "husky": "^8.0.1",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
-    "vitest": "^1.4.0",
+    "vitest": "^1.5.0",
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
