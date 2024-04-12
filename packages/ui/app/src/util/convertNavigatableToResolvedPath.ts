@@ -7,7 +7,6 @@ import {
     traverseSidebarNodes,
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
-import moment from "moment";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { emitDatadogError } from "../analytics/datadogRum";
 import {
@@ -17,6 +16,7 @@ import {
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import type { ResolvedPath } from "./ResolvedPath";
+import { Changelog } from "./dateUtils";
 import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
@@ -133,7 +133,7 @@ export async function convertNavigatableToResolvedPath({
                     });
                     return {
                         date: item.date,
-                        dateString: moment(item.date).parseZone().format("MMMM D, YYYY"),
+                        dateString: Changelog.toLongDateString(item.date),
                         markdown,
                     };
                 }),
