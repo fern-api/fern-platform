@@ -9,7 +9,7 @@ import {
     ResolvedTypeShape,
     dereferenceObjectProperties,
     unwrapReference,
-} from "../../util/resolver";
+} from "../../resolver/types";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -63,7 +63,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             onClick={onClick}
         >
             <div className="flex items-baseline space-x-2">
-                <div className="bg-tag-danger text-intent-danger rounded-lg px-2 py-1 text-xs">{error.statusCode}</div>
+                <div className="rounded-lg bg-tag-danger px-2 py-1 text-xs text-intent-danger">{error.statusCode}</div>
                 <div className="t-muted text-xs">
                     {error.name != null ? titleCase(error.name) : getErrorNameForStatus(error.statusCode)}
                 </div>

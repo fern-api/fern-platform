@@ -1,4 +1,4 @@
-import { ResolvedEndpointDefinition } from "../../../util/resolver";
+import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { convertEndpointExampleToHttpRequestExample } from "../HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../stringifyHttpRequestExampleToCurl";
 

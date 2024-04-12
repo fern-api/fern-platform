@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern-platform.git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/app"
   },
   "private": true,
@@ -14,11 +14,14 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --passWithNoTests --globals",
+    "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -26,7 +29,10 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "pnpx chromatic --project-token=chpt_48b3c560025e978"
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.14.0",
@@ -53,6 +59,7 @@
     "@types/nprogress": "^0.2.3",
     "algoliasearch": "^4.22.1",
     "clsx": "^2.1.0",
+    "estree-util-visit": "^2.0.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "hast-util-heading-rank": "^3.0.0",
@@ -97,7 +104,16 @@
     "vfile": "^6.0.1"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.3.1",
     "@fern-platform/configs": "workspace:*",
+    "@storybook/addon-essentials": "8.1.0-alpha.6",
+    "@storybook/addon-interactions": "8.1.0-alpha.6",
+    "@storybook/addon-links": "8.1.0-alpha.6",
+    "@storybook/addon-onboarding": "8.1.0-alpha.6",
+    "@storybook/blocks": "8.1.0-alpha.6",
+    "@storybook/nextjs": "8.1.0-alpha.6",
+    "@storybook/react": "8.1.0-alpha.6",
+    "@storybook/test": "8.1.0-alpha.6",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@types/estree": "^1.0.5",
@@ -112,16 +128,29 @@
     "@types/react-test-renderer": "^18.0.7",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-react": "^4.2.1",
+    "chromatic": "^11.3.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^24.0.0",
     "next-router-mock": "^0.9.13",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "react-test-renderer": "^18.2.0",
+    "sass": "^1.74.1",
+    "storybook": "8.1.0-alpha.6",
     "stylelint": "^16.1.0",
     "typescript": "5.4.3",
     "vite": "^5.2.6",
     "vitest": "^1.4.0"
-  }
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/fern-api/fern-platform/issues"
+  },
+  "homepage": "https://github.com/fern-api/fern-platform#readme"
 }

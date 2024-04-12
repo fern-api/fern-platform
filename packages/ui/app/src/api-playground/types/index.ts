@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-ui/core-utils";
-import { ResolvedFormValue } from "../../util/resolver";
+import { ResolvedFormValue } from "../../resolver/types";
 import { PlaygroundRequestFormAuth } from "./auth";
 import { PlaygroundFormDataEntryValue } from "./formDataEntryValue";
 import { JsonVariant } from "./jsonVariant";

@@ -1,0 +1,127 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`resolveApiDefinition > should finish resolving 1`] = `
+{
+  "api": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+  "auth": {
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "items": [
+    {
+      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "availability": undefined,
+      "description": undefined,
+      "id": "subpackage_merchants",
+      "items": [
+        {
+          "apiPackageId": "subpackage_merchants",
+          "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+          "auth": {
+            "tokenName": "token",
+            "type": "bearerAuth",
+          },
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Request Rewards Merchants",
+          "environments": [],
+          "errors": [],
+          "examples": [],
+          "headers": [],
+          "id": "getMerchants",
+          "method": "GET",
+          "name": "Get Merchants",
+          "path": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": [],
+          "responseBody": {
+            "availability": undefined,
+            "description": undefined,
+            "shape": {
+              "availability": undefined,
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "typeId": "type_merchants:Merchant",
+              },
+              "type": "list",
+            },
+          },
+          "slug": [
+            "merchants",
+            "get-merchants",
+          ],
+          "title": "Get Merchants",
+          "type": "endpoint",
+        },
+      ],
+      "name": "Merchants",
+      "slug": [
+        "merchants",
+      ],
+      "title": "Merchants",
+      "type": "subpackage",
+    },
+  ],
+  "slug": [],
+  "type": "rootPackage",
+  "types": {
+    "type_merchants:Merchant": {
+      "availability": undefined,
+      "description": undefined,
+      "extends": [],
+      "name": "Merchant",
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "hidden": false,
+          "key": "offers",
+          "valueShape": {
+            "availability": undefined,
+            "defaultsTo": undefined,
+            "description": undefined,
+            "shape": {
+              "availability": undefined,
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "typeId": "type_merchants:Offer",
+              },
+              "type": "list",
+            },
+            "type": "optional",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "type_merchants:Offer": {
+      "availability": undefined,
+      "description": undefined,
+      "extends": [],
+      "name": "Offer",
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "hidden": false,
+          "key": "merchant",
+          "valueShape": {
+            "availability": undefined,
+            "defaultsTo": undefined,
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "typeId": "type_merchants:Merchant",
+            },
+            "type": "optional",
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+}
+`;

@@ -4,7 +4,7 @@ import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { MdxContent } from "../mdx/MdxContent";
 import { type SerializedMdxContent } from "../mdx/mdx";
-import { type ResolvedPath } from "../util/ResolvedPath";
+import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace CustomDocsPage {
     export interface Props {
@@ -33,7 +33,7 @@ export const CustomDocsPageHeader = ({
             </div>
 
             {excerpt != null && (
-                <div className="prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7">
+                <div className="prose prose-lg mt-2 leading-7 prose-p:t-muted dark:prose-invert">
                     <MdxContent mdx={excerpt} />
                 </div>
             )}

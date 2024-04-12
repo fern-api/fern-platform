@@ -68,6 +68,8 @@
     "db:migrate:dev": "dotenv -e .env.dev -- prisma migrate deploy",
     "db:migrate:local": "dotenv -e .env.local -- prisma migrate dev",
     "db:migrate:prod": "dotenv -e .env.prod -- prisma migrate deploy",
+    "db:up:local": "docker-compose -f docker-compose.local.yml up -d",
+    "db:down:local": "docker-compose -f docker-compose.local.yml down -d",
     "dev": "tsx src/server.ts --watch",
     "devjs": "node --experimental-specifier-resolution=node dist/server.js",
     "clean": "rm -rf ./dist && tsc --build --clean",

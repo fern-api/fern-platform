@@ -6,7 +6,7 @@ import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     dereferenceObjectProperties,
-} from "../../util/resolver";
+} from "../../resolver/types";
 
 function sortKeysBy(obj: Record<string, unknown>, order: string[]) {
     // return keyBy(

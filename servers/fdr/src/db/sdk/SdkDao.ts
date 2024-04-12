@@ -6,6 +6,7 @@ export interface SdkIdForPackage {
     typescriptSdk?: APIV1Write.TypescriptPackage & { sdkId: string };
     pythonSdk?: APIV1Write.PythonPackage & { sdkId: string };
     goSdk?: APIV1Write.GoModule & { sdkId: string };
+    rubySdk?: APIV1Write.RubyGem & { sdkId: string };
     javaSdk?: APIV1Write.JavaCoordinate & { sdkId: string };
 }
 

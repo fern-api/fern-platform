@@ -8,14 +8,14 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { APIS } from "../sidebar/atom";
 import {
     ResolvedApiDefinition,
     ResolvedRootPackage,
     flattenRootPackage,
     isEndpoint,
     isWebSocket,
-} from "../util/resolver";
+} from "../resolver/types";
+import { APIS } from "../sidebar/atom";
 import {
     PlaygroundSelectionState,
     createFormStateKey,

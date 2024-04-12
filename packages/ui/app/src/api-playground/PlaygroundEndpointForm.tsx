@@ -8,7 +8,7 @@ import {
     dereferenceObjectProperties,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/types";
 import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";

@@ -8,7 +8,7 @@ import { emitDatadogError } from "../analytics/datadogRum";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";

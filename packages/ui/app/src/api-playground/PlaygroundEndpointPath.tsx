@@ -4,8 +4,8 @@ import cn from "clsx";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../resolver/types";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
-import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../util/resolver";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "./types";
 import { buildRequestUrl, unknownToString } from "./utils";
@@ -33,7 +33,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 }) => {
     return (
         <div className="playground-endpoint">
-            <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
+            <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span className="playground-endpoint-url">
                     <span className="playground-endpoint-baseurl max-sm:hidden">{environment?.baseUrl}</span>

@@ -7,7 +7,7 @@ import {
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
     isResolvedSubpackage,
-} from "../util/resolver";
+} from "../resolver/types";
 import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";

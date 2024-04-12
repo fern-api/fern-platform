@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
+import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
-import { ResolvedEndpointDefinition } from "../util/resolver";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 

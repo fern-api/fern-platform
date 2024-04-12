@@ -19,7 +19,7 @@ import {
     unwrapOptional,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/types";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -236,7 +236,7 @@ export function PlaygroundEndpointFormAside({
                                 SidebarNode.isApiPage(activeNavigatable) &&
                                 activeNavigatable.api === endpoint.apiSectionId
                             }
-                            className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                            className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                         >
                             <span>View in API Reference</span>
                             <ArrowTopRightIcon className="size-4" />

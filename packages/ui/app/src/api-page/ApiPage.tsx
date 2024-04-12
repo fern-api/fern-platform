@@ -3,8 +3,8 @@ import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useIsReady } from "../contexts/useIsReady";
+import { ResolvedRootPackage } from "../resolver/types";
 import { APIS } from "../sidebar/atom";
-import { ResolvedRootPackage } from "../util/resolver";
 import { ApiPackageContents } from "./ApiPackageContents";
 
 export declare namespace ApiPage {
@@ -36,7 +36,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => 
             />
 
             {isApiScrollingDisabled && (
-                <div className="max-w-content-width md:max-w-endpoint-width mx-4 md:mx-6 lg:mx-8">
+                <div className="mx-4 max-w-content-width md:mx-6 md:max-w-endpoint-width lg:mx-8">
                     {/* <BottomNavigationButtons showPrev={true} /> */}
                 </div>
             )}

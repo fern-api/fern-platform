@@ -6,7 +6,7 @@ import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";
 import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../util/resolver";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../resolver/types";
 import { castToRecord, getDefaultValueForType, isExpandable } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 

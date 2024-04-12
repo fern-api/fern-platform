@@ -6,8 +6,8 @@ import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { useRouteListener } from "../../../contexts/useRouteListener";
+import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../util/resolver";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

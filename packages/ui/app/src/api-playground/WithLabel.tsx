@@ -12,7 +12,7 @@ import {
     WithAvailability,
     WithDescription,
     unwrapOptional,
-} from "../util/resolver";
+} from "../resolver/types";
 import { shouldRenderInline } from "./utils";
 
 interface WithLabelProps {

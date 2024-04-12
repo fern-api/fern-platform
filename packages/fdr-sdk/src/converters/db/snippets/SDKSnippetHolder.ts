@@ -5,6 +5,7 @@ export interface SnippetsConfigWithSdkId {
     pythonSdk?: APIV1Write.PythonPackage & { sdkId: string };
     goSdk?: APIV1Write.GoModule & { sdkId: string };
     javaSdk?: APIV1Write.JavaCoordinate & { sdkId: string };
+    rubySdk?: APIV1Write.RubyGem & { sdkId: string };
 }
 
 export interface SdkSnippetHolderArgs {
@@ -89,6 +90,31 @@ export class SDKSnippetHolder {
             return undefined;
         }
         if (snippetsForEndpoint[0]?.type !== "go") {
+            return undefined;
+        }
+        return {
+            install: undefined, // TODO: add install snippet
+            client: snippetsForEndpoint[0]?.client,
+        };
+    }
+
+    public getRubyCodeSnippetForEndpoint({
+        endpointPath,
+        endpointMethod,
+    }: {
+        endpointPath: string;
+        endpointMethod: FdrAPI.EndpointMethod;
+    }): APIV1Read.RubySnippet | undefined {
+        if (this.snippetsConfigWithSdkId.rubySdk == null) {
+            return undefined;
+        }
+        const sdkId = this.snippetsConfigWithSdkId.rubySdk.sdkId;
+        const snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
+        // if no snippets for this endpoint or multiple snippets just return undefined
+        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
+            return undefined;
+        }
+        if (snippetsForEndpoint[0]?.type !== "ruby") {
             return undefined;
         }
         return {

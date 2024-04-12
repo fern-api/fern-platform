@@ -1,6 +1,6 @@
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 

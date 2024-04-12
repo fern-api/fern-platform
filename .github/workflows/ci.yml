@@ -73,6 +73,24 @@ jobs:
           pnpm organize-imports
           git --no-pager diff --exit-code
 
+  visual-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        # Chromatic CI config: https://www.chromatic.com/docs/github-actions/
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: packages/ui/app
+
   test:
     runs-on: ubuntu-latest
     steps:

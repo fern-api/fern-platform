@@ -15,9 +15,10 @@ import {
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
-import type { ResolvedPath } from "./ResolvedPath";
+import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import type { ResolvedPath } from "../resolver/ResolvedPath";
+import { ResolvedRootPackage } from "../resolver/types";
 import { Changelog } from "./dateUtils";
-import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
@@ -98,7 +99,7 @@ export async function convertNavigatableToResolvedPath({
             return;
         }
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await resolveApiDefinition(
+        const apiDefinition = await ApiDefinitionResolver.resolve(
             traverseState.curr.title,
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             apiSection.flattenedApiDefinition!,
@@ -165,7 +166,10 @@ export async function convertNavigatableToResolvedPath({
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
                         const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined);
-                        return [apiName, await resolveApiDefinition(title, flattenedApiDefinition, pages, mdxOptions)];
+                        return [
+                            apiName,
+                            await ApiDefinitionResolver.resolve(title, flattenedApiDefinition, pages, mdxOptions),
+                        ];
                     }),
                 ),
             );

@@ -14,5 +14,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "vitest.commandLine": "pnpm test"
 }
