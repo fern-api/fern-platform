@@ -60,7 +60,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
 
         const footer = h(
             "footer",
-            { class: "mt-12" },
+            { class: "mt-12 not-prose" },
             h(
                 "div",
                 { class: "flex sm:justify-between max-sm:flex-col gap-4" },

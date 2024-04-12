@@ -8,6 +8,7 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 import { useCreateSearchService } from "../services/useSearchService";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
 import { DocsMainContent } from "./DocsMainContent";
 import { HeaderContainer } from "./HeaderContainer";
@@ -93,6 +94,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         <DocsMainContent />
                     </main>
                 </div>
+
+                <BuiltWithFern />
 
                 {/* Enables footer DOM injection */}
                 <footer id="fern-footer" />

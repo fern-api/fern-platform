@@ -9,7 +9,6 @@ import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBrea
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
-import { BuiltWithFern } from "./BuiltWithFern";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -84,7 +83,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
                     <MobileSidebarHeaderLinks />
-                    <BuiltWithFern />
                 </FernScrollArea>
             </SearchSidebar>
         </nav>
