@@ -1,4 +1,6 @@
 import {
+    transformerMetaHighlight,
+    transformerMetaWordHighlight,
     transformerNotationDiff,
     transformerNotationErrorLevel,
     transformerNotationFocus,
@@ -84,8 +86,10 @@ export function highlightTokens(highlighter: Highlighter, code: string, rawLang:
             transformerNotationDiff(),
             transformerNotationHighlight(),
             transformerNotationWordHighlight(),
-            transformerNotationErrorLevel(),
             transformerNotationFocus(),
+            transformerNotationErrorLevel(),
+            transformerMetaHighlight(),
+            transformerMetaWordHighlight(),
         ],
     }) as Root;
     return { code, lang, hast };
