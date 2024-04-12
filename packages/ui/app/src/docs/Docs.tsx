@@ -62,7 +62,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     />
                 )}
 
-                <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                <div className="relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1">
                     <style>
                         {`
                                 .fern-sidebar-container {
@@ -79,8 +79,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     <Sidebar
                         className={
                             layout?.disableHeader !== true
-                                ? "fern-sidebar-container bg-sidebar border-concealed top-header-height mt-header-height h-vh-minus-header w-sidebar-width sticky hidden lg:block"
-                                : "fern-sidebar-container bg-sidebar border-concealed h-vh-minus-header w-sidebar-width fixed hidden lg:block"
+                                ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
+                                : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block"
                         }
                         currentSlug={currentSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
@@ -88,7 +88,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         logoHref={logoHref}
                         showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
                     />
-                    {layout?.disableHeader && <div className="w-sidebar-width hidden lg:block" />}
+                    {layout?.disableHeader && <div className="hidden w-sidebar-width lg:block" />}
 
                     <main className="fern-main">
                         <DocsMainContent />
