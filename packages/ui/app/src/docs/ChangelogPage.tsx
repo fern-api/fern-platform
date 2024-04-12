@@ -1,9 +1,9 @@
-import moment from "moment";
 import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
+import { Changelog } from "../util/dateUtils";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     return (
@@ -47,7 +47,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 </div>
                             </div>
                             <div className="-mt-2 w-[18rem]">
-                                <span className="t-muted text-base">{moment(item.date).format("MMM DD YYYY")}</span>
+                                <span className="t-muted text-base">{Changelog.toShortDateString(item.date)}</span>
                             </div>
                         </section>
                     ))}

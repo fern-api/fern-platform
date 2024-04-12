@@ -3,7 +3,6 @@ import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
-import moment from "moment";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
@@ -11,6 +10,7 @@ import { StreamTag } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { Changelog } from "../util/dateUtils";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 
@@ -162,7 +162,7 @@ function shouldShowIndicator(changelog: SidebarNode.ChangelogPage): boolean {
         return false;
     }
 
-    return moment().diff(latestChange.date, "days") <= 7;
+    return Changelog.withinLastWeek(latestChange.date) || Changelog.isFutureDate(latestChange.date);
 }
 
 function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode {
@@ -172,7 +172,7 @@ function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode
         return null;
     }
 
-    return `Last updated ${moment(latestChange.date).fromNow()}`;
+    return `Last updated ${Changelog.toCalendarDate(latestChange.date)}`;
 }
 
 interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
