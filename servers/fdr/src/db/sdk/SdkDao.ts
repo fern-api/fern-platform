@@ -1,5 +1,6 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { Language, PrismaClient } from "@prisma/client";
+import { SdkIdFactory } from "../snippets/SdkIdFactory";
 import { SdkId } from "../types";
 
 export interface SdkIdForPackage {
@@ -11,9 +12,9 @@ export interface SdkIdForPackage {
 }
 
 export interface SdkDao {
-    getLatestSdkIdsForPackages(snippetConfig: APIV1Write.SnippetsConfig): Promise<SdkIdForPackage>;
+    getSdkIdsForPackages(snippetConfig: APIV1Write.SnippetsConfig): Promise<SdkIdForPackage>;
 
-    getLatestSdkIdForPackage({
+    getSdkIdForPackage({
         sdkPackage,
         language,
     }: {
@@ -25,10 +26,10 @@ export interface SdkDao {
 export class SdkDaoImpl implements SdkDao {
     constructor(private readonly prisma: PrismaClient) {}
 
-    public async getLatestSdkIdsForPackages(snippetConfig: APIV1Write.SnippetsConfig): Promise<SdkIdForPackage> {
+    public async getSdkIdsForPackages(snippetConfig: APIV1Write.SnippetsConfig): Promise<SdkIdForPackage> {
         const result: SdkIdForPackage = {};
         if (snippetConfig.typescriptSdk != null) {
-            const sdkId = await this.getLatestSdkIdForPackage({
+            const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.typescriptSdk.package,
                 language: Language.TYPESCRIPT,
             });
@@ -37,7 +38,7 @@ export class SdkDaoImpl implements SdkDao {
             }
         }
         if (snippetConfig.pythonSdk != null) {
-            const sdkId = await this.getLatestSdkIdForPackage({
+            const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.pythonSdk.package,
                 language: Language.PYTHON,
             });
@@ -46,7 +47,7 @@ export class SdkDaoImpl implements SdkDao {
             }
         }
         if (snippetConfig.javaSdk != null) {
-            const sdkId = await this.getLatestSdkIdForPackage({
+            const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.javaSdk.coordinate,
                 language: Language.JAVA,
             });
@@ -55,7 +56,7 @@ export class SdkDaoImpl implements SdkDao {
             }
         }
         if (snippetConfig.goSdk != null) {
-            const sdkId = await this.getLatestSdkIdForPackage({
+            const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.goSdk.githubRepo,
                 language: Language.GO,
             });
@@ -67,13 +68,48 @@ export class SdkDaoImpl implements SdkDao {
         return result;
     }
 
-    public async getLatestSdkIdForPackage({
+    public async getSdkIdForPackage({
         sdkPackage,
         language,
+        version,
     }: {
         sdkPackage: string;
         language: Language;
+        version?: string;
     }): Promise<string | undefined> {
+        let id: string | undefined;
+        if (version != null) {
+            switch (language) {
+                case Language.TYPESCRIPT:
+                    id = SdkIdFactory.fromTypescript({ package: sdkPackage, version });
+                    break;
+                case Language.PYTHON:
+                    id = SdkIdFactory.fromPython({ package: sdkPackage, version });
+                    break;
+                case Language.GO:
+                    id = SdkIdFactory.fromGo({ githubRepo: sdkPackage, version });
+                    break;
+                case Language.RUBY:
+                    id = SdkIdFactory.fromRuby({ gem: sdkPackage, version });
+                    break;
+                case Language.JAVA: {
+                    // TODO(armandobelardo): confirm how to do java here
+                    const splitCoord = sdkPackage.split(":");
+                    if (splitCoord.length === 2) {
+                        const group = sdkPackage.split(":")[0];
+                        const artifact = sdkPackage.split(":")[1];
+                        id = SdkIdFactory.fromJava({ group, artifact, version });
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+            if (id != null) {
+                return id;
+            }
+        }
+
         const sdkRow = await this.prisma.sdk.findFirst({
             select: {
                 id: true,

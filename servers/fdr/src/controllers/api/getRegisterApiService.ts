@@ -18,9 +18,8 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 orgId: req.body.orgId,
             });
             const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {};
-            const snippetsConfigurationWithSdkIds = await app.dao
-                .sdks()
-                .getLatestSdkIdsForPackages(snippetsConfiguration);
+
+            const snippetsConfigurationWithSdkIds = await app.dao.sdks().getSdkIdsForPackages(snippetsConfiguration);
             const sdkIds = [];
             if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);

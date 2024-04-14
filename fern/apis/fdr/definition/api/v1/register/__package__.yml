@@ -74,22 +74,27 @@ types:
   TypescriptPackage:
     properties:
       package: string
+      version: optional<string>
 
   PythonPackage:
     properties:
       package: string
+      version: optional<string>
 
   GoModule:
     properties:
       githubRepo: string
+      version: optional<string>
 
   JavaCoordinate:
     properties:
       coordinate: string
+      version: optional<string>
 
   RubyGem:
     properties:
       gem: string
+      version: optional<string>
 
   ApiDefinitionPackage:
     properties:
