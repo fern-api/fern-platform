@@ -44,7 +44,9 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                 props.subtitle != null
                     ? h(
                           "div",
-                          { class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7" },
+                          {
+                              class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7 prose-p:max-w-content-wide-width max-w-content-wide-width",
+                          },
                           ...parseMarkdown(props.subtitle),
                       )
                     : undefined;

@@ -10,7 +10,7 @@ import {
     StarIcon,
 } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { FC, isValidElement, PropsWithChildren, ReactElement } from "react";
+import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
@@ -36,7 +36,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
     return (
         <div
             className={cn(
-                "p-4 mt-4 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
+                "p-4 mt-4 first:mt-0 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
@@ -68,15 +68,15 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                         <span className="callout-icon">{icon}</span>
                     ) : (
                         visitDiscriminatedUnion({ intent }, "intent")._visit({
-                            info: () => <InfoCircledIcon className="size-5 text-intent-default" />,
-                            warning: () => <BellIcon className="size-5 text-intent-warning" />,
-                            success: () => <CheckCircledIcon className="size-5 text-intent-success" />,
-                            error: () => <ExclamationTriangleIcon className="size-5 text-intent-danger" />,
-                            note: () => <DrawingPinIcon className="size-5 text-intent-info" />,
+                            info: () => <InfoCircledIcon className="text-intent-default size-5" />,
+                            warning: () => <BellIcon className="text-intent-warning size-5" />,
+                            success: () => <CheckCircledIcon className="text-intent-success size-5" />,
+                            error: () => <ExclamationTriangleIcon className="text-intent-danger size-5" />,
+                            note: () => <DrawingPinIcon className="text-intent-info size-5" />,
                             launch: () => <RocketIcon className="t-accent size-5" />,
-                            tip: () => <StarIcon className="size-5 text-intent-success" />,
-                            check: () => <CheckIcon className="size-5 text-intent-success" />,
-                            _other: () => <InfoCircledIcon className="size-5 text-intent-default" />,
+                            tip: () => <StarIcon className="text-intent-success size-5" />,
+                            check: () => <CheckIcon className="text-intent-success size-5" />,
+                            _other: () => <InfoCircledIcon className="text-intent-default size-5" />,
                         })
                     )}
                 </div>

@@ -70,8 +70,10 @@ function resolveSidebarNodeRawApiSection(
 
                     return { ...resolvedSubpackage, apiType: "subpackage" };
                 },
-                page: (page) => ({
+                page: (page): SidebarNodeRaw.ApiSummaryPage => ({
                     type: "page",
+                    apiType: "summary",
+                    api,
                     id: page.id,
                     slug: page.slug,
                     title: page.title,
