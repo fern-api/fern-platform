@@ -23,8 +23,8 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     if (items.length === 1 && items[0] != null) {
         return (
             <div className={containerClass}>
-                <div className="bg-tag-default-soft rounded-t-[inherit]">
-                    <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
+                <div className="rounded-t-[inherit] bg-tag-default-soft">
+                    <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
                         <div className="flex min-h-10 overflow-x-auto">
                             <div className="flex items-center px-3 py-1.5">
                                 <span className="t-muted rounded text-sm font-semibold">
@@ -46,17 +46,17 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
             onValueChange={(value) => setSelectedTabIndex(parseInt(value, 10))}
             defaultValue="0"
         >
-            <div className="bg-tag-default-soft rounded-t-[inherit]">
-                <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
+            <div className="rounded-t-[inherit] bg-tag-default-soft">
+                <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
                     <Tabs.List className="flex min-h-10" asChild>
                         <HorizontalOverflowMask>
                             {items.map((item, idx) => (
                                 <Tabs.Trigger
                                     key={idx}
                                     value={idx.toString()}
-                                    className="data-[state=active]:shadow-accent-primary  group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
+                                    className="group  flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] data-[state=active]:shadow-accent-primary"
                                 >
-                                    <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
+                                    <span className="t-muted whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:t-default group-hover:bg-tag-default group-data-[state=active]:font-semibold">
                                         {item.title ?? `Untitled ${idx + 1}`}
                                     </span>
                                 </Tabs.Trigger>
