@@ -48,7 +48,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
     return (
         <RadixAccordion.Root
             type="multiple"
-            className="fern-card divide-default mb-6 mt-4 divide-y rounded-lg"
+            className="fern-card divide-default mb-6 mt-4 divide-y rounded-lg first:mt-0"
             value={activeTabs}
             onValueChange={handleValueChange}
         >

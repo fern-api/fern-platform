@@ -29,7 +29,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
 
     return (
         <RadixTabs.Root value={activeTab} onValueChange={setActiveTab}>
-            <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b">
+            <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
                 {tabs.map(({ title, toc = parentToc }, idx) => {
                     const id = slug(title);
                     return (

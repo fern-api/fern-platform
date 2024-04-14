@@ -10,7 +10,7 @@ import {
     StarIcon,
 } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { FC, isValidElement, PropsWithChildren, ReactElement } from "react";
+import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
@@ -36,7 +36,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
     return (
         <div
             className={cn(
-                "p-4 mt-4 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
+                "p-4 mt-4 first:mt-0 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
