@@ -17,9 +17,11 @@ export interface SdkDao {
     getSdkIdForPackage({
         sdkPackage,
         language,
+        version,
     }: {
         sdkPackage: string;
         language: Language;
+        version?: string;
     }): Promise<SdkId | undefined>;
 }
 
@@ -32,6 +34,7 @@ export class SdkDaoImpl implements SdkDao {
             const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.typescriptSdk.package,
                 language: Language.TYPESCRIPT,
+                version: snippetConfig.typescriptSdk.version,
             });
             if (sdkId != null) {
                 result.typescriptSdk = { ...snippetConfig.typescriptSdk, sdkId };
@@ -41,6 +44,7 @@ export class SdkDaoImpl implements SdkDao {
             const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.pythonSdk.package,
                 language: Language.PYTHON,
+                version: snippetConfig.pythonSdk.version,
             });
             if (sdkId != null) {
                 result.pythonSdk = { ...snippetConfig.pythonSdk, sdkId };
@@ -50,6 +54,7 @@ export class SdkDaoImpl implements SdkDao {
             const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.javaSdk.coordinate,
                 language: Language.JAVA,
+                version: snippetConfig.javaSdk.version,
             });
             if (sdkId != null) {
                 result.javaSdk = { ...snippetConfig.javaSdk, sdkId };
@@ -59,6 +64,7 @@ export class SdkDaoImpl implements SdkDao {
             const sdkId = await this.getSdkIdForPackage({
                 sdkPackage: snippetConfig.goSdk.githubRepo,
                 language: Language.GO,
+                version: snippetConfig.goSdk.version,
             });
             if (sdkId != null) {
                 result.goSdk = { ...snippetConfig.goSdk, sdkId };
