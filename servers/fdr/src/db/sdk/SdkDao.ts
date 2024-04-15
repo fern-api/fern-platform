@@ -98,16 +98,6 @@ export class SdkDaoImpl implements SdkDao {
                 case Language.RUBY:
                     id = SdkIdFactory.fromRuby({ gem: sdkPackage, version });
                     break;
-                case Language.JAVA: {
-                    // TODO(armandobelardo): confirm how to do java here
-                    const splitCoord = sdkPackage.split(":");
-                    if (splitCoord.length === 2) {
-                        const group = sdkPackage.split(":")[0];
-                        const artifact = sdkPackage.split(":")[1];
-                        id = SdkIdFactory.fromJava({ group, artifact, version });
-                    }
-                    break;
-                }
                 default:
                     break;
             }
@@ -122,6 +112,7 @@ export class SdkDaoImpl implements SdkDao {
             },
             where: {
                 package: sdkPackage,
+                version,
                 language,
             },
             orderBy: {

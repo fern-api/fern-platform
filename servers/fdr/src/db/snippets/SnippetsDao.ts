@@ -226,6 +226,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 data: {
                     id: sdkInfo.id,
                     package: getPackageNameFromSdkSnippetsCreate(storeSnippetsInfo.sdk),
+                    version: storeSnippetsInfo.sdk.sdk.version,
                     language: sdkInfo.language,
                     sdk: writeBuffer(storeSnippetsInfo.sdk.sdk),
                 },
