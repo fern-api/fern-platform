@@ -422,6 +422,31 @@ it("snippets dao", async () => {
             },
         },
     });
+    await serverApp?.dao.snippets().storeSnippets({
+        storeSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            sdk: {
+                type: "python",
+                sdk: {
+                    package: "acme",
+                    version: "0.0.2",
+                },
+                snippets: [
+                    {
+                        endpoint: {
+                            path: "/users/v1",
+                            method: FdrAPI.EndpointMethod.Get,
+                        },
+                        snippet: {
+                            async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
+                            sync_client: "client = Acme(api_key='YOUR_API_KEY')",
+                        },
+                    },
+                ],
+            },
+        },
+    });
     // get snippets
     const response = await serverApp?.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
@@ -456,22 +481,27 @@ it("snippets dao", async () => {
         throw new Error("expected a python snippet");
     }
     expect(snippet.sdk.package).toEqual("acme");
-    expect(snippet.sdk.version).toEqual("0.0.1");
+    expect(snippet.sdk.version).toEqual("0.0.2");
     expect(snippet.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     expect(snippet.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
 
-    const sdkId = await serverApp?.dao.sdks().getLatestSdkIdForPackage({ sdkPackage: "acme", language: "PYTHON" });
-    expect(sdkId).toEqual("python|acme|0.0.1");
+    const sdkId = await serverApp?.dao.sdks().getSdkIdForPackage({ sdkPackage: "acme", language: "PYTHON" });
+    expect(sdkId).toEqual("python|acme|0.0.2");
+
+    const sdkIdPrevious = await serverApp?.dao
+        .sdks()
+        .getSdkIdForPackage({ sdkPackage: "acme", language: "PYTHON", version: "0.0.1" });
+    expect(sdkIdPrevious).toEqual("python|acme|0.0.2");
 
     const snippetsForSdkId = await serverApp?.dao.snippets().loadAllSnippetsForSdkIds(sdkId != null ? [sdkId] : []);
     expect(snippetsForSdkId).toEqual({
-        "python|acme|0.0.1": {
+        "python|acme|0.0.2": {
             "/users/v1": {
                 DELETE: [],
                 GET: [
                     {
                         async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
-                        sdk: { package: "acme", version: "0.0.1" },
+                        sdk: { package: "acme", version: "0.0.2" },
                         sync_client: "client = Acme(api_key='YOUR_API_KEY')",
                         type: "python",
                     },
