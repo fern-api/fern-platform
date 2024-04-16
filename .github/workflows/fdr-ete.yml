@@ -9,6 +9,7 @@ on:
       - 'servers/fdr/**'
       - '.github/workflows/deploy-fdr.yml'
       - 'packages/fdr-sdk/**'
+      - 'pnpm-lock.yaml'
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
