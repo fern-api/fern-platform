@@ -2,17 +2,13 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      // Build depends on own codegen and downstream build/compile
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "dependsOn": ["^build", "^compile", "codegen"]
     },
     "codegen": {
-      // Don't cache codegen. We may not know all the outputs
-      // we can cache on a per-package basis
       "cache": false
     },
     "compile": {
-      // Build depends on downstream compile
       "outputs": ["dist/**"],
       "dependsOn": ["^compile"]
     },
@@ -28,20 +24,13 @@
     },
     "format": {},
     "test": {
-      // Test depends on own compile
       "dependsOn": ["compile"]
     },
     "test-db": {
-      // Test depends on own compile
       "dependsOn": ["compile"]
     },
     "test-ete": {
-      // Test depends on own compile
       "dependsOn": ["compile"]
-    },
-    "//#fdr:generate": {
-      "inputs": ["fern/**"],
-      "outputs": ["servers/fdr/src/api/generated/**", "packages/fdr-sdk/src/client/generated/**"]
     }
   },
   "globalDependencies": [".eslintrc.js", ".prettierrc.json"]

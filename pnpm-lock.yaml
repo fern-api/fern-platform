@@ -13,10 +13,6 @@ overrides:
 importers:
 
   .:
-    dependencies:
-      fern-api:
-        specifier: ^0.19.18
-        version: 0.19.18
     devDependencies:
       '@babel/core':
         specifier: ^7.23.7
@@ -12759,11 +12755,6 @@ packages:
 
   /fecha@4.2.3:
     resolution: {integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==}
-    dev: false
-
-  /fern-api@0.19.18:
-    resolution: {integrity: sha512-ADyw37Teq0PIqT1nbK5LiYLl2oAlC4M9MX92Tjh8lXOeK+GJdeWCCj2IqY9yHBSrEClycmwDs8RxjZiE7UKuwg==}
-    hasBin: true
     dev: false
 
   /fetch-retry@5.0.6:
