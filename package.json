@@ -20,7 +20,6 @@
     "lint:eslint:fix": "turbo lint:eslint:fix",
     "lint:monorepo": "echo 'mrlint is disabled until it supports pnpm workspaces'",
     "lint:monorepo:fix": "echo 'mrlint is disabled until it supports pnpm workspaces'",
-    "organize-imports": "organize-imports-cli packages/**/tsconfig.json && pnpm format",
     "lint:style": "turbo lint:style",
     "lint:style:fix": "turbo lint:style:fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
