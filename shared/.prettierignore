@@ -14,4 +14,4 @@ bundle.c?js
 **/fern/**
 out
 pnpm-lock.yaml
-**/generated/**
+**/generated/

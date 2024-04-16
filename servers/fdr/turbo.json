@@ -4,7 +4,7 @@
   "pipeline": {
     "compile": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^build", "^compile", "codegen", "//#fdr:generate"]
+      "dependsOn": ["^build", "^compile", "codegen"]
     }
   }
 }
