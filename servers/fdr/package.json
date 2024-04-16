@@ -62,9 +62,6 @@
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
   },
-  "resolutions": {
-    "esbuild": "0.20.2"
-  },
   "scripts": {
     "compile": "tsc --build",
     "codegen": "prisma generate",
