@@ -34,7 +34,6 @@ export class ParsedBaseUrl {
                 path: parsedURL.pathname === "/" || parsedURL.pathname === "" ? undefined : parsedURL.pathname,
             });
         } catch (e) {
-            LOGGER.error(`Failed to parse URL: ${url}`, e);
             throw new Error(`Failed to parse URL: ${url}. The error was ${(e as Error)?.message}`);
         }
     }
