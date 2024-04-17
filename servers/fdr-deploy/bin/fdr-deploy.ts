@@ -27,6 +27,7 @@ async function main() {
                     version,
                     environmentType,
                     environmentInfo,
+                    environmentType === "PROD" ? 3 : undefined,
                     {
                         env: { account: "985111089818", region: "us-east-1" },
                     },

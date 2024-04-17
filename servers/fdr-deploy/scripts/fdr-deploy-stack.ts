@@ -26,6 +26,7 @@ export class FdrDeployStack extends Stack {
         version: string,
         environmentType: EnvironmentType,
         environmentInfo: EnvironmentInfo,
+        nodes?: number,
         props?: StackProps,
     ) {
         super(scope, id, props);
@@ -91,7 +92,7 @@ export class FdrDeployStack extends Stack {
             cluster,
             cpu: environmentType === "PROD" ? 2048 : 512,
             memoryLimitMiB: environmentType === "PROD" ? 4096 : 1024,
-            desiredCount: 1, // TODO: make this 2 in prod
+            desiredCount: nodes ?? 2,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
