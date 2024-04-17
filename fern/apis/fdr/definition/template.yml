@@ -42,13 +42,16 @@ service:
               type: commons.ApiId
               docs: |
                 The API name.
-            snippet: list<SnippetRegistryEntry>
+            snippets: list<SnippetRegistryEntry>
 
     get:
       path: /get
       docs: Get the endpoint's snippet template for a particular SDK.
       display-name: Store snippets
       method: POST
+      errors:
+        - commons.UnauthorizedError
+        - SnippetNotFound
       request:
         name: GetSnippetTemplate
         body:
@@ -61,7 +64,9 @@ service:
               type: commons.ApiId
               docs: |
                 The API name.
-            snippet: list<EndpointSnippetTemplate>
+            sdk: snippets.SDK
+            endpointId: snippets.EndpointIdentifier
+      response: EndpointSnippetTemplate
 
 types:
   # Internal Snippet structure
@@ -98,9 +103,9 @@ types:
           and so the child would be the actual object type seen in the example.
   Template:
     base-properties:
-      imports: optional<string[]>
+      imports: optional<list<string>>
       templateInputs:
-        type: optional<TemplateInput[]>
+        type: optional<list<TemplateInput>>
         docs: An ordered list of inputs to the template.
       inputDelimiter: optional<string>
       isOptional:
@@ -135,14 +140,16 @@ types:
     properties:
       location: PayloadLocation
       path:
-        type: <string>
+        type: optional<string>
         docs: Dot delimited path to the value within the payload, if omitted the full payload is used.
 
   SnippetTemplate:
     properties:
-      version: string
       clientInstantiation: Template
       functionInvocation: Template
+  VersionedSnippetTemplate:
+    union:
+      v1: SnippetTemplate
 
   SnippetRegistryEntry:
     properties:
@@ -150,10 +157,16 @@ types:
       apiId: commons.ApiId
       sdk: snippets.SDK
       endpointId: snippets.EndpointIdentifier
-      snippetTemplate: SnippetTemplate
+      snippetTemplate: VersionedSnippetTemplate
 
   EndpointSnippetTemplate:
     properties:
       sdk: snippets.SDK
       endpointId: snippets.EndpointIdentifier
-      snippetTemplate: SnippetTemplate
+      snippetTemplate: VersionedSnippetTemplate
+
+errors:
+  SnippetNotFound:
+    status-code: 404
+    docs: The requested snippet was not found
+    type: string
