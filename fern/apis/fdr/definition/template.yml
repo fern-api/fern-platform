@@ -65,39 +65,44 @@ service:
 
 types:
   # Internal Snippet structure
-  # Literals to know what the template strings look like, really just a convenience
-  FernTemplate:
-    properties:
-      prefix: literal<"fern!{{ ">
-      suffix: literal<" }}">
+  TemplateSentinel: literal<"$FERN_INPUT">
 
-  # Can ParentSnippet just be a generic snippet template? I think realistically it's just the
-  # function call itself with templated values for it's inputs.
   DiscriminatedUnionTemplate:
     properties:
       members: map<string, Template>
   EnumTemplate:
     properties:
+      template: optional<string>
       values: map<string, string>
   GenericTemplate:
     properties:
       template: string
-  IterableConfiguration:
+  DictTemplate:
     properties:
+      containerTemplate:
+        type: string
+        docs: Commonly the braces of a container like `{ $FERN_INPUT }`, but may even be something like `new Dict( $FERN_INPUT )`
       delimiter: string
-      child:
+      keyTemplate: Template
+      valueTemplate: Template
+  IterableTemplate:
+    properties:
+      containerTemplate:
+        type: string
+        docs: Commonly the braces of a container like `[ $FERN_INPUT ]` for a list or `{ $FERN_INPUT }` for a set
+      delimiter: string
+      innerTemplate:
         type: Template
         docs: |
           In the event of an array, the root template would be something like `[ fern!{{ child }} ]`
           and so the child would be the actual object type seen in the example.
   Template:
     base-properties:
-      imports: string[]
-      wireValue: string
-      allowMultiple: optional<IterableConfiguration>
+      imports: optional<string[]>
       templateInputs:
-        type: map<string, Template>
-        docs: Keyed by the wire value
+        type: optional<TemplateInput[]>
+        docs: An ordered list of inputs to the template.
+      inputDelimiter: optional<string>
       isOptional:
         type: boolean
         docs: |
@@ -107,9 +112,35 @@ types:
       generic: GenericTemplate
       enum: EnumTemplate
       discriminatedUnion: DiscriminatedUnionTemplate
+      dict: DictTemplate
+      iterable: IterableTemplate
+
+  TemplateInput:
+    discriminated: false
+    union:
+      - Template
+      - PayloadInput
+  PayloadLocation:
+    docs: |
+      The location of the payload, if omitted the full payload is used.
+      Note that RELATIVE should be used for iterables primarily, so be
+      able to specify the path to the field relative to the iterated on object
+    enum:
+      - BODY
+      - QUERY
+      - PATH
+      - HEADERS
+      - RELATIVE
+  PayloadInput:
+    properties:
+      location: PayloadLocation
+      path:
+        type: <string>
+        docs: Dot delimited path to the value within the payload, if omitted the full payload is used.
 
   SnippetTemplate:
     properties:
+      version: string
       clientInstantiation: Template
       functionInvocation: Template
 
