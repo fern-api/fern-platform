@@ -1,0 +1,128 @@
+imports:
+  commons: commons.yml
+  snippets: __package__.yml
+
+service:
+  auth: true
+  base-path: /snippet-template
+  endpoints:
+    register:
+      path: /register
+      docs: Store endpoint snippet for a particular SDK.
+      display-name: Store snippet
+      method: POST
+      request:
+        name: RegisterSnippetTemplateRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            snippet: SnippetRegistryEntry
+
+    registerBatch:
+      path: /register/batch
+      docs: Store endpoint snippets for a particular SDK.
+      display-name: Store snippets
+      method: POST
+      request:
+        name: RegisterSnippetTemplateBatchRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            snippet: list<SnippetRegistryEntry>
+
+    get:
+      path: /get
+      docs: Get the endpoint's snippet template for a particular SDK.
+      display-name: Store snippets
+      method: POST
+      request:
+        name: GetSnippetTemplate
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            snippet: list<EndpointSnippetTemplate>
+
+types:
+  # Internal Snippet structure
+  # Literals to know what the template strings look like, really just a convenience
+  FernTemplate:
+    properties:
+      prefix: literal<"fern!{{ ">
+      suffix: literal<" }}">
+
+  # Can ParentSnippet just be a generic snippet template? I think realistically it's just the
+  # function call itself with templated values for it's inputs.
+  DiscriminatedUnionTemplate:
+    properties:
+      members: map<string, Template>
+  EnumTemplate:
+    properties:
+      values: map<string, string>
+  GenericTemplate:
+    properties:
+      template: string
+  IterableConfiguration:
+    properties:
+      delimiter: string
+      child:
+        type: Template
+        docs: |
+          In the event of an array, the root template would be something like `[ fern!{{ child }} ]`
+          and so the child would be the actual object type seen in the example.
+  Template:
+    base-properties:
+      imports: string[]
+      wireValue: string
+      allowMultiple: optional<IterableConfiguration>
+      templateInputs:
+        type: map<string, Template>
+        docs: Keyed by the wire value
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+    union:
+      generic: GenericTemplate
+      enum: EnumTemplate
+      discriminatedUnion: DiscriminatedUnionTemplate
+
+  SnippetTemplate:
+    properties:
+      clientInstantiation: Template
+      functionInvocation: Template
+
+  SnippetRegistryEntry:
+    properties:
+      orgId: commons.OrgId
+      apiId: commons.ApiId
+      sdk: snippets.SDK
+      endpointId: snippets.EndpointIdentifier
+      snippetTemplate: SnippetTemplate
+
+  EndpointSnippetTemplate:
+    properties:
+      sdk: snippets.SDK
+      endpointId: snippets.EndpointIdentifier
+      snippetTemplate: SnippetTemplate
