@@ -489,6 +489,12 @@ export type ResolvedTypeShape =
     | APIV1Read.TypeReference.Unknown
     | ResolvedReferenceShape;
 
+export type WithoutMetadata = APIV1Read.TypeReference.Unknown | ResolvedReferenceShape;
+
+export function hasMetadata(shape: ResolvedTypeShape): shape is Exclude<ResolvedTypeShape, WithoutMetadata> {
+    return shape.type !== "unknown" && shape.type !== "reference";
+}
+
 export type DereferencedTypeShape = Exclude<ResolvedTypeShape, ResolvedReferenceShape>;
 export type NonOptionalTypeShape = Exclude<DereferencedTypeShape, ResolvedOptionalShape>;
 export type NonOptionalTypeShapeWithReference = Exclude<ResolvedTypeShape, ResolvedOptionalShape>;
@@ -615,6 +621,51 @@ export function unwrapOptional(
         return unwrapOptional(shape.shape, types);
     }
     return shape;
+}
+
+export function unwrapDescription(
+    valueShape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): string | MDXRemoteSerializeResult | undefined {
+    while (valueShape.type === "alias" || valueShape.type === "reference" || valueShape.type === "optional") {
+        if (valueShape.type === "reference") {
+            const nestedShape = types[valueShape.typeId];
+            if (nestedShape == null) {
+                return undefined;
+            }
+            valueShape = nestedShape;
+        } else {
+            if (valueShape.description != null) {
+                return valueShape.description;
+            }
+            valueShape = valueShape.shape;
+        }
+    }
+
+    if (hasMetadata(valueShape) && valueShape.description != null) {
+        return valueShape.description;
+    }
+
+    if (valueShape.type === "map") {
+        return unwrapDescription(valueShape.valueShape, types);
+    }
+
+    if (valueShape.type === "list" || valueShape.type === "set") {
+        return unwrapDescription(valueShape.shape, types);
+    }
+
+    return undefined;
+}
+
+export function getParameterDescription(
+    parameter: ResolvedObjectProperty,
+    types: Record<string, ResolvedTypeDefinition>,
+): string | MDXRemoteSerializeResult | undefined {
+    if (parameter.description != null) {
+        return parameter.description;
+    }
+
+    return unwrapDescription(parameter.valueShape, types);
 }
 
 // This hack is no longer needed since it was introduced for Hume's demo only.

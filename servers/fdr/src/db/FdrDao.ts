@@ -2,9 +2,10 @@ import { PrismaClient } from "@prisma/client";
 import { APIDefinitionDao, APIDefinitionDaoImpl } from "./api/APIDefinitionDao";
 import { DocsV2Dao, DocsV2DaoImpl } from "./docs/DocsV2Dao";
 import { IndexSegmentDaoImpl, type IndexSegmentDao } from "./docs/IndexSegmentDao";
+import { DocsRegistrationDao } from "./registrations/DocsRegistrationDao";
+import { SdkDao, SdkDaoImpl } from "./sdk/SdkDao";
 import { SnippetAPIsDaoImpl, type SnippetAPIsDao } from "./snippetApis/SnippetAPIsDao";
 import { SnippetsDaoImpl, type SnippetsDao } from "./snippets/SnippetsDao";
-import { SdkDao, SdkDaoImpl } from "./sdk/SdkDao";
 
 export class FdrDao {
     private docsV2Dao;
@@ -13,6 +14,7 @@ export class FdrDao {
     private snippetsDao;
     private snippetAPIsDao;
     private sdksDao;
+    private docsRegistrationDao;
 
     constructor(prisma: PrismaClient) {
         this.docsV2Dao = new DocsV2DaoImpl(prisma);
@@ -21,6 +23,7 @@ export class FdrDao {
         this.snippetsDao = new SnippetsDaoImpl(prisma);
         this.snippetAPIsDao = new SnippetAPIsDaoImpl(prisma);
         this.sdksDao = new SdkDaoImpl(prisma);
+        this.docsRegistrationDao = new DocsRegistrationDao(prisma);
     }
 
     public docsV2(): DocsV2Dao {
@@ -45,5 +48,9 @@ export class FdrDao {
 
     public sdks(): SdkDao {
         return this.sdksDao;
+    }
+
+    public docsRegistration(): DocsRegistrationDao {
+        return this.docsRegistrationDao;
     }
 }

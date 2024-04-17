@@ -295,9 +295,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             <div className="flex items-center">
                 <span className="inline-flex items-baseline gap-2">
                     <span className="t-accent text-sm font-semibold">API Playground</span>
-                    <span className="t-accent flex h-5 items-center rounded-md bg-tag-primary px-1.5 py-1 font-mono text-xs uppercase">
-                        BETA
-                    </span>
                 </span>
             </div>
 
