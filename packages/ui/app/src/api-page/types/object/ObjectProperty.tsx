@@ -4,7 +4,7 @@ import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositione
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useRouteListener } from "../../../contexts/useRouteListener";
-import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../resolver/types";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, hasMetadata, unwrapOptional } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
@@ -97,6 +97,18 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     }, [contextValue, jsonPropertyPath]);
 
     const anchorRoute = `${route}#${anchorId}`;
+
+    const description = useMemo(() => {
+        if (property.description != null) {
+            return property.description;
+        }
+        const unwrappedProperty = unwrapOptional(property.valueShape, types);
+        if (hasMetadata(unwrappedProperty)) {
+            return unwrappedProperty.description;
+        }
+        return undefined;
+    }, [property.description, property.valueShape, types]);
+
     return (
         <div
             ref={ref}
@@ -124,9 +136,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
-            {property.description && (
-                <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
-            )}
+            <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
             {hasInternalTypeReference(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>

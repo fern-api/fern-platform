@@ -489,6 +489,12 @@ export type ResolvedTypeShape =
     | APIV1Read.TypeReference.Unknown
     | ResolvedReferenceShape;
 
+export type WithoutMetadata = APIV1Read.TypeReference.Unknown | ResolvedReferenceShape;
+
+export function hasMetadata(shape: ResolvedTypeShape): shape is Exclude<ResolvedTypeShape, WithoutMetadata> {
+    return shape.type !== "unknown" && shape.type !== "reference";
+}
+
 export type DereferencedTypeShape = Exclude<ResolvedTypeShape, ResolvedReferenceShape>;
 export type NonOptionalTypeShape = Exclude<DereferencedTypeShape, ResolvedOptionalShape>;
 export type NonOptionalTypeShapeWithReference = Exclude<ResolvedTypeShape, ResolvedOptionalShape>;
