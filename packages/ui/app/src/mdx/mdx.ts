@@ -235,5 +235,5 @@ export async function serializeMdxWithFrontmatter(
 }
 
 export function replaceBrokenBrTags(content: string): string {
-    return content.replace(/<br\s*\/?>/g, "<br />").replace("</br>", "");
+    return content.replaceAll(/<br\s*\/?>/g, "<br />").replaceAll("</br>", "");
 }
