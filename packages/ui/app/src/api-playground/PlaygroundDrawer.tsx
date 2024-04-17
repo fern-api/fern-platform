@@ -272,7 +272,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                             content={
                                 <span className="space-x-4">
                                     <span>Close API Playground</span>
-                                    <span className="text-faded font-mono">CTRL + `</span>
+                                    <span className="font-mono text-faded">CTRL + `</span>
                                 </span>
                             }
                         >
@@ -313,7 +313,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                             content={
                                 <span className="space-x-4">
                                     <span>Close API Playground</span>
-                                    <span className="text-faded font-mono">CTRL + `</span>
+                                    <span className="font-mono text-faded">CTRL + `</span>
                                 </span>
                             }
                         >
