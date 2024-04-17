@@ -1,8 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  commons: commons.yml
-  snippets: __package__.yml
+  rootCommons: ../../../commons.yml
 
 service:
   auth: true
@@ -18,11 +17,11 @@ service:
         body:
           properties:
             orgId:
-              type: commons.OrgId
+              type: rootCommonsOrgId
               docs: |
                 The organization to create snippets for.
             apiId:
-              type: commons.ApiId
+              type: rootCommonsApiId
               docs: |
                 The API name.
             snippet: SnippetRegistryEntry
@@ -36,11 +35,11 @@ service:
         body:
           properties:
             orgId:
-              type: commons.OrgId
+              type: rootCommonsOrgId
               docs: |
                 The organization to create snippets for.
             apiId:
-              type: commons.ApiId
+              type: rootCommonsApiId
               docs: |
                 The API name.
             snippet: list<SnippetRegistryEntry>
@@ -54,12 +53,12 @@ service:
         body:
           properties:
             orgId:
-              type: optional<commons.OrgId>
+              type: optional<rootCommonsOrgId>
               docs: |
                 If the same API is defined across multiple organization,
                 you must specify an organization ID.
             apiId:
-              type: optional<commons.ApiId>
+              type: optional<rootCommonsApiId>
               docs: |
                 If you have more than one API, you must specify its ID.
             endpoint: EndpointIdentifier
@@ -74,12 +73,12 @@ service:
         body:
           properties:
             orgId:
-              type: optional<commons.OrgId>
+              type: optional<rootCommonsOrgId>
               docs: |
                 If the same API is defined across multiple organization,
                 you must specify an organization ID.
             apiId:
-              type: optional<commons.ApiId>
+              type: optional<rootCommonsApiId>
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks: SDK
@@ -162,8 +161,8 @@ types:
       functionInvocation: Template
   SnippetRegistryEntry:
     properties:
-      orgId: commons.OrgId
-      apiId: commons.ApiId
+      orgId: rootCommonsOrgId
+      apiId: rootCommonsApiId
       sdk: Sdk
       endpointId: EndpointIdentifier
       snippetTemplate: SnippetTemplate
