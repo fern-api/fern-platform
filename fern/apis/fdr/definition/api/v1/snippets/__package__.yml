@@ -1,0 +1,249 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  snippets: __package__.yml
+
+service:
+  auth: true
+  base-path: /v2/snippets
+  endpoints:
+    register:
+      path: /register
+      docs: Store endpoint snippet for a particular SDK.
+      display-name: Store snippet
+      method: POST
+      request:
+        name: CreateSnippetRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            snippet: SnippetRegistryEntry
+    registerBatch:
+      path: /register/batch
+      docs: Store endpoint snippets for a particular SDK.
+      display-name: Store snippets
+      method: POST
+      request:
+        name: CreateSnippetsRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            snippet: list<SnippetRegistryEntry>
+
+    detailEndpoint:
+      docs: A convenience method to get back the wireformats + expectations for a specific endpoint.
+      path: /detail
+      method: POST
+      request:
+        name: SnippetDetailRequest
+        body:
+          properties:
+            orgId:
+              type: optional<commons.OrgId>
+              docs: |
+                If the same API is defined across multiple organization,
+                you must specify an organization ID.
+            apiId:
+              type: optional<commons.ApiId>
+              docs: |
+                If you have more than one API, you must specify its ID.
+            endpoint: EndpointIdentifier
+      response: WireFormatDump
+
+    get:
+      path: ""
+      docs: Get a snippet for the specified endpoint (optionally) with a custom payload.
+      method: POST
+      request:
+        name: GetSnippetRequest
+        body:
+          properties:
+            orgId:
+              type: optional<commons.OrgId>
+              docs: |
+                If the same API is defined across multiple organization,
+                you must specify an organization ID.
+            apiId:
+              type: optional<commons.ApiId>
+              docs: |
+                If you have more than one API, you must specify its ID.
+            sdks: SDK
+            endpoint: EndpointIdentifier
+            # Nice to have, allow client variable name to be configurable
+            # clientName:
+            #   type: optional<string>
+            #   docs: |
+            #     The name of the client to be used in the snippet. If not specified then the default client name (the API name) will be used.
+            payload:
+              type: optional<unknown>
+              docs: |
+                The JSON payload to be used as the input for the code snippet. This should just be thought of as the
+                request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
+      response: list<SdkSnippet>
+
+types:
+  EndpointIdentifier:
+    properties:
+      path: EndpointPath
+      method: EndpointMethod
+  EndpointPath:
+    type: string
+    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+  EndpointMethod:
+    enum:
+      - PUT
+      - POST
+      - GET
+      - PATCH
+      - DELETE
+
+  # Internal Snippet structure
+  # Literals to know what the template strings look like, really just a convenience
+  FernTemplate:
+    properties:
+      prefix: literal<"fern!{{ ">
+      suffix: literal<" }}">
+
+  # Can ParentSnippet just be a generic snippet template? I think realistically it's just the
+  # function call itself with templated values for it's inputs.
+  DiscriminatedUnionTemplate:
+    properties:
+      members: map<string, Template>
+  EnumTemplate:
+    properties:
+      values: map<string, string>
+  GenericTemplate:
+    properties:
+      template: string
+  IterableConfiguration:
+    properties:
+      delimiter: string
+      child:
+        type: Template
+        docs: |
+          In the event of an array, the root template would be something like `[ fern!{{ child }} ]`
+          and so the child would be the actual object type seen in the example.
+  Template:
+    base-properties:
+      imports: string[]
+      wireValue: string
+      allowMultiple: optional<IterableConfiguration>
+      templateInputs:
+        type: map<string, Template>
+        docs: Keyed by the wire value
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+    union:
+      generic: GenericTemplate
+      enum: EnumTemplate
+      discriminatedUnion: DiscriminatedUnionTemplate
+
+  SnippetTemplate:
+    properties:
+      clientInstantiation: Template
+      functionInvocation: Template
+  SnippetRegistryEntry:
+    properties:
+      orgId: commons.OrgId
+      apiId: commons.ApiId
+      sdk: Sdk
+      endpointId: EndpointIdentifier
+      snippetTemplate: SnippetTemplate
+
+  # Snippet formatting
+  SdkSnippet:
+    base-properties:
+      package: string
+      version: string
+    union:
+      python: PythonSDKSnippet
+      typescript: TypescriptSDKSnippet
+      java: JavaSDKSnippet
+      go: GoSDKSnippet
+      ruby: RubySDKSnippet
+  GoSDKSnippet:
+    extends: BaseSdkSnippet
+  TypescriptSDKSnippet:
+    extends: BaseSdkSnippet
+  RubySDKSnippet:
+    extends: BaseSdkSnippet
+  JavaSDKSnippet:
+    extends: BaseSdkSnippet
+  PythonSDKSnippet:
+    extends: BaseSdkSnippet
+    properties:
+      asyncClientInstantiation: string
+  BaseSdkSnippet:
+    docs: |
+      The core properties pretty much all snippets should have. If needed you may extend this with additional properties per SDK,
+      as Python does. But do try to still extend this base as it allows consumers to handle the objects similarly.
+    properties:
+      imports: string[]
+      clientInstantiation: string
+      functionInvocation: string
+
+  # Communicating SDKs to make requests
+  Sdk:
+    docs: |
+      Leverage the version to pull snippets for a specific version of this SDK, or leave blank to get the latest.
+    base-properties:
+      version: optional<string>
+    union:
+      typescript: TypeScriptSdk
+      python: PythonSdk
+      go: GoSdk
+      ruby: RubySdk
+      java: JavaSdk
+  TypeScriptSdk:
+    properties:
+      package: string
+  PythonSdk:
+    properties:
+      package: string
+  RubySdk:
+    properties:
+      package: string
+  GoSdk:
+    properties:
+      githubRepo: string
+  JavaSdk:
+    properties:
+      coordinate:
+        type: string
+        docs: The full coordinate (e.g. `com.stripe.java:stripe-java`)
+
+  # Custom payloads
+  ParameterPayload:
+    properties:
+      name: string
+      value: unknown
+  CustomSnippetPayload:
+    properties:
+      headers: optional<list<ParameterPayload>>
+      pathParameters: optional<list<ParameterPayload>>
+      queryParameters: optional<list<ParameterPayload>>
+      requestBody: optional<unknown>
+  WireFormatDump:
+    properties:
+      headers: optional<list<string>>
+      pathParameters: optional<list<string>>
+      queryParameters: optional<list<string>>
+      requestBody: optional<list<unknown>>
