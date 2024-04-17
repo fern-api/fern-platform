@@ -1,8 +1,15 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { Fragment, ReactNode } from "react";
-import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../resolver/types";
+import {
+    ResolvedFileUploadRequestProperty,
+    ResolvedRequestBody,
+    ResolvedTypeDefinition,
+    unwrapDescription,
+    visitResolvedHttpRequestBodyShape,
+} from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -91,7 +98,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                 bodyProperty: (bodyProperty) => (
                                     <EndpointParameter
                                         name={bodyProperty.key}
-                                        description={bodyProperty.description}
+                                        description={getDescription(bodyProperty, types)}
                                         shape={bodyProperty.valueShape}
                                         anchorIdParts={[...anchorIdParts, bodyProperty.key]}
                                         route={route}
@@ -120,3 +127,14 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         </div>
     );
 };
+
+function getDescription(
+    bodyProperty: ResolvedFileUploadRequestProperty.BodyProperty,
+    types: Record<string, ResolvedTypeDefinition>,
+): string | MDXRemoteSerializeResult | undefined {
+    if (bodyProperty.description != null) {
+        return bodyProperty.description;
+    }
+
+    return unwrapDescription(bodyProperty.valueShape, types);
+}
