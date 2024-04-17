@@ -623,6 +623,32 @@ export function unwrapOptional(
     return shape;
 }
 
+export function unwrapDescription(
+    valueShape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): string | MDXRemoteSerializeResult | undefined {
+    while (valueShape.type === "alias" || valueShape.type === "reference" || valueShape.type === "optional") {
+        if (valueShape.type === "reference") {
+            const nestedShape = types[valueShape.typeId];
+            if (nestedShape == null) {
+                return undefined;
+            }
+            valueShape = nestedShape;
+        } else {
+            if (valueShape.description != null) {
+                return valueShape.description;
+            }
+            valueShape = valueShape.shape;
+        }
+    }
+
+    if (hasMetadata(valueShape) && valueShape.description != null) {
+        return valueShape.description;
+    }
+
+    return undefined;
+}
+
 // This hack is no longer needed since it was introduced for Hume's demo only.
 // keeping this around in case we need to re-introduce it.
 

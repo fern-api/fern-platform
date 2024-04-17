@@ -7,8 +7,7 @@ import {
     ResolvedFileUploadRequestProperty,
     ResolvedRequestBody,
     ResolvedTypeDefinition,
-    hasMetadata,
-    unwrapOptional,
+    unwrapDescription,
     visitResolvedHttpRequestBodyShape,
 } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -137,11 +136,5 @@ function getDescription(
         return description;
     }
 
-    valueShape = unwrapOptional(valueShape, types);
-
-    if (hasMetadata(valueShape)) {
-        return valueShape.description;
-    }
-
-    return undefined;
+    return unwrapDescription(valueShape, types);
 }

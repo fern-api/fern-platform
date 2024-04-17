@@ -4,7 +4,7 @@ import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositione
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useRouteListener } from "../../../contexts/useRouteListener";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, hasMetadata, unwrapOptional } from "../../../resolver/types";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
@@ -102,11 +102,8 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         if (property.description != null) {
             return property.description;
         }
-        const unwrappedProperty = unwrapOptional(property.valueShape, types);
-        if (hasMetadata(unwrappedProperty)) {
-            return unwrappedProperty.description;
-        }
-        return undefined;
+
+        return unwrapDescription(property.valueShape, types);
     }, [property.description, property.valueShape, types]);
 
     return (
