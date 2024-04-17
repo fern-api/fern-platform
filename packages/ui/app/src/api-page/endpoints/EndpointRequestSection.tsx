@@ -129,12 +129,12 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 };
 
 function getDescription(
-    { description, valueShape }: ResolvedFileUploadRequestProperty.BodyProperty,
+    bodyProperty: ResolvedFileUploadRequestProperty.BodyProperty,
     types: Record<string, ResolvedTypeDefinition>,
 ): string | MDXRemoteSerializeResult | undefined {
-    if (description != null) {
-        return description;
+    if (bodyProperty.description != null) {
+        return bodyProperty.description;
     }
 
-    return unwrapDescription(valueShape, types);
+    return unwrapDescription(bodyProperty.valueShape, types);
 }

@@ -646,7 +646,26 @@ export function unwrapDescription(
         return valueShape.description;
     }
 
+    if (valueShape.type === "map") {
+        return unwrapDescription(valueShape.valueShape, types);
+    }
+
+    if (valueShape.type === "list" || valueShape.type === "set") {
+        return unwrapDescription(valueShape.shape, types);
+    }
+
     return undefined;
+}
+
+export function getParameterDescription(
+    parameter: ResolvedObjectProperty,
+    types: Record<string, ResolvedTypeDefinition>,
+): string | MDXRemoteSerializeResult | undefined {
+    if (parameter.description != null) {
+        return parameter.description;
+    }
+
+    return unwrapDescription(parameter.valueShape, types);
 }
 
 // This hack is no longer needed since it was introduced for Hume's demo only.
