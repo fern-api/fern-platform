@@ -96,6 +96,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     id: uuidv4(),
                     orgId: storeSnippetsInfo.orgId,
                     apiName: storeSnippetsInfo.apiId,
+                    apiDefinitionId: storeSnippetsInfo.apiDefinitionId,
                     endpointPath: snippet.endpointId.path,
                     endpointMethod: snippet.endpointId.method,
                     sdkId: this.getSdkId(snippet.sdk),

@@ -72,7 +72,8 @@ model OverwrittenAlgoliaIndex {
 model SnippetTemplate {
   id                  String     @id
   orgId               String
-  apiId             String
+  apiName             String
+  apiDefinitionId     String
   endpointPath        String
   endpointMethod      HttpMethod
   sdkId               String
@@ -80,7 +81,7 @@ model SnippetTemplate {
 
   version             SnippetTemplateSemanticVersion
   
-  // The actual templates themselves held as binary data to save encoding the schema
+  // The actual templates themselves held as binary data to save encoding the schema, which may change
   functionInvocation  Bytes
   clientInstantiation Bytes
 }

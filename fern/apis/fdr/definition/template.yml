@@ -23,6 +23,7 @@ service:
               type: commons.ApiId
               docs: |
                 The API name.
+            apiDefinitionId: commons.ApiDefinitionId
             snippet: SnippetRegistryEntry
 
     registerBatch:
@@ -42,6 +43,7 @@ service:
               type: commons.ApiId
               docs: |
                 The API name.
+            apiDefinitionId: commons.ApiDefinitionId
             snippets: list<SnippetRegistryEntry>
 
     get:
@@ -72,27 +74,48 @@ types:
   # Internal Snippet structure
   TemplateSentinel: literal<"$FERN_INPUT">
 
+  UnionTemplate:
+    properties:
+      templateString: string
+      members:
+        type: map<string, Template>
+        docs: A map of the union member's typeID to the template.
+      templateInput: optional<PayloadInput>
   DiscriminatedUnionTemplate:
     properties:
-      members: map<string, Template>
+      templateString: string
+      discriminantField: string
+      members:
+        type: map<string, Template>
+        docs: A map of the union member's discriminant to the template to use to create it
+      templateInput: optional<PayloadInput>
   EnumTemplate:
     properties:
-      template: optional<string>
+      templateString: optional<string>
       values: map<string, string>
+      templateInput: optional<PayloadInput>
   GenericTemplate:
     properties:
-      template: string
+      templateString: string
+      templateInputs:
+        type: optional<list<TemplateInput>>
+        docs: An ordered list of inputs to the template.
+      inputDelimiter:
+        type: optional<string>
+        docs: In the event you have multiple template inputs, how do you concat them together
   DictTemplate:
     properties:
-      containerTemplate:
+      containerTemplateString:
         type: string
         docs: Commonly the braces of a container like `{ $FERN_INPUT }`, but may even be something like `new Dict( $FERN_INPUT )`
       delimiter: string
       keyTemplate: Template
       valueTemplate: Template
+      keyValueSeparator: string
+      templateInput: optional<PayloadInput>
   IterableTemplate:
     properties:
-      containerTemplate:
+      containerTemplateString:
         type: string
         docs: Commonly the braces of a container like `[ $FERN_INPUT ]` for a list or `{ $FERN_INPUT }` for a set
       delimiter: string
@@ -101,13 +124,10 @@ types:
         docs: |
           In the event of an array, the root template would be something like `[ fern!{{ child }} ]`
           and so the child would be the actual object type seen in the example.
+      templateInput: optional<PayloadInput>
   Template:
     base-properties:
       imports: optional<list<string>>
-      templateInputs:
-        type: optional<list<TemplateInput>>
-        docs: An ordered list of inputs to the template.
-      inputDelimiter: optional<string>
       isOptional:
         type: boolean
         docs: |
@@ -117,14 +137,14 @@ types:
       generic: GenericTemplate
       enum: EnumTemplate
       discriminatedUnion: DiscriminatedUnionTemplate
+      union: UnionTemplate
       dict: DictTemplate
       iterable: IterableTemplate
 
   TemplateInput:
-    discriminated: false
     union:
-      - Template
-      - PayloadInput
+      template: Template
+      payload: PayloadInput
   PayloadLocation:
     docs: |
       The location of the payload, if omitted the full payload is used.
@@ -145,7 +165,8 @@ types:
 
   SnippetTemplate:
     properties:
-      clientInstantiation: Template
+      # TODO: Make clientInstantiation a Template
+      clientInstantiation: string
       functionInvocation: Template
   VersionedSnippetTemplate:
     union:
@@ -153,8 +174,6 @@ types:
 
   SnippetRegistryEntry:
     properties:
-      orgId: commons.OrgId
-      apiId: commons.ApiId
       sdk: snippets.SDK
       endpointId: snippets.EndpointIdentifier
       snippetTemplate: VersionedSnippetTemplate
