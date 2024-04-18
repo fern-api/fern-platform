@@ -172,12 +172,13 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  * the only exception is for custom domains with subpaths, where we only revalidate the fernUrl
                  */
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
-
-                const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                if (stagingUrl != null) {
-                    // revalidation needs to occur separately for staging
-                    urls.push(stagingUrl);
-                }
+                
+                // Reducing load on server
+                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
+                // if (stagingUrl != null) {
+                //     // revalidation needs to occur separately for staging
+                //     urls.push(stagingUrl);
+                // }
 
                 // revalidate all custom urls
                 await Promise.all(
