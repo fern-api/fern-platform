@@ -1,4 +1,4 @@
-import { buildUrl } from "@fern-ui/fdr-utils";
+import { buildUrl, getHostFromUrl, stripStagingUrl } from "@fern-ui/fdr-utils";
 import { REGISTRY_SERVICE } from "@fern-ui/ui";
 import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
@@ -23,12 +23,19 @@ const NotFoundPage = dynamic(() => Promise.resolve(Core), {
 export default NotFoundPage;
 
 export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ params = {} }) => {
-    const host = params.host as string | undefined;
+    const host = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string | undefined);
     const slugArray = params.slug as string[] | undefined;
     const pathname = slugArray != null ? slugArray.join("/") : "";
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: host ?? "", pathname }),
+
+    if (host == null) {
+        return { props: { basePath: null } };
+    }
+
+    const url = buildUrl({
+        host: stripStagingUrl(getHostFromUrl(host)),
+        pathname,
     });
+    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
     if (!docs.ok) {
         return { props: { basePath: null } };
