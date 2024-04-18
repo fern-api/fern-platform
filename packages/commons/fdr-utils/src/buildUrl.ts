@@ -1,9 +1,10 @@
 export function buildUrl({ host, pathname }: { host: string; pathname: string }): string {
-    const hostWithoutTrailingSlash = host.replace(/\/$/, "");
-    if (pathname.length === 0) {
-        return hostWithoutTrailingSlash;
+    let toRet = host.replace(/\/$/, "");
+    if (pathname.length > 0) {
+        toRet = `${toRet}/${pathname.replace(/^\//, "").replace(/\/$/, "")}`;
     }
-    return `${hostWithoutTrailingSlash}/${pathname}`;
+
+    return encodeURI(toRet);
 }
 
 export function stripStagingUrl(url: string): string {
