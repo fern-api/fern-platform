@@ -22,6 +22,24 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
           outputEsm: true
+
+  fdr-test:
+    audiences:
+      - fiddle
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.12.8-rc0
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/fdr-test-sdk"
+        config:
+          noSerdeLayer: true
+          outputSourceFiles: true
+          neverThrowErrors: true
+          timeoutInSeconds: infinity
+          outputEsm: true
+
   fiddle:
     audiences:
       - fiddle

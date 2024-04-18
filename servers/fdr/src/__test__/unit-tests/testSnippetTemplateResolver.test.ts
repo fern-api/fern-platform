@@ -105,7 +105,7 @@ describe("Snippet Template Resolver", () => {
                 functionInvocation: functionInvocationTemplate,
             },
         };
-        const resolver = new SnippetTemplateResolver(payload, endpointSnippetTemplate);
+        const resolver = new SnippetTemplateResolver({ payload, endpointSnippetTemplate });
         const customSnippet = resolver.resolve();
 
         expect(customSnippet.type).toEqual("python");

@@ -341,6 +341,11 @@ errors:
     docs: "An OrgId is required"
     type: string
 
+  SnippetTemplateNotFoundError:
+    status-code: 404
+    docs: "A template for this snippet could not be found"
+    type: string
+
   InvalidPageError:
     status-code: 400
     docs: "Page must be >=1"

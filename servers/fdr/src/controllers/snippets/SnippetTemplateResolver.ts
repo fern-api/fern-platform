@@ -24,11 +24,15 @@ export class SnippetTemplateResolver {
     private endpointSnippetTemplate: EndpointSnippetTemplate;
     // TODO: This should actually be used in the future, specifically for union gen
     private apiDefinition?: ApiDefinition;
-    constructor(
-        payload: CustomSnippetPayload,
-        endpointSnippetTemplate: EndpointSnippetTemplate,
-        apiDefinition?: ApiDefinition,
-    ) {
+    constructor({
+        payload,
+        endpointSnippetTemplate,
+        apiDefinition,
+    }: {
+        payload: CustomSnippetPayload;
+        endpointSnippetTemplate: EndpointSnippetTemplate;
+        apiDefinition?: ApiDefinition;
+    }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
         this.apiDefinition = apiDefinition;

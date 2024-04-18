@@ -1,8 +1,15 @@
 import { SnippetsService } from "../../api";
-import { InvalidPageError, UnauthorizedError } from "../../api/generated/api";
+import {
+    EndpointSnippetTemplate,
+    InvalidPageError,
+    Snippet,
+    SnippetTemplateNotFoundError,
+    UnauthorizedError,
+} from "../../api/generated/api";
 import { type FdrApplication } from "../../app";
 import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
 import { APIResolver } from "./APIResolver";
+import { SnippetTemplateResolver } from "./SnippetTemplateResolver";
 
 export function getSnippetsService(app: FdrApplication): SnippetsService {
     return new SnippetsService({
@@ -15,7 +22,8 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
             });
-            if (req.body.payload == null)  {
+            const payload = req.body.payload;
+            if (payload == null) {
                 const response: DbSnippetsPage = await app.dao.snippets().loadSnippetsPage({
                     loadSnippetsInfo: {
                         orgId: apiInfo.orgId,
@@ -30,9 +38,33 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                     return res.send([]);
                 }
                 const snippetsForEndpointMethod = snippetsForEndpointPath[req.body.endpoint.method];
-                return res.send(snippetsForEndpointMethod ?? []);    
+                return res.send(snippetsForEndpointMethod ?? []);
             } else {
-                const 
+                const snippets: Snippet[] = [];
+
+                req.body.sdks?.forEach(async (sdk) => {
+                    const endpointSnippetTemplate: EndpointSnippetTemplate | null = await app.dao
+                        .snippetTemplates()
+                        .loadSnippetTemplate({
+                            loadSnippetTemplateRequest: {
+                                orgId: apiInfo.orgId,
+                                apiId: apiInfo.apiId,
+                                endpointId: req.body.endpoint,
+                                sdk,
+                            },
+                        });
+                    if (endpointSnippetTemplate == null) {
+                        throw new SnippetTemplateNotFoundError("Snippet not found");
+                    }
+                    const templateResolver = new SnippetTemplateResolver({
+                        payload,
+                        endpointSnippetTemplate,
+                    });
+
+                    snippets.push(templateResolver.resolve());
+                });
+
+                return res.send(snippets);
             }
         },
         load: async (req, res) => {
