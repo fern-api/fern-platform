@@ -10,11 +10,7 @@ export type RevalidatedPathsResponse = {
 };
 
 export interface RevalidatorService {
-    revalidate(params: {
-        fernUrl: ParsedBaseUrl;
-        baseUrl: ParsedBaseUrl;
-        app: FdrApplication;
-    }): Promise<RevalidatedPathsResponse>;
+    revalidate(params: { url: ParsedBaseUrl; app: FdrApplication }): Promise<RevalidatedPathsResponse>;
 }
 
 export class RevalidatorServiceImpl implements RevalidatorService {
@@ -42,24 +38,21 @@ export class RevalidatorServiceImpl implements RevalidatorService {
      */
 
     public async revalidate({
-        fernUrl,
-        baseUrl,
+        url,
         app,
     }: {
-        fernUrl: ParsedBaseUrl;
-        baseUrl: ParsedBaseUrl;
+        url: ParsedBaseUrl;
         app?: FdrApplication;
     }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
         try {
             const client = new FernRevalidationClient({
-                environment: baseUrl.path != null ? `https://${fernUrl.hostname}` : `https://${baseUrl.hostname}`,
+                environment: url.toURL().toString(),
             });
-            console.log(baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname);
             const response = await client.revalidateAllV2({
-                host: baseUrl.hostname,
-                basePath: baseUrl.path != null ? baseUrl.path : "",
-                xFernHost: baseUrl.hostname,
+                host: url.hostname,
+                basePath: url.path != null ? url.path : "",
+                xFernHost: url.hostname,
             });
             return {
                 response,
