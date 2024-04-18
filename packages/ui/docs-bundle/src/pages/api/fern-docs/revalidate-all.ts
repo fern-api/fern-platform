@@ -1,6 +1,7 @@
-import { getAllUrlsFromDocsConfig, getHostFromUrl, stripStagingUrl } from "@fern-ui/fdr-utils";
+import { buildUrl, getAllUrlsFromDocsConfig, getHostFromUrl, stripStagingUrl } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 export const config = {
     maxDuration: 300,
@@ -49,7 +50,12 @@ const handler: NextApiHandler = async (
 
         xFernHost = getHostFromUrl(xFernHost);
 
-        const docs = await loadWithUrl(stripStagingUrl(xFernHost));
+        const docs = await loadWithUrl(
+            buildUrl({
+                host: stripStagingUrl(xFernHost),
+                pathname: toValidPathname(req.query.basePath),
+            }),
+        );
 
         if (docs == null) {
             // return notFoundResponse();

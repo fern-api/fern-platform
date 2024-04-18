@@ -1,7 +1,8 @@
-import { getAllUrlsFromDocsConfig, getHostFromUrl, stripStagingUrl } from "@fern-ui/fdr-utils";
+import { buildUrl, getAllUrlsFromDocsConfig, getHostFromUrl, stripStagingUrl } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
+import { toValidPathname } from "../../../utils/toValidPathname";
 
 export const runtime = "edge";
 
@@ -29,7 +30,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     try {
-        const docs = await loadWithUrl(stripStagingUrl(xFernHost));
+        const docs = await loadWithUrl(
+            buildUrl({
+                host: stripStagingUrl(xFernHost),
+                pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")),
+            }),
+        );
 
         if (docs == null) {
             return jsonResponse(404, [], headers);
