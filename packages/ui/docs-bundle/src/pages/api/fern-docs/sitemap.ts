@@ -1,45 +1,35 @@
-import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
+import { getAllUrlsFromDocsConfig, getHostFromUrl, stripStagingUrl } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
-import { toValidPathname } from "../../../utils/toValidPathname";
 
 export const runtime = "edge";
-
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
 
-    let xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
+    let xFernHost: string | undefined = req.headers.get("x-fern-host") ?? req.nextUrl.href;
 
-    if (xFernHost?.includes("localhost")) {
+    if (xFernHost.includes("localhost")) {
         xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
     }
+
+    xFernHost = getHostFromUrl(xFernHost);
 
     const headers: Record<string, string> = {};
 
     if (xFernHost != null) {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        xFernHost = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
         headers["x-fern-host"] = xFernHost;
     } else {
         return jsonResponse(400, [], headers);
     }
 
     try {
-        const docs = await loadWithUrl(
-            buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) }),
-        );
+        const docs = await loadWithUrl(stripStagingUrl(xFernHost));
 
         if (docs == null) {
             return jsonResponse(404, [], headers);

@@ -1,4 +1,4 @@
-import { buildUrl } from "@fern-ui/fdr-utils";
+import { buildUrlWithoutStaging } from "@fern-ui/fdr-utils";
 import { REGISTRY_SERVICE } from "@fern-ui/ui";
 import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ param
     const slugArray = params.slug as string[] | undefined;
     const pathname = slugArray != null ? slugArray.join("/") : "";
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: host ?? "", pathname }),
+        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrlWithoutStaging({ host: host ?? "", pathname }),
     });
 
     if (!docs.ok) {
