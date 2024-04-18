@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ param
     }
 
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: stripStagingUrl(getHostFromUrl(host)), pathname }),
+        url: buildUrl({ host: stripStagingUrl(getHostFromUrl(host)), pathname }),
     });
 
     if (!docs.ok) {
