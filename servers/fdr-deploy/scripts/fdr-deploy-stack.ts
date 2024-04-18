@@ -89,8 +89,8 @@ export class FdrDeployStack extends Stack {
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
-            cpu: environmentType === "PROD" ? 2048 : 512,
-            memoryLimitMiB: environmentType === "PROD" ? 4096 : 1024,
+            cpu: environmentType === "PROD" ? 4096 : 512,
+            memoryLimitMiB: environmentType === "PROD" ? 8192 : 1024,
             desiredCount: 1, // TODO: make this 2 in prod
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
