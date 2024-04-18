@@ -149,7 +149,7 @@ export class SnippetTemplateResolver {
                 // const payloadMap = payloadValue as Map<string, unknown>;
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const key in payloadValue) {
-                    const value = payloadValue[key];
+                    const value = payloadValue[key as keyof typeof payloadValue];
                     const keySnippet = this.resolveV1Template(template.keyTemplate, key);
                     const valueSnippet = this.resolveV1Template(template.valueTemplate, value);
                     if (keySnippet != null && valueSnippet != null) {

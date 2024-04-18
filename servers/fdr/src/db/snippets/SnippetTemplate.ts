@@ -64,7 +64,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             snippetTemplate: {
                 type: snippetTemplate.version,
                 functionInvocation: readBuffer(snippetTemplate.functionInvocation) as Template,
-                clientInstantiation: readBuffer(snippetTemplate.clientInstantiation) as Template,
+                clientInstantiation: readBuffer(snippetTemplate.clientInstantiation) as string,
             },
         };
     }
