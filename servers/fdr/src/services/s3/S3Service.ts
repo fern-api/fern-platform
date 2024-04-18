@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { DocsV1Write, DocsV2Write } from "../../api";
 import type { FdrApplication } from "../../app";
 
+// This structure is stored in the db. Please keep this forwards and
+// backwards compatible.
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
     key: string;
