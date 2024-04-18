@@ -31,9 +31,11 @@ export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ param
         return { props: { basePath: null } };
     }
 
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: buildUrl({ host: stripStagingUrl(getHostFromUrl(host)), pathname }),
+    const url = buildUrl({
+        host: stripStagingUrl(getHostFromUrl(host)),
+        pathname,
     });
+    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
     if (!docs.ok) {
         return { props: { basePath: null } };
