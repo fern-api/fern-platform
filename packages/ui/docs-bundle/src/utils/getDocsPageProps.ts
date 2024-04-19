@@ -145,7 +145,6 @@ async function convertDocsToDocsPageProps({
     xFernHost: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
-    const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
     const pages = docs.definition.pages;
 
@@ -161,7 +160,14 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis, pages);
+    const navigation = getNavigationRoot(
+        slug,
+        docs.baseUrl.domain,
+        docs.baseUrl.basePath,
+        docsConfig.navigation,
+        docs.definition.apis,
+        pages,
+    );
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
@@ -189,6 +195,7 @@ async function convertDocsToDocsPageProps({
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
+        domain: docs.baseUrl.domain,
     });
 
     if (resolvedPath == null) {

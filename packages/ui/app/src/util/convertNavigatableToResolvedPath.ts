@@ -69,6 +69,7 @@ export async function convertNavigatableToResolvedPath({
     apis,
     pages,
     mdxOptions,
+    domain,
 }: {
     rawSidebarNodes: readonly SidebarNodeRaw[];
     sidebarNodes: SidebarNode[];
@@ -76,6 +77,7 @@ export async function convertNavigatableToResolvedPath({
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
+    domain: string;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -165,7 +167,7 @@ export async function convertNavigatableToResolvedPath({
             resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined);
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, domain);
                         return [
                             apiName,
                             await ApiDefinitionResolver.resolve(title, flattenedApiDefinition, pages, mdxOptions),
