@@ -900,7 +900,7 @@ it("user not part of org", async () => {
             method: FdrAPI.EndpointMethod.Get,
         },
     });
-    expect(response.ok === false && response.error.error === "UnauthorizedError");
+    expect(response.ok === false && response.error.error === "UnauthorizedError").toBe(true);
 });
 
 it("snippets apiId not found", async () => {
@@ -936,7 +936,7 @@ it("snippets apiId not found", async () => {
             method: FdrAPI.EndpointMethod.Get,
         },
     });
-    expect(response.ok === false && response.error.error === "OrgIdAndApiIdNotFound");
+    expect(response.ok === false && response.error.error === "OrgIdAndApiIdNotFound").toBe(true);
 });
 
 it("get snippets (unauthenticated)", async () => {
@@ -977,5 +977,5 @@ it("get snippets (unauthenticated)", async () => {
             method: FdrAPI.EndpointMethod.Get,
         },
     });
-    expect(response.ok === false && response.error.error === "UnauthorizedError");
+    expect(response.ok === false && response.error.error === "UnauthorizedError").toBe(true);
 });
