@@ -10,31 +10,31 @@ export function getWorkOS(): WorkOS {
 export function getJwtTokenSecret(): Uint8Array {
     const secret = process.env.JWT_SECRET_KEY;
 
-    if (!secret) {
-        throw new Error("JWT_SECRET_KEY is not set");
+    if (secret != null) {
+        return new Uint8Array(Buffer.from(secret, "base64"));
     }
 
-    return new Uint8Array(Buffer.from(secret, "base64"));
+    throw new Error("JWT_SECRET_KEY is not set");
 }
 
 export function getWorkOSApiKey(): string {
     const apiKey = process.env.WORKOS_API_KEY;
 
-    if (!apiKey) {
-        throw new Error("WORKOS_API_KEY is not set");
+    if (apiKey != null) {
+        return apiKey;
     }
 
-    return apiKey;
+    throw new Error("WORKOS_API_KEY is not set");
 }
 
 export function getWorkOSClientId(): string {
     const clientId = process.env.WORKOS_CLIENT_ID;
 
-    if (!clientId) {
-        throw new Error("WORKOS_CLIENT_ID is not set");
+    if (clientId != null) {
+        return clientId;
     }
 
-    return clientId;
+    throw new Error("WORKOS_CLIENT_ID is not set");
 }
 
 export function getAuthorizationUrl(

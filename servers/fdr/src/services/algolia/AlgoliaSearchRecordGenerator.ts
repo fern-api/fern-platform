@@ -15,7 +15,7 @@ class NavigationContext {
      */
     public get path() {
         return this.#pathParts
-            .filter((p) => !p.skipUrlSlug)
+            .filter((p) => p.skipUrlSlug != null)
             .map((p) => p.urlSlug)
             .join("/");
     }
@@ -292,7 +292,7 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const records: AlgoliaSearchRecord[] = [];
-        if (endpointDef.name || endpointDef.description) {
+        if (endpointDef.name != null || endpointDef.description != null) {
             const endpointContext = context.withPathPart({
                 name: endpointDef.name ?? "",
                 urlSlug: endpointDef.urlSlug,

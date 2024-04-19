@@ -85,7 +85,7 @@ module.exports = {
             },
         ],
         "no-unused-vars": "off",
-        "tailwindcss/classnames-order": "off",
+        "tailwindcss/classnames-order": "error",
         quotes: [
             "error",
             "double",
