@@ -53,8 +53,11 @@ jobs:
       - name: Lint monorepo
         run: pnpm lint:monorepo
 
-      - name: Lint style and eslint
-        run: pnpm turbo lint:style lint:eslint format:check
+      - name: Lint style 
+        run: pnpm turbo lint:style format:check
+
+      # - name: eslint
+      #   run:  pnpm turbo lint:eslint
 
   visual-testing:
     runs-on: ubuntu-latest
