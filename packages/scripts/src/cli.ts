@@ -3,7 +3,6 @@ import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { checkReleaseBlockers } from "./checkReleaseBlockers";
 
-
 void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-scripts")
     .strict()
