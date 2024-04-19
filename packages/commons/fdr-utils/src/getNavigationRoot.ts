@@ -40,10 +40,11 @@ export function getNavigationRoot(
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     pages: Record<string, DocsV1Read.PageContent>,
+    domain: string,
 ): Found | Redirect | undefined {
     const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
 
-    const root = resolveSidebarNodesRoot(nav, apis, pages, basePathSlug);
+    const root = resolveSidebarNodesRoot(nav, apis, pages, basePathSlug, domain);
     const hits: { node: SidebarNodeRaw.VisitableNode; parents: SidebarNodeRaw.ParentNode[] }[] = [];
 
     visitSidebarNodeRaw(root, (node, parents) => {

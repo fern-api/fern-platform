@@ -161,7 +161,14 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis, pages);
+    const navigation = getNavigationRoot(
+        slug,
+        basePath,
+        docsConfig.navigation,
+        docs.definition.apis,
+        pages,
+        docs.baseUrl.domain,
+    );
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
@@ -189,6 +196,7 @@ async function convertDocsToDocsPageProps({
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
+        domain: docs.baseUrl.domain,
     });
 
     if (resolvedPath == null) {

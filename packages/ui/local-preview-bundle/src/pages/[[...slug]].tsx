@@ -91,6 +91,7 @@ async function getDocsPageProps(
         docsConfig.navigation,
         docs.definition.apis,
         docs.definition.pages,
+        docs.baseUrl.domain,
     );
 
     if (navigation == null) {
@@ -128,6 +129,7 @@ async function getDocsPageProps(
         mdxOptions: {
             showError: true,
         },
+        domain: docs.baseUrl.domain,
     });
 
     if (resolvedPath == null) {

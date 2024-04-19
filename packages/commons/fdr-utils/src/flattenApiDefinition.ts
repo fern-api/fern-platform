@@ -149,12 +149,14 @@ export function flattenApiDefinition(
     apiDefinition: APIV1Read.ApiDefinition,
     parentSlugs: readonly string[],
     navigation: DocsV1Read.ApiNavigationConfigRoot | undefined,
+    domain: string,
 ): FlattenedApiDefinition {
     const package_ = flattenPackage(
         apiDefinition.rootPackage,
         apiDefinition.subpackages,
         parentSlugs,
         navigation ?? toConfigRoot(apiDefinition.navigation),
+        domain,
     );
 
     return {
@@ -171,6 +173,7 @@ function flattenPackage(
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
     order: DocsV1Read.ApiNavigationConfigRoot | undefined,
+    domain: string,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
@@ -251,7 +254,7 @@ function flattenPackage(
         (item): item is DocsV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage",
     );
 
-    const subpackages = currentPackage.subpackages
+    let subpackages = currentPackage.subpackages
         .map((subpackageId): FlattenedSubpackage | undefined => {
             const subpackage = subpackagesMap[subpackageId];
             if (subpackage == null) {
@@ -264,10 +267,12 @@ function flattenPackage(
                 subpackageId: subpackage.subpackageId,
                 name: subpackage.displayName ?? titleCase(subpackage.name),
                 description: subpackage.description,
-                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageOrder),
+                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageOrder, domain),
             };
         })
         .filter(isNonNullish);
+
+    subpackages = maybeMergeSubpackages(subpackages, domain);
 
     const pages =
         order?.items
@@ -354,4 +359,25 @@ function toConfigRoot(
     root: APIV1Read.ApiNavigationConfigRoot | undefined,
 ): DocsV1Read.ApiNavigationConfigRoot | undefined {
     return root;
+}
+
+function maybeMergeSubpackages(subpackages: FlattenedSubpackage[], domain: string): FlattenedSubpackage[] {
+    if (domain.includes("assemblyai")) {
+        const realtimeIdx = subpackages.findIndex((subpackage) => subpackage.subpackageId === "subpackage_realtime");
+        const realtime = subpackages[realtimeIdx];
+        if (realtime != null) {
+            const subpackageIdx = subpackages.findIndex(
+                (subpackage) => subpackage.subpackageId === "subpackage_streaming",
+            );
+            if (subpackageIdx !== -1) {
+                const subpackage = subpackages[subpackageIdx];
+                subpackages.splice(subpackageIdx, 1, {
+                    ...subpackage,
+                    items: [...realtime.items, ...subpackage.items],
+                });
+                subpackages.splice(realtimeIdx, 1);
+            }
+        }
+    }
+    return subpackages;
 }

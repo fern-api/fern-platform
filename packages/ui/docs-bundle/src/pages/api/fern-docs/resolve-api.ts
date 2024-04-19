@@ -58,6 +58,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             docsDefinition.config.navigation,
             docsDefinition.apis,
             pages,
+            docs.body.baseUrl.domain,
         );
 
         if (navigation == null || navigation.type === "redirect") {
@@ -74,7 +75,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
         res.status(200).json(
             await ApiDefinitionResolver.resolve(
                 apiSection?.title ?? "",
-                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined),
+                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined, docs.body.baseUrl.domain),
                 pages,
                 undefined,
             ),
