@@ -2,6 +2,7 @@
 
 import { isPlainObject } from "@fern-ui/core-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { getXFernHostNode } from "../../../utils/xFernHost";
 
 interface RequestBody {
     path: string;
@@ -31,14 +32,6 @@ interface ErrorParseResult {
     message: string;
 }
 
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
-
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>): Promise<unknown> => {
     if (req.method !== "POST") {
         return res.status(405).json({
@@ -46,14 +39,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
             message: "Method not allowed.",
         });
     }
-    const host = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
-
-    if (typeof host !== "string") {
-        return res.status(400).json({
-            success: false,
-            message: "Bad request: Missing or invalid host.",
-        });
-    }
+    const host = getXFernHostNode(req);
 
     try {
         const parseResult = parseRequestBody(req.body);

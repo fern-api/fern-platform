@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getXFernHostEdge } from "../../../utils/xFernHost";
+import { getFeatureFlags } from "./feature-flags";
 
 export const runtime = "edge";
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host") ?? req.nextUrl.host;
+    const xFernHost = getXFernHostEdge(req);
 
-    const hostname = new URL(`https://${xFernHost}`).hostname; // strip basepath
+    const { isSeoDisabled } = await getFeatureFlags(xFernHost);
 
-    if (hostname.includes(".docs.dev.buildwithfern.com") || hostname.includes(".docs.buildwithfern.com")) {
+    if (isSeoDisabled) {
         return new NextResponse("User-Agent: *\nDisallow: /", { status: 200 });
     }
 
-    return new NextResponse(`User-Agent: *\nSitemap: https://${hostname}/sitemap.xml`, { status: 200 });
+    return new NextResponse(`User-Agent: *\nSitemap: https://${xFernHost}/sitemap.xml`, { status: 200 });
 }

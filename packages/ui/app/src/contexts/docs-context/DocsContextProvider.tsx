@@ -1,9 +1,9 @@
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
-import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { getFontExtension } from "../../next-app/utils/getFontVariables";
@@ -28,8 +28,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const { resolvedTheme: theme } = useTheme();
 
-    const { baseUrl, title, favicon } = pageProps;
+    const { baseUrl, title, favicon, featureFlags } = pageProps;
     const { currentTabIndex, currentVersionIndex } = pageProps.navigation;
+    const { isSeoDisabled } = featureFlags;
 
     const stylesheet = useMemo(
         () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
@@ -103,7 +104,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 {theme === "dark" && colors.dark != null && (
                     <meta name="theme-color" content={getThemeColor(colors.dark)} />
                 )}
-                {maybeRenderNoIndex(baseUrl)}
+                {isSeoDisabled && <meta name="robots" content="noindex, nofollow" />}
             </Head>
             {/* 
                 We concatenate all global styles into a single instance,
@@ -156,22 +157,4 @@ function getPreloadedFont(
             crossOrigin="anonymous"
         />
     );
-}
-
-function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
-    // If the basePath is present, it's not clear whether or not the site is hosted on a custom domain.
-    // In this case, we don't want to render the no-track script. If this changes, we should update this logic.
-    if (baseUrl.basePath != null && process.env.NODE_ENV === "production") {
-        return null;
-    }
-
-    if (
-        baseUrl.domain.includes("docs.dev.buildwithfern.com") ||
-        baseUrl.domain.includes("docs.staging.buildwithfern.com") ||
-        baseUrl.domain.includes(".docs.buildwithfern.com") ||
-        process.env.NODE_ENV !== "production"
-    ) {
-        return <meta name="robots" content="noindex, nofollow" />;
-    }
-    return null;
 }

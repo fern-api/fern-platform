@@ -3,6 +3,7 @@ import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
+import { getXFernHostNode } from "../../../../utils/xFernHost";
 
 function getHostFromUrl(url: string | undefined): string | undefined {
     if (url == null) {
@@ -52,7 +53,7 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = getHostFromBody(req.body) ?? req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
+        const xFernHost = getHostFromBody(req.body) ?? getXFernHostNode(req);
         if (typeof xFernHost !== "string") {
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }

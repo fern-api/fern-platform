@@ -1,4 +1,4 @@
-import { flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
+import { buildUrl, flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
 import {
     ApiDefinitionResolver,
     REGISTRY_SERVICE,
@@ -6,6 +6,7 @@ import {
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { getXFernHostNode } from "../../../utils/xFernHost";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {
@@ -14,26 +15,17 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             return;
         }
 
-        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"];
-        if (typeof xFernHost === "string") {
-            req.headers.host = xFernHost;
-            res.setHeader("host", xFernHost);
-        } else {
-            res.status(400).json(null);
-            return;
-        }
-        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-        const maybePathName = req.query.path;
+        const xFernHost = getXFernHostNode(req);
+
+        const pathname = req.query.path;
         const api = req.query.api;
 
-        if (maybePathName == null || typeof maybePathName !== "string" || api == null || typeof api !== "string") {
+        if (pathname == null || typeof pathname !== "string" || api == null || typeof api !== "string") {
             return res.status(400).json(null);
         }
 
-        const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
-
         const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url: `${hostWithoutTrailingSlash}${pathname}`,
+            url: buildUrl({ host: xFernHost, pathname }),
         });
 
         if (!docs.ok) {

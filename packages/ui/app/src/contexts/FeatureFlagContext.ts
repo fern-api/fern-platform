@@ -4,12 +4,14 @@ export interface FeatureFlags {
     isApiPlaygroundEnabled: boolean;
     isApiScrollingDisabled: boolean;
     isWhitelabeled: boolean;
+    isSeoDisabled: boolean;
 }
 
 export const FeatureFlagContext = createContext<FeatureFlags>({
     isApiPlaygroundEnabled: false,
     isApiScrollingDisabled: false,
     isWhitelabeled: false,
+    isSeoDisabled: false,
 });
 
 export function useFeatureFlags(): FeatureFlags {
