@@ -35,7 +35,8 @@
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
-    "yargs": "^17.4.1"
+    "yargs": "^17.4.1",
+    "@fern-api/fdr-sdk": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

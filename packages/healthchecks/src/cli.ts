@@ -1,5 +1,6 @@
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { runRules } from "./rules/runRules";
 
 void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-healthchecks")
@@ -19,10 +20,9 @@ void yargs(hideBin(process.argv))
                     default: false,
                     requred: true,
                 }),
-        async (argv) => {
-            await checkRootPackage({
-                shouldFix: argv.url,
-            });
+        async () => {
+            // TODO(dsinghvi): actually run rules on specific docs URLs
+            await runRules({ url: "", stack: "dev" });
         },
     )
     .demandCommand()
