@@ -143,7 +143,6 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-
       containerTemplateString:
         type: string
         docs: Commonly the braces of a container like `{ $FERN_INPUT }`, but may even be something like `new Dict( $FERN_INPUT )`
