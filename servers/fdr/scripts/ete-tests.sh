@@ -1,4 +1,6 @@
 #!/bin/bash
+pnpm docker:local
+
 cd "$(dirname "$0")"
 cd ..
 docker-compose -f docker-compose.ete.yml up -d
@@ -11,6 +13,6 @@ pnpm prisma migrate deploy
 CI=true pnpm vitest src/__test__/ete/ --globals
 VITEST_EXIT_CODE=$?
 
-docker-compose -f docker-compose.ete.yml down
+# docker-compose -f docker-compose.ete.yml down
 
 exit $VITEST_EXIT_CODE

@@ -14,6 +14,7 @@ import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Ser
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
+import { getTemplateService } from "../../controllers/snippets/getTemplateService";
 import { DEFAULT_SNIPPETS_PAGE_SIZE } from "../../db/snippets/SnippetsDao";
 import { createMockFdrApplication } from "../mock";
 import { createApiDefinition, createMockDocs, createMockIndexSegment } from "./util";
@@ -70,6 +71,7 @@ beforeAll(async () => {
         },
         _root: getSnippetsService(serverApp),
         snippetsFactory: getSnippetsFactoryService(serverApp),
+        template: getTemplateService(serverApp),
     });
     console.log(`Listening for requests on port ${PORT}`);
     server = app.listen(PORT);

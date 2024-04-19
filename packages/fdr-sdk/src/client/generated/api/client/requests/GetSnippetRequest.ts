@@ -32,4 +32,10 @@ export interface GetSnippetRequest {
      */
     sdks?: FernRegistry.Sdk[];
     endpoint: FernRegistry.EndpointIdentifier;
+    /**
+     * The JSON payload to be used as the input for the code snippet. This should just be thought of as the
+     * request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
+     *
+     */
+    payload?: FernRegistry.CustomSnippetPayload;
 }

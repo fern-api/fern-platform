@@ -81,6 +81,23 @@ model OverwrittenAlgoliaIndex {
   @@map("overwritten_algolia_indexes")
 }
 
+model SnippetTemplate {
+  id                  String     @id
+  orgId               String
+  apiName             String
+  apiDefinitionId     String
+  endpointPath        String
+  endpointMethod      HttpMethod
+  sdkId               String
+  sdk                 Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+
+  version             SnippetTemplateSemanticVersion
+  
+  // The actual templates themselves held as binary data to save encoding the schema, which may change
+  functionInvocation  Bytes
+  clientInstantiation Bytes
+}
+
 model Snippet {
   id             String     @id
   orgId          String
@@ -104,6 +121,9 @@ model Sdk {
   sdk       Bytes
   createdAt DateTime  @default(now())
   Snippet   Snippet[]
+
+  // Optional for backcompat
+  templates SnippetTemplate[]
 }
 
 model SnippetApi {
@@ -128,4 +148,8 @@ enum Language {
   GO
   JAVA
   RUBY
+}
+
+enum SnippetTemplateSemanticVersion {
+  v1
 }
