@@ -173,18 +173,19 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  */
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                // Reducing load on server
-                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                // if (stagingUrl != null) {
-                //     // revalidation needs to occur separately for staging
-                //     urls.push(stagingUrl);
-                // }
+                const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
+                if (stagingUrl != null) {
+                    // revalidation needs to occur separately for staging
+                    urls.push(stagingUrl);
+                }
 
                 // revalidate all custom urls
                 await Promise.all(
-                    urls.map(async (url) => {
+                    urls.map(async (baseUrl) => {
                         const results = await app.services.revalidator.revalidate({
-                            url,
+                            // treat staging URL as its own fernURL to handle basepath revalidation
+                            fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
+                            baseUrl,
                             app,
                         });
                         if (
@@ -197,7 +198,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                             );
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({
-                                domain: url.getFullUrl(),
+                                domain: baseUrl.getFullUrl(),
                                 paths: results,
                             });
                         }
