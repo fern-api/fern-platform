@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import lodash from "lodash";
 import {
     CustomSnippetPayload,
     EndpointSnippetTemplate,
@@ -11,6 +11,7 @@ import {
     VersionedSnippetTemplate,
 } from "../../api/generated/api";
 import { ApiDefinition } from "../../api/generated/api/resources/api/resources/v1/resources/read";
+const { get } = lodash;
 
 interface V1Snippet {
     imports: string[];
