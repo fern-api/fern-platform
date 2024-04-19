@@ -13,6 +13,7 @@ service:
       docs: Store endpoint snippet for a particular SDK.
       display-name: Store snippet template
       method: POST
+      auth: false
       request:
         name: RegisterSnippetTemplateRequest
         body:
@@ -33,6 +34,7 @@ service:
       docs: Store endpoint snippets for a particular SDK.
       display-name: Store (multiple) snippet templates
       method: POST
+      auth: false
       request:
         name: RegisterSnippetTemplateBatchRequest
         body:
@@ -141,7 +143,7 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-    
+
       containerTemplateString:
         type: string
         docs: Commonly the braces of a container like `{ $FERN_INPUT }`, but may even be something like `new Dict( $FERN_INPUT )`
