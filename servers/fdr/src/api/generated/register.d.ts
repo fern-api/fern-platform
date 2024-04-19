@@ -4,6 +4,7 @@
 import express from "express";
 import { RootService } from "./api/service/RootService";
 import { SnippetsFactoryService } from "./api/resources/snippetsFactory/service/SnippetsFactoryService";
+import { TemplateService } from "./api/resources/template/service/TemplateService";
 import { ReadService as api_v1_read_RootService } from "./api/resources/api/resources/v1/resources/read/service/ReadService";
 import { RegisterService as api_v1_register_RootService } from "./api/resources/api/resources/v1/resources/register/service/RegisterService";
 import { ReadService as docs_v1_read_RootService } from "./api/resources/docs/resources/v1/resources/read/service/ReadService";
@@ -13,6 +14,7 @@ import { WriteService as docs_v2_write_RootService } from "./api/resources/docs/
 export declare function register(expressApp: express.Express | express.Router, services: {
     _root: RootService;
     snippetsFactory: SnippetsFactoryService;
+    template: TemplateService;
     api: {
         v1: {
             read: {
