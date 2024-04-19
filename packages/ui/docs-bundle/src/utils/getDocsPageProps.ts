@@ -145,7 +145,6 @@ async function convertDocsToDocsPageProps({
     xFernHost: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
-    const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
     const pages = docs.definition.pages;
 
@@ -163,11 +162,11 @@ async function convertDocsToDocsPageProps({
 
     const navigation = getNavigationRoot(
         slug,
-        basePath,
+        docs.baseUrl.domain,
+        docs.baseUrl.basePath,
         docsConfig.navigation,
         docs.definition.apis,
         pages,
-        docs.baseUrl.domain,
     );
 
     if (navigation == null) {

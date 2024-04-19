@@ -36,11 +36,11 @@ const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
 
 export function getNavigationRoot(
     slugArray: string[],
+    domain: string,
     basePath: string | undefined,
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
     pages: Record<string, DocsV1Read.PageContent>,
-    domain: string,
 ): Found | Redirect | undefined {
     const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
 

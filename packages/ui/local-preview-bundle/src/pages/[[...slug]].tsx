@@ -87,11 +87,11 @@ async function getDocsPageProps(
 
     const navigation = getNavigationRoot(
         slug,
-        basePath,
+        docs.baseUrl.domain,
+        docs.baseUrl.basePath,
         docsConfig.navigation,
         docs.definition.apis,
         docs.definition.pages,
-        docs.baseUrl.domain,
     );
 
     if (navigation == null) {
