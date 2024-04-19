@@ -6,7 +6,6 @@ on:
 jobs:
   publish_sdk:
     runs-on: ubuntu-latest
-    if: ${{ needs.changes.outputs.fdr == 'true' }} || startsWith(github.ref, 'refs/tags/fdr@')
     steps:
       - uses: actions/checkout@v4
         with:
