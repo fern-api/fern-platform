@@ -8,7 +8,7 @@ on:
       - "fern/fern.config.json"
       - "servers/fdr-deploy/**"
       - "servers/fdr/**"
-      - ".github/workflows/deploy-fdr.yml"
+      - ".github/workflows/deploy-fdr-dev.yml"
       - "packages/fdr-sdk/**"
 
 env:
