@@ -28,9 +28,6 @@ jobs:
     uses: ./.github/workflows/publish-fdr-sdk.yml
 
   deploy_dev:
-    strategy:
-      matrix:
-        concurrency: [1]
     runs-on: ubuntu-latest
     environment: Fern Dev
     env:
