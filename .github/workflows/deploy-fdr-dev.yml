@@ -2,14 +2,15 @@ name: Deploy FDR
 
 on:
   push:
-    branches: [main]
+    branches: main
     paths:
-      - "fern/apis/fdr/**"
-      - "fern/fern.config.json"
-      - "servers/fdr-deploy/**"
-      - "servers/fdr/**"
-      - ".github/workflows/deploy-fdr-dev.yml"
-      - "packages/fdr-sdk/**"
+      - 'fern/apis/fdr/**'
+      - 'fern/fern.config.json'
+      - 'servers/fdr-deploy/**'
+      - 'servers/fdr/**'
+      - '.github/workflows/deploy-fdr-dev.yml'
+      - 'packages/fdr-sdk/**'
+      - 'pnpm-lock.yaml'
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
