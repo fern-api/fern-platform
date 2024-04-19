@@ -13,36 +13,27 @@ export type Template =
     | FernRegistry.Template.Iterable;
 
 export declare namespace Template {
-    interface Generic extends FernRegistry.GenericTemplate, _Base {
+    interface Generic extends FernRegistry.GenericTemplate {
         type: "generic";
     }
 
-    interface Enum extends FernRegistry.EnumTemplate, _Base {
+    interface Enum extends FernRegistry.EnumTemplate {
         type: "enum";
     }
 
-    interface DiscriminatedUnion extends FernRegistry.DiscriminatedUnionTemplate, _Base {
+    interface DiscriminatedUnion extends FernRegistry.DiscriminatedUnionTemplate {
         type: "discriminatedUnion";
     }
 
-    interface Union extends FernRegistry.UnionTemplate, _Base {
+    interface Union extends FernRegistry.UnionTemplate {
         type: "union";
     }
 
-    interface Dict extends FernRegistry.DictTemplate, _Base {
+    interface Dict extends FernRegistry.DictTemplate {
         type: "dict";
     }
 
-    interface Iterable extends FernRegistry.IterableTemplate, _Base {
+    interface Iterable extends FernRegistry.IterableTemplate {
         type: "iterable";
-    }
-
-    interface _Base {
-        imports?: string[];
-        /**
-         * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
-         * or default if omitted and required.
-         */
-        isOptional: boolean;
     }
 }

@@ -5,11 +5,13 @@ imports:
 service:
   auth: true
   base-path: /snippet-template
+  audiences:
+    - snippets
   endpoints:
     register:
       path: /register
       docs: Store endpoint snippet for a particular SDK.
-      display-name: Store snippet
+      display-name: Store snippet template
       method: POST
       request:
         name: RegisterSnippetTemplateRequest
@@ -29,7 +31,7 @@ service:
     registerBatch:
       path: /register/batch
       docs: Store endpoint snippets for a particular SDK.
-      display-name: Store snippets
+      display-name: Store (multiple) snippet templates
       method: POST
       request:
         name: RegisterSnippetTemplateBatchRequest
@@ -49,7 +51,7 @@ service:
     get:
       path: /get
       docs: Get the endpoint's snippet template for a particular SDK.
-      display-name: Store snippets
+      display-name: Get snippet template
       method: POST
       errors:
         - commons.UnauthorizedError
@@ -76,6 +78,13 @@ types:
 
   UnionTemplate:
     properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
       templateString: string
       members:
         type: map<string, Template>
@@ -83,6 +92,13 @@ types:
       templateInput: optional<PayloadInput>
   DiscriminatedUnionTemplate:
     properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
       templateString: string
       discriminantField: string
       members:
@@ -91,11 +107,25 @@ types:
       templateInput: optional<PayloadInput>
   EnumTemplate:
     properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
       templateString: optional<string>
       values: map<string, string>
       templateInput: optional<PayloadInput>
   GenericTemplate:
     properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
       templateString: string
       templateInputs:
         type: optional<list<TemplateInput>>
@@ -105,6 +135,13 @@ types:
         docs: In the event you have multiple template inputs, how do you concat them together
   DictTemplate:
     properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+    
       containerTemplateString:
         type: string
         docs: Commonly the braces of a container like `{ $FERN_INPUT }`, but may even be something like `new Dict( $FERN_INPUT )`
@@ -115,6 +152,12 @@ types:
       templateInput: optional<PayloadInput>
   IterableTemplate:
     properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
       containerTemplateString:
         type: string
         docs: Commonly the braces of a container like `[ $FERN_INPUT ]` for a list or `{ $FERN_INPUT }` for a set
@@ -126,13 +169,6 @@ types:
           and so the child would be the actual object type seen in the example.
       templateInput: optional<PayloadInput>
   Template:
-    base-properties:
-      imports: optional<list<string>>
-      isOptional:
-        type: boolean
-        docs: |
-          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
-          or default if omitted and required.
     union:
       generic: GenericTemplate
       enum: EnumTemplate

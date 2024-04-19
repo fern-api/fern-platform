@@ -5,6 +5,12 @@
 import * as FernRegistry from "../../..";
 
 export interface DiscriminatedUnionTemplate {
+    imports?: string[];
+    /**
+     * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+     * or default if omitted and required.
+     */
+    isOptional: boolean;
     templateString: string;
     discriminantField: string;
     /** A map of the union member's discriminant to the template to use to create it */
