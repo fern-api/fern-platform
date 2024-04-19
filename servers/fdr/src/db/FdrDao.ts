@@ -5,6 +5,7 @@ import { IndexSegmentDaoImpl, type IndexSegmentDao } from "./docs/IndexSegmentDa
 import { DocsRegistrationDao } from "./registrations/DocsRegistrationDao";
 import { SdkDao, SdkDaoImpl } from "./sdk/SdkDao";
 import { SnippetAPIsDaoImpl, type SnippetAPIsDao } from "./snippetApis/SnippetAPIsDao";
+import { SnippetTemplateDao, SnippetTemplateDaoImpl } from "./snippets/SnippetTemplate";
 import { SnippetsDaoImpl, type SnippetsDao } from "./snippets/SnippetsDao";
 
 export class FdrDao {
@@ -12,6 +13,7 @@ export class FdrDao {
     private apisDao;
     private indexSegmentDao;
     private snippetsDao;
+    private snippetTemplateDao;
     private snippetAPIsDao;
     private sdksDao;
     private docsRegistrationDao;
@@ -23,6 +25,7 @@ export class FdrDao {
         this.snippetsDao = new SnippetsDaoImpl(prisma);
         this.snippetAPIsDao = new SnippetAPIsDaoImpl(prisma);
         this.sdksDao = new SdkDaoImpl(prisma);
+        this.snippetTemplateDao = new SnippetTemplateDaoImpl(prisma);
         this.docsRegistrationDao = new DocsRegistrationDao(prisma);
     }
 
@@ -44,6 +47,10 @@ export class FdrDao {
 
     public snippetAPIs(): SnippetAPIsDao {
         return this.snippetAPIsDao;
+    }
+
+    public snippetTemplates(): SnippetTemplateDao {
+        return this.snippetTemplateDao;
     }
 
     public sdks(): SdkDao {
