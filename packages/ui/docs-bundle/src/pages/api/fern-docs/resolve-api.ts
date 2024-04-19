@@ -1,11 +1,4 @@
-import {
-    buildUrl,
-    flattenApiDefinition,
-    getHostFromUrl,
-    getNavigationRoot,
-    stripStagingUrl,
-    type SidebarNode,
-} from "@fern-ui/fdr-utils";
+import { flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
 import {
     ApiDefinitionResolver,
     REGISTRY_SERVICE,
@@ -29,18 +22,19 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             res.status(400).json(null);
             return;
         }
-        const pathname = req.query.path;
+        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
+        const maybePathName = req.query.path;
         const api = req.query.api;
 
-        if (pathname == null || typeof pathname !== "string" || api == null || typeof api !== "string") {
+        if (maybePathName == null || typeof maybePathName !== "string" || api == null || typeof api !== "string") {
             return res.status(400).json(null);
         }
 
-        const url = buildUrl({
-            host: stripStagingUrl(getHostFromUrl(xFernHost)),
-            pathname,
+        const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
+
+        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+            url: `${hostWithoutTrailingSlash}${pathname}`,
         });
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
         if (!docs.ok) {
             res.status(404).json(null);
