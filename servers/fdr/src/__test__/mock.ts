@@ -54,18 +54,6 @@ class MockAuthService implements AuthService {
         };
     }
 
-    checkOrgHasSnippetsApiAccess({
-        authHeader,
-        orgId,
-        failHard,
-    }: {
-        authHeader: string | undefined;
-        orgId: string;
-        failHard?: boolean | undefined;
-    }): Promise<boolean> {
-        return Promise.resolve(false);
-    }
-
     async getWorkOSOrganization(_orgId: { orgId: string }): Promise<string | undefined> {
         return undefined;
     }

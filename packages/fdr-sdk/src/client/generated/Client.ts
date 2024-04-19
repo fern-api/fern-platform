@@ -9,7 +9,6 @@ import urlJoin from "url-join";
 import { Api } from "./api/resources/api/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
-import { Template } from "./api/resources/template/client/Client";
 
 export declare namespace FernRegistryClient {
     interface Options {
@@ -164,12 +163,6 @@ export class FernRegistryClient {
 
     public get snippetsFactory(): SnippetsFactory {
         return (this._snippetsFactory ??= new SnippetsFactory(this._options));
-    }
-
-    protected _template: Template | undefined;
-
-    public get template(): Template {
-        return (this._template ??= new Template(this._options));
     }
 
     protected async _getAuthorizationHeader() {

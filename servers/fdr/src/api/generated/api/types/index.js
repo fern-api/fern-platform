@@ -7,8 +7,6 @@ export * from "./PythonSdk";
 export * from "./GoSdk";
 export * from "./RubySdk";
 export * from "./JavaSdk";
-export * from "./ParameterPayload";
-export * from "./CustomSnippetPayload";
 export * from "./SnippetsPage";
 export * from "./SnippetsByEndpointMethod";
 export * from "./Snippet";
