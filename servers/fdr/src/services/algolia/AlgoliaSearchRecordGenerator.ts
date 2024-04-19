@@ -15,7 +15,7 @@ class NavigationContext {
      */
     public get path() {
         return this.#pathParts
-            .filter((p) => p.skipUrlSlug != null)
+            .filter((p) => p.skipUrlSlug == null || !p.skipUrlSlug)
             .map((p) => p.urlSlug)
             .join("/");
     }
