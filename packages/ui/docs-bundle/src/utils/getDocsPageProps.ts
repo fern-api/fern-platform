@@ -1,6 +1,6 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, getNavigationRoot } from "@fern-ui/fdr-utils";
+import { buildUrl, getHostFromUrl, getNavigationRoot, stripStagingUrl } from "@fern-ui/fdr-utils";
 import {
     DocsPage,
     DocsPageResult,
@@ -46,8 +46,10 @@ export async function getDocsPageProps(
         return { type: "notFound", notFound: true };
     }
 
-    const pathname = decodeURI(slug != null ? slug.join("/") : "");
-    const url = buildUrl({ host: xFernHost, pathname });
+    const url = buildUrl({
+        host: stripStagingUrl(getHostFromUrl(xFernHost)),
+        pathname: slug.join("/"),
+    });
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
@@ -90,7 +92,10 @@ export async function getPrivateDocsPageProps(
 
     const registryService = getRegistryServiceWithToken(`workos_${token}`);
 
-    const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
+    const url = buildUrl({
+        host: stripStagingUrl(getHostFromUrl(xFernHost)),
+        pathname: slug.join("/"),
+    });
     const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
 
     if (!docs.ok) {

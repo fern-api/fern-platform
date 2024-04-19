@@ -26,14 +26,21 @@ export interface DocsDefinitionCache {
 }
 
 interface CachedDocsResponse {
+    type: "response";
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
     isPrivate: boolean;
 }
 
+interface CachedDocsNotFound {
+    type: "not-found";
+}
+
+type CachedDocs = CachedDocsResponse | CachedDocsNotFound;
+
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
-    private DOCS_CACHE: Record<string, CachedDocsResponse> = {};
+    private DOCS_CACHE: Record<string, CachedDocs> = {};
     private DOCS_WRITE_MONITOR: Record<string, Semaphore> = {};
 
     constructor(
@@ -58,6 +65,10 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         url: URL;
         authorization: string | undefined;
     }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
+        if (url.hostname === "app.buildwithfern.com" || url.hostname === "app-staging.buildwithfern.com") {
+            throw new DocsV2Read.DomainNotRegisteredError();
+        }
+
         const cachedResponse = this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             this.app.logger.info(`Cache HIT for ${url}`);
@@ -86,6 +97,10 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         // we don't want to cache from READ if we are currently updating the cache via WRITE
         if (!this.getDocsWriteMonitor(url.hostname).isLocked()) {
             this.cacheResponse({ url, cachedResponse: dbResponse });
+        }
+
+        if (dbResponse.type === "not-found") {
+            throw new DocsV2Read.DomainNotRegisteredError();
         }
 
         if (dbResponse.isPrivate) {
@@ -145,15 +160,22 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         );
     }
 
-    private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
+    private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocs }): void {
         this.DOCS_CACHE[url.hostname] = cachedResponse;
     }
 
     private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
-        return this.DOCS_CACHE[url.hostname];
+        const response = this.DOCS_CACHE[url.hostname];
+        if (response.type === "not-found") {
+            throw new DocsV2Read.DomainNotRegisteredError();
+        }
+        if (response.type === "response") {
+            return response;
+        }
+        return;
     }
 
-    private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
+    private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocs> {
         const dbDocs = await this.dao.docsV2().loadDocsForURL(url);
         if (dbDocs != null) {
             const definition = await getDocsDefinition({
@@ -162,6 +184,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 docsV2: dbDocs,
             });
             return {
+                type: "response",
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
@@ -179,10 +202,11 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             // delegate to V1
             const v1Domain = url.hostname.match(DOCS_DOMAIN_REGX)?.[1];
             if (v1Domain == null) {
-                throw new DocsV2Read.DomainNotRegisteredError();
+                return { type: "not-found" };
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
+                type: "response",
                 updatedTime: new Date(),
                 dbFiles: v1Docs.dbFiles ?? {},
                 response: {

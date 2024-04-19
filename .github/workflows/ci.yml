@@ -56,23 +56,6 @@ jobs:
       - name: Lint style and eslint
         run: pnpm turbo lint:style lint:eslint format:check
 
-  organize-imports:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # This helps turbo resolve changes faster
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Organize imports
-        # not using --list-different because sometimes this removes a trailing
-        # comma that prettier adds back
-        run: |
-          pnpm organize-imports
-          git --no-pager diff --exit-code
-
   visual-testing:
     runs-on: ubuntu-latest
     steps:

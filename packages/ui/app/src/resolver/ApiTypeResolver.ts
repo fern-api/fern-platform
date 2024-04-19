@@ -16,7 +16,9 @@ export class ApiTypeResolver {
     public resolve = once(async (): Promise<Record<string, ResolvedTypeDefinition>> => {
         return Object.fromEntries(
             await Promise.all(
-                Object.entries(this.types).map(async ([key, value]) => [key, await this.resolveTypeDefinition(value)]),
+                Object.entries(this.types).map(async ([key, value]) => {
+                    return [key, await this.resolveTypeDefinition(value)];
+                }),
             ),
         );
     });

@@ -1,7 +1,7 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import React, { useCallback } from "react";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -83,7 +83,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                                                     shape={parameter.valueShape}
                                                     anchorIdParts={["payload", "header", parameter.key]}
                                                     route={route}
-                                                    description={parameter.description}
+                                                    description={getParameterDescription(parameter, types)}
                                                     availability={parameter.availability}
                                                     types={types}
                                                 />

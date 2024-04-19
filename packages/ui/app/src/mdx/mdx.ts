@@ -171,6 +171,8 @@ export async function maybeSerializeMdxContent(
         return content;
     }
 
+    content = replaceBrokenBrTags(content);
+
     try {
         return await serialize(content, {
             scope: {},
@@ -209,6 +211,9 @@ export async function serializeMdxWithFrontmatter(
     if (content == null) {
         return undefined;
     }
+
+    content = replaceBrokenBrTags(content);
+
     try {
         return await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
             scope: {},
@@ -227,4 +232,8 @@ export async function serializeMdxWithFrontmatter(
 
         return content;
     }
+}
+
+export function replaceBrokenBrTags(content: string): string {
+    return content.replaceAll(/<br\s*\/?>/g, "<br />").replaceAll("</br>", "");
 }

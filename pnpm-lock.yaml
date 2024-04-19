@@ -15,8 +15,8 @@ importers:
   .:
     dependencies:
       fern-api:
-        specifier: ^0.19.18
-        version: 0.19.18
+        specifier: ^0.21.0
+        version: 0.21.0
     devDependencies:
       '@babel/core':
         specifier: ^7.23.7
@@ -275,7 +275,7 @@ importers:
         version: 8.56.0
       next-mdx-remote:
         specifier: ^4.4.1
-        version: 4.4.1(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.4.1(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1311,8 +1311,8 @@ importers:
         specifier: ^0.3.0-2-g994ae9e
         version: 0.3.0-2-g994ae9e
       '@fern-fern/revalidation-sdk':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 0.0.7
+        version: 0.0.7
       '@prisma/client':
         specifier: 5.11.0
         version: 5.11.0(prisma@5.11.0)
@@ -5164,8 +5164,8 @@ packages:
       - debug
     dev: false
 
-  /@fern-fern/revalidation-sdk@0.0.2:
-    resolution: {integrity: sha512-lmPGacKOaF/ZOolnfOBTNI03PQ20Im+73edWa8MIfMAfw6rKlkv0R++COa7f7hdar3/dI9LocABub9sO/3ehiA==}
+  /@fern-fern/revalidation-sdk@0.0.7:
+    resolution: {integrity: sha512-rdBxlMhKe42L+MMzyWPrVlZ+HbMe0le4aAn8mrCcFhENLi9FDcWnGQkIHJ2sjsvCu1ibbglLUygnLgZsqf7uXw==}
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0
@@ -5420,6 +5420,17 @@ packages:
     dependencies:
       '@types/mdx': 2.0.11
       '@types/react': 18.2.74
+      react: 18.2.0
+    dev: true
+
+  /@mdx-js/react@3.0.1(@types/react@18.2.79)(react@18.2.0):
+    resolution: {integrity: sha512-9ZrPIU4MGf6et1m1ov3zKf+q9+deetI51zprKB1D/z3NOb+rUxxtEl3mCjW5wTGh6VhRdwPueh1oRzi6ezkA8A==}
+    peerDependencies:
+      '@types/react': '>=16'
+      react: '>=16'
+    dependencies:
+      '@types/mdx': 2.0.11
+      '@types/react': 18.2.79
       react: 18.2.0
     dev: true
 
@@ -8624,6 +8635,13 @@ packages:
 
   /@types/react@18.2.74:
     resolution: {integrity: sha512-9AEqNZZyBx8OdZpxzQlaFEVCSFUM2YXJH46yPOiOpm078k6ZLOCcuAzGum/zK8YBwY+dbahVNbHrbgrAwIRlqw==}
+    dependencies:
+      '@types/prop-types': 15.7.12
+      csstype: 3.1.3
+    dev: true
+
+  /@types/react@18.2.79:
+    resolution: {integrity: sha512-RwGAGXPl9kSXwdNTafkOEuFrTBD5SA2B3iEB96xi8+xu5ddUa/cpvyVCSNn+asgLCTHkb5ZxN8gbuibYJi4s1w==}
     dependencies:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
@@ -12754,8 +12772,8 @@ packages:
     resolution: {integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==}
     dev: false
 
-  /fern-api@0.19.18:
-    resolution: {integrity: sha512-ADyw37Teq0PIqT1nbK5LiYLl2oAlC4M9MX92Tjh8lXOeK+GJdeWCCj2IqY9yHBSrEClycmwDs8RxjZiE7UKuwg==}
+  /fern-api@0.21.0:
+    resolution: {integrity: sha512-/Zf/24Cg4YoRsbwJ8Joot0AcosQwUyvGQvZ6Qi0Cu/c83FfrWvQ73cb3ddJQCyzWhM06McgO5uguviSmgFyQWQ==}
     hasBin: true
     dev: false
 
@@ -15722,7 +15740,7 @@ packages:
       - supports-color
     dev: false
 
-  /next-mdx-remote@4.4.1(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0):
+  /next-mdx-remote@4.4.1(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1BvyXaIou6xy3XoNF4yaMZUCb6vD2GTAa5ciOa6WoO+gAUTYsb1K4rI/HSC2ogAWLrb/7VSV52skz07vOzmqIQ==}
     engines: {node: '>=14', npm: '>=7'}
     peerDependencies:
@@ -15730,7 +15748,7 @@ packages:
       react-dom: '>=16.x <=18.x'
     dependencies:
       '@mdx-js/mdx': 3.0.1
-      '@mdx-js/react': 3.0.1(@types/react@18.2.74)(react@18.2.0)
+      '@mdx-js/react': 3.0.1(@types/react@18.2.79)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       vfile: 5.3.7

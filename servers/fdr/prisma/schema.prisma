@@ -20,6 +20,18 @@ model ApiDefinitionsV2 {
   @@id([apiDefinitionId])
 }
 
+model DocsRegistrations {
+  registrationID String
+  orgID String
+  fernURL String
+  customURLs String[]
+  isPreview Boolean
+  authType AuthType
+  s3FileInfos Bytes
+
+  @@id([registrationID])
+}
+
 model Docs {
   url            String
   docsDefinition Bytes

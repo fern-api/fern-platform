@@ -11,6 +11,7 @@ import {
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
+    getParameterDescription,
 } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -81,7 +82,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_PATH, parameter.key]}
                                     route={"/" + endpoint.slug.join("/")}
-                                    description={parameter.description}
+                                    description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -101,7 +102,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_HEADER, parameter.key]}
                                     route={"/" + endpoint.slug.join("/")}
-                                    description={parameter.description}
+                                    description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -125,7 +126,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_QUERY, parameter.key]}
                                     route={"/" + endpoint.slug.join("/")}
-                                    description={parameter.description}
+                                    description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
                                 />

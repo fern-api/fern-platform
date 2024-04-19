@@ -39,9 +39,6 @@ lerna-debug.log*
 !.yarn/sdks
 !.yarn/versions
 
-# fern
-packages/**/generated
-
 # environments
 .env*.local
 .vercel

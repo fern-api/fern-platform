@@ -11,6 +11,8 @@ groups:
         config:
           noSerdeLayer: true
           outputEsm: true
+          # extraDevDependencies:
+          #   "@types/mime": "3.0.4"
       - name: fernapi/fern-typescript-node-sdk
         version: 0.12.8-rc0
         output:
@@ -22,6 +24,8 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
           outputEsm: true
+          extraDevDependencies:
+            "@types/mime": "3.0.4"
 
   fdr-test:
     generators:
@@ -37,6 +41,8 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
           outputEsm: true
+          extraDevDependencies:
+            "@types/mime": "3.0.4"
 
   sdk-generators:
     generators:

@@ -8,8 +8,6 @@ import { type S3FileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
-const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
-
 export interface DocsRegistrationInfo {
     fernUrl: ParsedBaseUrl;
     customUrls: ParsedBaseUrl[];
@@ -77,14 +75,14 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 orgId: req.body.orgId,
                 urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
             });
-            DOCS_REGISTRATIONS[docsRegistrationId] = {
+            await app.dao.docsRegistration().storeDocsRegistrationById(docsRegistrationId, {
                 fernUrl,
                 customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
                 authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
-            };
+            });
             return res.send({
                 docsRegistrationId,
                 uploadUrls: Object.fromEntries(
@@ -108,14 +106,14 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
             });
-            DOCS_REGISTRATIONS[docsRegistrationId] = {
+            await app.dao.docsRegistration().storeDocsRegistrationById(docsRegistrationId, {
                 fernUrl,
                 customUrls: [],
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: true,
                 authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
-            };
+            });
             return res.send({
                 docsRegistrationId,
                 uploadUrls: Object.fromEntries(
@@ -127,7 +125,9 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             });
         },
         finishDocsRegister: async (req, res) => {
-            const docsRegistrationInfo = DOCS_REGISTRATIONS[req.params.docsRegistrationId];
+            const docsRegistrationInfo = await app.dao
+                .docsRegistration()
+                .getDocsRegistrationById(req.params.docsRegistrationId);
             if (docsRegistrationInfo == null) {
                 throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
@@ -166,30 +166,25 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     indexSegments,
                 });
 
-                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-                delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
-
                 /**
                  * IMPORTANT NOTE:
                  * vercel cache is not shared between custom domains, so we need to revalidate on EACH custom domain individually
                  * the only exception is for custom domains with subpaths, where we only revalidate the fernUrl
                  */
-
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                if (stagingUrl != null) {
-                    // revalidation needs to occur separately for staging
-                    urls.push(stagingUrl);
-                }
+                // Reducing load on server
+                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
+                // if (stagingUrl != null) {
+                //     // revalidation needs to occur separately for staging
+                //     urls.push(stagingUrl);
+                // }
 
                 // revalidate all custom urls
                 await Promise.all(
-                    urls.map(async (baseUrl) => {
+                    urls.map(async (url) => {
                         const results = await app.services.revalidator.revalidate({
-                            // treat staging URL as its own fernURL to handle basepath revalidation
-                            fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
-                            baseUrl,
+                            url,
                             app,
                         });
                         if (
@@ -202,7 +197,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                             );
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({
-                                domain: baseUrl.getFullUrl(),
+                                domain: url.getFullUrl(),
                                 paths: results,
                             });
                         }
