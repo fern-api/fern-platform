@@ -30,6 +30,9 @@ jobs:
   deploy_dev:
     runs-on: ubuntu-latest
     environment: Fern Dev
+    strategy:
+      matrix:
+        concurrency: [1]
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}/fdr?schema=public
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
