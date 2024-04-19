@@ -108,7 +108,8 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         const headers = new Headers(proxyRequest.headers);
 
         // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
-        if (headers.get("Content-Type")?.toLowerCase().includes("multipart/form-data")) {
+        const contentType = headers.get("Content-Type");
+        if (contentType != null && contentType.toLowerCase().includes("multipart/form-data")) {
             headers.delete("Content-Type");
         }
 
