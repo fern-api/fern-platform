@@ -24,8 +24,6 @@ groups:
           outputEsm: true
 
   fdr-test:
-    audiences:
-      - fiddle
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.12.8-rc0
@@ -39,6 +37,18 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
           outputEsm: true
+
+  sdk-generators:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 1.1.0-rc4
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: "fern-fern-fdr-sdk"
+        config:
+          client:
+            class_name: FdrClient
 
   fiddle:
     audiences:
