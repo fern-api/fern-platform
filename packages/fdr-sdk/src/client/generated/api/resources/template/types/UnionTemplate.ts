@@ -5,6 +5,12 @@
 import * as FernRegistry from "../../..";
 
 export interface UnionTemplate {
+    imports?: string[];
+    /**
+     * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+     * or default if omitted and required.
+     */
+    isOptional: boolean;
     templateString: string;
     /** A map of the union member's typeID to the template. */
     members: Record<string, FernRegistry.Template>;

@@ -3,6 +3,12 @@
  */
 import * as FernRegistry from "../../..";
 export interface EnumTemplate {
+    imports?: string[];
+    /**
+     * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+     * or default if omitted and required.
+     */
+    isOptional: boolean;
     templateString?: string;
     values: Record<string, string>;
     templateInput?: FernRegistry.PayloadInput;

@@ -5,6 +5,12 @@
 import * as FernRegistry from "../../..";
 
 export interface GenericTemplate {
+    imports?: string[];
+    /**
+     * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+     * or default if omitted and required.
+     */
+    isOptional: boolean;
     templateString: string;
     /** An ordered list of inputs to the template. */
     templateInputs?: FernRegistry.TemplateInput[];
