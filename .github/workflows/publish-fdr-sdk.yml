@@ -3,6 +3,9 @@ name: Publish FDR SDK
 on:
   workflow_call:
 
+env:
+  PACKAGE_NAME: "@fern-platform/fdr"
+
 jobs:
   publish_sdk:
     runs-on: ubuntu-latest
