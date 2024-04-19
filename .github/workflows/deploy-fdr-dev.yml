@@ -1,4 +1,4 @@
-name: Deploy FDR
+name: Deploy FDR Dev
 
 on:
   push:
