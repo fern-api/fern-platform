@@ -14,6 +14,5 @@ export { ReadService as DocsV2ReadService } from "./generated/api/resources/docs
 export * as DocsV2Write from "./generated/api/resources/docs/resources/v2/resources/write";
 export { WriteService as DocsV2WriteService } from "./generated/api/resources/docs/resources/v2/resources/write/service/WriteService";
 export { SnippetsFactoryService } from "./generated/api/resources/snippetsFactory/service/SnippetsFactoryService";
-export { TemplateService } from "./generated/api/resources/template/service/TemplateService";
 export { RootService as SnippetsService } from "./generated/api/service/RootService";
 export { register } from "./generated/register";

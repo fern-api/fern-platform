@@ -1348,8 +1348,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/fdr-sdk
       '@fern-api/venus-api-sdk':
-        specifier: ^0.3.0-2-g994ae9e
-        version: 0.3.0-2-g994ae9e
+        specifier: ^0.1.0
+        version: 0.1.1
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.7
         version: 0.0.7
@@ -5172,17 +5172,6 @@ packages:
 
   /@fern-api/venus-api-sdk@0.1.1:
     resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /@fern-api/venus-api-sdk@0.3.0-2-g994ae9e:
-    resolution: {integrity: sha512-hjzFCe127Q8k4+1IL1F/A89Q9eC3K9PP+SG7yBXNJkSQtDqur/sxmmnOPLbAmjwWsR/jRf2j5duczfLslTQivw==}
     dependencies:
       '@types/url-join': 4.0.1
       axios: 0.27.2

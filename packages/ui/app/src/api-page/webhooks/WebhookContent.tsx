@@ -49,7 +49,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
     const webhookExample = example ? <WebhookExample example={example} /> : null;
 
     return (
-        <div className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}>
+        <div className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}>
             <div
                 className={cn(
                     "scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
@@ -60,7 +60,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                 ref={setContainerRef}
                 data-route={route.toLowerCase()}
             >
-                <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
+                <div className="max-w-content-width flex min-w-0 flex-1 flex-col">
                     <div className="space-y-1 py-8">
                         <Breadcrumbs breadcrumbs={breadcrumbs} />
                         <h1 className="my-0 inline-block leading-tight">{webhook.name}</h1>

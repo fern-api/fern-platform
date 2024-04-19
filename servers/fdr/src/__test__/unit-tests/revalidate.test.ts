@@ -5,7 +5,8 @@ it("revalidates a custom docs domain", async () => {
     const revalidationService = new RevalidatorServiceImpl();
 
     const revalidationResult = await revalidationService.revalidate({
-        url: ParsedBaseUrl.parse("https://fdr-ete-test.buildwithfern.com"),
+        baseUrl: ParsedBaseUrl.parse("https://fdr-ete-test.buildwithfern.com"),
+        fernUrl: ParsedBaseUrl.parse("https://fdr-ete-test.buildwithfern.com"),
     });
 
     expect(revalidationResult.revalidationFailed).toEqual(false);

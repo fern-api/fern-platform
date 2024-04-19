@@ -54,18 +54,6 @@ class MockAuthService implements AuthService {
         };
     }
 
-    checkOrgHasSnippetsApiAccess({
-        authHeader,
-        orgId,
-        failHard,
-    }: {
-        authHeader: string | undefined;
-        orgId: string;
-        failHard?: boolean | undefined;
-    }): Promise<boolean> {
-        return Promise.resolve(false);
-    }
-
     async getWorkOSOrganization(_orgId: { orgId: string }): Promise<string | undefined> {
         return undefined;
     }
@@ -94,7 +82,7 @@ class MockSlackService implements SlackService {
 }
 
 class MockRevalidatorService implements RevalidatorService {
-    async revalidate(_params: { url: ParsedBaseUrl }): Promise<RevalidatedPathsResponse> {
+    async revalidate(_params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPathsResponse> {
         return {
             response: {
                 successfulRevalidations: [],
