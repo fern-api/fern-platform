@@ -99,7 +99,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             this.cacheResponse({ url, cachedResponse: dbResponse });
         }
 
-        if (dbResponse.type === "not-found") {
+        if (dbResponse?.type === "not-found") {
             throw new DocsV2Read.DomainNotRegisteredError();
         }
 
@@ -166,10 +166,10 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
         const response = this.DOCS_CACHE[url.hostname];
-        if (response.type === "not-found") {
+        if (response?.type === "not-found") {
             throw new DocsV2Read.DomainNotRegisteredError();
         }
-        if (response.type === "response") {
+        if (response?.type === "response") {
             return response;
         }
         return;
