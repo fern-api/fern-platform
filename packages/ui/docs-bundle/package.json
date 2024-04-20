@@ -46,6 +46,7 @@
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
+    "@highlight-run/next": "^7.5.1",
     "@vercel/edge-config": "^1.1.0",
     "@workos-inc/node": "^6.1.0",
     "cssnano": "^6.0.3",

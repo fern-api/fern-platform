@@ -1,6 +1,7 @@
+import { PageRouterErrorProps, pageRouterCustomErrorHandler } from "@highlight-run/next/ssr";
+
 import { GetServerSideProps } from "next";
 import Error from "next/error";
-import { ReactElement } from "react";
 
 export function parseResolvedUrl(resolvedUrl: string): string {
     // if resolvedUrl is `/static/[host]/[...slug]` or `/dynamic/[host]/[..slug]` then return '/[...slug]`
@@ -29,10 +30,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, resolve
     };
 };
 
-interface ServerErrorProps {
-    errorCode: number;
-}
-
-export default function Page({ errorCode }: ServerErrorProps): ReactElement {
-    return <Error statusCode={errorCode} />;
-}
+// This is for capturing SSR errors
+export default pageRouterCustomErrorHandler(
+    {
+        // This is just the same config as the error NextApp has
+        // TODO(armando): we should have a shared config for this
+        projectId: "3ej4m3ye",
+        serviceName: "docs-frontend-server",
+        tracingOrigins: true,
+        environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
+    },
+    (props: PageRouterErrorProps) => <Error statusCode={props.statusCode} />,
+);

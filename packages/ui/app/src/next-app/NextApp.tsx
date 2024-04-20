@@ -1,3 +1,4 @@
+import { HighlightInit } from "@highlight-run/next/client";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { createStore, Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
@@ -36,7 +37,20 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                 <ThemeProvider colors={pageProps.colors}>
                     <IsReadyProvider>
                         <RouteListenerContextProvider>
+                            {/* TODO: Remove DD once we move over to Highlight */}
                             <DatadogInit />
+                            <HighlightInit
+                                projectId={"3ej4m3ye"}
+                                serviceName="docs-frontend"
+                                tracingOrigins
+                                reportConsoleErrors
+                                networkRecording={{
+                                    enabled: true,
+                                    recordHeadersAndBody: true,
+                                    urlBlocklist: [],
+                                }}
+                                environment={process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev"}
+                            />
                             <JotaiProvider store={store}>
                                 <LayoutBreakpointProvider>
                                     <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />

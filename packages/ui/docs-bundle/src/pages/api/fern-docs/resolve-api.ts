@@ -6,6 +6,7 @@ import {
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { withPageRouterHighlight } from "../../../utils/pagerouterHighlight.config";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {
@@ -87,7 +88,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
     }
 };
 
-export default resolveApiHandler;
+export default withPageRouterHighlight(resolveApiHandler);
 
 function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
     for (const node of sidebarNodes) {

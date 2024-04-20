@@ -2,6 +2,7 @@
 
 import { isPlainObject } from "@fern-ui/core-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { withPageRouterHighlight } from "../../../utils/pagerouterHighlight.config";
 
 interface RequestBody {
     path: string;
@@ -105,7 +106,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     }
 };
 
-export default handler;
+export default withPageRouterHighlight(handler);
 
 function parseRequestBody(rawBody: unknown): ParseResult {
     if (!isPlainObject(rawBody)) {

@@ -1,3 +1,5 @@
+import { withHighlightConfig } from "@highlight-run/next/config";
+
 const assetPrefix = process.env.CDN_URI != null ? new URL("/", process.env.CDN_URI).href : undefined;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -7,6 +9,7 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
+        instrumentationHook: true,
     },
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
@@ -119,4 +122,4 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withHighlightConfig(withBundleAnalyzer(nextConfig));
