@@ -1,3 +1,7 @@
+import type { Attributes } from "@opentelemetry/api";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
+import { Resource } from "@opentelemetry/resources";
+import { NodeSDK } from "@opentelemetry/sdk-node";
 import compression from "compression";
 import cors from "cors";
 import express from "express";
@@ -25,6 +29,17 @@ expressApp.get("/health", (_req, res) => {
     res.sendStatus(200);
 });
 const app = new FdrApplication(config);
+
+const attributes: Attributes = {
+    "highlight.project_id": "3ej4m3ye",
+};
+const sdk = new NodeSDK({
+    resource: new Resource(attributes),
+    traceExporter: new OTLPTraceExporter({
+        url: "https://otel.highlight.io:4318/v1/traces",
+    }),
+});
+sdk.start();
 
 try {
     expressApp.use(express.json({ limit: "50mb" }));
