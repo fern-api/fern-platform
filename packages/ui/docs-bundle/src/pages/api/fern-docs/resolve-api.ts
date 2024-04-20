@@ -6,7 +6,7 @@ import {
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
-import { withPageRouterHighlight } from "../../../utils/pagerouterHighlight.config";
+import { withPageRouterHighlight } from "../../../utils/pageRouterHighlight.config";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {
