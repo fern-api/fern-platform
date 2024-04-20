@@ -18,12 +18,11 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplateService } from "./controllers/snippets/getTemplateService";
+import { HIGHLIGHT_PROJECT_ID, HIGHLIGHT_SERVICE_NAME } from "./app/FdrApplication";
 
 const config = getConfig();
 
 // [Tracing] OTel config for Highlight
-const HIGHLIGHT_PROJECT_ID = "3ej4m3ye";
-const HIGHLIGHT_SERVICE_NAME = "fdr";
 const attributes: Attributes = {
     "highlight.project_id": HIGHLIGHT_PROJECT_ID,
 };
