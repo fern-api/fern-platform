@@ -1353,6 +1353,9 @@ importers:
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.7
         version: 0.0.7
+      '@highlight-run/node':
+        specifier: ^3.9.0
+        version: 3.9.0
       '@opentelemetry/api':
         specifier: ^1.8.0
         version: 1.8.0
@@ -5347,6 +5350,10 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@highlight-run/node@3.9.0:
+    resolution: {integrity: sha512-FyHORfMrUymln1Ckz4WvRucZ/QMucFE7pGnPaRNibjJSFXDNOfQ7gNUsb7TNUEC9mGJKcvkp5HQuW4spDbkJAA==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
