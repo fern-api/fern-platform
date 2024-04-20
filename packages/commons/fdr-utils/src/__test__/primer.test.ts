@@ -19,6 +19,7 @@ describe("getNavigationRoot", () => {
 
             const urls = getNavigationRoot(
                 "docs/api/introduction/getting-started".split("/"),
+                fixture.baseUrl.domain,
                 fixture.baseUrl.basePath,
                 fixture.definition.config.navigation,
                 fixture.definition.apis,
@@ -38,6 +39,7 @@ describe("getNavigationRoot", () => {
 
             const urls = getNavigationRoot(
                 "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token".split("/"),
+                fixture.baseUrl.domain,
                 fixture.baseUrl.basePath,
                 fixture.definition.config.navigation,
                 fixture.definition.apis,

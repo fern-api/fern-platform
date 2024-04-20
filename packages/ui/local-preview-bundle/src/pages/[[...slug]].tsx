@@ -87,7 +87,8 @@ async function getDocsPageProps(
 
     const navigation = getNavigationRoot(
         slug,
-        basePath,
+        docs.baseUrl.domain,
+        docs.baseUrl.basePath,
         docsConfig.navigation,
         docs.definition.apis,
         docs.definition.pages,
@@ -128,6 +129,7 @@ async function getDocsPageProps(
         mdxOptions: {
             showError: true,
         },
+        domain: docs.baseUrl.domain,
     });
 
     if (resolvedPath == null) {

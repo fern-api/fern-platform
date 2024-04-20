@@ -18,6 +18,9 @@ import { S3ServiceImpl, type S3Service } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
 import type { FdrConfig } from "./FdrConfig";
 
+export const HIGHLIGHT_PROJECT_ID = "3ej4m3ye";
+export const HIGHLIGHT_SERVICE_NAME = "fdr";
+
 export interface FdrServices {
     readonly auth: AuthService;
     readonly db: DatabaseService;
@@ -29,13 +32,29 @@ export interface FdrServices {
     readonly revalidator: RevalidatorService;
 }
 
+const highlightTransport = new winston.transports.Http({
+    host: "pub.highlight.run",
+    path: "/v1/logs/json",
+    ssl: true,
+    headers: {
+        "x-highlight-project": HIGHLIGHT_PROJECT_ID,
+        "x-highlight-service": HIGHLIGHT_SERVICE_NAME,
+    },
+});
+
 export const LOGGER = winston.createLogger({
     level: "info",
-    format: winston.format.json(),
+    format: winston.format.combine(
+        winston.format.json(),
+        winston.format.errors({ stack: true }),
+        winston.format.timestamp(),
+        winston.format.prettyPrint(),
+    ),
     transports: [
         new winston.transports.Console({
             format: winston.format.json(),
         }),
+        highlightTransport,
     ],
 });
 
@@ -51,11 +70,17 @@ export class FdrApplication {
     ) {
         this.logger = winston.createLogger({
             level: config.logLevel,
-            format: winston.format.json(),
+            format: winston.format.combine(
+                winston.format.json(),
+                winston.format.errors({ stack: true }),
+                winston.format.timestamp(),
+                winston.format.prettyPrint(),
+            ),
             transports: [
                 new winston.transports.Console({
                     format: winston.format.json(),
                 }),
+                highlightTransport,
             ],
         });
         const prisma = new PrismaClient({
