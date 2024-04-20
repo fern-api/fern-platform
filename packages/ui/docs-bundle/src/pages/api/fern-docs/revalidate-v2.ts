@@ -2,7 +2,7 @@
 
 import { isPlainObject } from "@fern-ui/core-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { withPageRouterHighlight } from "../../../utils/pagerouterHighlight.config";
+import { withPageRouterHighlight } from "../../../utils/pageRouterHighlight.config";
 
 interface RequestBody {
     path: string;

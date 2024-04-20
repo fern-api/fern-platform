@@ -1,7 +1,7 @@
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { withPageRouterHighlight } from "../../../utils/pagerouterHighlight.config";
+import { withPageRouterHighlight } from "../../../utils/pageRouterHighlight.config";
 import { toValidPathname } from "../../../utils/toValidPathname";
 
 function getHostFromUrl(url: string | undefined): string | undefined {
