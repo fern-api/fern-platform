@@ -10,7 +10,6 @@
   "files": [
     "dist"
   ],
-  "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
