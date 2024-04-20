@@ -1,5 +1,3 @@
-import { withHighlightConfig } from "@highlight-run/next/config";
-
 const assetPrefix = process.env.CDN_URI != null ? new URL("/", process.env.CDN_URI).href : undefined;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -121,5 +119,6 @@ const nextConfig = {
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });
+const withHighlightConfig = require("@highlight-run/next/config").withHighlightConfig;
 
 module.exports = withHighlightConfig(withBundleAnalyzer(nextConfig));
