@@ -40,7 +40,7 @@ const highlightConfig = {
     serviceName: HIGHLIGHT_SERVICE_NAME,
     // TODO(armando): it would be great to send version over as well
     // There's got to be a better way to do this
-    environment: config.venusUrl.includes("dev") ? "dev" : "production",
+    environment: config.venusUrl.includes("dev") ? "dev" : "prod",
 };
 H.init(highlightConfig);
 
