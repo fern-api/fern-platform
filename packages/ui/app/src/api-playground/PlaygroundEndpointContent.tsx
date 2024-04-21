@@ -19,10 +19,10 @@ import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
+import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
 
 interface PlaygroundEndpointContentProps {
     endpoint: ResolvedEndpointDefinition;
@@ -217,10 +217,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 loaded: (response) =>
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
-                    ) : response.response.contentType.startsWith("audio/") ? (
+                    ) : response.response.contentType.startsWith("audio/") ||
+                      (window.location.hostname.includes("ircamamplify") &&
+                          response.response.contentType == "binary/octet-stream") ? (
                         <FernAudioPlayer
                             src={response.response.src}
-                            title={"Untitled"}
+                            title={"Untitled"} // TODO get org name
                             className="flex h-full items-center justify-center p-4"
                         />
                     ) : (
