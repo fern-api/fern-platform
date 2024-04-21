@@ -25,9 +25,10 @@ declare module "vitest" {
 }
 
 export async function setup({ provide }: { provide: (key: string, value: any) => void }) {
-    await execa("docker-compose", ["-f", "docker-compose.test.yml", "up", "-d"], { shell: true });
+    await execa("docker-compose", ["-f", "docker-compose.test.yml", "up", "-d"], { stdio: "inherit" });
+    await sleep(3000);
     await execa("pnpm", ["prisma", "migrate", "deploy"], {
-        shell: true,
+        stdio: "inherit",
     });
     const instance = runMockFdr(9999);
     provide("url", `http://localhost:${instance.port}/`);
@@ -36,7 +37,7 @@ export async function setup({ provide }: { provide: (key: string, value: any) =>
             throw new Error("teardown called twice");
         }
         teardown = true;
-        await execa("docker-compose", ["-f", "docker-compose.test.yml", "down"], { shell: true });
+        await execa("docker-compose", ["-f", "docker-compose.test.yml", "down"], { stdio: "inherit" });
         return new Promise<void>((resolve) => {
             instance.server?.close(() => resolve());
         });
@@ -50,6 +51,10 @@ export const prisma = new PrismaClient({
 export const fdrApplication = createMockFdrApplication({
     orgIds: ["acme"],
 });
+
+function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 declare namespace MockFdr {
     interface Instance {
