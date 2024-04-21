@@ -14,7 +14,7 @@ import {
 } from "../services/slack/SlackService";
 import { ParsedBaseUrl } from "../util/ParsedBaseUrl";
 
-class MockAlgoliaService implements AlgoliaService {
+export class MockAlgoliaService implements AlgoliaService {
     generateSearchApiKey(_filters: string): string {
         return "";
     }
