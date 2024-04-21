@@ -551,9 +551,6 @@ importers:
 
   packages/fdr-sdk:
     dependencies:
-      '@ungap/url-search-params':
-        specifier: 0.2.2
-        version: 0.2.2
       form-data:
         specifier: 4.0.0
         version: 4.0.0
