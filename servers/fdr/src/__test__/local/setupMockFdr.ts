@@ -26,7 +26,7 @@ declare module "vitest" {
 
 export async function setup({ provide }: { provide: (key: string, value: any) => void }) {
     await execa("docker-compose", ["-f", "docker-compose.test.yml", "up", "-d"], { shell: true });
-    await execa("yarn", ["prisma", "migrate", "deploy"], {
+    await execa("pnpm", ["prisma", "migrate", "deploy"], {
         shell: true,
     });
     const instance = runMockFdr(9999);
