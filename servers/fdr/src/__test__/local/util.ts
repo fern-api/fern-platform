@@ -1,5 +1,10 @@
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrClient } from "@fern-api/fdr-sdk";
+import { APIResponse } from "@fern-api/fdr-sdk/dist/client/generated/core";
 import type { DocsV2, IndexSegment } from "@prisma/client";
+
+export function getUniqueDocsForUrl(prefix: string): string {
+    return `${prefix}_${Math.random()}.fern.com`;
+}
 
 export function createApiDefinition({
     endpointId,
@@ -71,4 +76,23 @@ export function createMockIndexSegment({
         version: version ?? null,
         createdAt,
     };
+}
+
+export function getAPIResponse<Success, Failure>(response: APIResponse<Success, Failure>): Success {
+    if (response.ok) {
+        return response.body;
+    }
+    throw new Error(`Received error from response: ${JSON.stringify(response.error)}`);
+}
+
+export function getClient({ authed, url }: { url: string; authed: boolean }): FdrClient {
+    if (authed) {
+        return new FdrClient({
+            environment: url,
+            token: "dummy",
+        });
+    }
+    return new FdrClient({
+        environment: url,
+    });
 }
