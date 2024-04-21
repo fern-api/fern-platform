@@ -100,6 +100,13 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
+      - name: Run tests against local FDR
+        run: |
+          cd servers/fdr
+          pnpm test:local
+        env:
+          CI: true
+
   check-docs-release-is-allowed:
     runs-on: ubuntu-latest
     steps:

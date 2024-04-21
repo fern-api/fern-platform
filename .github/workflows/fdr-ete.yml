@@ -28,13 +28,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Run local server tests for FDR
-        run: |
-          cd servers/fdr
-          pnpm test:local
-        env:
-          CI: true
-
       - name: Setup database
         # TODO: re-enable when moving to turbo
         # pnpm turbo --filter= docker:local
