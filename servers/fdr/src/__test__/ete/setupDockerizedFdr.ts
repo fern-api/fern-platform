@@ -5,7 +5,7 @@ let teardown = false;
 export async function setup() {
     await execa("pnpm", ["docker:local"], { stdio: "inherit" });
     await execa("docker-compose", ["-f", "docker-compose.ete.yml", "up", "-d"], { stdio: "inherit" });
-    await sleep(3000);
+    await sleep(10000);
     await execa("pnpm", ["prisma", "migrate", "deploy"], {
         stdio: "inherit",
     });
