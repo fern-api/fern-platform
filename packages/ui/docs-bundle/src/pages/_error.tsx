@@ -1,7 +1,6 @@
 import { PageRouterErrorProps, pageRouterCustomErrorHandler } from "@highlight-run/next/ssr";
-
-import { GetServerSideProps } from "next";
 import Error from "next/error";
+import { useRouter } from "next/router";
 import { NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID, NEXT_PUBLIC_HIGHLIGHT_SERVICE_NAME } from "../constants";
 
 export function parseResolvedUrl(resolvedUrl: string): string {
@@ -10,26 +9,26 @@ export function parseResolvedUrl(resolvedUrl: string): string {
     return match?.[2] ?? resolvedUrl;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res, resolvedUrl, query }) => {
-    if (
-        res.statusCode >= 500 &&
-        res.statusCode < 600 &&
-        req.url != null &&
-        resolvedUrl.startsWith("/static") &&
-        query.error !== "true"
-    ) {
-        const url = parseResolvedUrl(resolvedUrl);
-        return {
-            redirect: {
-                destination: `${url}${url.includes("?") ? "&" : "?"}error=true`,
-                permanent: false,
-            },
-        };
-    }
-    return {
-        props: { errorCode: res.statusCode },
-    };
-};
+// export const getServerSideProps: GetServerSideProps = async ({ req, res, resolvedUrl, query }) => {
+//     if (
+//         res.statusCode >= 500 &&
+//         res.statusCode < 600 &&
+//         req.url != null &&
+//         resolvedUrl.startsWith("/static") &&
+//         query.error !== "true"
+//     ) {
+//         const url = parseResolvedUrl(resolvedUrl);
+//         return {
+//             redirect: {
+//                 destination: `${url}${url.includes("?") ? "&" : "?"}error=true`,
+//                 permanent: false,
+//             },
+//         };
+//     }
+//     return {
+//         props: { errorCode: res.statusCode },
+//     };
+// };
 
 // This is for capturing SSR errors
 export default pageRouterCustomErrorHandler(
@@ -41,5 +40,15 @@ export default pageRouterCustomErrorHandler(
         tracingOrigins: true,
         environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
     },
-    (props: PageRouterErrorProps) => <Error statusCode={props.statusCode} />,
+    (props: PageRouterErrorProps) => {
+        const router = useRouter();
+        // eslint-disable-next-line no-console
+        console.error(props.errorMessage);
+
+        if (props.statusCode >= 400 && props.statusCode < 600) {
+            void router.replace(parseResolvedUrl(router.asPath) + "?error=true");
+        }
+
+        return <Error {...props} />;
+    },
 );
