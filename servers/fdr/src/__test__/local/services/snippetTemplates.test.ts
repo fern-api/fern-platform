@@ -1,7 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
 import { getClient } from "../util";
-import { EMPTY_REGISTER_API_DEFINITION } from "./api.test";
 
 const ENDPOINT: FdrAPI.EndpointIdentifier = {
     path: "/users/v1",
@@ -14,17 +13,14 @@ const SDK: FdrAPI.Sdk = {
 };
 
 it("create snippet template", async () => {
+    const unauthedFdr = getClient({ authed: false, url: inject("url") });
     const fdr = getClient({ authed: true, url: inject("url") });
-    // register API definition for acme org
-    await fdr.api.v1.register.registerApiDefinition({
-        orgId: "acme",
-        apiId: "user",
-        definition: EMPTY_REGISTER_API_DEFINITION,
-    });
+
+    const orgId = "acme";
 
     // register API definition for acme org
-    await fdr.template.register({
-        orgId: "acme",
+    await unauthedFdr.template.register({
+        orgId,
         apiId: "user",
         apiDefinitionId: "....",
         snippet: {
@@ -43,11 +39,12 @@ it("create snippet template", async () => {
     });
     // create snippets
     const response = await fdr.template.get({
-        orgId: "acme",
+        orgId,
         apiId: "user",
         endpointId: ENDPOINT,
         sdk: SDK,
     });
+    console.log(JSON.stringify(response, null, 2));
     expect(response.ok).toBe(true);
     if (!response.ok) {
         throw new Error("Failed to load snippet template");
