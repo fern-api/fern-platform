@@ -144,6 +144,54 @@ export class Template {
         };
     }
 
+    /**
+     * Which SDKs have snippet templates available
+     */
+    public async getAvailableSnippetTemplates(
+        request: FernRegistry.GetAvailableSnippetTemplateRequest,
+        requestOptions?: Template.RequestOptions
+    ): Promise<core.APIResponse<string[], FernRegistry.template.getAvailableSnippetTemplates.Error>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                "/snippet-template/get"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: _response.body as string[],
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.template.getAvailableSnippetTemplates.Error)?.error) {
+                case "UnauthorizedError":
+                case "SnippetNotFound":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.template.getAvailableSnippetTemplates.Error,
+                    };
+            }
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.template.getAvailableSnippetTemplates.Error._unknown(_response.error),
+        };
+    }
+
     protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {

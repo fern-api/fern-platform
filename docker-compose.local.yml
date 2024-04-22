@@ -1,0 +1,34 @@
+version: "3.8" # optional since v1.27.0
+services:
+  fern-definition-registry:
+    image: fern-definition-registry:local
+    ports:
+      - 8080:8080
+    environment:
+      VENUS_URL: "https://venus-dev2.buildwithfern.com"
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+      S3_BUCKET_NAME: dummy
+      S3_BUCKET_REGION: dummy
+      DOMAIN_SUFFIX: dummy
+      ALGOLIA_APP_ID: dummy
+      ALGOLIA_ADMIN_API_KEY: dummy
+      ALGOLIA_SEARCH_INDEX: dummy
+      ALGOLIA_SEARCH_API_KEY: dummy
+      SLACK_TOKEN: dummy
+      ENABLE_CUSTOMER_NOTIFICATIONS: "false"
+  postgres:
+    image: postgres:10.3
+    restart: always
+    environment:
+      - POSTGRES_USER=fdr
+      - POSTGRES_PASSWORD=fdr1!
+    ports:
+      - "5434:5432"
+  s3-mock:
+    image: adobe/s3mock
+    ports:
+      - 9090:9090
+      - 9191:9191
+    environment:
+      initialBuckets: fdr

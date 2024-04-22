@@ -5,6 +5,13 @@ import { APIResolver } from "./APIResolver";
 
 export function getTemplateService(app: FdrApplication): TemplateService {
     return new TemplateService({
+        getAvailableSnippetTemplates: async (req, res) => {
+            const result = await app.dao.snippetTemplates().getAvailableSnippetTemplates({
+                orgId: req.body.orgId,
+                apiName: req.body.apiId,
+            });
+            return res.send(result);
+        },
         register: async (req, res) => {
             // if (req.headers.authorization === undefined) {
             //     throw new UnauthorizedError("You must be authorized to load snippets");

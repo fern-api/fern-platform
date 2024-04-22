@@ -20,7 +20,14 @@ export interface LoadSnippetAPIsRequest {
     apiName: string | undefined;
 }
 
+export interface GetAvailableSnippetTemplatesRequest {
+    orgId: string;
+    apiName: string;
+}
+
 export interface SnippetTemplateDao {
+    getAvailableSnippetTemplates({ orgId, apiName }: GetAvailableSnippetTemplatesRequest): Promise<string[]>;
+
     loadSnippetTemplate({
         loadSnippetTemplateRequest,
     }: {
@@ -36,6 +43,21 @@ export interface SnippetTemplateDao {
 
 export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     constructor(private readonly prisma: PrismaClient) {}
+
+    async getAvailableSnippetTemplates({ orgId, apiName }: GetAvailableSnippetTemplatesRequest): Promise<string[]> {
+        const snippetTemplate = await this.prisma.snippetTemplate.findMany({
+            where: {
+                orgId,
+                apiName,
+            },
+            select: {
+                sdkId: true,
+            },
+        });
+        return snippetTemplate.map((template) => {
+            return template.sdkId;
+        });
+    }
 
     public async loadSnippetTemplate({
         loadSnippetTemplateRequest,

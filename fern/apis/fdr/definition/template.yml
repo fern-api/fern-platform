@@ -74,6 +74,30 @@ service:
             endpointId: snippets.EndpointIdentifier
       response: EndpointSnippetTemplate
 
+    getAvailableSnippetTemplates:
+      path: /get
+      docs: Which SDKs have snippet templates available
+      display-name: Get snippet template
+      method: POST
+      errors:
+        - commons.UnauthorizedError
+        - SnippetNotFound
+      request:
+        name: GetAvailableSnippetTemplateRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+      response:
+        type: list<string>
+        docs: The SDK Ids that have snippet templates available
+
 types:
   # Internal Snippet structure
   TemplateSentinel: literal<"$FERN_INPUT">

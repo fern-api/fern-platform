@@ -19,6 +19,11 @@ export interface TemplateServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
+    getAvailableSnippetTemplates(req: express.Request<never, string[], FernRegistry.GetAvailableSnippetTemplateRequest, never>, res: {
+        send: (responseBody: string[]) => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }): void | Promise<void>;
 }
 export declare class TemplateService {
     private readonly methods;

@@ -50,4 +50,14 @@ it("create snippet template", async () => {
         throw new Error("Failed to load snippet template");
     }
     expect(response.body.endpointId).toEqual(ENDPOINT);
+
+    const avaiableResponse = await fdr.template.getAvailableSnippetTemplates({
+        apiId: "user",
+        orgId,
+    });
+    expect(avaiableResponse.ok).toBe(true);
+    if (!avaiableResponse.ok) {
+        throw new Error("Failed to get available snippet templates");
+    }
+    expect(avaiableResponse.body[0]).toContain("go");
 });
