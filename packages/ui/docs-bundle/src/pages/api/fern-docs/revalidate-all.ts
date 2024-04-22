@@ -1,4 +1,5 @@
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
+import { H } from "@highlight-run/next/server";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { withPageRouterHighlight } from "../../../utils/pageRouterHighlight.config";
@@ -85,6 +86,11 @@ const handler: NextApiHandler = async (
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
+                    const parsed = H.parseHeaders(req.headers);
+                    H.consumeError(e as Error, parsed?.secureSessionId, parsed?.requestId, {
+                        message: `Failed to revalidate path: ${url}`,
+                        tags: ["revalidation"],
+                    });
                     return { success: false, url, message: e instanceof Error ? e.message : "Unknown error." };
                 }
             }),
