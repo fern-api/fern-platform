@@ -34,6 +34,7 @@ it("get snippets", async () => {
     // get snippets
     const snippets = getAPIResponse(
         await fdr.get({
+            orgId: "acme",
             apiId: "foo",
             endpoint: {
                 path: "/snippets/load",
@@ -150,6 +151,7 @@ it("get Go snippets", async () => {
     const snippets = getAPIResponse(
         await fdr.get({
             apiId: "echo",
+            orgId: "acme",
             endpoint: {
                 path: "/snippets/load",
                 method: FdrAPI.EndpointMethod.Post,
@@ -260,6 +262,7 @@ it("get snippets with unregistered API", async () => {
     // get snippets
     const snippets = getAPIResponse(
         await fdr.get({
+            orgId: "acme",
             apiId: "fresh",
             endpoint: {
                 path: "/users/v1",
@@ -313,6 +316,7 @@ it("load snippets", async () => {
     // load snippets (first page)
     const firstResponse = getAPIResponse(
         await fdr.load({
+            orgId: "acme",
             apiId: "petstore",
         }),
     );
@@ -335,6 +339,7 @@ it("load snippets", async () => {
     // load snippets (second page)
     const secondResponse = getAPIResponse(
         await fdr.load({
+            orgId: "acme",
             apiId: "petstore",
             sdks: [
                 {
@@ -429,6 +434,7 @@ it("snippets apiId not found", async () => {
 
     // get not found apiId
     const response = await fdr.get({
+        orgId: "acme",
         apiId: "dne",
         endpoint: {
             path: "/users/v1",
@@ -472,6 +478,7 @@ it("get snippets (unauthenticated)", async () => {
     // get snippets
     const unauthedFdr = getClient({ authed: false, url: inject("url") });
     const response = await unauthedFdr.get({
+        orgId: "acme",
         apiId: "user",
         endpoint: {
             path: "/users/v1",
