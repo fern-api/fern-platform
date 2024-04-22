@@ -78,6 +78,20 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                 });
             }
         });
+
+        // strip acorns
+        // TODO: exclude this logic if acorn matches scope (once we use scopes)
+        visit(tree, (node, index, parent) => {
+            if (index == null) {
+                return;
+            }
+            if (node.type === "mdxTextExpression") {
+                parent?.children.splice(index, 1, {
+                    type: "text",
+                    value: `{${node.value}}`,
+                });
+            }
+        });
     };
 }
 
