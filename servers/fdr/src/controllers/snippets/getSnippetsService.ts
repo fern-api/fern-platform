@@ -40,31 +40,35 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 const snippetsForEndpointMethod = snippetsForEndpointPath[req.body.endpoint.method];
                 return res.send(snippetsForEndpointMethod ?? []);
             } else {
-                const snippets: Snippet[] = [];
+                try {
+                    const snippets: Snippet[] = [];
 
-                for (const sdk of req.body.sdks ?? []) {
-                    const endpointSnippetTemplate: EndpointSnippetTemplate | null = await app.dao
-                        .snippetTemplates()
-                        .loadSnippetTemplate({
-                            loadSnippetTemplateRequest: {
-                                orgId: apiInfo.orgId,
-                                apiId: apiInfo.apiId,
-                                endpointId: req.body.endpoint,
-                                sdk,
-                            },
+                    for (const sdk of req.body.sdks ?? []) {
+                        const endpointSnippetTemplate: EndpointSnippetTemplate | null = await app.dao
+                            .snippetTemplates()
+                            .loadSnippetTemplate({
+                                loadSnippetTemplateRequest: {
+                                    orgId: apiInfo.orgId,
+                                    apiId: apiInfo.apiId,
+                                    endpointId: req.body.endpoint,
+                                    sdk,
+                                },
+                            });
+                        if (endpointSnippetTemplate == null) {
+                            throw new SnippetTemplateNotFoundError("Snippet not found");
+                        }
+                        const templateResolver = new SnippetTemplateResolver({
+                            payload,
+                            endpointSnippetTemplate,
                         });
-                    if (endpointSnippetTemplate == null) {
-                        throw new SnippetTemplateNotFoundError("Snippet not found");
+
+                        snippets.push(templateResolver.resolve());
                     }
-                    const templateResolver = new SnippetTemplateResolver({
-                        payload,
-                        endpointSnippetTemplate,
-                    });
 
-                    snippets.push(templateResolver.resolve());
+                    return res.send(snippets);
+                } catch (e) {
+                    return res.send([]);
                 }
-
-                return res.send(snippets);
             }
         },
         load: async (req, res) => {
