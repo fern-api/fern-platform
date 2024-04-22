@@ -19,7 +19,18 @@ export function getTemplateService(app: FdrApplication): TemplateService {
             //     orgId: apiInfo.orgId,
             //     failHard: true,
             // });
-
+            const api = await app.dao.snippetAPIs().loadSnippetAPI({
+                loadSnippetAPIRequest: {
+                    orgId: req.body.orgId,
+                    apiName: req.body.apiId,
+                },
+            });
+            if (api == null) {
+                await app.dao.snippetAPIs().createSnippetAPI({
+                    apiName: req.body.apiId,
+                    orgId: req.body.orgId,
+                });
+            }
             await app.dao.snippetTemplates().storeSnippetTemplate({
                 storeSnippetsInfo: {
                     ...req.body,
@@ -45,7 +56,18 @@ export function getTemplateService(app: FdrApplication): TemplateService {
             //     orgId: apiInfo.orgId,
             //     failHard: true,
             // });
-
+            const api = await app.dao.snippetAPIs().loadSnippetAPI({
+                loadSnippetAPIRequest: {
+                    orgId: req.body.orgId,
+                    apiName: req.body.apiId,
+                },
+            });
+            if (api == null) {
+                await app.dao.snippetAPIs().createSnippetAPI({
+                    apiName: req.body.apiId,
+                    orgId: req.body.orgId,
+                });
+            }
             await app.dao.snippetTemplates().storeSnippetTemplate({
                 storeSnippetsInfo: {
                     ...req.body,

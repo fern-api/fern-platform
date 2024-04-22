@@ -1453,6 +1453,9 @@ importers:
       '@types/cors':
         specifier: ^2.8.13
         version: 2.8.17
+      '@types/execa':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@types/express':
         specifier: ^4.17.13
         version: 4.17.21
@@ -1486,6 +1489,9 @@ importers:
       eslint-config-custom:
         specifier: '*'
         version: 0.0.0(eslint@8.56.0)(typescript@5.4.3)
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
       nodemon:
         specifier: ^3.0.0
         version: 3.1.0
@@ -9008,6 +9014,13 @@ packages:
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  /@types/execa@2.0.0:
+    resolution: {integrity: sha512-aBnkJ0r3khaZkHzu9pDZeWXrDg1N/ZtDGRQkK+KIqNVvvTvW+URXMUHQQCQMYdb2GPrcwu9Fq6l9iiT+pirIbg==}
+    deprecated: This is a stub types definition. execa provides its own type definitions, so you do not need this installed.
+    dependencies:
+      execa: 5.1.1
+    dev: true
 
   /@types/express-serve-static-core@4.17.43:
     resolution: {integrity: sha512-oaYtiBirUOPQGSWNGPWnzyAFJ0BP3cwvN4oWZQY+zUBwpVIGsKUkpBpSztp74drYcjavs7SKFZ4DX1V2QeN8rg==}

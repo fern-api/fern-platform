@@ -1,13 +1,10 @@
 import { H, Handlers } from "@highlight-run/node";
-import type { Attributes } from "@opentelemetry/api";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
-import { Resource } from "@opentelemetry/resources";
-import { NodeSDK } from "@opentelemetry/sdk-node";
 import compression from "compression";
 import cors from "cors";
 import express from "express";
 import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
+import { HIGHLIGHT_PROJECT_ID, HIGHLIGHT_SERVICE_NAME } from "./app/FdrApplication";
 import { registerBackgroundTasks } from "./background";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
@@ -18,21 +15,8 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplateService } from "./controllers/snippets/getTemplateService";
-import { HIGHLIGHT_PROJECT_ID, HIGHLIGHT_SERVICE_NAME } from "./app/FdrApplication";
 
 const config = getConfig();
-
-// [Tracing] OTel config for Highlight
-const attributes: Attributes = {
-    "highlight.project_id": HIGHLIGHT_PROJECT_ID,
-};
-const sdk = new NodeSDK({
-    resource: new Resource(attributes),
-    traceExporter: new OTLPTraceExporter({
-        url: "https://otel.highlight.io:4318/v1/traces",
-    }),
-});
-sdk.start();
 
 // [Logging + Error Monitoring] Highlight-proper config
 const highlightConfig = {
