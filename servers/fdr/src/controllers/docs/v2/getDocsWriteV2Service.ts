@@ -1,4 +1,5 @@
 import { convertDocsDefinitionToDb, DocsV1Db } from "@fern-api/fdr-sdk";
+import { H } from "@highlight-run/node";
 import { AuthType } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
@@ -208,6 +209,12 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 return res.send();
             } catch (e) {
                 app.logger.error(`Error while trying to register docs for ${docsRegistrationInfo.fernUrl}`, e);
+
+                const parsed = H.parseHeaders(req.headers);
+                H.consumeError(e as Error, parsed?.secureSessionId, parsed?.requestId, {
+                    message: `Docs failed to register \`${docsRegistrationInfo.fernUrl}\``,
+                    tags: ["revalidation"],
+                });
                 await app.services.slack.notifyFailedToRegisterDocs({
                     domain: docsRegistrationInfo.fernUrl.getFullUrl(),
                     err: e,
