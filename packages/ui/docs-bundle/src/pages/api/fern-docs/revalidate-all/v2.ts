@@ -5,14 +5,6 @@ import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
 import { getXFernHostNode } from "../../../../utils/xFernHost";
 
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
-
 export const config = {
     maxDuration: 300,
 };
