@@ -1,4 +1,5 @@
 import { FernRevalidation, FernRevalidationClient } from "@fern-fern/revalidation-sdk";
+import { H } from "@highlight-run/node";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
@@ -69,6 +70,12 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             app?.logger.error("Failed to revalidate paths", e);
             revalidationFailed = true;
             console.log(e);
+
+            H.consumeError(e as Error, undefined, undefined, {
+                message: "Docs registration failed completely",
+                tags: ["revalidation"],
+            });
+
             return {
                 response: undefined,
                 revalidationFailed: true,

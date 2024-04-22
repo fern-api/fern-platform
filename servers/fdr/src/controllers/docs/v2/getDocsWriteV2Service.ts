@@ -213,7 +213,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 const parsed = H.parseHeaders(req.headers);
                 H.consumeError(e as Error, parsed?.secureSessionId, parsed?.requestId, {
                     message: `Docs failed to register \`${docsRegistrationInfo.fernUrl}\``,
-                    tags: ["revalidation"],
+                    tags: ["registration"],
                 });
                 await app.services.slack.notifyFailedToRegisterDocs({
                     domain: docsRegistrationInfo.fernUrl.getFullUrl(),
