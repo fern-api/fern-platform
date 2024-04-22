@@ -234,7 +234,7 @@ export class SnippetTemplateResolver {
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        const snippet = `${(endpointSnippet?.imports ?? []).join("\n")}\n\n${clientSnippet}\n${endpointSnippet?.invocation}`;
+        const snippet = `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${endpointSnippet?.invocation}`;
 
         switch (sdk.type) {
             case "typescript":
