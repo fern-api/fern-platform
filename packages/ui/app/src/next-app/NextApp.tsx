@@ -18,6 +18,9 @@ import "./globals.scss";
 
 const store = createStore();
 
+export const HIGHLIGHT_PROJECT_ID = "3ej4m3ye";
+export const HIGHLIGHT_SERVICE_NAME = "docs-frontend";
+
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
     useEffect(() => {
         initializePosthog();
@@ -40,8 +43,8 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                             {/* TODO: Remove DD once we move over to Highlight */}
                             <DatadogInit />
                             <HighlightInit
-                                projectId={"3ej4m3ye"}
-                                serviceName="docs-frontend"
+                                projectId={HIGHLIGHT_PROJECT_ID}
+                                serviceName={HIGHLIGHT_SERVICE_NAME}
                                 tracingOrigins
                                 reportConsoleErrors
                                 networkRecording={{

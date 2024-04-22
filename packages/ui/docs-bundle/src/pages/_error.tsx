@@ -2,6 +2,7 @@ import { PageRouterErrorProps, pageRouterCustomErrorHandler } from "@highlight-r
 
 import { GetServerSideProps } from "next";
 import Error from "next/error";
+import { NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID, NEXT_PUBLIC_HIGHLIGHT_SERVICE_NAME } from "../constants";
 
 export function parseResolvedUrl(resolvedUrl: string): string {
     // if resolvedUrl is `/static/[host]/[...slug]` or `/dynamic/[host]/[..slug]` then return '/[...slug]`
@@ -35,8 +36,8 @@ export default pageRouterCustomErrorHandler(
     {
         // This is just the same config as the error NextApp has
         // TODO(armando): we should have a shared config for this
-        projectId: "3ej4m3ye",
-        serviceName: "docs-frontend-server",
+        projectId: NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID,
+        serviceName: NEXT_PUBLIC_HIGHLIGHT_SERVICE_NAME,
         tracingOrigins: true,
         environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
     },
