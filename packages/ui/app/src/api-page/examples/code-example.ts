@@ -76,7 +76,7 @@ function getIconForClient(clientId: string) {
             return "fa-brands fa-js";
         case "go":
         case "golang":
-            return "fa-brands fa-go";
+            return "fa-brands fa-golang";
         case "ruby":
             return "fa-solid fa-gem";
         case "java":
