@@ -49,7 +49,7 @@ export const prisma = new PrismaClient({
 });
 
 export const fdrApplication = createMockFdrApplication({
-    orgIds: ["acme"],
+    orgIds: ["acme", "octoai"],
 });
 
 function sleep(ms: number) {
