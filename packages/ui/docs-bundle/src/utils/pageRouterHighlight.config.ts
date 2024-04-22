@@ -1,5 +1,6 @@
 import { PageRouterHighlight } from "@highlight-run/next/server";
+import { NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID } from "../constants";
 
 export const withPageRouterHighlight = PageRouterHighlight({
-    projectID: "3ej4m3ye",
+    projectID: NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID,
 });

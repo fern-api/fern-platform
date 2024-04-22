@@ -1,5 +1,6 @@
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
+import { withEdgeHighlight } from "../../../utils/edgeHighlight.config";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
 import { toValidPathname } from "../../../utils/toValidPathname";
@@ -14,7 +15,7 @@ function getHostFromUrl(url: string | undefined): string | undefined {
     return urlObj.host;
 }
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
@@ -59,3 +60,5 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return jsonResponse(500, [], headers);
     }
 }
+
+export default withEdgeHighlight(GET);

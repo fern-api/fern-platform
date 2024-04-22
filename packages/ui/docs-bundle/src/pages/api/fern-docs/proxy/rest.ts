@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
 import { NextResponse, type NextRequest } from "next/server";
+import { withEdgeHighlight } from "../../../../utils/edgeHighlight.config";
 import { jsonResponse } from "../../../../utils/serverResponse";
 
 export const runtime = "edge";
@@ -94,7 +95,7 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
     }
 }
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+async function POST(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
@@ -170,3 +171,5 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         });
     }
 }
+
+export default withEdgeHighlight(POST);

@@ -1,11 +1,12 @@
 import { ProxyRequest } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
+import { withEdgeHighlight } from "../../../../utils/edgeHighlight.config";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60 * 5; // 5 minutes
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+async function POST(req: NextRequest): Promise<NextResponse> {
     try {
         if (req.method !== "POST") {
             return new NextResponse(null, { status: 405 });
@@ -46,3 +47,5 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 500 });
     }
 }
+
+export default withEdgeHighlight(POST);

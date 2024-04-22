@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withEdgeHighlight } from "../../../utils/edgeHighlight.config";
 import { notFoundResponse } from "../../../utils/serverResponse";
 
 export const runtime = "edge";
@@ -12,7 +13,7 @@ function getHostFromUrl(url: string | undefined): string | undefined {
     return urlObj.host;
 }
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+async function GET(req: NextRequest): Promise<NextResponse> {
     const xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
 
     if (xFernHost == null || Array.isArray(xFernHost)) {
@@ -45,6 +46,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         },
     });
 }
+
+export default withEdgeHighlight(GET);
 
 function getSitemapXml(urls: string[]): string {
     return `<?xml version="1.0" encoding="UTF-8"?> <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

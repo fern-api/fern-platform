@@ -1,6 +1,7 @@
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
+import { withEdgeHighlight } from "../../../../utils/edgeHighlight.config";
 import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
 
 // export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
@@ -30,7 +31,7 @@ import { notFoundResponse, redirectResponse } from "../../../../utils/serverResp
 
 export const runtime = "edge";
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
 
@@ -75,3 +76,5 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     });
     return res;
 }
+
+export default withEdgeHighlight(GET);

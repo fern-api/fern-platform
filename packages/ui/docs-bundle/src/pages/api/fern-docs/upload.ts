@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createGetSignedUrl, createPutSignedUrl } from "../../../utils/createSignedUrl";
+import { withEdgeHighlight } from "../../../utils/edgeHighlight.config";
 
 export const runtime = "edge";
 export const maxDuration = 5;
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
@@ -30,6 +31,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 500 });
     }
 }
+
+export default withEdgeHighlight(GET);
 
 function constructS3Key(domain: string, time: string, file: string): string {
     return `${domain}/user-upload/${time}/${file}`;

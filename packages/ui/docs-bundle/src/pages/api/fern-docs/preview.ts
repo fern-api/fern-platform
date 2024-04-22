@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withEdgeHighlight } from "../../../utils/edgeHighlight.config";
 import { notFoundResponse, redirectResponse } from "../../../utils/serverResponse";
 
 export const runtime = "edge";
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
@@ -36,3 +37,5 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     return notFoundResponse();
 }
+
+export default withEdgeHighlight(GET);

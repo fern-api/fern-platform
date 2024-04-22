@@ -1,6 +1,7 @@
 import { FeatureFlags } from "@fern-ui/ui";
 import { getAll } from "@vercel/edge-config";
 import { NextRequest, NextResponse } from "next/server";
+import { withEdgeHighlight } from "../../../utils/edgeHighlight.config";
 
 export const runtime = "edge";
 
@@ -10,10 +11,12 @@ interface EdgeConfigResponse {
     whitelabeled: string[];
 }
 
-export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
+async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
     const domain = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host") ?? req.nextUrl.host;
     return NextResponse.json(await getFeatureFlags(domain));
 }
+
+export default withEdgeHighlight(handler);
 
 export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
     try {
