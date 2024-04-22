@@ -49,7 +49,7 @@ groups:
       - snippets
     generators:
       - name: fernapi/fern-python-sdk
-        version: 1.2.0-rc1
+        version: 1.3.0-rc4
         output:
           location: pypi
           url: pypi.buildwithfern.com

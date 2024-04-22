@@ -42,7 +42,7 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
             } else {
                 const snippets: Snippet[] = [];
 
-                req.body.sdks?.forEach(async (sdk) => {
+                for (const sdk of req.body.sdks ?? []) {
                     const endpointSnippetTemplate: EndpointSnippetTemplate | null = await app.dao
                         .snippetTemplates()
                         .loadSnippetTemplate({
@@ -62,7 +62,7 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                     });
 
                     snippets.push(templateResolver.resolve());
-                });
+                }
 
                 return res.send(snippets);
             }
