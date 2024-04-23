@@ -1,4 +1,4 @@
 {
-  "ignores": ["@types/jest", "@types/node", "esbuild", "@yarnpkg/esbuild-plugin-pnp"],
-  "ignore-patterns": ["lib", "dist"]
+  "ignores": ["qs", "@types/qs", "form-data"],
+  "ignore-patterns": ["dist"]
 }

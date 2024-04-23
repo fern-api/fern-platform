@@ -1,29 +1,21 @@
 {
   "name": "@fern-api/template-resolver",
   "version": "0.0.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/template-resolver"
-  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "type": "module",
+  "module": "dist/index.js",
   "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
+    "test": "vitest --passWithNoTests"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
