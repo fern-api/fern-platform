@@ -1,0 +1,47 @@
+name: Publish Template Resolver Package
+
+on:
+  push: {}
+  release:
+    types:
+      - published
+
+env:
+  PACKAGE_NAME: "@fern-api/template-resolver"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+
+jobs:
+  publish_package:
+    if: github.event_name == 'release' && startsWith(github.event.release.tag_name, 'python@')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: 🧪 Build and test
+        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Publish Template Resolver Package
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        # Currently follows the same version as FDR, which is probably fine for now
+        run: |
+          tag=${{ github.event.release.tag_name }}
+          prefix="template-resolver@"
+          VERSION="${tag#$prefix}"
+
+          cd packages/template-resolver
+          mv package.json package.json.tmp
+          version_replace="s/0.0.0/${VERSION}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          rm -rf package.json.tmp
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm publish --access public
