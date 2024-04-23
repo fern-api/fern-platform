@@ -9,4 +9,5 @@
     },
   },
   "include": ["./src/**/*"],
+  "references": [{ "path": "../../packages/template-resolver" }],
 }
