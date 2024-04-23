@@ -1,0 +1,43 @@
+---
+title: Toggle SMS Reply Method
+subtitle: Turn on or off the AI replying for a given phone number.
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="phone_number" type="string">
+The phone number to update.
+</ParamField>
+
+<ParamField body="on" type="boolean">
+Turn human mode on or off. 
+
+`true` means that the AI will *not* reply. 
+`false` means the AI will reply
+</ParamField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "Turned human mode on"
+}
+```
+
+</ResponseExample>
+
+
+
+
+
+
+
+
+

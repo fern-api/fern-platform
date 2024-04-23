@@ -1,19 +1,12 @@
-import fs from "fs";
 import path from "path";
-import { migrateMintlifyToDocsConfig } from "..";
-import { MintJsonSchema } from "../mintlify";
+import { MigrateFromMintlify } from "..";
 
 export function testMigrator(fixtureName: string): void {
-    // eslint-disable-next-line vitest/valid-title
-    it("runs migrator", async () => {
-        const fixturePath = path.join(__dirname, "fixtures", `${fixtureName}/mint.json`);
+    it("crawls directory", async () => {
+        const fixturePath = path.join(__dirname, "fixtures", `${fixtureName}`);
+        const outputPath = path.join(__dirname, "outputs", `${fixtureName}`);
 
-        const content = fs.readFileSync(fixturePath, "utf-8");
-
-        const fixture = JSON.parse(content) as MintJsonSchema;
-
-        const docsConfig = migrateMintlifyToDocsConfig(fixture);
-
-        expect(docsConfig).toMatchSnapshot();
+        const migrator = new MigrateFromMintlify(fixturePath, outputPath, fixtureName);
+        await migrator.run();
     });
 }

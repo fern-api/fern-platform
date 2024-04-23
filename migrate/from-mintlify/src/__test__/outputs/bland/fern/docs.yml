@@ -1,0 +1,101 @@
+instances: []
+title: Bland AI
+logo:
+  light: assets/logo/light.svg
+  dark: assets/logo/dark.svg
+favicon: assets/logo.png
+colors:
+  accent-primary:
+    dark: "#0b0a18"
+    light: "#847AF9"
+  background:
+    dark: "#0A141B"
+navbar-links:
+  - type: secondary
+    text: Support
+    url: mailto:hello@bland.ai
+  - type: primary
+    text: GET YOUR KEYS
+    url: https://app.bland.ai
+tabs:
+  V1 API Reference:
+    display-name: V1 API Reference
+    slug: api-v1
+layout:
+  tabs-placement: sidebar
+  searchbar-placement: header
+navigation:
+  - section: Get Started
+    contents:
+      - page: Welcome to Bland AI
+        path: welcome-to-bland.mdx
+      - page: Starter guide
+        path: starter-guide.mdx
+  - section: Bland Enterprise
+    contents:
+      - page: Custom Twilio Integration
+        path: enterprise-features/custom-twilio.mdx
+      - page: Fine-tuning & Custom LLMs
+        path: enterprise-features/custom-llm.mdx
+      - page: Unlimited support
+        path: enterprise-features/unlimited-support.mdx
+      - page: Custom languages & voices
+        path: enterprise-features/custom-tts.mdx
+      - page: Bring your own Twilio
+        path: enterprise-features/bring-your-own-twilio.mdx
+      - page: Enterprise rate limits
+        path: enterprise-features/enterprise-rate-limits.mdx
+  - section: Featured guides
+    contents:
+      - page: Bland & Botpress
+        path: featured-guides/bland-and-botpress.mdx
+  - section: Basic Tutorials
+    contents:
+      - page: Conversational Pathways
+        path: tutorials/pathways.mdx
+      - page: Custom Tools
+        path: tutorials/custom-tools.mdx
+      - page: Send your first phone call
+        path: tutorials/send-first-call.mdx
+      - page: Webhook Signing
+        path: tutorials/webhook-signing.mdx
+      - page: Send 1000 phone calls
+        path: tutorials/send-1000-calls-at-once.mdx
+      - page: Dynamic Data
+        path: tutorials/dynamic-data.mdx
+      - page: Setting max duration
+        path: tutorials/max-duration.mdx
+      - page: Live transfer
+        path: tutorials/live-transfer.mdx
+      - page: Webhooks
+        path: tutorials/webhooks.mdx
+  - section: Basic
+    contents: []
+  - section: Calls
+    contents: []
+  - section: Web Agents
+    contents: []
+  - section: Inbound Numbers
+    contents: []
+  - section: Outbound Numbers
+    contents: []
+  - section: Voices
+    contents: []
+  - section: Custom Tools
+    contents: []
+  - section: Custom Twilio Accounts
+    contents: []
+  - section: Subaccounts
+    contents: []
+  - section: Batches
+    contents: []
+  - section: Primary Endpoints
+    contents: []
+  - section: Batch Endpoints
+    contents: []
+  - section: SMS
+    contents: []
+  - section: Account
+    contents: []
+  - section: Hold Endpoint
+    contents: []
