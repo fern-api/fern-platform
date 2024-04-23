@@ -102,8 +102,6 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
         [contextValue],
     );
 
-    console.log(unionVariant);
-
     return (
         <div
             className={cn("flex flex-col py-3", {
