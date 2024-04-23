@@ -1,16 +1,5 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import lodash from "lodash";
-import {
-    CustomSnippetPayload,
-    EndpointSnippetTemplate,
-    ParameterPayload,
-    PayloadInput,
-    Sdk,
-    Snippet,
-    SnippetTemplate,
-    Template,
-    VersionedSnippetTemplate,
-} from "../../api/generated/api";
-import { ApiDefinition } from "../../api/generated/api/resources/api/resources/v1/resources/read";
 const { get } = lodash;
 
 interface V1Snippet {
@@ -21,22 +10,18 @@ interface V1Snippet {
 const TemplateSentinel = "$FERN_INPUT";
 
 export class SnippetTemplateResolver {
-    private payload: CustomSnippetPayload;
-    private endpointSnippetTemplate: EndpointSnippetTemplate;
-    // TODO: This should actually be used in the future, specifically for union gen
-    private apiDefinition?: ApiDefinition;
+    private payload: FdrAPI.CustomSnippetPayload;
+    private endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
+
     constructor({
         payload,
         endpointSnippetTemplate,
-        apiDefinition,
     }: {
-        payload: CustomSnippetPayload;
-        endpointSnippetTemplate: EndpointSnippetTemplate;
-        apiDefinition?: ApiDefinition;
+        payload: FdrAPI.CustomSnippetPayload;
+        endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
-        this.apiDefinition = apiDefinition;
     }
 
     private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
@@ -44,7 +29,7 @@ export class SnippetTemplateResolver {
     }
 
     private accessParameterPayloadByPath(
-        parameterPayloads?: ParameterPayload[],
+        parameterPayloads?: FdrAPI.ParameterPayload[],
         locationPath?: string,
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
@@ -60,7 +45,7 @@ export class SnippetTemplateResolver {
         return undefined;
     }
 
-    private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
+    private getPayloadValue(location: FdrAPI.PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
             return this.accessByPath(payloadOverride, location.path);
         }
@@ -82,17 +67,17 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveV1Template(template: Template, payloadOverride?: unknown): V1Snippet | undefined {
+    private resolveV1Template(template: FdrAPI.Template, payloadOverride?: unknown): V1Snippet | undefined {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
             case "generic": {
-                if (template.templateInputs == null || template.templateInputs.length == 0) {
+                if (template.templateInputs == null || template.templateInputs.length === 0) {
                     // TODO: If the field is required return SOMETHING, ideally from the default example
                     return undefined;
                 }
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const input of template.templateInputs) {
-                    if (input.type == "payload") {
+                    if (input.type === "payload") {
                         const evaluatedPayload = this.getPayloadValue(input, payloadOverride);
                         if (evaluatedPayload != null) {
                             evaluatedInputs.push({
@@ -176,7 +161,7 @@ export class SnippetTemplateResolver {
                 const enumValues = new Map(Object.entries(template.values));
                 const enumSdkValues = Array.from(enumValues.values());
                 const defaultEnumValue = enumSdkValues[0];
-                if (template.templateInput == null) {
+                if (template.templateInput == null || defaultEnumValue == null) {
                     return undefined;
                 }
 
@@ -228,7 +213,7 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveSnippetV1Template(sdk: Sdk, template: SnippetTemplate): Snippet {
+    private resolveSnippetV1Template(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
         const clientSnippet = template.clientInstantiation;
         const endpointSnippet = this.resolveV1Template(template.functionInvocation);
 
@@ -264,9 +249,9 @@ export class SnippetTemplateResolver {
         }
     }
 
-    public resolve(): Snippet {
-        const sdk: Sdk = this.endpointSnippetTemplate.sdk;
-        const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+    public resolve(): FdrAPI.Snippet {
+        const sdk: FdrAPI.Sdk = this.endpointSnippetTemplate.sdk;
+        const template: FdrAPI.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1Template(sdk, template);

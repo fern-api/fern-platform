@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.335.0",
     "@aws-sdk/s3-request-presigner": "^3.540.0",
+    "@fern-api/template-resolver": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.3.0-2-g994ae9e",
     "@fern-fern/revalidation-sdk": "0.0.7",

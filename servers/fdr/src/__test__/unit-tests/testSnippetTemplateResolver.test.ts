@@ -1,3 +1,4 @@
+import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import {
     CustomSnippetPayload,
     EndpointSnippetTemplate,
@@ -5,7 +6,6 @@ import {
     Template,
     TemplateInput,
 } from "../../api/generated/api";
-import { SnippetTemplateResolver } from "../../controllers/snippets/SnippetTemplateResolver";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../octo";
 
 describe("Snippet Template Resolver", () => {
