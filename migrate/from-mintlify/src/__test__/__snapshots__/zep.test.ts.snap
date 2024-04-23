@@ -1,0 +1,394 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`zep > runs migrator 1`] = `
+{
+  "backgroundImage": undefined,
+  "colors": {
+    "accentPrimary": {
+      "dark": "#D5479D",
+      "light": "#D5479D",
+    },
+    "background": {
+      "dark": undefined,
+      "light": undefined,
+    },
+  },
+  "favicon": "/logo/favicon.png",
+  "instances": [],
+  "layout": {
+    "searchbarPlacement": "header",
+    "tabsPlacement": "sidebar",
+  },
+  "logo": {
+    "dark": "/logo/zep-name-logo-pink.svg",
+    "href": undefined,
+    "light": "/logo/zep-name-logo-gradient.svg",
+  },
+  "navbarLinks": [
+    {
+      "text": "Support",
+      "type": "secondary",
+      "url": "mailto:help@getzep.com",
+    },
+    {
+      "text": "Dashboard",
+      "type": "primary",
+      "url": "https://app.getzep.com",
+    },
+  ],
+  "navigation": [
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "sdks",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "projects",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "users",
+        },
+      ],
+      "icon": undefined,
+      "section": "Getting Started",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "chat-history-memory/overview",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "chat-history-memory/memories",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "chat-history-memory/sessions",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "chat-history-memory/messages",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "chat-history-memory/summaries",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "chat-history-memory/search",
+        },
+      ],
+      "icon": undefined,
+      "section": "Chat History Memory",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "dialog-classification",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "question-synthesis",
+        },
+      ],
+      "icon": undefined,
+      "section": "Dialog Tools",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "working-with-search",
+        },
+      ],
+      "icon": undefined,
+      "section": "Working with Search",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "document-collections",
+        },
+      ],
+      "icon": undefined,
+      "section": "Document Collections",
+    },
+    {
+      "contents": [
+        {
+          "contents": [
+            {
+              "page": "Untitled Page",
+              "path": "langchain/overview",
+            },
+            {
+              "page": "Untitled Page",
+              "path": "langchain/messagehistory",
+            },
+            {
+              "page": "Untitled Page",
+              "path": "langchain/vectorstore",
+            },
+            {
+              "contents": [
+                {
+                  "page": "Untitled Page",
+                  "path": "langchain/examples/messagehistory-example",
+                },
+                {
+                  "page": "Untitled Page",
+                  "path": "langchain/examples/vectorstore-example",
+                },
+                {
+                  "page": "Untitled Page",
+                  "path": "langchain/examples/rag-message-history-example",
+                },
+              ],
+              "icon": undefined,
+              "section": "Examples",
+            },
+          ],
+          "icon": undefined,
+          "section": "LangChain",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "ecosystem/flowise",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "ecosystem/chainlit",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "ecosystem/llamaindex",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "ecosystem/langflow",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "ecosystem/n8n",
+        },
+      ],
+      "icon": undefined,
+      "section": "Ecosystem",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "legal/privacy-policy",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "legal/terms-of-service",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "legal/website-terms-of-use",
+        },
+      ],
+      "icon": undefined,
+      "section": "Legal",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/updates-a-document-in-a-documentcollection-by-uuid",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/gets-a-document-from-a-documentcollection-by-uuid",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/creates-multiple-documents-in-a-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/batch-deletes-documents-from-a-documentcollection-by-uuid",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/batch-gets-documents-from-a-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/batch-updates-documents-in-a-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/delete-document-from-a-documentcollection-by-uuid",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/document/searches-documents-in-a-documentcollection",
+        },
+      ],
+      "icon": undefined,
+      "section": "document",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/collection/gets-a-list-of-documentcollections",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/collection/gets-a-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/collection/creates-a-new-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/collection/deletes-a-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/collection/updates-a-documentcollection",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/collection/creates-an-index-for-a-documentcollection",
+        },
+      ],
+      "icon": undefined,
+      "section": "collection",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/session/returns-all-sessions",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/session/add-a-session",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/session/returns-a-session-by-id",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/session/add-a-session-1",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/session/classify-a-session",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/session/returns-a-sessions-summaries-by-id",
+        },
+      ],
+      "icon": undefined,
+      "section": "session",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/memory/returns-a-memory-latest-summary-and-list-of-messages-for-a-given-session",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/memory/add-memory-messages-to-a-given-session",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/memory/delete-memory-messages-for-a-given-session",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/memory/synthesize-a-question-for-a-given-session",
+        },
+      ],
+      "icon": undefined,
+      "section": "memory",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/messages/retrieves-all-messages-for-a-specific-session",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/messages/retrieves-a-specific-message",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/messages/updates-the-metadata-of-a-specific-message",
+        },
+      ],
+      "icon": undefined,
+      "section": "messages",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/search/search-memory-messages-for-a-given-session",
+        },
+      ],
+      "icon": undefined,
+      "section": "search",
+    },
+    {
+      "contents": [
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/list-all-users",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/add-a-user",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/list-all-users-1",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/returns-a-user-by-id",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/delete-a-user",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/update-a-user",
+        },
+        {
+          "page": "Untitled Page",
+          "path": "api-reference/user/list-all-sessions-for-a-user",
+        },
+      ],
+      "icon": undefined,
+      "section": "user",
+    },
+  ],
+  "tabs": {
+    "API Reference": {
+      "displayName": "API Reference",
+      "slug": "api-reference",
+    },
+  },
+  "title": "Zep Documentation",
+  "versions": undefined,
+}
+`;
