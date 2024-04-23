@@ -89,7 +89,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     applyErrorStyles,
     route,
     defaultExpandAll = false,
-    idx,
+    // idx,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
