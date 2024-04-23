@@ -30,7 +30,7 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: FdrAPI.ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
@@ -98,7 +98,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
                           ),
                       }
                     : undefined;
@@ -123,7 +123,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -153,7 +153,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -219,7 +219,9 @@ export class SnippetTemplateResolver {
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        const snippet = `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${endpointSnippet?.invocation}`;
+        const snippet = `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
+            endpointSnippet?.invocation
+        }`;
 
         switch (sdk.type) {
             case "typescript":
