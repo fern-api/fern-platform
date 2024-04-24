@@ -1,6 +1,6 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, getNavigationRoot } from "@fern-ui/fdr-utils";
+import { buildUrl, getNavigationRoot, isVersionedNavigationConfig } from "@fern-ui/fdr-utils";
 import {
     DocsPage,
     DocsPageResult,
@@ -176,7 +176,7 @@ async function convertDocsToDocsPageProps({
     if (navigation == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
-        return { type: "notFound", notFound: true };
+        return handleNotFound(docs, slug);
     }
 
     if (navigation.type === "redirect") {
@@ -205,10 +205,7 @@ async function convertDocsToDocsPageProps({
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
-        return {
-            type: "notFound",
-            notFound: true,
-        };
+        return handleNotFound(docs, slug);
     }
 
     if (resolvedPath.type === "redirect") {
@@ -285,4 +282,37 @@ async function maybeGetWorkosOrganization(host: string): Promise<string | undefi
         return undefined;
     }
     return maybeOrg.body.workosOrganizationId;
+}
+
+function handleNotFound(docs: DocsV2Read.LoadDocsForUrlResponse, slug: string[]): DocsPageResult<DocsPage.Props> {
+    if (isVersionedNavigationConfig(docs.definition.config.navigation)) {
+        // if the navigation config is versioned, determine which version's basepath to redirect to
+
+        for (const version of docs.definition.config.navigation.versions) {
+            const versionSlug = version.urlSlug.split("/");
+
+            if (slug.length >= versionSlug.length) {
+                const isVersionMatch = versionSlug.every((part, index) => part === slug[index]);
+
+                if (isVersionMatch) {
+                    return {
+                        type: "redirect",
+                        redirect: {
+                            destination: `${docs.baseUrl.basePath ?? ""}/${version.urlSlug}`,
+                            permanent: false,
+                        },
+                    };
+                }
+            }
+        }
+    }
+
+    // essentially a 404, but redirect user to the root path
+    return {
+        type: "redirect",
+        redirect: {
+            destination: docs.baseUrl.basePath ?? "/",
+            permanent: false,
+        },
+    };
 }

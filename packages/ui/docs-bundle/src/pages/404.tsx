@@ -1,6 +1,3 @@
-import { buildUrl } from "@fern-ui/fdr-utils";
-import { REGISTRY_SERVICE } from "@fern-ui/ui";
-import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
@@ -21,21 +18,3 @@ const NotFoundPage = dynamic(() => Promise.resolve(Core), {
 });
 
 export default NotFoundPage;
-
-export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ params = {} }) => {
-    const host = params.host as string | undefined;
-    const slugArray = params.slug as string[] | undefined;
-    const pathname = slugArray != null ? slugArray.join("/") : "";
-    const url = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: host ?? "", pathname });
-    // eslint-disable-next-line no-console
-    console.log("[404] Loading docs for", url);
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
-
-    if (!docs.ok) {
-        return { props: { basePath: null } };
-    }
-
-    const basePath = docs.body.baseUrl.basePath ?? null;
-
-    return { props: { basePath } };
-};
