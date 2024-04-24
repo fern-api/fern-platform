@@ -84,8 +84,7 @@ const handler: NextApiHandler = async (
 
         const results: RevalidatePathResult[] = [];
 
-        // batch urls to 100 at a time
-        const batchSize = 100;
+        const batchSize = 250;
         for (let i = 0; i < urls.length; i += batchSize) {
             const batch = urls.slice(i, i + batchSize);
             results.push(
