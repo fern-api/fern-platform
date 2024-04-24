@@ -102,7 +102,7 @@ export class MigrateFromMintlify {
                 .map(async (page) => {
                     const { path: filePath, data, content } = page;
                     const frontmatter = `---\n${jsyaml.dump(JSON.parse(JSON.stringify(data)))}---\n`;
-                    const absoluteFilePath = path.join(fernDir, "docs", filePath);
+                    const absoluteFilePath = path.join(fernDir, filePath);
                     const dir = path.dirname(absoluteFilePath);
                     await fs.promises.mkdir(dir, { recursive: true });
                     await fs.promises.writeFile(
@@ -116,9 +116,9 @@ export class MigrateFromMintlify {
         await Promise.all(
             this.imageFiles.map(async (file) => {
                 const absoluteFilePath = path.join(this.dir, file);
-                const dir = path.dirname(path.join(fernDir, "assets", file));
-                await fs.promises.mkdir(dir, { recursive: true });
-                await fs.promises.copyFile(absoluteFilePath, path.join(fernDir, "assets", file));
+                const newFilePath = path.join(fernDir, file);
+                await fs.promises.mkdir(path.dirname(newFilePath), { recursive: true });
+                await fs.promises.copyFile(absoluteFilePath, newFilePath);
             }),
         );
     }

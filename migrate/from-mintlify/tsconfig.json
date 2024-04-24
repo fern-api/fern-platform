@@ -1,5 +1,5 @@
 {
-  "extends": "@fern-platform/configs/tsconfig/cli.json",
+  "extends": "@fern-platform/configs/tsconfig/library.json",
   "compilerOptions": {
     "composite": true,
     "noEmit": false,

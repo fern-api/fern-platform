@@ -1,15 +1,24 @@
 {
   "name": "@fern-platform/from-mintlify",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "migrate/from-mintlify"
+  },
+  "private": true,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "vitest --passWithNoTests --globals"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
   "type": "module",
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
   "dependencies": {
     "@fern-fern/docs-config": "^0.22.0",
     "@fern-ui/core-utils": "workspace:*",
