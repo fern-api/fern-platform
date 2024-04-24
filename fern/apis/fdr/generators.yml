@@ -27,7 +27,7 @@ groups:
           extraDevDependencies:
             "@types/mime": "3.0.4"
 
-  internal-snippets-sdk:
+  internal-snippets-sdks:
     audiences:
       - snippets
     generators:
@@ -54,21 +54,23 @@ groups:
           namespaceExport: FdrSnippetTemplate
           includeUtilsOnUnionMembers: true
 
-  external-snippets-sdk:
+  external-sdks:
     audiences:
+      - external
       - snippets
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.12.8-rc0
         output:
           location: npm
-          package-name: "@fern/snippets"
-          token: ${NPM_TOKEN}
+          package-name: "@fern/node-sdk"
+          # token: ${NPM_TOKEN}
         github:
-          repository: fern-api/snippets-ts
+          repository: fern-api/node-sdk
           mode: pull-request
+          license: MIT
         config:
-          namespaceExport: Snippets
+          namespaceExport: Fern
           includeUtilsOnUnionMembers: true
 
   fiddle:

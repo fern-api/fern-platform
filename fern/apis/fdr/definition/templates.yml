@@ -1,0 +1,228 @@
+imports:
+  commons: commons.yml
+  snippets: snippets.yml
+
+service:
+  auth: true
+  base-path: /snippet-template
+  audiences:
+    - snippets
+  endpoints:
+    register:
+      path: /register
+      docs: Store endpoint snippet for a particular SDK.
+      display-name: Store snippet template
+      method: POST
+      auth: false
+      request:
+        name: RegisterSnippetTemplateRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            apiDefinitionId: commons.ApiDefinitionId
+            snippet: SnippetRegistryEntry
+
+    registerBatch:
+      path: /register/batch
+      docs: Store endpoint snippets for a particular SDK.
+      display-name: Store (multiple) snippet templates
+      method: POST
+      auth: false
+      request:
+        name: RegisterSnippetTemplateBatchRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            apiDefinitionId: commons.ApiDefinitionId
+            snippets: list<SnippetRegistryEntry>
+
+    get:
+      path: /get
+      docs: Get the endpoint's snippet template for a particular SDK.
+      display-name: Get snippet template
+      method: POST
+      errors:
+        - commons.UnauthorizedError
+        - SnippetNotFound
+      request:
+        name: GetSnippetTemplate
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            apiId:
+              type: commons.ApiId
+              docs: |
+                The API name.
+            sdk: snippets.SDK
+            endpointId: snippets.EndpointIdentifier
+      response: EndpointSnippetTemplate
+
+types:
+  # Internal Snippet structure
+  TemplateSentinel: literal<"$FERN_INPUT">
+
+  UnionTemplate:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
+      templateString: string
+      members:
+        type: map<string, Template>
+        docs: A map of the union member's typeID to the template.
+      templateInput: optional<PayloadInput>
+  DiscriminatedUnionTemplate:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
+      templateString: string
+      discriminantField: string
+      members:
+        type: map<string, Template>
+        docs: A map of the union member's discriminant to the template to use to create it
+      templateInput: optional<PayloadInput>
+  EnumTemplate:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
+      templateString: optional<string>
+      values: map<string, string>
+      templateInput: optional<PayloadInput>
+  GenericTemplate:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
+      templateString: string
+      templateInputs:
+        type: optional<list<TemplateInput>>
+        docs: An ordered list of inputs to the template.
+      inputDelimiter:
+        type: optional<string>
+        docs: In the event you have multiple template inputs, how do you concat them together
+  DictTemplate:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+      containerTemplateString:
+        type: string
+        docs: Commonly the braces of a container like `{ $FERN_INPUT }`, but may even be something like `new Dict( $FERN_INPUT )`
+      delimiter: string
+      keyTemplate: Template
+      valueTemplate: Template
+      keyValueSeparator: string
+      templateInput: optional<PayloadInput>
+  IterableTemplate:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+      containerTemplateString:
+        type: string
+        docs: Commonly the braces of a container like `[ $FERN_INPUT ]` for a list or `{ $FERN_INPUT }` for a set
+      delimiter: string
+      innerTemplate:
+        type: Template
+        docs: |
+          In the event of an array, the root template would be something like `[ fern!{{ child }} ]`
+          and so the child would be the actual object type seen in the example.
+      templateInput: optional<PayloadInput>
+  Template:
+    union:
+      generic: GenericTemplate
+      enum: EnumTemplate
+      discriminatedUnion: DiscriminatedUnionTemplate
+      union: UnionTemplate
+      dict: DictTemplate
+      iterable: IterableTemplate
+
+  TemplateInput:
+    union:
+      template: Template
+      payload: PayloadInput
+  PayloadLocation:
+    docs: |
+      The location of the payload, if omitted the full payload is used.
+      Note that RELATIVE should be used for iterables primarily, so be
+      able to specify the path to the field relative to the iterated on object
+    enum:
+      - BODY
+      - QUERY
+      - PATH
+      - HEADERS
+      - RELATIVE
+  PayloadInput:
+    properties:
+      location: PayloadLocation
+      path:
+        type: optional<string>
+        docs: Dot delimited path to the value within the payload, if omitted the full payload is used.
+
+  SnippetTemplate:
+    properties:
+      # TODO: Make clientInstantiation a Template
+      clientInstantiation: string
+      functionInvocation: Template
+  VersionedSnippetTemplate:
+    union:
+      v1: SnippetTemplate
+
+  SnippetRegistryEntry:
+    properties:
+      sdk: snippets.SDK
+      endpointId: snippets.EndpointIdentifier
+      snippetTemplate: VersionedSnippetTemplate
+
+  EndpointSnippetTemplate:
+    properties:
+      sdk: snippets.SDK
+      endpointId: snippets.EndpointIdentifier
+      snippetTemplate: VersionedSnippetTemplate
+
+errors:
+  SnippetNotFound:
+    status-code: 404
+    docs: The requested snippet was not found
+    type: string
