@@ -169,25 +169,19 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 /**
                  * IMPORTANT NOTE:
                  * vercel cache is not shared between custom domains, so we need to revalidate on EACH custom domain individually
-                 * the only exception is for custom domains with subpaths, where we only revalidate the fernUrl
                  */
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                if (stagingUrl != null) {
-                    // revalidation needs to occur separately for staging
-                    urls.push(stagingUrl);
-                }
+                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
+                // if (stagingUrl != null) {
+                //     // revalidation needs to occur separately for staging
+                //     urls.push(stagingUrl);
+                // }
 
                 // revalidate all custom urls
                 await Promise.all(
                     urls.map(async (baseUrl) => {
-                        const results = await app.services.revalidator.revalidate({
-                            // treat staging URL as its own fernURL to handle basepath revalidation
-                            fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
-                            baseUrl,
-                            app,
-                        });
+                        const results = await app.services.revalidator.revalidate({ baseUrl, app });
                         if (
                             results.response != null &&
                             results.response.failedRevalidations.length === 0 &&

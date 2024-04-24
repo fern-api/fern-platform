@@ -58,12 +58,13 @@ const handler: NextApiHandler = async (
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-        const docs = await loadWithUrl(
-            buildUrl({
-                host: hostWithoutTrailingSlash,
-                pathname: toValidPathname(req.query.basePath),
-            }),
-        );
+        const url = buildUrl({
+            host: hostWithoutTrailingSlash,
+            pathname: toValidPathname(req.query.basePath),
+        });
+        // eslint-disable-next-line no-console
+        console.log("[revalidate-all/v2] Loading docs for", url);
+        const docs = await loadWithUrl(url);
 
         if (docs == null) {
             // return notFoundResponse();
@@ -79,6 +80,8 @@ const handler: NextApiHandler = async (
 
         const results = await Promise.all(
             urls.map(async (url): Promise<RevalidatePathResult> => {
+                // eslint-disable-next-line no-console
+                console.log(`Revalidating ${url}`);
                 try {
                     await res.revalidate(`/static/${encodeURI(url)}`);
                     return { success: true, url };

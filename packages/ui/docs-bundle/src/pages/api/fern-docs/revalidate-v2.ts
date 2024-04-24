@@ -72,7 +72,10 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
         const { path } = parseResult.request;
 
         try {
-            await res.revalidate(`/static/${encodeURI(host)}/${encodeURI(path)}`);
+            // eslint-disable-next-line no-console
+            const url = `${host}/${path}`;
+            console.log(`Revalidating ${url}`);
+            await res.revalidate(`/static/${encodeURI(url)}`);
             // return jsonResponse<ResponseBody>(200, {
             //     success: true,
             //     message: "Successfully revalidated path: " + `${host}/${path}`,

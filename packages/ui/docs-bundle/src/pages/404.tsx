@@ -26,9 +26,10 @@ export const getStaticProps: GetStaticProps<NotFoundPage.Props> = async ({ param
     const host = params.host as string | undefined;
     const slugArray = params.slug as string[] | undefined;
     const pathname = slugArray != null ? slugArray.join("/") : "";
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: host ?? "", pathname }),
-    });
+    const url = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host: host ?? "", pathname });
+    // eslint-disable-next-line no-console
+    console.log("[404] Loading docs for", url);
+    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
     if (!docs.ok) {
         return { props: { basePath: null } };
