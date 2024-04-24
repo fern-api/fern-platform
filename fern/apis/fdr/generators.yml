@@ -60,6 +60,15 @@ groups:
             include_union_utils: true
           client:
             class_name: FdrClient
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.12.8-rc0
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/snippet-template-sdk"
+        config:
+          namespaceExport: FdrSnippetTemplate
+          includeUtilsOnUnionMembers: true
 
   fiddle:
     audiences:

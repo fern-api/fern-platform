@@ -89,8 +89,7 @@ model SnippetTemplate {
   endpointPath        String
   endpointMethod      HttpMethod
   sdkId               String
-  sdk                 Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
-
+  // sdk                 Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
   version             SnippetTemplateSemanticVersion
   
   // The actual templates themselves held as binary data to save encoding the schema, which may change
@@ -123,7 +122,7 @@ model Sdk {
   Snippet   Snippet[]
 
   // Optional for backcompat
-  templates SnippetTemplate[]
+  // templates SnippetTemplate[]
 }
 
 model SnippetApi {

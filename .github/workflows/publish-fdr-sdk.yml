@@ -26,6 +26,8 @@ jobs:
         run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Publish FDR SDK
+        env: 
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
           git_version="$(scripts/fdr-version.sh)"
           cd packages/fdr-sdk

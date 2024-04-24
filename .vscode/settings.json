@@ -15,5 +15,6 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vitest.commandLine": "pnpm test"
+  "vitest.commandLine": "pnpm test",
+  "vitest.disableWorkspaceWarning": true
 }

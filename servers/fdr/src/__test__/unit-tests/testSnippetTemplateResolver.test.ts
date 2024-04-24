@@ -6,6 +6,7 @@ import {
     TemplateInput,
 } from "../../api/generated/api";
 import { SnippetTemplateResolver } from "../../controllers/snippets/SnippetTemplateResolver";
+import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../octo";
 
 describe("Snippet Template Resolver", () => {
     it("Test Snippet Template Resolution", () => {
@@ -112,5 +113,15 @@ describe("Snippet Template Resolver", () => {
         expect((customSnippet as PythonSnippet).sync_client).toEqual(
             'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)',
         );
+    });
+
+    it("Test Chat Completion snippet", () => {
+        const resolver = new SnippetTemplateResolver({
+            payload: CHAT_COMPLETION_PAYLOAD,
+            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
+        });
+        const customSnippet = resolver.resolve();
+
+        expect(customSnippet.type).toEqual("python");
     });
 });
