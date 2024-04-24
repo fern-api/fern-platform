@@ -4,6 +4,7 @@ export * from "./docs";
 export * from "./flattenApiDefinition";
 export * from "./getAllUrlsFromDocsConfig";
 export * from "./getNavigationRoot";
+export * from "./getUnversionedSlug";
 export * from "./resolver";
 export * from "./slug";
 export * from "./subpackage";
