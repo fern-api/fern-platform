@@ -1,9 +1,9 @@
 instances: []
 title: Zep Documentation
 logo:
-  light: assets/logo/zep-name-logo-gradient.svg
-  dark: assets/logo/zep-name-logo-pink.svg
-favicon: assets/logo/favicon.png
+  light: logo/zep-name-logo-gradient.svg
+  dark: logo/zep-name-logo-pink.svg
+favicon: logo/favicon.png
 colors:
   accent-primary:
     dark: "#D5479D"

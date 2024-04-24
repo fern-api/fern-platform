@@ -24,7 +24,14 @@
     "@fern-ui/core-utils": "workspace:*",
     "execa": "^5.1.1",
     "gray-matter": "^4.0.3",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "rehype-remark": "^10.0.0",
+    "remark-mdx": "^3.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.0",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.4",
+    "unified-prettier": "^2.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

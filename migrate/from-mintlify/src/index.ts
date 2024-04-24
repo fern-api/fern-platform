@@ -107,7 +107,7 @@ export class MigrateFromMintlify {
                     await fs.promises.mkdir(dir, { recursive: true });
                     await fs.promises.writeFile(
                         absoluteFilePath,
-                        `${frontmatter}\n${this.transformMarkdownContent(content)}`,
+                        `${frontmatter}\n${this.transformMarkdownContent(content, filePath)}`,
                     );
                 }),
         );
@@ -123,8 +123,24 @@ export class MigrateFromMintlify {
         );
     }
 
-    private transformMarkdownContent(content: string): string {
-        // replace all /x/y/z.png with /assets/x/y/z.png
+    private transformMarkdownContent(content: string, filePath: string): string {
+        const absoluteFilePath = path.join(this.outputDir, "fern", filePath);
+        content = content.replaceAll(/src="(.*)"/g, (original, p) => {
+            if (isExternalUrl(p)) {
+                return p;
+            }
+
+            if (p.startsWith("/")) {
+                const absolutePath = path.join(this.outputDir, "fern", stripLeadingSlash(p));
+
+                // get the relative path to the current filePath
+                const relativePath = path.relative(path.dirname(absoluteFilePath), absolutePath);
+                return `src="${relativePath}"`;
+            }
+
+            console.log(p);
+            return original;
+        });
 
         return content;
     }
@@ -191,7 +207,7 @@ export class MigrateFromMintlify {
             instances: [],
             title: mint.name,
             logo: this.migrateLogo(mint.logo),
-            favicon: path.join("assets", stripLeadingSlash(mint.favicon)),
+            favicon: path.join(stripLeadingSlash(mint.favicon)),
             backgroundImage: mint.backgroundImage,
             colors: this.migrateColors(mint.colors),
             navbarLinks: this.migrateNavbarLinks(mint.topbarCtaButton, mint.topbarLinks),
@@ -213,14 +229,14 @@ export class MigrateFromMintlify {
         // TODO: add support for single-string logo in docs.yml
         if (typeof logo === "string") {
             return {
-                light: path.join("assets", stripLeadingSlash(logo)),
-                dark: path.join("assets", stripLeadingSlash(logo)),
+                light: path.join(stripLeadingSlash(logo)),
+                dark: path.join(stripLeadingSlash(logo)),
             };
         }
 
         return {
-            light: path.join("assets", stripLeadingSlash(logo.light)),
-            dark: path.join("assets", stripLeadingSlash(logo.dark)),
+            light: path.join(stripLeadingSlash(logo.light)),
+            dark: path.join(stripLeadingSlash(logo.dark)),
             href: logo.href,
             // TODO: add support for logo size
         };

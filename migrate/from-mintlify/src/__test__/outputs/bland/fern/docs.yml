@@ -1,9 +1,9 @@
 instances: []
 title: Bland AI
 logo:
-  light: assets/logo/light.svg
-  dark: assets/logo/dark.svg
-favicon: assets/logo.png
+  light: logo/light.svg
+  dark: logo/dark.svg
+favicon: logo.png
 colors:
   accent-primary:
     dark: "#0b0a18"
