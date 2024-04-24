@@ -78,6 +78,10 @@ const handler: NextApiHandler = async (
             docs.definition.apis,
         );
 
+        // when we call res.revalidate() nextjs uses
+        // req.headers.host to make the network request
+        req.headers.host = xFernHost;
+
         const results = await Promise.all(
             urls.map(async (url): Promise<RevalidatePathResult> => {
                 // eslint-disable-next-line no-console
