@@ -1,3 +1,5 @@
+import { LOGGER } from "../app/FdrApplication";
+
 const HAS_HTTPS_REGEX = /^https?:\/\//i;
 
 export class ParsedBaseUrl {
@@ -21,14 +23,18 @@ export class ParsedBaseUrl {
     }
 
     public static parse(url: string): ParsedBaseUrl {
-        let urlWithHttpsPrefix = url;
-        if (!HAS_HTTPS_REGEX.test(url)) {
-            urlWithHttpsPrefix = "https://" + url;
+        try {
+            let urlWithHttpsPrefix = url;
+            if (!HAS_HTTPS_REGEX.test(url)) {
+                urlWithHttpsPrefix = "https://" + url;
+            }
+            const parsedURL = new URL(urlWithHttpsPrefix);
+            return new ParsedBaseUrl({
+                hostname: parsedURL.hostname,
+                path: parsedURL.pathname === "/" || parsedURL.pathname === "" ? undefined : parsedURL.pathname,
+            });
+        } catch (e) {
+            throw new Error(`Failed to parse URL: ${url}. The error was ${(e as Error)?.message}`);
         }
-        const parsedURL = new URL(urlWithHttpsPrefix);
-        return new ParsedBaseUrl({
-            hostname: parsedURL.hostname,
-            path: parsedURL.pathname === "/" || parsedURL.pathname === "" ? undefined : parsedURL.pathname,
-        });
     }
 }

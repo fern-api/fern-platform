@@ -15,6 +15,7 @@ import {
     ResolvedUndiscriminatedUnionShapeVariant,
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
+    getParameterDescription,
     unwrapReference,
 } from "../../resolver/types";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
@@ -176,7 +177,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "headers", parameter.key]}
                                                         route={route}
-                                                        description={parameter.description}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -200,7 +201,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
                                                         route={route}
-                                                        description={parameter.description}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -224,7 +225,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "query", parameter.key]}
                                                         route={route}
-                                                        description={parameter.description}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />

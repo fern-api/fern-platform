@@ -14,7 +14,7 @@ import {
 } from "../services/slack/SlackService";
 import { ParsedBaseUrl } from "../util/ParsedBaseUrl";
 
-class MockAlgoliaService implements AlgoliaService {
+export class MockAlgoliaService implements AlgoliaService {
     generateSearchApiKey(_filters: string): string {
         return "";
     }
@@ -52,6 +52,18 @@ class MockAuthService implements AuthService {
             type: "success",
             orgIds: new Set<string>(this.orgIds),
         };
+    }
+
+    checkOrgHasSnippetsApiAccess({
+        authHeader,
+        orgId,
+        failHard,
+    }: {
+        authHeader: string | undefined;
+        orgId: string;
+        failHard?: boolean | undefined;
+    }): Promise<boolean> {
+        return Promise.resolve(false);
     }
 
     async getWorkOSOrganization(_orgId: { orgId: string }): Promise<string | undefined> {

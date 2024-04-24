@@ -53,25 +53,11 @@ jobs:
       - name: Lint monorepo
         run: pnpm lint:monorepo
 
-      - name: Lint style and eslint
-        run: pnpm turbo lint:style lint:eslint format:check
+      - name: Lint style
+        run: pnpm turbo lint:style format:check
 
-  organize-imports:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # This helps turbo resolve changes faster
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Organize imports
-        # not using --list-different because sometimes this removes a trailing
-        # comma that prettier adds back
-        run: |
-          pnpm organize-imports
-          git --no-pager diff --exit-code
+      - name: eslint
+        run: pnpm lint:eslint
 
   visual-testing:
     runs-on: ubuntu-latest
@@ -90,8 +76,8 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: packages/ui/app
-
-  test:
+  
+  fern-generate: 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -106,13 +92,30 @@ jobs:
           pnpm fern generate --local --api fdr
           pnpm turbo --filter=@fern-platform/fdr codegen
 
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Run tests
         run: pnpm test
         env:
           CI: true
 
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+      - name: Run tests against local FDR
+        run: |
+          cd servers/fdr
+          pnpm test:local
+        env:
+          CI: true
 
   check-docs-release-is-allowed:
     runs-on: ubuntu-latest

@@ -54,6 +54,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
         const navigation = getNavigationRoot(
             pathname.slice(1).split("/"),
+            docs.body.baseUrl.domain,
             basePath,
             docsDefinition.config.navigation,
             docsDefinition.apis,
@@ -74,7 +75,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
         res.status(200).json(
             await ApiDefinitionResolver.resolve(
                 apiSection?.title ?? "",
-                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined),
+                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined, docs.body.baseUrl.domain),
                 pages,
                 undefined,
             ),
