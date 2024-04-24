@@ -50,7 +50,11 @@ export async function getDocsPageProps(
     const url = buildUrl({ host: xFernHost, pathname });
     // eslint-disable-next-line no-console
     console.log("[getDocsPageProps] Loading docs for", url);
+    const start = Date.now();
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+    const end = Date.now();
+    // eslint-disable-next-line no-console
+    console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
             return {
@@ -60,11 +64,8 @@ export async function getDocsPageProps(
         }
 
         // eslint-disable-next-line no-console
-        console.error(`Failed to fetch docs for ${url}`, docs.error);
-        return {
-            type: "notFound",
-            notFound: true,
-        };
+        console.error(`[getDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
+        throw new Error("Failed to fetch docs");
     }
 
     return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
@@ -94,8 +95,12 @@ export async function getPrivateDocsPageProps(
 
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     // eslint-disable-next-line no-console
-    console.log("[getDocsPageProps] Loading private docs for", url);
+    console.log("[getPrivateDocsPageProps] Loading docs for", url);
+    const start = Date.now();
     const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
+    const end = Date.now();
+    // eslint-disable-next-line no-console
+    console.log(`[getPrivateDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
 
     if (!docs.ok) {
         res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
@@ -108,11 +113,8 @@ export async function getPrivateDocsPageProps(
         }
 
         // eslint-disable-next-line no-console
-        console.error(`Failed to fetch docs for ${xFernHost}/${slug.join("/")}`, docs.error);
-        return {
-            type: "notFound",
-            notFound: true,
-        };
+        console.error(`[getPrivateDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
+        throw new Error("Failed to fetch private docs");
     }
 
     return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
