@@ -14,7 +14,7 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplateService } from "./controllers/snippets/getTemplateService";
-const Sentry = require("@sentry/node");
+import * as Sentry from "@sentry/node";
 
 const PORT = 8080;
 
@@ -29,13 +29,16 @@ Sentry.init({
         // enable HTTP calls tracing
         new Sentry.Integrations.Http({ tracing: true }),
         // enable Express.js middleware tracing
-        new Sentry.Integrations.Express({ app }),
+        new Sentry.Integrations.Express({ app: expressApp }),
         nodeProfilingIntegration(),
     ],
     // Performance Monitoring
     tracesSampleRate: 1.0, //  Capture 100% of the transactions
     // Set sampling rate for profiling - this is relative to tracesSampleRate
     profilesSampleRate: 1.0,
+    environment: process.env.NODE_ENV,
+    maxValueLength: 1000,
+    enabled: process.env.NODE_ENV === "production", // Do not enavle sentry when running local
 });
 
 // The request handler must be the first middleware on the app
