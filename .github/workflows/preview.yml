@@ -10,6 +10,12 @@ env:
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
   JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
 on: pull_request
+
+# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -34,7 +40,7 @@ jobs:
           message: |
             ## PR Preview
             Building...
-          comment_tag: pr_preview_${{ github.run_id }}
+          comment_tag: pr_preview
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -51,7 +57,7 @@ jobs:
           message: |
             ## PR Preview
             Deploying...
-          comment_tag: pr_preview_${{ github.run_id }}
+          comment_tag: pr_preview
 
       - name: Deploy Project Artifacts to Vercel
         run: |
@@ -74,4 +80,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2.4.3
         with:
           filePath: preview.txt
-          comment_tag: pr_preview_${{ github.run_id }}
+          comment_tag: pr_preview
