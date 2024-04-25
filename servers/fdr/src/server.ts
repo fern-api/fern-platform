@@ -57,9 +57,9 @@ try {
                 },
             },
         },
-        _root: getSnippetsService(app),
+        snippets: getSnippetsService(app),
         snippetsFactory: getSnippetsFactoryService(app),
-        template: getTemplatesService(app),
+        templates: getTemplatesService(app),
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);

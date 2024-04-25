@@ -93,9 +93,9 @@ function runMockFdr(port: number): MockFdr.Instance {
                 register: { _root: getRegisterApiService(fdrApplication) },
             },
         },
-        _root: getSnippetsService(fdrApplication),
+        snippets: getSnippetsService(fdrApplication),
         snippetsFactory: getSnippetsFactoryService(fdrApplication),
-        template: getTemplatesService(fdrApplication),
+        templates: getTemplatesService(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);

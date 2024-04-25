@@ -49,7 +49,7 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/snippet-template-sdk"
+          package-name: "@fern-fern/snippet-sdk"
         config:
           namespaceExport: FdrSnippetTemplate
           includeUtilsOnUnionMembers: true

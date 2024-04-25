@@ -1,17 +1,11 @@
-import { SnippetTemplateResolver } from "@fern-api/template-resolver";
-import {
-    CustomSnippetPayload,
-    EndpointSnippetTemplate,
-    PythonSnippet,
-    Template,
-    TemplateInput,
-} from "../../api/generated/api";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { SnippetTemplateResolver } from "../../SnippetTemplateResolver";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../octo";
 
 describe("Snippet Template Resolver", () => {
     it("Test Snippet Template Resolution", () => {
         // Example with an object, a list of strings, a list of objects, and an enum
-        const payload: CustomSnippetPayload = {
+        const payload: FdrAPI.CustomSnippetPayload = {
             requestBody: {
                 prompt: "A prompt",
                 negative_prompt: "A negative prompt",
@@ -20,7 +14,7 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const samplerTemplate: TemplateInput = {
+        const samplerTemplate: FdrAPI.TemplateInput = {
             type: "template",
             value: {
                 imports: ["from octoai.image_gen import Scheduler"],
@@ -32,7 +26,7 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const lorasTemplate: TemplateInput = {
+        const lorasTemplate: FdrAPI.TemplateInput = {
             type: "template",
             value: {
                 imports: [],
@@ -57,7 +51,7 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const generateSdxlRequestTemplate: TemplateInput = {
+        const generateSdxlRequestTemplate: FdrAPI.TemplateInput = {
             type: "template",
             value: {
                 imports: ["from octoai.image_gen import ImageGenerationRequest"],
@@ -90,14 +84,14 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const functionInvocationTemplate: Template = {
+        const functionInvocationTemplate: FdrAPI.Template = {
             imports: [],
             type: "generic",
             templateString: "client.image_gen.generate_sdxl(\n$FERN_INPUT\n)",
             templateInputs: [generateSdxlRequestTemplate],
             isOptional: false,
         };
-        const endpointSnippetTemplate: EndpointSnippetTemplate = {
+        const endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate = {
             sdk: { type: "python", package: "acme", version: "0.0.1" },
             endpointId: { path: "/image_gen", method: "GET" },
             snippetTemplate: {
@@ -110,8 +104,8 @@ describe("Snippet Template Resolver", () => {
         const customSnippet = resolver.resolve();
 
         expect(customSnippet.type).toEqual("python");
-        expect((customSnippet as PythonSnippet).sync_client).toEqual(
-            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)',
+        expect((customSnippet as FdrAPI.PythonSnippet).sync_client).toEqual(
+            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)'
         );
     });
 
