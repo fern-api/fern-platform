@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { emitDatadogError } from "../../analytics/datadogRum";
+import { captureSentryError } from "../../analytics/sentry";
 import { unknownToString } from "../../util/unknownToString";
 import { HttpRequestExample } from "./HttpRequestExample";
 
@@ -14,7 +14,7 @@ export function stringifyHttpRequestExampleToCurl(request: HttpRequestExample): 
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "ApiPage",
             errorSource: "unsafeStringifyHttpRequestExampleToCurl",
             errorDescription:
