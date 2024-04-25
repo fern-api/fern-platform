@@ -15,7 +15,7 @@ Pre-requisites:
 ## Step 1: Creating an Encrypted Key with your Twilio Credentials
 
 1. Go to your [Twilio Console](https://www.twilio.com/console) and get your Account SID and Auth Token.
-2. Create an `encrypted_key` by [sending an API request](/api-v1/post/accounts) to Bland. 
+2. Create an `encrypted_key` by [sending an API request](../api-v1/post/accounts.mdx) to Bland. 
 
 This is the only time that your `encrypted_key` will be returned to you. Make sure to store it securely, and new keys will need to be generated if lost.
 
@@ -39,7 +39,7 @@ Note:
 ## Step 3: Uploading Inbound numbers
 
 1. Go to your [Twilio Console](https://www.twilio.com/console) and get your Twilio phone number(s).
-2. Upload your numbers [through the API](/api-v1/post/inbound-insert).
+2. Upload your numbers [through the API](../api-v1/post/inbound-insert.mdx).
 
 We'll validate that these numbers are owned by that account and add them to your Bland account.
 
@@ -47,4 +47,4 @@ We'll validate that these numbers are owned by that account and add them to your
 
 Note: When updating inbound numbers, the headers need to include the `encrypted_key` in addition to the `Authorization` header. Doing so makes sure the updates are applied to the correct Twilio account.
 
-Once you update an inbound number through the [Dev Portal](https://app.bland.ai) or [API](/api-v1/post/inbound-number-update), that number will be automatically configured to run on Bland's infrastructure. No additional steps are required!
+Once you update an inbound number through the [Dev Portal](https://app.bland.ai) or [API](../api-v1/post/inbound-number-update.mdx), that number will be automatically configured to run on Bland's infrastructure. No additional steps are required!

@@ -95,21 +95,25 @@ export class MigrateFromMintlify {
 
         await fs.promises.writeFile(path.join(fernDir, "docs.yml"), docsYml);
 
+        const convertedMarkdownFiles = Object.fromEntries(
+            Object.entries(this.mintlifyMarkdownPages).map(
+                ([key, page]) => [key, this.convertMintlifyToFernMarkdown(page)] as const,
+            ),
+        );
+
         // convert all markdown files and write them to the output directory
         await Promise.all(
-            Object.values(this.mintlifyMarkdownPages)
-                .map(this.convertMintlifyToFernMarkdown)
-                .map(async (page) => {
-                    const { path: filePath, data, content } = page;
-                    const frontmatter = `---\n${jsyaml.dump(JSON.parse(JSON.stringify(data)))}---\n`;
-                    const absoluteFilePath = path.join(fernDir, filePath);
-                    const dir = path.dirname(absoluteFilePath);
-                    await fs.promises.mkdir(dir, { recursive: true });
-                    await fs.promises.writeFile(
-                        absoluteFilePath,
-                        `${frontmatter}\n${this.transformMarkdownContent(content, filePath)}`,
-                    );
-                }),
+            Object.values(convertedMarkdownFiles).map(async (page) => {
+                const { path: filePath, data, content } = page;
+                const frontmatter = `---\n${jsyaml.dump(JSON.parse(JSON.stringify(data)))}---\n`;
+                const absoluteFilePath = path.join(fernDir, filePath);
+                const dir = path.dirname(absoluteFilePath);
+                await fs.promises.mkdir(dir, { recursive: true });
+                await fs.promises.writeFile(
+                    absoluteFilePath,
+                    `${frontmatter}\n${this.transformMarkdownContent(content, filePath, convertedMarkdownFiles)}`,
+                );
+            }),
         );
 
         // copy all image files
@@ -123,11 +127,15 @@ export class MigrateFromMintlify {
         );
     }
 
-    private transformMarkdownContent(content: string, filePath: string): string {
+    private transformMarkdownContent(
+        content: string,
+        filePath: string,
+        markdownPageByKey: Record<string, MarkdownWithFernDocsFrontmatter>,
+    ): string {
         const absoluteFilePath = path.join(this.outputDir, "fern", filePath);
         content = content.replaceAll(/src="(.*)"/g, (original, p) => {
             if (isExternalUrl(p)) {
-                return p;
+                return original;
             }
 
             if (p.startsWith("/")) {
@@ -139,6 +147,47 @@ export class MigrateFromMintlify {
             }
 
             console.log(p);
+            return original;
+        });
+
+        content = content.replaceAll(/href="(.*)"/g, (original, p) => {
+            if (isExternalUrl(p)) {
+                return original;
+            }
+
+            p = stripLeadingSlash(p);
+
+            const markdownPage = markdownPageByKey[p];
+
+            if (markdownPage != null) {
+                const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
+                const relativePath = path.relative(path.dirname(absoluteFilePath), absoluteTargetPath);
+                return `href="${relativePath}"`;
+            }
+
+            console.log(`Could not find markdown page for href: ${p} in ${filePath}`);
+
+            return original;
+        });
+
+        // markdown links
+        content = content.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g, (original, text, p) => {
+            if (isExternalUrl(p)) {
+                return original;
+            }
+
+            p = stripLeadingSlash(p);
+
+            const markdownPage = markdownPageByKey[p];
+
+            if (markdownPage != null) {
+                const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
+                const relativePath = path.relative(path.dirname(absoluteFilePath), absoluteTargetPath);
+                return `[${text}](${relativePath})`;
+            }
+
+            console.log(`Could not find markdown page for link: ${p} in ${filePath}`);
+
             return original;
         });
 
