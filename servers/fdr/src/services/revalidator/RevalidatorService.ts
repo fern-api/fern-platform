@@ -10,11 +10,7 @@ export type RevalidatedPathsResponse = {
 };
 
 export interface RevalidatorService {
-    revalidate(params: {
-        fernUrl: ParsedBaseUrl;
-        baseUrl: ParsedBaseUrl;
-        app: FdrApplication;
-    }): Promise<RevalidatedPathsResponse>;
+    revalidate(params: { baseUrl: ParsedBaseUrl; app: FdrApplication }): Promise<RevalidatedPathsResponse>;
 }
 
 export class RevalidatorServiceImpl implements RevalidatorService {
@@ -29,10 +25,10 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     /**
      * NOTE on basepath revalidation:
      *
-     * When the baseUrl.path is not null, this means we are revalidating a custom domain which has configured subpath rewriting.
-     * In this case, we don't have access to /api/revalidate-all and revalidation would fail.
-     * Instead, we can hit https://org.docs.buildwithfern.com/api/revalidate-all?basePath=/path where the x-fern-host is set to custom-domain.com.
-     * This works because custom-domain.com/path is rewritten to org.docs.buildwithfern.com/path
+     * When the baseUrl.path is not null, the custom domain is re-written. Thus,
+     * /api/revalidate-all does not exist on the root, but `/base/path/api/revalidate-all` does (rewritten via frontend middleware).
+     *
+     * Behind the scenes, the revalidation request is sent to the original domain, i.e. org.docs.buildwithfern.com.
      *
      * Example prefetch request:
      * https://custom-domain.com/path/_next/data/.../static/custom-domain.com/path.json is rewritten to:
@@ -42,20 +38,18 @@ export class RevalidatorServiceImpl implements RevalidatorService {
      */
 
     public async revalidate({
-        fernUrl,
         baseUrl,
         app,
     }: {
-        fernUrl: ParsedBaseUrl;
         baseUrl: ParsedBaseUrl;
         app?: FdrApplication;
     }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
         try {
             const client = new FernRevalidationClient({
-                environment: baseUrl.path != null ? `https://${fernUrl.hostname}` : `https://${baseUrl.hostname}`,
+                environment: baseUrl.toURL().toString(),
             });
-            console.log(baseUrl.path != null ? fernUrl.hostname : baseUrl.hostname);
+            app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
             const response = await client.revalidateAllV2({
                 host: baseUrl.hostname,
                 basePath: baseUrl.path != null ? baseUrl.path : "",

@@ -1,4 +1,4 @@
-import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
+import { SidebarNode, getUnversionedSlug, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
@@ -241,6 +241,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     resolvedPath,
                     activeVersion: versions[currentVersionIndex ?? 0],
                     selectedSlug,
+                    unversionedSlug: getUnversionedSlug(
+                        selectedSlug.split("/"),
+                        versions[currentVersionIndex ?? 0]?.slug ?? [],
+                        basePath?.split("/").filter((part) => part.length > 0) ?? [],
+                    ),
                 }),
                 [
                     activeNavigatable,
