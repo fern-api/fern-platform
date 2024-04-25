@@ -9,8 +9,8 @@ description: Learn about how to set up a subdomain or subpath for a customer's d
   ### Step 1: Add to `docs.yml`
     Add the following to the `docs.yml` file:
   ```yaml
-  - url: fern.docs.buildwithfern.com
-  custom-domain: docs.buildwithfern.com
+  - url: myorg.docs.buildwithfern.com
+  custom-domain: docs.myorg.com
   ```
 
   ### Step 2: Add the domain in Vercel
@@ -26,8 +26,10 @@ description: Learn about how to set up a subdomain or subpath for a customer's d
 ### Step 1: Add to `docs.yml`
 Add the following `url` and `custom-domain` fields to the `docs.yml` file:
 ```yaml
-- url: fern.docs.buildwithfern.com/docs
-  custom-domain: buildwithfern.com/docs
+- url: myorg.docs.buildwithfern.com/docs
+  custom-domain:
+    - fern.myorg.com/docs # host    
+    - myorg.com/docs # rewrite
 ```
 
 ### Step 2: Add rewrite rules 
@@ -42,11 +44,11 @@ There are many options for deploying rewrite rules, and is highly dependent on y
             "rewrites": [
                 {
                 "source": "/docs",
-                "destination": "https://fern.docs.buildwithfern.com/docs"
+                "destination": "https://myorg.docs.buildwithfern.com/docs"
                 },
                 {
                 "source": "/docs/:path*",
-                "destination": "https://fern.docs.buildwithfern.com/docs/:path*"
+                "destination": "https://myorg.docs.buildwithfern.com/docs/:path*"
                 }
             ]
         }
@@ -55,19 +57,19 @@ There are many options for deploying rewrite rules, and is highly dependent on y
     <Tab title="NGINX">
         ```shell
         location /docs {
-            rewrite ^/docs$ https://fern.docs.buildwithfern.com/docs permanent;
+            rewrite ^/docs$ https://myorg.docs.buildwithfern.com/docs permanent;
         }
 
         location ~ ^/docs/(.*) {
-            rewrite ^/docs/(.*)$ https://fern.docs.buildwithfern.com/docs/$1 permanent;
+            rewrite ^/docs/(.*)$ https://myorg.docs.buildwithfern.com/docs/$1 permanent;
         }
         ```
     </Tab>
     <Tab title="Apache (.htaccess)">
         ```apache
         RewriteEngine On
-        RewriteRule ^/docs$ https://fern.docs.buildwithfern.com/docs [R=301,L]
-        RewriteRule ^/docs/(.*)$ https://fern.docs.buildwithfern.com/docs/$1 [R=301,L]
+        RewriteRule ^/docs$ https://myorg.docs.buildwithfern.com/docs [R=301,L]
+        RewriteRule ^/docs/(.*)$ https://myorg.docs.buildwithfern.com/docs/$1 [R=301,L]
         ```
     </Tab>
     <Tab title="Express/Node.js">
@@ -76,11 +78,11 @@ There are many options for deploying rewrite rules, and is highly dependent on y
         const app = express();
 
         app.get('/docs', (req, res) => {
-        res.redirect(301, 'https://fern.docs.buildwithfern.com/docs');
+        res.redirect(301, 'https://myorg.docs.buildwithfern.com/docs');
         });
 
         app.get('/docs/:path', (req, res) => {
-        res.redirect(301, `https://fern.docs.buildwithfern.com/docs/${req.params.path}`);
+        res.redirect(301, `https://myorg.docs.buildwithfern.com/docs/${req.params.path}`);
         });
 
         app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
@@ -94,10 +96,10 @@ There are many options for deploying rewrite rules, and is highly dependent on y
         from django.shortcuts import redirect
 
         def docs_redirect(request):
-            return redirect('https://fern.docs.buildwithfern.com/docs', permanent=True)
+            return redirect('https://myorg.docs.buildwithfern.com/docs', permanent=True)
 
         def docs_path_redirect(request, path):
-            return redirect(f'https://fern.docs.buildwithfern.com/docs/{path}', permanent=True)
+            return redirect(f'https://myorg.docs.buildwithfern.com/docs/{path}', permanent=True)
 
 
         # urls.py
@@ -111,6 +113,6 @@ There are many options for deploying rewrite rules, and is highly dependent on y
         ```
     </Tab>
     <Tab title="AWS Cloudfront">
-    Setup an edge@lambda function to rewrite the path. [Here are instructions](https://www.notion.so/buildwithfern/How-to-configure-custom-domain-and-subpath-50bb20e6843c4fff94b707f24e26a390?pvs=4#dbc73a322fa94146abd604e1ef5201b9).
+    Setup an edge@lambda function to rewrite the path. [Instructions](https://serverlessrepo.aws.amazon.com/applications/us-east-1/418289889111/rewrite-url)
     </Tab>
 </Tabs>
