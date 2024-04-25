@@ -97,7 +97,7 @@ export class MigrateFromMintlify {
 
         const convertedMarkdownFiles = Object.fromEntries(
             Object.entries(this.mintlifyMarkdownPages).map(
-                ([key, page]) => [key, this.convertMintlifyToFernMarkdown(page)] as const,
+                ([slug, page]) => [slug, this.convertMintlifyToFernMarkdown(page, slug)] as const,
             ),
         );
 
@@ -194,7 +194,10 @@ export class MigrateFromMintlify {
         return content;
     }
 
-    private convertMintlifyToFernMarkdown(mintlify: MarkdownWithMintlifyFrontmatter): MarkdownWithFernDocsFrontmatter {
+    private convertMintlifyToFernMarkdown(
+        mintlify: MarkdownWithMintlifyFrontmatter,
+        slug: string,
+    ): MarkdownWithFernDocsFrontmatter {
         const { data, content } = mintlify;
         if (data.mode === "custom") {
             console.warn("Custom mode is not supported in fern.");
@@ -206,6 +209,7 @@ export class MigrateFromMintlify {
                 subtitle: data.description,
                 layout: data.mode != null ? "reference" : undefined,
                 image: data["og:image"],
+                slug,
             },
             content,
         };

@@ -1,5 +1,5 @@
 ---
-{}
+slug: README
 ---
 
 # Mintlify Starter Kit

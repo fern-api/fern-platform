@@ -50,6 +50,11 @@ export interface FernDocsFrontmatter {
     image?: string;
 
     /**
+     * Full slug of the page.
+     */
+    slug?: string;
+
+    /**
      * Renders an "Edit this page" link at the bottom of the page.
      */
     "edit-this-page-url"?: string;
