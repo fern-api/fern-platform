@@ -71,7 +71,6 @@ groups:
           license: MIT
         config:
           namespaceExport: Fern
-          includeUtilsOnUnionMembers: true
           includeApiReference: true
 
   fiddle:
