@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+import type { NextPageContext } from "next";
 import { GetServerSideProps } from "next";
 import Error, { ErrorProps } from "next/error";
 import { ReactElement } from "react";
@@ -35,3 +37,7 @@ export const getServerSideProps: GetServerSideProps<ErrorProps> = async ({ req, 
 export default function Page(props: ErrorProps): ReactElement {
     return <Error {...props} />;
 }
+
+Page.getInitialProps = async (contextData: NextPageContext) => {
+    await Sentry.captureUnderscoreErrorException(contextData);
+};
