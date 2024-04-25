@@ -3,12 +3,12 @@ instances:
     private: true
 title: Fern Internal Docs
 navigation:
-  - page: Home
+  - page: Welcome
     path: ./docs/pages/welcome.mdx
   - section: How To Guides
     contents:
-      page: Enable API Playground
-      path: ./docs/pages/enable-api-playground.mdx
+      - page: Enable API Playground
+        path: ./docs/pages/enable-api-playground.mdx
   - api: FDR API Reference
     api-name: fdr
     display-errors: true
