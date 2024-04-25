@@ -1,3 +1,4 @@
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import compression from "compression";
 import cors from "cors";
 import express from "express";
@@ -13,12 +14,36 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplateService } from "./controllers/snippets/getTemplateService";
+const Sentry = require("@sentry/node");
 
 const PORT = 8080;
 
 const config = getConfig();
 
 const expressApp = express();
+
+// ========= Init Sentry =========
+Sentry.init({
+    dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
+    integrations: [
+        // enable HTTP calls tracing
+        new Sentry.Integrations.Http({ tracing: true }),
+        // enable Express.js middleware tracing
+        new Sentry.Integrations.Express({ app }),
+        nodeProfilingIntegration(),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 1.0, //  Capture 100% of the transactions
+    // Set sampling rate for profiling - this is relative to tracesSampleRate
+    profilesSampleRate: 1.0,
+});
+
+// The request handler must be the first middleware on the app
+expressApp.use(Sentry.Handlers.requestHandler());
+// TracingHandler creates a trace for every incoming request
+expressApp.use(Sentry.Handlers.tracingHandler());
+// ========= Init Sentry =========
+
 expressApp.use(cors());
 expressApp.use(compression());
 expressApp.get("/health", (_req, res) => {
@@ -63,6 +88,8 @@ try {
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);
+    // The error handler must be registered before any other error middleware and after all controllers
+    expressApp.use(Sentry.Handlers.errorHandler());
     expressApp.listen(PORT);
 } catch (err) {
     app.logger.error("Failed to start express server", err);
