@@ -22,7 +22,7 @@ export function makeToc(tree: Root): ElementContent {
             if (
                 getBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
-                ) === false
+                ) !== true
             ) {
                 return SKIP;
             }
@@ -64,7 +64,7 @@ export function makeToc(tree: Root): ElementContent {
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
             const parentSkipToc =
-                tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
+                tocAttr == null || (typeof tocAttr.value === "object" && tocAttr.value?.value !== "true");
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }
@@ -91,7 +91,7 @@ export function makeToc(tree: Root): ElementContent {
             const itemsAttr = attributes.find((attr) => attr.name === "items");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
             const parentSkipToc =
-                tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
+                tocAttr == null || (typeof tocAttr.value === "object" && tocAttr.value?.value !== "true");
 
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
