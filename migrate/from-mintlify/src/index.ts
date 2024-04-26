@@ -95,23 +95,25 @@ export class MigrateFromMintlify {
 
         await fs.promises.writeFile(path.join(fernDir, "docs.yml"), docsYml);
 
-        const convertedMarkdownFiles = Object.fromEntries(
+        const convertedMarkdownFiles = new Map(
             Object.entries(this.mintlifyMarkdownPages).map(
-                ([slug, page]) => [slug, this.convertMintlifyToFernMarkdown(page, slug)] as const,
+                ([slug, page]) =>
+                    [slug.toLowerCase(), this.convertMintlifyToFernMarkdown(page, slug.toLowerCase())] as const,
             ),
         );
 
         // convert all markdown files and write them to the output directory
         await Promise.all(
-            Object.values(convertedMarkdownFiles).map(async (page) => {
+            [...convertedMarkdownFiles.values()].map(async (page) => {
                 const { path: filePath, data, content } = page;
-                const frontmatter = `---\n${jsyaml.dump(JSON.parse(JSON.stringify(data)))}---\n`;
+                const frontmatter =
+                    Object.keys(data).length > 0 ? `---\n${jsyaml.dump(JSON.parse(JSON.stringify(data)))}---\n\n` : "";
                 const absoluteFilePath = path.join(fernDir, filePath);
                 const dir = path.dirname(absoluteFilePath);
                 await fs.promises.mkdir(dir, { recursive: true });
                 await fs.promises.writeFile(
                     absoluteFilePath,
-                    `${frontmatter}\n${this.transformMarkdownContent(content, filePath, convertedMarkdownFiles)}`,
+                    `${frontmatter}${this.transformMarkdownContent(content, filePath, convertedMarkdownFiles)}`,
                 );
             }),
         );
@@ -144,7 +146,7 @@ export class MigrateFromMintlify {
     private transformMarkdownContent(
         content: string,
         filePath: string,
-        markdownPageByKey: Record<string, MarkdownWithFernDocsFrontmatter>,
+        markdownPageByKey: Map<string, MarkdownWithFernDocsFrontmatter>,
     ): string {
         const absoluteFilePath = path.join(this.outputDir, "fern", filePath);
         content = content.replaceAll(/src="(.*)"/g, (original, p) => {
@@ -164,14 +166,14 @@ export class MigrateFromMintlify {
             return original;
         });
 
-        content = content.replaceAll(/href="(.*)"/g, (original, p) => {
+        content = content.replaceAll(/href="(.*)"/g, (original, p: string) => {
             if (isExternalUrl(p)) {
                 return original;
             }
 
             p = stripLeadingSlash(p);
 
-            const markdownPage = markdownPageByKey[p];
+            const markdownPage = markdownPageByKey.get(p.toLowerCase());
 
             if (markdownPage != null) {
                 const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
@@ -185,14 +187,14 @@ export class MigrateFromMintlify {
         });
 
         // markdown links
-        content = content.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g, (original, text, p) => {
+        content = content.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g, (original, text, p: string) => {
             if (isExternalUrl(p)) {
                 return original;
             }
 
             p = stripLeadingSlash(p);
 
-            const markdownPage = markdownPageByKey[p];
+            const markdownPage = markdownPageByKey.get(p.toLowerCase());
 
             if (markdownPage != null) {
                 const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
@@ -215,6 +217,13 @@ export class MigrateFromMintlify {
         const { data, content } = mintlify;
         if (data.mode === "custom") {
             console.warn("Custom mode is not supported in fern.");
+        }
+        if (slug === "readme") {
+            return {
+                path: mintlify.path,
+                data: {},
+                content,
+            };
         }
         return {
             path: mintlify.path,
