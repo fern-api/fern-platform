@@ -133,7 +133,7 @@ module.exports = withSentryConfig(
 
         // Suppresses source map uploading logs during build
         silent: true,
-        org: "fern-api",
+        org: "buildwithfern",
         project: "docs-frontend",
     },
     {
