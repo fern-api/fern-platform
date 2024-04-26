@@ -136,7 +136,7 @@ export class MigrateFromMintlify {
 
             const openapi = mint.openapi[0];
             const openapiFilePath = path.join(this.dir, openapi);
-            const newOpenapiFilePath = path.join(openapiDir, `openapi.${path.extname(openapi)}`);
+            const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
             await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
         }
     }
