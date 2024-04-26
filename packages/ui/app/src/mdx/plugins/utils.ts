@@ -9,7 +9,7 @@ import { unknownToString } from "../../util/unknownToString";
 import { valueToEstree } from "./to-estree";
 
 export function isMdxJsxFlowElement(node: Node): node is MdxJsxFlowElementHast {
-    return node.type === "mdxJsxFlowElement";
+    return node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement";
 }
 
 export function isMdxJsxAttribute(

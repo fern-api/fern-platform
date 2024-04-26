@@ -1,5 +1,6 @@
-import { useMounted } from "@fern-ui/react-commons";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
+import { toNumber } from "lodash-es";
 import {
     AnchorHTMLAttributes,
     Children,
@@ -9,11 +10,14 @@ import {
     FC,
     isValidElement,
     ReactElement,
+    useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernCard } from "../components/FernCard";
+import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
@@ -130,14 +134,33 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
     return element.type === Img;
 }
 
-export const Img: FC<ImgProps> = ({ className, src, alt, disableZoom, ...rest }) => {
-    const mounted = useMounted();
-    if (!mounted || disableZoom) {
-        return <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} />;
-    }
+export const Img: FC<ImgProps> = ({ className, src, height, width, disableZoom, ...rest }) => {
+    const { files } = useDocsContext();
+    // const mounted = useMounted();
+    // if (!mounted || disableZoom) {
+    //     return <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} />;
+    // }
+    const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
+        if (src == null) {
+            return undefined;
+        }
+
+        if (src.startsWith("file:")) {
+            const fileId = src.slice(5);
+            return files[fileId];
+        }
+
+        return { type: "url", url: src };
+    }, [files, src]);
     return (
         <Zoom>
-            <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} />
+            {/* <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} /> */}
+            <FernImage
+                src={fernImageSrc}
+                {...rest}
+                height={height != null ? toNumber(height) : undefined}
+                width={height != null ? toNumber(width) : undefined}
+            />
         </Zoom>
     );
 };

@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
@@ -154,10 +155,12 @@ function withDefaultMdxOptions({
 export async function maybeSerializeMdxContent(
     content: string,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<MDXRemoteSerializeResult | string>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<MDXRemoteSerializeResult | string | undefined>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
@@ -199,10 +202,12 @@ export async function maybeSerializeMdxContent(
 export async function serializeMdxWithFrontmatter(
     content: string,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<SerializedMdxContent>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<SerializedMdxContent | undefined>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
