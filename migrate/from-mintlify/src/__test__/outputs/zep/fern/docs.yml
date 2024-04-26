@@ -3,6 +3,7 @@ title: Zep Documentation
 logo:
   light: logo/zep-name-logo-gradient.svg
   dark: logo/zep-name-logo-pink.svg
+  height: 28
 favicon: logo/favicon.png
 colors:
   accent-primary:

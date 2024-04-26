@@ -317,6 +317,7 @@ export class MigrateFromMintlify {
             return {
                 light: path.join(stripLeadingSlash(logo)),
                 dark: path.join(stripLeadingSlash(logo)),
+                height: 28, // mintlify's default height (1.75rem)
             };
         }
 
@@ -324,7 +325,7 @@ export class MigrateFromMintlify {
             light: path.join(stripLeadingSlash(logo.light)),
             dark: path.join(stripLeadingSlash(logo.dark)),
             href: logo.href,
-            // TODO: add support for logo size
+            height: 28, // mintlify's default height (1.75rem)
         };
     }
 

@@ -3,6 +3,7 @@ title: Bland AI
 logo:
   light: logo/light.svg
   dark: logo/dark.svg
+  height: 28
 favicon: logo.png
 colors:
   accent-primary:
