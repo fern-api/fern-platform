@@ -125,6 +125,20 @@ export class MigrateFromMintlify {
                 await fs.promises.copyFile(absoluteFilePath, newFilePath);
             }),
         );
+
+        // create openapi folder
+        if (mint.openapi != null && mint.openapi.length > 0) {
+            const openapiDir = path.join(fernDir, "openapi");
+            fs.mkdirSync(openapiDir, { recursive: true });
+            if (mint.openapi.length > 1) {
+                console.warn("Multiple OpenAPI files are not supported yet in this migrator.");
+            }
+
+            const openapi = mint.openapi[0];
+            const openapiFilePath = path.join(this.dir, openapi);
+            const newOpenapiFilePath = path.join(openapiDir, `openapi.${path.extname(openapi)}`);
+            await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
+        }
     }
 
     private transformMarkdownContent(
