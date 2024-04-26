@@ -12,15 +12,15 @@ export function rehypeFernComponents(): (tree: Root) => void {
             }
 
             if (isMdxJsxFlowElement(node) && node.name != null) {
-                if (node.name === "Tabs" && node.children.length > 0) {
+                if (node.name === "Tabs") {
                     transformTabs(node, index, parent);
                 }
 
-                if (node.name === "TabGroup" && node.children.length > 0) {
+                if (node.name === "TabGroup") {
                     transformTabs(node, index, parent);
                 }
 
-                if (node.name === "AccordionGroup" && node.children.length > 0) {
+                if (node.name === "AccordionGroup") {
                     transformAccordionGroup(node, index, parent);
                 }
             }

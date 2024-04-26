@@ -1,6 +1,7 @@
-import type { Expression } from "estree";
+import type { JSXFragment } from "estree-jsx";
 import { SKIP as ESTREE_SKIP, visit as visitEstree } from "estree-util-visit";
 import type { ElementContent, Root } from "hast";
+import { MdxJsxAttribute, MdxJsxExpressionAttribute } from "mdast-util-mdx-jsx";
 import { SKIP, visit } from "unist-util-visit";
 import { parseStringStyle } from "../../util/parseStringStyle";
 import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
@@ -31,7 +32,7 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                             attr.value?.type === "mdxJsxAttributeValueExpression" &&
                             attr.value.data?.estree != null
                         ) {
-                            visitEstree(attr.value.data.estree, (esnode, _key, _i, ancestors) => {
+                            visitEstree(attr.value.data.estree, (esnode, _key, i, ancestors) => {
                                 if (ancestors.length === 0) {
                                     return undefined;
                                 }
@@ -45,6 +46,9 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                                         ancestor.expression = jsxFragment();
                                         return ESTREE_SKIP;
                                     }
+                                    if (ancestor.type === "JSXFragment" && i != null) {
+                                        ancestor.children[i] = jsxFragment();
+                                    }
                                 }
                                 return undefined;
                             });
@@ -52,6 +56,13 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
 
                         return attr;
                     });
+
+                    // const temporaryRoot: Root = {
+                    //     type: "root",
+                    //     children: node.children,
+                    // };
+                    // rehypeSanitizeJSX({ showErrors })(temporaryRoot);
+                    // node.children = temporaryRoot.children as ElementContent[];
                 }
             }
             return;
@@ -92,7 +103,44 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                 });
             }
         });
+
+        // convert img to img element
+        visit(tree, (node, index, parent) => {
+            if (index == null) {
+                return;
+            }
+            if (isMdxJsxFlowElement(node)) {
+                if (node.name === "img") {
+                    const properties = toProperties(node.attributes);
+                    if (properties != null) {
+                        parent?.children.splice(index, 1, {
+                            type: "element",
+                            tagName: "img",
+                            properties,
+                            children: node.children,
+                        });
+                    }
+                }
+            }
+        });
     };
+}
+
+function toProperties(attributes: (MdxJsxAttribute | MdxJsxExpressionAttribute)[]): Record<string, string> | undefined {
+    const properties: Record<string, string> = {};
+    for (const attr of attributes) {
+        if (attr.type === "mdxJsxAttribute" && attr.value != null) {
+            if (typeof attr.value === "string") {
+                properties[attr.name] = attr.value;
+            } else {
+                // todo: handle literal expressions
+                return undefined;
+            }
+        } else if (attr.type === "mdxJsxExpressionAttribute") {
+            return undefined;
+        }
+    }
+    return properties;
 }
 
 function mdxErrorBoundary(nodeName: string): ElementContent {
@@ -104,7 +152,7 @@ function mdxErrorBoundary(nodeName: string): ElementContent {
     };
 }
 
-function jsxFragment(): Expression {
+function jsxFragment(): JSXFragment {
     return {
         type: "JSXFragment",
         openingFragment: {

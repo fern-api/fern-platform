@@ -966,6 +966,9 @@ importers:
       '@types/estree':
         specifier: ^1.0.5
         version: 1.0.5
+      '@types/estree-jsx':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
