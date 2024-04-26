@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from "react";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
@@ -35,7 +35,7 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
-            emitDatadogError(e, {
+            captureSentryError(e, {
                 context: "FernSyntaxHighlighter",
                 errorSource: "highlightTokens",
                 errorDescription: "Error occurred while highlighting tokens",

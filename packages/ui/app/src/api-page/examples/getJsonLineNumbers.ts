@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
-import { emitDatadogError } from "../../analytics/datadogRum";
+import { captureSentryError } from "../../analytics/sentry";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -22,7 +22,7 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "ApiPage",
             errorSource: "getJsonLineNumbers",
             errorDescription:

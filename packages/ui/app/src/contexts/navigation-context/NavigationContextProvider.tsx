@@ -5,7 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { renderToString } from "react-dom/server";
-import { emitDatadogError } from "../../analytics/datadogRum";
+import { captureSentryError } from "../../analytics/sentry";
 import { MdxContent } from "../../mdx/MdxContent";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
@@ -306,7 +306,7 @@ function convertDescriptionToString(
         // eslint-disable-next-line no-console
         console.error("Error rendering MDX to string", e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "NavigationContext",
             errorSource: "convertDescriptionToString",
             errorDescription:
