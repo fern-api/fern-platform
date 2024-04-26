@@ -41,6 +41,18 @@ export function rehypeFernComponents(): (tree: Root) => void {
                 }
             }
         });
+
+        // convert img to Image
+        visit(tree, (node, index) => {
+            if (index == null) {
+                return;
+            }
+            if (isMdxJsxFlowElement(node)) {
+                if (node.name === "img") {
+                    node.name = "Image";
+                }
+            }
+        });
     };
 }
 

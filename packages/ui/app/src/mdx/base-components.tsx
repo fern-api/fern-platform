@@ -109,7 +109,7 @@ export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
 
 export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
     const cnCombined = cn("fern-mdx-link", className);
-    const hideExternalLinkIcon = isValidElement(children) && (children.type === "img" || children.type === Img);
+    const hideExternalLinkIcon = isValidElement(children) && (children.type === "img" || children.type === Image);
 
     return (
         <FernLink className={cnCombined} href={href ?? {}} {...rest} showExternalLinkIcon={!hideExternalLinkIcon}>
@@ -119,22 +119,22 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
                     : isImgElement(child)
                       ? cloneElement<ImgProps>(child, { disableZoom: true })
                       : child.type === "img"
-                        ? createElement(Img, { ...child.props, disableZoom: true })
+                        ? createElement(Image, { ...child.props, disableZoom: true })
                         : child,
             )}
         </FernLink>
     );
 };
 
-interface ImgProps extends ComponentProps<"img"> {
+export interface ImgProps extends ComponentProps<"img"> {
     disableZoom?: boolean;
 }
 
 function isImgElement(element: ReactElement): element is ReactElement<ImgProps> {
-    return element.type === Img;
+    return element.type === Image;
 }
 
-export const Img: FC<ImgProps> = ({ className, src, height, width, disableZoom, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom, ...rest }) => {
     const { files } = useDocsContext();
     // const mounted = useMounted();
     // if (!mounted || disableZoom) {
