@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import compression from "compression";
 import cors from "cors";
@@ -14,7 +15,6 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplateService } from "./controllers/snippets/getTemplateService";
-import * as Sentry from "@sentry/node";
 
 const PORT = 8080;
 
@@ -36,9 +36,9 @@ Sentry.init({
     tracesSampleRate: 1.0, //  Capture 100% of the transactions
     // Set sampling rate for profiling - this is relative to tracesSampleRate
     profilesSampleRate: 1.0,
-    environment: process.env.NODE_ENV,
+    environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
     maxValueLength: 1000,
-    enabled: process.env.NODE_ENV === "production", // Do not enavle sentry when running local
+    enabled: process.env.NODE_ENV === "production", // Do not enable sentry when running local
 });
 
 // The request handler must be the first middleware on the app

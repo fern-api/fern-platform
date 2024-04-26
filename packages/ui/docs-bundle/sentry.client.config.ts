@@ -8,6 +8,7 @@ Sentry.init({
     dsn: "https://216ad381a8f652e036b1833af58627e5@o4507138224160768.ingest.us.sentry.io/4507148139495424",
     // Do not enable sentry locally
     enabled: process.env.NODE_ENV === "production",
+    environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
 
     // Adjust this value in production, or use tracesSampler for greater control
     tracesSampleRate: 1,
