@@ -59,7 +59,6 @@ jobs:
       - name: 🧪 Build and test
         run: |
           pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
-          pnpm sentry:sourcemaps
 
       - name: 💻 Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
