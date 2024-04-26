@@ -149,7 +149,7 @@ export class MigrateFromMintlify {
         markdownPageByKey: Map<string, MarkdownWithFernDocsFrontmatter>,
     ): string {
         const absoluteFilePath = path.join(this.outputDir, "fern", filePath);
-        content = content.replaceAll(/src="(.*)"/g, (original, p) => {
+        content = content.replaceAll(/src=["']([^"']+)["']/g, (original, p) => {
             if (isExternalUrl(p)) {
                 return original;
             }
@@ -162,11 +162,11 @@ export class MigrateFromMintlify {
                 return `src="${relativePath}"`;
             }
 
-            console.log(p);
+            console.log(`Could not find image for src: ${p} in ${filePath}`);
             return original;
         });
 
-        content = content.replaceAll(/href="(.*)"/g, (original, p: string) => {
+        content = content.replaceAll(/href=["'](.*)["']/g, (original, p: string) => {
             if (isExternalUrl(p)) {
                 return original;
             }
@@ -178,6 +178,7 @@ export class MigrateFromMintlify {
             if (markdownPage != null) {
                 const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
                 const relativePath = path.relative(path.dirname(absoluteFilePath), absoluteTargetPath);
+                console.log(absoluteFilePath, relativePath, filePath);
                 return `href="${relativePath}"`;
             }
 
@@ -194,7 +195,16 @@ export class MigrateFromMintlify {
 
             p = stripLeadingSlash(p);
 
-            const markdownPage = markdownPageByKey.get(p.toLowerCase());
+            let markdownPage = markdownPageByKey.get(p.toLowerCase());
+
+            if (markdownPage != null) {
+                const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
+                const relativePath = path.relative(path.dirname(absoluteFilePath), absoluteTargetPath);
+                return `[${text}](${relativePath})`;
+            }
+
+            p = path.join(path.dirname(filePath), p);
+            markdownPage = markdownPageByKey.get(p.toLowerCase());
 
             if (markdownPage != null) {
                 const absoluteTargetPath = path.join(this.outputDir, "fern", markdownPage.path);
@@ -469,7 +479,7 @@ export class MigrateFromMintlify {
                     const { data, fullSlug, path } = markdownPage;
 
                     if (data.api != null || data.openapi) {
-                        console.warn(`Navigation item "${item}" is an API reference. This is not supported yet.`);
+                        // console.warn(`Navigation item "${item}" is an API reference. This is not supported yet.`);
                         return;
                     }
 
