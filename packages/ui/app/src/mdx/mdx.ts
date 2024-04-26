@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
@@ -186,7 +186,7 @@ export async function maybeSerializeMdxContent(
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "MDX",
             errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",
@@ -229,7 +229,7 @@ export async function serializeMdxWithFrontmatter(
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "MDX",
             errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",

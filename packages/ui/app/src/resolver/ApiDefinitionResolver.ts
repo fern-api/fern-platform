@@ -10,7 +10,7 @@ import {
     FlattenedWebhookDefinition,
 } from "@fern-ui/fdr-utils";
 import { mapValues } from "lodash-es";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
 import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
 import { ApiTypeResolver } from "./ApiTypeResolver";
@@ -735,7 +735,7 @@ export class ApiDefinitionResolver {
             // eslint-disable-next-line no-console
             console.error("Failed to sort JSON keys by type shape", e);
 
-            emitDatadogError(e, {
+            captureSentryError(e, {
                 context: "ApiPage",
                 errorSource: "sortKeysByShape",
                 errorDescription:

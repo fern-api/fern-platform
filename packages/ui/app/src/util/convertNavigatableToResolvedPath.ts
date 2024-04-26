@@ -8,7 +8,7 @@ import {
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import {
     FernDocsFrontmatter,
     FernSerializeMdxOptions,
@@ -48,7 +48,7 @@ async function getSubtitle(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error occurred while parsing frontmatter", e);
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "getStaticProps",
             errorSource: "getSubtitle",
             errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",

@@ -2,7 +2,7 @@ import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { emitDatadogError, emitDatadogErrorLog } from "../analytics/datadogRum";
+import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
@@ -26,7 +26,7 @@ export function FernErrorTag({
     useEffect(() => {
         // eslint-disable-next-line no-console
         console.error(error);
-        emitDatadogError(error, {
+        captureSentryError(error, {
             context: component,
             errorSource: "FernErrorTag",
             errorDescription:
@@ -68,7 +68,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     useEffect(() => {
         if (refreshOnError) {
             // eslint-disable-next-line no-console
-            emitDatadogErrorLog("Fern Docs crashed. Reloading the page might fix the issue.");
+            captureSentryErrorMessage("Fern Docs crashed. Reloading the page might fix the issue.");
             router.reload();
         }
     }, [refreshOnError, router]);
