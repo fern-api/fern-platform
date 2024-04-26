@@ -8,7 +8,12 @@ interface FernUIErrorContext {
 }
 
 export function captureSentryError(e: unknown, context: FernUIErrorContext): void {
-    Sentry.captureException(e, context);
+    Sentry.captureException(e, {
+        captureContext: {
+            extra: { context: context.context, source: context.errorSource, description: context.errorDescription },
+        },
+        data: context.data,
+    });
 }
 
 export function captureSentryErrorMessage(message: string): void {
