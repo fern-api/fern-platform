@@ -1,6 +1,7 @@
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import React from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import type { SerializedMdxContent } from "./mdx";
 import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components";
 
@@ -31,6 +32,7 @@ export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx
                 compiledSource={mdx.compiledSource}
                 components={COMPONENTS}
             />
+            <FeedbackPopover />
         </FernErrorBoundary>
     );
 });
