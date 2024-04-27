@@ -48,6 +48,16 @@ class NavigationContext {
     public withPathParts(pathParts: PathPart[]) {
         return new NavigationContext(this.#indexSegment, [...this.#pathParts, ...pathParts]);
     }
+
+    /**
+     * @returns A new `NavigationContext` instance.
+     */
+    public withFullSlug(fullSlug: string[]) {
+        return new NavigationContext(
+            this.#indexSegment,
+            fullSlug.map((urlSlug) => ({ name: urlSlug, urlSlug })),
+        );
+    }
 }
 
 interface AlgoliaSearchRecordGeneratorConfig {
@@ -225,7 +235,14 @@ export class AlgoliaSearchRecordGenerator {
             if (pageContent == null) {
                 return [];
             }
-            const pageContext = context.withPathPart({ name: page.title, urlSlug: page.urlSlug });
+
+            const pageContext =
+                page.fullSlug != null
+                    ? context.withFullSlug(page.fullSlug)
+                    : context.withPathPart({
+                          name: page.title,
+                          urlSlug: page.urlSlug,
+                      });
             const processedContent = convertMarkdownToText(pageContent.markdown);
             const { indexSegment } = context;
             return [
