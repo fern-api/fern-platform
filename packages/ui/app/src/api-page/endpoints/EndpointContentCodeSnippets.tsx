@@ -122,7 +122,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
             {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" type={"primary"} />}
-            {example.responseBody != null && (
+            {example.responseBody != null && endpoint.responseBody?.shape.type !== "fileDownload" && (
                 <CodeSnippetExample
                     title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
                     type={example.responseStatusCode >= 400 ? "warning" : "primary"}

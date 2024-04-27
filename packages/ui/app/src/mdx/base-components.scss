@@ -1,6 +1,5 @@
 code:not(.code-block) {
     @apply font-mono ring-1 ring-inset ring-default rounded bg-card py-0.5 px-1;
-    @apply before:content-none after:content-none;
     @apply text-[0.875em];
 
     font-weight: inherit;

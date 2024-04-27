@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
@@ -7,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
@@ -154,10 +155,12 @@ function withDefaultMdxOptions({
 export async function maybeSerializeMdxContent(
     content: string,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<MDXRemoteSerializeResult | string>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<MDXRemoteSerializeResult | string | undefined>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
@@ -183,7 +186,7 @@ export async function maybeSerializeMdxContent(
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "MDX",
             errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",
@@ -199,10 +202,12 @@ export async function maybeSerializeMdxContent(
 export async function serializeMdxWithFrontmatter(
     content: string,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<SerializedMdxContent>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
     mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<SerializedMdxContent | undefined>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
@@ -224,7 +229,7 @@ export async function serializeMdxWithFrontmatter(
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "MDX",
             errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",

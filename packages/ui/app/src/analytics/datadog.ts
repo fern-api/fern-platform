@@ -2,7 +2,7 @@
 "use client";
 
 import { datadogLogs } from "@datadog/browser-logs";
-import { datadogRum } from "@datadog/browser-rum";
+// import { datadogRum } from "@datadog/browser-rum";
 
 const clientToken = process?.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN?.trim();
 // https://docs.datadoghq.com/logs/log_collection/javascript/#configuration
@@ -15,20 +15,20 @@ if (clientToken && process.env.NODE_ENV === "production") {
         env: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
     });
 
-    datadogRum.init({
-        applicationId: process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID ?? "unset",
-        clientToken,
-        site: "datadoghq.com",
-        service: "docs-frontend",
-        env: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
-        version: process.env.VERSION,
-        sessionSampleRate: 100,
-        sessionReplaySampleRate: 100,
-        trackUserInteractions: true,
-        trackResources: true,
-        trackLongTasks: true,
-        defaultPrivacyLevel: "mask-user-input",
-    });
+    // datadogRum.init({
+    //     applicationId: process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID ?? "unset",
+    //     clientToken,
+    //     site: "datadoghq.com",
+    //     service: "docs-frontend",
+    //     env: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
+    //     version: process.env.VERSION,
+    //     sessionSampleRate: 100,
+    //     sessionReplaySampleRate: 100,
+    //     trackUserInteractions: true,
+    //     trackResources: true,
+    //     trackLongTasks: true,
+    //     defaultPrivacyLevel: "mask-user-input",
+    // });
 }
 
 export default function DatadogInit(): null {

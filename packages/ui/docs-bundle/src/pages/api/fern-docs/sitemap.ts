@@ -37,9 +37,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     try {
-        const docs = await loadWithUrl(
-            buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) }),
-        );
+        const url = buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) });
+        // eslint-disable-next-line no-console
+        console.log("[sitemap] Loading docs for", url);
+        const docs = await loadWithUrl(url);
 
         if (docs == null) {
             return jsonResponse(404, [], headers);

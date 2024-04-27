@@ -31,9 +31,11 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
         }
 
         const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
-
+        const url = `${hostWithoutTrailingSlash}${pathname}`;
+        // eslint-disable-next-line no-console
+        console.log("[resolve-api] Loading docs for", url);
         const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url: `${hostWithoutTrailingSlash}${pathname}`,
+            url,
         });
 
         if (!docs.ok) {
