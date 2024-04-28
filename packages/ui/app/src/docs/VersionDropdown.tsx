@@ -2,6 +2,7 @@ import { getVersionAvailabilityLabel, SidebarVersionInfo } from "@fern-ui/fdr-ut
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
+import { useNavigationContext } from "../contexts/navigation-context";
 
 export declare namespace VersionDropdown {
     export interface Props {
@@ -11,6 +12,8 @@ export declare namespace VersionDropdown {
 }
 
 export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersionIndex, versions }) => {
+    const { unversionedSlug } = useNavigationContext();
+
     if (versions.length <= 1) {
         return null;
     }
@@ -25,7 +28,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: versionName,
                     disabled: availability == null,
-                    href: "/" + slug.join("/"),
+                    href: `${slug.length > 0 ? `/${slug.join("/")}` : ""}${unversionedSlug.length > 0 ? `/${unversionedSlug.join("/")}` : ""}`,
                 }))}
             >
                 <FernButton

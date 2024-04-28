@@ -170,6 +170,22 @@ module.exports = {
                         ul: {
                             maxWidth: "var(--spacing-content-width)",
                         },
+
+                        // remove quotes from code blocks
+                        "code::before": {
+                            content: "",
+                        },
+                        "code::after": {
+                            content: "",
+                        },
+
+                        // remove opening and closing quotes
+                        "blockquote p:first-of-type::before": {
+                            content: "",
+                        },
+                        "blockquote p:last-of-type::after": {
+                            content: "",
+                        },
                     },
                 },
                 sm: {

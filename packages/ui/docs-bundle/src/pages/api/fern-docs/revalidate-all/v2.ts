@@ -58,12 +58,13 @@ const handler: NextApiHandler = async (
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 
-        const docs = await loadWithUrl(
-            buildUrl({
-                host: hostWithoutTrailingSlash,
-                pathname: toValidPathname(req.query.basePath),
-            }),
-        );
+        const url = buildUrl({
+            host: hostWithoutTrailingSlash,
+            pathname: toValidPathname(req.query.basePath),
+        });
+        // eslint-disable-next-line no-console
+        console.log("[revalidate-all/v2] Loading docs for", url);
+        const docs = await loadWithUrl(url);
 
         if (docs == null) {
             // return notFoundResponse();
@@ -77,18 +78,32 @@ const handler: NextApiHandler = async (
             docs.definition.apis,
         );
 
-        const results = await Promise.all(
-            urls.map(async (url): Promise<RevalidatePathResult> => {
-                try {
-                    await res.revalidate(`/static/${encodeURI(url)}`);
-                    return { success: true, url };
-                } catch (e) {
-                    // eslint-disable-next-line no-console
-                    console.error(e);
-                    return { success: false, url, message: e instanceof Error ? e.message : "Unknown error." };
-                }
-            }),
-        );
+        // when we call res.revalidate() nextjs uses
+        // req.headers.host to make the network request
+        req.headers.host = xFernHost;
+
+        const results: RevalidatePathResult[] = [];
+
+        const batchSize = 250;
+        for (let i = 0; i < urls.length; i += batchSize) {
+            const batch = urls.slice(i, i + batchSize);
+            results.push(
+                ...(await Promise.all(
+                    batch.map(async (url): Promise<RevalidatePathResult> => {
+                        // eslint-disable-next-line no-console
+                        console.log(`Revalidating ${url}`);
+                        try {
+                            await res.revalidate(`/static/${encodeURI(url)}`);
+                            return { success: true, url };
+                        } catch (e) {
+                            // eslint-disable-next-line no-console
+                            console.error(e);
+                            return { success: false, url, message: e instanceof Error ? e.message : "Unknown error." };
+                        }
+                    }),
+                )),
+            );
+        }
 
         const successfulRevalidations = results.filter(isSuccessResult);
         const failedRevalidations = results.filter(isFailureResult);

@@ -1,0 +1,118 @@
+---
+title: How to Configure a Custom Domain
+description: Learn about how to set up a subdomain or subpath for a customer's docs website.
+---
+
+## Subdomain 
+
+<Steps>
+  ### Step 1: Add to `docs.yml`
+    Add the following to the `docs.yml` file:
+  ```yaml
+  - url: myorg.docs.buildwithfern.com
+  custom-domain: docs.myorg.com
+  ```
+
+  ### Step 2: Add the domain in Vercel
+  Visit https://vercel.com/buildwithfern/fern-prod/settings/domains and add the subdomain (e.g., docs.buildwithfern.com). 
+
+  ### Step 3: Send the DNS instructions to the customer
+  Vercel may ask for a TXT and will ask for a CNAME to be configured. Send this to our customer via Slack. 
+
+</Steps>
+
+## Subpath 
+
+### Step 1: Add to `docs.yml`
+Add the following `url` and `custom-domain` fields to the `docs.yml` file:
+```yaml
+- url: myorg.docs.buildwithfern.com/docs
+  custom-domain:
+    - fern.myorg.com/docs # host    
+    - myorg.com/docs # rewrite
+```
+
+### Step 2: Add rewrite rules 
+We need to create two entries, one that matches the basepath `/docs`, and another that matches any subpaths `/docs/subpath`. This is important because the second rewrite only matches on /docs/ (with a trailing /).
+
+There are many options for deploying rewrite rules, and is highly dependent on your setup.
+
+<Tabs>
+    <Tab title="NextJS/Vercel">
+        ```json
+        {
+            "rewrites": [
+                {
+                "source": "/docs",
+                "destination": "https://myorg.docs.buildwithfern.com/docs"
+                },
+                {
+                "source": "/docs/:path*",
+                "destination": "https://myorg.docs.buildwithfern.com/docs/:path*"
+                }
+            ]
+        }
+        ```
+    </Tab>
+    <Tab title="NGINX">
+        ```shell
+        location /docs {
+            rewrite ^/docs$ https://myorg.docs.buildwithfern.com/docs permanent;
+        }
+
+        location ~ ^/docs/(.*) {
+            rewrite ^/docs/(.*)$ https://myorg.docs.buildwithfern.com/docs/$1 permanent;
+        }
+        ```
+    </Tab>
+    <Tab title="Apache (.htaccess)">
+        ```apache
+        RewriteEngine On
+        RewriteRule ^/docs$ https://myorg.docs.buildwithfern.com/docs [R=301,L]
+        RewriteRule ^/docs/(.*)$ https://myorg.docs.buildwithfern.com/docs/$1 [R=301,L]
+        ```
+    </Tab>
+    <Tab title="Express/Node.js">
+        ```javascript 
+        const express = require('express');
+        const app = express();
+
+        app.get('/docs', (req, res) => {
+        res.redirect(301, 'https://myorg.docs.buildwithfern.com/docs');
+        });
+
+        app.get('/docs/:path', (req, res) => {
+        res.redirect(301, `https://myorg.docs.buildwithfern.com/docs/${req.params.path}`);
+        });
+
+        app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
+        ```
+    </Tab>
+    <Tab title="Django/Python">
+        ```python
+        pip install django-shortcuts
+
+        # views.py
+        from django.shortcuts import redirect
+
+        def docs_redirect(request):
+            return redirect('https://myorg.docs.buildwithfern.com/docs', permanent=True)
+
+        def docs_path_redirect(request, path):
+            return redirect(f'https://myorg.docs.buildwithfern.com/docs/{path}', permanent=True)
+
+
+        # urls.py
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path('docs', views.docs_redirect),
+            path('docs/<str:path>', views.docs_path_redirect),
+]
+        ```
+    </Tab>
+    <Tab title="AWS Cloudfront">
+    Setup an edge@lambda function to rewrite the path. [Instructions](https://serverlessrepo.aws.amazon.com/applications/us-east-1/418289889111/rewrite-url)
+    </Tab>
+</Tabs>

@@ -1,6 +1,6 @@
 import { camelCase } from "lodash-es";
 import StyleToObject from "style-to-object";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 
 export function parseStringStyle(value: unknown): Record<string, string> | undefined {
     if (typeof value !== "string") {
@@ -15,7 +15,7 @@ export function parseStringStyle(value: unknown): Record<string, string> | undef
         // eslint-disable-next-line no-console
         console.error("Failed to parse style", e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "FernSyntaxHighlighter",
             errorSource: "parseStyle",
             errorDescription: "Failed to parse style originating from shiki",

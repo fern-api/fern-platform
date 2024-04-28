@@ -4,8 +4,8 @@ import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/l
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { resolve } from "url";
-import { emitDatadogError } from "../analytics/datadogRum";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { captureSentryError } from "../analytics/sentry";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
@@ -227,7 +227,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
             console.error(e);
             setResponse(failed(e));
 
-            emitDatadogError(e, {
+            captureSentryError(e, {
                 context: "ApiPlayground",
                 errorSource: "sendRequest",
                 errorDescription:

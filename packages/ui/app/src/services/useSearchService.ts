@@ -1,7 +1,7 @@
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { REGISTRY_SERVICE } from "./registry";
@@ -34,7 +34,7 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
             // eslint-disable-next-line no-console
             console.error(resp.error);
 
-            emitDatadogError(resp.error, {
+            captureSentryError(resp.error, {
                 context: "SearchService",
                 errorSource: "createSearchApiKeyLoader",
                 errorDescription: "[P0] Failed to fetch index segment api key.",
@@ -102,7 +102,7 @@ export function useCreateSearchService(currentVersionIndex: number | undefined):
             // eslint-disable-next-line no-console
             console.error("Failed to initialize search service", e);
 
-            emitDatadogError(e, {
+            captureSentryError(e, {
                 context: "SearchService",
                 errorSource: "useCreateSearchService",
                 errorDescription: "Failed to initialize search service",

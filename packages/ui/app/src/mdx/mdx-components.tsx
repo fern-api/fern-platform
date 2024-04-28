@@ -7,7 +7,7 @@ import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBou
 import { FernScrollArea } from "../components/FernScrollArea";
 import { Feedback } from "../custom-docs-page/Feedback";
 import { TableOfContents } from "../custom-docs-page/TableOfContents";
-import { A, HeadingRenderer, Img, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
+import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
 import { Badge } from "./components/Badge";
@@ -84,6 +84,8 @@ export const JSX_COMPONENTS = {
     MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
         <FernErrorTag component="MdxErrorBoundary" {...props} />
     ),
+
+    Image,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
@@ -108,6 +110,6 @@ export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
     ul: Ul,
     li: Li,
     a: A,
-    img: Img,
+    img: Image,
     strong: Strong,
 };

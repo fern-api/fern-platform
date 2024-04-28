@@ -4,13 +4,13 @@ on:
   push:
     branches: main
     paths:
-      - 'fern/apis/fdr/**'
-      - 'fern/fern.config.json'
-      - 'servers/fdr-deploy/**'
-      - 'servers/fdr/**'
-      - '.github/workflows/deploy-fdr-dev.yml'
-      - 'packages/fdr-sdk/**'
-      - 'pnpm-lock.yaml'
+      - "fern/apis/fdr/**"
+      - "fern/fern.config.json"
+      - "servers/fdr-deploy/**"
+      - "servers/fdr/**"
+      - ".github/workflows/deploy-fdr-dev.yml"
+      - "packages/fdr-sdk/**"
+      - "pnpm-lock.yaml"
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
@@ -57,7 +57,11 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
       - name: 🧪 Build and test
-        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+        env:
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+          pnpm --filter "@fern-platform/fdr" sentry:sourcemaps
 
       - name: 💻 Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
