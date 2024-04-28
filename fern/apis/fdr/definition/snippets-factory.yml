@@ -2,7 +2,7 @@
 
 imports:
   commons: commons.yml
-  snippets: __package__.yml
+  snippets: snippets.yml
 
 service:
   auth: true

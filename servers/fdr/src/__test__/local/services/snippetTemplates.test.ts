@@ -21,7 +21,7 @@ it("create snippet template", async () => {
     const orgId = "acme";
 
     // register API definition for acme org
-    await unauthedFdr.template.register({
+    await unauthedFdr.templates.register({
         orgId,
         apiId: "user",
         apiDefinitionId: "....",
@@ -40,7 +40,7 @@ it("create snippet template", async () => {
         },
     });
     // create snippets
-    const response = await fdr.template.get({
+    const response = await fdr.templates.get({
         orgId,
         apiId: "user",
         endpointId: ENDPOINT,
@@ -67,21 +67,21 @@ it("generate example from snippet template", async () => {
     };
 
     // register API definition for acme org
-    await unauthedFdr.template.register({
+    await unauthedFdr.templates.register({
         orgId,
         apiId,
         apiDefinitionId: "....",
         snippet: CHAT_COMPLETION_SNIPPET,
     });
     // create snippets
-    await fdr.template.get({
+    await fdr.templates.get({
         orgId,
         apiId,
         endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
         sdk,
     });
 
-    const response = await fdr.get({
+    const response = await fdr.snippets.get({
         orgId,
         apiId,
         endpoint: CHAT_COMPLETION_SNIPPET.endpointId,

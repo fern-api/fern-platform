@@ -1,3 +1,4 @@
+import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { SnippetsService } from "../../api";
 import {
     EndpointSnippetTemplate,
@@ -9,7 +10,6 @@ import {
 import { type FdrApplication } from "../../app";
 import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
 import { APIResolver } from "./APIResolver";
-import { SnippetTemplateResolver } from "./SnippetTemplateResolver";
 
 export function getSnippetsService(app: FdrApplication): SnippetsService {
     return new SnippetsService({

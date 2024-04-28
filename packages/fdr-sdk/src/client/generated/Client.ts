@@ -4,12 +4,11 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import * as FernRegistry from "./api";
-import urlJoin from "url-join";
 import { Api } from "./api/resources/api/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
-import { Template } from "./api/resources/template/client/Client";
+import { Snippets } from "./api/resources/snippets/client/Client";
+import { Templates } from "./api/resources/templates/client/Client";
 
 export declare namespace FernRegistryClient {
     interface Options {
@@ -25,128 +24,6 @@ export declare namespace FernRegistryClient {
 
 export class FernRegistryClient {
     constructor(protected readonly _options: FernRegistryClient.Options = {}) {}
-
-    /**
-     * Get snippet by endpoint method and path
-     *
-     * @example
-     *     await fernRegistry.get({
-     *         endpoint: {
-     *             method: FernRegistry.EndpointMethod.Get,
-     *             path: "/v1/search"
-     *         }
-     *     })
-     */
-    public async get(
-        request: FernRegistry.GetSnippetRequest,
-        requestOptions?: FernRegistryClient.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.Snippet[], FernRegistry.get.Error>> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
-                "/snippets"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            body: request,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return {
-                ok: true,
-                body: _response.body as FernRegistry.Snippet[],
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as FernRegistry.get.Error)?.error) {
-                case "UnauthorizedError":
-                case "UserNotInOrgError":
-                case "UnavailableError":
-                case "ApiIdRequiredError":
-                case "OrgIdRequiredError":
-                case "OrgIdAndApiIdNotFound":
-                case "OrgIdNotFound":
-                case "EndpointNotFound":
-                case "SDKNotFound":
-                    return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.get.Error,
-                    };
-            }
-        }
-
-        return {
-            ok: false,
-            error: FernRegistry.get.Error._unknown(_response.error),
-        };
-    }
-
-    public async load(
-        request: FernRegistry.ListSnippetsRequest = {},
-        requestOptions?: FernRegistryClient.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.SnippetsPage, FernRegistry.load.Error>> {
-        const { page, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (page != null) {
-            _queryParams["page"] = page.toString();
-        }
-
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
-                "/snippets/load"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            body: _body,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return {
-                ok: true,
-                body: _response.body as FernRegistry.SnippetsPage,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as FernRegistry.load.Error)?.error) {
-                case "UnauthorizedError":
-                case "UserNotInOrgError":
-                case "UnavailableError":
-                case "InvalidPageError":
-                case "ApiIdRequiredError":
-                case "OrgIdRequiredError":
-                case "OrgIdAndApiIdNotFound":
-                case "OrgIdNotFound":
-                case "SDKNotFound":
-                    return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.load.Error,
-                    };
-            }
-        }
-
-        return {
-            ok: false,
-            error: FernRegistry.load.Error._unknown(_response.error),
-        };
-    }
 
     protected _api: Api | undefined;
 
@@ -166,18 +43,15 @@ export class FernRegistryClient {
         return (this._snippetsFactory ??= new SnippetsFactory(this._options));
     }
 
-    protected _template: Template | undefined;
+    protected _snippets: Snippets | undefined;
 
-    public get template(): Template {
-        return (this._template ??= new Template(this._options));
+    public get snippets(): Snippets {
+        return (this._snippets ??= new Snippets(this._options));
     }
 
-    protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
+    protected _templates: Templates | undefined;
 
-        return undefined;
+    public get templates(): Templates {
+        return (this._templates ??= new Templates(this._options));
     }
 }

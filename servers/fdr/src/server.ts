@@ -14,7 +14,7 @@ import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service
 import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Service";
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
-import { getTemplateService } from "./controllers/snippets/getTemplateService";
+import { getTemplatesService } from "./controllers/snippets/getTemplatesService";
 
 const PORT = 8080;
 
@@ -85,9 +85,9 @@ try {
                 },
             },
         },
-        _root: getSnippetsService(app),
+        snippets: getSnippetsService(app),
         snippetsFactory: getSnippetsFactoryService(app),
-        template: getTemplateService(app),
+        templates: getTemplatesService(app),
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);
