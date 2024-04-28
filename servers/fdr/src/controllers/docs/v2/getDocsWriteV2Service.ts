@@ -59,10 +59,13 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             const customUrls = validateAndParseCustomDomainUrl({ customUrls: req.body.customDomains });
 
             // ensure that the domains are not already registered by another org
-            app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
+            const hasOwnership = await app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
                 [fernUrl, ...customUrls].map((url) => url.getFullUrl()),
                 req.body.orgId,
             );
+            if (!hasOwnership) {
+                throw new FdrAPI.DomainBelongsToAnotherOrgError();
+            }
 
             const docsRegistrationId = uuidv4();
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
