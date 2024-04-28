@@ -15,13 +15,15 @@ description: "Returns a set of metadata for each call dispatched by your account
 <ParamField query="from_number" type="string">
   Filter calls by the number they were dispatched from.
 
-  The number that initiated the call - the user's phone number for inbound calls, or the number your AI Agent called from for outbound calls.
+The number that initiated the call - the user's phone number for inbound calls, or the number your AI Agent called from for outbound calls.
+
 </ParamField>
 
 <ParamField query="to_number" type="string">
   Filter calls by the number they were dispatched to.
 
-  The number that answered the call - the user's phone number for outbound calls, or your AI Agent's number for inbound calls.
+The number that answered the call - the user's phone number for outbound calls, or your AI Agent's number for inbound calls.
+
 </ParamField>
 
 <ParamField query="from" type="int">
@@ -49,7 +51,8 @@ description: "Returns a set of metadata for each call dispatched by your account
 <ResponseField name="calls" type="array">
   An array of call data objects. See the [Call](/api-v1/get/calls-id) section for details.
 
-  Note: Individual call transcripts are not included due to their size.
+Note: Individual call transcripts are not included due to their size.
+
 </ResponseField>
 
 <ResponseExample>
@@ -74,11 +77,3 @@ description: "Returns a set of metadata for each call dispatched by your account
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-
-

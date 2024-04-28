@@ -104,11 +104,7 @@
     },
     {
       "group": "Legal",
-      "pages": [
-        "legal/privacy-policy",
-        "legal/terms-of-service",
-        "legal/website-terms-of-use"
-      ]
+      "pages": ["legal/privacy-policy", "legal/terms-of-service", "legal/website-terms-of-use"]
     },
     {
       "group": "document",
@@ -164,9 +160,7 @@
     },
     {
       "group": "search",
-      "pages": [
-        "api-reference/search/search-memory-messages-for-a-given-session"
-      ]
+      "pages": ["api-reference/search/search-memory-messages-for-a-given-session"]
     },
     {
       "group": "user",

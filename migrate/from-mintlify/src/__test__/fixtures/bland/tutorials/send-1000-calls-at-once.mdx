@@ -85,8 +85,7 @@ const headers = {
 
 // Data
 const data = {
-  base_prompt:
-    "You are calling {{business}} to renew their subscription to {{service}} before it expires on {{date}}.",
+  base_prompt: "You are calling {{business}} to renew their subscription to {{service}} before it expires on {{date}}.",
   call_data: [
     {
       phone_number: "1234567890",
@@ -113,12 +112,3 @@ await axios.post("https://api.bland.ai/v1/batches", data, { headers });
 ```
 
 </RequestExample>
-
-
-
-
-
-
-
-
-

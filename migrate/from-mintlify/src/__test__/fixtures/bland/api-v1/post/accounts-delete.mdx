@@ -1,5 +1,5 @@
 ---
-title: "Delete Encrypted Key" 
+title: "Delete Encrypted Key"
 api: "POST https://api.bland.ai/v1/accounts/delete"
 description: "Disable an encrypted key for a Twilio account integration. See [Enterprise Twilio Integration](/enterprise-features/custom-twilio) for more information."
 ---
@@ -21,13 +21,13 @@ description: "Disable an encrypted key for a Twilio account integration. See [En
 
     - `success` - The encrypted key was successfully deleted.
     - `error` - There was an error deleting the encrypted key.
+
 </ResponseField>
 
 <ResponseField body="message" type="string">
-    Special messages:
-    - `Error deleting Twilio credentials` - The encrypted key could not be deleted or already has been deleted.
-    - `Missing encrypted key` - The `encrypted_key` parameter is missing.
-    - none - The encrypted key was successfully deleted.
+  Special messages: - `Error deleting Twilio credentials` - The encrypted key could not be deleted or already has been
+  deleted. - `Missing encrypted key` - The `encrypted_key` parameter is missing. - none - The encrypted key was
+  successfully deleted.
 </ResponseField>
 
 <ResponseExample>

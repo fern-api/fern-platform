@@ -12,6 +12,7 @@ description: "Memories are the central data structure in Zep's Memory Store. The
 
     The Memory and Summary are returned with UUIDs, token counts, timestamps, and other metadata.
     Memories are associated with [Sessions](sessions) in a many-to-one relationship.
+
 </Card>
 ## Persisting a Memory to a Session
 
@@ -27,6 +28,7 @@ Sessions are created automatically when adding Memories. If the `SessionID` is a
 upserted into the Session.
 
 [Manually creating a session](sessions) can be useful if you want to associate it with a user or add metadata.
+
 </Note>
 
 <Tabs group="memory">
@@ -56,37 +58,43 @@ messages = [Message(role=m["role"], content=m["content"], metadata=m.get("metada
 memory = Memory(messages=messages)
 result = client.memory.add_memory(session_id, memory)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 import { ZepClient, Message, Memory } from "@getzep/zep-js";
-import * as uuid from 'uuid';
+import * as uuid from "uuid";
 
-const API_KEY = "<your_api_key>"
+const API_KEY = "<your_api_key>";
 const zepClient = await ZepClient.init(process.env.ZEP_API_KEY);
 
 const session_id: string = uuid.v4(); // A new session identifier
 
 const history: { role: string; content: string; metadata?: { [key: string]: any } }[] = [
-    { "role": "Jane", "role_type": "user", "content": "Who was Octavia Butler?" },
-    { "role": "HistoryBot", "role_type": "assistant", "content": "Octavia Estelle Butler (June 22, 1947 – February 24, 2006) was an American science fiction author." },
-    { "role": "Jane", "role_type": "user", "content": "Which books of hers were made into movies?", "metadata": { "foo": "bar" } },
+  { role: "Jane", role_type: "user", content: "Who was Octavia Butler?" },
+  {
+    role: "HistoryBot",
+    role_type: "assistant",
+    content: "Octavia Estelle Butler (June 22, 1947 – February 24, 2006) was an American science fiction author.",
+  },
+  { role: "Jane", role_type: "user", content: "Which books of hers were made into movies?", metadata: { foo: "bar" } },
 ];
 
-const messages: Message[] = history.map(m => new Message({ role: m.role, content: m.content, metadata: m.metadata }));
+const messages: Message[] = history.map((m) => new Message({ role: m.role, content: m.content, metadata: m.metadata }));
 const memory: Memory = new Memory({ messages });
 const result = client.memory.addMemory(session_id, memory);
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Getting a Session's Memory
 
 <Note>Read more about the difference between [Perpetual and Message Window Buffer Memory](/chat-history-memory).</Note>
 
 ### Perpetual Memory
+
 The example below uses Zep's async API and a context manager. You may also use the sync API's `client.memory.get_memory`
 method and use the `client` outside of a context manager.
 
@@ -109,16 +117,16 @@ async with ZepClient(api_key=api_key) as client:
 ```typescript
 const client = await ZepClient.init(api_key);
 try {
-    const memory = await client.memory.getMemory(session_id, "perpetual");
-    for (const message of memory.messages) {
-        console.log(message.toDict());
-    }
+  const memory = await client.memory.getMemory(session_id, "perpetual");
+  for (const message of memory.messages) {
+    console.log(message.toDict());
+  }
 } catch (error) {
-    if (error instanceof NotFoundError) {
-        console.log("Memory not found");
-    } else {
-        throw error;
-    }
+  if (error instanceof NotFoundError) {
+    console.log("Memory not found");
+  } else {
+    throw error;
+  }
 }
 ```
 
@@ -161,23 +169,25 @@ async with ZepClient(api_key) as client:
     except NotFoundError:
         print("Memory not found")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 const client = await ZepClient.init(api_key);
 try {
-    const memory = await client.memory.getMemory(session_id, "message_window");
-    for (const message of memory.messages) {
-        console.log(message.toDict());
-    }
+  const memory = await client.memory.getMemory(session_id, "message_window");
+  for (const message of memory.messages) {
+    console.log(message.toDict());
+  }
 } catch (error) {
-    if (error instanceof NotFoundError) {
-        console.log("Memory not found");
-    } else {
-        throw error;
-    }
+  if (error instanceof NotFoundError) {
+    console.log("Memory not found");
+  } else {
+    throw error;
+  }
 }
 ```
+
 </Tab>
 </Tabs>

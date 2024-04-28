@@ -2,7 +2,6 @@
 title: "Validate Dynamic Data"
 api: "POST https://api.bland.ai/dynamic_data/test"
 description: "This endpoint is designed for validating and processing dynamic data obtained from external APIs. The data is used in AI phone calls to ensure compliance with format requirements and functionality."
-
 ---
 
 ### Headers
@@ -14,7 +13,8 @@ description: "This endpoint is designed for validating and processing dynamic da
 ### Body
 
 <ParamField body="dynamic_data" type="array" required>
-  An array of objects, each specifying an external API to fetch data from. These objects must include the API endpoint, the HTTP method, a cache flag, and details on parsing and integrating the response.
+  An array of objects, each specifying an external API to fetch data from. These objects must include the API endpoint,
+  the HTTP method, a cache flag, and details on parsing and integrating the response.
 </ParamField>
 
 ### Response
@@ -28,7 +28,8 @@ description: "This endpoint is designed for validating and processing dynamic da
 </ResponseField>
 
 <ResponseField name="dynamic_data_response" type="array">
-  Contains the results from the dynamic data fetch. Each object in this array shows the cache status, the name of the data, and the processed prompt with the inserted data.
+  Contains the results from the dynamic data fetch. Each object in this array shows the cache status, the name of the
+  data, and the processed prompt with the inserted data.
 </ResponseField>
 
 <ResponseField name="dynamic_data_request" type="array">
@@ -36,7 +37,8 @@ description: "This endpoint is designed for validating and processing dynamic da
 </ResponseField>
 
 <ResponseField name="variables" type="object">
-  The parsed data from fetching the dynamic data. This can be used in other requests, the `task` or `prompt` fields, even other dynamic data requests through the `{{variable}}` syntax.
+  The parsed data from fetching the dynamic data. This can be used in other requests, the `task` or `prompt` fields,
+  even other dynamic data requests through the `{{ variable }}` syntax.
 </ResponseField>
 
 <ResponseField name="url_responses" type="array">
@@ -147,11 +149,3 @@ description: "This endpoint is designed for validating and processing dynamic da
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-
-

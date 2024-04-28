@@ -1,5 +1,5 @@
 ---
-title: "Stop Active Call"  
+title: "Stop Active Call"
 api: "POST https://api.bland.ai/v1/calls/{call_id}/stop"
 description: "End an active phone call by call_id."
 ---
@@ -23,9 +23,8 @@ description: "End an active phone call by call_id."
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  If the status is `success`, the message will say "Call ended successfully."
-  Otherwise, if the status is `error`, the message will say "SID not found for
-  the given c_id." or "Internal server error."
+  If the status is `success`, the message will say "Call ended successfully." Otherwise, if the status is `error`, the
+  message will say "SID not found for the given c_id." or "Internal server error."
 </ResponseField>
 
 <ResponseExample>
@@ -36,12 +35,3 @@ description: "End an active phone call by call_id."
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-
-
-

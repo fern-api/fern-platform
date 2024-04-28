@@ -1,5 +1,5 @@
 ---
-title: "Inbound Number Details"  
+title: "Inbound Number Details"
 api: "GET https://api.bland.ai/v1/inbound/{phone_number}"
 description: "Retrieve settings for your inbound phone number."
 ---
@@ -23,6 +23,7 @@ description: "Retrieve settings for your inbound phone number."
     - `%2B13334445555`
     - `13334445555`
     - `3334445555`
+
 </ParamField>
 
 ### Response
@@ -44,13 +45,12 @@ description: "Retrieve settings for your inbound phone number."
 </ResponseField>
 
 <ResponseField name="voice_" type="integer">
-  The `voice` your agent is using - will be a `reduce_latency` voice. 
-  
-  For more information, see [List Voices](/api-v1/get/voices).
+  The `voice` your agent is using - will be a `reduce_latency` voice. For more information, see [List
+  Voices](/api-v1/get/voices).
 </ResponseField>
 
 <ResponseField name="pathway_id" type="string">
-    The `pathway_id` your agent is using. 
+    The `pathway_id` your agent is using.
 
 </ResponseField>
 
@@ -75,11 +75,3 @@ description: "Retrieve settings for your inbound phone number."
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-
-

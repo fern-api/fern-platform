@@ -1,5 +1,5 @@
 ---
-title: "Voice Details"  
+title: "Voice Details"
 api: "GET https://api.bland.ai/v1/voices/{id}"
 description: "Retrieve detailed information about a specific voice."
 ---
@@ -15,9 +15,10 @@ description: "Retrieve detailed information about a specific voice."
 <ParamField path="id" type="string" required>
   The unique identifier for the voice preset.
 
-  Place either the voice's `name` or `id` here.
+Place either the voice's `name` or `id` here.
 
-  For example, `GET https://api.bland.ai/v1/voices/david` or `GET https://api.bland.ai/v1/voices/ff2c405b-3dba-41e0-9261-bc8ee3f91f46`.
+For example, `GET https://api.bland.ai/v1/voices/david` or `GET https://api.bland.ai/v1/voices/ff2c405b-3dba-41e0-9261-bc8ee3f91f46`.
+
 </ParamField>
 
 ### Response
@@ -35,6 +36,7 @@ description: "Retrieve detailed information about a specific voice."
     - `total_ratings` - The number of ratings for the voice.
 
     Note: Ratings are under development and may show incomplete or inaccurate data.
+
 </ResponseField>
 
 <ResponseExample>
@@ -56,10 +58,3 @@ description: "Retrieve detailed information about a specific voice."
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-

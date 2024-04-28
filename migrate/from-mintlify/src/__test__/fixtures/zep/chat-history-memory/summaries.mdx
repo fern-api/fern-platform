@@ -3,17 +3,16 @@ configured
 `Message Window` for your [Zep Project](/getting-started/projects). The first summary is generated after the first `N` messages are
 added to a Session.
 
-
-
 <Note>
 **Summaries are generated asynchronously.**
 
 Zep uses a proprietary, low-latency summarization model to generate dialog summaries asynchronously. This means that
 summary generation does not delay your requests to retrieve Memories from Zep.
+
 </Note>
 
 <Frame>
-    <img alt="List of Summaries" src="/images/summaries.png" />
+  <img alt="List of Summaries" src="/images/summaries.png" />
 </Frame>
 
 ## Accessing Summaries
@@ -30,5 +29,3 @@ search and includes this summary in your Memory request.
 
 Zep automatically determines which summary to add to a response based on your configured `Message Window` and the number
 of messages in the Session.
-
-

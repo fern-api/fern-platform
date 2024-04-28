@@ -8,7 +8,7 @@ description: "Learn how to register your A2P brand using our API. This guide cov
 
 This documentation provides detailed information on how to register an Application-to-Person (A2P) brand by making a POST request to our API. The process involves submitting your brand's details for registration and verification purposes.
 
-A2P Registration is required for *all* businesses who wish to send SMS. There can be signifcant fines for any non compliant messages. A2P Registration can take 2 days -> 2 Weeks.
+A2P Registration is required for _all_ businesses who wish to send SMS. There can be signifcant fines for any non compliant messages. A2P Registration can take 2 days -> 2 Weeks.
 
 ## Endpoint
 
@@ -38,10 +38,11 @@ Your request should include a JSON body with the following parameters:
 - `trusted_user` (object): An object containing details about the trusted user registering the brand. Includes `position`, `last_name`, `phone_number`, `first_name`, and `email`.
 
 Ex. of trusted_user obj:
-```json 
+
+```json
 {
     "position": "CEO" //must be C Suite or VP,
-    "last_name":"Smith", 
+    "last_name":"Smith",
     "first_name":"John"
 }
 ```
@@ -57,8 +58,7 @@ Our API provides detailed error messages to help you understand what went wrong 
 
 A successful request returns a `200 OK` status code with a JSON body containing a message indicating the registration was successful and any relevant data or identifiers related to the A2P brand registration.
 
-***Important**** The Brand Registration can take several attempts and days to weeks to complete. This success only indicates we *submitted* the registration correctly.
-
+**\*Important\*\*** The Brand Registration can take several attempts and days to weeks to complete. This success only indicates we _submitted_ the registration correctly.
 
 ```json
 {

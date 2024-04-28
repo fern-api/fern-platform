@@ -69,10 +69,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": [
-        "welcome-to-bland",
-        "starter-guide"
-      ]
+      "pages": ["welcome-to-bland", "starter-guide"]
     },
     {
       "group": "Bland Enterprise",
@@ -87,9 +84,7 @@
     },
     {
       "group": "Featured guides",
-      "pages": [
-        "featured-guides/bland-and-botpress"
-      ]
+      "pages": ["featured-guides/bland-and-botpress"]
     },
     {
       "group": "Basic Tutorials",
@@ -106,11 +101,8 @@
       ]
     },
     {
-      "group":"Basic",
-      "pages":[
-        "api-v1/post/calls-simple",
-        "api-v1/post/calls-simple-pathway"
-      ]
+      "group": "Basic",
+      "pages": ["api-v1/post/calls-simple", "api-v1/post/calls-simple-pathway"]
     },
     {
       "group": "Calls",
@@ -145,27 +137,15 @@
     },
     {
       "group": "Outbound Numbers",
-      "pages": [
-        "api-v1/post/outbound-purchase",
-        "api-v1/get/outbound"
-      ]
+      "pages": ["api-v1/post/outbound-purchase", "api-v1/get/outbound"]
     },
     {
       "group": "Voices",
-      "pages": [
-        "api-v1/get/voices",
-        "api-v1/get/voices-id",
-        "api-v1/post/voices-id-sample"
-      ]
+      "pages": ["api-v1/get/voices", "api-v1/get/voices-id", "api-v1/post/voices-id-sample"]
     },
     {
       "group": "Custom Tools",
-      "pages": [
-        "api-v1/post/tools",
-        "api-v1/post/tools-tool-id",
-        "api-v1/get/tools",
-        "api-v1/get/tools-tool-id"
-      ]
+      "pages": ["api-v1/post/tools", "api-v1/post/tools-tool-id", "api-v1/get/tools", "api-v1/get/tools-tool-id"]
     },
     {
       "group": "Custom Twilio Accounts",
@@ -231,21 +211,15 @@
         "api-v1/post/sms-get-messages",
         "api-v1/post/sms-toggle-human",
         "api-v1/post/sms-webhook-update"
-
       ]
     },
     {
       "group": "Account",
-      "pages": [
-        "api-v1/get/me"
-
-      ]
+      "pages": ["api-v1/get/me"]
     },
     {
       "group": "Hold Endpoint",
-      "pages": [
-        "api-reference/hold-endpoint/hold"
-      ]
+      "pages": ["api-reference/hold-endpoint/hold"]
     }
   ],
   "footerSocials": {

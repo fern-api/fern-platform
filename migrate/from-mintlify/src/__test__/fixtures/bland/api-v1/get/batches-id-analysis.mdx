@@ -1,5 +1,5 @@
 ---
-title: "Retrieve Batch Analysis"  
+title: "Retrieve Batch Analysis"
 api: "GET https://api.bland.ai/v1/batches/{batch_id}/analysis"
 description: "Retrieves the analyses for a specific batch of calls, including details of each call's analysis."
 ---
@@ -27,14 +27,9 @@ description: "Retrieves the analyses for a specific batch of calls, including de
 </ResponseField>
 
 <ResponseField type="array" name="analysis">
-  An array of analysis objects, each corresponding to a call within the batch. 
-  
-  Each analysis object includes:
-    - `call_id`, 
-    - `batch_id`
-    - `goal`
-    - `answers` - the results of the AI analysis
-    - `questions` - the original questions asked by the AI
+  An array of analysis objects, each corresponding to a call within the batch. Each analysis object includes: -
+  `call_id`, - `batch_id` - `goal` - `answers` - the results of the AI analysis - `questions` - the original questions
+  asked by the AI
 </ResponseField>
 
 <ResponseExample>
@@ -65,10 +60,3 @@ description: "Retrieves the analyses for a specific batch of calls, including de
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-

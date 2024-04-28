@@ -3,30 +3,29 @@ title: "Call an inbound lead"
 description: "Learn to use the `/call` endpoint to contact an inbound lead to your website"
 ---
 
-<img
-  style={{ borderRadius: '0.5rem' }}
-  src="/examples/inboundlead.jpg"
-/>
+<img style={{ borderRadius: "0.5rem" }} src="/examples/inboundlead.jpg" />
 
 ## Introduction
+
 Imagine you're selling a service, online. Your website contains a contact form where potential customers can request a demo. You know deals will close way more often if you call leads within 5 minutes of their form submission. Unfortunately, you don't have enough hands on deck to make those calls yourself, so you've decided to automate those calls with an AI voice agent.
 
 In this example, we'll show you how to call your inbound leads with a personalized prompt. Let's get started!
 
 ## Prompt for the phone call
+
 Your phone call prompt should be written as a [template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) (a string that you can pass variables to). That way, you can insert the data captured from the form into your prompt.
 
 Here's what your prompt should look like (before you insert the data from the form).
 
 <Accordion title="Template string prompt (before updating with form data)">
-Your name is Matt, and you're an AI phone agent from Acme Inc. Whenever an inbound lead visits your website, you call them within five minutes. You're direct in your manner of speech. You never repeat yourself. You follow your script as tightly as possible to keep the call on track. 
+Your name is Matt, and you're an AI phone agent from Acme Inc. Whenever an inbound lead visits your website, you call them within five minutes. You're direct in your manner of speech. You never repeat yourself. You follow your script as tightly as possible to keep the call on track.
 
 Here's how the typical phone call progresses:
+
 1. You introduce yourself
 2. You ask qualification customers based on the customer type (startup, small business, enterprise)
 3. If the customer is qualified, you explain that you'll text them a scheduling link right after the call
 4. You end the phone call
-
 
 **Example dialogue**
 
@@ -69,6 +68,7 @@ Person: Yes, that works for me.
 You: Fantastic, I'll text you the link right away. Thanks for your time, `${first_name}`. We look forward to potentially working with you.
 
 Person: Thank you, Matt. Looking forward to it.
+
 </Accordion>
 
 Did you notice how detailed the prompt is? It provides so much context, and explains what character the AI phone agent is playing, why it's playing it, how it should speak, how the call should progress, and even provides an example dialogue.
@@ -76,9 +76,10 @@ Did you notice how detailed the prompt is? It provides so much context, and expl
 Now, check out what the prompt looks like after we insert the form variables.
 
 <Accordion title="Prompt to send (after updating with form data)">
-Your name is Matt, and you're an AI phone agent from Acme Inc. Whenever an inbound lead visits your website, you call them within five minutes. You're direct in your manner of speech. You never repeat yourself. You follow your script as tightly as possible to keep the call on track. 
+Your name is Matt, and you're an AI phone agent from Acme Inc. Whenever an inbound lead visits your website, you call them within five minutes. You're direct in your manner of speech. You never repeat yourself. You follow your script as tightly as possible to keep the call on track.
 
 Here's how the typical phone call progresses:
+
 1. You introduce yourself
 2. You ask qualification customers based on the customer type (startup, small business, enterprise)
 3. If the customer is qualified, you explain that you'll text them a scheduling link right after the call
@@ -125,6 +126,7 @@ Person: Yes, that works for me.
 You: Fantastic, I'll text you the link right away. Thanks for your time, Jordan. We look forward to potentially working with you.
 
 Person: Thank you, Matt. Looking forward to it.
+
 </Accordion>
 
 ## Customizing the phone agent
@@ -140,11 +142,3 @@ For clarity's sake, we'll include those in our code example anyone.
 The code example is present on the right hand section of this page. You can copy it, either in Javascript or Python.
 
 Have additional questions? Want to see other use cases? Join our [discord community](https://discord.gg/QvxDz8zcKe)!
-
-
-
-
-
-
-
-

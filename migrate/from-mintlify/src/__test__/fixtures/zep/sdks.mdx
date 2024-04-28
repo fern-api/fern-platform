@@ -14,19 +14,20 @@ To install the Zep Python SDK with Zep Cloud support, you'll need to install a r
 ```Bash
 pip install --pre zep-python
 ```
+
 </Tab>
 <Tab title="poetry">
 
 ```Bash
 poetry add zep-python@^2.0.0rc
 ```
+
 </Tab>
 </Tabs>
 
 ### TypeScript
 
 To install the Zep JavaScript SDK with Zep Cloud support, please install a pre-release version tagged with `@next`.
-
 
 <Tabs>
 
@@ -35,23 +36,25 @@ To install the Zep JavaScript SDK with Zep Cloud support, please install a pre-r
 ```Bash
 npm install @getzep/zep-js@next
 ```
+
 </Tab>
 <Tab title="yarn">
 
 ```Bash
 yarn add @getzep/zep-js@next
 ```
+
 </Tab>
 <Tab title="pnpm">
 
 ```Bash
 pnpm install @getzep/zep-js@next
 ```
+
 </Tab>
 </Tabs>
 
 ## Initialize Client
-
 
 <Tabs group="code_block">
 <Tab title="Python" group-key="python">
@@ -64,18 +67,18 @@ API_KEY = os.environ.get('ZEP_API_KEY')
 
 zep = ZepClient(api_key=API_KEY)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 import { ZepClient } from "@getzep/zep-js";
 
-API_KEY = process.env.ZEP_API_KEY
+API_KEY = process.env.ZEP_API_KEY;
 
-const zep = await ZepClient.init(
-    API_KEY,
-);
+const zep = await ZepClient.init(API_KEY);
 ```
+
 </Tab>
 <Tab title="Go (Coming soon)" group-key="go">
 </Tab>
@@ -86,12 +89,13 @@ const zep = await ZepClient.init(
 <Info>
     **The Python SDK Supports Async Use**
 
- All methods are available as both sync and async, with the async methods prefixed with `a`.
+All methods are available as both sync and async, with the async methods prefixed with `a`.
 
     For example, zep-python
- has both `zep_client.memory.add_memory` and `zep_client.memory.aadd_memory` methods.
-</Info>
 
+has both `zep_client.memory.add_memory` and `zep_client.memory.aadd_memory` methods.
+
+</Info>
 
 ## LangChain
 
@@ -109,6 +113,7 @@ Import the classes as shown below:
 ```python
 from zep_python.langchain import ZepChatMessageHistory, ZepVectorStore
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -125,8 +130,9 @@ npm install langchain
 To import these classes, use the following syntax:
 
 ```typescript
-import { ZepChatMessageHistory, ZepVectorStore } from "@getzep/zep-js/langchain"
+import { ZepChatMessageHistory, ZepVectorStore } from "@getzep/zep-js/langchain";
 ```
+
 </Tab>
 
 <Tab title="Go (Coming soon)" group-key="go">
@@ -136,7 +142,3 @@ import { ZepChatMessageHistory, ZepVectorStore } from "@getzep/zep-js/langchain"
 ## LlamaIndex
 
 Stay tuned! We are in the process of updating our LlamaIndex integration to be compatible with the latest Zep API.
-
-
-
-

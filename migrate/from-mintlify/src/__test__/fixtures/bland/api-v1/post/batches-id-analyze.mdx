@@ -1,5 +1,5 @@
 ---
-title: "Analyze Batch with AI"  
+title: "Analyze Batch with AI"
 api: "POST https://api.bland.ai/v1/batches/{batch_id}/analyze"
 description: "Analyzes a batch of calls based on using questions and goals."
 ---
@@ -19,7 +19,8 @@ description: "Analyzes a batch of calls based on using questions and goals."
 ### Request Body
 
 <ParamField body="goal" type="string" required>
-  This is the overall purpose of the batch of calls. Provides context for the analysis to guide how the questions/transcripts are interpreted.
+  This is the overall purpose of the batch of calls. Provides context for the analysis to guide how the
+  questions/transcripts are interpreted.
 </ParamField>
 
 <ParamField body="questions" type="array" required>
@@ -27,17 +28,19 @@ description: "Analyzes a batch of calls based on using questions and goals."
   
   Each question should be an array with two elements: the question text and the expected answer type (e.g., "string", "boolean").
 
-  Fairly flexible in terms of the expected answer type, and unanswerable questions will default to `null`.
+Fairly flexible in terms of the expected answer type, and unanswerable questions will default to `null`.
 
-  Examples:
-  ```json
-  "questions": [
-        ["Who answered the call?", "human or voicemail"],
-        ["Positive feedback about the product: ", "string"],
-        ["Negative feedback about the product: ", "string"],
-        ["Customer confirmed they were satisfied", "boolean"]
-    ]
-  ```
+Examples:
+
+```json
+"questions": [
+      ["Who answered the call?", "human or voicemail"],
+      ["Positive feedback about the product: ", "string"],
+      ["Negative feedback about the product: ", "string"],
+      ["Customer confirmed they were satisfied", "boolean"]
+  ]
+```
+
 </ParamField>
 
 ### Response
@@ -53,15 +56,17 @@ description: "Analyzes a batch of calls based on using questions and goals."
 <ResponseField type="object" name="answers">
   Contains the analyzed answers for each call in the batch.
 
-  The keys are `call_id`s from the batch, and the array values are the analysis results for each question in the batch.
+The keys are `call_id`s from the batch, and the array values are the analysis results for each question in the batch.
+
 </ResponseField>
 
 <ResponseField type="number" name="credits_used">
   Token-based price for the analysis request.
 
-  As a rough estimate, the base cost is `0.003` credits with an additional `0.0015` credits per call in the batch.
+As a rough estimate, the base cost is `0.003` credits with an additional `0.0015` credits per call in the batch.
 
-  Longer call transcripts and higher numbers of questions can increase the cost, however the cost scales very effectively with batches vs. individual calls.
+Longer call transcripts and higher numbers of questions can increase the cost, however the cost scales very effectively with batches vs. individual calls.
+
 </ResponseField>
 
 <ResponseExample>
@@ -86,10 +91,3 @@ description: "Analyzes a batch of calls based on using questions and goals."
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-

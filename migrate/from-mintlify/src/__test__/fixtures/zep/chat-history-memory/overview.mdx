@@ -12,17 +12,17 @@ Zep offers several approaches to populating prompts with context from historical
 ## Perpetual Memory
 
 Perpetual Memory is the default memory type. Salient facts from the dialog are extracted and stored in a `Fact Table`. This
-is updated in real-time as new messages are added to the Session. 
+is updated in real-time as new messages are added to the Session.
 
 Every time you call the Memory API to get a Memory,
 Zep returns the Fact Table, the most recent messages (per your `Message Window` setting), and a summary of the most recent
 messages prior to the `Message Window`.
 
-We've found that including the combination of the Fact Table, summary, and the most recent messages in a prompts provides both factual 
+We've found that including the combination of the Fact Table, summary, and the most recent messages in a prompts provides both factual
 context and nuance to the LLM.
 
 <Frame>
-    <img alt="Perpetual Memory" src="/images/fact-table.png" />
+  <img alt="Perpetual Memory" src="/images/fact-table.png" />
 </Frame>
 
 ## Summary Retriever Memory
@@ -37,7 +37,8 @@ You don't need to do anything to enable this feature, beyond adding messages to 
 calling the `get_memory` API and requesting the `perpetual` `memory_type`.
 
 <Note>
-Want to learn more about how Summary Retriever works? [Read How Perpetual Memory Works](#how-summary-retriever-memory-works).
+  Want to learn more about how Summary Retriever works? [Read How Perpetual Memory
+  Works](#how-summary-retriever-memory-works).
 </Note>
 
 ## Message Window Buffer Memory
@@ -57,7 +58,7 @@ This is ongoing, ensuring that the entire conversation is incrementally summariz
 These summaries are also embedded, enabling vector similarity search over the entire series of conversation summaries.
 
 <Frame>
-    <img alt="Summary Retriever Flow Chart" src="/images/perpetual_memory.png" />
+  <img alt="Summary Retriever Flow Chart" src="/images/perpetual_memory.png" />
 </Frame>
 
 Every time you call the Memory API to get a Memory, Zep uses a proprietary, low-latency language model to generate a
