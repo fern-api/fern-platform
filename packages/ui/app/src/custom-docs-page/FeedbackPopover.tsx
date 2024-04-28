@@ -298,7 +298,7 @@ export const FeedbackPopover: React.FC = () => {
                             className="flex flex-col gap-2"
                         >
                             <label htmlFor="moreFeedback" className="mt-2 t-muted text-sm font-medium">
-                                {isHelpful ? "What did you like?" : "What went wrong?"}
+                                {isHelpful ? "What did you like?" : "What could improve?"}
                             </label>
                             <FernInput id="moreFeedback" name="moreFeedback" className="min-w-60" />
                             <FernButton type="submit" intent="primary" className="self-end">

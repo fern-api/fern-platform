@@ -1,4 +1,5 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
+import clsx from "clsx";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
@@ -94,7 +95,11 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     <span className="t-muted text-sm font-medium">Was this page helpful?</span>
                     <FernButtonGroup>
                         <FernButton
-                            icon={<ThumbsUp className="opacity-60" />}
+                            icon={
+                                <ThumbsUp
+                                    className={clsx("opacity-60", { "animate-thumb-rock": feedback === "yes" })}
+                                />
+                            }
                             variant="outlined"
                             intent={feedback === "yes" ? "success" : "none"}
                             onClick={handleYes}
@@ -103,7 +108,11 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                             Yes
                         </FernButton>
                         <FernButton
-                            icon={<ThumbsDown className="opacity-60" />}
+                            icon={
+                                <ThumbsDown
+                                    className={clsx("opacity-60", { "animate-thumb-rock": feedback === "no" })}
+                                />
+                            }
                             variant="outlined"
                             intent={feedback === "no" ? "danger" : "none"}
                             onClick={handleNo}
