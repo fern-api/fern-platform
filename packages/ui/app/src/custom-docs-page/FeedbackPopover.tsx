@@ -86,6 +86,28 @@ export const FeedbackPopover: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        const handleDoubleClick = () => {
+            const selection = window.getSelection();
+            if (selection?.toString().trim()) {
+                setTimeout(() => {
+                    const range = selection.getRangeAt(0);
+                    const selectionRect = range.getBoundingClientRect();
+
+                    const fakeReference = document.createElement("div");
+                    fakeReference.style.position = "absolute";
+                    fakeReference.style.top = `${selectionRect.top}px`;
+                    fakeReference.style.left = `${selectionRect.left}px`;
+                    fakeReference.style.width = `${selectionRect.width}px`;
+                    fakeReference.style.height = `${selectionRect.height}px`;
+                    fakeReference.classList.add("bg-accent-highlight");
+                    document.body.appendChild(fakeReference);
+
+                    setReferenceElement(fakeReference);
+                    setShowMenu(true);
+                }, 0);
+            }
+        };
+
         const handleSelectionChange = () => {
             const selection = window.getSelection();
             if (selection?.toString().trim()) {
@@ -115,7 +137,6 @@ export const FeedbackPopover: React.FC = () => {
                 setFeedbackSubmitted(false);
             }
         };
-
         const handleHashChange = () => {
             const hash = window.location.hash;
             if (hash.startsWith("#:~:text=")) {
@@ -170,6 +191,7 @@ export const FeedbackPopover: React.FC = () => {
             }
         };
 
+        document.addEventListener("dblclick", handleDoubleClick);
         document.addEventListener("selectionchange", handleSelectionChange);
         window.addEventListener("hashchange", handleHashChange);
         document.addEventListener("keydown", handleEscapeKey);
@@ -180,10 +202,10 @@ export const FeedbackPopover: React.FC = () => {
             textarea.addEventListener("focus", handleTextareaFocus);
         }
 
-        // Check for the highlight hash on initial load
         handleHashChange();
 
         return () => {
+            document.removeEventListener("dblclick", handleDoubleClick);
             document.removeEventListener("selectionchange", handleSelectionChange);
             window.removeEventListener("hashchange", handleHashChange);
             document.removeEventListener("keydown", handleEscapeKey);
