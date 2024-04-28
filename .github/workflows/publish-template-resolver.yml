@@ -16,7 +16,7 @@ env:
 
 jobs:
   publish_package:
-    if: github.event_name == 'release' && startsWith(github.event.release.tag_name, 'python@')
+    if: github.event_name == 'release' && startsWith(github.event.release.tag_name, 'template-resolver@')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
