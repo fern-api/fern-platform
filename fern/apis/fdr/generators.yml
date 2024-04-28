@@ -63,10 +63,10 @@ groups:
         version: 0.12.8-rc0
         output:
           location: npm
-          package-name: "@fern/node-sdk"
+          package-name: "@fern/typescript-sdk"
           # token: ${NPM_TOKEN}
         github:
-          repository: fern-api/node-sdk
+          repository: fern-api/fern-typescript
           mode: pull-request
           license: MIT
         config:
