@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, ThumbsDown, ThumbsUp } from "react-feather";
 import { usePopper } from "react-popper";
 import { capturePosthogEvent } from "../analytics/posthog";
@@ -28,19 +28,25 @@ export const FeedbackPopover: React.FC = () => {
         ],
     });
 
+    const selection = useMemo(() => window.getSelection(), []);
+
     const handleThumbsUp = useCallback(() => {
+        const selectedText = selection?.toString().trim();
         setIsHelpful(true);
         capturePosthogEvent("feedback_voted", {
             satisfied: true,
+            selectedText,
         });
-    }, []);
+    }, [selection]);
 
     const handleThumbsDown = useCallback(() => {
+        const selectedText = selection?.toString().trim();
         setIsHelpful(false);
         capturePosthogEvent("feedback_voted", {
             satisfied: false,
+            selectedText,
         });
-    }, []);
+    }, [selection]);
 
     const handleCreateHighlightLink = async () => {
         const selection = window.getSelection();
@@ -60,7 +66,7 @@ export const FeedbackPopover: React.FC = () => {
             setTimeout(() => {
                 setCopied(false);
                 setShowMenu(false);
-            }, 1500); // Change the duration (in milliseconds) as needed
+            }, 1500);
         }
     };
 
@@ -146,7 +152,7 @@ export const FeedbackPopover: React.FC = () => {
                 setIsHelpful(undefined);
                 setCopied(false);
                 setFeedbackSubmitted(false);
-            }, 1500); // Change the duration (in milliseconds) as needed
+            }, 1500);
         };
 
         const handleTextareaFocus = () => {
