@@ -64,6 +64,21 @@ export const FeedbackPopover: React.FC = () => {
         }
     };
 
+    const findTextNode = useCallback((node: Node, text: string): Node | null => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent?.includes(text)) {
+            return node;
+        }
+
+        for (let i = 0; i < node.childNodes.length; i++) {
+            const foundNode = findTextNode(node.childNodes[i], text);
+            if (foundNode) {
+                return foundNode;
+            }
+        }
+
+        return null;
+    }, []);
+
     useEffect(() => {
         const handleSelectionChange = () => {
             const selection = window.getSelection();
@@ -172,22 +187,7 @@ export const FeedbackPopover: React.FC = () => {
                 textarea.removeEventListener("focus", handleTextareaFocus);
             }
         };
-    }, []);
-
-    const findTextNode = (node: Node, text: string): Node | null => {
-        if (node.nodeType === Node.TEXT_NODE && node.textContent?.includes(text)) {
-            return node;
-        }
-
-        for (let i = 0; i < node.childNodes.length; i++) {
-            const foundNode = findTextNode(node.childNodes[i], text);
-            if (foundNode) {
-                return foundNode;
-            }
-        }
-
-        return null;
-    };
+    }, [findTextNode]);
 
     return (
         <Transition
