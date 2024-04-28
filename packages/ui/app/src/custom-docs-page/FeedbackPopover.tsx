@@ -1,11 +1,15 @@
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, ThumbsDown, ThumbsUp } from "react-feather";
 import { usePopper } from "react-popper";
+import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { FernTextarea } from "../components/FernTextarea";
 
 export const FeedbackPopover: React.FC = () => {
+  const [isHelpful, setIsHelpful] = useState<boolean>();
   const [showMenu, setShowMenu] = useState(false);
   const [referenceElement, setReferenceElement] = useState<any>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
@@ -22,6 +26,20 @@ export const FeedbackPopover: React.FC = () => {
       },
     ],
   });
+
+  const handleThumbsUp = useCallback(() => {
+    setIsHelpful(true);
+    capturePosthogEvent("feedback_voted", {
+      satisfied: true,
+    });
+  }, []);
+
+  const handleThumbsDown = useCallback(() => {
+    setIsHelpful(false);
+    capturePosthogEvent("feedback_voted", {
+      satisfied: false,
+    });
+  }, []);
 
   const handleCreateHighlightLink = async () => {
     const selection = window.getSelection();
@@ -61,6 +79,9 @@ export const FeedbackPopover: React.FC = () => {
       } else {
         setShowMenu(false);
         setReferenceElement(null);
+        // Clear feedback states when text selection is removed
+        setIsHelpful(undefined);
+        setCopied(false);
       }
     };
 
@@ -120,54 +141,49 @@ export const FeedbackPopover: React.FC = () => {
       leaveFrom="opacity-100 scale-100 translate-y-0"
       leaveTo="opacity-0 -translate-y-8"
     >
-      <div
+      <motion.div
         ref={setPopperElement}
         style={styles.popper}
         {...attributes.popper}
-        className={clsx(
-          "fixed z-50 rounded-lg border border-gray-200 bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
-        )}
+        className="fixed z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl"
       >
         <FernButtonGroup>
           <FernButton
-            icon={<ThumbsUp className="opacity-60" />}
+            icon={<ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
             variant="minimal"
-          // active={thumbsUpClicked}
-          // onClick={handleThumbsUp}
-          // className={thumbsUpClicked ? 'animate-thumbs-up' : ''}
+            intent={isHelpful ? "success" : "none"}
+            active={isHelpful}
+            onClick={handleThumbsUp}
           >
             Helpful
           </FernButton>
           <FernButton
-
+            icon={<ThumbsDown className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })} />}
             variant="minimal"
-          // intent={feedback === "yes" ? "success" : "none"}
-          // onClick={handleYes}
-          // active={feedback === "yes"}
+            intent={isHelpful === false ? "danger" : "none"}
+            active={isHelpful === false}
+            onClick={handleThumbsDown}
           >
-            Helpful
+            Not Helpful
           </FernButton>
-          <FernButton
-            icon={<ThumbsDown className="opacity-60" />}
-            variant="minimal"
-          // intent={feedback === "no" ? "danger" : "none"}
-          // onClick={handleNo}
-          // active={feedback === "no"}
-          >
-            Not helpful
-          </FernButton>
-          <div className="w-px h-8 mx-1 bg-gray-200" />
+          <div className="w-px h-8 mx-1 bg-border-default" />
           <FernButton
             icon={<Link className="opacity-60" />}
             variant="minimal"
-            // intent={feedback === "no" ? "danger" : "none"}
             onClick={handleCreateHighlightLink}
-          // active={feedback === "no"}
           >
             {copied ? "Copied!" : "Copy highlight"}
           </FernButton>
         </FernButtonGroup>
-      </div>
+        {
+          isHelpful !== undefined && (
+            <>
+              <label htmlFor="more-feedback" className="block mt-2">{isHelpful ? "What did you like?" : "What went wrong?"}</label>
+              <FernTextarea id="more-feedback" />
+            </>
+          )
+        }
+      </motion.div>
     </Transition>
   );
 };

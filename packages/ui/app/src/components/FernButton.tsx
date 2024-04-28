@@ -26,9 +26,9 @@ interface FernButtonSharedProps {
 
 export interface FernButtonProps
     extends Omit<ComponentProps<"button">, "ref">,
-        PropsWithChildren<FernButtonSharedProps> {}
+    PropsWithChildren<FernButtonSharedProps> { }
 
-interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> {}
+interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> { }
 
 function renderIcon(icon: string | ReactNode | undefined) {
     if (typeof icon === "string") {
@@ -69,13 +69,13 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
             onClick={
                 props.onClick != null
                     ? (e) => {
-                          if (disabled) {
-                              e.preventDefault();
-                              e.stopPropagation();
-                          } else {
-                              props.onClick?.(e);
-                          }
-                      }
+                        if (disabled) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        } else {
+                            props.onClick?.(e);
+                        }
+                    }
                     : undefined
             }
         >
@@ -120,13 +120,13 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
             onClick={
                 props.onClick != null
                     ? (e) => {
-                          if (disabled) {
-                              e.preventDefault();
-                              e.stopPropagation();
-                          } else {
-                              props.onClick?.(e);
-                          }
-                      }
+                        if (disabled) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        } else {
+                            props.onClick?.(e);
+                        }
+                    }
                     : undefined
             }
         >
