@@ -1,12 +1,12 @@
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link, ThumbsDown, ThumbsUp } from "react-feather";
+import React, { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Heart, Link, ThumbsDown, ThumbsUp } from "react-feather";
 import { usePopper } from "react-popper";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernTextarea } from "../components/FernTextarea";
+import { FernInput } from "../components/FernInput";
 
 export const FeedbackPopover: React.FC = () => {
     const [isHelpful, setIsHelpful] = useState<boolean>();
@@ -85,6 +85,24 @@ export const FeedbackPopover: React.FC = () => {
         return null;
     }, []);
 
+    const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        capturePosthogEvent("feedback_submitted", {
+            satisfied: true,
+            message: event,
+            // selectedText,
+        });
+        setFeedbackSubmitted(true);
+        setTimeout(() => {
+            setShowMenu(false);
+            setReferenceElement(null);
+            setIsHelpful(undefined);
+            setCopied(false);
+            setFeedbackSubmitted(false);
+            // removeFakeHighlight();
+        }, 2000);
+    }, []);
+
     useEffect(() => {
         const removeFakeHighlight = () => {
             const fakeHighlight = document.querySelector("[data-fake-highlight]");
@@ -119,7 +137,9 @@ export const FeedbackPopover: React.FC = () => {
         const handleSelectionChange = () => {
             const selection = window.getSelection();
             if (selection?.toString().trim()) {
-                removeFakeHighlight();
+                if (!showMenu) {
+                    removeFakeHighlight();
+                }
                 const range = selection.getRangeAt(0);
                 const selectionRect = range.getBoundingClientRect();
 
@@ -135,7 +155,7 @@ export const FeedbackPopover: React.FC = () => {
                 setReferenceElement(fakeReference);
                 setShowMenu(true);
             } else if (popperRef.current && popperRef.current.contains(document.activeElement)) {
-                // Keep the popover open if the textarea is focused
+                // Keep the popover open if the input is focused
                 setShowMenu(true);
             } else {
                 setShowMenu(false);
@@ -149,7 +169,21 @@ export const FeedbackPopover: React.FC = () => {
         };
 
         const handleHashChange = () => {
-            // ... (unchanged)
+            const hash = window.location.hash;
+            if (hash.startsWith("#:~:text=")) {
+                const encodedText = hash.slice("#:~:text=".length);
+                const decodedText = decodeURIComponent(encodedText);
+
+                const textNode = findTextNode(document.body, decodedText);
+                if (textNode) {
+                    const range = document.createRange();
+                    range.selectNodeContents(textNode);
+                    const selection = window.getSelection();
+                    selection?.removeAllRanges();
+                    selection?.addRange(range);
+                    textNode.parentElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }
         };
 
         const handleEscapeKey = (event: KeyboardEvent) => {
@@ -163,20 +197,8 @@ export const FeedbackPopover: React.FC = () => {
             }
         };
 
-        const handleTextareaBlur = () => {
-            setFeedbackSubmitted(true);
-            setTimeout(() => {
-                setShowMenu(false);
-                setReferenceElement(null);
-                setIsHelpful(undefined);
-                setCopied(false);
-                setFeedbackSubmitted(false);
-                removeFakeHighlight();
-            }, 1500);
-        };
-
-        const handleTextareaFocus = () => {
-            if (popperRef.current) {
+        const handleInputFocus = () => {
+            if (popperRef.current && referenceElement) {
                 const selection = window.getSelection();
                 if (!selection?.toString().trim()) {
                     const fakeHighlight = document.querySelector("[data-fake-highlight]");
@@ -192,10 +214,9 @@ export const FeedbackPopover: React.FC = () => {
         window.addEventListener("hashchange", handleHashChange);
         document.addEventListener("keydown", handleEscapeKey);
 
-        const textarea = document.getElementById("more-feedback") as HTMLTextAreaElement;
-        if (textarea) {
-            textarea.addEventListener("blur", handleTextareaBlur);
-            textarea.addEventListener("focus", handleTextareaFocus);
+        const input = document.getElementById("moreFeedback") as HTMLInputElement;
+        if (input) {
+            input.addEventListener("focus", handleInputFocus);
         }
 
         handleHashChange();
@@ -206,12 +227,11 @@ export const FeedbackPopover: React.FC = () => {
             window.removeEventListener("hashchange", handleHashChange);
             document.removeEventListener("keydown", handleEscapeKey);
 
-            if (textarea) {
-                textarea.removeEventListener("blur", handleTextareaBlur);
-                textarea.removeEventListener("focus", handleTextareaFocus);
+            if (input) {
+                input.removeEventListener("focus", handleInputFocus);
             }
         };
-    }, [findTextNode]);
+    }, [findTextNode, referenceElement, showMenu]);
 
     return (
         <Transition
@@ -228,7 +248,10 @@ export const FeedbackPopover: React.FC = () => {
                 ref={popperRef}
                 style={styles.popper}
                 {...attributes.popper}
-                className="fixed z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl"
+                className={clsx(
+                    "fixed z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
+                    { "p-2": isHelpful !== undefined },
+                )}
             >
                 <FernButtonGroup>
                     <FernButton
@@ -266,17 +289,22 @@ export const FeedbackPopover: React.FC = () => {
                 </FernButtonGroup>
                 <AnimatePresence>
                     {isHelpful !== undefined && !feedbackSubmitted && (
-                        <motion.div
+                        <motion.form
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.3 }}
+                            onSubmit={handleSubmit}
+                            className="flex flex-col gap-2"
                         >
-                            <label htmlFor="more-feedback" className="block mt-2">
+                            <label htmlFor="moreFeedback" className="mt-2 t-muted text-sm font-medium">
                                 {isHelpful ? "What did you like?" : "What went wrong?"}
                             </label>
-                            <FernTextarea id="more-feedback" />
-                        </motion.div>
+                            <FernInput id="moreFeedback" name="moreFeedback" className="min-w-60" />
+                            <FernButton type="submit" intent="primary" className="self-end">
+                                Submit
+                            </FernButton>
+                        </motion.form>
                     )}
                     {feedbackSubmitted && (
                         <motion.div
@@ -284,7 +312,9 @@ export const FeedbackPopover: React.FC = () => {
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.3 }}
+                            className="flex gap-1.5"
                         >
+                            <Heart className="text-accent-primary-aaa animate-pulse" />
                             <p className="text-sm mt-2">Thank you for your feedback!</p>
                         </motion.div>
                     )}
