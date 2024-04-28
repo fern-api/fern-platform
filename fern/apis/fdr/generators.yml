@@ -71,7 +71,7 @@ groups:
           license: MIT
         config:
           noSerdeLayer: true
-          namespaceExport: Fern
+          namespaceExport: FernInternal
           includeApiReference: true
 
   fiddle:
