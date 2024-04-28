@@ -6,7 +6,7 @@ import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
 import { Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
-import { ApplicationProtocol, HttpCodeTarget } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { ApplicationProtocol, HttpCodeElb } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
@@ -189,7 +189,7 @@ export class FdrDeployStack extends Stack {
 
         const lb500CountAlarm = new Alarm(this, "fdr-lb-5XX-count", {
             alarmName: `${id} Load Balancer 500 Error Alarm`,
-            metric: fargateService.loadBalancer.metrics.httpCodeTarget(HttpCodeTarget.TARGET_5XX_COUNT),
+            metric: fargateService.loadBalancer.metrics.httpCodeElb(HttpCodeElb.ELB_5XX_COUNT),
             threshold: 2,
             evaluationPeriods: 5,
         });
