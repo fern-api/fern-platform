@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
-import { motion } from "framer-motion";
-import React, { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, ThumbsDown, ThumbsUp } from "react-feather";
 import { usePopper } from "react-popper";
 import { capturePosthogEvent } from "../analytics/posthog";
@@ -11,11 +11,12 @@ import { FernTextarea } from "../components/FernTextarea";
 export const FeedbackPopover: React.FC = () => {
   const [isHelpful, setIsHelpful] = useState<boolean>();
   const [showMenu, setShowMenu] = useState(false);
-  const [referenceElement, setReferenceElement] = useState<any>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
+  const popperRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+  const { styles, attributes } = usePopper(referenceElement, popperRef.current, {
     placement: "top",
     modifiers: [
       {
@@ -70,11 +71,19 @@ export const FeedbackPopover: React.FC = () => {
         const range = selection.getRangeAt(0);
         const selectionRect = range.getBoundingClientRect();
 
-        const virtualReference = {
-          getBoundingClientRect: () => selectionRect,
-        };
+        const fakeReference = document.createElement("div");
+        fakeReference.style.position = "absolute";
+        fakeReference.style.top = `${selectionRect.top}px`;
+        fakeReference.style.left = `${selectionRect.left}px`;
+        fakeReference.style.width = `${selectionRect.width}px`;
+        fakeReference.style.height = `${selectionRect.height}px`;
+        fakeReference.classList.add("bg-accent-highlight");
+        document.body.appendChild(fakeReference);
 
-        setReferenceElement(virtualReference);
+        setReferenceElement(fakeReference);
+        setShowMenu(true);
+      } else if (popperRef.current && popperRef.current.contains(document.activeElement)) {
+        // Keep the popover open if the textarea is focused
         setShowMenu(true);
       } else {
         setShowMenu(false);
@@ -82,6 +91,7 @@ export const FeedbackPopover: React.FC = () => {
         // Clear feedback states when text selection is removed
         setIsHelpful(undefined);
         setCopied(false);
+        setFeedbackSubmitted(false);
       }
     };
 
@@ -103,8 +113,51 @@ export const FeedbackPopover: React.FC = () => {
       }
     };
 
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowMenu(false);
+        setReferenceElement(null);
+        setIsHelpful(undefined);
+        setCopied(false);
+        setFeedbackSubmitted(false);
+      }
+    };
+
+    const handleTextareaBlur = () => {
+      setFeedbackSubmitted(true);
+      setTimeout(() => {
+        setShowMenu(false);
+        setReferenceElement(null);
+        setIsHelpful(undefined);
+        setCopied(false);
+        setFeedbackSubmitted(false);
+      }, 1500); // Change the duration (in milliseconds) as needed
+    };
+
+    const handleTextareaFocus = () => {
+      if (popperRef.current) {
+        const textareaRect = popperRef.current.getBoundingClientRect();
+        const fakeReference = document.createElement("div");
+        fakeReference.style.position = "absolute";
+        fakeReference.style.top = `${textareaRect.top}px`;
+        fakeReference.style.left = `${textareaRect.left}px`;
+        fakeReference.style.width = `${textareaRect.width}px`;
+        fakeReference.style.height = `${textareaRect.height}px`;
+        document.body.appendChild(fakeReference);
+
+        setReferenceElement(fakeReference);
+      }
+    };
+
     document.addEventListener("selectionchange", handleSelectionChange);
     window.addEventListener("hashchange", handleHashChange);
+    document.addEventListener("keydown", handleEscapeKey);
+
+    const textarea = document.getElementById("more-feedback") as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.addEventListener("blur", handleTextareaBlur);
+      textarea.addEventListener("focus", handleTextareaFocus);
+    }
 
     // Check for the highlight hash on initial load
     handleHashChange();
@@ -112,6 +165,12 @@ export const FeedbackPopover: React.FC = () => {
     return () => {
       document.removeEventListener("selectionchange", handleSelectionChange);
       window.removeEventListener("hashchange", handleHashChange);
+      document.removeEventListener("keydown", handleEscapeKey);
+
+      if (textarea) {
+        textarea.removeEventListener("blur", handleTextareaBlur);
+        textarea.removeEventListener("focus", handleTextareaFocus);
+      }
     };
   }, []);
 
@@ -142,7 +201,7 @@ export const FeedbackPopover: React.FC = () => {
       leaveTo="opacity-0 -translate-y-8"
     >
       <motion.div
-        ref={setPopperElement}
+        ref={popperRef}
         style={styles.popper}
         {...attributes.popper}
         className="fixed z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl"
@@ -166,23 +225,44 @@ export const FeedbackPopover: React.FC = () => {
           >
             Not Helpful
           </FernButton>
-          <div className="w-px h-8 mx-1 bg-border-default" />
-          <FernButton
-            icon={<Link className="opacity-60" />}
-            variant="minimal"
-            onClick={handleCreateHighlightLink}
-          >
-            {copied ? "Copied!" : "Copy highlight"}
-          </FernButton>
-        </FernButtonGroup>
-        {
-          isHelpful !== undefined && (
+          {isHelpful === undefined && (
             <>
-              <label htmlFor="more-feedback" className="block mt-2">{isHelpful ? "What did you like?" : "What went wrong?"}</label>
-              <FernTextarea id="more-feedback" />
+              <div className="w-px h-8 mx-1 bg-border-default" />
+              <FernButton
+                icon={<Link className="opacity-60" />}
+                variant="minimal"
+                onClick={handleCreateHighlightLink}
+              >
+                {copied ? "Copied!" : "Copy highlight"}
+              </FernButton>
             </>
-          )
-        }
+          )}
+        </FernButtonGroup>
+        <AnimatePresence>
+          {isHelpful !== undefined && !feedbackSubmitted && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <label htmlFor="more-feedback" className="block mt-2">
+                {isHelpful ? "What did you like?" : "What went wrong?"}
+              </label>
+              <FernTextarea id="more-feedback" />
+            </motion.div>
+          )}
+          {feedbackSubmitted && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-sm mt-2">Thank you for your feedback!</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </Transition>
   );
