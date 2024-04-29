@@ -196,7 +196,7 @@ export class FdrDeployStack extends Stack {
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
 
-        new ElastiCacheStack(scope, "FernDocsElastiCache", {
+        new ElastiCacheStack(this, "FernDocsElastiCache", {
             cacheName: "FernDocsElastiCache",
             IVpc: vpc,
             numCacheShards: 1,
