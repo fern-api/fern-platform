@@ -3,14 +3,6 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
 
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
-
 export const config = {
     maxDuration: 300,
 };
@@ -51,7 +43,7 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = getHost(req.query.host) ?? req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
+        const xFernHost = getHost(req.query.host) ?? req.headers["x-fern-host"] ?? req.headers["host"];
         if (typeof xFernHost !== "string") {
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
@@ -79,7 +71,9 @@ const handler: NextApiHandler = async (
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        req.headers.host = xFernHost;
+        if (!docs.baseUrl.domain.includes("rewrite-test.danny-312.workers.dev")) {
+            req.headers.host = xFernHost;
+        }
 
         const results: RevalidatePathResult[] = [];
 
