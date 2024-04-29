@@ -15,6 +15,7 @@ import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
+import { ElastiCacheStack } from "./elasticache-stack";
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
@@ -194,6 +195,16 @@ export class FdrDeployStack extends Stack {
             evaluationPeriods: 5,
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
+
+        new ElastiCacheStack(this, "FernDocsElastiCache", {
+            cacheName: "FernDocsElastiCache",
+            IVpc: vpc,
+            numCacheShards: 1,
+            numCacheReplicasPerShard: environmentType === EnvironmentType.Prod ? 2 : undefined,
+            clusterMode: "enabled",
+            cacheNodeType: "cache.r7g.large",
+            envType: environmentType,
+        });
     }
 }
 
