@@ -5,6 +5,8 @@ import { Cache } from "../../Cache";
 import { DocsV1Write, DocsV2Write } from "../../api";
 import type { FdrApplication } from "../../app";
 
+const ONE_WEEK_IN_SECONDS = 604800;
+
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
     key: string;
@@ -34,7 +36,7 @@ export interface S3Service {
 
 export class S3ServiceImpl implements S3Service {
     private client: S3Client;
-    private presignedDownloadUrlCache = new Cache<string>(1000, 604800 /* 1 week */);
+    private presignedDownloadUrlCache = new Cache<string>(10_000, ONE_WEEK_IN_SECONDS);
 
     constructor(private readonly app: FdrApplication) {
         const { config } = app;
