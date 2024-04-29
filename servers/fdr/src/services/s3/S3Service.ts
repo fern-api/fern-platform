@@ -34,7 +34,7 @@ export interface S3Service {
 
 export class S3ServiceImpl implements S3Service {
     private client: S3Client;
-    private presignedDownloadUrlCache = new Cache<string>(1000);
+    private presignedDownloadUrlCache = new Cache<string>(1000, 604800 /* 1 week */);
 
     constructor(private readonly app: FdrApplication) {
         const { config } = app;
