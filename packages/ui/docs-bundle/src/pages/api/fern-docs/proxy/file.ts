@@ -6,7 +6,7 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60 * 5; // 5 minutes
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+export default async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
     try {
         if (req.method !== "POST") {
             return new NextResponse(null, { status: 405 });
