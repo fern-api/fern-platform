@@ -1,7 +1,6 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
 import { NextResponse, type NextRequest } from "next/server";
-import { jsonResponse } from "../../../../utils/serverResponse";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -160,20 +159,6 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-
-        return jsonResponse<ProxyResponse>(500, {
-            response: {
-                headers: {},
-                ok: false,
-                redirected: false,
-                status: 500,
-                statusText: "Internal Server Error",
-                type: "error",
-                url: "",
-                body: null,
-            },
-            time: -1,
-            size: null,
-        });
+        return new NextResponse(null, { status: 500 });
     }
 }
