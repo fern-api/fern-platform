@@ -3,11 +3,10 @@ import { App, Octokit } from "octokit";
 
 import path from "node:path";
 import { Readable } from "node:stream";
-// import { finished } from "node:stream/promises";
+import simpleGit from "simple-git";
 import { Env } from "../env";
 import { API_ORIGIN_LOCATION_KEY, ASYNC_API_LOCATION_KEY, OPENAPI_LOCATION_KEY } from "../fern-cli/schemas";
 import { loadRawGeneratorsConfiguration } from "../fern-cli/utilities";
-import { GitCommander } from "../github/GitCommander";
 import { setupGithubApp } from "../github/octokit";
 import { createOrUpdatePullRequest } from "../github/utilities";
 
@@ -39,15 +38,14 @@ async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Prom
         ghAuth = tokenWithPrefix as string;
     }
 
-    const git = await GitCommander.create(repoDir, ghAuth);
+    const git = simpleGit(fullRepoPath);
     // Clone the repo to repoDir and update the branch
     await git.clone(repository.clone_url);
-    git.setWorkingDirectory(fullRepoPath);
-    if (!(await git.tryFetch(branchRemoteName, OPENAPI_UPDATE_BRANCH))) {
-        await git.checkout(OPENAPI_UPDATE_BRANCH, undefined, ["-b"]);
-        await git.exec(["merge", "-X", "theirs", `${branchRemoteName}/${repository.default_branch}`]);
+    if (!(await git.fetch(branchRemoteName, OPENAPI_UPDATE_BRANCH))) {
+        await git.checkoutBranch(OPENAPI_UPDATE_BRANCH, branchRemoteName);
+        await git.merge(["-X", "theirs", `${branchRemoteName}/${repository.default_branch}`]);
     } else {
-        await git.checkout(OPENAPI_UPDATE_BRANCH, undefined, []);
+        await git.checkout(OPENAPI_UPDATE_BRANCH);
     }
 
     // Parse the generators config
@@ -86,10 +84,10 @@ async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Prom
         }
     }
 
-    if (origin != undefined && (await git.isDirty(true))) {
+    if (origin != undefined && !(await git.status()).isClean()) {
         // Add + commit files
         await git.add(["-A"]);
-        await git.commit(["-m", ":herb: Update API Spec"]);
+        await git.commit(":herb: Update API Spec");
 
         // Push the changes
         await git.push([

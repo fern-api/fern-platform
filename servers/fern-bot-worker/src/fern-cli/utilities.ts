@@ -1,4 +1,3 @@
-import { addPrefixToString } from "@fern-api/core-utils";
 import path from "node:path";
 import { z } from "zod";
 import { GENERATORS_CONFIGURATION_FILENAME } from "./constants";
@@ -57,10 +56,7 @@ export async function validateSchema<T>({
 
     const issues: string[] = result.error.errors.map((issue) => {
         const message = issue.path.length > 0 ? `${issue.message} at "${joinZodPath(issue.path)}"` : issue.message;
-        return addPrefixToString({
-            content: message,
-            prefix: "  - ",
-        });
+        return `  - ${message}`;
     });
 
     const errorMessage = [`Failed to parse file: ${path.relative(process.cwd(), filepathBeingParsed)}`, ...issues].join(
