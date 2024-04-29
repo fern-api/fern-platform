@@ -28,8 +28,6 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             body: requestBody,
         });
 
-        // response.blob().then(blob => URL.createObjectURL)
-
         return new NextResponse(response.body, {
             headers: response.headers,
             status: response.status,

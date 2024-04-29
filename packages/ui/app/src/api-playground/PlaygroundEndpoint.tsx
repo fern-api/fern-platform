@@ -357,7 +357,7 @@ async function serializeFile(
     file: File | undefined,
     basePath: string | undefined,
 ): Promise<SerializableFile | undefined> {
-    if (file == null) {
+    if (file == null || !isFile(file)) {
         return undefined;
     }
     return {
@@ -367,4 +367,8 @@ async function serializeFile(
         type: file.type,
         dataUrl: await blobToDataURL(file, basePath),
     };
+}
+
+function isFile(value: any): value is File {
+    return value instanceof File;
 }

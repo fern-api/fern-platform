@@ -42,28 +42,7 @@ export declare namespace ProxyResponse {
     export interface SerializableFileBody extends SerializableResponse {
         readonly body: string;
     }
-
-    // export interface Error {
-    //     error: true;
-    //     status: number;
-    //     time: number;
-    //     size: string | null;
-    // }
-
-    // export interface Success {
-    //     error: false;
-    //     response: SerializableBody;
-    //     time: number;
-    //     size: string | null;
-    // }
 }
-
-// export type ProxyResponse = {
-//     // error: boolean;
-//     response: ProxyResponse.SerializableBody;
-//     time: number;
-//     size: string | null;
-// };
 
 export interface ProxyResponse {
     response: ProxyResponse.SerializableBody;
