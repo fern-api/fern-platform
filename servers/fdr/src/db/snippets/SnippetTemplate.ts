@@ -9,6 +9,7 @@ import {
 } from "../../api/generated/api";
 import { readBuffer, writeBuffer } from "../../util";
 import { SdkIdFactory } from "./SdkIdFactory";
+import { getSdkFromSdkRequest } from "./getPackageNameFromSdkSnippetsCreate";
 
 export interface LoadSnippetAPIRequest {
     orgId: string;
@@ -42,13 +43,15 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }: {
         loadSnippetTemplateRequest: GetSnippetTemplate;
     }): Promise<EndpointSnippetTemplate | null> {
+        const sdkFromRequest = await getSdkFromSdkRequest(loadSnippetTemplateRequest.sdk);
+
         const snippetTemplate = await this.prisma.snippetTemplate.findFirst({
             where: {
                 orgId: loadSnippetTemplateRequest.orgId,
                 apiName: loadSnippetTemplateRequest.apiId,
                 endpointPath: loadSnippetTemplateRequest.endpointId?.path,
                 endpointMethod: loadSnippetTemplateRequest.endpointId?.method,
-                sdkId: this.getSdkId(loadSnippetTemplateRequest.sdk),
+                sdkId: this.getSdkId(sdkFromRequest),
             },
         });
 
@@ -60,7 +63,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                 path: snippetTemplate.endpointPath,
                 method: snippetTemplate.endpointMethod,
             },
-            sdk: loadSnippetTemplateRequest.sdk,
+            sdk: sdkFromRequest,
             snippetTemplate: {
                 type: snippetTemplate.version,
                 functionInvocation: readBuffer(snippetTemplate.functionInvocation) as Template,

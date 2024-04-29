@@ -30,7 +30,7 @@ service:
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks:
-              type: optional<list<SDK>>
+              type: optional<list<SDKRequest>>
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
@@ -116,7 +116,7 @@ service:
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks:
-              type: optional<list<SDK>>
+              type: optional<list<SDKRequest>>
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
@@ -140,7 +140,7 @@ service:
             sdks:
               - type: python
                 package: vellum-ai
-                version: 1.2.1
+                # version: 1.2.1
           response:
             body:
               next: 2
@@ -222,6 +222,41 @@ types:
       - GET
       - PATCH
       - DELETE
+
+  SDKRequest:
+    base-properties:
+      version: optional<string>
+    union:
+      typescript: TypeScriptSDKRequest
+      python: PythonSDKRequest
+      go: GoSDKRequest
+      ruby: RubySDKRequest
+      java: JavaSDKRequest
+
+  TypeScriptSDKRequest:
+    properties:
+      package: string
+
+  PythonSDKRequest:
+    properties:
+      package: string
+
+  GoSDKRequest:
+    properties:
+      githubRepo: string
+
+  RubySDKRequest:
+    properties:
+      gem: string
+
+  JavaSDKRequest:
+    properties:
+      group:
+        type: string
+        docs: The maven repository group (e.g. `com.stripe.java`)
+      artifact:
+        type: string
+        docs: The artifact (e.g. `stripe-java`)
 
   SDK:
     union:

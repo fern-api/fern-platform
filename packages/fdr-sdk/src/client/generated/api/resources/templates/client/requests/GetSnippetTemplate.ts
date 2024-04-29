@@ -15,6 +15,6 @@ export interface GetSnippetTemplate {
      *
      */
     apiId: FernRegistry.ApiId;
-    sdk: FernRegistry.Sdk;
+    sdk: FernRegistry.SdkRequest;
     endpointId: FernRegistry.EndpointIdentifier;
 }

@@ -70,7 +70,7 @@ service:
               type: commons.ApiId
               docs: |
                 The API name.
-            sdk: snippets.SDK
+            sdk: snippets.SDKRequest
             endpointId: snippets.EndpointIdentifier
       response: EndpointSnippetTemplate
 
