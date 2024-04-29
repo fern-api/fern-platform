@@ -2,7 +2,7 @@ import { Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Heart, Link, ThumbsDown, ThumbsUp } from "react-feather";
+import { Link, ThumbsDown, ThumbsUp } from "react-feather";
 import { usePopper } from "react-popper";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
@@ -17,7 +17,6 @@ export const FeedbackPopover: React.FC = () => {
     const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
     const popperRef = useRef<HTMLDivElement>(null);
     const [copied, setCopied] = useState(false);
-    const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
     const { styles, attributes } = usePopper(referenceElement, popperRef.current, {
         placement: "top",
@@ -52,7 +51,6 @@ export const FeedbackPopover: React.FC = () => {
     }, [selection]);
 
     const handleCreateHighlightLink = async () => {
-        const selection = window.getSelection();
         if (selection?.toString().trim()) {
             const selectedText = selection.toString();
             const encodedText = encodeURIComponent(selectedText);
@@ -104,15 +102,14 @@ export const FeedbackPopover: React.FC = () => {
                 feedback: feedbackId,
                 // selectedText,
             });
-            setFeedbackSubmitted(true);
+            setShowMenu(false);
+            // Tiny timeout to make sure there isn't an animation flicker after submitting
             setTimeout(() => {
-                setShowMenu(false);
                 setReferenceElement(null);
                 setIsHelpful(undefined);
                 setCopied(false);
-                setFeedbackSubmitted(false);
                 // removeFakeHighlight();
-            }, 2000);
+            }, 200);
         },
         [],
     );
@@ -126,7 +123,6 @@ export const FeedbackPopover: React.FC = () => {
         };
 
         const handleDoubleClick = () => {
-            const selection = window.getSelection();
             if (selection?.toString().trim()) {
                 setTimeout(() => {
                     removeFakeHighlight();
@@ -149,7 +145,6 @@ export const FeedbackPopover: React.FC = () => {
         };
 
         const handleSelectionChange = () => {
-            const selection = window.getSelection();
             if (selection?.toString().trim()) {
                 if (!showMenu) {
                     removeFakeHighlight();
@@ -177,7 +172,6 @@ export const FeedbackPopover: React.FC = () => {
                 // Clear feedback states when text selection is removed
                 setIsHelpful(undefined);
                 setCopied(false);
-                setFeedbackSubmitted(false);
                 removeFakeHighlight();
             }
         };
@@ -192,7 +186,6 @@ export const FeedbackPopover: React.FC = () => {
                 if (textNode) {
                     const range = document.createRange();
                     range.selectNodeContents(textNode);
-                    const selection = window.getSelection();
                     selection?.removeAllRanges();
                     selection?.addRange(range);
                     textNode.parentElement?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -206,14 +199,12 @@ export const FeedbackPopover: React.FC = () => {
                 setReferenceElement(null);
                 setIsHelpful(undefined);
                 setCopied(false);
-                setFeedbackSubmitted(false);
                 removeFakeHighlight();
             }
         };
 
         const handleInputFocus = () => {
             if (popperRef.current && referenceElement) {
-                const selection = window.getSelection();
                 if (!selection?.toString().trim()) {
                     const fakeHighlight = document.querySelector("[data-fake-highlight]");
                     if (fakeHighlight) {
@@ -245,7 +236,7 @@ export const FeedbackPopover: React.FC = () => {
                 input.removeEventListener("focus", handleInputFocus);
             }
         };
-    }, [findTextNode, referenceElement, showMenu]);
+    }, [findTextNode, referenceElement, selection, showMenu]);
 
     const voteButtons = useMemo(
         () => (
@@ -292,7 +283,7 @@ export const FeedbackPopover: React.FC = () => {
             leaveTo="opacity-0 -translate-y-8"
         >
             <motion.div ref={popperRef} style={styles.popper} {...attributes.popper} className="fixed z-50">
-                {isHelpful !== undefined && !feedbackSubmitted && voteButtons}
+                {isHelpful !== undefined && voteButtons}
                 <motion.div
                     className={clsx(
                         "rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
@@ -317,20 +308,8 @@ export const FeedbackPopover: React.FC = () => {
                         </MotionFernButtonGroup>
                     )}
                     <AnimatePresence>
-                        {isHelpful !== undefined && !feedbackSubmitted && (
+                        {isHelpful !== undefined && (
                             <FeedbackForm layoutDensity="condensed" onSubmit={handleSubmit} isHelpful={isHelpful} />
-                        )}
-                        {feedbackSubmitted && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: "auto" }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="flex gap-1 items-center mx-auto"
-                            >
-                                <Heart className="text-accent-primary-aaa animate-pulse text-sm" />
-                                <p className="text-sm mt-2">Thank you for your feedback!</p>
-                            </motion.div>
                         )}
                     </AnimatePresence>
                 </motion.div>
