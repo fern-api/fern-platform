@@ -203,6 +203,7 @@ export class FdrDeployStack extends Stack {
             numCacheReplicasPerShard: 2,
             clusterMode: "enabled",
             cacheNodeType: "cache.r7g.large",
+            envType: environmentType,
         });
     }
 }
