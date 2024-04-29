@@ -2,7 +2,7 @@ import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { memo, useCallback, useEffect, useState } from "react";
 import { FernButton } from "../../components/FernButton";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getDefaultValueForType, unknownToString } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
@@ -69,7 +69,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
     return (
         <>
             {internalState.length > 0 && (
-                <ul className="divide-default border-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
+                <ul className="border-default divide-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
                         <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
                             {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">

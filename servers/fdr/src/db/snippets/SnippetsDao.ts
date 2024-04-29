@@ -4,8 +4,8 @@ import { FdrAPI } from "../../api";
 import { readBuffer, writeBuffer } from "../../util";
 import { PrismaTransaction, SdkId } from "../types";
 import { EndpointSnippetCollector } from "./EndpointSnippetCollectors";
-import { getPackageNameFromSdkSnippetsCreate } from "./getPackageNameFromSdkSnippetsCreate";
 import { SdkIdFactory } from "./SdkIdFactory";
+import { getPackageNameFromSdkSnippetsCreate } from "./getPackageNameFromSdkSnippetsCreate";
 
 export const DEFAULT_SNIPPETS_PAGE_SIZE = 100;
 
@@ -226,6 +226,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 data: {
                     id: sdkInfo.id,
                     package: getPackageNameFromSdkSnippetsCreate(storeSnippetsInfo.sdk),
+                    version: storeSnippetsInfo.sdk.sdk.version,
                     language: sdkInfo.language,
                     sdk: writeBuffer(storeSnippetsInfo.sdk.sdk),
                 },
@@ -269,6 +270,11 @@ function sdkInfoFromSnippetsCreate({ sdkSnippetsCreate }: { sdkSnippetsCreate: F
                 language: Language.GO,
                 id: SdkIdFactory.fromGo(sdkSnippetsCreate.sdk),
             };
+        case "ruby":
+            return {
+                language: Language.RUBY,
+                id: SdkIdFactory.fromRuby(sdkSnippetsCreate.sdk),
+            };
         case "java":
             return {
                 language: Language.JAVA,
@@ -293,6 +299,11 @@ function sdkInfoFromSdk({ sdk }: { sdk: FdrAPI.Sdk }): SdkInfo {
             return {
                 language: Language.GO,
                 id: SdkIdFactory.fromGo(sdk),
+            };
+        case "ruby":
+            return {
+                language: Language.RUBY,
+                id: SdkIdFactory.fromRuby(sdk),
             };
         case "java":
             return {
@@ -327,6 +338,12 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 type: "go",
                 sdk: sdk as FdrAPI.GoSdk,
                 client: (readBuffer(dbSnippet.snippet) as FdrAPI.GoSnippetCode).client,
+            };
+        case Language.RUBY:
+            return {
+                type: "ruby",
+                sdk: sdk as FdrAPI.RubySdk,
+                client: (readBuffer(dbSnippet.snippet) as FdrAPI.RubySnippetCode).client,
             };
         case Language.JAVA: {
             const javaSnippetCode: FdrAPI.JavaSnippetCode = readBuffer(dbSnippet.snippet) as FdrAPI.JavaSnippetCode;

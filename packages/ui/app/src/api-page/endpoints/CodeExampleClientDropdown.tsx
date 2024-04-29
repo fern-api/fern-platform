@@ -29,7 +29,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     className: "group/option",
                     icon: (
                         <RemoteFontAwesomeIcon
-                            className="bg-intent-default group-data-[highlighted]/option:bg-accent-contrast size-3"
+                            className="size-3 bg-intent-default group-data-[highlighted]/option:bg-accent-contrast"
                             icon={client.icon}
                         />
                     ),

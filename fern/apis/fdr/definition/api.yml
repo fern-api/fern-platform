@@ -10,3 +10,4 @@ error-discrimination:
 audiences: 
   - external
   - fiddle
+  - snippets

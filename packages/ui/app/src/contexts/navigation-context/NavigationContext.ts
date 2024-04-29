@@ -1,7 +1,7 @@
 import { noop } from "@fern-ui/core-utils";
 import { SidebarNode, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import React from "react";
-import { type ResolvedPath } from "../../util/ResolvedPath";
+import { type ResolvedPath } from "../../resolver/ResolvedPath";
 
 export const NavigationContext = React.createContext<NavigationContextValue>({
     domain: "",
@@ -22,6 +22,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
         apis: {},
     },
+    unversionedSlug: [],
 });
 
 export interface NavigationContextValue {
@@ -33,4 +34,5 @@ export interface NavigationContextValue {
     onScrollToPath: (slug: string) => void;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
+    unversionedSlug: readonly string[];
 }

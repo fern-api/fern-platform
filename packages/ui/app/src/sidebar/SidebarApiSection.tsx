@@ -3,7 +3,6 @@ import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual, last, sortBy } from "lodash-es";
-import moment from "moment";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
@@ -11,6 +10,7 @@ import { StreamTag } from "../commons/withStream";
 import { FernTooltip } from "../components/FernTooltip";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { Changelog } from "../util/dateUtils";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarSlugLink } from "./SidebarLink";
 
@@ -112,16 +112,18 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                         selected={isEqual(item.slug, selectedSlug)}
                         depth={Math.max(0, depth - 1)}
                         rightElement={
-                            item.apiType === "endpoint" ? (
-                                item.stream ? (
-                                    <StreamTag small />
-                                ) : (
-                                    HTTP_METHOD_TAGS[item.method]
-                                )
-                            ) : item.apiType === "websocket" ? (
-                                <FernTooltip content="WebSocket Channel">
-                                    <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
-                                </FernTooltip>
+                            SidebarNode.isApiPage(item) ? (
+                                item.apiType === "endpoint" ? (
+                                    item.stream ? (
+                                        <StreamTag small />
+                                    ) : (
+                                        HTTP_METHOD_TAGS[item.method]
+                                    )
+                                ) : item.apiType === "websocket" ? (
+                                    <FernTooltip content="WebSocket Channel">
+                                        <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
+                                    </FernTooltip>
+                                ) : null
                             ) : null
                         }
                         icon={item.icon}
@@ -160,7 +162,7 @@ function shouldShowIndicator(changelog: SidebarNode.ChangelogPage): boolean {
         return false;
     }
 
-    return moment().diff(latestChange.date, "days") <= 7;
+    return Changelog.withinLastWeek(latestChange.date) || Changelog.isFutureDate(latestChange.date);
 }
 
 function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode {
@@ -170,7 +172,7 @@ function renderChangelogTooltip(changelog: SidebarNode.ChangelogPage): ReactNode
         return null;
     }
 
-    return `Last updated ${moment(latestChange.date).fromNow()}`;
+    return `Last updated ${Changelog.toCalendarDate(latestChange.date)}`;
 }
 
 interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
@@ -215,6 +217,7 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
             icon={apiSection.icon}
             hidden={apiSection.hidden}
+            slug={apiSection.summaryPage != null ? slug : undefined}
         >
             {children}
         </SidebarSlugLink>

@@ -5,12 +5,15 @@ import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import {
-    forwardRef,
     HTMLAttributeAnchorTarget,
-    memo,
+    JSX,
+    JSXElementConstructor,
     PropsWithChildren,
     ReactElement,
     ReactNode,
+    createElement,
+    forwardRef,
+    memo,
     useEffect,
     useRef,
 } from "react";
@@ -21,7 +24,7 @@ import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
     icon?: ReactElement | string;
-    slug?: string[];
+    slug?: readonly string[];
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
@@ -37,6 +40,7 @@ interface SidebarSlugLinkProps {
     tooltipContent?: ReactNode;
     hidden: boolean;
     scrollOnShallow?: boolean;
+    as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
 
 type SidebarLinkProps = PropsWithChildren<
@@ -72,6 +76,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         rel,
         hidden,
         scrollOnShallow,
+        as = "span",
     } = props;
 
     if (hidden && !expanded && !selected) {
@@ -164,7 +169,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                                         {typeof icon === "string" ? <RemoteFontAwesomeIcon icon={icon} /> : icon}
                                     </span>
                                 )}
-                                <span className="fern-sidebar-link-text">{title}</span>
+                                {createElement(as, { className: "fern-sidebar-link-text" }, title)}
                                 {rightElement}
                             </span>
                             {expandButton}

@@ -1,0 +1,19 @@
+---
+title: How to Enable API Playground
+description: Learn about how to enable feature flags for a customer's docs website in Vercel.
+---
+
+<Steps>
+  ### Step 1: Navigate to Vercel
+  Go to https://vercel.com/buildwithfern/fern-prod/stores/edge-config/ecfg_lp1z4ajavumgwe1aimfx02eh3qce/items
+  ### Step 2: Add the org
+  Add the org name (from `fern.config.json`) to the `api-playground-enabled` list and click save.
+  ### Step 3: Build the docs site
+  Run `fern generate --docs`. You should now see the API Playground! 
+</Steps>
+
+## Additional configs
+
+- **whitelabeled**: This will remove the Fern branding from the docs site.
+- **api-scrolling-disabled**: This will disable the single-page API scrolling feature.
+- **seo-disabled**: This will disable the site from being indexed by search engine crawlers.

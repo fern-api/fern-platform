@@ -1,6 +1,6 @@
 import { titleCase } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
-import { ResolvedExampleEndpointCall } from "../../util/resolver";
+import { ResolvedExampleEndpointCall } from "../../resolver/types";
 
 export interface CodeExample {
     key: string;
@@ -74,15 +74,26 @@ function getIconForClient(clientId: string) {
         case "javascript":
         case "typescript":
             return "fa-brands fa-js";
+        case "go":
         case "golang":
-            return "fa-brands fa-go";
+            return "fa-brands fa-golang";
         case "ruby":
             return "fa-solid fa-gem";
         case "java":
-        case "kotlin":
             return "fa-brands fa-java";
+        case "kotlin":
+            return "fa-brands fa-android"; // TODO: change to kotlin icon
+        case ".net":
+        case "dotnet":
+        case "c#":
+        case "csharp":
+            return "fa-brands fa-microsoft"; // TODO: change to csharp icon
         case "php":
             return "fa-brands fa-php";
+        case "swift":
+            return "fa-brands fa-swift";
+        case "rust":
+            return "fa-brands fa-rust";
         default:
             return "fa-solid fa-code";
     }

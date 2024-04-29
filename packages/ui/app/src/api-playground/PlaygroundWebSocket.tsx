@@ -2,12 +2,15 @@ import { usePrevious } from "@fern-ui/react-commons";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
 import { FernTooltipProvider } from "../components/FernTooltip";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 import { buildRequestUrl, buildUnredactedHeadersWebsocket } from "./utils";
+
+// TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
+const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
 
 interface PlaygroundWebSocketProps {
     websocket: ResolvedWebSocketChannel;
@@ -58,7 +61,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
             setConnectedState("opening");
 
-            socket.current = new WebSocket("wss://fern-websocket-worker.danny-312.workers.dev/ws");
+            socket.current = new WebSocket(WEBSOCKET_PROXY_URI);
 
             socket.current.onopen = () => {
                 socket.current?.send(

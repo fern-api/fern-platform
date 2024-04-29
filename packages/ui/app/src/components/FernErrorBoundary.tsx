@@ -1,10 +1,8 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import clsx from "clsx";
 import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { emitDatadogError, emitDatadogErrorLog } from "../analytics/datadogRum";
+import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
@@ -17,33 +15,35 @@ export declare interface FernErrorBoundaryProps {
 export function FernErrorTag({
     component,
     error,
-    className,
+    // className,
     errorDescription,
 }: {
     component: string; // component displayName where the error occurred
     error: unknown;
     className?: string;
     errorDescription?: string;
-}): ReactElement {
+}): ReactElement | null {
     useEffect(() => {
         // eslint-disable-next-line no-console
         console.error(error);
-        emitDatadogError(error, {
+        captureSentryError(error, {
             context: component,
             errorSource: "FernErrorTag",
             errorDescription:
                 errorDescription ??
-                "An unknown UI error occurred. This renders a tag with an error message to the user. This could be a critical user-facing error that should be investigated.",
+                "An unknown UI error occurred. This could be a critical user-facing error that should be investigated.",
         });
     }, [component, error, errorDescription]);
-    return (
-        <div className={clsx(className ?? "my-4")}>
-            <span className="bg-tag-danger t-danger inline-flex items-center gap-2 rounded-full px-2">
-                <ExclamationTriangleIcon />
-                <span>{stringifyError(error)}</span>
-            </span>
-        </div>
-    );
+    // TODO: render this error in the UI if in URL-preview, staging, dev, or local-preview model.
+    // return (
+    //     <div className={clsx(className ?? "my-4")}>
+    //         <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
+    //             <ExclamationTriangleIcon />
+    //             <span>{stringifyError(error)}</span>
+    //         </span>
+    //     </div>
+    // );
+    return null;
 }
 
 export function stringifyError(error: unknown): string {
@@ -68,7 +68,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     useEffect(() => {
         if (refreshOnError) {
             // eslint-disable-next-line no-console
-            emitDatadogErrorLog("Fern Docs crashed. Reloading the page might fix the issue.");
+            captureSentryErrorMessage("Fern Docs crashed. Reloading the page might fix the issue.");
             router.reload();
         }
     }, [refreshOnError, router]);

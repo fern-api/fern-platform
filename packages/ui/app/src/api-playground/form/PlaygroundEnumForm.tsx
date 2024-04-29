@@ -4,7 +4,7 @@ import { memo, useMemo } from "react";
 import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedEnumValue } from "../../util/resolver";
+import { ResolvedEnumValue } from "../../resolver/types";
 
 // const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
 //     ssr: true,

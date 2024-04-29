@@ -5,7 +5,11 @@ import { memo, useCallback, useMemo } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernDropdown } from "../components/FernDropdown";
 import { FernSegmentedControl } from "../components/FernSegmentedControl";
-import { dereferenceObjectProperties, ResolvedDiscriminatedUnionShape, ResolvedTypeDefinition } from "../util/resolver";
+import {
+    ResolvedDiscriminatedUnionShape,
+    ResolvedTypeDefinition,
+    dereferenceObjectProperties,
+} from "../resolver/types";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
 
@@ -107,7 +111,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                 </FernDropdown>
             )}
             {activeVariant != null && (
-                <div className="border-border-default-soft border-l pl-4">
+                <div className="border-l border-border-default-soft pl-4">
                     <PlaygroundObjectPropertiesForm
                         properties={properties}
                         value={value}

@@ -7,17 +7,18 @@ import {
     traverseSidebarNodes,
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
-import moment from "moment";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
 import {
     FernDocsFrontmatter,
     FernSerializeMdxOptions,
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
-import type { ResolvedPath } from "./ResolvedPath";
-import { ResolvedRootPackage, resolveApiDefinition } from "./resolver";
+import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import type { ResolvedPath } from "../resolver/ResolvedPath";
+import { ResolvedRootPackage } from "../resolver/types";
+import { Changelog } from "./dateUtils";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
@@ -47,7 +48,7 @@ async function getSubtitle(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error occurred while parsing frontmatter", e);
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "getStaticProps",
             errorSource: "getSubtitle",
             errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
@@ -62,17 +63,21 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
+    rawSidebarNodes,
     sidebarNodes,
     currentNode,
     apis,
     pages,
     mdxOptions,
+    domain,
 }: {
+    rawSidebarNodes: readonly SidebarNodeRaw[];
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
+    domain: string;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -91,19 +96,24 @@ export async function convertNavigatableToResolvedPath({
 
     if (SidebarNode.isApiPage(traverseState.curr)) {
         const api = apis[traverseState.curr.api];
-        const apiSection = findApiSection(traverseState.curr.api, sidebarNodes);
+        const apiSection = findApiSection(traverseState.curr.api, rawSidebarNodes);
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await resolveApiDefinition(flattenedApiDefinition);
+        const apiDefinition = await ApiDefinitionResolver.resolve(
+            traverseState.curr.title,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            apiSection.flattenedApiDefinition!,
+            pages,
+            mdxOptions,
+        );
         return {
             type: "api-page",
             fullSlug: traverseState.curr.slug.join("/"),
             api: traverseState.curr.api,
             apiDefinition,
-            artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
+            // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiSection.showErrors,
             neighbors,
         };
@@ -126,7 +136,7 @@ export async function convertNavigatableToResolvedPath({
                     });
                     return {
                         date: item.date,
-                        dateString: moment(item.date).format("MMMM D, YYYY"),
+                        dateString: Changelog.toLongDateString(item.date),
                         markdown,
                     };
                 }),
@@ -153,11 +163,15 @@ export async function convertNavigatableToResolvedPath({
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
+            const title = traverseState.curr.title;
             resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
-                        return [apiName, await resolveApiDefinition(flattenedApiDefinition)];
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, domain);
+                        return [
+                            apiName,
+                            await ApiDefinitionResolver.resolve(title, flattenedApiDefinition, pages, mdxOptions),
+                        ];
                     }),
                 ),
             );

@@ -2,10 +2,10 @@ import { slug } from "github-slugger";
 import type { ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
-import { visit } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 import { TableOfContentsItem } from "../../custom-docs-page/TableOfContents";
 import { AccordionItemProps } from "../components/AccordionGroup";
-import { isElement, isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
+import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
 
 interface FoundHeading {
     depth: number;
@@ -17,6 +17,18 @@ export function makeToc(tree: Root): ElementContent {
     const headings: FoundHeading[] = [];
 
     visit(tree, (node) => {
+        // if the node is a <Steps toc={false}>, skip traversing its children
+        if (isMdxJsxFlowElement(node) && node.name === "Steps") {
+            if (
+                getBooleanValue(
+                    node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
+                ) !== true
+            ) {
+                return SKIP;
+            }
+        }
+
+        // parse markdown headings
         const rank = headingRank(node);
         if (isElement(node) && rank != null) {
             const id = node.properties.id;
@@ -29,12 +41,13 @@ export function makeToc(tree: Root): ElementContent {
             headings.push({ depth: rank, id, title });
         }
 
+        // parse mdx-jsx headings i.e. `<h1 id="my-id">My Title</h1>`
         if (
             isMdxJsxFlowElement(node) &&
             node.name != null &&
             ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.name)
         ) {
-            const id = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "is")?.value;
+            const id = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "id")?.value;
             if (id == null || typeof id !== "string") {
                 return;
             }
@@ -51,7 +64,7 @@ export function makeToc(tree: Root): ElementContent {
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
             const parentSkipToc =
-                tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
+                tocAttr == null || (typeof tocAttr.value === "object" && tocAttr.value?.value !== "true");
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }
@@ -78,7 +91,7 @@ export function makeToc(tree: Root): ElementContent {
             const itemsAttr = attributes.find((attr) => attr.name === "items");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
             const parentSkipToc =
-                tocAttr != null && typeof tocAttr.value === "object" && tocAttr.value?.value === "false";
+                tocAttr == null || (typeof tocAttr.value === "object" && tocAttr.value?.value !== "true");
 
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
@@ -98,6 +111,8 @@ export function makeToc(tree: Root): ElementContent {
                 console.error(e);
             }
         }
+
+        return;
     });
 
     const minDepth = Math.min(...headings.map((heading) => heading.depth));

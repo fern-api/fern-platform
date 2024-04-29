@@ -2,7 +2,7 @@ import { convertDbAPIDefinitionsToRead, convertDbDocsConfigToRead } from "@fern-
 import NodeCache from "node-cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { getParsedUrl } from "../../../util";
+import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
 const SECONDS_IN_ONE_HOUR = 60 * 60;
 
@@ -14,21 +14,21 @@ const DOCS_CONFIG_ID_CACHE = new NodeCache({
 export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
     return new DocsV2ReadService({
         getDocsForUrl: async (req, res) => {
-            const parsedUrl = getParsedUrl(req.body.url);
-            const response = await app.docsDefinitionCache.getDocsForUrl({ url: parsedUrl });
+            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
+            const response = await app.docsDefinitionCache.getDocsForUrl({ url: parsedUrl.toURL() });
             return res.send(response);
         },
         getPrivateDocsForUrl: async (req, res) => {
-            const parsedUrl = getParsedUrl(req.body.url);
+            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
             const response = await app.docsDefinitionCache.getDocsForUrl({
-                url: parsedUrl,
+                url: parsedUrl.toURL(),
                 authorization: req.headers.authorization,
             });
             return res.send(response);
         },
         getOrganizationForUrl: async (req, res) => {
-            const parsedUrl = getParsedUrl(req.body.url);
-            const orgId = await app.docsDefinitionCache.getOrganizationForUrl(parsedUrl);
+            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
+            const orgId = await app.docsDefinitionCache.getOrganizationForUrl(parsedUrl.toURL());
             if (orgId == null) {
                 throw new DocsV2Read.DomainNotRegisteredError();
             }

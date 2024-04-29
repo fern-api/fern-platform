@@ -11,6 +11,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export interface SnippetAPIsDao {
+    createSnippetAPI({ apiName, orgId }: { apiName: string; orgId: string }): Promise<void>;
+
     loadSnippetAPI({
         loadSnippetAPIRequest,
     }: {
@@ -26,6 +28,15 @@ export interface SnippetAPIsDao {
 
 export class SnippetAPIsDaoImpl implements SnippetAPIsDao {
     constructor(private readonly prisma: PrismaClient) {}
+
+    public async createSnippetAPI({ apiName, orgId }: { apiName: string; orgId: string }): Promise<void> {
+        await this.prisma.snippetApi.create({
+            data: {
+                apiName,
+                orgId,
+            },
+        });
+    }
 
     public async loadSnippetAPI({
         loadSnippetAPIRequest,

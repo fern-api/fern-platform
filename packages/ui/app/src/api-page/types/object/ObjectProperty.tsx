@@ -4,8 +4,8 @@ import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositione
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useRouteListener } from "../../../contexts/useRouteListener";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
@@ -97,6 +97,15 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     }, [contextValue, jsonPropertyPath]);
 
     const anchorRoute = `${route}#${anchorId}`;
+
+    const description = useMemo(() => {
+        if (property.description != null) {
+            return property.description;
+        }
+
+        return unwrapDescription(property.valueShape, types);
+    }, [property.description, property.valueShape, types]);
+
     return (
         <div
             ref={ref}
@@ -124,9 +133,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
-            {property.description && (
-                <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
-            )}
+            <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
             {hasInternalTypeReference(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>

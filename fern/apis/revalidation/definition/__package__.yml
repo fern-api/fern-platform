@@ -11,8 +11,8 @@ service:
       method: POST
       request:
         name: CreateRevalidateAllV2Request
-        headers: 
-          x-fern-host: 
+        headers:
+          x-fern-host:
             type: string
             docs: |
               The host you want to revalidate the docs for.
@@ -37,5 +37,5 @@ types:
 
   SuccessfulRevalidations:
     properties:
-      success: string
+      success: boolean
       url: string

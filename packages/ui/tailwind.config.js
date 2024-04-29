@@ -49,6 +49,9 @@ module.exports = {
             },
 
             colors: {
+                "fern-green": "#49932B",
+                "fern-green-dark": "#ADFF8C",
+
                 "accent-primary": withOpacity("--accent-primary"),
                 "accent-primary-aa": withOpacity("--accent-primary-aa"),
                 "accent-primary-aaa": withOpacity("--accent-primary-aaa"),
@@ -166,6 +169,22 @@ module.exports = {
                         },
                         ul: {
                             maxWidth: "var(--spacing-content-width)",
+                        },
+
+                        // remove quotes from code blocks
+                        "code::before": {
+                            content: "",
+                        },
+                        "code::after": {
+                            content: "",
+                        },
+
+                        // remove opening and closing quotes
+                        "blockquote p:first-of-type::before": {
+                            content: "",
+                        },
+                        "blockquote p:last-of-type::after": {
+                            content: "",
                         },
                     },
                 },

@@ -29,8 +29,8 @@
     "build": "pnpm compile",
     "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
     "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
-    "dev:fern-dev": "pnpm turbo build && pnpm env:fern-dev next dev",
-    "dev:fern-prod": "pnpm turbo build && pnpm env:fern-prod next dev",
+    "dev:fern-dev": "pnpm turbo build && NODE_OPTIONS='--inspect' pnpm env:fern-dev next dev",
+    "dev:fern-prod": "pnpm turbo build && NODE_OPTIONS='--inspect' pnpm env:fern-prod next dev",
     "build:fern-dev": "pnpm turbo build && pnpm env:fern-dev next build",
     "build:fern-prod": "pnpm turbo build && pnpm env:fern-prod next build",
     "start:fern-dev": "pnpm turbo build && pnpm env:fern-dev next start",
@@ -46,6 +46,7 @@
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
+    "@sentry/nextjs": "^7.105.0",
     "@vercel/edge-config": "^1.1.0",
     "@workos-inc/node": "^6.1.0",
     "cssnano": "^6.0.3",
@@ -72,10 +73,10 @@
     "organize-imports-cli": "^0.10.0",
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
-    "sass": "^1.70.0",
+    "sass": "^1.74.1",
     "stylelint": "^16.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "5.4.3",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   }
 }

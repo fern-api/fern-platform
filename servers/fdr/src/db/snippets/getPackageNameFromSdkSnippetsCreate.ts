@@ -1,5 +1,5 @@
-import { assertNever } from "../../util";
 import { FdrAPI } from "../../api";
+import { assertNever } from "../../util";
 
 export function getPackageNameFromSdkSnippetsCreate(create: FdrAPI.SdkSnippetsCreate): string {
     switch (create.type) {
@@ -11,6 +11,8 @@ export function getPackageNameFromSdkSnippetsCreate(create: FdrAPI.SdkSnippetsCr
             return create.sdk.package;
         case "typescript":
             return create.sdk.package;
+        case "ruby":
+            return create.sdk.gem;
         default:
             assertNever(create);
     }

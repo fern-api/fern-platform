@@ -16,7 +16,7 @@ RUN turbo prune @fern-platform/fdr --docker
 FROM base AS installer
 RUN apk add --no-cache libc6-compat
 RUN apk update
-RUN npm install -g pnpm fern-api
+RUN npm install -g pnpm@v8.15.4 fern-api
 WORKDIR /app
 
 # Install deps

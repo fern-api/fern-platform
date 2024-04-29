@@ -11,17 +11,22 @@ import { toAttribute } from "./utils";
 
 export interface PageHeaderProps {
     breadcrumbs: string[];
+
+    // the following are defaults, can be overridden by frontmatter
     title: string;
     subtitle?: string;
     editThisPageUrl?: string;
+
+    // the following are overrides that "forces" a config regardless of frontmatter
+    layout?: FernDocsFrontmatter["layout"]; // sometimes we need to force a layout, e.g. reference layout for endpoints
+    hideNavLinks?: boolean;
 }
 
 export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
         const matter = vfile.data.matter as FernDocsFrontmatter | undefined;
-        let layout = matter?.layout ?? "guide";
-
         props = mergePropsWithMatter(props, matter);
+        let layout = props?.layout ?? "guide";
 
         let header: Element | null = null;
         if (props != null) {
@@ -39,7 +44,9 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                 props.subtitle != null
                     ? h(
                           "div",
-                          { class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7" },
+                          {
+                              class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7 prose-p:max-w-content-wide-width max-w-content-wide-width",
+                          },
                           ...parseMarkdown(props.subtitle),
                       )
                     : undefined;
@@ -55,7 +62,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
 
         const footer = h(
             "footer",
-            { class: "mt-12" },
+            { class: "mt-12 not-prose" },
             h(
                 "div",
                 { class: "flex sm:justify-between max-sm:flex-col gap-4" },
@@ -79,7 +86,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                       })
                     : undefined,
             ),
-            matter?.["hide-nav-links"] || layout === "overview"
+            props?.hideNavLinks || layout === "overview"
                 ? undefined
                 : {
                       type: "mdxJsxFlowElement",
@@ -102,7 +109,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             { class: articleClassName },
             header,
             aside.length === 0
-                ? h("section", { class: proseClassName }, [...tree.children, footer])
+                ? h("section", { class: cn(proseClassName, "max-w-full") }, [...tree.children, footer])
                 : [
                       h(
                           "div",
@@ -114,7 +121,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                               h(
                                   "div",
                                   {
-                                      class: "md:max-h-vh-minus-header scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
+                                      class: "scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
                                   },
                                   aside,
                               ),
@@ -158,6 +165,8 @@ function mergePropsWithMatter(
         title: matter.title ?? props.title,
         subtitle: matter.subtitle ?? matter.excerpt ?? props.subtitle,
         editThisPageUrl: matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? props.editThisPageUrl,
+        layout: props.layout ?? matter.layout,
+        hideNavLinks: props.hideNavLinks ?? matter["hide-nav-links"],
     };
 }
 

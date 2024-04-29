@@ -10,7 +10,7 @@ export function getAllUrlsFromDocsConfig(
     apis: Record<string, APIV1Read.ApiDefinition>,
 ): string[] {
     const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
-    const root = resolveSidebarNodesRoot(nav, apis, basePathSlug);
+    const root = resolveSidebarNodesRoot(nav, apis, {}, basePathSlug, host);
     const visitedSlugs: string[] = [];
 
     visitSidebarNodeRaw(root, (node) => {

@@ -8,7 +8,7 @@ export declare namespace Frame {
 
 export const Frame: FC<PropsWithChildren<Frame.Props>> = ({ caption, children }) => {
     return (
-        <figure className="not-prose fern-card relative mb-6 mt-4 overflow-hidden rounded-xl p-2">
+        <figure className="not-prose fern-card relative mb-6 mt-4 overflow-hidden rounded-xl p-2 first:mt-0">
             <div className="relative flex justify-center overflow-hidden rounded-lg shadow-sm">{children}</div>
             {caption && (
                 <figcaption className="t-muted relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">

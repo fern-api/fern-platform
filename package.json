@@ -20,7 +20,6 @@
     "lint:eslint:fix": "turbo lint:eslint:fix",
     "lint:monorepo": "echo 'mrlint is disabled until it supports pnpm workspaces'",
     "lint:monorepo:fix": "echo 'mrlint is disabled until it supports pnpm workspaces'",
-    "organize-imports": "organize-imports-cli packages/**/tsconfig.json && pnpm format",
     "lint:style": "turbo lint:style",
     "lint:style:fix": "turbo lint:style:fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
@@ -34,7 +33,7 @@
     "docs-dev:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-dev",
     "docs:build": "pnpm --filter=@fern-ui/docs-bundle run build:fern-prod",
     "docs:start": "pnpm --filter=@fern-ui/docs-bundle run start:fern-prod",
-    "fdr:generate": "fern generate --api fdr"
+    "fdr:generate": "pnpm fern generate --api fdr --local"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -57,15 +56,14 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-vitest": "^0.3.26",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.13.1",
+    "eslint-plugin-vitest": "^0.3.26",
     "execa": "^5.1.1",
     "husky": "^8.0.1",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
-    "vitest": "^1.4.0",
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
@@ -84,12 +82,14 @@
     "tsx": "^4.7.1",
     "turbo": "^1.12.5",
     "typescript": "5.4.3",
-    "typescript-plugin-css-modules": "^5.1.0"
+    "typescript-plugin-css-modules": "^5.1.0",
+    "vitest": "^1.5.0"
   },
   "resolutions": {
     "postcss": "8.4.31",
     "@mdx-js/mdx": "3.0.1",
-    "@mdx-js/react": "3.0.1"
+    "@mdx-js/react": "3.0.1",
+    "esbuild": "0.20.2"
   },
   "packageManager": "pnpm@8.15.4",
   "dependenciesMeta": {
@@ -98,6 +98,6 @@
     }
   },
   "dependencies": {
-    "fern-api": "^0.19.18"
+    "fern-api": "^0.21.0"
   }
 }

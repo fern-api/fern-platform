@@ -9,8 +9,8 @@ import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useViewportSize } from "../../hooks/useViewportSize";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -210,7 +210,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
+            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
             onClick={() => setSelectedError(undefined)}
             ref={containerRef}
         >
@@ -248,7 +248,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 </div>
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
-                        className="max-w-content-width flex min-w-0 flex-1 flex-col"
+                        className="flex min-w-0 max-w-content-width flex-1 flex-col"
                         style={{
                             minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}

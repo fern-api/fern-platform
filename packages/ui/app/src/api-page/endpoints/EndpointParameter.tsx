@@ -5,8 +5,8 @@ import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react"
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useRouteListener } from "../../contexts/useRouteListener";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";

@@ -149,6 +149,7 @@ types:
       changelog: optional<docsReadV1.ChangelogSection>
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
+      navigation: optional<docsReadV1.ApiNavigationConfigRoot>
 
   DocsSection:
     properties:

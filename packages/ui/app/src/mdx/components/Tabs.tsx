@@ -29,13 +29,13 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
 
     return (
         <RadixTabs.Root value={activeTab} onValueChange={setActiveTab}>
-            <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b">
+            <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
                 {tabs.map(({ title, toc = parentToc }, idx) => {
                     const id = slug(title);
                     return (
                         <RadixTabs.Trigger key={idx} value={idx.toString()} asChild>
                             <h6
-                                className="text-default data-[state=active]:border-accent-primary data-[state=active]:t-accent hover:border-default scroll-mt-header-height-padded -mb-px flex max-w-max cursor-default whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
+                                className="text-default -mb-px flex max-w-max cursor-pointer scroll-mt-header-height-padded whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6 hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent-primary"
                                 id={id}
                                 data-anchor={toc ? id : undefined}
                             >

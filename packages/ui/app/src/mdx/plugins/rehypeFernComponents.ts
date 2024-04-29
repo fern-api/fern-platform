@@ -1,5 +1,5 @@
-import type { Element, Root } from "hast";
-import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
+import type { Element, ElementContent, Root } from "hast";
+import { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { visit } from "unist-util-visit";
 import { wrapChildren } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
@@ -12,15 +12,15 @@ export function rehypeFernComponents(): (tree: Root) => void {
             }
 
             if (isMdxJsxFlowElement(node) && node.name != null) {
-                if (node.name === "Tabs" && node.children.length > 0) {
+                if (node.name === "Tabs") {
                     transformTabs(node, index, parent);
                 }
 
-                if (node.name === "TabGroup" && node.children.length > 0) {
+                if (node.name === "TabGroup") {
                     transformTabs(node, index, parent);
                 }
 
-                if (node.name === "AccordionGroup" && node.children.length > 0) {
+                if (node.name === "AccordionGroup") {
                     transformAccordionGroup(node, index, parent);
                 }
             }
@@ -41,6 +41,18 @@ export function rehypeFernComponents(): (tree: Root) => void {
                 }
             }
         });
+
+        // convert img to Image
+        visit(tree, (node, index) => {
+            if (index == null) {
+                return;
+            }
+            if (isMdxJsxFlowElement(node)) {
+                if (node.name === "img") {
+                    node.name = "Image";
+                }
+            }
+        });
     };
 }
 
@@ -52,12 +64,16 @@ function transformTabs(
     const tabs = node.children
         .filter(isMdxJsxFlowElement)
         .filter((child) => child.name === "Tab")
-        .map(createTabOrAccordionItem);
+        .map(collectProps);
+
+    // const toc = getBooleanValue(node.attributes.find(
+    //     (attr) => attr.type === "mdxJsxAttribute" && attr.name === "toc",
+    // )?.value);
 
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
         name: "TabGroup",
-        attributes: [toAttribute("tabs", tabs)],
+        attributes: [toAttribute("tabs", tabs), ...node.attributes],
         children: [],
     });
 }
@@ -67,7 +83,7 @@ function transformTabItem(
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
 ): void {
-    const tabItem = createTabOrAccordionItem(node);
+    const tabItem = collectProps(node);
     const tabs = [tabItem];
 
     parent.children.splice(index, 1, {
@@ -86,7 +102,7 @@ function transformAccordionGroup(
     const items = node.children
         .filter(isMdxJsxFlowElement)
         .filter((child) => child.name === "Accordion")
-        .map(createTabOrAccordionItem);
+        .map(collectProps);
 
     parent.children.splice(index, 1, {
         type: "mdxJsxFlowElement",
@@ -101,7 +117,7 @@ function transformAccordion(
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
 ): void {
-    const item = createTabOrAccordionItem(node);
+    const item = collectProps(node);
     const items = [item];
 
     parent.children.splice(index, 1, {
@@ -112,10 +128,20 @@ function transformAccordion(
     });
 }
 
-function createTabOrAccordionItem(child: MdxJsxFlowElementHast) {
-    const title = child.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "title")?.value;
-    return {
-        title,
-        children: wrapChildren(child.children),
-    };
+function collectProps(child: MdxJsxFlowElementHast) {
+    const props: Record<string, ElementContent | string | MdxJsxAttributeValueExpression | null | undefined> = {};
+
+    child.attributes.forEach((attr) => {
+        if (attr.type === "mdxJsxAttribute") {
+            props[attr.name] = attr.value;
+        }
+
+        // expression attributes are not supported
+    });
+
+    if (child.children.length > 0) {
+        props.children = wrapChildren(child.children);
+    }
+
+    return props;
 }

@@ -1,10 +1,15 @@
 import type { Element, ElementContent, Node, Root, RootContent, Text } from "hast";
-import type { MdxJsxAttribute, MdxJsxExpressionAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
+import type {
+    MdxJsxAttribute,
+    MdxJsxAttributeValueExpression,
+    MdxJsxExpressionAttribute,
+    MdxJsxFlowElementHast,
+} from "mdast-util-mdx-jsx";
 import { unknownToString } from "../../util/unknownToString";
 import { valueToEstree } from "./to-estree";
 
 export function isMdxJsxFlowElement(node: Node): node is MdxJsxFlowElementHast {
-    return node.type === "mdxJsxFlowElement";
+    return node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement";
 }
 
 export function isMdxJsxAttribute(
@@ -45,4 +50,22 @@ export function toAttribute(key: string, value: unknown): MdxJsxAttribute {
                       },
                   },
     };
+}
+
+export function getBooleanValue(
+    value: string | MdxJsxAttributeValueExpression | null | undefined,
+): boolean | undefined {
+    if (value == null) {
+        return undefined;
+    }
+
+    if (typeof value === "string") {
+        return value === "true" ? true : value === "false" ? false : undefined;
+    }
+
+    if (value.type === "mdxJsxAttributeValueExpression") {
+        return value.value === "true" ? true : value.value === "false" ? false : undefined;
+    }
+
+    return undefined;
 }
