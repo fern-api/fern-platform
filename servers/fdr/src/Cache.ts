@@ -33,6 +33,7 @@ export class Cache<V> {
 
     public set(key: string, value: V): void {
         this.deleteOldestKeys();
+
         this.cache[key] = {
             value,
             timestamp: Date.now(),
@@ -44,8 +45,8 @@ export class Cache<V> {
     }
 
     private deleteOldestKeys(): void {
-        // remove the oldest keys if the cache is full
-        while (this.keysQueue.length > this.maxKeys) {
+        // remove the oldest keys if the cache is full, and makes space for a new key
+        while (this.keysQueue.length > this.maxKeys - 1) {
             const key = this.keysQueue.shift();
             if (key == null) {
                 // this should never happen
