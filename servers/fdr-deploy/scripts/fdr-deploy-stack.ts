@@ -21,6 +21,8 @@ const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
 
 export class FdrDeployStack extends Stack {
+    private readonly fernDocsCacheEndpoint: string;
+
     constructor(
         scope: Construct,
         id: string,
@@ -205,7 +207,9 @@ export class FdrDeployStack extends Stack {
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,
         });
-        new CfnOutput(this, "FernDocsCacheEndpoint", { value: fernDocsCache.redisEndpointAddress });
+
+        this.fernDocsCacheEndpoint = `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`;
+        new CfnOutput(this, "FernDocsCacheEndpoint", { value: this.fernDocsCacheEndpoint });
     }
 }
 
