@@ -1,7 +1,7 @@
 import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
+import { Cache } from "../../Cache";
 import { DocsV1Write, DocsV2Write } from "../../api";
 import type { FdrApplication } from "../../app";
 
@@ -34,10 +34,7 @@ export interface S3Service {
 
 export class S3ServiceImpl implements S3Service {
     private client: S3Client;
-    private presignedDownloadUrlCache: NodeCache = new NodeCache({
-        stdTTL: 3600,
-        maxKeys: 1_000,
-    });
+    private presignedDownloadUrlCache = new Cache<string>(1000);
 
     constructor(private readonly app: FdrApplication) {
         const { config } = app;
@@ -52,7 +49,7 @@ export class S3ServiceImpl implements S3Service {
     }
 
     async getPresignedDownloadUrl({ key }: { key: string }): Promise<string> {
-        const cachedUrl = await this.presignedDownloadUrlCache.get(key);
+        const cachedUrl = this.presignedDownloadUrlCache.get(key);
         if (cachedUrl != null && typeof cachedUrl === "string") {
             return cachedUrl;
         }
@@ -60,7 +57,7 @@ export class S3ServiceImpl implements S3Service {
             Bucket: this.app.config.s3BucketName,
             Key: key,
         });
-        const signedUrl = getSignedUrl(this.client, command, { expiresIn: 604800 });
+        const signedUrl = await getSignedUrl(this.client, command, { expiresIn: 604800 });
         this.presignedDownloadUrlCache.set(key, signedUrl);
         return signedUrl;
     }
