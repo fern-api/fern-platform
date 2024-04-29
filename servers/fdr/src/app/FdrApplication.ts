@@ -83,6 +83,7 @@ export class FdrApplication {
             profilesSampleRate: 1.0,
             environment: process?.env.APPLICATION_ENVIRONMENT ?? "local",
             maxValueLength: 1000,
+            debug: true,
         });
 
         this.services = {

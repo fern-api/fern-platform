@@ -1,3 +1,4 @@
+import express from "express";
 import { APIV1Db, DocsV1Db } from "../api";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
@@ -125,7 +126,7 @@ export function createMockFdrConfig(): FdrConfig {
 }
 
 export function createMockFdrApplication({ orgIds, services }: { orgIds?: string[]; services?: Partial<FdrServices> }) {
-    return new FdrApplication(createMockFdrConfig(), {
+    return new FdrApplication(createMockFdrConfig(), express(), {
         auth: new MockAuthService({
             orgIds: orgIds ?? [],
         }),
