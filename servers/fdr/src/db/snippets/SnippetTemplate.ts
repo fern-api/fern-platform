@@ -44,15 +44,20 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }: {
         loadSnippetTemplateRequest: GetSnippetTemplate;
     }): Promise<EndpointSnippetTemplate | null> {
-        let sdkId: string | undefined | null;
+        let version: string | null | undefined;
         if (loadSnippetTemplateRequest.sdk.version == null) {
-            sdkId = await this.getSdkIdFromRequest({ request: loadSnippetTemplateRequest.sdk });
+            version = await this.getSdkVersionFromRequest({ request: loadSnippetTemplateRequest.sdk });
         } else {
-            sdkId = this.getSdkId({
-                ...loadSnippetTemplateRequest.sdk,
-                version: loadSnippetTemplateRequest.sdk.version,
-            });
+            version = loadSnippetTemplateRequest.sdk.version;
         }
+        if (version == null) {
+            return null;
+        }
+
+        const sdkId = this.getSdkId({
+            ...loadSnippetTemplateRequest.sdk,
+            version,
+        });
         const snippetTemplate = await this.prisma.snippetTemplate.findFirst({
             where: {
                 orgId: loadSnippetTemplateRequest.orgId,
@@ -71,7 +76,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                 path: snippetTemplate.endpointPath,
                 method: snippetTemplate.endpointMethod,
             },
-            sdk: loadSnippetTemplateRequest.sdk,
+            sdk: { ...loadSnippetTemplateRequest.sdk, version },
             snippetTemplate: {
                 type: snippetTemplate.version,
                 functionInvocation: readBuffer(snippetTemplate.functionInvocation) as Template,
@@ -112,6 +117,23 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         }
     }
 
+    public async getSdkVersionFromRequest({ request }: { request: SdkRequest }): Promise<string | null | undefined> {
+        return (
+            await this.prisma.sdk.findFirst({
+                select: {
+                    version: true,
+                },
+                where: {
+                    package: getPackageNameFromSdk(request),
+                    language: this.sdkLangaugeFromSdk({ sdk: request }),
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+            })
+        )?.version;
+    }
+
     public async getSdkIdFromRequest({ request }: { request: SdkRequest }): Promise<string | undefined> {
         return (
             await this.prisma.sdk.findFirst({
@@ -119,8 +141,8 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     id: true,
                 },
                 where: {
-                    package: getPackageNameFromSdk(request.sdk),
-                    language: this.sdkLangaugeFromSdk({ sdk: request.sdk }),
+                    package: getPackageNameFromSdk(request),
+                    language: this.sdkLangaugeFromSdk({ sdk: request }),
                 },
                 orderBy: {
                     createdAt: "desc",
