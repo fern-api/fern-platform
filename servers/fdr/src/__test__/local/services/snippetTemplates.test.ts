@@ -2,7 +2,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
 import { FernRegistry } from "../../../api/generated";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../../octo";
-import { getClient } from "../util";
+import { getAPIResponse, getClient } from "../util";
 
 const ENDPOINT: FdrAPI.EndpointIdentifier = {
     path: "/users/v1",
@@ -112,16 +112,15 @@ it("fallback to version", async () => {
         snippet: CHAT_COMPLETION_SNIPPET,
     });
     // create snippets
-    const template = await fdr.templates.get({
-        orgId,
-        apiId,
-        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
-        sdk: { ...sdk, version: undefined },
-    });
-    expect(template.ok).toBe(true);
-    if (template.ok) {
-        expect(template.body.sdk.version).toBe("0.0.5");
-    }
+    const template = getAPIResponse(
+        await fdr.templates.get({
+            orgId,
+            apiId,
+            endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+            sdk: { ...sdk, version: undefined },
+        }),
+    );
+    expect(template.sdk.version).toBe("0.0.5");
 
     // register API definition for acme org
     await unauthedFdr.templates.register({

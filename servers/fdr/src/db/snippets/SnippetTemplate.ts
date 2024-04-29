@@ -34,6 +34,8 @@ export interface SnippetTemplateDao {
     }: {
         storeSnippetsInfo: RegisterSnippetTemplateBatchRequest;
     }): Promise<void>;
+
+    getLatestSdkVersionFromRequest({ request }: { request: SdkRequest }): Promise<string | null | undefined>;
 }
 
 export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
@@ -46,7 +48,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }): Promise<EndpointSnippetTemplate | null> {
         let version: string | null | undefined;
         if (loadSnippetTemplateRequest.sdk.version == null) {
-            version = await this.getSdkVersionFromRequest({ request: loadSnippetTemplateRequest.sdk });
+            version = await this.getLatestSdkVersionFromRequest({ request: loadSnippetTemplateRequest.sdk });
         } else {
             version = loadSnippetTemplateRequest.sdk.version;
         }
@@ -117,7 +119,11 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         }
     }
 
-    public async getSdkVersionFromRequest({ request }: { request: SdkRequest }): Promise<string | null | undefined> {
+    public async getLatestSdkVersionFromRequest({
+        request,
+    }: {
+        request: SdkRequest;
+    }): Promise<string | null | undefined> {
         return (
             await this.prisma.sdk.findFirst({
                 select: {

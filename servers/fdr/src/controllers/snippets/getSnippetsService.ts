@@ -1,8 +1,10 @@
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { SnippetsService } from "../../api";
 import {
+    BadRequestError,
     EndpointSnippetTemplate,
     InvalidPageError,
+    Sdk,
     Snippet,
     SnippetTemplateNotFoundError,
     UnauthorizedError,
@@ -32,9 +34,31 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                         sdks:
                             req.body.sdks != null
                                 ? await Promise.all(
-                                      req.body.sdks.map(
-                                          async (sdk) => await this.getSdkIdFromRequest({ request: sdk }),
-                                      ),
+                                      req.body.sdks.map(async (sdk) => {
+                                          let versionedSdk: Sdk;
+                                          if (sdk.version == null) {
+                                              const version = await app.dao
+                                                  .snippetTemplates()
+                                                  .getLatestSdkVersionFromRequest({
+                                                      request: sdk,
+                                                  });
+                                              if (version == null || version == undefined) {
+                                                  throw new BadRequestError(
+                                                      `Version not found for provided SDK: ${sdk.type}`,
+                                                  );
+                                              }
+                                              versionedSdk = { ...sdk, version };
+                                              return versionedSdk;
+                                          } else {
+                                              if (sdk.version == null) {
+                                                  throw new BadRequestError(
+                                                      `Version not found for provided SDK: ${sdk.type}`,
+                                                  );
+                                              }
+                                              versionedSdk = { ...sdk, version: sdk.version };
+                                              return versionedSdk;
+                                          }
+                                      }),
                                   )
                                 : [],
                         page: undefined,
