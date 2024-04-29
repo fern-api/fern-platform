@@ -1,4 +1,5 @@
 import SmeeClient from "smee-client";
+import { updateOpenApiSpecs } from "./actions/updateOpenApiSpecs";
 import { Env } from "./env";
 import { handleIncomingRequest } from "./github/octokitHooks";
 
@@ -14,11 +15,13 @@ if (process.env.NODE_ENV !== "production") {
 
 const Worker = {
     async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
+        console.log("Processing incoming request.");
         return handleIncomingRequest(request, env);
     },
 
     async scheduled(_controller: ScheduledController, _env: Env, _ctx: ExecutionContext): Promise<void> {
-        console.log("cron processed");
+        console.log("Processing scheduled run.");
+        await updateOpenApiSpecs(_env);
     },
 };
 
