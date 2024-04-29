@@ -55,6 +55,11 @@ export class ElastiCacheStack extends Stack {
             cacheSubnetGroupName: this.subnetGroup.ref,
             securityGroupIds: [this.securityGroup.securityGroupId],
         });
+
+        this.replicationGroup.cfnOptions.updatePolicy = {
+            useOnlineResharding: true,
+        };
+
         this.replicationGroup.addDependency(this.subnetGroup);
 
         this.redisEndpointAddress = this.replicationGroup.attrConfigurationEndPointAddress;
