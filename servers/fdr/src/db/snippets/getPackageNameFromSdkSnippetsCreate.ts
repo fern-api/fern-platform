@@ -17,3 +17,20 @@ export function getPackageNameFromSdkSnippetsCreate(create: FdrAPI.SdkSnippetsCr
             assertNever(create);
     }
 }
+
+export function getPackageNameFromSdk(sdk: FdrAPI.SdkRequest): string {
+    switch (sdk.type) {
+        case "go":
+            return sdk.githubRepo;
+        case "java":
+            return `${sdk.group}:${sdk.artifact}`;
+        case "python":
+            return sdk.package;
+        case "typescript":
+            return sdk.package;
+        case "ruby":
+            return sdk.gem;
+        default:
+            assertNever(sdk);
+    }
+}

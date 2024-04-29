@@ -29,7 +29,14 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                         orgId: apiInfo.orgId,
                         apiId: apiInfo.apiId,
                         endpointIdentifier: req.body.endpoint,
-                        sdks: req.body.sdks,
+                        sdks:
+                            req.body.sdks != null
+                                ? await Promise.all(
+                                      req.body.sdks.map(
+                                          async (sdk) => await this.getSdkIdFromRequest({ request: sdk }),
+                                      ),
+                                  )
+                                : [],
                         page: undefined,
                     },
                 });
