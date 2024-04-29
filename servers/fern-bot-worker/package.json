@@ -16,6 +16,7 @@
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.1.0",
     "@cloudflare/workers-types": "^4.20240404.0",
+    "@types/js-yaml": "^4.0.5",
     "typescript": "^5.0.4",
     "vitest": "1.3.0",
     "wrangler": "^3.0.0"
@@ -23,12 +24,11 @@
   "dependencies": {
     "@actions/io": "^1.1.3",
     "@fern-api/core-utils": "0.15.0-rc63",
-    "@fern-api/fs-utils": "0.15.0-rc63",
     "@octokit/app": "^14.1.0",
     "@octokit/openapi-types": "^22.0.0",
     "@octokit/types": "^13.1.0",
     "@octokit/webhooks": "^13.2.1",
-    "find-up": "^7.0.0",
+    "js-yaml": "^4.1.0",
     "octokit": "^3.2.0",
     "smee-client": "^2.0.1",
     "zod": "^3.22.4"

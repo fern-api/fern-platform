@@ -1,10 +1,9 @@
 import { components } from "@octokit/openapi-types";
 import { App, Octokit } from "octokit";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { createWriteStream } from "fs";
-import { Readable } from "stream";
-import { finished } from "stream/promises";
+import path from "node:path";
+import { Readable } from "node:stream";
+// import { finished } from "node:stream/promises";
 import { Env } from "../env";
 import { API_ORIGIN_LOCATION_KEY, ASYNC_API_LOCATION_KEY, OPENAPI_LOCATION_KEY } from "../fern-cli/schemas";
 import { loadRawGeneratorsConfiguration } from "../fern-cli/utilities";
@@ -18,14 +17,14 @@ type Repository = components["schemas"]["repository"];
 async function fetchAndWriteFile(url: string, path: string): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
-        const fileStream = createWriteStream(path);
-        await finished(Readable.fromWeb(resp.body).pipe(fileStream));
+        const fileStream = require("fs").createWriteStream(path);
+        await require("node:stream/promises").finished(Readable.fromWeb(resp.body).pipe(fileStream));
     }
 }
 
 async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Promise<void> {
-    const repoDir = AbsoluteFilePath.of(`${__dirname}/${repository.id}`);
-    const fullRepoPath = join(repoDir, RelativeFilePath.of(repository.name));
+    const repoDir = `${__dirname}/${repository.id}`;
+    const fullRepoPath = path.join(repoDir, repository.name);
 
     const branchRemoteName = "origin";
 
