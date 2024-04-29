@@ -202,7 +202,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 className="-mr-2"
                             />
                         ),
-                    failed: () => <div />,
+                    failed: () => (
+                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                            Failed
+                        </span>
+                    ),
                 })}
             </div>
             {visitLoadable(response, {
@@ -235,6 +239,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         component="PlaygroundEndpointContent"
                         error={e}
                         className="flex h-full items-center justify-center"
+                        showError={true}
                     />
                 ),
             })}
