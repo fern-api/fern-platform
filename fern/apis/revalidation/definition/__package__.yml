@@ -32,7 +32,7 @@ service:
       path: /revalidate-all/v3
       docs: Revalidates a docs website
       display-name: Revalidate a docs instance
-      method: POST
+      method: GET
       request:
         name: CreateRevalidateAllV3Request
         headers:

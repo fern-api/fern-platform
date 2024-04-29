@@ -1397,8 +1397,8 @@ importers:
         specifier: ^0.3.0-2-g994ae9e
         version: 0.3.0-2-g994ae9e
       '@fern-fern/revalidation-sdk':
-        specifier: 0.0.8
-        version: 0.0.8
+        specifier: 0.0.9
+        version: 0.0.9
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)
@@ -5254,8 +5254,8 @@ packages:
       - debug
     dev: false
 
-  /@fern-fern/revalidation-sdk@0.0.8:
-    resolution: {integrity: sha512-eltdBtcyAIeHoDEytT38dm9dHGoQlaiIk+DroxkWqLVEurq1QUi3FZG6mwnvDurRdsQUjsL4+O5AuWpA5WtHYw==}
+  /@fern-fern/revalidation-sdk@0.0.9:
+    resolution: {integrity: sha512-iZhm1odMdgWqlJi8B6lUPkza8YFfPz6iAhLfTkTnG4cpgPLER4sdQ8tlO+sUcGJF07Z3KkCRKmD6k54wNhv6Gg==}
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0
