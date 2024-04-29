@@ -55,7 +55,7 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     }
 
     constructor(private readonly app: FdrApplication) {
-        this.apiKeysCache = new Cache(AlgoliaIndexSegmentManagerServiceImpl.config.maxKeysToCache);
+        this.apiKeysCache = new Cache(AlgoliaIndexSegmentManagerServiceImpl.config.maxKeysToCache, SECONDS_IN_ONE_HOUR);
     }
 
     public generateIndexSegmentsForDefinition({
