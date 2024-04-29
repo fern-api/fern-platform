@@ -39,19 +39,34 @@ export declare namespace ProxyResponse {
         readonly body: unknown;
     }
 
-    export interface Error {
-        error: true;
-        status: number;
-        time: number;
-        size: string | null;
+    export interface SerializableFileBody extends SerializableResponse {
+        readonly body: string;
     }
 
-    export interface Success {
-        error: false;
-        response: SerializableBody;
-        time: number;
-        size: string | null;
-    }
+    // export interface Error {
+    //     error: true;
+    //     status: number;
+    //     time: number;
+    //     size: string | null;
+    // }
+
+    // export interface Success {
+    //     error: false;
+    //     response: SerializableBody;
+    //     time: number;
+    //     size: string | null;
+    // }
 }
 
-export type ProxyResponse = ProxyResponse.Error | ProxyResponse.Success;
+// export type ProxyResponse = {
+//     // error: boolean;
+//     response: ProxyResponse.SerializableBody;
+//     time: number;
+//     size: string | null;
+// };
+
+export interface ProxyResponse {
+    response: ProxyResponse.SerializableBody;
+    time: number;
+    size: string | null;
+}

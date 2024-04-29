@@ -221,16 +221,16 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 loaded: (response) =>
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
-                    ) : response.response.contentType.startsWith("audio/") ? (
+                    ) : response.contentType.startsWith("audio/") ? (
                         <FernAudioPlayer
-                            src={response.response.src}
+                            src={response.response.body}
                             title={"Untitled"}
                             className="flex h-full items-center justify-center p-4"
                         />
                     ) : (
                         <FernErrorTag
                             component="PlaygroundEndpointContent"
-                            error={`File preview not supported for ${response.response.contentType}`}
+                            error={`File preview not supported for ${response.contentType}`}
                             className="flex h-full items-center justify-center"
                         />
                     ),

@@ -1,5 +1,6 @@
 import { ProxyRequest } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
+import { buildRequestBody } from "./rest";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -12,11 +13,23 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         }
 
         const proxyRequest = (await req.json()) as ProxyRequest;
+        const requestBody = await buildRequestBody(proxyRequest.body);
+        const headers = new Headers(proxyRequest.headers);
+
+        // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
+        const contentType = headers.get("Content-Type");
+        if (contentType != null && contentType.toLowerCase().includes("multipart/form-data")) {
+            headers.delete("Content-Type");
+        }
+
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
-            headers: proxyRequest.headers,
-            body: proxyRequest.body != null ? JSON.stringify(proxyRequest.body.value) : undefined,
+            headers,
+            body: requestBody,
         });
+
+        // response.blob().then(blob => URL.createObjectURL)
+
         return new NextResponse(response.body, {
             headers: response.headers,
             status: response.status,

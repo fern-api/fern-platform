@@ -30,7 +30,7 @@ async function dataURLtoBlob(dataUrl: string): Promise<Blob> {
     return new Blob([u8arr], { type: mime });
 }
 
-async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
+export async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
     if (body == null) {
         return undefined;
     }
@@ -140,9 +140,8 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         }
         const responseHeaders = response.headers;
 
-        return NextResponse.json(
+        return NextResponse.json<ProxyResponse>(
             {
-                error: false,
                 response: {
                     headers: Object.fromEntries(responseHeaders.entries()),
                     ok: response.ok,
@@ -163,8 +162,16 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         console.error(err);
 
         return jsonResponse<ProxyResponse>(500, {
-            error: true,
-            status: 500,
+            response: {
+                headers: {},
+                ok: false,
+                redirected: false,
+                status: 500,
+                statusText: "Internal Server Error",
+                type: "error",
+                url: "",
+                body: null,
+            },
             time: -1,
             size: null,
         });
