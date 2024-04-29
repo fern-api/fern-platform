@@ -109,6 +109,7 @@ export class FdrDeployStack extends Stack {
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                     LOG_LEVEL: getLogLevel(environmentType),
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
+                    APPLICATION_ENVIRONMENT: environmentType === "PROD" ? "prod" : "dev",
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,

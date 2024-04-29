@@ -1,4 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import * as Sentry from "@sentry/node";
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
+import express from "express";
 import winston from "winston";
 import { FdrDao } from "../db";
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
@@ -47,6 +50,7 @@ export class FdrApplication {
 
     public constructor(
         public readonly config: FdrConfig,
+        public readonly router: express.Router,
         services?: Partial<FdrServices>,
     ) {
         this.logger = winston.createLogger({
@@ -61,6 +65,26 @@ export class FdrApplication {
         const prisma = new PrismaClient({
             log: ["info", "warn", "error"],
         });
+
+        // ========= Init Sentry =========
+        Sentry.init({
+            dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
+            integrations: [
+                // enable HTTP calls tracing
+                new Sentry.Integrations.Http({ tracing: true }),
+                // enable Express.js middleware tracing
+                new Sentry.Integrations.Express({ app: router }),
+                new Sentry.Integrations.Prisma({ client: prisma }),
+                nodeProfilingIntegration(),
+            ],
+            // Performance Monitoring
+            tracesSampleRate: 1.0, //  Capture 100% of the transactions
+            // Set sampling rate for profiling - this is relative to tracesSampleRate
+            profilesSampleRate: 1.0,
+            environment: process?.env.APPLICATION_ENVIRONMENT ?? "local",
+            maxValueLength: 1000,
+        });
+
         this.services = {
             auth: services?.auth ?? new AuthServiceImpl(this),
             db: services?.db ?? new DatabaseServiceImpl(prisma),
