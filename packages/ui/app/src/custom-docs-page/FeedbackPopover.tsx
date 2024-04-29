@@ -1,12 +1,15 @@
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Heart, Link, ThumbsDown, ThumbsUp } from "react-feather";
 import { usePopper } from "react-popper";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernInput } from "../components/FernInput";
+import { FeedbackForm } from "./FeedbackForm";
+
+const MotionFernButton = motion(FernButton);
+const MotionFernButtonGroup = motion(FernButtonGroup);
 
 export const FeedbackPopover: React.FC = () => {
     const [isHelpful, setIsHelpful] = useState<boolean>();
@@ -85,23 +88,34 @@ export const FeedbackPopover: React.FC = () => {
         return null;
     }, []);
 
-    const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        capturePosthogEvent("feedback_submitted", {
-            satisfied: true,
-            message: event,
-            // selectedText,
-        });
-        setFeedbackSubmitted(true);
-        setTimeout(() => {
-            setShowMenu(false);
-            setReferenceElement(null);
-            setIsHelpful(undefined);
-            setCopied(false);
-            setFeedbackSubmitted(false);
-            // removeFakeHighlight();
-        }, 2000);
-    }, []);
+    const handleSubmit = useCallback(
+        async ({
+            feedbackId,
+            feedbackMessage,
+        }: {
+            feedbackId: string;
+            feedbackMessage: string;
+            email: string;
+            showEmailInput: boolean | "indeterminate";
+        }) => {
+            capturePosthogEvent("feedback_submitted", {
+                satisfied: true,
+                message: feedbackMessage,
+                feedback: feedbackId,
+                // selectedText,
+            });
+            setFeedbackSubmitted(true);
+            setTimeout(() => {
+                setShowMenu(false);
+                setReferenceElement(null);
+                setIsHelpful(undefined);
+                setCopied(false);
+                setFeedbackSubmitted(false);
+                // removeFakeHighlight();
+            }, 2000);
+        },
+        [],
+    );
 
     useEffect(() => {
         const removeFakeHighlight = () => {
@@ -233,6 +247,39 @@ export const FeedbackPopover: React.FC = () => {
         };
     }, [findTextNode, referenceElement, showMenu]);
 
+    const voteButtons = useMemo(
+        () => (
+            <div
+                className={clsx("p-1 w-fit", {
+                    "p-0 space-x-1 rounded-lg bg-white/50 backdrop-blur-xl dark:bg-background/50":
+                        isHelpful !== undefined,
+                })}
+            >
+                <MotionFernButton
+                    layoutId="thumbs-up"
+                    icon={<ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
+                    variant="minimal"
+                    intent={isHelpful ? "success" : "none"}
+                    active={isHelpful}
+                    onClick={handleThumbsUp}
+                >
+                    Helpful
+                </MotionFernButton>
+                <MotionFernButton
+                    layoutId="thumbs-down"
+                    icon={<ThumbsDown className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })} />}
+                    variant="minimal"
+                    intent={isHelpful === false ? "danger" : "none"}
+                    active={isHelpful === false}
+                    onClick={handleThumbsDown}
+                >
+                    Not Helpful
+                </MotionFernButton>
+            </div>
+        ),
+        [handleThumbsDown, handleThumbsUp, isHelpful],
+    );
+
     return (
         <Transition
             show={showMenu}
@@ -244,81 +291,49 @@ export const FeedbackPopover: React.FC = () => {
             leaveFrom="opacity-100 scale-100 translate-y-0"
             leaveTo="opacity-0 -translate-y-8"
         >
-            <motion.div
-                ref={popperRef}
-                style={styles.popper}
-                {...attributes.popper}
-                className={clsx(
-                    "fixed z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
-                    { "p-2": isHelpful !== undefined },
-                )}
-            >
-                <FernButtonGroup>
-                    <FernButton
-                        icon={<ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
-                        variant="minimal"
-                        intent={isHelpful ? "success" : "none"}
-                        active={isHelpful}
-                        onClick={handleThumbsUp}
-                    >
-                        Helpful
-                    </FernButton>
-                    <FernButton
-                        icon={
-                            <ThumbsDown className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })} />
-                        }
-                        variant="minimal"
-                        intent={isHelpful === false ? "danger" : "none"}
-                        active={isHelpful === false}
-                        onClick={handleThumbsDown}
-                    >
-                        Not Helpful
-                    </FernButton>
+            <motion.div ref={popperRef} style={styles.popper} {...attributes.popper} className="fixed z-50">
+                {isHelpful !== undefined && !feedbackSubmitted && voteButtons}
+                <motion.div
+                    className={clsx(
+                        "rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
+                        { "p-2": isHelpful !== undefined },
+                    )}
+                >
                     {isHelpful === undefined && (
-                        <>
-                            <div className="w-px h-8 mx-1 bg-border-default" />
-                            <FernButton
-                                icon={<Link className="opacity-60" />}
-                                variant="minimal"
-                                onClick={handleCreateHighlightLink}
+                        <MotionFernButtonGroup className="flex items-center">
+                            {voteButtons}
+                            {isHelpful === undefined && (
+                                <>
+                                    <div className="w-px h-8 mx-1 bg-border-default" />
+                                    <MotionFernButton
+                                        icon={<Link className="opacity-60" />}
+                                        variant="minimal"
+                                        onClick={handleCreateHighlightLink}
+                                    >
+                                        {copied ? "Copied!" : "Copy highlight"}
+                                    </MotionFernButton>
+                                </>
+                            )}
+                        </MotionFernButtonGroup>
+                    )}
+                    <AnimatePresence>
+                        {isHelpful !== undefined && !feedbackSubmitted && (
+                            <FeedbackForm layoutDensity="condensed" onSubmit={handleSubmit} isHelpful={isHelpful} />
+                        )}
+                        {feedbackSubmitted && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="flex gap-1 items-center mx-auto"
                             >
-                                {copied ? "Copied!" : "Copy highlight"}
-                            </FernButton>
-                        </>
-                    )}
-                </FernButtonGroup>
-                <AnimatePresence>
-                    {isHelpful !== undefined && !feedbackSubmitted && (
-                        <motion.form
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            onSubmit={handleSubmit}
-                            className="flex flex-col gap-2"
-                        >
-                            <label htmlFor="moreFeedback" className="mt-2 t-muted text-sm font-medium">
-                                {isHelpful ? "What did you like?" : "What could improve?"}
-                            </label>
-                            <FernInput id="moreFeedback" name="moreFeedback" className="min-w-60" />
-                            <FernButton type="submit" intent="primary" className="self-end">
-                                Submit
-                            </FernButton>
-                        </motion.form>
-                    )}
-                    {feedbackSubmitted && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="flex gap-1.5"
-                        >
-                            <Heart className="text-accent-primary-aaa animate-pulse" />
-                            <p className="text-sm mt-2">Thank you for your feedback!</p>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                                <Heart className="text-accent-primary-aaa animate-pulse text-sm" />
+                                <p className="text-sm mt-2">Thank you for your feedback!</p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             </motion.div>
         </Transition>
     );

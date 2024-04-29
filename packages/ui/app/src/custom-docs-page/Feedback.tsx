@@ -15,7 +15,7 @@ export interface FeedbackProps {
 export const Feedback: FC<FeedbackProps> = ({ className }) => {
     const router = useRouter();
     const [sent, setSent] = useState(false);
-    const [feedback, setFeedback] = useState<"yes" | "no">();
+    const [isHelpful, setIsHelpful] = useState<boolean>();
     const [showFeedbackInput, setShowFeedbackInput] = useState(false);
 
     const ref = useRef<HTMLDivElement>(null);
@@ -24,7 +24,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     useEffect(() => {
         const resetForm = () => {
             setSent(false);
-            setFeedback(undefined);
+            setIsHelpful(undefined);
             setShowFeedbackInput(false);
         };
         router.events.on("routeChangeComplete", resetForm);
@@ -34,7 +34,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     }, [router.events]);
 
     const handleYes = () => {
-        setFeedback("yes");
+        setIsHelpful(true);
         setShowFeedbackInput(true);
         textareaRef.current?.focus();
         capturePosthogEvent("feedback_voted", {
@@ -42,7 +42,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
         });
     };
     const handleNo = () => {
-        setFeedback("no");
+        setIsHelpful(false);
         setShowFeedbackInput(true);
         textareaRef.current?.focus();
         capturePosthogEvent("feedback_voted", {
@@ -64,7 +64,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
         }) => {
             registerPosthogProperties({ email });
             capturePosthogEvent("feedback_submitted", {
-                satisfied: feedback === "yes" ? true : false,
+                satisfied: isHelpful ? true : false,
                 feedback: feedbackId,
                 message: feedbackMessage,
                 email,
@@ -72,7 +72,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
             });
             setSent(true);
         },
-        [feedback],
+        [isHelpful],
     );
 
     useKeyboardPress({
@@ -95,28 +95,24 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                     <span className="t-muted text-sm font-medium">Was this page helpful?</span>
                     <FernButtonGroup>
                         <FernButton
-                            icon={
-                                <ThumbsUp
-                                    className={clsx("opacity-60", { "animate-thumb-rock": feedback === "yes" })}
-                                />
-                            }
+                            icon={<ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
                             variant="outlined"
-                            intent={feedback === "yes" ? "success" : "none"}
+                            intent={isHelpful ? "success" : "none"}
                             onClick={handleYes}
-                            active={feedback === "yes"}
+                            active={isHelpful}
                         >
                             Yes
                         </FernButton>
                         <FernButton
                             icon={
                                 <ThumbsDown
-                                    className={clsx("opacity-60", { "animate-thumb-rock": feedback === "no" })}
+                                    className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })}
                                 />
                             }
                             variant="outlined"
-                            intent={feedback === "no" ? "danger" : "none"}
+                            intent={isHelpful === false ? "danger" : "none"}
                             onClick={handleNo}
-                            active={feedback === "no"}
+                            active={isHelpful === false}
                         >
                             No
                         </FernButton>
@@ -129,7 +125,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
             )}
             {!sent && (
                 <FeedbackFormDialog show={showFeedbackInput} targetRef={ref} onClose={handleClose}>
-                    <FeedbackForm feedback={feedback} onSubmit={handleSubmitFeedback} />
+                    <FeedbackForm isHelpful={isHelpful} onSubmit={handleSubmitFeedback} />
                 </FeedbackFormDialog>
             )}
         </div>
