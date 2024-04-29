@@ -71,7 +71,9 @@ const handler: NextApiHandler = async (
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        req.headers.host = xFernHost;
+        if (!docs.baseUrl.domain.includes("rewrite-test.danny-312.workers.dev")) {
+            req.headers.host = xFernHost;
+        }
 
         const results: RevalidatePathResult[] = [];
 
