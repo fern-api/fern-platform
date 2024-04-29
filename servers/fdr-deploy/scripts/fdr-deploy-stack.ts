@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
@@ -196,7 +196,7 @@ export class FdrDeployStack extends Stack {
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
 
-        new ElastiCacheStack(this, "FernDocsElastiCache", {
+        const fernDocsCache = new ElastiCacheStack(this, "FernDocsElastiCache", {
             cacheName: "FernDocsElastiCache",
             IVpc: vpc,
             numCacheShards: 1,
@@ -205,6 +205,7 @@ export class FdrDeployStack extends Stack {
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,
         });
+        new CfnOutput(this, "FernDocsCacheEndpoint", { value: fernDocsCache.redisEndpointAddress });
     }
 }
 

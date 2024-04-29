@@ -1,5 +1,5 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { aws_elasticache as ElastiCache, Stack, StackProps, Token } from "aws-cdk-lib";
+import { Stack, StackProps, Token } from "aws-cdk-lib";
 import { IVpc, Peer, Port, SecurityGroup } from "aws-cdk-lib/aws-ec2";
 import { CfnReplicationGroup, CfnSubnetGroup } from "aws-cdk-lib/aws-elasticache";
 import { Construct } from "constructs";
@@ -34,14 +34,14 @@ export class ElastiCacheStack extends Stack {
         });
 
         const elastiCacheSubnetGroupName = envPrefix + props.cacheName + "SubnetGroup";
-        const elastiCacheSubnetGroup = new ElastiCache.CfnSubnetGroup(this, elastiCacheSubnetGroupName, {
+        this.subnetGroup = new CfnSubnetGroup(this, elastiCacheSubnetGroupName, {
             description: `${elastiCacheSubnetGroupName} CDK`,
             cacheSubnetGroupName: elastiCacheSubnetGroupName,
             subnetIds: props.IVpc.privateSubnets.map(({ subnetId }) => subnetId),
         });
 
         const elastiCacheReplicationGroupName = envPrefix + props.cacheName + "ReplicationGroup";
-        this.replicationGroup = new ElastiCache.CfnReplicationGroup(this, elastiCacheReplicationGroupName, {
+        this.replicationGroup = new CfnReplicationGroup(this, elastiCacheReplicationGroupName, {
             replicationGroupDescription: `Replication Group for the ${elastiCacheReplicationGroupName} ElastiCache stack`,
             automaticFailoverEnabled: true,
             autoMinorVersionUpgrade: true,
@@ -52,12 +52,12 @@ export class ElastiCacheStack extends Stack {
             numNodeGroups: props.numCacheShards,
             replicasPerNodeGroup: props.numCacheReplicasPerShard,
             clusterMode: props.clusterMode,
-            cacheSubnetGroupName: elastiCacheSubnetGroup.ref,
+            cacheSubnetGroupName: this.subnetGroup.ref,
             securityGroupIds: [this.securityGroup.securityGroupId],
         });
-        this.replicationGroup.addDependency(elastiCacheSubnetGroup);
+        this.replicationGroup.addDependency(this.subnetGroup);
 
-        this.redisEndpointAddress = this.replicationGroup.attrPrimaryEndPointAddress;
+        this.redisEndpointAddress = this.replicationGroup.attrConfigurationEndPointAddress;
         this.redisEndpointPort = this.replicationGroup.attrConfigurationEndPointPort;
 
         this.securityGroup.addIngressRule(
