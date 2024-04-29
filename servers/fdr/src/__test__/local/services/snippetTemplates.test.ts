@@ -91,3 +91,65 @@ it("generate example from snippet template", async () => {
     expect(response.ok).toBe(true);
     console.log(JSON.stringify(response, null, 2));
 });
+
+it("fallback to version", async () => {
+    const unauthedFdr = getClient({ authed: false, url: inject("url") });
+    const fdr = getClient({ authed: true, url: inject("url") });
+
+    const orgId = "octoai";
+    const apiId = "api";
+    const sdk: FernRegistry.Sdk = {
+        type: "python",
+        package: "octoai",
+        version: "0.0.5",
+    };
+
+    // register API definition for acme org
+    await unauthedFdr.templates.register({
+        orgId,
+        apiId,
+        apiDefinitionId: "....",
+        snippet: CHAT_COMPLETION_SNIPPET,
+    });
+    // create snippets
+    const template = await fdr.templates.get({
+        orgId,
+        apiId,
+        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+        sdk: { ...sdk, version: undefined },
+    });
+    expect(template.ok).toBe(true);
+    if (template.ok) {
+        expect(template.body.sdk.version).toBe("0.0.5");
+    }
+
+    // register API definition for acme org
+    await unauthedFdr.templates.register({
+        orgId,
+        apiId,
+        apiDefinitionId: "....",
+        snippet: { ...CHAT_COMPLETION_SNIPPET, sdk: { ...CHAT_COMPLETION_SNIPPET.sdk, version: "0.0.122" } },
+    });
+    // create snippets
+    const templateAgain = await fdr.templates.get({
+        orgId,
+        apiId,
+        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+        sdk: { ...sdk, version: undefined },
+    });
+    expect(templateAgain.ok).toBe(true);
+    if (templateAgain.ok) {
+        expect(templateAgain.body.sdk.version).toBe("0.0.122");
+    }
+
+    const templateSpecify = await fdr.templates.get({
+        orgId,
+        apiId,
+        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+        sdk,
+    });
+    expect(templateSpecify.ok).toBe(true);
+    if (templateSpecify.ok) {
+        expect(templateSpecify.body.sdk.version).toBe("0.0.5");
+    }
+});
