@@ -207,7 +207,6 @@ export class FdrDeployStack extends Stack {
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,
             env: props?.env,
-            ingressSecurityGroup: fdrSg,
         });
 
         this.fernDocsCacheEndpoint = `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`;
