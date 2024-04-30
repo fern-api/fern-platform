@@ -85,7 +85,6 @@ jobs:
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
           DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
-          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
   smoke-test:
     needs: deploy_dev
