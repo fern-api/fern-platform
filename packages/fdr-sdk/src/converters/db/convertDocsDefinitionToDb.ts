@@ -168,7 +168,7 @@ export function transformNavigationItemForDb(
                 ...writeShape,
                 icon: writeShape.icon,
                 hidden: writeShape.hidden ?? false,
-                longScrolling: writeShape.longScrolling, 
+                longScrolling: writeShape.longScrolling,
                 flattened: writeShape.flattened,
                 fullSlug: writeShape.fullSlug,
                 urlSlug: kebabCase(writeShape.title),
