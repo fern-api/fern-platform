@@ -1,14 +1,12 @@
 name: Diff FDR Dev
 
 on:
+  push:
+    branches:
+      - "bsinghvi/test-branch"
   pull_request:
     branches:
       - "bsinghvi/test-branch"
-    paths:
-      - "servers/fdr-deploy/**"
-      - "servers/fdr/**"
-      - ".github/workflows/diff-fdr-dev.yml"
-      - "pnpm-lock.yaml"
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
