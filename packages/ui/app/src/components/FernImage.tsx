@@ -9,6 +9,7 @@ export declare namespace FernImage {
         // If the file has width/height metadata, we can render it using next/image for optimized loading.
         src: DocsV1Read.File_ | undefined;
         alt?: string;
+        maxWidth?: number; // from docs.yml
     }
 }
 
@@ -22,8 +23,8 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
             return <img {...imgProps} src={url} />;
         },
         image: ({ url, width: realWidth, height: realHeight, blurDataUrl, alt }) => {
-            const { width: layoutWidth, height: layoutHeight } = props;
-            const { width, height } = getDimensions(layoutWidth, layoutHeight, realWidth, realHeight);
+            const { width: layoutWidth, height: layoutHeight, maxWidth } = props;
+            const { width, height } = getDimensions(layoutWidth, layoutHeight, realWidth, realHeight, maxWidth);
             return (
                 <Image
                     {...props}
@@ -34,6 +35,7 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
                     placeholder={props.placeholder ?? (blurDataUrl != null ? "blur" : "empty")}
                     blurDataURL={props.blurDataURL ?? blurDataUrl}
                     unoptimized={props.unoptimized ?? url.includes(".svg")}
+                    overrideSrc={url}
                 />
             );
         },
@@ -46,17 +48,40 @@ function getDimensions(
     layoutHeight: number | `${number}` | undefined,
     realWidth: number,
     realHeight: number,
+    maxWidth?: number,
 ): { width: number; height: number } {
     layoutWidth = typeof layoutWidth === "string" ? parseInt(layoutWidth, 10) : layoutWidth;
     layoutHeight = typeof layoutHeight === "string" ? parseInt(layoutHeight, 10) : layoutHeight;
     if (layoutWidth != null && layoutHeight != null) {
+        if (maxWidth != null && layoutWidth > maxWidth) {
+            const ratio = maxWidth / layoutWidth;
+            return { width: maxWidth, height: layoutHeight * ratio };
+        }
+
         return { width: layoutWidth, height: layoutHeight };
     }
     if (layoutWidth != null) {
-        return { width: layoutWidth, height: (layoutWidth / realWidth) * realHeight };
+        if (maxWidth != null && layoutWidth > maxWidth) {
+            layoutWidth = maxWidth;
+        }
+        const ratio = layoutWidth / realWidth;
+        return { width: layoutWidth, height: realHeight * ratio };
     }
     if (layoutHeight != null) {
-        return { width: (layoutHeight / realHeight) * realWidth, height: layoutHeight };
+        if (maxWidth != null && realWidth > maxWidth) {
+            const ratio = maxWidth / realWidth;
+            const height = realHeight * ratio;
+            if (height <= layoutHeight) {
+                return { width: maxWidth, height };
+            }
+        }
+
+        const ratio = layoutHeight / realHeight;
+        return { width: realWidth * ratio, height: layoutHeight };
+    }
+    if (maxWidth != null && realWidth > maxWidth) {
+        const ratio = maxWidth / realWidth;
+        return { width: maxWidth, height: realHeight * ratio };
     }
     return { width: realWidth, height: realHeight };
 }
