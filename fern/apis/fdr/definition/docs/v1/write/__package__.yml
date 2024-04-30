@@ -224,11 +224,23 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
+    union:
+      - NavigationTabGroup
+      - NavigationTabLink
+
+  NavigationTabGroup:
     properties:
       title: string
       icon: optional<string>
       items: list<NavigationItem>
       urlSlugOverride: optional<string>
+
+  NavigationTabLink:
+    properties:
+      title: string
+      icon: optional<string>
+      url: string
 
   UnversionedUntabbedNavigationConfig:
     properties:

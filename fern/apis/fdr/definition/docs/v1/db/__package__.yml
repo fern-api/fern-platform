@@ -109,6 +109,12 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
+    union:
+      - NavigationTabGroup
+      - docsReadV1.NavigationTabLink
+
+  NavigationTabGroup:
     properties:
       title: string
       icon: optional<string>

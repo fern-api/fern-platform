@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { resolveSidebarNodesRoot } from "./resolver";
-import { SidebarNavigationRaw, SidebarNodeRaw } from "./types";
+import { SidebarNavigationRaw, SidebarNodeRaw, SidebarTab } from "./types";
 import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
 
 interface Redirect {
@@ -75,17 +75,18 @@ export function getNavigationRoot(
 
     const sidebarNodes = findSiblings<SidebarNodeRaw>(parents, isSidebarNodeRaw).items;
 
-    const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.TabGroup>(
+    const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.Tab>(
         parents,
         (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup",
     );
 
-    const tabs = tabItems.map((tab) => ({
-        title: tab.title,
-        icon: tab.icon,
-        slug: tab.slug,
-        index: tab.index,
-    }));
+    const tabs = tabItems.map((tab): SidebarTab => {
+        if (tab.type === "tabLink") {
+            return tab;
+        }
+        const { items, ...tabGroup } = tab;
+        return tabGroup;
+    });
 
     const { items: versionItems, node: currentVerion } = findSiblings<SidebarNodeRaw.VersionGroup>(
         parents,
@@ -125,7 +126,10 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     }
 
     if (isNavigationNode(node) || node.type === "section") {
-        const firstChild = node.items[0];
+        const firstChild = node.items.filter(
+            (item): item is SidebarNodeRaw.TabGroup | SidebarNodeRaw.VersionGroup | SidebarNodeRaw =>
+                item.type !== "tabLink",
+        )[0];
         return resolveRedirect(firstChild, from);
     }
 
@@ -145,9 +149,9 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     return { type: "redirect", redirect: "/" + node.slug.join("/") };
 }
 
-function findSiblings<T extends SidebarNodeRaw.ParentNode>(
+function findSiblings<T extends SidebarNodeRaw.ParentNode | SidebarNodeRaw.TabLink>(
     parents: readonly SidebarNodeRaw.ParentNode[],
-    match: (node: SidebarNodeRaw.ParentNode) => node is T,
+    match: (node: SidebarNodeRaw.ParentNode) => boolean,
 ): { items: readonly T[]; node: T | undefined } {
     const navigationDepth = parents.findIndex(match);
 
@@ -166,5 +170,5 @@ function findSiblings<T extends SidebarNodeRaw.ParentNode>(
         return { items: [], node: undefined };
     }
 
-    return { items: parent.items.filter(match) as T[], node: parents[navigationDepth] as T | undefined };
+    return { items: parent.items as T[], node: parents[navigationDepth] as T | undefined };
 }

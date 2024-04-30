@@ -185,7 +185,16 @@ function resolveSidebarNodesVersionItems(
     domain: string,
 ): SidebarNodeRaw.VersionGroup["items"] {
     if (isUnversionedTabbedNavigationConfig(nav)) {
-        return nav.tabs.map((tab, index): SidebarNodeRaw.TabGroup => {
+        return nav.tabs.map((tab, index): SidebarNodeRaw.Tab => {
+            if (tab.type === "link") {
+                return {
+                    type: "tabLink",
+                    title: tab.title,
+                    url: tab.url,
+                    icon: tab.icon,
+                    index,
+                };
+            }
             const tabSlug = [...parentSlugs, ...tab.urlSlug.split("/")];
             return {
                 type: "tabGroup",
