@@ -1,7 +1,7 @@
 import { APIV1Db, APIV1Read, DiffService, FdrAPI } from "../../api";
 import { type FdrApplication } from "../../app";
 
-export function getSnippetsFactoryService(app: FdrApplication): DiffService {
+export function getApiDiffService(app: FdrApplication): DiffService {
     return new DiffService({
         diff: async (req, res) => {
             const previous = await app.dao.apis().loadAPIDefinition(req.query.previousApiDefinitionId);
