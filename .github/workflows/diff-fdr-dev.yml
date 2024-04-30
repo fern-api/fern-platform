@@ -3,7 +3,7 @@ name: Diff FDR Dev
 on:
   pull_request:
     branches:
-      - "*"
+      - "bsinghvi/test-branch"
     paths:
       - "servers/fdr-deploy/**"
       - "servers/fdr/**"
