@@ -113,6 +113,11 @@ const nextConfig = {
     env: {
         VERSION: process.env.VERSION,
     },
+    logging: {
+        fetches: {
+            fullUrl: true,
+        },
+    },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

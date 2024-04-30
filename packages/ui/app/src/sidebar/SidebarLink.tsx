@@ -165,7 +165,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                             {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-2">
+                                    <span className="mr-2 inline-flex items-center">
                                         {typeof icon === "string" ? <RemoteFontAwesomeIcon icon={icon} /> : icon}
                                     </span>
                                 )}

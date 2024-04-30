@@ -202,7 +202,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 className="-mr-2"
                             />
                         ),
-                    failed: () => <div />,
+                    failed: () => (
+                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                            Failed
+                        </span>
+                    ),
                 })}
             </div>
             {visitLoadable(response, {
@@ -217,16 +221,16 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 loaded: (response) =>
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
-                    ) : response.response.contentType.startsWith("audio/") ? (
+                    ) : response.contentType.startsWith("audio/") ? (
                         <FernAudioPlayer
-                            src={response.response.src}
+                            src={response.response.body}
                             title={"Untitled"}
                             className="flex h-full items-center justify-center p-4"
                         />
                     ) : (
                         <FernErrorTag
                             component="PlaygroundEndpointContent"
-                            error={`File preview not supported for ${response.response.contentType}`}
+                            error={`File preview not supported for ${response.contentType}`}
                             className="flex h-full items-center justify-center"
                         />
                     ),
@@ -235,6 +239,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         component="PlaygroundEndpointContent"
                         error={e}
                         className="flex h-full items-center justify-center"
+                        showError={true}
                     />
                 ),
             })}

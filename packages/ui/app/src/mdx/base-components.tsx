@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { toNumber } from "lodash-es";
 import {
@@ -11,6 +12,7 @@ import {
     isValidElement,
     ReactElement,
     useMemo,
+    useState,
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
@@ -135,11 +137,8 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
 }
 
 export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom, ...rest }) => {
-    const { files } = useDocsContext();
-    // const mounted = useMounted();
-    // if (!mounted || disableZoom) {
-    //     return <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} />;
-    // }
+    const { files, layout } = useDocsContext();
+    const [isLoaded, setIsLoaded] = useState(false);
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
         if (src == null) {
             return undefined;
@@ -152,15 +151,35 @@ export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom
 
         return { type: "url", url: src };
     }, [files, src]);
-    return (
-        <Zoom>
-            {/* <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} /> */}
-            <FernImage
-                src={fernImageSrc}
-                {...rest}
-                height={height != null ? toNumber(height) : undefined}
-                width={height != null ? toNumber(width) : undefined}
-            />
-        </Zoom>
+    const maxWidth = useMemo(() => {
+        return layout?.contentWidth == null
+            ? 44 * 16
+            : visitDiscriminatedUnion(layout.contentWidth, "type")._visit({
+                  px: (px) => px.value,
+                  rem: (rem) => rem.value * 16,
+                  _other: () => 44 * 16,
+              });
+    }, [layout?.contentWidth]);
+
+    const image = (
+        <FernImage
+            src={fernImageSrc}
+            {...rest}
+            height={height != null ? toNumber(height) : undefined}
+            width={height != null ? toNumber(width) : undefined}
+            // initial load should be optimized for speed.
+            // after the image is loaded, we can switch to higher quality, which is better for zooming.
+            maxWidth={isLoaded ? undefined : maxWidth}
+            quality={isLoaded ? undefined : 100}
+            onLoad={() => {
+                setIsLoaded(true);
+            }}
+        />
     );
+
+    if (disableZoom) {
+        return image;
+    }
+
+    return <Zoom>{image}</Zoom>;
 };

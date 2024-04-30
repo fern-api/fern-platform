@@ -26,6 +26,7 @@ env:
 jobs:
   sdk:
     uses: ./.github/workflows/publish-fdr-sdk.yml
+    secrets: inherit
 
   deploy_dev:
     runs-on: ubuntu-latest

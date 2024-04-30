@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
@@ -21,6 +21,8 @@ const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
 
 export class FdrDeployStack extends Stack {
+    private readonly fernDocsCacheEndpoint: string;
+
     constructor(
         scope: Construct,
         id: string,
@@ -196,7 +198,7 @@ export class FdrDeployStack extends Stack {
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
 
-        new ElastiCacheStack(this, "FernDocsElastiCache", {
+        const fernDocsCache = new ElastiCacheStack(this, "FernDocsElastiCache", {
             cacheName: "FernDocsElastiCache",
             IVpc: vpc,
             numCacheShards: 1,
@@ -204,7 +206,11 @@ export class FdrDeployStack extends Stack {
             clusterMode: "enabled",
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,
+            env: props?.env,
         });
+
+        this.fernDocsCacheEndpoint = `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`;
+        new CfnOutput(this, "FernDocsCacheEndpoint", { value: this.fernDocsCacheEndpoint });
     }
 }
 

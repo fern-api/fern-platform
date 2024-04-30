@@ -7,6 +7,7 @@ import { register } from "../../api";
 import { FdrApplication } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
+import { getApiDiffService } from "../../controllers/diff/getApiDiffService";
 import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "../../controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Service";
@@ -96,6 +97,7 @@ function runMockFdr(port: number): MockFdr.Instance {
         snippets: getSnippetsService(fdrApplication),
         snippetsFactory: getSnippetsFactoryService(fdrApplication),
         templates: getTemplatesService(fdrApplication),
+        diff: getApiDiffService(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);

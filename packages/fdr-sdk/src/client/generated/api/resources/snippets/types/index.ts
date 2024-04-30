@@ -1,6 +1,3 @@
-export * from "./EndpointIdentifier";
-export * from "./EndpointPath";
-export * from "./EndpointMethod";
 export * from "./SdkRequest";
 export * from "./TypeScriptSdkRequest";
 export * from "./PythonSdkRequest";

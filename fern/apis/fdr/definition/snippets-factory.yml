@@ -72,27 +72,27 @@ types:
 
   SingleTypescriptSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: TypeScriptSnippetCode
 
   SinglePythonSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: PythonSnippetCode
 
   SingleGoSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: GoSnippetCode
 
   SingleRubySnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: RubySnippetCode
 
   SingleJavaSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: JavaSnippetCode
 
   # Snippet Code

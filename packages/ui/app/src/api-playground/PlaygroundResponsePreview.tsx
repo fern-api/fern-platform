@@ -14,7 +14,9 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
                 ? response.response.body
                 : response.type === "file"
                   ? ""
-                  : JSON.stringify(response.response.body, null, 2),
+                  : typeof response.response.body === "string"
+                    ? response.response.body
+                    : JSON.stringify(response.response.body, null, 2),
         [response],
     );
     const viewportRef = useRef<ScrollToHandle>(null);
@@ -32,10 +34,36 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({ 
     return (
         <FernSyntaxHighlighter
             className="relative min-h-0 flex-1 shrink"
-            language="json"
+            language={getLanguage(response)}
             code={responseJson}
             fontSize="sm"
             viewportRef={viewportRef}
         />
     );
 };
+
+function getLanguage(response: PlaygroundResponse): string {
+    if (response.type === "file") {
+        return "text";
+    }
+
+    if (response.type === "stream") {
+        return "json"; // TODO: support other types
+    }
+
+    if (response.contentType.includes("text/html")) {
+        return "html";
+    } else if (response.contentType.includes("application/json")) {
+        return "json";
+    } else if (response.contentType.includes("application/xml")) {
+        return "xml";
+    } else if (response.contentType.includes("text/css")) {
+        return "css";
+    } else if (response.contentType.includes("text/javascript")) {
+        return "javascript";
+    } else if (response.contentType.includes("text/plain")) {
+        return "text";
+    } else {
+        return "text";
+    }
+}
