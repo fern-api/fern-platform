@@ -25,9 +25,9 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             >
                 <div className="flex min-w-0 items-center justify-start space-x-4">
                     <div className="min-w-fit">
-                        <div className="flex size-6 items-center ring-1 shadow-sm ring-border-concealed justify-center rounded-md group-hover/tab-button:bg-accent group-hover/tab-button:ring-0 bg-card group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:ring-0 group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent">
+                        <div className="flex size-6 items-center ring-1 shadow-sm ring-border-concealed justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent-primary/70 bg-card group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:ring-0 group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent">
                             <RemoteFontAwesomeIcon
-                                className="size-4 bg-faded group-hover/tab-button:bg-background group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background"
+                                className="size-4 bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background"
                                 // TODO: Should we validate that the icon is not undefined in sidebar mode
                                 icon={tab.icon ?? "book-open"}
                             />
