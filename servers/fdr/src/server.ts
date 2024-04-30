@@ -8,6 +8,7 @@ import { FdrApplication, getConfig } from "./app";
 import { registerBackgroundTasks } from "./background";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
+import { getApiDiffService } from "./controllers/diff/getApiDiffService";
 import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "./controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service";
@@ -88,6 +89,7 @@ try {
         snippets: getSnippetsService(app),
         snippetsFactory: getSnippetsFactoryService(app),
         templates: getTemplatesService(app),
+        diff: getApiDiffService(app),
     });
     registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);
