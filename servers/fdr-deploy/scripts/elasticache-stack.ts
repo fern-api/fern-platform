@@ -13,6 +13,7 @@ interface ElastiCacheStackProps extends StackProps {
     readonly cacheNodeType: string;
     readonly envType: EnvironmentType;
     readonly env?: Environment;
+    readonly ingressSecurityGroup?: SecurityGroup;
 }
 
 export class ElastiCacheStack extends Stack {
@@ -38,7 +39,7 @@ export class ElastiCacheStack extends Stack {
         this.subnetGroup = new CfnSubnetGroup(this, elastiCacheSubnetGroupName, {
             description: `${elastiCacheSubnetGroupName} CDK`,
             cacheSubnetGroupName: elastiCacheSubnetGroupName,
-            subnetIds: props.IVpc.privateSubnets.map(({ subnetId }) => subnetId),
+            subnetIds: props.IVpc.publicSubnets.map(({ subnetId }) => subnetId),
         });
 
         const elastiCacheReplicationGroupName = envPrefix + props.cacheName + "ReplicationGroup";
@@ -67,7 +68,7 @@ export class ElastiCacheStack extends Stack {
         this.redisEndpointPort = this.replicationGroup.attrConfigurationEndPointPort;
 
         this.securityGroup.addIngressRule(
-            Peer.anyIpv4(),
+            props.ingressSecurityGroup || Peer.anyIpv4(),
             Port.tcp(Token.asNumber(this.redisEndpointPort)),
             "Redis Port Ingress rule",
         );
