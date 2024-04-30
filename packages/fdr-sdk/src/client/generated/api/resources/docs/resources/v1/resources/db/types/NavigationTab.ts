@@ -4,9 +4,4 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface NavigationTab {
-    title: string;
-    icon?: string;
-    items: FernRegistry.docs.v1.db.NavigationItem[];
-    urlSlug: string;
-}
+export type NavigationTab = FernRegistry.docs.v1.db.NavigationTabGroup | FernRegistry.docs.v1.read.NavigationTabLink;
