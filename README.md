@@ -14,6 +14,8 @@ by our workspace root.
 
 > Note: To upgrade fern run `pnpm upgrade fern-api`.
 
+Add a test
+
 ## Services
 
 ### FDR (Fern Definition Registry)
