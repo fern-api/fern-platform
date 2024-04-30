@@ -93,7 +93,7 @@ export async function buildRequestBody(body: ProxyRequest.SerializableBody | und
     }
 }
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+export default async function POST(req: NextRequest): Promise<NextResponse<null | ProxyResponse>> {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
