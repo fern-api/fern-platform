@@ -1,8 +1,8 @@
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import cn from "clsx";
-import Link from "next/link";
 import { memo } from "react";
 import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
+import { FernLink } from "../components/FernLink";
 
 export declare namespace SidebarTabButton {
     export interface Props {
@@ -14,13 +14,13 @@ export declare namespace SidebarTabButton {
 const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, selected }) => {
     return (
         <li>
-            <Link
+            <FernLink
                 className={cn(
                     "min-h-[32px] lg:min-h-[36px]",
                     "text-base lg:text-sm flex flex-1 py-2 lg:px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:t-accent",
                     "data-[state=active]:t-accent data-[state=inactive]:t-muted",
                 )}
-                href={`/${tab.slug.join("/")}`}
+                href={tab.type === "tabGroup" ? `/${tab.slug.join("/")}` : tab.url}
                 data-state={selected ? "active" : "inactive"}
             >
                 <div className="flex min-w-0 items-center justify-start space-x-4 lg:space-x-3">
@@ -40,7 +40,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     </div>
                     <span className="truncate font-medium">{tab.title}</span>
                 </div>
-            </Link>
+            </FernLink>
         </li>
     );
 };

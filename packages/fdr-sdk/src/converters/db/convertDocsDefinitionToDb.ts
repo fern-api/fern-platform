@@ -9,6 +9,7 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
+import { isNavigationTabLink } from "../../client/visitNavigationTab";
 import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
@@ -152,6 +153,9 @@ function transformUnversionedNavigationConfigForDb(
 }
 
 export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTab): DocsV1Db.NavigationTab {
+    if (isNavigationTabLink(writeShape)) {
+        return writeShape;
+    }
     return {
         ...writeShape,
         items: writeShape.items.map(transformNavigationItemForDb),
@@ -239,7 +243,12 @@ function getReferencedApiDefinitionIdsForUnversionedReadConfig(
             return config.items.flatMap(getReferencedApiDefinitionIdFromItem);
         },
         tabbed: (config) => {
-            return config.tabs.flatMap((tab) => tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+            return config.tabs.flatMap((tab) => {
+                if (isNavigationTabLink(tab)) {
+                    return [];
+                }
+                return tab.items.flatMap(getReferencedApiDefinitionIdFromItem);
+            });
         },
     });
 }

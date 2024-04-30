@@ -1,8 +1,9 @@
 import lodash from "lodash";
 import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
+import { visitDbNavigationTab } from "../../client/visitNavigationTab";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 const { kebabCase } = lodash;
 
@@ -136,10 +137,18 @@ function transformUnversionedNavigationConfigForDb(
 }
 
 export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): DocsV1Read.NavigationTab {
-    return {
-        ...dbShape,
-        items: dbShape.items.map(transformNavigationItemForDb),
-    };
+    return visitDbNavigationTab<DocsV1Read.NavigationTab>(dbShape, {
+        link: (link) => ({ type: "link", ...link }),
+        group: (group) => ({
+            type: "group",
+            ...group,
+            items: group.items.map(transformNavigationItemForDb),
+        }),
+    });
+}
+
+export function isNavigationTabLink(tab: DocsV1Db.NavigationTab): tab is DocsV1Read.NavigationTabLink {
+    return (tab as DocsV1Read.NavigationTabLink).url != null;
 }
 
 export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): DocsV1Read.NavigationItem {
