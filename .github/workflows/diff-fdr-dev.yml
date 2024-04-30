@@ -6,7 +6,7 @@ on:
       - "*"
     paths:
       - "servers/fdr-deploy/**"
-      - ".github/workflows/deploy-fdr-dev.yml"
+      - ".github/workflows/diff-fdr-dev.yml"
       - "pnpm-lock.yaml"
 
 env:
