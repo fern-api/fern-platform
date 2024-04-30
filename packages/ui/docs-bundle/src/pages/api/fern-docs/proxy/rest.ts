@@ -159,23 +159,6 @@ export default async function POST(req: NextRequest): Promise<NextResponse<null 
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-
-        return NextResponse.json(
-            {
-                response: {
-                    headers: {},
-                    ok: false,
-                    redirected: false,
-                    status: 500,
-                    statusText: "Internal Server Error",
-                    type: "error",
-                    url: "",
-                    body: null,
-                },
-                time: -1,
-                size: null,
-            },
-            { status: 500 },
-        );
+        return new NextResponse(null, { status: 500 });
     }
 }
