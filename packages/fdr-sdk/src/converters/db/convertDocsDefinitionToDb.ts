@@ -9,6 +9,7 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
+import { isNavigationTabLink } from "../../client/visitNavigationTab";
 import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
@@ -160,12 +161,6 @@ export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTa
         items: writeShape.items.map(transformNavigationItemForDb),
         urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
     };
-}
-
-export function isNavigationTabLink(
-    tab: DocsV1Write.NavigationTab | DocsV1Db.NavigationTab,
-): tab is DocsV1Write.NavigationTabLink {
-    return (tab as DocsV1Write.NavigationTabLink).url != null;
 }
 
 export function transformNavigationItemForDb(

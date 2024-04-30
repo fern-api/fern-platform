@@ -1,4 +1,4 @@
-import { visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
+import { visitDbNavigationTab, visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
@@ -102,15 +102,20 @@ export class AlgoliaSearchRecordGenerator {
         config: DocsV1Db.UnversionedTabbedNavigationConfig,
         context: NavigationContext,
     ) {
-        const records = config.tabs.map((tab) => {
-            const tabRecords = tab.items.map((item) =>
-                this.generateAlgoliaSearchRecordsForNavigationItem(
-                    item,
-                    context.withPathPart({ name: tab.title, urlSlug: tab.urlSlug }),
-                ),
-            );
-            return tabRecords.flat(1);
-        });
+        const records = config.tabs.map((tab) =>
+            visitDbNavigationTab(tab, {
+                group: (group) => {
+                    const tabRecords = group.items.map((item) =>
+                        this.generateAlgoliaSearchRecordsForNavigationItem(
+                            item,
+                            context.withPathPart({ name: tab.title, urlSlug: group.urlSlug }),
+                        ),
+                    );
+                    return tabRecords.flat(1);
+                },
+                link: () => [],
+            }),
+        );
         return records.flat(1);
     }
 
