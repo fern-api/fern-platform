@@ -5,7 +5,7 @@ on:
     branches:
       - "*"
     paths:
-      - "servers/fdr-deploy/**"
+      - "servers/fdr-deploy/scripts/**"
       - ".github/workflows/diff-fdr-dev.yml"
       - "pnpm-lock.yaml"
 
@@ -21,7 +21,7 @@ env:
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 jobs:
-  deploy_dev:
+  diff_cdk:
     runs-on: ubuntu-latest
     environment: Fern Dev
     strategy:
