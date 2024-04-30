@@ -281,7 +281,7 @@
     }
 
     .fern-sidebar-link-expand {
-        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out;
+        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none ease-out;
         @apply lg:rounded-lg;
 
         &:last-child {
