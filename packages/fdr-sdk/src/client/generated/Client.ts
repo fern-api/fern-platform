@@ -6,6 +6,7 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Api } from "./api/resources/api/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
+import { Diff } from "./api/resources/diff/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
@@ -35,6 +36,12 @@ export class FernRegistryClient {
 
     public get docs(): Docs {
         return (this._docs ??= new Docs(this._options));
+    }
+
+    protected _diff: Diff | undefined;
+
+    public get diff(): Diff {
+        return (this._diff ??= new Diff(this._options));
     }
 
     protected _snippetsFactory: SnippetsFactory | undefined;
