@@ -206,6 +206,7 @@ export class FdrDeployStack extends Stack {
             clusterMode: "enabled",
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,
+            env: props?.env,
         });
 
         this.fernDocsCacheEndpoint = `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`;

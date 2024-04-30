@@ -1,5 +1,5 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Stack, StackProps, Token } from "aws-cdk-lib";
+import { Environment, Stack, StackProps, Token } from "aws-cdk-lib";
 import { IVpc, Peer, Port, SecurityGroup } from "aws-cdk-lib/aws-ec2";
 import { CfnReplicationGroup, CfnSubnetGroup } from "aws-cdk-lib/aws-elasticache";
 import { Construct } from "constructs";
@@ -12,6 +12,7 @@ interface ElastiCacheStackProps extends StackProps {
     readonly clusterMode: "enabled" | "disabled";
     readonly cacheNodeType: string;
     readonly envType: EnvironmentType;
+    readonly env?: Environment;
 }
 
 export class ElastiCacheStack extends Stack {
