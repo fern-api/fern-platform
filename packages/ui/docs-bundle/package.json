@@ -47,6 +47,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@sentry/nextjs": "^7.105.0",
+    "@vercel/edge": "^1.1.1",
     "@vercel/edge-config": "^1.1.0",
     "@workos-inc/node": "^6.1.0",
     "cssnano": "^6.0.3",

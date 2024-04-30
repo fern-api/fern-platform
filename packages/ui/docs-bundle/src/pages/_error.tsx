@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<ErrorProps> = async ({ req, 
     return {
         props: {
             statusCode: res.statusCode,
-            title: res.statusMessage,
+            // title: res.statusMessage,
         },
     };
 };

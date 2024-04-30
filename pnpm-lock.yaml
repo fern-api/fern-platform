@@ -1117,6 +1117,9 @@ importers:
       '@sentry/nextjs':
         specifier: ^7.105.0
         version: 7.112.2(next@14.1.4)(react@18.2.0)
+      '@vercel/edge':
+        specifier: ^1.1.1
+        version: 1.1.1
       '@vercel/edge-config':
         specifier: ^1.1.0
         version: 1.1.0(typescript@5.4.3)
@@ -9865,6 +9868,10 @@ packages:
       ts-essentials: 9.4.1(typescript@5.4.3)
     transitivePeerDependencies:
       - typescript
+    dev: false
+
+  /@vercel/edge@1.1.1:
+    resolution: {integrity: sha512-NtKiIbn9Cq6HWGy+qRudz28mz5nxfOJWls5Pnckjw1yCfSX8rhXdvY/il3Sy3Zd5n/sKCM2h7VSCCpJF/oaDrQ==}
     dev: false
 
   /@vitejs/plugin-react@4.2.1(vite@5.2.6):
