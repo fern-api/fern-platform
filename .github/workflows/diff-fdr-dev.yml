@@ -72,13 +72,13 @@ jobs:
       #   env:
       #     DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
 
-      - name: 🚀 cdk deploy
+      - name: 🚀 cdk diff
         run: |
           git_version="$(scripts/git-version.sh)"
           pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
           npm install -g aws-cdk
           cd servers/fdr-deploy
-          VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy cdk-diff
+          VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy cdk diff
         env:
           DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
 
