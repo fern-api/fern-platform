@@ -9,9 +9,9 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 const { kebabCase } = lodash;
 
 export interface S3FileInfo {
@@ -168,6 +168,8 @@ export function transformNavigationItemForDb(
                 ...writeShape,
                 icon: writeShape.icon,
                 hidden: writeShape.hidden ?? false,
+                longScrolling: writeShape.longScrolling, 
+                flattened: writeShape.flattened,
                 fullSlug: writeShape.fullSlug,
                 urlSlug: kebabCase(writeShape.title),
                 artifacts:

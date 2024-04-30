@@ -15,4 +15,6 @@ export interface ApiSection {
     hidden?: boolean;
     fullSlug?: string[];
     navigation?: FernRegistry.docs.v1.write.ApiNavigationConfigRoot;
+    longScrolling?: boolean;
+    flattened?: boolean;
 }
