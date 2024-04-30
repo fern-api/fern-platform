@@ -1,4 +1,4 @@
-import { Language } from "@prisma/client";
+import { Language, PrismaClient } from "@prisma/client";
 import { FdrAPI } from "../../api";
 import { BadRequestError, Sdk, SdkRequest } from "../../api/generated/api";
 import { assertNever } from "../../util";
@@ -37,26 +37,28 @@ export function getPackageNameFromSdkRequest(sdk: FdrAPI.SdkRequest): string {
     }
 }
 
-export async function getSdkFromSdkRequest(request: SdkRequest): Promise<Sdk> {
+export async function getSdkFromSdkRequest(prismaClient: PrismaClient, request: SdkRequest): Promise<Sdk> {
     if (request.version != null) {
         return { ...request, version: request.version };
     } else {
-        const sdkDao = await this.prisma.sdk.findFirst({
+        const packageName = getPackageNameFromSdkRequest(request);
+        const language = getLanguageFromRequest({ sdk: request });
+        const sdkDao = await prismaClient.sdk.findFirst({
             select: {
                 version: true,
             },
             where: {
-                package: getPackageNameFromSdkRequest(request),
-                language: getLanguageFromRequest({ sdk: request }),
+                package: packageName,
+                language,
             },
             orderBy: {
                 createdAt: "desc",
             },
         });
 
-        if (sdkDao === null) {
-            throw new BadRequestError("No SDK found for the given request");
-        } else if (sdkDao.version === null) {
+        if (sdkDao == null) {
+            throw new BadRequestError(`No SDK found for the given request: ${language} ${packageName}`);
+        } else if (sdkDao.version == null) {
             throw new BadRequestError("No version for SDK found for the given request");
         }
 
@@ -67,7 +69,7 @@ export async function getSdkFromSdkRequest(request: SdkRequest): Promise<Sdk> {
     }
 }
 
-function getLanguageFromRequest({ sdk }: { sdk: SdkRequest }): Language {
+export function getLanguageFromRequest({ sdk }: { sdk: SdkRequest }): Language {
     switch (sdk.type) {
         case "typescript":
             return Language.TYPESCRIPT;

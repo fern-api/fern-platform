@@ -71,20 +71,20 @@ it("generate example from snippet template", async () => {
         orgId,
         apiId,
         apiDefinitionId: "....",
-        snippet: CHAT_COMPLETION_SNIPPET,
+        snippet: CHAT_COMPLETION_SNIPPET("0.0.5"),
     });
     // create snippets
     await fdr.templates.get({
         orgId,
         apiId,
-        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+        endpointId: CHAT_COMPLETION_SNIPPET("0.0.5").endpointId,
         sdk,
     });
 
     const response = await fdr.snippets.get({
         orgId,
         apiId,
-        endpoint: CHAT_COMPLETION_SNIPPET.endpointId,
+        endpoint: CHAT_COMPLETION_SNIPPET("0.0.5").endpointId,
         sdks: [sdk],
         payload: CHAT_COMPLETION_PAYLOAD,
     });
@@ -101,7 +101,7 @@ it("fallback to version", async () => {
     const sdk: FernRegistry.Sdk = {
         type: "python",
         package: "octoai",
-        version: "0.0.5",
+        version: "0.0.6",
     };
     const genericRequest: FernRegistry.SdkRequest = {
         type: "python",
@@ -109,36 +109,38 @@ it("fallback to version", async () => {
     };
 
     // register API definition for acme org
-    await unauthedFdr.templates.register({
+    const reg = await unauthedFdr.templates.register({
         orgId,
         apiId,
         apiDefinitionId: "....",
-        snippet: CHAT_COMPLETION_SNIPPET,
+        snippet: CHAT_COMPLETION_SNIPPET("0.0.6"),
     });
+    expect(reg.ok).toBe(true);
     // create snippets
     const template = getAPIResponse(
         await fdr.templates.get({
             orgId,
             apiId,
-            endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
-            sdk,
+            endpointId: CHAT_COMPLETION_SNIPPET("0.0.6").endpointId,
+            sdk: genericRequest,
         }),
     );
-    expect(template.sdk.version).toBe("0.0.5");
+    expect(template.sdk.version).toBe("0.0.6");
 
     // register API definition for acme org
-    await unauthedFdr.templates.register({
+    const regAgain = await unauthedFdr.templates.register({
         orgId,
         apiId,
         apiDefinitionId: "....",
-        snippet: { ...CHAT_COMPLETION_SNIPPET, sdk: { ...CHAT_COMPLETION_SNIPPET.sdk, version: "0.0.122" } },
+        snippet: CHAT_COMPLETION_SNIPPET("0.0.122"),
     });
+    expect(regAgain.ok).toBe(true);
     // create snippets
     const templateAgain = getAPIResponse(
         await fdr.templates.get({
             orgId,
             apiId,
-            endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+            endpointId: CHAT_COMPLETION_SNIPPET("0.0.122").endpointId,
             sdk: genericRequest,
         }),
     );
@@ -147,11 +149,11 @@ it("fallback to version", async () => {
     const templateSpecify = await fdr.templates.get({
         orgId,
         apiId,
-        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+        endpointId: CHAT_COMPLETION_SNIPPET("0.0.6").endpointId,
         sdk,
     });
     expect(templateSpecify.ok).toBe(true);
     if (templateSpecify.ok) {
-        expect(templateSpecify.body.sdk.version).toBe("0.0.5");
+        expect(templateSpecify.body.sdk.version).toBe("0.0.6");
     }
 });
