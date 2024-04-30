@@ -5,7 +5,7 @@ export const runtime = "edge";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60 * 5; // 5 minutes
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+export default async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
     try {
         if (req.method !== "POST") {
             return new NextResponse(null, { status: 405 });
@@ -21,7 +21,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         if (response.body != null) {
             const encoder = new TextEncoder();
             const decoder = new TextDecoder();
-            const transformStream = new TransformStream({
+            const transformStream = new TransformStream<Uint8Array, Uint8Array>({
                 transform(chunk, controller) {
                     const endTime = Date.now();
                     const text = decoder.decode(chunk);
