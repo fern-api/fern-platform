@@ -382,6 +382,8 @@ types:
       changelog: optional<ChangelogSection>
       fullSlug: optional<list<string>>
       navigation: optional<ApiNavigationConfigRoot>
+      longScrolling: optional<boolean>
+      flattened: optional<boolean>
 
   ApiNavigationConfigRoot:
     properties:

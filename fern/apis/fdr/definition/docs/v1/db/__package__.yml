@@ -156,6 +156,8 @@ types:
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
       navigation: optional<docsReadV1.ApiNavigationConfigRoot>
+      longScrolling: optional<boolean>
+      flattened: optional<boolean>      
 
   DocsSection:
     properties:
