@@ -62,7 +62,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                 >
                     {tabs.length > 0 && (
                         <ul
-                            className={cn("mt-4 flex list-none flex-col", {
+                            className={cn("mt-5 flex list-none flex-col", {
                                 "lg:hidden": layout?.disableHeader !== true && layout?.tabsPlacement === "HEADER",
                             })}
                         >

@@ -77,7 +77,7 @@ export function getNavigationRoot(
 
     const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.Tab>(
         parents,
-        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup",
+        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup" || n.type === "tabLink",
     );
 
     const tabs = tabItems
