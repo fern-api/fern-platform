@@ -3,9 +3,11 @@ import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
+import { Toaster } from "../components/FernToast";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
@@ -55,6 +57,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                         <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                         <Docs logoHeight={logoHeight} logoHref={logoHref} />
                     </NavigationContextProvider>
+                    <Toaster />
                 </div>
             </DocsContextProvider>
         </FeatureFlagContext.Provider>

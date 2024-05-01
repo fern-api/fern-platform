@@ -99,6 +99,7 @@
     "remark-math": "^6.0.0",
     "remark-smartypants": "^2.1.0",
     "shiki": "^1.1.7",
+    "sonner": "^1.4.41",
     "style-to-object": "^1.0.5",
     "tinycolor2": "^1.6.0",
     "unified": "^11.0.4",
