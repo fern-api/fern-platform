@@ -24,6 +24,20 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
         image: ({ url, width: realWidth, height: realHeight, blurDataUrl, alt }) => {
             const { width: layoutWidth, height: layoutHeight } = props;
             const { width, height } = getDimensions(layoutWidth, layoutHeight, realWidth, realHeight);
+            console.log(
+                "width",
+                width,
+                "height",
+                height,
+                "realWidth",
+                realWidth,
+                "realHeight",
+                realHeight,
+                "layoutWidth",
+                layoutWidth,
+                "layoutHeight",
+                layoutHeight,
+            );
             return (
                 <Image
                     {...props}
@@ -49,6 +63,12 @@ function getDimensions(
 ): { width: number; height: number } {
     layoutWidth = typeof layoutWidth === "string" ? parseInt(layoutWidth, 10) : layoutWidth;
     layoutHeight = typeof layoutHeight === "string" ? parseInt(layoutHeight, 10) : layoutHeight;
+    if (layoutWidth != null && isNaN(layoutWidth)) {
+        layoutWidth = undefined;
+    }
+    if (layoutHeight != null && isNaN(layoutHeight)) {
+        layoutHeight = undefined;
+    }
     if (layoutWidth != null && layoutHeight != null) {
         return { width: layoutWidth, height: layoutHeight };
     }
