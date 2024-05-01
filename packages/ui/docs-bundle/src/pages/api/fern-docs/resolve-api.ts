@@ -6,6 +6,7 @@ import {
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { getFeatureFlags } from "./feature-flags";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {
@@ -74,12 +75,15 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
         const apiSection = findApiSection(api, sidebarNodes);
 
+        const featureFlags = await getFeatureFlags(docs.body.baseUrl.domain);
+
         res.status(200).json(
             await ApiDefinitionResolver.resolve(
                 apiSection?.title ?? "",
                 flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined, docs.body.baseUrl.domain),
                 pages,
                 undefined,
+                featureFlags,
             ),
         );
     } catch (err) {
