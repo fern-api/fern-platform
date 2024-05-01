@@ -1,5 +1,5 @@
+import { Env } from "@libs/env";
 import { App } from "octokit";
-import { Env } from "../env";
 import { dashboard, setupGithubApp } from "./octokit";
 
 export async function handleIncomingRequest(request: Request, env: Env): Promise<Response> {

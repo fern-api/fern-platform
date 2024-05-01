@@ -1,4 +1,4 @@
-import path from "node:path";
+import * as path from "path";
 import { z } from "zod";
 import { GENERATORS_CONFIGURATION_FILENAME } from "./constants";
 import { GeneratorsConfigurationSchema } from "./schemas";

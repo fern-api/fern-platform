@@ -1,9 +1,0 @@
-name = "fern-bot-worker"
-main = "src/index.ts"
-compatibility_date = "2024-04-04"
-node_compat = true
-
-# Enable a time-based trigger for this worker, cloudflare exposes a way to conveniently test these
-# https://developers.cloudflare.com/workers/examples/cron-trigger/#test-cron-triggers-using-wrangler
-[triggers]
-crons = ["0 * * * *"]

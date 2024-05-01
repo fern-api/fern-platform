@@ -1,10 +1,12 @@
 import { components } from "@octokit/openapi-types";
 import { App, Octokit } from "octokit";
 
-import path from "node:path";
-import { Readable } from "node:stream";
+import { Env } from "@libs/env";
+import { createWriteStream } from "fs";
+import * as path from "path";
 import simpleGit from "simple-git";
-import { Env } from "../env";
+import { Readable } from "stream";
+import { finished } from "stream/promises";
 import { API_ORIGIN_LOCATION_KEY, ASYNC_API_LOCATION_KEY, OPENAPI_LOCATION_KEY } from "../fern-cli/schemas";
 import { loadRawGeneratorsConfiguration } from "../fern-cli/utilities";
 import { setupGithubApp } from "../github/octokit";
@@ -16,8 +18,8 @@ type Repository = components["schemas"]["repository"];
 async function fetchAndWriteFile(url: string, path: string): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
-        const fileStream = require("fs").createWriteStream(path);
-        await require("node:stream/promises").finished(Readable.fromWeb(resp.body).pipe(fileStream));
+        const fileStream = createWriteStream(path);
+        await finished(Readable.fromWeb(resp.body).pipe(fileStream));
     }
 }
 

@@ -1,5 +1,5 @@
+import { Env } from "@libs/env";
 import { App } from "octokit";
-import { Env } from "../env";
 
 export const dashboard = async (app: App): Promise<Response> => {
     const { data } = await app.octokit.request("GET /app");
