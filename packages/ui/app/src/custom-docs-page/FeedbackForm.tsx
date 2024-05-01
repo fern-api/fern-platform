@@ -2,7 +2,7 @@ import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernCheckbox } from "../components/FernCheckbox";
 import { FernDropdown } from "../components/FernDropdown";
@@ -86,7 +86,8 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layou
         capture: true,
     });
 
-    const handleSubmitFeedback = () => {
+    const handleSubmitFeedback = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (feedbackId == null) {
             return;
         }
@@ -99,7 +100,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layou
     };
 
     return (
-        <form className="p-0">
+        <form onSubmit={handleSubmitFeedback} className="p-0">
             <label
                 htmlFor="feedbackReason"
                 className={clsx({
@@ -159,7 +160,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layou
                 full={true}
                 intent="primary"
                 className="mt-4 rounded-md"
-                onClick={handleSubmitFeedback}
+                type="submit"
                 disabled={feedbackId == null}
                 size={layoutDensity === "verbose" ? "large" : "normal"}
             >

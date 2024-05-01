@@ -5,6 +5,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
 import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
+import { toast } from "../components/FernToast";
 import { FeedbackForm } from "./FeedbackForm";
 import { FeedbackFormDialog } from "./FeedbackFormDialog";
 
@@ -70,6 +71,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                 email,
                 allowFollowUpViaEmail: showEmailInput === true,
             });
+            toast.success("Thank you for submitting feedback!");
             setSent(true);
         },
         [isHelpful],
