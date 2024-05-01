@@ -4,16 +4,16 @@
 import * as FernRegistry from "../../../../../../../../..";
 export declare type PrimitiveType = FernRegistry.api.v1.read.PrimitiveType.Integer | FernRegistry.api.v1.read.PrimitiveType.Double | FernRegistry.api.v1.read.PrimitiveType.Long | FernRegistry.api.v1.read.PrimitiveType.String | FernRegistry.api.v1.read.PrimitiveType.Boolean | FernRegistry.api.v1.read.PrimitiveType.Datetime | FernRegistry.api.v1.read.PrimitiveType.Uuid | FernRegistry.api.v1.read.PrimitiveType.Base64 | FernRegistry.api.v1.read.PrimitiveType.Date_;
 export declare namespace PrimitiveType {
-    interface Integer {
+    interface Integer extends FernRegistry.api.v1.read.IntegerType {
         type: "integer";
     }
-    interface Double {
+    interface Double extends FernRegistry.api.v1.read.DoubleType {
         type: "double";
     }
     interface Long {
         type: "long";
     }
-    interface String {
+    interface String extends FernRegistry.api.v1.read.StringType {
         type: "string";
     }
     interface Boolean {
