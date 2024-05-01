@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
+export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippetTemplate => ({
     endpointId: {
         path: "/v1/chat/completions",
         method: "POST",
@@ -8,7 +8,7 @@ export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
     sdk: {
         type: "python",
         package: "octoai",
-        version: "0.0.5",
+        version,
     },
     snippetTemplate: {
         type: "v1",
@@ -624,7 +624,7 @@ export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
         clientInstantiation:
             'from octoai.client import AsyncOctoAI\n\nclient = AsyncOctoAI(\n    api_key="YOUR_API_KEY",\n)\n',
     },
-};
+});
 
 export const CHAT_COMPLETION_PAYLOAD: FdrAPI.CustomSnippetPayload = {
     headers: [],

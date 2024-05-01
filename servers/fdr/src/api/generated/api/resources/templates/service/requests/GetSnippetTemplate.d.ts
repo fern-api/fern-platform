@@ -5,6 +5,6 @@ import * as FernRegistry from "../../../..";
 export interface GetSnippetTemplate {
     orgId: FernRegistry.OrgId;
     apiId: FernRegistry.ApiId;
-    sdk: FernRegistry.Sdk;
+    sdk: FernRegistry.SdkRequest;
     endpointId: FernRegistry.EndpointIdentifier;
 }
