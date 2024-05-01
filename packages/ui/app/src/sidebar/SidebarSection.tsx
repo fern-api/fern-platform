@@ -149,7 +149,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                 <li key={sectionSlug}>
                                     <SidebarHeading
                                         className={cn({
-                                            "mt-6": topLevel,
+                                            "mt-5": topLevel,
                                         })}
                                         depth={depth}
                                         title={section.title}
@@ -211,7 +211,7 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                                 ) : (
                                     <SidebarHeading
                                         className={cn({
-                                            "mt-6": topLevel,
+                                            "mt-5": topLevel,
                                         })}
                                         depth={depth}
                                         title={apiSection.title}

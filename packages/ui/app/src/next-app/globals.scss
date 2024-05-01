@@ -225,7 +225,7 @@
     }
 
     .fern-sidebar-heading {
-        @apply flex min-h-[32px] lg:min-h-[36px];
+        @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
     }
 
     .fern-sidebar-group {

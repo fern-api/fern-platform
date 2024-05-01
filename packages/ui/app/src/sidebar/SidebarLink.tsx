@@ -165,8 +165,15 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                             {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-2 inline-flex items-center">
-                                        {typeof icon === "string" ? <RemoteFontAwesomeIcon icon={icon} /> : icon}
+                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:text-text-default">
+                                        {typeof icon === "string" ? (
+                                            <RemoteFontAwesomeIcon
+                                                icon={icon}
+                                                className="bg-faded group-data-[state=active]:bg-text-default"
+                                            />
+                                        ) : (
+                                            icon
+                                        )}
                                     </span>
                                 )}
                                 {createElement(as, { className: "fern-sidebar-link-text" }, title)}
