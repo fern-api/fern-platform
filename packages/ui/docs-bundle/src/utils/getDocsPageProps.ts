@@ -195,6 +195,8 @@ async function convertDocsToDocsPageProps({
         navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
     );
 
+    const featureFlags = await getFeatureFlags(xFernHost);
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
         rawSidebarNodes: navigation.found.sidebarNodes,
@@ -202,6 +204,7 @@ async function convertDocsToDocsPageProps({
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
         domain: docs.baseUrl.domain,
+        featureFlags,
     });
 
     if (resolvedPath == null) {
@@ -219,8 +222,6 @@ async function convertDocsToDocsPageProps({
             },
         };
     }
-
-    const featureFlags = await getFeatureFlags(xFernHost);
 
     const props: DocsPage.Props = {
         baseUrl: docs.baseUrl,
