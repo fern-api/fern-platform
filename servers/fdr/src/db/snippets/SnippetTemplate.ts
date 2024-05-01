@@ -80,6 +80,9 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         > = {};
         for (const endpoint of endpoints) {
             for (const sdk of sdkRequests) {
+                if (sdk.type !== "typescript" && sdk.type !== "python") {
+                    continue;
+                }
                 const result = await this.loadSnippetTemplate({
                     loadSnippetTemplateRequest: {
                         sdk,
@@ -101,9 +104,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                             DELETE: {},
                         };
                     }
-                    if (sdk.type === "typescript" || sdk.type === "python") {
-                        toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
-                    }
+                    toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
                 }
             }
         }
