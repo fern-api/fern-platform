@@ -1,6 +1,13 @@
 name: Diff FDR Dev
 
 on:
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - "servers/fdr-deploy/scripts/**"
+      - ".github/workflows/diff-fdr-dev.yml"
+      - "pnpm-lock.yaml"
   push:
     branches:
       - "*"

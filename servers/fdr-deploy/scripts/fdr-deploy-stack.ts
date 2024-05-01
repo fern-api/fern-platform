@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
@@ -21,8 +21,6 @@ const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
 
 export class FdrDeployStack extends Stack {
-    private readonly fernDocsCacheEndpoint: string;
-
     constructor(
         scope: Construct,
         id: string,
@@ -79,6 +77,18 @@ export class FdrDeployStack extends Stack {
             versioned: true,
         });
 
+        const fernDocsCache = new ElastiCacheStack(this, "FernDocsCache", {
+            cacheName: "FernDocsCache",
+            IVpc: vpc,
+            numCacheShards: 1,
+            numCacheReplicasPerShard: environmentType === EnvironmentType.Prod ? 2 : undefined,
+            clusterMode: "enabled",
+            cacheNodeType: "cache.r7g.large",
+            envType: environmentType,
+            env: props?.env,
+            ingressSecurityGroup: fdrSg,
+        });
+
         const cloudmapNamespaceName = environmentInfo.cloudMapNamespaceInfo.namespaceName;
         const cloudMapNamespace = PrivateDnsNamespace.fromPrivateDnsNamespaceAttributes(this, "private-cloudmap", {
             namespaceArn: environmentInfo.cloudMapNamespaceInfo.namespaceArn,
@@ -111,6 +121,7 @@ export class FdrDeployStack extends Stack {
                     ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                     LOG_LEVEL: getLogLevel(environmentType),
+                    DOCS_CACHE_ENDPOINT: `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
                 },
                 containerName: CONTAINER_NAME,
@@ -197,20 +208,6 @@ export class FdrDeployStack extends Stack {
             evaluationPeriods: 5,
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
-
-        const fernDocsCache = new ElastiCacheStack(this, "FernDocsElastiCache", {
-            cacheName: "FernDocsElastiCache",
-            IVpc: vpc,
-            numCacheShards: 1,
-            numCacheReplicasPerShard: environmentType === EnvironmentType.Prod ? 2 : undefined,
-            clusterMode: "enabled",
-            cacheNodeType: "cache.r7g.large",
-            envType: environmentType,
-            env: props?.env,
-        });
-
-        this.fernDocsCacheEndpoint = `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`;
-        new CfnOutput(this, "FernDocsCacheEndpoint", { value: this.fernDocsCacheEndpoint });
     }
 }
 

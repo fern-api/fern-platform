@@ -1,5 +1,5 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Environment, Stack, StackProps, Token } from "aws-cdk-lib";
+import { CfnOutput, Environment, Stack, StackProps, Token } from "aws-cdk-lib";
 import { IVpc, Peer, Port, SecurityGroup } from "aws-cdk-lib/aws-ec2";
 import { CfnReplicationGroup, CfnSubnetGroup } from "aws-cdk-lib/aws-elasticache";
 import { Construct } from "constructs";
@@ -72,5 +72,8 @@ export class ElastiCacheStack extends Stack {
             Port.tcp(Token.asNumber(this.redisEndpointPort)),
             "Redis Port Ingress rule",
         );
+
+        new CfnOutput(this, `${props.cacheName}Host`, { value: this.redisEndpointAddress });
+        new CfnOutput(this, `${props.cacheName}Port`, { value: this.redisEndpointPort });
     }
 }
