@@ -61,6 +61,7 @@ export class ElastiCacheStack extends Stack {
         this.replicationGroup.cfnOptions.updatePolicy = {
             useOnlineResharding: true,
         };
+        this.replicationGroup;
 
         this.replicationGroup.addDependency(this.subnetGroup);
 
@@ -74,6 +75,6 @@ export class ElastiCacheStack extends Stack {
         );
 
         new CfnOutput(this, `${props.cacheName}Host`, { value: this.redisEndpointAddress });
-        new CfnOutput(this, `${props.cacheName}Port`, { value: this.redisEndpointPort });
+        new CfnOutput(this, `${props.cacheName}Po`, { value: this.redisEndpointPort });
     }
 }

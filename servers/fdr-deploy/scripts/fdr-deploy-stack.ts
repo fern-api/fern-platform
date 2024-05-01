@@ -1,11 +1,12 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
-import { Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
+import { IVpc, Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
+import { CfnReplicationGroup, CfnSubnetGroup } from "aws-cdk-lib/aws-elasticache";
 import { ApplicationProtocol, HttpCodeTarget } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
@@ -15,10 +16,21 @@ import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
-import { ElastiCacheStack } from "./elasticache-stack";
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
+
+interface ElastiCacheProps {
+    readonly cacheName: string;
+    readonly IVpc: IVpc;
+    readonly numCacheShards: number;
+    readonly numCacheReplicasPerShard: number | undefined;
+    readonly clusterMode: "enabled" | "disabled";
+    readonly cacheNodeType: string;
+    readonly envType: EnvironmentType;
+    readonly env?: Environment;
+    readonly ingressSecurityGroup?: SecurityGroup;
+}
 
 export class FdrDeployStack extends Stack {
     constructor(
@@ -77,7 +89,7 @@ export class FdrDeployStack extends Stack {
             versioned: true,
         });
 
-        const fernDocsCache = new ElastiCacheStack(this, "FernDocsCache", {
+        const fernDocsCacheEndpoint = this.constructElastiCacheInstance(scope, {
             cacheName: "FernDocsCache",
             IVpc: vpc,
             numCacheShards: 1,
@@ -121,7 +133,7 @@ export class FdrDeployStack extends Stack {
                     ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                     LOG_LEVEL: getLogLevel(environmentType),
-                    DOCS_CACHE_ENDPOINT: `${fernDocsCache.redisEndpointAddress}:${fernDocsCache.redisEndpointPort}`,
+                    DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
                 },
                 containerName: CONTAINER_NAME,
@@ -208,6 +220,61 @@ export class FdrDeployStack extends Stack {
             evaluationPeriods: 5,
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
+    }
+
+    private constructElastiCacheInstance(scope: Construct, props: ElastiCacheProps): string {
+        const envPrefix = props.envType + "-";
+
+        const cacheSecurityGroupName = envPrefix + props.cacheName + "SecurityGroup";
+        const cacheSecurityGroup = new SecurityGroup(scope, cacheSecurityGroupName, {
+            vpc: props.IVpc,
+            allowAllOutbound: true,
+            description: `${cacheSecurityGroupName} CDK`,
+        });
+
+        const cacheSubnetGroupName = envPrefix + props.cacheName + "SubnetGroup";
+        const cacheSubnetGroup = new CfnSubnetGroup(this, cacheSubnetGroupName, {
+            description: `${cacheSubnetGroupName} CDK`,
+            cacheSubnetGroupName,
+            subnetIds: props.IVpc.publicSubnets.map(({ subnetId }) => subnetId),
+        });
+
+        const cacheReplicationGroupName = envPrefix + props.cacheName + "ReplicationGroup";
+        const cacheReplicationGroup = new CfnReplicationGroup(this, cacheReplicationGroupName, {
+            replicationGroupId: cacheReplicationGroupName,
+            replicationGroupDescription: `Replication Group for the ${cacheReplicationGroupName} ElastiCache stack`,
+            automaticFailoverEnabled: true,
+            autoMinorVersionUpgrade: true,
+            engine: "redis",
+            engineVersion: "7.0",
+            cacheParameterGroupName: "default.redis7.cluster.on",
+            cacheNodeType: props.cacheNodeType,
+            numNodeGroups: props.numCacheShards,
+            replicasPerNodeGroup: props.numCacheReplicasPerShard,
+            clusterMode: props.clusterMode,
+            cacheSubnetGroupName: cacheSubnetGroup.ref,
+            securityGroupIds: [cacheSecurityGroup.securityGroupId],
+        });
+
+        cacheReplicationGroup.cfnOptions.updatePolicy = {
+            useOnlineResharding: true,
+        };
+
+        cacheReplicationGroup.addDependency(cacheSubnetGroup);
+
+        const cacheEndpointAddress = cacheReplicationGroup.attrConfigurationEndPointAddress;
+        const cacheEndpointPort = cacheReplicationGroup.attrConfigurationEndPointPort;
+
+        cacheSecurityGroup.addIngressRule(
+            props.ingressSecurityGroup || Peer.anyIpv4(),
+            Port.tcp(Token.asNumber(cacheEndpointPort)),
+            "Redis Port Ingress rule",
+        );
+
+        new CfnOutput(this, `${props.cacheName}Host`, { value: cacheEndpointAddress });
+        new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
+
+        return `${cacheEndpointAddress}:${cacheEndpointPort}`;
     }
 }
 
