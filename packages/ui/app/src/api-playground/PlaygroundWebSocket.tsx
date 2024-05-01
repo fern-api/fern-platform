@@ -1,4 +1,5 @@
 import { usePrevious } from "@fern-ui/react-commons";
+import { merge } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
 import { FernTooltipProvider } from "../components/FernTooltip";
@@ -7,7 +8,7 @@ import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundWebSocketRequestFormState } from "./types";
-import { buildRequestUrl, buildUnredactedHeadersWebsocket } from "./utils";
+import { buildRequestUrl, buildUnredactedHeadersWebsocket, getDefaultValueForType } from "./utils";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
@@ -108,7 +109,9 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
         async (message: ResolvedWebSocketMessage, data: unknown) => {
             const isConnected = await startSession();
             if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
-                socket.current.send(JSON.stringify(data));
+                // TODO: handle validation
+                const defaultValue = getDefaultValueForType(message.body, types);
+                socket.current.send(JSON.stringify(merge(defaultValue, data)));
                 pushMessage({
                     type: message.type,
                     data,
@@ -117,7 +120,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                 });
             }
         },
-        [pushMessage, startSession],
+        [pushMessage, startSession, types],
     );
 
     return (
