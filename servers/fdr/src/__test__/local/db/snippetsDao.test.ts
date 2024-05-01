@@ -273,7 +273,15 @@ it("snippets template", async () => {
     });
 
     expect(response).not.toEqual(null);
-    expect(response).toMatchInlineSnapshot();
+    expect(response).toEqual({
+        endpointId: { path: "/users/v1", method: "GET" },
+        sdk: { type: "python", package: "acme", version: "0.0.1" },
+        snippetTemplate: {
+            type: "v1",
+            functionInvocation: { type: "generic", isOptional: false, templateString: "" },
+            clientInstantiation: "",
+        },
+    });
 
     const response2 = await fdrApplication.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
         orgId: "acme",
@@ -311,7 +319,25 @@ it("snippets template", async () => {
         },
     });
 
-    expect(response2).toMatchInlineSnapshot();
+    expect(response2).toEqual({
+        "/users/v1": {
+            PATCH: {},
+            POST: {},
+            PUT: {},
+            GET: {
+                typescript: {
+                    type: "v1",
+                    functionInvocation: {
+                        type: "generic",
+                        isOptional: false,
+                        templateString: "",
+                    },
+                    clientInstantiation: "",
+                },
+            },
+            DELETE: {},
+        },
+    });
 
     const response3 = await fdrApplication.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
         orgId: "acme",
@@ -345,5 +371,5 @@ it("snippets template", async () => {
         },
     });
 
-    expect(response3).toBe({});
+    expect(response3).toEqual({});
 });

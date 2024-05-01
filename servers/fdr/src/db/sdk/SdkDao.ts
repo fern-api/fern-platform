@@ -50,6 +50,7 @@ export class SdkDaoImpl implements SdkDao {
                 version: sdk.version,
                 sdk: sdk.sdk,
             })),
+            skipDuplicates: true,
         });
     }
 
