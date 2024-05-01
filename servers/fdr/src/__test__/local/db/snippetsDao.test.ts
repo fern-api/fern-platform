@@ -204,3 +204,146 @@ it("snippets dao", async () => {
         },
     });
 });
+
+it("snippets template", async () => {
+    await fdrApplication.dao.snippetTemplates().storeSnippetTemplate({
+        storeSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            apiDefinitionId: "....",
+            snippets: [
+                {
+                    sdk: {
+                        type: "python",
+                        package: "acme",
+                        version: "0.0.1",
+                    },
+                    endpointId: {
+                        path: "/users/v1",
+                        method: FdrAPI.EndpointMethod.Get,
+                    },
+                    snippetTemplate: {
+                        type: "v1",
+                        clientInstantiation: "",
+                        functionInvocation: {
+                            type: "generic",
+                            isOptional: false,
+                            templateString: "",
+                        },
+                    },
+                },
+                {
+                    sdk: {
+                        type: "typescript",
+                        package: "acme",
+                        version: "0.0.1",
+                    },
+                    endpointId: {
+                        path: "/users/v1",
+                        method: FdrAPI.EndpointMethod.Get,
+                    },
+                    snippetTemplate: {
+                        type: "v1",
+                        clientInstantiation: "",
+                        functionInvocation: {
+                            type: "generic",
+                            isOptional: false,
+                            templateString: "",
+                        },
+                    },
+                },
+            ],
+        },
+    });
+
+    const response = await fdrApplication.dao.snippetTemplates().loadSnippetTemplate({
+        loadSnippetTemplateRequest: {
+            orgId: "acme",
+            apiId: "api",
+            endpointId: {
+                path: "/users/v1",
+                method: FdrAPI.EndpointMethod.Get,
+            },
+            sdk: {
+                type: "python",
+                package: "acme",
+                version: "0.0.1",
+            },
+        },
+    });
+
+    expect(response).not.toEqual(null);
+    expect(response).toMatchInlineSnapshot();
+
+    const response2 = await fdrApplication.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
+        orgId: "acme",
+        apiId: "api",
+        sdkRequests: [
+            {
+                type: "python",
+                package: "acme",
+            },
+            {
+                type: "typescript",
+                package: "acme",
+            },
+        ],
+        definition: {
+            rootPackage: {
+                endpoints: [
+                    {
+                        id: "getUsers",
+                        path: {
+                            parts: [{ type: "literal", value: "/users/v1" }],
+                            pathParameters: [],
+                        },
+                        method: "GET",
+                        queryParameters: [],
+                        headers: [],
+                        examples: [],
+                    },
+                ],
+                types: [],
+                subpackages: [],
+            },
+            types: {},
+            subpackages: {},
+        },
+    });
+
+    expect(response2).toMatchInlineSnapshot();
+
+    const response3 = await fdrApplication.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
+        orgId: "acme",
+        apiId: "api",
+        sdkRequests: [
+            {
+                type: "go",
+                githubRepo: "",
+            },
+        ],
+        definition: {
+            rootPackage: {
+                endpoints: [
+                    {
+                        id: "getUsers",
+                        path: {
+                            parts: [{ type: "literal", value: "/users/v1" }],
+                            pathParameters: [],
+                        },
+                        method: "GET",
+                        queryParameters: [],
+                        headers: [],
+                        examples: [],
+                    },
+                ],
+                types: [],
+                subpackages: [],
+            },
+            types: {},
+            subpackages: {},
+        },
+    });
+
+    expect(response3).toBe({});
+});
