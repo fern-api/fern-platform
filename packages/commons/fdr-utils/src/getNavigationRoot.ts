@@ -13,10 +13,10 @@ interface Found {
     found: SidebarNavigationRaw;
 }
 
-function isSidebarNodeRaw<T extends SidebarNodeRaw.VisitableNode>(
-    n: T,
-): n is Exclude<T, SidebarNodeRaw.NavigationNode> {
-    return n.type !== "root" && n.type !== "tabGroup" && n.type !== "versionGroup";
+function isSidebarNodeRaw(
+    n: SidebarNodeRaw.VisitableNode | SidebarNodeRaw.TabLink | SidebarNodeRaw.Link,
+): n is SidebarNodeRaw {
+    return n.type === "apiSection" || n.type === "pageGroup" || n.type === "section";
 }
 
 function isNavigationNode(n: SidebarNodeRaw.VisitableNode): n is SidebarNodeRaw.NavigationNode {
@@ -77,16 +77,18 @@ export function getNavigationRoot(
 
     const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.Tab>(
         parents,
-        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup",
+        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup" || n.type === "tabLink",
     );
 
-    const tabs = tabItems.map((tab): SidebarTab => {
-        if (tab.type === "tabLink") {
-            return tab;
-        }
-        const { items, ...tabGroup } = tab;
-        return tabGroup;
-    });
+    const tabs = tabItems
+        .filter((n) => n.type === "tabLink" || n.type === "tabGroup")
+        .map((tab): SidebarTab => {
+            if (tab.type === "tabLink") {
+                return tab;
+            }
+            const { items, ...tabGroup } = tab;
+            return tabGroup;
+        });
 
     const { items: versionItems, node: currentVerion } = findSiblings<SidebarNodeRaw.VersionGroup>(
         parents,
@@ -151,7 +153,7 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
 
 function findSiblings<T extends SidebarNodeRaw.ParentNode | SidebarNodeRaw.TabLink>(
     parents: readonly SidebarNodeRaw.ParentNode[],
-    match: (node: SidebarNodeRaw.ParentNode) => boolean,
+    match: (node: SidebarNodeRaw.VisitableNode | SidebarNodeRaw.TabLink | SidebarNodeRaw.Link) => boolean,
 ): { items: readonly T[]; node: T | undefined } {
     const navigationDepth = parents.findIndex(match);
 
@@ -170,5 +172,5 @@ function findSiblings<T extends SidebarNodeRaw.ParentNode | SidebarNodeRaw.TabLi
         return { items: [], node: undefined };
     }
 
-    return { items: parent.items as T[], node: parents[navigationDepth] as T | undefined };
+    return { items: parent.items.filter(match) as T[], node: parents[navigationDepth] as T | undefined };
 }

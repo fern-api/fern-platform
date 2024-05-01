@@ -16,6 +16,7 @@ import {
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
     getParameterDescription,
+    stringifyResolvedEndpointPathParts,
     unwrapReference,
 } from "../../resolver/types";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
@@ -307,7 +308,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                         </main>
                     </section>
                     <aside className="max-w-content-width">
-                        {example != null && example.messages.length > 0 && (
+                        {
                             <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
@@ -330,7 +331,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example.path ?? ""}`}
+                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -346,13 +347,15 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                         </div>
                                     </FernScrollArea>
                                 </TitledExample>
-                                <TitledExample title={"Messages"} type={"primary"} className="min-h-0 shrink">
-                                    <FernScrollArea className="rounded-b-[inherit]">
-                                        <WebSocketMessages messages={exampleMessages} />
-                                    </FernScrollArea>
-                                </TitledExample>
+                                {exampleMessages.length > 0 && (
+                                    <TitledExample title={"Messages"} type={"primary"} className="min-h-0 shrink">
+                                        <FernScrollArea className="rounded-b-[inherit]">
+                                            <WebSocketMessages messages={exampleMessages} />
+                                        </FernScrollArea>
+                                    </TitledExample>
+                                )}
                             </div>
-                        )}
+                        }
                     </aside>
                 </div>
             </article>

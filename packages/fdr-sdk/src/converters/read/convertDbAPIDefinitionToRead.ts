@@ -86,6 +86,7 @@ function transformEndpoint({
         // htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
         // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+        snippetTemplates: dbShape.snippetTemplates,
     };
 }
 

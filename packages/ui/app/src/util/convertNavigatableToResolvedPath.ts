@@ -9,6 +9,7 @@ import {
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { captureSentryError } from "../analytics/sentry";
+import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import {
     FernDocsFrontmatter,
     FernSerializeMdxOptions,
@@ -70,6 +71,7 @@ export async function convertNavigatableToResolvedPath({
     pages,
     mdxOptions,
     domain,
+    featureFlags,
 }: {
     rawSidebarNodes: readonly SidebarNodeRaw[];
     sidebarNodes: SidebarNode[];
@@ -78,6 +80,7 @@ export async function convertNavigatableToResolvedPath({
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     domain: string;
+    featureFlags: FeatureFlags;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -107,6 +110,7 @@ export async function convertNavigatableToResolvedPath({
             apiSection.flattenedApiDefinition!,
             pages,
             mdxOptions,
+            featureFlags,
         );
         return {
             type: "api-page",
@@ -154,6 +158,7 @@ export async function convertNavigatableToResolvedPath({
                 title: traverseState.curr.title,
                 breadcrumbs: traverseState.sectionTitleBreadcrumbs,
                 editThisPageUrl: pageContent.editThisPageUrl,
+                isTocDefaultEnabled: featureFlags.isTocDefaultEnabled,
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
@@ -170,7 +175,13 @@ export async function convertNavigatableToResolvedPath({
                         const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, domain);
                         return [
                             apiName,
-                            await ApiDefinitionResolver.resolve(title, flattenedApiDefinition, pages, mdxOptions),
+                            await ApiDefinitionResolver.resolve(
+                                title,
+                                flattenedApiDefinition,
+                                pages,
+                                mdxOptions,
+                                featureFlags,
+                            ),
                         ];
                     }),
                 ),
