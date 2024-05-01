@@ -28,7 +28,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: versionName,
                     disabled: availability == null,
-                    href: `/${slug.join("/")}${unversionedSlug.length > 0 ? `/${unversionedSlug.join("/")}` : ""}`,
+                    href: `${slug.length > 0 ? `/${slug.join("/")}` : ""}${unversionedSlug.length > 0 ? `/${unversionedSlug.join("/")}` : ""}`,
                 }))}
             >
                 <FernButton

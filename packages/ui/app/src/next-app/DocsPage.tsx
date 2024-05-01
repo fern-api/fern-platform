@@ -45,20 +45,18 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     return (
         <FeatureFlagContext.Provider value={featureFlags}>
             <DocsContextProvider {...pageProps}>
-                <div className="min-h-screen w-full">
-                    <BgImageGradient />
-                    <NavigationContextProvider
-                        resolvedPath={resolvedPath} // this changes between pages
-                        domain={baseUrl.domain}
-                        basePath={baseUrl.basePath}
-                        title={title}
-                    >
-                        <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
-                        <Docs logoHeight={logoHeight} logoHref={logoHref} />
-                    </NavigationContextProvider>
-                    <Toaster />
-                </div>
+                <BgImageGradient />
+                <NavigationContextProvider
+                    resolvedPath={resolvedPath} // this changes between pages
+                    domain={baseUrl.domain}
+                    basePath={baseUrl.basePath}
+                    title={title}
+                >
+                    <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                    <Docs logoHeight={logoHeight} logoHref={logoHref} />
+                </NavigationContextProvider>
             </DocsContextProvider>
+            <Toaster />
         </FeatureFlagContext.Provider>
     );
 }

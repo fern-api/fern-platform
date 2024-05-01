@@ -1,6 +1,7 @@
 export * from "./EnvironmentId";
 export * from "./EndpointId";
 export * from "./EndpointDefinition";
+export * from "./EndpointSnippetTemplates";
 export * from "./Environment";
 export * from "./HttpMethod";
 export * from "./EndpointPath";

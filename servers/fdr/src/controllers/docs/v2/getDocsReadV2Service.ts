@@ -1,15 +1,10 @@
 import { convertDbAPIDefinitionsToRead, convertDbDocsConfigToRead } from "@fern-api/fdr-sdk";
-import NodeCache from "node-cache";
+import { Cache } from "../../../Cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
-const SECONDS_IN_ONE_HOUR = 60 * 60;
-
-const DOCS_CONFIG_ID_CACHE = new NodeCache({
-    stdTTL: SECONDS_IN_ONE_HOUR,
-    maxKeys: 100,
-});
+const DOCS_CONFIG_ID_CACHE = new Cache<DocsV2Read.GetDocsConfigByIdResponse>(100);
 
 export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
     return new DocsV2ReadService({
@@ -35,8 +30,9 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             return res.send(orgId);
         },
         getDocsConfigById: async (req, res) => {
-            let docsConfig: DocsV2Read.GetDocsConfigByIdResponse | undefined =
-                DOCS_CONFIG_ID_CACHE.get<DocsV2Read.GetDocsConfigByIdResponse>(req.params.docsConfigId);
+            let docsConfig: DocsV2Read.GetDocsConfigByIdResponse | undefined = DOCS_CONFIG_ID_CACHE.get(
+                req.params.docsConfigId,
+            );
             if (docsConfig == null) {
                 const loadDocsConfigResponse = await app.dao
                     .docsV2()

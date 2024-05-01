@@ -2,7 +2,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
 import { FernRegistry } from "../../../api/generated";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../../octo";
-import { getClient } from "../util";
+import { getAPIResponse, getClient } from "../util";
 
 const ENDPOINT: FdrAPI.EndpointIdentifier = {
     path: "/users/v1",
@@ -21,7 +21,7 @@ it("create snippet template", async () => {
     const orgId = "acme";
 
     // register API definition for acme org
-    await unauthedFdr.template.register({
+    await unauthedFdr.templates.register({
         orgId,
         apiId: "user",
         apiDefinitionId: "....",
@@ -40,7 +40,7 @@ it("create snippet template", async () => {
         },
     });
     // create snippets
-    const response = await fdr.template.get({
+    const response = await fdr.templates.get({
         orgId,
         apiId: "user",
         endpointId: ENDPOINT,
@@ -67,27 +67,93 @@ it("generate example from snippet template", async () => {
     };
 
     // register API definition for acme org
-    await unauthedFdr.template.register({
+    await unauthedFdr.templates.register({
         orgId,
         apiId,
         apiDefinitionId: "....",
-        snippet: CHAT_COMPLETION_SNIPPET,
+        snippet: CHAT_COMPLETION_SNIPPET("0.0.5"),
     });
     // create snippets
-    await fdr.template.get({
+    await fdr.templates.get({
         orgId,
         apiId,
-        endpointId: CHAT_COMPLETION_SNIPPET.endpointId,
+        endpointId: CHAT_COMPLETION_SNIPPET("0.0.5").endpointId,
         sdk,
     });
 
-    const response = await fdr.get({
+    const response = await fdr.snippets.get({
         orgId,
         apiId,
-        endpoint: CHAT_COMPLETION_SNIPPET.endpointId,
+        endpoint: CHAT_COMPLETION_SNIPPET("0.0.5").endpointId,
         sdks: [sdk],
         payload: CHAT_COMPLETION_PAYLOAD,
     });
     expect(response.ok).toBe(true);
     console.log(JSON.stringify(response, null, 2));
+});
+
+it("fallback to version", async () => {
+    const unauthedFdr = getClient({ authed: false, url: inject("url") });
+    const fdr = getClient({ authed: true, url: inject("url") });
+
+    const orgId = "octoai";
+    const apiId = "api";
+    const sdk: FernRegistry.Sdk = {
+        type: "python",
+        package: "octoai",
+        version: "0.0.6",
+    };
+    const genericRequest: FernRegistry.SdkRequest = {
+        type: "python",
+        package: "octoai",
+    };
+
+    // register API definition for acme org
+    const reg = await unauthedFdr.templates.register({
+        orgId,
+        apiId,
+        apiDefinitionId: "....",
+        snippet: CHAT_COMPLETION_SNIPPET("0.0.6"),
+    });
+    expect(reg.ok).toBe(true);
+    // create snippets
+    const template = getAPIResponse(
+        await fdr.templates.get({
+            orgId,
+            apiId,
+            endpointId: CHAT_COMPLETION_SNIPPET("0.0.6").endpointId,
+            sdk: genericRequest,
+        }),
+    );
+    expect(template.sdk.version).toBe("0.0.6");
+
+    // register API definition for acme org
+    const regAgain = await unauthedFdr.templates.register({
+        orgId,
+        apiId,
+        apiDefinitionId: "....",
+        snippet: CHAT_COMPLETION_SNIPPET("0.0.122"),
+    });
+    expect(regAgain.ok).toBe(true);
+    // create snippets
+    const templateAgain = getAPIResponse(
+        await fdr.templates.get({
+            orgId,
+            apiId,
+            endpointId: CHAT_COMPLETION_SNIPPET("0.0.122").endpointId,
+            sdk: genericRequest,
+        }),
+    );
+    expect(templateAgain.sdk.version).toBe("0.0.122");
+
+    const templateSpecify = await fdr.templates.get({
+        orgId,
+        apiId,
+        endpointId: CHAT_COMPLETION_SNIPPET("0.0.6").endpointId,
+        sdk,
+    });
+    expect(templateSpecify.ok).toBe(true);
+    if (templateSpecify.ok) {
+        expect(templateSpecify.body.sdk.version).toBe("0.0.6");
+    }
 });

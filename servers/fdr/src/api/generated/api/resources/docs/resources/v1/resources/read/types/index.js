@@ -35,6 +35,8 @@ export * from "./NavigationConfig";
 export * from "./UnversionedNavigationConfig";
 export * from "./UnversionedTabbedNavigationConfig";
 export * from "./NavigationTab";
+export * from "./NavigationTabGroup";
+export * from "./NavigationTabLink";
 export * from "./UnversionedUntabbedNavigationConfig";
 export * from "./VersionedNavigationConfig";
 export * from "./VersionedNavigationConfigData";

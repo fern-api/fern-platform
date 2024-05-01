@@ -50,7 +50,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
                 environment: baseUrl.toURL().toString(),
             });
             app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
-            const response = await client.revalidateAllV2({
+            const response = await client.revalidateAllV3({
                 host: baseUrl.hostname,
                 basePath: baseUrl.path != null ? baseUrl.path : "",
                 xFernHost: baseUrl.hostname,

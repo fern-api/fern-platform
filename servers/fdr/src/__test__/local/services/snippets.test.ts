@@ -33,7 +33,7 @@ it("get snippets", async () => {
     });
     // get snippets
     const snippets = getAPIResponse(
-        await fdr.get({
+        await fdr.snippets.get({
             orgId: "acme",
             apiId: "foo",
             endpoint: {
@@ -149,7 +149,7 @@ it("get Go snippets", async () => {
     });
     // get snippets
     const snippets = getAPIResponse(
-        await fdr.get({
+        await fdr.snippets.get({
             apiId: "echo",
             orgId: "acme",
             endpoint: {
@@ -261,7 +261,7 @@ it("get snippets with unregistered API", async () => {
     });
     // get snippets
     const snippets = getAPIResponse(
-        await fdr.get({
+        await fdr.snippets.get({
             orgId: "acme",
             apiId: "fresh",
             endpoint: {
@@ -315,7 +315,7 @@ it("load snippets", async () => {
 
     // load snippets (first page)
     const firstResponse = getAPIResponse(
-        await fdr.load({
+        await fdr.snippets.load({
             orgId: "acme",
             apiId: "petstore",
         }),
@@ -338,7 +338,7 @@ it("load snippets", async () => {
 
     // load snippets (second page)
     const secondResponse = getAPIResponse(
-        await fdr.load({
+        await fdr.snippets.load({
             orgId: "acme",
             apiId: "petstore",
             sdks: [
@@ -394,7 +394,7 @@ it("user not part of org", async () => {
         },
     });
     // get snippets
-    const response = await fdr.get({
+    const response = await fdr.snippets.get({
         orgId: "private",
         endpoint: {
             path: "/users/v1",
@@ -433,7 +433,7 @@ it("snippets apiId not found", async () => {
     });
 
     // get not found apiId
-    const response = await fdr.get({
+    const response = await fdr.snippets.get({
         orgId: "acme",
         apiId: "dne",
         endpoint: {
@@ -477,7 +477,7 @@ it("get snippets (unauthenticated)", async () => {
     });
     // get snippets
     const unauthedFdr = getClient({ authed: false, url: inject("url") });
-    const response = await unauthedFdr.get({
+    const response = await unauthedFdr.snippets.get({
         orgId: "acme",
         apiId: "user",
         endpoint: {

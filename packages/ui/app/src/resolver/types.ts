@@ -42,7 +42,7 @@ export function dereferenceObjectProperties(
         // however, we do NOT sort the properties by key because the initial order of properties may be significant
         return sortBy(
             [...directProperties],
-            (property) => unwrapReference(property.valueShape, types).type === "optional",
+            (property) => unwrapAlias(property.valueShape, types).type === "optional",
             (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         );
     }
@@ -55,7 +55,7 @@ export function dereferenceObjectProperties(
     // since there are extended properties, the initial order of properties are not significant, and we should sort by key
     return sortBy(
         [...directProperties, ...filteredExtendedProperties],
-        (property) => unwrapReference(property.valueShape, types).type === "optional",
+        (property) => unwrapAlias(property.valueShape, types).type === "optional",
         (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         (property) => property.key,
     );
@@ -498,6 +498,7 @@ export function hasMetadata(shape: ResolvedTypeShape): shape is Exclude<Resolved
 export type DereferencedTypeShape = Exclude<ResolvedTypeShape, ResolvedReferenceShape>;
 export type NonOptionalTypeShape = Exclude<DereferencedTypeShape, ResolvedOptionalShape>;
 export type NonOptionalTypeShapeWithReference = Exclude<ResolvedTypeShape, ResolvedOptionalShape>;
+export type UnaliasedTypeShape = Exclude<DereferencedTypeShape, ResolvedAliasShape>;
 
 export interface ResolvedReferenceShape {
     type: "reference";
@@ -609,6 +610,33 @@ export function unwrapReference(
         }
         return unwrapReference(nestedShape, types);
     }
+
+    if (shape.type === "alias") {
+        return {
+            ...shape,
+            shape: unwrapReference(shape.shape, types),
+        };
+    }
+
+    return shape;
+}
+
+export function unwrapAlias(
+    shape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): DereferencedTypeShape {
+    shape = unwrapReference(shape, types);
+    if (shape.type === "alias") {
+        return unwrapAlias(shape.shape, types);
+    }
+
+    if (shape.type === "optional") {
+        return {
+            ...shape,
+            shape: unwrapAlias(shape.shape, types) as NonOptionalTypeShapeWithReference,
+        };
+    }
+
     return shape;
 }
 
@@ -620,6 +648,14 @@ export function unwrapOptional(
     if (shape.type === "optional") {
         return unwrapOptional(shape.shape, types);
     }
+
+    if (shape.type === "alias") {
+        return {
+            ...shape,
+            shape: unwrapOptional(shape.shape, types),
+        };
+    }
+
     return shape;
 }
 

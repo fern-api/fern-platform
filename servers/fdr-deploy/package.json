@@ -6,16 +6,19 @@
     "watch": "tsc -w",
     "cdk": "cdk",
     "deploy:dev": "cdk deploy fdr-dev2 --require-approval never --progress events",
-    "deploy:prod": "cdk deploy fdr-prod --require-approval never --progress events"
+    "deploy:prod": "cdk deploy fdr-prod --require-approval never --progress events",
+    "rediscli": "node ./node_modules/redis-cli/index.js"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
     "@types/prettier": "2.6.0",
-    "aws-cdk": "^2.118.0",
+    "aws-cdk": "^2.139.0",
     "vitest": "^1.5.0",
     "prettier": "^3.2.4",
     "ts-node": "^10.9.1",
+    "@types/jest": "^29.5.12",
+    "redis-cli": "^2.1.2",
     "typescript": "5.4.3"
   },
   "dependencies": {
@@ -23,6 +26,7 @@
     "aws-cdk-lib": "^2.122.0",
     "axios": "^1.6.5",
     "constructs": "^10.3.0",
+    "redis": "^4.6.13",
     "source-map-support": "^0.5.21"
   }
 }

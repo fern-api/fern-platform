@@ -7,13 +7,14 @@ import { register } from "../../api";
 import { FdrApplication } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
+import { getApiDiffService } from "../../controllers/diff/getApiDiffService";
 import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "../../controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
-import { getTemplateService } from "../../controllers/snippets/getTemplateService";
+import { getTemplatesService } from "../../controllers/snippets/getTemplatesService";
 import { createMockFdrApplication } from "../mock";
 
 let teardown = false;
@@ -93,9 +94,10 @@ function runMockFdr(port: number): MockFdr.Instance {
                 register: { _root: getRegisterApiService(fdrApplication) },
             },
         },
-        _root: getSnippetsService(fdrApplication),
+        snippets: getSnippetsService(fdrApplication),
         snippetsFactory: getSnippetsFactoryService(fdrApplication),
-        template: getTemplateService(fdrApplication),
+        templates: getTemplatesService(fdrApplication),
+        diff: getApiDiffService(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);

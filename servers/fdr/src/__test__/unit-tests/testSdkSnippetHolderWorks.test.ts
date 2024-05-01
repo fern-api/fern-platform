@@ -27,6 +27,7 @@ describe("SDK Snippet Holder", () => {
                     sdkId: "python|acme|0.0.1",
                 },
             },
+            snippetTemplatesByEndpoint: {},
         });
         const snippet = sdkSnippetHolder.getPythonCodeSnippetForEndpoint({
             endpointMethod: "GET",

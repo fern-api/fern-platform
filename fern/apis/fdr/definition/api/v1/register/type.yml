@@ -50,15 +50,34 @@ types:
 
   PrimitiveType:
     union:
-      integer: {}
-      double: {}
+      integer: IntegerType
+      double: DoubleType
       long: {}
-      string: {}
+      string: StringType
       boolean: {}
       datetime: {}
       uuid: {}
       base64: {}
       date: {}
+
+  IntegerType:
+    properties:
+      minimum: optional<integer>
+      maximum: optional<integer>
+      default: optional<integer>
+  
+  DoubleType:
+    properties:
+      minimum: optional<double>
+      maximum: optional<double>
+      default: optional<double>
+  
+  StringType: 
+    properties:
+      regex: optional<string>
+      minLength: optional<integer>
+      maxLength: optional<integer>
+      default: optional<string>
 
   OptionalType:
     properties:

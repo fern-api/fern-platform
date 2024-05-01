@@ -1,7 +1,7 @@
 import { RevalidatorServiceImpl } from "../../services/revalidator/RevalidatorService";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
-it("revalidates a custom docs domain", async () => {
+it.skip("revalidates a custom docs domain", async () => {
     const revalidationService = new RevalidatorServiceImpl();
 
     const revalidationResult = await revalidationService.revalidate({

@@ -61,6 +61,9 @@ export function visitSidebarNodeRaw(
         },
         versionGroup: (versionGroup) => {
             for (const item of versionGroup.items) {
+                if (item.type === "tabLink") {
+                    continue;
+                }
                 const flag = visitSidebarNodeRaw(item, visit, [...parentNodes, versionGroup]);
                 if (flag === false) {
                     return false;
@@ -80,6 +83,9 @@ export function visitSidebarNodeRaw(
         page: () => true,
         root: (root) => {
             for (const item of root.items) {
+                if (item.type === "tabLink") {
+                    continue;
+                }
                 const flag = visitSidebarNodeRaw(item, visit, [root, ...parentNodes]);
                 if (flag === false) {
                     return false;

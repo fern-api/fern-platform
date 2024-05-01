@@ -9,6 +9,8 @@ navigation:
     contents:
       - page: Enable API Playground
         path: ./docs/pages/enable-api-playground.mdx
+      - page: Configure Custom Domain 
+        path: ./docs/pages/configure-custom-domain.mdx
   - api: FDR API Reference
     api-name: fdr
     display-errors: true

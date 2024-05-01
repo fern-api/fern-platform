@@ -52,6 +52,7 @@ interface Fixture {
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
     snippetsConfigWithSdkId: {},
+    snippetTemplatesByEndpoint: {},
 });
 
 describe("generateAlgoliaSearchRecordsForDocs", () => {

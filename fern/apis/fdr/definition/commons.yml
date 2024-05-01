@@ -14,6 +14,23 @@ types:
   DocsConfigId:
     type: string
     docs: The ID of a particular docs config.
+  
+  EndpointIdentifier:
+    properties:
+      path: EndpointPath
+      method: EndpointMethod
+
+  EndpointPath:
+    type: string
+    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+
+  EndpointMethod:
+    enum:
+      - PUT
+      - POST
+      - GET
+      - PATCH
+      - DELETE
 
 errors:
   BadRequestError:
