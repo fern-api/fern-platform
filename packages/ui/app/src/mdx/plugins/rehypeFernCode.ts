@@ -195,10 +195,11 @@ function maybeParseInt(str: string | null | undefined): number | undefined {
 }
 
 export function parseBlockMetaString(element: Element, defaultFallback: string): FernCodeMeta {
-    let meta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "");
+    const originalMeta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "").trim();
+    let meta = originalMeta;
 
     const titleMatch = meta.match(/title="([^"]*)"/);
-    const title = titleMatch?.[1];
+    let title = titleMatch?.[1];
     meta = meta.replace(titleMatch?.[0] ?? "", "");
 
     // i.e. maxLines=20 (default is 20)
@@ -215,6 +216,10 @@ export function parseBlockMetaString(element: Element, defaultFallback: string):
     const focused = meta.match(/focus/);
     if (focused) {
         meta = meta.replace(focused[0], "");
+    }
+
+    if (originalMeta === meta && meta.length > 0) {
+        title = meta;
     }
 
     let lang = defaultFallback;
