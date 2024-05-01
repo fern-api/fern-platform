@@ -218,8 +218,10 @@ function transformEndpoint({
         // htmlDescription,
         authed: writeShape.auth,
         // descriptionContainsMarkdown: true,
-        // TODO(dsinghvi): Add snippet templates to the API definition
-        snippetTemplates: undefined,
+        snippetTemplates: snippets.getSnippetTemplateForEndpoint({
+            endpointPath: getEndpointPathAsString(writeShape),
+            endpointMethod: writeShape.method,
+        }),
     };
 }
 

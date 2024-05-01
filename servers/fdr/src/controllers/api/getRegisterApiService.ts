@@ -1,6 +1,7 @@
 import { SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1WriteService } from "../../api";
+import { SdkRequest } from "../../api/generated/api";
 import type { FdrApplication } from "../../app";
 import { writeBuffer } from "../../util";
 
@@ -20,27 +21,61 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {};
 
             const snippetsConfigurationWithSdkIds = await app.dao.sdks().getSdkIdsForPackages(snippetsConfiguration);
-            const sdkIds = [];
+            const sdkIds: string[] = [];
+            const sdkRequests: SdkRequest[] = [];
             if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
+                sdkRequests.push({
+                    type: "typescript",
+                    package: snippetsConfigurationWithSdkIds.typescriptSdk.package,
+                    // TODO: support version
+                });
             }
             if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.pythonSdk.sdkId);
+                sdkRequests.push({
+                    type: "python",
+                    package: snippetsConfigurationWithSdkIds.pythonSdk.package,
+                    // TODO: support version
+                });
             }
             if (snippetsConfigurationWithSdkIds.javaSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
+                // TODO: support parsing coordinate -> group, artifact, version
+                // sdkRequests.push({
+                //     type: "java",
+                //     group: snippetsConfigurationWithSdkIds.javaSdk.coordinate,
+                // });
             }
             if (snippetsConfigurationWithSdkIds.goSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
+                sdkRequests.push({
+                    type: "go",
+                    githubRepo: snippetsConfigurationWithSdkIds.goSdk.githubRepo,
+                    version: snippetsConfigurationWithSdkIds.goSdk.version,
+                });
             }
             if (snippetsConfigurationWithSdkIds.rubySdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
+                sdkRequests.push({
+                    type: "ruby",
+                    gem: snippetsConfigurationWithSdkIds.rubySdk.gem,
+                    version: snippetsConfigurationWithSdkIds.rubySdk.version,
+                });
             }
+
             const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(sdkIds);
+            const snippetTemplatesByEndpoint = await app.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
+                orgId: req.body.orgId,
+                apiId: req.body.apiId,
+                sdkRequests,
+                definition: req.body.definition,
+            });
             const apiDefinitionId = uuidv4();
             const snippetHolder = new SDKSnippetHolder({
                 snippetsBySdkId,
                 snippetsConfigWithSdkId: snippetsConfigurationWithSdkIds,
+                snippetTemplatesByEndpoint,
             });
             const transformedApiDefinition = convertAPIDefinitionToDb(
                 req.body.definition,
