@@ -5,5 +5,5 @@ import * as FernRegistry from "../../../..";
 export interface ListSnippetsRequest {
     orgId?: FernRegistry.OrgId;
     apiId?: FernRegistry.ApiId;
-    sdks?: FernRegistry.Sdk[];
+    sdks?: FernRegistry.SdkRequest[];
 }

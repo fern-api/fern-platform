@@ -258,7 +258,13 @@ export function resolveSidebarNodes(
                             : api.skipUrlSlug
                               ? parentSlugs
                               : [...parentSlugs, ...api.urlSlug.split("/")];
-                    const flattened = flattenApiDefinition(definition, definitionSlug, api.navigation, domain);
+                    const flattened = flattenApiDefinition(
+                        definition,
+                        definitionSlug,
+                        api.navigation,
+                        domain,
+                        api.flattened,
+                    );
                     const resolved = resolveSidebarNodeRawApiSection(
                         api.api,
                         api.api,

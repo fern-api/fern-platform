@@ -12,6 +12,7 @@ import {
 import { mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
+import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import { resolveCodeSnippets } from "./resolveCodeSnippets";
@@ -50,8 +51,9 @@ export class ApiDefinitionResolver {
         apiDefinition: FlattenedApiDefinition,
         pages: Record<string, DocsV1Read.PageContent>,
         mdxOptions: FernSerializeMdxOptions | undefined,
+        featureFlags: FeatureFlags,
     ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(apiDefinition, pages);
+        const resolver = new ApiDefinitionResolver(apiDefinition, pages, featureFlags);
         return resolver.resolveApiDefinition(title, mdxOptions);
     }
 
@@ -61,6 +63,7 @@ export class ApiDefinitionResolver {
     private constructor(
         private apiDefinition: FlattenedApiDefinition,
         private pages: Record<string, DocsV1Read.PageContent>,
+        private featureFlags: FeatureFlags,
         // filteredTypes?: string[],
     ) {
         this.apiDefinition = apiDefinition;
@@ -134,6 +137,7 @@ export class ApiDefinitionResolver {
                                     editThisPageUrl: pageContent.editThisPageUrl,
                                     hideNavLinks: true,
                                     layout: "reference",
+                                    isTocDefaultEnabled: this.featureFlags.isTocDefaultEnabled,
                                 },
                             }),
                         };
@@ -159,6 +163,7 @@ export class ApiDefinitionResolver {
                         editThisPageUrl: pageContent.editThisPageUrl,
                         hideNavLinks: true,
                         layout: "reference",
+                        isTocDefaultEnabled: this.featureFlags.isTocDefaultEnabled,
                     },
                 }),
             });

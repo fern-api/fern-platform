@@ -13,17 +13,18 @@ interface FoundHeading {
     id: string;
 }
 
-export function makeToc(tree: Root): ElementContent {
+export function makeToc(tree: Root, isTocDefaultEnabled = false): ElementContent {
     const headings: FoundHeading[] = [];
 
     visit(tree, (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
         if (isMdxJsxFlowElement(node) && node.name === "Steps") {
-            if (
+            const isTocEnabled =
                 getBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
-                ) !== true
-            ) {
+                ) ?? isTocDefaultEnabled;
+
+            if (!isTocEnabled) {
                 return SKIP;
             }
         }
@@ -59,12 +60,10 @@ export function makeToc(tree: Root): ElementContent {
         }
 
         if (isMdxJsxFlowElement(node) && node.name === "TabGroup") {
-            // node.attributes.find(attr => attr.type === "mdxJsxAttribute" && attr.name === "toc")?.data;
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
-            const parentSkipToc =
-                tocAttr == null || (typeof tocAttr.value === "object" && tocAttr.value?.value !== "true");
+            const isParentTocEnabled = getBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }
@@ -72,8 +71,8 @@ export function makeToc(tree: Root): ElementContent {
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
-                    const skipToc = parentSkipToc ? item.toc !== true : false;
-                    if (item.title.trim().length === 0 || skipToc) {
+                    const isTocEnabled = item.toc ?? isParentTocEnabled;
+                    if (item.title.trim().length === 0 || !isTocEnabled) {
                         return;
                     }
                     headings.push({ depth: 6, id: slug(item.title), title: item.title });
@@ -85,13 +84,10 @@ export function makeToc(tree: Root): ElementContent {
         }
 
         if (isMdxJsxFlowElement(node) && node.name === "AccordionGroup") {
-            // node.attributes.find(attr => attr.type === "mdxJsxAttribute" && attr.name === "toc")?.data;
-            // console.log(node);
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "items");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
-            const parentSkipToc =
-                tocAttr == null || (typeof tocAttr.value === "object" && tocAttr.value?.value !== "true");
+            const isParentTocEnabled = getBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
 
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
@@ -100,8 +96,8 @@ export function makeToc(tree: Root): ElementContent {
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
-                    const skipToc = parentSkipToc ? item.toc !== true : false;
-                    if (item.title.trim().length === 0 || skipToc) {
+                    const isTocEnabled = item.toc ?? isParentTocEnabled;
+                    if (item.title.trim().length === 0 || !isTocEnabled) {
                         return;
                     }
                     headings.push({ depth: 6, id: slug(item.title), title: item.title });

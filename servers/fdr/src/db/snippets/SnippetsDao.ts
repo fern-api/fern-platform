@@ -2,10 +2,11 @@ import { Language, Prisma, PrismaClient, Sdk, Snippet } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { FdrAPI } from "../../api";
 import { readBuffer, writeBuffer } from "../../util";
+import { SdkDaoImpl } from "../sdk/SdkDao";
 import { PrismaTransaction, SdkId } from "../types";
 import { EndpointSnippetCollector } from "./EndpointSnippetCollectors";
 import { SdkIdFactory } from "./SdkIdFactory";
-import { getPackageNameFromSdkSnippetsCreate } from "./getPackageNameFromSdkSnippetsCreate";
+import { getPackageNameFromSdkSnippetsCreate, getSdkFromSdkRequest } from "./getPackageNameFromSdkSnippetsCreate";
 
 export const DEFAULT_SNIPPETS_PAGE_SIZE = 100;
 
@@ -13,7 +14,7 @@ export interface LoadDbSnippetsPage {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     endpointIdentifier: FdrAPI.EndpointIdentifier | undefined;
-    sdks: FdrAPI.Sdk[] | undefined;
+    sdks: FdrAPI.SdkRequest[] | undefined;
     page: number | undefined;
 }
 
@@ -100,11 +101,16 @@ export class SnippetsDaoImpl implements SnippetsDao {
         loadSnippetsInfo: LoadDbSnippetsPage;
     }): Promise<DbSnippetsPage> {
         return await this.prisma.$transaction(async (tx) => {
-            const sdkIds: string[] | undefined = loadSnippetsInfo.sdks?.map((sdk: FdrAPI.Sdk) => {
-                return sdkInfoFromSdk({
-                    sdk,
-                }).id;
-            });
+            const sdkIds: string[] | undefined =
+                loadSnippetsInfo.sdks != null
+                    ? await Promise.all(
+                          loadSnippetsInfo.sdks.map(async (sdk: FdrAPI.SdkRequest) => {
+                              return sdkInfoFromSdk({
+                                  sdk: await getSdkFromSdkRequest(this.prisma, sdk),
+                              }).id;
+                          }),
+                      )
+                    : undefined;
 
             const sdkIdsForSnippets =
                 sdkIds != null ? sdkIds : await this.getSdkIdsReferencedBySnippetRows({ loadSnippetsInfo, tx });
@@ -189,6 +195,8 @@ export class SnippetsDaoImpl implements SnippetsDao {
     }: {
         storeSnippetsInfo: StoreSnippetsInfo;
     }): Promise<StoreSnippetsResponse> {
+        const sdkDao = new SdkDaoImpl(this.prisma);
+
         return await this.prisma.$transaction(async (tx) => {
             const dbApi = await tx.snippetApi.findUnique({
                 where: {
@@ -209,28 +217,19 @@ export class SnippetsDaoImpl implements SnippetsDao {
             const sdkInfo = sdkInfoFromSnippetsCreate({
                 sdkSnippetsCreate: storeSnippetsInfo.sdk,
             });
-            const dbSdk = await tx.sdk.findUnique({
-                where: {
+
+            await sdkDao.createSdkIfNotExists(
+                {
                     id: sdkInfo.id,
-                },
-            });
-            if (dbSdk !== null) {
-                // Overwrite the SDK and all of its snippets that already exist.
-                await tx.sdk.delete({
-                    where: {
-                        id: sdkInfo.id,
-                    },
-                });
-            }
-            await tx.sdk.create({
-                data: {
-                    id: sdkInfo.id,
-                    package: getPackageNameFromSdkSnippetsCreate(storeSnippetsInfo.sdk),
+                    sdkPackage: getPackageNameFromSdkSnippetsCreate(storeSnippetsInfo.sdk),
                     version: storeSnippetsInfo.sdk.sdk.version,
                     language: sdkInfo.language,
                     sdk: writeBuffer(storeSnippetsInfo.sdk.sdk),
                 },
-            });
+                tx,
+                true,
+            );
+
             const snippets: Prisma.Enumerable<Prisma.SnippetCreateManyInput> = [];
             storeSnippetsInfo.sdk.snippets.map((snippet) => {
                 snippets.push({

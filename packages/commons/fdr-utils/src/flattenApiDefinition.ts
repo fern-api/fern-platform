@@ -144,6 +144,7 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, APIV1Read.TypeDefinition>;
     globalHeaders: APIV1Read.Header[];
+    isSidebarFlattened: boolean;
 }
 
 export function flattenApiDefinition(
@@ -151,6 +152,7 @@ export function flattenApiDefinition(
     parentSlugs: readonly string[],
     navigation: DocsV1Read.ApiNavigationConfigRoot | undefined,
     domain: string,
+    isSidebarFlattened = false,
 ): FlattenedApiDefinition {
     const package_ = flattenPackage(
         apiDefinition.rootPackage,
@@ -165,6 +167,7 @@ export function flattenApiDefinition(
         auth: apiDefinition.auth,
         types: apiDefinition.types,
         globalHeaders: apiDefinition.globalHeaders ?? [],
+        isSidebarFlattened,
         ...package_,
     };
 }
