@@ -348,6 +348,7 @@ export class ApiDefinitionResolver {
             requestBody,
             responseBody,
             errors,
+            snippetTemplates: endpoint.snippetTemplates,
         };
 
         toRet.examples = endpoint.examples.map((example) => {
