@@ -27,7 +27,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     types,
 }): ReactElement => {
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
-    const { messages, pushMessage } = useWebsocketMessages(websocket.id);
+    const { messages, pushMessage, clearMessages } = useWebsocketMessages(websocket.id);
     const [error, setError] = useState<string | null>(null);
 
     const socket = useRef<WebSocket | null>(null);
@@ -123,7 +123,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
         },
         [pushMessage, startSession, types],
     );
-
     return (
         <FernTooltipProvider>
             <div className="flex min-h-0 flex-1 shrink flex-col">
@@ -166,6 +165,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                         types={types}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
+                        clearMessages={clearMessages}
                         connected={connectedState === "opened"}
                         error={error}
                     />
