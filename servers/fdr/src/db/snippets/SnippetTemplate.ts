@@ -178,18 +178,6 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         };
     }
 
-    // public async bulkLoadSnippetTemplates({
-    //     loadSnippetTemplatesRequests,
-    // }: {
-    //     loadSnippetTemplatesRequests: GetSnippetTemplate[];
-    // }): Promise<(EndpointSnippetTemplate | null)[]> {
-    //     return Promise.all(
-    //         loadSnippetTemplatesRequests.map((loadSnippetTemplateRequest) =>
-    //             this.loadSnippetTemplate({ loadSnippetTemplateRequest }),
-    //         ),
-    //     );
-    // }
-
     private getSdkId(sdk: Sdk): string {
         switch (sdk.type) {
             case "typescript":
@@ -264,7 +252,6 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }
 }
 
-// TODO: move this to a shared location
 function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
     let endpointPath = "";
     for (const part of endpoint.path.parts) {
