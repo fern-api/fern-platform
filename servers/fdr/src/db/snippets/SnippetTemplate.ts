@@ -52,65 +52,6 @@ export interface SnippetTemplateDao {
 
 export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     constructor(private readonly prisma: PrismaClient) {}
-    public async loadSnippetTemplatesByEndpoint({
-        orgId,
-        apiId,
-        sdkRequests,
-        definition,
-    }: {
-        orgId: string;
-        apiId: string;
-        sdkRequests: SdkRequest[];
-        definition: APIV1Write.ApiDefinition;
-    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>> {
-        const endpoints: APIV1Write.EndpointDefinition[] = [];
-        for (const endpoint of definition.rootPackage.endpoints) {
-            endpoints.push(endpoint);
-        }
-
-        for (const subpackage of Object.values(definition.subpackages)) {
-            for (const endpoint of subpackage.endpoints) {
-                endpoints.push(endpoint);
-            }
-        }
-
-        const toRet: Record<
-            FdrAPI.EndpointPath,
-            Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
-        > = {};
-        for (const endpoint of endpoints) {
-            for (const sdk of sdkRequests) {
-                if (sdk.type !== "typescript" && sdk.type !== "python") {
-                    continue;
-                }
-                const result = await this.loadSnippetTemplate({
-                    loadSnippetTemplateRequest: {
-                        sdk,
-                        orgId,
-                        apiId,
-                        endpointId: {
-                            path: getEndpointPathAsString(endpoint),
-                            method: endpoint.method,
-                        },
-                    },
-                });
-                if (result != null) {
-                    if (toRet[result.endpointId.path] == null) {
-                        toRet[result.endpointId.path] = {
-                            PATCH: {},
-                            POST: {},
-                            PUT: {},
-                            GET: {},
-                            DELETE: {},
-                        };
-                    }
-                    toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
-                }
-            }
-        }
-
-        return toRet;
-    }
 
     async getSdkFromSdkRequest(request: SdkRequest): Promise<Sdk> {
         if (request.version != null) {
@@ -249,6 +190,66 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                 data: snippets,
             });
         });
+    }
+
+    public async loadSnippetTemplatesByEndpoint({
+        orgId,
+        apiId,
+        sdkRequests,
+        definition,
+    }: {
+        orgId: string;
+        apiId: string;
+        sdkRequests: SdkRequest[];
+        definition: APIV1Write.ApiDefinition;
+    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>> {
+        const endpoints: APIV1Write.EndpointDefinition[] = [];
+        for (const endpoint of definition.rootPackage.endpoints) {
+            endpoints.push(endpoint);
+        }
+
+        for (const subpackage of Object.values(definition.subpackages)) {
+            for (const endpoint of subpackage.endpoints) {
+                endpoints.push(endpoint);
+            }
+        }
+
+        const toRet: Record<
+            FdrAPI.EndpointPath,
+            Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+        > = {};
+        for (const endpoint of endpoints) {
+            for (const sdk of sdkRequests) {
+                if (sdk.type !== "typescript" && sdk.type !== "python") {
+                    continue;
+                }
+                const result = await this.loadSnippetTemplate({
+                    loadSnippetTemplateRequest: {
+                        sdk,
+                        orgId,
+                        apiId,
+                        endpointId: {
+                            path: getEndpointPathAsString(endpoint),
+                            method: endpoint.method,
+                        },
+                    },
+                });
+                if (result != null) {
+                    if (toRet[result.endpointId.path] == null) {
+                        toRet[result.endpointId.path] = {
+                            PATCH: {},
+                            POST: {},
+                            PUT: {},
+                            GET: {},
+                            DELETE: {},
+                        };
+                    }
+                    toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
+                }
+            }
+        }
+
+        return toRet;
     }
 }
 
