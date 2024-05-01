@@ -2,6 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { flattenApiDefinition } from "@fern-ui/fdr-utils";
 import fs from "fs";
 import path from "path";
+import { FEATURE_FLAG } from "../../contexts/FeatureFlagContext";
 import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
 
 describe("resolveApiDefinition", () => {
@@ -11,7 +12,7 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const flattened = flattenApiDefinition(fixture, [], undefined, "docs.buildwithfern.com");
-        const resolved = await ApiDefinitionResolver.resolve("API Reference", flattened, {}, undefined);
+        const resolved = await ApiDefinitionResolver.resolve("API Reference", flattened, {}, undefined, FEATURE_FLAG);
         expect(resolved).toMatchSnapshot();
     });
 });

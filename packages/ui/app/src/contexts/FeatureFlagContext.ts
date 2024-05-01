@@ -8,13 +8,15 @@ export interface FeatureFlags {
     isTocDefaultEnabled: boolean;
 }
 
-export const FeatureFlagContext = createContext<FeatureFlags>({
+export const FEATURE_FLAG: FeatureFlags = {
     isApiPlaygroundEnabled: false,
     isApiScrollingDisabled: false,
     isWhitelabeled: false,
     isSeoDisabled: false,
     isTocDefaultEnabled: false,
-});
+};
+
+export const FeatureFlagContext = createContext<FeatureFlags>(FEATURE_FLAG);
 
 export function useFeatureFlags(): FeatureFlags {
     return useContext(FeatureFlagContext);
