@@ -24,20 +24,6 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
         image: ({ url, width: realWidth, height: realHeight, blurDataUrl, alt }) => {
             const { width: layoutWidth, height: layoutHeight } = props;
             const { width, height } = getDimensions(layoutWidth, layoutHeight, realWidth, realHeight);
-            console.log(
-                "width",
-                width,
-                "height",
-                height,
-                "realWidth",
-                realWidth,
-                "realHeight",
-                realHeight,
-                "layoutWidth",
-                layoutWidth,
-                "layoutHeight",
-                layoutHeight,
-            );
             return (
                 <Image
                     {...props}
