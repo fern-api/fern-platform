@@ -198,9 +198,17 @@ export function parseBlockMetaString(element: Element, defaultFallback: string):
     const originalMeta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "").trim();
     let meta = originalMeta;
 
-    const titleMatch = meta.match(/title="([^"]*)"/);
+    const titleMatch = meta.match(/title="((?:[^"\\]|\\.)*)"/);
     let title = titleMatch?.[1];
     meta = meta.replace(titleMatch?.[0] ?? "", "");
+
+    const fileName = meta.match(/fileName="((?:[^"\\]|\\.)*)"/);
+    title = title ?? fileName?.[1];
+    meta = meta.replace(fileName?.[0] ?? "", "");
+
+    const filename = meta.match(/filename="((?:[^"\\]|\\.)*)"/);
+    title = title ?? filename?.[1];
+    meta = meta.replace(filename?.[0] ?? "", "");
 
     // i.e. maxLines=20 (default is 20)
     const maxLinesMatch = meta.match(/maxLines=(\d+)/);
