@@ -28,7 +28,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 sdkRequests.push({
                     type: "typescript",
                     package: snippetsConfigurationWithSdkIds.typescriptSdk.package,
-                    // TODO: support version
+                    version: snippetsConfigurationWithSdkIds.typescriptSdk.version,
                 });
             }
             if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
@@ -36,16 +36,24 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 sdkRequests.push({
                     type: "python",
                     package: snippetsConfigurationWithSdkIds.pythonSdk.package,
-                    // TODO: support version
+                    version: snippetsConfigurationWithSdkIds.pythonSdk.version,
                 });
             }
             if (snippetsConfigurationWithSdkIds.javaSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
-                // TODO: support parsing coordinate -> group, artifact, version
-                // sdkRequests.push({
-                //     type: "java",
-                //     group: snippetsConfigurationWithSdkIds.javaSdk.coordinate,
-                // });
+                const coordinate = snippetsConfigurationWithSdkIds.javaSdk.coordinate;
+                const [group, artifact] = coordinate.split(":");
+                if (group == null || artifact == null) {
+                    throw new Error(
+                        `Invalid coordinate for Java SDK: ${coordinate}. Must be in the format group:artifact`,
+                    );
+                }
+                sdkRequests.push({
+                    type: "java",
+                    group,
+                    artifact,
+                    version: snippetsConfigurationWithSdkIds.javaSdk.version,
+                });
             }
             if (snippetsConfigurationWithSdkIds.goSdk != null) {
                 sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
