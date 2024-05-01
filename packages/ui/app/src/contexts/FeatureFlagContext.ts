@@ -6,6 +6,7 @@ export interface FeatureFlags {
     isWhitelabeled: boolean;
     isSeoDisabled: boolean;
     isTocDefaultEnabled: boolean;
+    isSnippetTemplatesEnabled: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
@@ -14,6 +15,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isWhitelabeled: false,
     isSeoDisabled: false,
     isTocDefaultEnabled: false,
+    isSnippetTemplatesEnabled: false,
 };
 
 export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);

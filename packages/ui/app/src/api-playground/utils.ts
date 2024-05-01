@@ -90,11 +90,17 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
         .join("\n");
 }
 
-export function stringifyFetch(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyFetch({
+    endpoint,
+    formState,
+    redacted,
+    isSnippetTemplatesEnabled,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    isSnippetTemplatesEnabled: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -107,7 +113,7 @@ export function stringifyFetch(
 
     const snippetTemplate = endpoint.snippetTemplates?.typescript;
 
-    if (snippetTemplate != null) {
+    if (snippetTemplate != null && isSnippetTemplatesEnabled) {
         const resolver = new SnippetTemplateResolver({
             payload: convertToCustomSnippetPayload(formState),
             endpointSnippetTemplate: {
@@ -193,11 +199,17 @@ ${buildFetch("formData")}`;
     });
 }
 
-export function stringifyPythonRequests(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyPythonRequests({
+    endpoint,
+    formState,
+    redacted,
+    isSnippetTemplatesEnabled,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    isSnippetTemplatesEnabled: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -214,7 +226,7 @@ export function stringifyPythonRequests(
 
     const snippetTemplate = endpoint.snippetTemplates?.python;
 
-    if (snippetTemplate != null) {
+    if (snippetTemplate != null && isSnippetTemplatesEnabled) {
         const resolver = new SnippetTemplateResolver({
             payload: convertToCustomSnippetPayload(formState),
             endpointSnippetTemplate: {
@@ -230,6 +242,7 @@ export function stringifyPythonRequests(
                 snippetTemplate,
             },
         });
+
         const resolvedTemplate = resolver.resolve();
 
         if (resolvedTemplate.type === "python") {
@@ -459,11 +472,15 @@ export function buildUnredactedHeaders(
     return headers;
 }
 
-export function stringifyCurl(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyCurl({
+    endpoint,
+    formState,
+    redacted,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
