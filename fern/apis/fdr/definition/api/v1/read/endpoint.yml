@@ -32,9 +32,9 @@ types:
       errors: list<ErrorDeclaration>
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
-      snippetTemplate: optional<EndpointSnippetTemplate>
+      snippetTemplates: optional<EndpointSnippetTemplates>
 
-  EndpointSnippetTemplate:
+  EndpointSnippetTemplates:
     properties:
       typescript: optional<snippetTemplate.VersionedSnippetTemplate>
       python: optional<snippetTemplate.VersionedSnippetTemplate>

@@ -4,7 +4,7 @@
 
 import * as FernRegistry from "../../../../../../../../..";
 
-export interface EndpointSnippetTemplate {
+export interface EndpointSnippetTemplates {
     typescript?: FernRegistry.VersionedSnippetTemplate;
     python?: FernRegistry.VersionedSnippetTemplate;
 }

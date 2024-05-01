@@ -21,5 +21,5 @@ export interface EndpointDefinition extends FernRegistry.api.v1.read.WithDescrip
     errors: FernRegistry.api.v1.read.ErrorDeclaration[];
     errorsV2?: FernRegistry.api.v1.read.ErrorDeclarationV2[];
     examples: FernRegistry.api.v1.read.ExampleEndpointCall[];
-    snippetTemplate?: FernRegistry.api.v1.read.EndpointSnippetTemplate;
+    snippetTemplates?: FernRegistry.api.v1.read.EndpointSnippetTemplates;
 }
