@@ -8,7 +8,7 @@ export interface FeatureFlags {
     isTocDefaultEnabled: boolean;
 }
 
-export const FEATURE_FLAG: FeatureFlags = {
+export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isApiPlaygroundEnabled: false,
     isApiScrollingDisabled: false,
     isWhitelabeled: false,
@@ -16,7 +16,7 @@ export const FEATURE_FLAG: FeatureFlags = {
     isTocDefaultEnabled: false,
 };
 
-export const FeatureFlagContext = createContext<FeatureFlags>(FEATURE_FLAG);
+export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);
 
 export function useFeatureFlags(): FeatureFlags {
     return useContext(FeatureFlagContext);
