@@ -3,6 +3,7 @@
 imports:
   type: type.yml
   commons: commons.yml
+  snippetTemplate: ../../../templates.yml
 
 types:
   EnvironmentId: string
@@ -31,6 +32,12 @@ types:
       errors: list<ErrorDeclaration>
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
+      snippetTemplates: optional<EndpointSnippetTemplates>
+
+  EndpointSnippetTemplates:
+    properties:
+      typescript: optional<snippetTemplate.VersionedSnippetTemplate>
+      python: optional<snippetTemplate.VersionedSnippetTemplate>
 
   Environment:
     properties:
