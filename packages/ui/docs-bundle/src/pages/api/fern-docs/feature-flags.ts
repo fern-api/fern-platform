@@ -41,7 +41,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isWhitelabeled,
             isSeoDisabled: isSeoDisabledOverrides(domain) || isSeoDisabled,
             isTocDefaultEnabled,
-            isSnippetTemplatesEnabled,
+            isSnippetTemplatesEnabled: isSnippetTemplatesEnabled || isDevelopment(domain),
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -52,7 +52,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isWhitelabeled: false,
             isSeoDisabled: isSeoDisabledOverrides(domain),
             isTocDefaultEnabled: false,
-            isSnippetTemplatesEnabled: false,
+            isSnippetTemplatesEnabled: isDevelopment(domain),
         };
     }
 }
@@ -77,11 +77,14 @@ function isApiPlaygroundEnabledOverrides(domain: string): boolean {
 }
 
 function isSeoDisabledOverrides(domain: string): boolean {
-    if (
-        domain.includes(".docs.buildwithfern.com") ||
-        domain.includes(".docs.dev.buildwithfern.com") ||
-        domain.includes(".docs.staging.buildwithfern.com")
-    ) {
+    if (domain.includes(".docs.staging.buildwithfern.com")) {
+        return true;
+    }
+    return isDevelopment(domain);
+}
+
+function isDevelopment(domain: string): boolean {
+    if (domain.includes(".docs.dev.buildwithfern.com") || domain.includes(".docs.staging.buildwithfern.com")) {
         return true;
     }
 
