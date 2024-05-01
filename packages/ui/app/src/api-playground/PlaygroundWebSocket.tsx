@@ -111,7 +111,8 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
             if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
                 // TODO: handle validation
                 const defaultValue = getDefaultValueForType(message.body, types);
-                socket.current.send(JSON.stringify(merge(defaultValue, data)));
+                data = merge(defaultValue, data);
+                socket.current.send(JSON.stringify(data));
                 pushMessage({
                     type: message.type,
                     data,
