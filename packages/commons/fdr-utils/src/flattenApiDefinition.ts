@@ -38,6 +38,7 @@ export interface FlattenedEndpointDefinition {
     response: APIV1Read.HttpResponse | undefined;
     errors: APIV1Read.ErrorDeclarationV2[];
     examples: APIV1Read.ExampleEndpointCall[];
+    snippetTemplates: APIV1Read.EndpointSnippetTemplates | undefined;
 }
 
 export interface FlattenedWebSocketChannel {
@@ -210,6 +211,7 @@ function flattenPackage(
             response: endpoint.response,
             errors: endpoint.errorsV2 ?? [],
             examples: endpoint.examples,
+            snippetTemplates: endpoint.snippetTemplates,
         }),
     );
 

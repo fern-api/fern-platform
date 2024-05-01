@@ -1,3 +1,4 @@
+import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
@@ -12,6 +13,7 @@ import {
     ResolvedTypeShape,
     ResolvedWebSocketChannel,
     dereferenceObjectProperties,
+    stringifyResolvedEndpointPathPartsTemplate,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
@@ -102,6 +104,31 @@ export function stringifyFetch(
         delete headers["Content-Type"]; // fetch will set this automatically
     }
 
+    const snippetTemplate = endpoint.snippetTemplates?.typescript;
+
+    if (snippetTemplate != null) {
+        const resolver = new SnippetTemplateResolver({
+            payload: {},
+            endpointSnippetTemplate: {
+                sdk: {
+                    type: "typescript",
+                    package: "",
+                    version: "",
+                },
+                endpointId: {
+                    path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
+                    method: endpoint.method,
+                },
+                snippetTemplate,
+            },
+        });
+        const resolvedTemplate = resolver.resolve();
+
+        if (resolvedTemplate.type === "typescript") {
+            return resolvedTemplate.client;
+        }
+    }
+
     function buildFetch(body: string | undefined) {
         if (endpoint == null) {
             return "";
@@ -182,6 +209,31 @@ export function stringifyPythonRequests(
         json?: string;
         data?: string;
         files?: string;
+    }
+
+    const snippetTemplate = endpoint.snippetTemplates?.python;
+
+    if (snippetTemplate != null) {
+        const resolver = new SnippetTemplateResolver({
+            payload: {},
+            endpointSnippetTemplate: {
+                sdk: {
+                    type: "python",
+                    package: "",
+                    version: "",
+                },
+                endpointId: {
+                    path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
+                    method: endpoint.method,
+                },
+                snippetTemplate,
+            },
+        });
+        const resolvedTemplate = resolver.resolve();
+
+        if (resolvedTemplate.type === "python") {
+            return resolvedTemplate.sync_client;
+        }
     }
 
     function buildRequests({ json, data, files }: PythonRequestParams) {

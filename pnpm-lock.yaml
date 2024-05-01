@@ -768,6 +768,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
+      '@fern-api/template-resolver':
+        specifier: workspace:*
+        version: link:../../template-resolver
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
