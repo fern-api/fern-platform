@@ -7,7 +7,6 @@ import { Toaster } from "../components/FernToast";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
-import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
 import { type ResolvedPath } from "../resolver/ResolvedPath";

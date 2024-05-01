@@ -10,9 +10,7 @@ const globalDecorator = (Story) => (
         <Toaster />
     </React.Fragment>
 );
-export const decorators = [
-    globalDecorator,
-];
+export const decorators = [globalDecorator];
 
 const preview: Preview = {
     parameters: {
