@@ -266,6 +266,7 @@ the current organization_id of the authenticated user
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -373,6 +374,7 @@ authenticated user, then response code of 403 will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -483,6 +485,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -603,6 +606,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -687,6 +691,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -909,6 +914,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-token",
         },
       ],
@@ -1045,6 +1051,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -1126,6 +1133,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -1307,6 +1315,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "execute",
         },
         {
@@ -1453,6 +1462,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "validate",
         },
       ],
@@ -1598,6 +1608,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "delete-all",
         },
         {
@@ -1682,6 +1693,7 @@ current organization_id, then a response code of \`403\` will be returned.
             },
           },
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete-entries-by-ids",
         },
       ],
@@ -2692,6 +2704,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
       ],
@@ -2979,6 +2992,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-service-line-adjudication-details",
         },
         {
@@ -3238,6 +3252,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-statuses",
         },
       ],
@@ -4105,6 +4120,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -4225,6 +4241,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-legal-comparisons",
         },
         {
@@ -4433,6 +4450,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -5078,6 +5096,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -5235,6 +5254,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
         {
@@ -5685,6 +5705,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "resolve-config-for-scope",
         },
         {
@@ -5969,6 +5990,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "validate-rule",
         },
       ],
@@ -6519,6 +6541,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -6628,6 +6651,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all-variable-summaries",
         },
         {
@@ -6838,6 +6862,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -7396,6 +7421,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -7633,6 +7659,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
         {
@@ -7788,6 +7815,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all-variables-paged",
         },
       ],
@@ -8080,6 +8108,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -8426,6 +8455,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -8748,6 +8778,7 @@ Max items is 100.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -8829,6 +8860,7 @@ Max items is 100.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
         {
@@ -9181,6 +9213,7 @@ value, overriding what was set before.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
       ],
@@ -9336,6 +9369,7 @@ value, overriding what was set before.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
       ],
@@ -9469,6 +9503,7 @@ value, overriding what was set before.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -9635,6 +9670,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -9716,6 +9752,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -9965,6 +10002,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update-referring-provider",
         },
       ],
@@ -10676,6 +10714,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-summaries",
         },
         {
@@ -10980,6 +11019,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-summary",
         },
       ],
@@ -11260,6 +11300,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
       ],
@@ -11578,6 +11619,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "reverse-manual-insurance-adjustment-remit",
         },
         {
@@ -11786,6 +11828,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "calculate-financial-information",
         },
       ],
@@ -12909,6 +12952,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -13831,6 +13875,7 @@ or encounter external id.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -15812,6 +15857,7 @@ in bounds of the diagnoses list field
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -17257,6 +17303,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -17372,6 +17419,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-attachments",
         },
         {
@@ -17472,6 +17520,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "generate-clinical-notes-pdf",
         },
         {
@@ -17756,6 +17805,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "recompute-network-status-results",
         },
         {
@@ -17858,6 +17908,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "mark-as-not-billable",
         },
       ],
@@ -18084,6 +18135,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -18362,6 +18414,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
         {
@@ -18443,6 +18496,7 @@ submitted to the payor.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
         {
@@ -18663,6 +18717,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -18948,6 +19003,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -19026,6 +19082,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-latest-change-enrollment-import-datetime",
         },
         {
@@ -19138,6 +19195,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "download-attachment",
         },
         {
@@ -19247,6 +19305,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "list-attachments",
         },
         {
@@ -19339,6 +19398,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "upload-attachment",
         },
         {
@@ -19436,6 +19496,7 @@ submitted to the payor.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete-attachment",
         },
       ],
@@ -19946,6 +20007,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "compute",
         },
       ],
@@ -20169,6 +20231,7 @@ submitted to the payor.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "compute",
         },
       ],
@@ -20688,6 +20751,7 @@ Must be within 30 days of start_date.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-exports",
         },
       ],
@@ -21032,6 +21096,7 @@ Must be within 30 days of start_date.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
       ],
@@ -21136,6 +21201,7 @@ Must be within 30 days of start_date.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-fee-schedule-configuration-mechanism",
         },
         {
@@ -21438,6 +21504,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-grouped-fee-schedules-for-payer",
         },
         {
@@ -21612,6 +21679,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-bound-fee-schedule",
         },
       ],
@@ -21909,6 +21977,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -22047,6 +22116,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -22302,6 +22372,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
       ],
@@ -22607,6 +22678,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
       ],
@@ -22944,6 +23016,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "validate-insurance-adjustment",
         },
         {
@@ -23230,6 +23303,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create-insurance-adjustment",
         },
         {
@@ -23416,6 +23490,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "upload-attachment",
         },
       ],
@@ -23631,6 +23706,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -23729,6 +23805,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-images",
         },
       ],
@@ -23966,6 +24043,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create-movie",
         },
         {
@@ -24148,6 +24226,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-movie",
         },
       ],
@@ -24452,6 +24531,7 @@ identified by the id, then 403 response will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -24690,6 +24770,7 @@ will be limited to only those invoices that belong to the patient_external_id
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "search",
         },
         {
@@ -25012,6 +25093,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
       ],
@@ -25249,6 +25331,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-by-id",
         },
         {
@@ -25480,6 +25563,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
         {
@@ -25716,6 +25800,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -25928,6 +26013,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -26085,6 +26171,7 @@ upon creation of the invoice.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -26227,6 +26314,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "search",
         },
         {
@@ -26374,6 +26462,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
         {
@@ -26483,6 +26572,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "add-organization-payer",
         },
       ],
@@ -26676,6 +26766,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -26918,6 +27009,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -27089,6 +27181,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -27421,6 +27514,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -27502,6 +27596,7 @@ upon creation of the invoice.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -27704,6 +27799,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -27970,6 +28066,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
         {
@@ -28284,6 +28381,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -28554,6 +28652,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
       ],
@@ -28773,6 +28872,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -29046,6 +29146,7 @@ upon creation of the invoice.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -29277,6 +29378,7 @@ upon creation of the invoice.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -29388,6 +29490,7 @@ upon creation of the invoice.
             },
           },
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
       ],
@@ -29671,6 +29774,7 @@ identified by the id, then 403 response will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -29833,6 +29937,7 @@ identified by the id, then 403 response will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "search",
         },
         {
@@ -30038,6 +30143,7 @@ identified by the id, then 403 response will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -30319,6 +30425,7 @@ If the authenticated user does not have the permission to update the PatientPaym
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "patch",
         },
         {
@@ -30555,6 +30662,7 @@ by the id, then 403 will be returned
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -30874,6 +30982,7 @@ by the id, then 403 will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "search",
         },
         {
@@ -31143,6 +31252,7 @@ by the id, then 403 will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -31345,6 +31455,7 @@ by the id, then 403 will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -31767,6 +31878,7 @@ by the id, then 403 will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -32073,6 +32185,7 @@ by the id, then 403 will be returned
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -32399,6 +32512,7 @@ the current organization_id of the authenticated user.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "search",
         },
         {
@@ -32670,6 +32784,7 @@ authenticated user, then response code of 403 will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -33039,6 +33154,7 @@ The order of specificity from the most specific to least specific is \`service_l
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -33497,6 +33613,7 @@ The order of specificity from the most specific to least specific is \`service_l
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
         {
@@ -33805,6 +33922,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
       ],
@@ -34021,6 +34139,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -34486,6 +34605,7 @@ slashes.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
       ],
@@ -34611,6 +34731,7 @@ slashes.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -34747,6 +34868,7 @@ slashes.
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
       ],
@@ -35046,6 +35168,7 @@ identified by the id, then 403 response will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -35149,6 +35272,7 @@ identified by the id, then 403 response will be returned
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -35552,6 +35676,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -36015,6 +36140,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "patch",
         },
         {
@@ -36251,6 +36377,7 @@ by the id, then 403 will be returned
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete",
         },
         {
@@ -36456,6 +36583,7 @@ and the third party payment processor's customer can be identified by the patien
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "verify-can-invoice",
         },
         {
@@ -36547,6 +36675,7 @@ Verification includes that the provided token has all of the appropriate permiss
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "verify-api-token",
         },
         {
@@ -36667,6 +36796,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "verify-customer-exists",
         },
       ],
@@ -36878,6 +37008,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-pipeline-configurations",
         },
       ],
@@ -37256,6 +37387,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
         {
@@ -37516,6 +37648,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi-paged",
         },
         {
@@ -37904,6 +38037,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "post-remit",
         },
       ],
@@ -38215,6 +38349,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
         {
@@ -38391,6 +38526,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "validate",
         },
         {
@@ -38584,6 +38720,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "prepopulate",
         },
       ],
@@ -38753,6 +38890,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "update",
         },
       ],
@@ -39066,6 +39204,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-ledger-tables",
         },
       ],
@@ -39328,6 +39467,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "calculate-financial-information",
         },
       ],
@@ -39449,6 +39589,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all",
         },
         {
@@ -39554,6 +39695,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
       ],
@@ -39718,6 +39860,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-actions",
         },
       ],
@@ -39891,6 +40034,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-internal-enrollment-assignees",
         },
         {
@@ -40112,6 +40256,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-assignable-users",
         },
         {
@@ -40333,6 +40478,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-multi",
         },
         {
@@ -40446,6 +40592,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-assignable-users-unpaginated",
         },
         {
@@ -40648,6 +40795,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-by-external-id",
         },
       ],
@@ -40891,6 +41039,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
         {
@@ -41005,6 +41154,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get-all-work-queues",
         },
       ],
@@ -78725,6 +78875,7 @@ exports[`transformApiDefinitionToDb > {"name":"cyclical-1"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "get",
         },
       ],
@@ -79199,6 +79350,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create-least-cost-fulfillment",
         },
       ],
@@ -80123,6 +80275,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
         },
         "response": undefined,
+        "snippetTemplates": undefined,
         "urlSlug": "execute-workflow-stream",
       },
       {
@@ -80581,6 +80734,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             },
           },
         },
+        "snippetTemplates": undefined,
         "urlSlug": "generate",
       },
       {
@@ -80962,6 +81116,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
         },
         "response": undefined,
+        "snippetTemplates": undefined,
         "urlSlug": "generate-stream",
       },
       {
@@ -81276,6 +81431,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             },
           },
         },
+        "snippetTemplates": undefined,
         "urlSlug": "search",
       },
       {
@@ -81549,6 +81705,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
         },
         "response": undefined,
+        "snippetTemplates": undefined,
         "urlSlug": "submit-completion-actuals",
       },
       {
@@ -81671,6 +81828,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           },
         },
         "response": undefined,
+        "snippetTemplates": undefined,
         "urlSlug": "submit-workflow-execution-actuals",
       },
     ],
@@ -81956,6 +82114,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "retrieve",
         },
       ],
@@ -82163,6 +82322,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "create",
         },
       ],
@@ -82362,6 +82522,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "list",
         },
         {
@@ -82548,6 +82709,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "partial-update",
         },
         {
@@ -82628,6 +82790,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "destroy",
         },
         {
@@ -82844,6 +83007,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "upload",
         },
       ],
@@ -83078,6 +83242,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "retrieve",
         },
         {
@@ -83215,6 +83380,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "model-version-compile-prompt",
         },
       ],
@@ -83606,6 +83772,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "register-prompt",
         },
       ],
@@ -83830,6 +83997,7 @@ or overwritten with default values.",
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "upsert-sandbox-scenario",
         },
         {
@@ -83929,6 +84097,7 @@ or overwritten with default values.",
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete-sandbox-scenario",
         },
       ],
@@ -84131,6 +84300,7 @@ or overwritten with default values.",
               },
             },
           },
+          "snippetTemplates": undefined,
           "urlSlug": "upsert-test-suite-test-case",
         },
         {
@@ -84231,6 +84401,7 @@ or overwritten with default values.",
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
+          "snippetTemplates": undefined,
           "urlSlug": "delete-test-suite-test-case",
         },
       ],

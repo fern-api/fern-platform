@@ -49,6 +49,12 @@ function getDimensions(
 ): { width: number; height: number } {
     layoutWidth = typeof layoutWidth === "string" ? parseInt(layoutWidth, 10) : layoutWidth;
     layoutHeight = typeof layoutHeight === "string" ? parseInt(layoutHeight, 10) : layoutHeight;
+    if (layoutWidth != null && isNaN(layoutWidth)) {
+        layoutWidth = undefined;
+    }
+    if (layoutHeight != null && isNaN(layoutHeight)) {
+        layoutHeight = undefined;
+    }
     if (layoutWidth != null && layoutHeight != null) {
         return { width: layoutWidth, height: layoutHeight };
     }

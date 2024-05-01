@@ -8,6 +8,7 @@ import * as core from "../../../../../../../../core";
 export type Error =
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidDomainError
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidCustomDomainError
+    | FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError
     | FernRegistry.docs.v2.write.startDocsRegister.Error._Unknown;
 
 export declare namespace Error {
@@ -19,6 +20,10 @@ export declare namespace Error {
         error: "InvalidCustomDomainError";
     }
 
+    interface DomainBelongsToAnotherOrgError {
+        error: "DomainBelongsToAnotherOrgError";
+    }
+
     interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
@@ -27,6 +32,7 @@ export declare namespace Error {
     interface _Visitor<_Result> {
         invalidDomainError: () => _Result;
         invalidCustomDomainError: () => _Result;
+        domainBelongsToAnotherOrgError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -44,6 +50,13 @@ export const Error = {
         };
     },
 
+    domainBelongsToAnotherOrgError:
+        (): FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError => {
+            return {
+                error: "DomainBelongsToAnotherOrgError",
+            };
+        },
+
     _unknown: (fetcherError: core.Fetcher.Error): FernRegistry.docs.v2.write.startDocsRegister.Error._Unknown => {
         return {
             error: undefined,
@@ -60,6 +73,8 @@ export const Error = {
                 return visitor.invalidDomainError();
             case "InvalidCustomDomainError":
                 return visitor.invalidCustomDomainError();
+            case "DomainBelongsToAnotherOrgError":
+                return visitor.domainBelongsToAnotherOrgError();
             default:
                 return visitor._other(value as any);
         }

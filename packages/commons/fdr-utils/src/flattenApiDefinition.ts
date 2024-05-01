@@ -38,6 +38,7 @@ export interface FlattenedEndpointDefinition {
     response: APIV1Read.HttpResponse | undefined;
     errors: APIV1Read.ErrorDeclarationV2[];
     examples: APIV1Read.ExampleEndpointCall[];
+    snippetTemplates: APIV1Read.EndpointSnippetTemplates | undefined;
 }
 
 export interface FlattenedWebSocketChannel {
@@ -143,6 +144,7 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, APIV1Read.TypeDefinition>;
     globalHeaders: APIV1Read.Header[];
+    isSidebarFlattened: boolean;
 }
 
 export function flattenApiDefinition(
@@ -150,6 +152,7 @@ export function flattenApiDefinition(
     parentSlugs: readonly string[],
     navigation: DocsV1Read.ApiNavigationConfigRoot | undefined,
     domain: string,
+    isSidebarFlattened = false,
 ): FlattenedApiDefinition {
     const package_ = flattenPackage(
         apiDefinition.rootPackage,
@@ -164,6 +167,7 @@ export function flattenApiDefinition(
         auth: apiDefinition.auth,
         types: apiDefinition.types,
         globalHeaders: apiDefinition.globalHeaders ?? [],
+        isSidebarFlattened,
         ...package_,
     };
 }
@@ -210,6 +214,7 @@ function flattenPackage(
             response: endpoint.response,
             errors: endpoint.errorsV2 ?? [],
             examples: endpoint.examples,
+            snippetTemplates: endpoint.snippetTemplates,
         }),
     );
 

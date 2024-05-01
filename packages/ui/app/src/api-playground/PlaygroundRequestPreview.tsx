@@ -1,4 +1,5 @@
 import { FC, useMemo } from "react";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundEndpointRequestFormState } from "./types";
@@ -11,16 +12,31 @@ interface PlaygroundRequestPreviewProps {
 }
 
 export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ endpoint, formState, requestType }) => {
+    const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const code = useMemo(
         () =>
             requestType === "curl"
-                ? stringifyCurl(endpoint, formState)
+                ? stringifyCurl({
+                      endpoint,
+                      formState,
+                      redacted: true,
+                  })
                 : requestType === "javascript"
-                  ? stringifyFetch(endpoint, formState)
+                  ? stringifyFetch({
+                        endpoint,
+                        formState,
+                        redacted: true,
+                        isSnippetTemplatesEnabled,
+                    })
                   : requestType === "python"
-                    ? stringifyPythonRequests(endpoint, formState)
+                    ? stringifyPythonRequests({
+                          endpoint,
+                          formState,
+                          redacted: true,
+                          isSnippetTemplatesEnabled,
+                      })
                     : "",
-        [endpoint, formState, requestType],
+        [endpoint, formState, isSnippetTemplatesEnabled, requestType],
     );
     return (
         <FernSyntaxHighlighter

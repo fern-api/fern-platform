@@ -10,6 +10,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { FernTabs } from "../components/FernTabs";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
@@ -47,6 +48,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     sendRequest,
     types,
 }) => {
+    const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -143,11 +145,25 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 <CopyToClipboardButton
                     content={() =>
                         requestType === "curl"
-                            ? stringifyCurl(endpoint, formState, false)
+                            ? stringifyCurl({
+                                  endpoint,
+                                  formState,
+                                  redacted: false,
+                              })
                             : requestType === "javascript"
-                              ? stringifyFetch(endpoint, formState, false)
+                              ? stringifyFetch({
+                                    endpoint,
+                                    formState,
+                                    redacted: false,
+                                    isSnippetTemplatesEnabled,
+                                })
                               : requestType === "python"
-                                ? stringifyPythonRequests(endpoint, formState, false)
+                                ? stringifyPythonRequests({
+                                      endpoint,
+                                      formState,
+                                      redacted: false,
+                                      isSnippetTemplatesEnabled,
+                                  })
                                 : ""
                     }
                     className="-mr-2"
@@ -202,7 +218,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 className="-mr-2"
                             />
                         ),
-                    failed: () => <div />,
+                    failed: () => (
+                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                            Failed
+                        </span>
+                    ),
                 })}
             </div>
             {visitLoadable(response, {
@@ -217,16 +237,16 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 loaded: (response) =>
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
-                    ) : response.response.contentType.startsWith("audio/") ? (
+                    ) : response.contentType.startsWith("audio/") ? (
                         <FernAudioPlayer
-                            src={response.response.src}
+                            src={response.response.body}
                             title={"Untitled"}
                             className="flex h-full items-center justify-center p-4"
                         />
                     ) : (
                         <FernErrorTag
                             component="PlaygroundEndpointContent"
-                            error={`File preview not supported for ${response.response.contentType}`}
+                            error={`File preview not supported for ${response.contentType}`}
                             className="flex h-full items-center justify-center"
                         />
                     ),
@@ -235,6 +255,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         component="PlaygroundEndpointContent"
                         error={e}
                         className="flex h-full items-center justify-center"
+                        showError={true}
                     />
                 ),
             })}

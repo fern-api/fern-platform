@@ -4,14 +4,6 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
 
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
-
 export const config = {
     maxDuration: 300,
 };
@@ -52,7 +44,7 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = getHostFromBody(req.body) ?? req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
+        const xFernHost = getHostFromBody(req.body) ?? req.headers["x-fern-host"] ?? req.headers["host"];
         if (typeof xFernHost !== "string") {
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }

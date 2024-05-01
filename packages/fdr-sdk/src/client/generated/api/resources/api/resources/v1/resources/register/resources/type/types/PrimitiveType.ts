@@ -16,11 +16,11 @@ export type PrimitiveType =
     | FernRegistry.api.v1.register.PrimitiveType.Date_;
 
 export declare namespace PrimitiveType {
-    interface Integer {
+    interface Integer extends FernRegistry.api.v1.register.IntegerType {
         type: "integer";
     }
 
-    interface Double {
+    interface Double extends FernRegistry.api.v1.register.DoubleType {
         type: "double";
     }
 
@@ -28,7 +28,7 @@ export declare namespace PrimitiveType {
         type: "long";
     }
 
-    interface String {
+    interface String extends FernRegistry.api.v1.register.StringType {
         type: "string";
     }
 

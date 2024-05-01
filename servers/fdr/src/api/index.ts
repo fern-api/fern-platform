@@ -16,4 +16,5 @@ export { WriteService as DocsV2WriteService } from "./generated/api/resources/do
 export { SnippetsService } from "./generated/api/resources/snippets/service/SnippetsService";
 export { SnippetsFactoryService } from "./generated/api/resources/snippetsFactory/service/SnippetsFactoryService";
 export { TemplatesService } from "./generated/api/resources/templates/service/TemplatesService";
+export { DiffService } from "./generated/api/resources/diff/service/DiffService";
 export { register } from "./generated/register";

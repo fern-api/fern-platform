@@ -4,9 +4,6 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface NavigationTab {
-    title: string;
-    icon?: string;
-    items: FernRegistry.docs.v1.write.NavigationItem[];
-    urlSlugOverride?: string;
-}
+export type NavigationTab =
+    | FernRegistry.docs.v1.write.NavigationTabGroup
+    | FernRegistry.docs.v1.write.NavigationTabLink;

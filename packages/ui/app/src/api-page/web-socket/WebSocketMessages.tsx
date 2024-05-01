@@ -67,7 +67,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                     // "justify-end": event.action === "recieve",
                                 })}
                             >
-                                <span className="t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none">
+                                <span className="t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap">
                                     {message.displayName ?? message.type}
                                 </span>
                             </span>

@@ -1,4 +1,5 @@
-import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
@@ -7,42 +8,111 @@ import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { StreamTag } from "../commons/withStream";
-import { FernTooltip } from "../components/FernTooltip";
+import { WssTag } from "../commons/withWss";
+import { FernErrorTag } from "../components/FernErrorBoundary";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { Changelog } from "../util/dateUtils";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
+import { SidebarHeading } from "./SidebarHeading";
 import { SidebarSlugLink } from "./SidebarLink";
 
 export interface SidebarApiSectionProps {
-    className?: string;
     apiSection: SidebarNode.ApiSection;
-    slug: readonly string[];
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     depth: number;
 }
 
 export const SidebarApiSection: React.FC<SidebarApiSectionProps> = ({
-    className,
-    slug,
     registerScrolledToPathListener,
     apiSection,
     depth,
 }) => {
-    return (
-        <InnerSidebarApiSection
-            className={className}
-            slug={slug}
-            registerScrolledToPathListener={registerScrolledToPathListener}
-            artifacts={apiSection.artifacts}
-            depth={depth}
+    const { selectedSlug } = useCollapseSidebar();
+
+    return depth === 0 ? (
+        <li>
+            {apiSection.isSidebarFlattened ? (
+                <ul className="fern-sidebar-group">
+                    {apiSection.items.map((item) =>
+                        visitDiscriminatedUnion(item, "type")._visit({
+                            apiSection: (item) => (
+                                <SidebarApiSection
+                                    key={item.id}
+                                    apiSection={item}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    depth={depth}
+                                />
+                            ),
+                            page: (item) => (
+                                <SidebarApiSlugLink
+                                    key={joinUrlSlugs(...item.slug)}
+                                    item={item}
+                                    api={apiSection.api}
+                                    registerScrolledToPathListener={registerScrolledToPathListener}
+                                    depth={depth}
+                                />
+                            ),
+                            _other: () => (
+                                <FernErrorTag
+                                    component="SidebarApiSection"
+                                    error="Tried to render unknown api section."
+                                />
+                            ),
+                        }),
+                    )}
+                </ul>
+            ) : apiSection.summaryPage != null ? (
+                <SidebarSlugLink
+                    className={cn({
+                        "mt-6": depth === 0,
+                    })}
+                    depth={depth}
+                    title={apiSection.summaryPage.title}
+                    as={"h6"}
+                    slug={apiSection.summaryPage.slug}
+                    icon={apiSection.summaryPage.icon}
+                    hidden={apiSection.summaryPage.hidden}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    selected={isEqual(selectedSlug, apiSection.summaryPage.slug)}
+                >
+                    <InnerSidebarApiSection
+                        apiSection={apiSection}
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        depth={depth + 1}
+                    />
+                </SidebarSlugLink>
+            ) : (
+                <SidebarHeading
+                    className={cn({
+                        "mt-6": depth === 0,
+                    })}
+                    depth={depth}
+                    title={apiSection.title}
+                    slug={apiSection.slug}
+                    icon={apiSection.icon}
+                    hidden={apiSection.hidden}
+                >
+                    <InnerSidebarApiSection
+                        apiSection={apiSection}
+                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        depth={depth + 1}
+                    />
+                </SidebarHeading>
+            )}
+        </li>
+    ) : (
+        <ExpandableSidebarApiSection
             apiSection={apiSection}
+            registerScrolledToPathListener={registerScrolledToPathListener}
+            depth={depth}
+            title={apiSection.title}
         />
     );
 };
 
 interface InnerSidebarApiSectionProps extends SidebarApiSectionProps {
-    artifacts: DocsV1Read.ApiArtifacts | undefined;
+    className?: string;
 }
 
 const HTTP_METHOD_TAGS: Record<APIV1Read.HttpMethod, ReactElement> = {
@@ -55,23 +125,16 @@ const HTTP_METHOD_TAGS: Record<APIV1Read.HttpMethod, ReactElement> = {
 
 const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerSidebarApiSection({
     className,
-    slug,
     registerScrolledToPathListener,
-    artifacts,
     depth,
     apiSection,
 }) {
     const { selectedSlug } = useCollapseSidebar();
-    const { activeNavigatable } = useNavigationContext();
-    const shallow =
-        activeNavigatable != null &&
-        SidebarNode.isApiPage(activeNavigatable) &&
-        activeNavigatable.api === apiSection.api;
     const renderArtifacts = () => {
-        if (artifacts == null || !areApiArtifactsNonEmpty(artifacts)) {
+        if (apiSection.artifacts == null || !areApiArtifactsNonEmpty(apiSection.artifacts)) {
             return null;
         }
-        const clientLibrariesSlug = [...slug, "client-libraries"];
+        const clientLibrariesSlug = [...apiSection.slug, "client-libraries"];
         return (
             <SidebarSlugLink
                 slug={clientLibrariesSlug}
@@ -84,7 +147,10 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
         );
     };
 
-    if (apiSection.items.length === 0 && (artifacts == null || areApiArtifactsNonEmpty(artifacts))) {
+    if (
+        apiSection.items.length === 0 &&
+        (apiSection.artifacts == null || areApiArtifactsNonEmpty(apiSection.artifacts))
+    ) {
         return null;
     }
 
@@ -96,38 +162,17 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
                     <ExpandableSidebarApiSection
                         key={joinUrlSlugs(...item.slug)}
                         title={item.title}
-                        slug={item.slug}
                         apiSection={item}
                         registerScrolledToPathListener={registerScrolledToPathListener}
                         depth={depth}
-                        artifacts={undefined}
                     />
                 ) : (
-                    <SidebarSlugLink
+                    <SidebarApiSlugLink
                         key={joinUrlSlugs(...item.slug)}
-                        slug={item.slug}
-                        shallow={shallow}
-                        title={item.title}
+                        item={item}
                         registerScrolledToPathListener={registerScrolledToPathListener}
-                        selected={isEqual(item.slug, selectedSlug)}
-                        depth={Math.max(0, depth - 1)}
-                        rightElement={
-                            SidebarNode.isApiPage(item) ? (
-                                item.apiType === "endpoint" ? (
-                                    item.stream ? (
-                                        <StreamTag small />
-                                    ) : (
-                                        HTTP_METHOD_TAGS[item.method]
-                                    )
-                                ) : item.apiType === "websocket" ? (
-                                    <FernTooltip content="WebSocket Channel">
-                                        <span className="rounded-md font-mono text-xs uppercase leading-none">wss</span>
-                                    </FernTooltip>
-                                ) : null
-                            ) : null
-                        }
-                        icon={item.icon}
-                        hidden={item.hidden}
+                        depth={depth}
+                        api={apiSection.api}
                     />
                 ),
             )}
@@ -154,6 +199,45 @@ const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerS
         </ul>
     );
 });
+
+interface SidebarApiSlugLinkProps {
+    item: SidebarNode.Page | SidebarNode.ApiPage;
+    registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
+    depth: number;
+    api: FdrAPI.ApiId;
+}
+
+function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }: SidebarApiSlugLinkProps) {
+    const { selectedSlug } = useCollapseSidebar();
+    const { activeNavigatable } = useNavigationContext();
+    const shallow =
+        activeNavigatable != null && SidebarNode.isApiPage(activeNavigatable) && activeNavigatable.api === api;
+    return (
+        <SidebarSlugLink
+            slug={item.slug}
+            shallow={shallow}
+            title={item.title}
+            registerScrolledToPathListener={registerScrolledToPathListener}
+            selected={isEqual(item.slug, selectedSlug)}
+            depth={Math.max(0, depth - 1)}
+            rightElement={
+                SidebarNode.isApiPage(item) ? (
+                    item.apiType === "endpoint" ? (
+                        item.stream ? (
+                            <StreamTag small />
+                        ) : (
+                            HTTP_METHOD_TAGS[item.method]
+                        )
+                    ) : item.apiType === "websocket" ? (
+                        <WssTag small />
+                    ) : null
+                ) : null
+            }
+            icon={item.icon}
+            hidden={item.hidden}
+        />
+    );
+}
 
 function shouldShowIndicator(changelog: SidebarNode.ChangelogPage): boolean {
     // if latest change was within the last 7 days
@@ -183,27 +267,23 @@ interface ExpandableSidebarApiSectionProps extends InnerSidebarApiSectionProps {
 export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionProps> = ({
     className,
     title,
-    slug,
     registerScrolledToPathListener,
     depth,
-    artifacts,
     apiSection,
 }) => {
     const { checkExpanded, toggleExpanded, selectedSlug } = useCollapseSidebar();
-    const expanded = checkExpanded(slug);
+    const expanded = checkExpanded(apiSection.slug);
 
     const children = useMemo(
         () => (
             <InnerSidebarApiSection
                 className={cn("expandable", { hidden: !expanded })}
-                slug={slug}
                 registerScrolledToPathListener={registerScrolledToPathListener}
                 depth={depth + 1}
-                artifacts={artifacts}
                 apiSection={apiSection}
             />
         ),
-        [apiSection, artifacts, depth, expanded, registerScrolledToPathListener, slug],
+        [apiSection, depth, expanded, registerScrolledToPathListener],
     );
 
     return (
@@ -213,11 +293,11 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
             registerScrolledToPathListener={registerScrolledToPathListener}
             title={title}
             expanded={expanded}
-            toggleExpand={useCallback(() => toggleExpanded(slug), [slug, toggleExpanded])}
-            showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, slug) && !expanded}
+            toggleExpand={useCallback(() => toggleExpanded(apiSection.slug), [apiSection.slug, toggleExpanded])}
+            showIndicator={selectedSlug != null && checkSlugStartsWith(selectedSlug, apiSection.slug) && !expanded}
             icon={apiSection.icon}
             hidden={apiSection.hidden}
-            slug={apiSection.summaryPage != null ? slug : undefined}
+            slug={apiSection.summaryPage != null ? apiSection.slug : undefined}
         >
             {children}
         </SidebarSlugLink>

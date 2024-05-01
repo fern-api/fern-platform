@@ -52,6 +52,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
             "merchants",
             "get-merchants",
           ],
+          "snippetTemplates": undefined,
           "title": "Get Merchants",
           "type": "endpoint",
         },

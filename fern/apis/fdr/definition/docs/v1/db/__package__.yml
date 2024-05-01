@@ -109,6 +109,12 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
+    union:
+      - NavigationTabGroup
+      - docsReadV1.NavigationTabLink
+
+  NavigationTabGroup:
     properties:
       title: string
       icon: optional<string>
@@ -150,6 +156,8 @@ types:
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
       navigation: optional<docsReadV1.ApiNavigationConfigRoot>
+      longScrolling: optional<boolean>
+      flattened: optional<boolean>      
 
   DocsSection:
     properties:

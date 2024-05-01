@@ -70,8 +70,8 @@ service:
               type: commons.ApiId
               docs: |
                 The API name.
-            sdk: snippets.SDK
-            endpointId: snippets.EndpointIdentifier
+            sdk: snippets.SDKRequest
+            endpointId: commons.EndpointIdentifier
       response: EndpointSnippetTemplate
 
 types:
@@ -212,13 +212,13 @@ types:
   SnippetRegistryEntry:
     properties:
       sdk: snippets.SDK
-      endpointId: snippets.EndpointIdentifier
+      endpointId: commons.EndpointIdentifier
       snippetTemplate: VersionedSnippetTemplate
 
   EndpointSnippetTemplate:
     properties:
       sdk: snippets.SDK
-      endpointId: snippets.EndpointIdentifier
+      endpointId: commons.EndpointIdentifier
       snippetTemplate: VersionedSnippetTemplate
 
 errors:
