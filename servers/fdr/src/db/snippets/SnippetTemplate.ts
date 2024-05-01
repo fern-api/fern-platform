@@ -1,3 +1,4 @@
+import { APIV1Read, APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -34,6 +35,13 @@ export interface SnippetTemplateDao {
     }: {
         loadSnippetTemplateRequest: GetSnippetTemplate;
     }): Promise<EndpointSnippetTemplate | null>;
+
+    loadSnippetTemplatesByEndpoint(opts: {
+        orgId: FdrAPI.OrgId;
+        apiId: FdrAPI.ApiId;
+        sdkRequests: SdkRequest[];
+        definition: APIV1Write.ApiDefinition;
+    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>>;
 
     storeSnippetTemplate({
         storeSnippetsInfo,
@@ -183,4 +191,76 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             });
         });
     }
+
+    public async loadSnippetTemplatesByEndpoint({
+        orgId,
+        apiId,
+        sdkRequests,
+        definition,
+    }: {
+        orgId: string;
+        apiId: string;
+        sdkRequests: SdkRequest[];
+        definition: APIV1Write.ApiDefinition;
+    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>> {
+        const endpoints: APIV1Write.EndpointDefinition[] = [];
+        for (const endpoint of definition.rootPackage.endpoints) {
+            endpoints.push(endpoint);
+        }
+
+        for (const subpackage of Object.values(definition.subpackages)) {
+            for (const endpoint of subpackage.endpoints) {
+                endpoints.push(endpoint);
+            }
+        }
+
+        const toRet: Record<
+            FdrAPI.EndpointPath,
+            Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+        > = {};
+        for (const endpoint of endpoints) {
+            for (const sdk of sdkRequests) {
+                if (sdk.type !== "typescript" && sdk.type !== "python") {
+                    continue;
+                }
+                const result = await this.loadSnippetTemplate({
+                    loadSnippetTemplateRequest: {
+                        sdk,
+                        orgId,
+                        apiId,
+                        endpointId: {
+                            path: getEndpointPathAsString(endpoint),
+                            method: endpoint.method,
+                        },
+                    },
+                });
+                if (result != null) {
+                    if (toRet[result.endpointId.path] == null) {
+                        toRet[result.endpointId.path] = {
+                            PATCH: {},
+                            POST: {},
+                            PUT: {},
+                            GET: {},
+                            DELETE: {},
+                        };
+                    }
+                    toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
+                }
+            }
+        }
+
+        return toRet;
+    }
+}
+
+function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
+    let endpointPath = "";
+    for (const part of endpoint.path.parts) {
+        if (part.type === "literal") {
+            endpointPath += `${part.value}`;
+        } else {
+            endpointPath += `{${part.value}}`;
+        }
+    }
+    return endpointPath;
 }

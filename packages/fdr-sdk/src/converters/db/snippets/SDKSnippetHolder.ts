@@ -11,15 +11,24 @@ export interface SnippetsConfigWithSdkId {
 export interface SdkSnippetHolderArgs {
     snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
     snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
+    snippetTemplatesByEndpoint: Record<
+        FdrAPI.EndpointPath,
+        Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    >;
 }
 
 export class SDKSnippetHolder {
     private snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
     private snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
+    private snippetTemplatesByEndpoint: Record<
+        FdrAPI.EndpointPath,
+        Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    >;
 
-    constructor({ snippetsBySdkId, snippetsConfigWithSdkId }: SdkSnippetHolderArgs) {
+    constructor({ snippetsBySdkId, snippetsConfigWithSdkId, snippetTemplatesByEndpoint }: SdkSnippetHolderArgs) {
         this.snippetsBySdkId = snippetsBySdkId;
         this.snippetsConfigWithSdkId = snippetsConfigWithSdkId;
+        this.snippetTemplatesByEndpoint = snippetTemplatesByEndpoint;
     }
 
     public getPythonCodeSnippetForEndpoint({
@@ -121,5 +130,15 @@ export class SDKSnippetHolder {
             install: undefined, // TODO: add install snippet
             client: snippetsForEndpoint[0]?.client,
         };
+    }
+
+    public getSnippetTemplateForEndpoint({
+        endpointPath,
+        endpointMethod,
+    }: {
+        endpointPath: string;
+        endpointMethod: FdrAPI.EndpointMethod;
+    }): APIV1Read.EndpointSnippetTemplates | undefined {
+        return this.snippetTemplatesByEndpoint[endpointPath]?.[endpointMethod];
     }
 }
