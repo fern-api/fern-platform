@@ -37,7 +37,7 @@ export declare namespace EndpointContentCodeSnippets {
     }
 }
 
-const TITLED_EXAMPLE_PADDING = 43;
+// const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
     api,
@@ -53,12 +53,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
-    requestHeight,
-    responseHeight,
+    // requestHeight,
+    // responseHeight,
 }) => {
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
-        <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col gap-6">
+        <div className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full">
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <FernButtonGroup className="min-w-0 shrink">
                     {selectedClientGroup?.examples.map((example) => (
@@ -119,7 +119,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 jsonStartLine={
                     selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
-                scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
+                // scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
             {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" type={"primary"} />}
             {example.responseBody != null && endpoint.responseBody?.shape.type !== "fileDownload" && (
@@ -133,7 +133,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     language="json"
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={responseJson}
-                    scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
+                    // scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
                 />
             )}
         </div>
