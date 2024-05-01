@@ -17,20 +17,24 @@ async function main() {
         if (environmentInfo == null) {
             throw new Error(`No info for environment ${environmentType}`);
         }
-        if (!(environmentType in EnvironmentType)) {
-            return;
+        switch (environmentType) {
+            case EnvironmentType.Dev:
+            case EnvironmentType.Dev2:
+            case EnvironmentType.Prod:
+                new FdrDeployStack(
+                    app,
+                    `fdr-${environmentType.toLowerCase()}`,
+                    version,
+                    environmentType,
+                    environmentInfo,
+                    {
+                        env: { account: "985111089818", region: "us-east-1" },
+                    },
+                );
+                break;
+            default:
+                return;
         }
-
-        new FdrDeployStack(
-            app,
-            `fdr-${environmentType.toLowerCase()}`,
-            version,
-            environmentType as EnvironmentType,
-            environmentInfo,
-            {
-                env: { account: "985111089818", region: "us-east-1" },
-            },
-        );
     }
 }
 
