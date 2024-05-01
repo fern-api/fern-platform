@@ -203,6 +203,7 @@ export declare namespace SidebarNode {
         changelog: ChangelogPage | undefined;
         summaryPage: ApiSummaryPage | undefined;
         description: MDXRemoteSerializeResult | string | undefined;
+        isSidebarFlattened: boolean;
     }
 
     export interface Section extends Omit<SidebarNodeRaw.Section, "items"> {
