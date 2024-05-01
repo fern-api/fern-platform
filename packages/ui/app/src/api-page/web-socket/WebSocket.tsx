@@ -16,6 +16,7 @@ import {
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
     getParameterDescription,
+    stringifyResolvedEndpointPathParts,
     unwrapReference,
 } from "../../resolver/types";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
@@ -330,7 +331,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example?.path ?? websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("")}`}
+                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
