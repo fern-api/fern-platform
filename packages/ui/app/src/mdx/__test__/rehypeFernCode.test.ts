@@ -26,6 +26,18 @@ describe("parseBlockMetaString", () => {
         });
     });
 
+    it("should parse block meta string with double quotes", () => {
+        const node = createElement('{1,2,3} focused maxLines=5 title="title"', "typescript");
+        const meta = parseBlockMetaString(node);
+        expect(meta).toEqual({
+            lang: "typescript",
+            highlights: [1, 2, 3],
+            focused: true,
+            maxLines: 5,
+            title: "title",
+        });
+    });
+
     it("should parse block meta string with empty highlights", () => {
         const node = createElement("{ } focused maxLines=5 title='title'", "typescript");
         const meta = parseBlockMetaString(node);
