@@ -35,6 +35,13 @@ const createFakeReferenceElement = (
     }
 };
 
+const removeFakeHighlight = () => {
+    const fakeHighlight = document.querySelector("[data-fake-highlight]");
+    if (fakeHighlight) {
+        fakeHighlight.classList.remove("bg-accent-highlight");
+    }
+};
+
 export const FeedbackPopover: React.FC = () => {
     const [isHelpful, setIsHelpful] = useState<boolean>();
     const [showMenu, setShowMenu] = useState(false);
@@ -64,12 +71,12 @@ export const FeedbackPopover: React.FC = () => {
         });
     }, [selection]);
 
-    const handleCreateHighlightLink = async () => {
+    const handleCreateHighlightLink = useCallback(async () => {
         if (selection?.toString().trim()) {
             await createAndCopyHighlightLink();
             setShowMenu(false);
         }
-    };
+    }, [createAndCopyHighlightLink, selection]);
 
     const findTextNode = useCallback((node: Node, text: string): Node | null => {
         if (node.nodeType === Node.TEXT_NODE && node.textContent?.includes(text)) {
@@ -103,33 +110,29 @@ export const FeedbackPopover: React.FC = () => {
                 selectedText: selection?.toString().trim(),
             });
             setShowMenu(false);
+            removeFakeHighlight();
             toast.success("Thank you for submitting feedback!");
             setTimeout(() => {
                 setReferenceElement(null);
                 setIsHelpful(undefined);
-                // removeFakeHighlight();
             }, 200);
         },
         [selection],
     );
 
-    const handleMouseDown = (event: MouseEvent) => {
-        if (popperRef.current && !popperRef.current.contains(event.target as Node)) {
-            setShowMenu(false);
-            setReferenceElement(null);
-            setIsHelpful(undefined);
-            // removeFakeHighlight();
-        }
-    };
+    const handleMouseDown = useCallback(
+        (event: MouseEvent) => {
+            if (popperRef.current && !popperRef.current.contains(event.target as Node)) {
+                setShowMenu(false);
+                setReferenceElement(null);
+                setIsHelpful(undefined);
+                removeFakeHighlight();
+            }
+        },
+        [popperRef],
+    );
 
     useEffect(() => {
-        const removeFakeHighlight = () => {
-            const fakeHighlight = document.querySelector("[data-fake-highlight]");
-            if (fakeHighlight) {
-                fakeHighlight.remove();
-            }
-        };
-
         const handleDoubleClick = () => {
             setTimeout(() => {
                 removeFakeHighlight();
@@ -177,11 +180,28 @@ export const FeedbackPopover: React.FC = () => {
             }
         };
 
+        const handlePopoverFocus = () => {
+            const fakeHighlight = document.querySelector("[data-fake-highlight]");
+            if (fakeHighlight) {
+                fakeHighlight.classList.add("bg-accent-highlight");
+            }
+        };
+
+        const handlePopoverBlur = () => {
+            removeFakeHighlight();
+        };
+
         document.addEventListener("dblclick", handleDoubleClick);
         document.addEventListener("mousedown", handleMouseDown);
         document.addEventListener("selectionchange", handleSelectionChange);
         document.addEventListener("keydown", handleEscapeKey);
         window.addEventListener("hashchange", handleHashChange);
+
+        const popoverElement = popperRef.current;
+        if (popoverElement) {
+            popoverElement.addEventListener("focusin", handlePopoverFocus);
+            popoverElement.addEventListener("focusout", handlePopoverBlur);
+        }
 
         handleHashChange();
 
@@ -191,8 +211,13 @@ export const FeedbackPopover: React.FC = () => {
             document.removeEventListener("selectionchange", handleSelectionChange);
             document.removeEventListener("keydown", handleEscapeKey);
             window.removeEventListener("hashchange", handleHashChange);
+
+            if (popoverElement) {
+                popoverElement.removeEventListener("focusin", handlePopoverFocus);
+                popoverElement.removeEventListener("focusout", handlePopoverBlur);
+            }
         };
-    }, [findTextNode, referenceElement, selection, showMenu]);
+    }, [findTextNode, handleMouseDown, referenceElement, selection, showMenu]);
 
     const voteButtons = useMemo(
         () => (
