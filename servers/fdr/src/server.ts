@@ -40,7 +40,7 @@ Sentry.init({
     environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
     maxValueLength: 1000,
     // enabled: process.env.NODE_ENV === "production", // Do not enable sentry when running local
-    debug: true
+    debug: true,
 });
 
 // The request handler must be the first middleware on the app
