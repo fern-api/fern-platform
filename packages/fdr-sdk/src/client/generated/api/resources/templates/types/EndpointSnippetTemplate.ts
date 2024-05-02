@@ -4,35 +4,14 @@
 
 import * as FernRegistry from "../../..";
 
-export type EndpointSnippetTemplate =
-    | FernRegistry.EndpointSnippetTemplate.Typescript
-    | FernRegistry.EndpointSnippetTemplate.Python
-    | FernRegistry.EndpointSnippetTemplate.Java
-    | FernRegistry.EndpointSnippetTemplate.Go
-    | FernRegistry.EndpointSnippetTemplate.Ruby;
-
-export declare namespace EndpointSnippetTemplate {
-    interface Typescript extends FernRegistry.TypescriptEndpointSnippetTemplate, _Base {
-        type: "typescript";
-    }
-
-    interface Python extends FernRegistry.PythonEndpointSnippetTemplate, _Base {
-        type: "python";
-    }
-
-    interface Java extends FernRegistry.JavaEndpointSnippetTemplate, _Base {
-        type: "java";
-    }
-
-    interface Go extends FernRegistry.GoEndpointSnippetTemplate, _Base {
-        type: "go";
-    }
-
-    interface Ruby extends FernRegistry.RubyEndpointSnippetTemplate, _Base {
-        type: "ruby";
-    }
-
-    interface _Base {
-        endpointId: FernRegistry.EndpointIdentifier;
-    }
+export interface EndpointSnippetTemplate {
+    sdk: FernRegistry.Sdk;
+    endpointId: FernRegistry.EndpointIdentifier;
+    /** The default snippet template to use */
+    snippetTemplate: FernRegistry.VersionedSnippetTemplate;
+    /**
+     * Additional templates to use for this endpoint, for example if you wanted
+     * an async example, you could have { "async": Template(...) }.
+     */
+    additionalTemplates?: Record<string, FernRegistry.VersionedSnippetTemplate>;
 }

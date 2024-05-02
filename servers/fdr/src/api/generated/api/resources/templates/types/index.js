@@ -13,8 +13,3 @@ export * from "./SnippetTemplate";
 export * from "./VersionedSnippetTemplate";
 export * from "./SnippetRegistryEntry";
 export * from "./EndpointSnippetTemplate";
-export * from "./PythonEndpointSnippetTemplate";
-export * from "./TypescriptEndpointSnippetTemplate";
-export * from "./JavaEndpointSnippetTemplate";
-export * from "./GoEndpointSnippetTemplate";
-export * from "./RubyEndpointSnippetTemplate";
