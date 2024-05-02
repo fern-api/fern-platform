@@ -1,6 +1,7 @@
 import { APIV1Db, DocsV1Db } from "../api";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
+import { DeploymentEnvironment } from "../app/FdrConfig";
 import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
 import { type AuthService } from "../services/auth";
 import { OrgIdsResponse } from "../services/auth/AuthService";
@@ -120,7 +121,9 @@ export function createMockFdrConfig(): FdrConfig {
         algoliaSearchApiKey: "",
         slackToken: "",
         logLevel: "debug",
+        docsCacheEndpoint: "",
         enableCustomerNotifications: false,
+        deploymentEnvironment: DeploymentEnvironment.LOCAL,
     };
 }
 

@@ -1,6 +1,8 @@
 import { AuthType } from "@prisma/client";
+import { RedisClientType } from "redis";
 import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
+import { DeploymentEnvironment } from "../../app/FdrConfig";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { FdrDao } from "../../db";
@@ -39,6 +41,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
+        private readonly redisClient: RedisClientType,
     ) {}
 
     // allows us to block reads from writing to the cache while we are updating it
@@ -58,7 +61,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         url: URL;
         authorization: string | undefined;
     }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
-        const cachedResponse = this.getDocsForUrlFromCache({ url });
+        const cachedResponse = await this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             this.app.logger.info(`Cache HIT for ${url}`);
             if (cachedResponse.isPrivate) {
@@ -146,11 +149,21 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
+        if (this.app.config.deploymentEnvironment !== DeploymentEnvironment.PROD) {
+            this.redisClient.set(url.hostname, JSON.stringify(cachedResponse));
+        }
         this.DOCS_CACHE[url.hostname] = cachedResponse;
     }
 
-    private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
-        return this.DOCS_CACHE[url.hostname];
+    private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | undefined> {
+        if (this.app.config.deploymentEnvironment === DeploymentEnvironment.PROD) {
+            return this.DOCS_CACHE[url.hostname];
+        }
+        const result = await this.redisClient.get(url.hostname);
+        if (result) {
+            return JSON.parse(result);
+        }
+        return undefined;
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {

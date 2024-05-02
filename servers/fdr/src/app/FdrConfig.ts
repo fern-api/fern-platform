@@ -11,7 +11,9 @@ const ALGOLIA_SEARCH_INDEX_ENV_VAR = "ALGOLIA_SEARCH_INDEX";
 const ALGOLIA_SEARCH_API_KEY_ENV_VAR = "ALGOLIA_SEARCH_API_KEY";
 const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
+const DOCS_CACHE_ENDPOINT_ENV_VAR = "DOCS_CACHE_ENDPOINT";
 const ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR = "ENABLE_CUSTOMER_NOTIFICATIONS";
+const DEPLOYMENT_ENVIRONMENT_ENV_VAR = "RUNTIME_ENVIRONMENT";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -27,7 +29,16 @@ export interface FdrConfig {
     algoliaSearchIndex: string;
     slackToken: string;
     logLevel: string;
+    docsCacheEndpoint: string;
     enableCustomerNotifications: boolean;
+    deploymentEnvironment: DeploymentEnvironment;
+}
+
+export enum DeploymentEnvironment {
+    LOCAL = "LOCAL",
+    DEV = "DEV",
+    DEV2 = "DEV2",
+    PROD = "PROD",
 }
 
 export function getConfig(): FdrConfig {
@@ -45,7 +56,9 @@ export function getConfig(): FdrConfig {
         algoliaSearchApiKey: getEnvironmentVariableOrThrow(ALGOLIA_SEARCH_API_KEY_ENV_VAR),
         slackToken: getEnvironmentVariableOrThrow(SLACK_TOKEN_ENV_VAR),
         logLevel: process.env[LOG_LEVEL_ENV_VAR] ?? "info",
+        docsCacheEndpoint: getEnvironmentVariableOrThrow(DOCS_CACHE_ENDPOINT_ENV_VAR),
         enableCustomerNotifications: getEnvironmentVariableOrThrow(ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR) === "true",
+        deploymentEnvironment: (process.env[DEPLOYMENT_ENVIRONMENT_ENV_VAR] ?? "LOCAL") as DeploymentEnvironment,
     };
 }
 

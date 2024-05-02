@@ -15,3 +15,12 @@ services:
       - 9191:9191
     environment:
       initialBuckets: fdr
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    expose:
+      - 6379:6379
+    command: ["redis-server"]
+    environment:
+      initialBuckets: fdr

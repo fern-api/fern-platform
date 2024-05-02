@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import * as redis from "redis";
 import winston from "winston";
 import { FdrDao } from "../db";
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
@@ -16,7 +17,7 @@ import { DocsDefinitionCache, DocsDefinitionCacheImpl } from "../services/docs-c
 import { RevalidatorService, RevalidatorServiceImpl } from "../services/revalidator/RevalidatorService";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
-import type { FdrConfig } from "./FdrConfig";
+import { type FdrConfig } from "./FdrConfig";
 
 export interface FdrServices {
     readonly auth: AuthService;
@@ -43,6 +44,7 @@ export class FdrApplication {
     public readonly services: FdrServices;
     public readonly dao: FdrDao;
     public readonly docsDefinitionCache: DocsDefinitionCache;
+    public readonly docsCacheClient: redis.RedisClientType;
     public readonly logger = LOGGER;
 
     public constructor(
@@ -61,6 +63,10 @@ export class FdrApplication {
         const prisma = new PrismaClient({
             log: ["info", "warn", "error"],
         });
+
+        this.docsCacheClient = redis.createClient({ url: `redis://${config.docsCacheEndpoint}` });
+        this.docsCacheClient.connect();
+
         this.services = {
             auth: services?.auth ?? new AuthServiceImpl(this),
             db: services?.db ?? new DatabaseServiceImpl(prisma),
@@ -73,8 +79,9 @@ export class FdrApplication {
             slack: services?.slack ?? new SlackServiceImpl(this),
             revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
         };
+
         this.dao = new FdrDao(prisma);
-        this.docsDefinitionCache = new DocsDefinitionCacheImpl(this, this.dao);
+        this.docsDefinitionCache = new DocsDefinitionCacheImpl(this, this.dao, this.docsCacheClient);
 
         if ("prepareStackTrace" in Error) {
             Error.prepareStackTrace = (err, stack) =>

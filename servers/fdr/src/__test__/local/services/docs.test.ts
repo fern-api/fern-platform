@@ -35,8 +35,18 @@ it("docs register", async () => {
     await fdr.docs.v1.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
+
     // load docs
-    const docs = getAPIResponse(
+    let docs = getAPIResponse(
+        await fdr.docs.v1.read.getDocsForDomain({
+            domain,
+        }),
+    );
+    // assert docs have 2 file urls
+    expect(Object.entries(docs.files)).toHaveLength(2);
+
+    // load docs again
+    docs = getAPIResponse(
         await fdr.docs.v1.read.getDocsForDomain({
             domain,
         }),
@@ -57,7 +67,7 @@ it("docs register", async () => {
     });
 });
 
-it.skip("docs register V2", async () => {
+it("docs register V2", async () => {
     const fdr = getClient({ authed: true, url: inject("url") });
     // register docs
     const startDocsRegisterResponse = getAPIResponse(

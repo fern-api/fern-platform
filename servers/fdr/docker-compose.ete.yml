@@ -16,7 +16,9 @@ services:
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
+      DOCS_CACHE_ENDPOINT: dummy
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
+      DEVELOPMENT_ENVIRONMENT: ""
   postgres:
     image: postgres:10.3
     restart: always
@@ -30,5 +32,11 @@ services:
     ports:
       - 9090:9090
       - 9191:9191
+    environment:
+      initialBuckets: fdr
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
     environment:
       initialBuckets: fdr

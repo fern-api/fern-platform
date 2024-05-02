@@ -135,6 +135,7 @@ export class FdrDeployStack extends Stack {
                     LOG_LEVEL: getLogLevel(environmentType),
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
+                    DEPLOYMENT_ENVIRONMENT: environmentType,
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
