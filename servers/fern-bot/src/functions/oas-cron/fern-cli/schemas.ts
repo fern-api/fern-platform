@@ -39,7 +39,7 @@ export const GeneratorsOpenAPISchema = z.union([GeneratorsOpenAPIObjectSchema, z
 
 export type GeneratorsOpenAPISchema = z.infer<typeof GeneratorsOpenAPISchema>;
 
-export const GeneratorsConfigurationSchema = z.strictObject({
+export const GeneratorsConfigurationSchema = z.object({
     api: z.optional(APIConfigurationSchema),
 
     // deprecated, use the `api` key instead

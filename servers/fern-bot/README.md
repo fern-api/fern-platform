@@ -22,6 +22,16 @@ We have two bots, one for staging/testing, and another that's the production app
 - **Test:** [[Development] Fern Bot](https://github.com/organizations/fern-api/settings/apps/development-fern-bot)
 - **Production:** [Fern API](https://github.com/organizations/fern-api/settings/apps/fern-api)
 
+## Testing locally
+
+(There's a way to write tests, but for now let's talk about invoking this)
+
+You can run locally by running `pnpm invoke local --function FUNCTION`, for example if you wanted to test the update OpenAPI spec function with your `.env.local`, you'd run:
+
+```bash
+dotenv -e .env.local -- pnpm invoke local --function updateOpenApiSpec
+```
+
 <!-- ## Test your service
 
 This template contains a single lambda function triggered by an HTTP request made on the provisioned API Gateway REST API `/hello` route with `POST` method. The request body must be provided as `application/json`. The body structure is tested by API Gateway against `src/functions/hello/schema.ts` JSON-Schema definition: it must contain the `name` property.
