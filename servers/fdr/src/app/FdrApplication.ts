@@ -44,7 +44,7 @@ export class FdrApplication {
     public readonly services: FdrServices;
     public readonly dao: FdrDao;
     public readonly docsDefinitionCache: DocsDefinitionCache;
-    public readonly docsCacheClient: redis.RedisClientType;
+    public readonly docsCacheClient?: redis.RedisClientType;
     public readonly logger = LOGGER;
 
     public constructor(

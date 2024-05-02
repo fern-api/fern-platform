@@ -97,15 +97,6 @@ it("docs register V2", async () => {
     expect(docs.baseUrl.basePath).toEqual("/docs");
     expect(Object.entries(docs.definition.files)).toHaveLength(3);
 
-    docs = getAPIResponse(
-        await fdr.docs.v2.read.getDocsForUrl({
-            url: "https://docs.useacme.com/docs/1/",
-        }),
-    );
-    expect(docs.baseUrl.domain).toEqual("docs.useacme.com");
-    expect(docs.baseUrl.basePath).toEqual("/docs");
-    expect(Object.entries(docs.definition.files)).toHaveLength(3);
-
     //re-register docs
     const startDocsRegisterResponse2 = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({

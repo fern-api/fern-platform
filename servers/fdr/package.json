@@ -38,7 +38,6 @@
     "path-resolver": "*",
     "redis": "^4.6.13",
     "redis-cli": "^2.1.2",
-    "redis-memory-server": "^0.10.0",
     "uuid": "^9.0.0",
     "winston": "^3.10.0"
   },
@@ -91,7 +90,7 @@
     "test": "vitest src/__test__/unit-tests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
-    "test:local": "dotenv -e .env.test -- vitest src/__test__/local/services --globals --config src/__test__/local/vitest.config.ts",
+    "test:local": "dotenv -e .env.test -- vitest src/__test__/local --globals --config src/__test__/local/vitest.config.ts",
     "test:ete": "dotenv -e .env.ete -- vitest src/__test__/ete --globals --config src/__test__/ete/vitest.config.ts",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org buildwithfern --project fdr ./dist && sentry-cli sourcemaps upload --org buildwithfern --project fdr ./dist"
   }
