@@ -129,9 +129,7 @@ module.exports = {
             },
         },
         {
-            // CloudFlare workers ship console logs to the CloudFlare dashboard
-            // which we can then pipe to Datadog, so let FernBot use console logs.
-            files: ["servers/fdr/**/*", "servers/fern-bot-worker/**/*"],
+            files: ["servers/fdr/**/*", "servers/fern-bot/**/*"],
             rules: {
                 eqeqeq: "off",
                 "no-console": "off",
