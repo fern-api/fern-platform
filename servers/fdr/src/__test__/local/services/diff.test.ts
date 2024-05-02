@@ -50,5 +50,5 @@ it("register api", async () => {
         }),
     );
 
-    expect(response.endpointDiffs.length).toBeGreaterThan(0);
+    expect(response.markdown.length).toBeGreaterThan(0);
 });
