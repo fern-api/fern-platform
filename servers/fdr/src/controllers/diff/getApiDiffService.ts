@@ -15,7 +15,7 @@ export function getApiDiffService(app: FdrApplication): DiffService {
             const previousEndpoints = getEndpoints(previous);
             const currentEndpoints = getEndpoints(current);
 
-            const visitedEndpoints: Set<string> = new Set();\
+            const visitedEndpoints: Set<string> = new Set();
             const addedEndpoints: FdrAPI.AddedEndpoint[] = [];
             const updatedEndpoints: FdrAPI.UpdatedEndpoint[] = [];
             for (const [endpointId, currentEndpoint] of Object.entries(currentEndpoints)) {
@@ -26,14 +26,20 @@ export function getApiDiffService(app: FdrApplication): DiffService {
                 };
                 if (previousEndpoint == null) {
                     addedEndpoints.push({
-                        id: endpointIdentifier
+                        id: endpointIdentifier,
                     });
                     continue;
                 } else {
                     const endpointDiff: FdrAPI.UpdatedEndpoint = {
                         id: endpointIdentifier,
-                        pathParameterDiff: getPathParameterDiff({ previous: previousEndpoint, current: currentEndpoint}),
-                        queryParameterDiff: getQueryParameterDiff({ previous: previousEndpoint, current: currentEndpoint}),
+                        pathParameterDiff: getPathParameterDiff({
+                            previous: previousEndpoint,
+                            current: currentEndpoint,
+                        }),
+                        queryParameterDiff: getQueryParameterDiff({
+                            previous: previousEndpoint,
+                            current: currentEndpoint,
+                        }),
                         requestBodyDiff: {
                             added: [],
                             removed: [],
@@ -50,48 +56,60 @@ export function getApiDiffService(app: FdrApplication): DiffService {
             return res.send({
                 addedEndpoints,
                 updatedEndpoints,
-                removedEndpoints: []
+                removedEndpoints: [],
             });
         },
     });
 }
 
-function getPathParameterDiff({ previous, current }: { previous: APIV1Db.DbEndpointDefinition, current: APIV1Db.DbEndpointDefinition}): PathParameterDiff {
+function getPathParameterDiff({
+    previous,
+    current,
+}: {
+    previous: APIV1Db.DbEndpointDefinition;
+    current: APIV1Db.DbEndpointDefinition;
+}): PathParameterDiff {
     const added: PathParameter[] = [];
     const removed: PathParameter[] = [];
     for (const currentParameter of current.path.pathParameters) {
         const previousParameter = previous.path.pathParameters.find((maybePreviousParameter) => {
-            maybePreviousParameter.key === currentParameter.key
+            maybePreviousParameter.key === currentParameter.key;
         });
         if (previousParameter == null) {
             added.push({
-                wireKey: currentParameter.key
+                wireKey: currentParameter.key,
             });
         }
     }
     return {
         added,
         removed,
-    }
+    };
 }
 
-function getQueryParameterDiff({ previous, current }: { previous: APIV1Db.DbEndpointDefinition, current: APIV1Db.DbEndpointDefinition}): QueryParameterDiff {
+function getQueryParameterDiff({
+    previous,
+    current,
+}: {
+    previous: APIV1Db.DbEndpointDefinition;
+    current: APIV1Db.DbEndpointDefinition;
+}): QueryParameterDiff {
     const added: QueryParameter[] = [];
     const removed: QueryParameter[] = [];
     for (const currentParameter of current.path.pathParameters) {
         const previousParameter = previous.path.pathParameters.find((maybePreviousParameter) => {
-            maybePreviousParameter.key === currentParameter.key
+            maybePreviousParameter.key === currentParameter.key;
         });
         if (previousParameter == null) {
             added.push({
-                wireKey: currentParameter.key
+                wireKey: currentParameter.key,
             });
         }
     }
     return {
         added,
         removed,
-    }
+    };
 }
 
 function getEndpoints(apiDefinition: APIV1Db.DbApiDefinition): Record<string, APIV1Db.DbEndpointDefinition> {
