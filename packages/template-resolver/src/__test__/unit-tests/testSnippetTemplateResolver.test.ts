@@ -168,7 +168,7 @@ describe("Snippet Template Resolver", () => {
 
         expect(customSnippet.type).toEqual("python");
         expect((customSnippet as FdrAPI.PythonSnippet).sync_client).toEqual(
-            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\ttune_id="someId",\n\t\toffset="10",\n\t\toutput_format="pcm_16000",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)'
+            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\ttune_id="someId",\n\t\toffset="10",\n\t\toutput_format="pcm_16000",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)',
         );
     });
 
@@ -208,9 +208,6 @@ describe("Snippet Template Resolver", () => {
         const customSnippet = resolver.resolve();
 
         expect(customSnippet.type).toEqual("python");
-        if (customSnippet.type === "python") {
-            console.log(customSnippet.sync_client);
-        }
     });
 
     it("Test Chat Completion snippet", () => {
