@@ -30,7 +30,7 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: FdrAPI.ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
@@ -67,6 +67,14 @@ export class SnippetTemplateResolver {
         }
     }
 
+    private _recordToMap(record: Record<string, any>): Map<string, any> {
+        const convertedMap = new Map<string, any>();
+        Object.entries(record).forEach(([key, val]) => {
+            convertedMap[key] = val;
+        });
+        return convertedMap;
+    }
+
     private resolveV1Template(template: FdrAPI.Template, payloadOverride?: unknown): V1Snippet | undefined {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
@@ -98,7 +106,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
                           ),
                       }
                     : undefined;
@@ -123,7 +131,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -153,12 +161,12 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
             case "enum": {
-                const enumValues = new Map(Object.entries(template.values));
+                const enumValues = this._recordToMap(template.values);
                 const enumSdkValues = Array.from(enumValues.values());
                 const defaultEnumValue = enumSdkValues[0];
                 if (template.templateInput == null || defaultEnumValue == null) {
@@ -195,7 +203,7 @@ export class SnippetTemplateResolver {
 
                 const unionMap = maybeUnionValue as Map<string, unknown>;
                 const discriminatorValue = unionMap.get(discriminator) as string;
-                const selectedMemberTemplate = new Map(Object.entries(unionMembers)).get(discriminatorValue);
+                const selectedMemberTemplate = this._recordToMap(unionMembers).get(discriminatorValue);
                 const evaluatedMember: V1Snippet | undefined = selectedMemberTemplate
                     ? this.resolveV1Template(selectedMemberTemplate, payloadOverride)
                     : undefined;
