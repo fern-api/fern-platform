@@ -54,7 +54,7 @@ export function generateCodeExamples(examples: ResolvedExampleEndpointCall[]): C
         ...sortBy(
             Array.from(codeExamples.entries()).map(([language, examples]) => ({
                 language,
-                languageDisplayName: titleCase(language),
+                languageDisplayName: getLanguageDisplayName(language),
                 icon: getIconForClient(language),
                 examples,
             })),
@@ -96,6 +96,21 @@ function getIconForClient(clientId: string) {
             return "fa-brands fa-rust";
         default:
             return "fa-solid fa-code";
+    }
+}
+
+function getLanguageDisplayName(language: string) {
+    switch (language) {
+        case "go":
+        case "golang":
+            return "Go";
+        case ".net":
+            return ".NET";
+        case "c#":
+        case "csharp":
+            return "C#";
+        default:
+            return titleCase(language);
     }
 }
 

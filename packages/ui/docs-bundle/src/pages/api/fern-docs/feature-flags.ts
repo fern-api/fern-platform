@@ -11,6 +11,7 @@ interface EdgeConfigResponse {
     "seo-disabled": string[];
     "toc-default-enabled": string[]; // toc={true} in Steps, Tabs, and Accordions
     "snippet-template-enabled": string[];
+    "http-snippets-enabled": string[];
 }
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
@@ -26,6 +27,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             "whitelabeled",
             "seo-disabled",
             "toc-default-enabled",
+            "snippet-template-enabled",
         ]);
 
         const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"]);
@@ -34,6 +36,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isSeoDisabled = checkDomainMatchesCustomers(domain, config["seo-disabled"]);
         const isTocDefaultEnabled = checkDomainMatchesCustomers(domain, config["toc-default-enabled"]);
         const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(domain, config["snippet-template-enabled"]);
+        const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -42,6 +45,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isSeoDisabled: isSeoDisabledOverrides(domain) || isSeoDisabled,
             isTocDefaultEnabled,
             isSnippetTemplatesEnabled: isSnippetTemplatesEnabled || isDevelopment(domain),
+            isHttpSnippetsEnabled,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -53,6 +57,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isSeoDisabled: isSeoDisabledOverrides(domain),
             isTocDefaultEnabled: false,
             isSnippetTemplatesEnabled: isDevelopment(domain),
+            isHttpSnippetsEnabled: false,
         };
     }
 }
