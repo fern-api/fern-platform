@@ -3,7 +3,6 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import React, { ReactElement, useState } from "react";
 import { Search } from "react-feather";
-import { Chip } from "../../../components/Chip";
 import { FernButton } from "../../../components/FernButton";
 import { FernInput } from "../../../components/FernInput";
 import { FernTooltipProvider } from "../../../components/FernTooltip";
@@ -66,11 +65,7 @@ export const EnumTypeDefinition = ({
                 <div className="t-muted flex items-baseline gap-2">
                     <span className="shrink-0 text-sm"> Allowed values: </span>
                     <FernTooltipProvider>
-                        <span className="inline-flex flex-wrap gap-2">
-                            {elements.map((item) => (
-                                <Chip key={item.key} name={item.props.name} description={item.props.description} />
-                            ))}
-                        </span>
+                        <span className="inline-flex flex-wrap gap-2">{elements}</span>
                     </FernTooltipProvider>
                 </div>
             ) : (
