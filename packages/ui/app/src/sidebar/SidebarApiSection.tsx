@@ -115,14 +115,6 @@ interface InnerSidebarApiSectionProps extends SidebarApiSectionProps {
     className?: string;
 }
 
-const HTTP_METHOD_TAGS: Record<APIV1Read.HttpMethod, ReactElement> = {
-    GET: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Get} small />,
-    POST: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Post} small />,
-    PUT: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Put} small />,
-    PATCH: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Patch} small />,
-    DELETE: <HttpMethodTag className="ml-2 font-normal" method={APIV1Read.HttpMethod.Delete} small />,
-};
-
 const InnerSidebarApiSection = memo<InnerSidebarApiSectionProps>(function InnerSidebarApiSection({
     className,
     registerScrolledToPathListener,
@@ -212,24 +204,34 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
     const { activeNavigatable } = useNavigationContext();
     const shallow =
         activeNavigatable != null && SidebarNode.isApiPage(activeNavigatable) && activeNavigatable.api === api;
+
+    const selected = isEqual(item.slug, selectedSlug);
+
+    const httpMethodTags: Record<APIV1Read.HttpMethod, ReactElement> = {
+        GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} small active={selected} />,
+        POST: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Post} small active={selected} />,
+        PUT: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Put} small active={selected} />,
+        PATCH: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Patch} small active={selected} />,
+        DELETE: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Delete} small active={selected} />,
+    };
     return (
         <SidebarSlugLink
             slug={item.slug}
             shallow={shallow}
             title={item.title}
             registerScrolledToPathListener={registerScrolledToPathListener}
-            selected={isEqual(item.slug, selectedSlug)}
+            selected={selected}
             depth={Math.max(0, depth - 1)}
             rightElement={
                 SidebarNode.isApiPage(item) ? (
                     item.apiType === "endpoint" ? (
                         item.stream ? (
-                            <StreamTag small />
+                            <StreamTag small active={selected} />
                         ) : (
-                            HTTP_METHOD_TAGS[item.method]
+                            httpMethodTags[item.method]
                         )
                     ) : item.apiType === "websocket" ? (
-                        <WssTag small />
+                        <WssTag small active={selected} />
                     ) : null
                 ) : null
             }
