@@ -4,9 +4,19 @@ imports:
 types:
   APIDiff:
     properties:
-      endpointDiffs: list<EndpointDiff>
+      addedEndpoints: list<AddedEndpoint>
+      removedEndpoints: list<RemovedEndpoint>
+      updatedEndpoints: list<UpdatedEndpoint>
 
-  EndpointDiff:
+  RemovedEndpoint:
+    properties:
+      id: commons.EndpointIdentifier
+
+  AddedEndpoint:
+    properties:
+      id: commons.EndpointIdentifier
+
+  UpdatedEndpoint:
     properties:
       id: commons.EndpointIdentifier
       pathParameterDiff: PathParameterDiff
