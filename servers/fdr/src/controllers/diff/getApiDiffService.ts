@@ -75,7 +75,7 @@ function generateMarkdownChangelog({
         markdown += `The following endpoints were added:
 `;
         for (const addEndpont of added) {
-            markdown += `  - ${addEndpont.id.method} ${addEndpont.id.path}`;
+            markdown += `  - \`${addEndpont.id.method} ${addEndpont.id.path}\` \n`;
         }
     }
 

@@ -45,8 +45,8 @@ it("register api", async () => {
 
     const response = getAPIResponse(
         await fdr.diff.diff({
-            currentApiDefinitionId: emptyDefinitionRegisterResponse.apiDefinitionId,
-            previousApiDefinitionId: updatedDefinitionRegisterResponse.apiDefinitionId,
+            currentApiDefinitionId: updatedDefinitionRegisterResponse.apiDefinitionId,
+            previousApiDefinitionId: emptyDefinitionRegisterResponse.apiDefinitionId,
         }),
     );
 
