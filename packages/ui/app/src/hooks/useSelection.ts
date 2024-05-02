@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 
-export const useSelection: () => { selection: Selection | null; textSelection: string | undefined } = () => {
+export const useSelection: () => {
+    selection: Selection | null;
+} = () => {
     const [selection, setSelection] = useState<Selection | null>(null);
-    const [textSelection, setTextSelection] = useState<string | undefined>();
 
     useEffect(() => {
         const handleSelectionChange = () => {
@@ -12,12 +13,10 @@ export const useSelection: () => { selection: Selection | null; textSelection: s
 
         document.addEventListener("selectionchange", handleSelectionChange);
 
-        setTextSelection(selection?.toString().trim());
-
         return () => {
             document.removeEventListener("selectionchange", handleSelectionChange);
         };
-    }, [selection]);
+    }, []);
 
-    return { selection, textSelection };
+    return { selection };
 };

@@ -9,6 +9,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { toast } from "../components/FernToast";
 import { useHighlightLink } from "../hooks/useHighlightLink";
 import { FeedbackForm } from "./FeedbackForm";
+import { useSelection } from "../hooks/useSelection";
 
 const MotionFernButton = motion(FernButton);
 const MotionFernButtonGroup = motion(FernButtonGroup);
@@ -19,29 +20,26 @@ export const FeedbackPopover: React.FC = () => {
     const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
     const popperRef = useRef<HTMLDivElement>(null);
     const createAndCopyHighlightLink = useHighlightLink();
+    const { selection } = useSelection();
 
     const { styles, attributes } = usePopper(referenceElement, popperRef.current, {
         placement: "auto",
         modifiers: [{ name: "offset", options: { offset: [0, 8] } }],
     });
 
-    const selection = useMemo(() => window.getSelection(), []);
-
     const handleThumbsUp = useCallback(() => {
-        const selectedText = selection?.toString().trim();
         setIsHelpful(true);
         capturePosthogEvent("feedback_voted", {
             satisfied: true,
-            selectedText,
+            selectedText: selection?.toString().trim(),
         });
     }, [selection]);
 
     const handleThumbsDown = useCallback(() => {
-        const selectedText = selection?.toString().trim();
         setIsHelpful(false);
         capturePosthogEvent("feedback_voted", {
             satisfied: false,
-            selectedText,
+            selectedText: selection?.toString().trim(),
         });
     }, [selection]);
 
@@ -85,7 +83,6 @@ export const FeedbackPopover: React.FC = () => {
             });
             setShowMenu(false);
             toast.success("Thank you for submitting feedback!");
-            // Tiny timeout to make sure there isn't an animation flicker after submitting
             setTimeout(() => {
                 setReferenceElement(null);
                 setIsHelpful(undefined);
