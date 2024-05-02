@@ -207,8 +207,6 @@ service:
 
 types:
   SDKRequest:
-    base-properties:
-      version: optional<string>
     union:
       typescript: TypeScriptSDKRequest
       python: PythonSDKRequest
@@ -219,18 +217,22 @@ types:
   TypeScriptSDKRequest:
     properties:
       package: string
+      version: optional<string>
 
   PythonSDKRequest:
     properties:
       package: string
+      version: optional<string>
 
   GoSDKRequest:
     properties:
       githubRepo: string
+      version: optional<string>
 
   RubySDKRequest:
     properties:
       gem: string
+      version: optional<string>
 
   JavaSDKRequest:
     properties:
@@ -240,6 +242,7 @@ types:
       artifact:
         type: string
         docs: The artifact (e.g. `stripe-java`)
+      version: optional<string>
 
   SDK:
     union:

@@ -7,4 +7,5 @@ export interface JavaSdkRequest {
     group: string;
     /** The artifact (e.g. `stripe-java`) */
     artifact: string;
+    version?: string;
 }
