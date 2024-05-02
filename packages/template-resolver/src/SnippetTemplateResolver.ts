@@ -25,18 +25,18 @@ export class SnippetTemplateResolver {
     }
 
     private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        return path != null && jsonObject != null ? get(jsonObject, path) : jsonObject;
+        return path != null && jsonObject != null && path.length > 0 ? get(jsonObject, path) : jsonObject;
     }
 
     private accessParameterPayloadByPath(
         parameterPayloads?: FdrAPI.ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
 
         if (parameterName != null && parameterPayloads != null) {
-            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === locationPath);
+            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === parameterName);
             if (selectedParameter != null) {
                 return this.accessByPath(selectedParameter.value, splitPath);
             }
@@ -98,7 +98,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
                           ),
                       }
                     : undefined;
@@ -123,7 +123,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -153,7 +153,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
