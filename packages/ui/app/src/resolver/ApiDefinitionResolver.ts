@@ -348,29 +348,43 @@ export class ApiDefinitionResolver {
             requestBody,
             responseBody,
             errors,
+            snippetTemplates: endpoint.snippetTemplates,
         };
 
-        toRet.examples = endpoint.examples.map((example) => {
-            const requestBody = this.resolveExampleEndpointRequest(example.requestBodyV3, toRet.requestBody[0]?.shape);
-            const responseBody = this.resolveExampleEndpointResponse(example.responseBodyV3, toRet.responseBody?.shape);
-            return {
-                name: example.name,
-                description: example.description,
-                path: example.path,
-                pathParameters: example.pathParameters,
-                queryParameters: example.queryParameters,
-                headers: example.headers,
-                requestBody,
-                responseStatusCode: example.responseStatusCode,
-                responseBody,
-                // TODO: handle this differently for streaming/file responses
-                // responseHast:
-                //     responseBody != null
-                //         ? highlight(highlighter, JSON.stringify(responseBody.value, undefined, 2), "json")
-                //         : undefined,
-                snippets: resolveCodeSnippets(toRet, example, requestBody),
-            };
-        });
+        toRet.examples = await Promise.all(
+            endpoint.examples.map(async (example) => {
+                const requestBody = this.resolveExampleEndpointRequest(
+                    example.requestBodyV3,
+                    toRet.requestBody[0]?.shape,
+                );
+                const responseBody = this.resolveExampleEndpointResponse(
+                    example.responseBodyV3,
+                    toRet.responseBody?.shape,
+                );
+                return {
+                    name: example.name,
+                    description: example.description,
+                    path: example.path,
+                    pathParameters: example.pathParameters,
+                    queryParameters: example.queryParameters,
+                    headers: example.headers,
+                    requestBody,
+                    responseStatusCode: example.responseStatusCode,
+                    responseBody,
+                    // TODO: handle this differently for streaming/file responses
+                    // responseHast:
+                    //     responseBody != null
+                    //         ? highlight(highlighter, JSON.stringify(responseBody.value, undefined, 2), "json")
+                    //         : undefined,
+                    snippets: await resolveCodeSnippets(
+                        toRet,
+                        example,
+                        requestBody,
+                        this.featureFlags.isHttpSnippetsEnabled,
+                    ),
+                };
+            }),
+        );
 
         return toRet;
     }

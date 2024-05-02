@@ -8,6 +8,7 @@ import { useRouteListener } from "../../contexts/useRouteListener";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { ApiPageDescription } from "../ApiPageDescription";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
@@ -41,7 +42,18 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
             anchorIdParts={anchorIdParts}
             route={route}
             availability={availability}
-        />
+        >
+            <TypeReferenceDefinitions
+                shape={shape}
+                isCollapsible={true}
+                // onHoverProperty={onHoverProperty}
+                anchorIdParts={anchorIdParts}
+                route={route}
+                // defaultExpandAll={defaultExpandAll}
+                applyErrorStyles={false}
+                types={types}
+            />
+        </EndpointParameterContent>
     ),
     (prev, next) =>
         prev.name === next.name &&

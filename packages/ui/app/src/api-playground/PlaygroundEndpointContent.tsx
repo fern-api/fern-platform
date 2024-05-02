@@ -10,6 +10,7 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { FernTabs } from "../components/FernTabs";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
@@ -47,6 +48,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     sendRequest,
     types,
 }) => {
+    const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -143,11 +145,25 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 <CopyToClipboardButton
                     content={() =>
                         requestType === "curl"
-                            ? stringifyCurl(endpoint, formState, false)
+                            ? stringifyCurl({
+                                  endpoint,
+                                  formState,
+                                  redacted: false,
+                              })
                             : requestType === "javascript"
-                              ? stringifyFetch(endpoint, formState, false)
+                              ? stringifyFetch({
+                                    endpoint,
+                                    formState,
+                                    redacted: false,
+                                    isSnippetTemplatesEnabled,
+                                })
                               : requestType === "python"
-                                ? stringifyPythonRequests(endpoint, formState, false)
+                                ? stringifyPythonRequests({
+                                      endpoint,
+                                      formState,
+                                      redacted: false,
+                                      isSnippetTemplatesEnabled,
+                                  })
                                 : ""
                     }
                     className="-mr-2"

@@ -29,6 +29,7 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     errors: [],
     examples: [],
     description: undefined,
+    snippetTemplates: undefined,
 };
 
 const EMPTY_EXAMPLE = {

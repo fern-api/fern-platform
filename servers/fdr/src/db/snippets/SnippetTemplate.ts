@@ -29,6 +29,11 @@ export interface LoadSnippetAPIsRequest {
     apiName: string | undefined;
 }
 
+export type SnippetTemplatesByEndpoint = Record<
+    FdrAPI.EndpointPath,
+    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+>;
+
 export interface SnippetTemplateDao {
     loadSnippetTemplate({
         loadSnippetTemplateRequest,
@@ -41,7 +46,7 @@ export interface SnippetTemplateDao {
         apiId: FdrAPI.ApiId;
         sdkRequests: SdkRequest[];
         definition: APIV1Write.ApiDefinition;
-    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>>;
+    }): Promise<SnippetTemplatesByEndpoint>;
 
     storeSnippetTemplate({
         storeSnippetsInfo,

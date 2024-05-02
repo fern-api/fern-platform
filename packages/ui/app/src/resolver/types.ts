@@ -231,6 +231,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     responseBody: ResolvedResponseBody | undefined;
     errors: ResolvedError[];
     examples: ResolvedExampleEndpointCall[];
+    snippetTemplates: APIV1Read.EndpointSnippetTemplates | undefined;
 }
 
 export interface ResolvedExampleEndpointCall {
@@ -353,6 +354,10 @@ export declare namespace ResolvedEndpointPathParts {
 
 export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPathParts[]): string {
     return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
+}
+
+export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEndpointPathParts[]): string {
+    return pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join("");
 }
 
 export interface ResolvedWebSocketChannel {

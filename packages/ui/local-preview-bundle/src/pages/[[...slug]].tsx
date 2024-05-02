@@ -121,12 +121,15 @@ async function getDocsPageProps(
         navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
     );
 
+    // TODO: get feature flags from the API
     const featureFlags: FeatureFlags = {
         isApiPlaygroundEnabled: false,
         isApiScrollingDisabled: false,
         isWhitelabeled: false,
         isSeoDisabled: true,
         isTocDefaultEnabled: false,
+        isSnippetTemplatesEnabled: false,
+        isHttpSnippetsEnabled: false,
     };
 
     const resolvedPath = await convertNavigatableToResolvedPath({
