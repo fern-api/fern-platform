@@ -7,6 +7,7 @@ import { usePopper } from "react-popper";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { toast } from "../components/FernToast";
+import { useHighlightLink } from "../hooks/useHighlightLink";
 import { FeedbackForm } from "./FeedbackForm";
 
 const MotionFernButton = motion(FernButton);
@@ -17,18 +18,11 @@ export const FeedbackPopover: React.FC = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
     const popperRef = useRef<HTMLDivElement>(null);
-    const [copied, setCopied] = useState(false);
+    const createAndCopyHighlightLink = useHighlightLink();
 
     const { styles, attributes } = usePopper(referenceElement, popperRef.current, {
-        placement: "top",
-        modifiers: [
-            {
-                name: "offset",
-                options: {
-                    offset: [0, 8],
-                },
-            },
-        ],
+        placement: "auto",
+        modifiers: [{ name: "offset", options: { offset: [0, 8] } }],
     });
 
     const selection = useMemo(() => window.getSelection(), []);
@@ -53,22 +47,8 @@ export const FeedbackPopover: React.FC = () => {
 
     const handleCreateHighlightLink = async () => {
         if (selection?.toString().trim()) {
-            const selectedText = selection.toString();
-            const encodedText = encodeURIComponent(selectedText);
-
-            // This is a cleanup incase there are already anchors in the URL
-            const currentURL = window.location.href.split("#")[0];
-
-            const highlightLink = `${currentURL}#:~:text=${encodedText}`;
-
-            await navigator.clipboard.writeText(highlightLink);
-
-            setCopied(true);
-
-            setTimeout(() => {
-                setCopied(false);
-                setShowMenu(false);
-            }, 1500);
+            await createAndCopyHighlightLink();
+            setShowMenu(false);
         }
     };
 
@@ -109,7 +89,6 @@ export const FeedbackPopover: React.FC = () => {
             setTimeout(() => {
                 setReferenceElement(null);
                 setIsHelpful(undefined);
-                setCopied(false);
                 // removeFakeHighlight();
             }, 200);
         },
@@ -121,7 +100,6 @@ export const FeedbackPopover: React.FC = () => {
             setShowMenu(false);
             setReferenceElement(null);
             setIsHelpful(undefined);
-            setCopied(false);
             // removeFakeHighlight();
         }
     };
@@ -203,7 +181,6 @@ export const FeedbackPopover: React.FC = () => {
                 setShowMenu(false);
                 setReferenceElement(null);
                 setIsHelpful(undefined);
-                setCopied(false);
                 removeFakeHighlight();
             }
         };
@@ -288,11 +265,11 @@ export const FeedbackPopover: React.FC = () => {
             leaveFrom="opacity-100 scale-100 translate-y-0"
             leaveTo="opacity-0 -translate-y-8"
         >
-            <motion.div ref={popperRef} style={styles.popper} {...attributes.popper} className="fixed z-50">
+            <motion.div ref={popperRef} style={styles.popper} {...attributes.popper} className="z-50">
                 {isHelpful !== undefined && voteButtons}
                 <motion.div
                     className={clsx(
-                        "rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
+                        "rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl min-w-72",
                         { "p-2": isHelpful !== undefined },
                     )}
                 >
@@ -307,7 +284,7 @@ export const FeedbackPopover: React.FC = () => {
                                         variant="minimal"
                                         onClick={handleCreateHighlightLink}
                                     >
-                                        {copied ? "Copied!" : "Copy highlight"}
+                                        Copy highlight
                                     </MotionFernButton>
                                 </>
                             )}

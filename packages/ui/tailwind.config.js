@@ -262,10 +262,10 @@ module.exports = {
                         transform: "rotate(0deg)",
                     },
                     "30%": {
-                        transform: "rotate(10deg)",
+                        transform: "rotate(15deg)",
                     },
                     "80%": {
-                        transform: "rotate(-5deg)",
+                        transform: "rotate(-10deg)",
                     },
                     "100%": {
                         transform: "rotate(0deg)",
