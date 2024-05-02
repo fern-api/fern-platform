@@ -38,5 +38,4 @@ services:
     image: redis
     ports:
       - 6379:6379
-    environment:
-      initialBuckets: fdr
+    command: ["redis-server"]

@@ -41,7 +41,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
-        private readonly redisClient: RedisClientType,
+        private readonly redisClient?: RedisClientType,
     ) {}
 
     // allows us to block reads from writing to the cache while we are updating it
@@ -149,14 +149,14 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        if (this.app.config.deploymentEnvironment !== DeploymentEnvironment.PROD) {
+        if (this.app.config.deploymentEnvironment !== DeploymentEnvironment.PROD && this.redisClient) {
             this.redisClient.set(url.hostname, JSON.stringify(cachedResponse));
         }
         this.DOCS_CACHE[url.hostname] = cachedResponse;
     }
 
     private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | undefined> {
-        if (this.app.config.deploymentEnvironment === DeploymentEnvironment.PROD) {
+        if (this.app.config.deploymentEnvironment === DeploymentEnvironment.PROD || this.redisClient == null) {
             return this.DOCS_CACHE[url.hostname];
         }
         const result = await this.redisClient.get(url.hostname);

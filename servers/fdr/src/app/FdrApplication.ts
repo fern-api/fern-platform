@@ -64,8 +64,10 @@ export class FdrApplication {
             log: ["info", "warn", "error"],
         });
 
-        this.docsCacheClient = redis.createClient({ url: `redis://${config.docsCacheEndpoint}` });
-        this.docsCacheClient.connect();
+        if (config.docsCacheEndpoint) {
+            this.docsCacheClient = redis.createClient({ url: `redis://${config.docsCacheEndpoint}` });
+            this.docsCacheClient.connect();
+        }
 
         this.services = {
             auth: services?.auth ?? new AuthServiceImpl(this),

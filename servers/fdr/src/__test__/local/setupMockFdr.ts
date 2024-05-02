@@ -49,10 +49,6 @@ export const prisma = new PrismaClient({
     log: ["query", "info", "warn", "error"],
 });
 
-export const fdrApplication = createMockFdrApplication({
-    orgIds: ["acme", "octoai"],
-});
-
 function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -75,6 +71,9 @@ function runMockFdr(port: number): MockFdr.Instance {
     const authedClient = new FdrClient({
         environment: `http://localhost:${port}/`,
         token: "dummy",
+    });
+    const fdrApplication = createMockFdrApplication({
+        orgIds: ["acme", "octoai"],
     });
     const app = express();
     register(app, {

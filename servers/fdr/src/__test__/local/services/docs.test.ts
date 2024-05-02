@@ -37,16 +37,7 @@ it("docs register", async () => {
     });
 
     // load docs
-    let docs = getAPIResponse(
-        await fdr.docs.v1.read.getDocsForDomain({
-            domain,
-        }),
-    );
-    // assert docs have 2 file urls
-    expect(Object.entries(docs.files)).toHaveLength(2);
-
-    // load docs again
-    docs = getAPIResponse(
+    const docs = getAPIResponse(
         await fdr.docs.v1.read.getDocsForDomain({
             domain,
         }),
@@ -97,6 +88,15 @@ it("docs register V2", async () => {
         },
     });
     // load docs again
+    docs = getAPIResponse(
+        await fdr.docs.v2.read.getDocsForUrl({
+            url: "https://docs.useacme.com/docs/1/",
+        }),
+    );
+    expect(docs.baseUrl.domain).toEqual("docs.useacme.com");
+    expect(docs.baseUrl.basePath).toEqual("/docs");
+    expect(Object.entries(docs.definition.files)).toHaveLength(3);
+
     docs = getAPIResponse(
         await fdr.docs.v2.read.getDocsForUrl({
             url: "https://docs.useacme.com/docs/1/",

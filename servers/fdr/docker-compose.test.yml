@@ -22,5 +22,3 @@ services:
     expose:
       - 6379:6379
     command: ["redis-server"]
-    environment:
-      initialBuckets: fdr

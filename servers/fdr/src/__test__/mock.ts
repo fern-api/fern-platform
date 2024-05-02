@@ -121,7 +121,7 @@ export function createMockFdrConfig(): FdrConfig {
         algoliaSearchApiKey: "",
         slackToken: "",
         logLevel: "debug",
-        docsCacheEndpoint: "",
+        docsCacheEndpoint: process.env["DOCS_CACHE_ENDPOINT"] || "",
         enableCustomerNotifications: false,
         deploymentEnvironment: DeploymentEnvironment.LOCAL,
     };
