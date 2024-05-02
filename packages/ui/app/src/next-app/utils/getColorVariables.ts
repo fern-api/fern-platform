@@ -64,6 +64,7 @@ export const CSS_VARIABLES = {
     GRAYSCALE_11: "--grayscale-a11",
     GRAYSCALE_12: "--grayscale-a12",
     BODY_TEXT: "--body-text",
+    BODY_TEXT_INVERTED: "--body-text-inverted",
     BACKGROUND_IMAGE: "--docs-background-image",
 } as const;
 
@@ -200,6 +201,7 @@ export function getColorVariables(
             [CSS_VARIABLES.BORDER]: borderLight?.toRgbString() ?? "var(--grayscale-a4)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderLight?.toRgbString() ?? "var(--grayscale-a2)",
             [CSS_VARIABLES.BODY_TEXT]: "0, 0, 0",
+            [CSS_VARIABLES.BODY_TEXT_INVERTED]: "255, 255, 255",
             [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(colorsV3.light?.backgroundImage, files),
         },
         dark: {
@@ -228,6 +230,7 @@ export function getColorVariables(
             [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a5)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderDark?.toRgbString() ?? "var(--grayscale-a3)",
             [CSS_VARIABLES.BODY_TEXT]: "255, 255, 255",
+            [CSS_VARIABLES.BODY_TEXT_INVERTED]: "0, 0, 0",
             [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(colorsV3.dark?.backgroundImage, files),
         },
     };
