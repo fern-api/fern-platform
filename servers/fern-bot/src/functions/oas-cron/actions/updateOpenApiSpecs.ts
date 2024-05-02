@@ -16,6 +16,7 @@ const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
 type Repository = components["schemas"]["repository"];
 
 async function fetchAndWriteFile(url: string, path: string): Promise<void> {
+    console.log("Spec origin found, pulling spec from origin");
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
         const fileStream = createWriteStream(path);
@@ -23,23 +24,13 @@ async function fetchAndWriteFile(url: string, path: string): Promise<void> {
     }
 }
 
-async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Promise<void> {
+async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repository): Promise<void> {
     const repoDir = `${__dirname}/${repository.id}`;
     const fullRepoPath = path.join(repoDir, repository.name);
 
     const branchRemoteName = "origin";
 
-    // Auth the app with the repo
-    // TODO: figure out if this octokit instance has the right auth.
-    let ghAuth = repository.temp_clone_token;
-    if (ghAuth == null) {
-        // @ts-expect-error: Octokit auth is not typed correctly
-        const { token, tokenType } = await octokit.auth();
-        const tokenWithPrefix = tokenType === "installation" ? `x-access-token:${token}` : token;
-
-        ghAuth = tokenWithPrefix as string;
-    }
-
+    console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
     const git = simpleGit(fullRepoPath);
     // Clone the repo to repoDir and update the branch
     await git.clone(repository.clone_url);
@@ -51,6 +42,7 @@ async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Prom
     }
 
     // Parse the generators config
+    console.log("Loading generator configuration");
     const generatorConfig = await loadRawGeneratorsConfiguration(fullRepoPath);
     if (generatorConfig == null) {
         console.error(`Could not find generators config within repo: ${fullRepoPath}`);
@@ -86,6 +78,7 @@ async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Prom
         }
     }
 
+    console.log("Checking for changes to commit and push");
     if (origin != undefined && !(await git.status()).isClean()) {
         // Add + commit files
         await git.add(["-A"]);
@@ -113,11 +106,11 @@ async function updateOpenApiSpec(octokit: Octokit, repository: Repository): Prom
     }
 }
 
-export async function updateOpenApiSpecs(env: Env): Promise<void> {
-    console.log("Beginning scheduled run of `updateOpenApiSpecs`");
+export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
     const app: App = setupGithubApp(env);
 
-    await app.eachRepository(
-        async (installation) => await updateOpenApiSpec(installation.octokit, installation.repository),
-    );
+    await app.eachRepository(async (installation) => {
+        console.log("Encountered installation", installation.repository.full_name);
+        await updateOpenApiSpecInternal(installation.octokit, installation.repository);
+    });
 }

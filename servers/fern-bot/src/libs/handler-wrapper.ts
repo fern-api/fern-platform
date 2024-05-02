@@ -1,5 +1,4 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
-import "source-map-support/register";
 
 export const handlerWrapper =
     (handlerFunction: (event: APIGatewayProxyEvent, context: Context) => Promise<unknown>) =>

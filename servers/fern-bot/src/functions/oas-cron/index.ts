@@ -6,7 +6,7 @@ const handlerFunction: AWS["functions"][string] = {
     events: [
         {
             schedule: {
-                rate: ["cron(0 * * * *)"],
+                rate: ["cron(0 0 ? * * *)"],
                 enabled: true,
             },
         },
