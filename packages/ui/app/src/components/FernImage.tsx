@@ -34,6 +34,7 @@ export function FernImage({ src, ...props }: FernImage.Props): ReactElement | nu
                     placeholder={props.placeholder ?? (blurDataUrl != null ? "blur" : "empty")}
                     blurDataURL={props.blurDataURL ?? blurDataUrl}
                     unoptimized={props.unoptimized ?? url.includes(".svg")}
+                    overrideSrc={url}
                 />
             );
         },
