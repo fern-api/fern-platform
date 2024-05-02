@@ -25,7 +25,7 @@ export class SnippetTemplateResolver {
     }
 
     private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        return path != null && jsonObject != null ? get(jsonObject, path) : jsonObject;
+        return path != null && jsonObject != null && path.length > 0 ? get(jsonObject, path) : jsonObject;
     }
 
     private accessParameterPayloadByPath(
@@ -36,7 +36,7 @@ export class SnippetTemplateResolver {
         const parameterName = splitPath.shift();
 
         if (parameterName != null && parameterPayloads != null) {
-            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === locationPath);
+            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === parameterName);
             if (selectedParameter != null) {
                 return this.accessByPath(selectedParameter.value, splitPath);
             }
