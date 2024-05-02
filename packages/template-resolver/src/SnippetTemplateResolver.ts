@@ -73,7 +73,14 @@ export class SnippetTemplateResolver {
             case "generic": {
                 if (template.templateInputs == null || template.templateInputs.length === 0) {
                     // TODO: If the field is required return SOMETHING, ideally from the default example
-                    return undefined;
+                    return {
+                        imports: [],
+                        invocation: template.templateString.replace(
+                            // TODO: fix the typescript generator to create literals not as types
+                            TemplateSentinel,
+                            "",
+                        ),
+                    };
                 }
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const input of template.templateInputs) {

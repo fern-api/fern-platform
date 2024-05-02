@@ -172,6 +172,44 @@ describe("Snippet Template Resolver", () => {
         );
     });
 
+    it("Empty payload", () => {
+        const resolver = new SnippetTemplateResolver({
+            payload: {
+                headers: undefined,
+                pathParameters: undefined,
+                queryParameters: undefined,
+                requestBody: undefined,
+            },
+            endpointSnippetTemplate: {
+                snippetTemplate: {
+                    type: "v1",
+                    functionInvocation: {
+                        imports: [],
+                        isOptional: true,
+                        templateString: "await client.voices.get_all(\n\t$FERN_INPUT\n)",
+                        templateInputs: [],
+                        inputDelimiter: ",\n\t",
+                        type: "generic",
+                    },
+                    clientInstantiation:
+                        'from elevenlabs.client import AsyncElevenLabs\n\nclient = AsyncElevenLabs(\n    api_key="YOUR_API_KEY",\n)',
+                },
+                endpointId: {
+                    method: "GET",
+                    path: "/voices",
+                },
+                sdk: {
+                    type: "python",
+                    package: "elevenlabs",
+                    version: "0.0.1",
+                },
+            },
+        });
+        const customSnippet = resolver.resolve();
+
+        expect(customSnippet.type).toEqual("python");
+    });
+
     it("Test Chat Completion snippet", () => {
         const resolver = new SnippetTemplateResolver({
             payload: CHAT_COMPLETION_PAYLOAD,
