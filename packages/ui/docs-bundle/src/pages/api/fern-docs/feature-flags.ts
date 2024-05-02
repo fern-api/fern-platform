@@ -28,6 +28,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             "seo-disabled",
             "toc-default-enabled",
             "snippet-template-enabled",
+            "http-snippets-enabled",
         ]);
 
         const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"]);
