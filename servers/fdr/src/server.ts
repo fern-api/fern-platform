@@ -53,6 +53,9 @@ expressApp.use(compression());
 expressApp.get("/health", (_req, res) => {
     res.sendStatus(200);
 });
+expressApp.get("/debug-sentry", function mainHandler(req, res) {
+    throw new Error("Test sentry error!");
+});
 const app = new FdrApplication(config);
 
 try {
