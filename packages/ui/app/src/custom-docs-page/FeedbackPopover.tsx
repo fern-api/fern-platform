@@ -14,6 +14,27 @@ import { useSelection } from "../hooks/useSelection";
 const MotionFernButton = motion(FernButton);
 const MotionFernButtonGroup = motion(FernButtonGroup);
 
+const createFakeReferenceElement = (
+    selection: Selection,
+    setReferenceElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>,
+) => {
+    if (selection.toString().trim()) {
+        const range = selection.getRangeAt(0);
+        const selectionRect = range.getBoundingClientRect();
+
+        const fakeReference = document.createElement("div");
+        fakeReference.style.position = "absolute";
+        fakeReference.style.top = `${selectionRect.top}px`;
+        fakeReference.style.left = `${selectionRect.left}px`;
+        fakeReference.style.width = `${selectionRect.width}px`;
+        fakeReference.style.height = `${selectionRect.height}px`;
+        fakeReference.setAttribute("data-fake-highlight", "");
+        document.body.appendChild(fakeReference);
+
+        setReferenceElement(fakeReference);
+    }
+};
+
 export const FeedbackPopover: React.FC = () => {
     const [isHelpful, setIsHelpful] = useState<boolean>();
     const [showMenu, setShowMenu] = useState(false);
@@ -110,25 +131,11 @@ export const FeedbackPopover: React.FC = () => {
         };
 
         const handleDoubleClick = () => {
-            if (selection?.toString().trim()) {
-                setTimeout(() => {
-                    removeFakeHighlight();
-                    const range = selection.getRangeAt(0);
-                    const selectionRect = range.getBoundingClientRect();
-
-                    const fakeReference = document.createElement("div");
-                    fakeReference.style.position = "absolute";
-                    fakeReference.style.top = `${selectionRect.top}px`;
-                    fakeReference.style.left = `${selectionRect.left}px`;
-                    fakeReference.style.width = `${selectionRect.width}px`;
-                    fakeReference.style.height = `${selectionRect.height}px`;
-                    fakeReference.setAttribute("data-fake-highlight", "");
-                    document.body.appendChild(fakeReference);
-
-                    setReferenceElement(fakeReference);
-                    setShowMenu(true);
-                }, 0);
-            }
+            setTimeout(() => {
+                removeFakeHighlight();
+                selection && createFakeReferenceElement(selection, setReferenceElement);
+                setShowMenu(true);
+            }, 0);
         };
 
         const handleSelectionChange = () => {
@@ -136,22 +143,10 @@ export const FeedbackPopover: React.FC = () => {
                 if (!showMenu) {
                     removeFakeHighlight();
                 }
-                const range = selection.getRangeAt(0);
-                const selectionRect = range.getBoundingClientRect();
-
-                const fakeReference = document.createElement("div");
-                fakeReference.style.position = "absolute";
-                fakeReference.style.top = `${selectionRect.top}px`;
-                fakeReference.style.left = `${selectionRect.left}px`;
-                fakeReference.style.width = `${selectionRect.width}px`;
-                fakeReference.style.height = `${selectionRect.height}px`;
-                fakeReference.setAttribute("data-fake-highlight", "");
-                document.body.appendChild(fakeReference);
-
-                setReferenceElement(fakeReference);
+                createFakeReferenceElement(selection, setReferenceElement);
                 setShowMenu(true);
             } else if (popperRef.current && popperRef.current.contains(document.activeElement)) {
-                // Keep the popover open if the input is focused
+                // Keep the popover open if the form is being interacted with
                 setShowMenu(true);
             }
         };
@@ -182,27 +177,11 @@ export const FeedbackPopover: React.FC = () => {
             }
         };
 
-        const handleInputFocus = () => {
-            if (popperRef.current && referenceElement) {
-                if (!selection?.toString().trim()) {
-                    const fakeHighlight = document.querySelector("[data-fake-highlight]");
-                    if (fakeHighlight) {
-                        fakeHighlight.classList.add("bg-accent-highlight");
-                    }
-                }
-            }
-        };
-
         document.addEventListener("dblclick", handleDoubleClick);
         document.addEventListener("mousedown", handleMouseDown);
         document.addEventListener("selectionchange", handleSelectionChange);
         document.addEventListener("keydown", handleEscapeKey);
         window.addEventListener("hashchange", handleHashChange);
-
-        const input = document.getElementById("moreFeedback") as HTMLInputElement;
-        if (input) {
-            input.addEventListener("focus", handleInputFocus);
-        }
 
         handleHashChange();
 
@@ -212,10 +191,6 @@ export const FeedbackPopover: React.FC = () => {
             document.removeEventListener("selectionchange", handleSelectionChange);
             document.removeEventListener("keydown", handleEscapeKey);
             window.removeEventListener("hashchange", handleHashChange);
-
-            if (input) {
-                input.removeEventListener("focus", handleInputFocus);
-            }
         };
     }, [findTextNode, referenceElement, selection, showMenu]);
 
