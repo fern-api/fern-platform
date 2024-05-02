@@ -98,10 +98,13 @@ types:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-      fileUpload:
-        type: optional<type.FileUploadRequest>
-        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
       bytes: type.BytesRequest
+      formData: type.FormDataRequest
+
+      # deprecated, use formData
+      fileUpload:
+        type: optional<type.FormDataRequest>
+        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
 
   HttpResponse:
     extends: commons.WithDescription

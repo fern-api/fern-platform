@@ -26,3 +26,4 @@ export * from "./FileUploadRequestProperty";
 export * from "./FileProperty";
 export * from "./FilePropertySingle";
 export * from "./FilePropertyArray";
+export * from "./ContentType";
