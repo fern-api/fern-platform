@@ -211,7 +211,8 @@ function getHarRequest(
                 }
             }
         } else if (requestBody.type === "stream") {
-            request.postData.text = "<stream>";
+            // TODO: verify this is correct
+            request.postData.params = [{ name: "file", fileName: requestBody.fileName }];
         }
     }
 
