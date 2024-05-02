@@ -129,6 +129,7 @@ async function getDocsPageProps(
         isSeoDisabled: true,
         isTocDefaultEnabled: false,
         isSnippetTemplatesEnabled: false,
+        isHttpSnippetsEnabled: false,
     };
 
     const resolvedPath = await convertNavigatableToResolvedPath({
