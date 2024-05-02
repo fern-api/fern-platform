@@ -116,6 +116,16 @@ export const FeedbackPopover: React.FC = () => {
         [selection],
     );
 
+    const handleMouseDown = (event: MouseEvent) => {
+        if (popperRef.current && !popperRef.current.contains(event.target as Node)) {
+            setShowMenu(false);
+            setReferenceElement(null);
+            setIsHelpful(undefined);
+            setCopied(false);
+            // removeFakeHighlight();
+        }
+    };
+
     useEffect(() => {
         const removeFakeHighlight = () => {
             const fakeHighlight = document.querySelector("[data-fake-highlight]");
@@ -168,13 +178,6 @@ export const FeedbackPopover: React.FC = () => {
             } else if (popperRef.current && popperRef.current.contains(document.activeElement)) {
                 // Keep the popover open if the input is focused
                 setShowMenu(true);
-            } else {
-                setShowMenu(false);
-                setReferenceElement(null);
-                // Clear feedback states when text selection is removed
-                setIsHelpful(undefined);
-                setCopied(false);
-                removeFakeHighlight();
             }
         };
 
@@ -217,9 +220,10 @@ export const FeedbackPopover: React.FC = () => {
         };
 
         document.addEventListener("dblclick", handleDoubleClick);
+        document.addEventListener("mousedown", handleMouseDown);
         document.addEventListener("selectionchange", handleSelectionChange);
-        window.addEventListener("hashchange", handleHashChange);
         document.addEventListener("keydown", handleEscapeKey);
+        window.addEventListener("hashchange", handleHashChange);
 
         const input = document.getElementById("moreFeedback") as HTMLInputElement;
         if (input) {
@@ -230,9 +234,10 @@ export const FeedbackPopover: React.FC = () => {
 
         return () => {
             document.removeEventListener("dblclick", handleDoubleClick);
+            document.removeEventListener("mousedown", handleMouseDown);
             document.removeEventListener("selectionchange", handleSelectionChange);
-            window.removeEventListener("hashchange", handleHashChange);
             document.removeEventListener("keydown", handleEscapeKey);
+            window.removeEventListener("hashchange", handleHashChange);
 
             if (input) {
                 input.removeEventListener("focus", handleInputFocus);

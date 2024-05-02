@@ -7,7 +7,7 @@ export type { ToastT } from "sonner";
 export const Toaster: FC = () => {
     return (
         <SonnerToaster
-            position="bottom-right"
+            position="bottom-center"
             theme="system"
             toastOptions={{
                 unstyled: true,
