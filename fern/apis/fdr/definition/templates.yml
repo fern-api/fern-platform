@@ -216,9 +216,40 @@ types:
       snippetTemplate: VersionedSnippetTemplate
 
   EndpointSnippetTemplate:
-    properties:
-      sdk: snippets.SDK
+    base-properties:
       endpointId: commons.EndpointIdentifier
+    union:
+      typescript: TypescriptEndpointSnippetTemplate
+      python: PythonEndpointSnippetTemplate
+      java: JavaEndpointSnippetTemplate
+      go: GoEndpointSnippetTemplate
+      ruby: RubyEndpointSnippetTemplate
+
+  PythonEndpointSnippetTemplate:
+    properties:
+      sdk: snippets.PythonSDK
+      snippetTemplate: VersionedSnippetTemplate
+      asyncSnippetTemplate: VersionedSnippetTemplate
+
+  TypescriptEndpointSnippetTemplate:
+    properties:
+      sdk: snippets.TypeScriptSDK
+      snippetTemplate: VersionedSnippetTemplate
+
+  JavaEndpointSnippetTemplate:
+    properties:
+      sdk: snippets.JavaSDK
+      snippetTemplate: VersionedSnippetTemplate
+      asyncSnippetTemplate: VersionedSnippetTemplate
+
+  GoEndpointSnippetTemplate:
+    properties:
+      sdk: snippets.GoSDK
+      snippetTemplate: VersionedSnippetTemplate
+
+  RubyEndpointSnippetTemplate:
+    properties:
+      sdk: snippets.RubySDK
       snippetTemplate: VersionedSnippetTemplate
 
 errors:

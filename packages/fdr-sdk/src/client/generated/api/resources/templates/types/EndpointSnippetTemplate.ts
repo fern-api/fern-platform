@@ -4,8 +4,35 @@
 
 import * as FernRegistry from "../../..";
 
-export interface EndpointSnippetTemplate {
-    sdk: FernRegistry.Sdk;
-    endpointId: FernRegistry.EndpointIdentifier;
-    snippetTemplate: FernRegistry.VersionedSnippetTemplate;
+export type EndpointSnippetTemplate =
+    | FernRegistry.EndpointSnippetTemplate.Typescript
+    | FernRegistry.EndpointSnippetTemplate.Python
+    | FernRegistry.EndpointSnippetTemplate.Java
+    | FernRegistry.EndpointSnippetTemplate.Go
+    | FernRegistry.EndpointSnippetTemplate.Ruby;
+
+export declare namespace EndpointSnippetTemplate {
+    interface Typescript extends FernRegistry.TypescriptEndpointSnippetTemplate, _Base {
+        type: "typescript";
+    }
+
+    interface Python extends FernRegistry.PythonEndpointSnippetTemplate, _Base {
+        type: "python";
+    }
+
+    interface Java extends FernRegistry.JavaEndpointSnippetTemplate, _Base {
+        type: "java";
+    }
+
+    interface Go extends FernRegistry.GoEndpointSnippetTemplate, _Base {
+        type: "go";
+    }
+
+    interface Ruby extends FernRegistry.RubyEndpointSnippetTemplate, _Base {
+        type: "ruby";
+    }
+
+    interface _Base {
+        endpointId: FernRegistry.EndpointIdentifier;
+    }
 }
