@@ -3,5 +3,8 @@
  */
 import * as FernRegistry from "../../..";
 export interface ApiDiff {
-    endpointDiffs: FernRegistry.EndpointDiff[];
+    addedEndpoints: FernRegistry.AddedEndpoint[];
+    removedEndpoints: FernRegistry.RemovedEndpoint[];
+    updatedEndpoints: FernRegistry.UpdatedEndpoint[];
+    markdown: string;
 }

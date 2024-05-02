@@ -30,8 +30,6 @@ export async function resolveCodeSnippets(
 ): Promise<ResolvedCodeSnippet[]> {
     let toRet: ResolvedCodeSnippet[] = [];
 
-    const snippet = new HTTPSnippet(getHarRequest(endpoint, example, requestBody));
-
     const curlCode = stringifyHttpRequestExampleToCurl(
         convertEndpointExampleToHttpRequestExample(endpoint, example, requestBody),
     );
@@ -102,30 +100,36 @@ export async function resolveCodeSnippets(
         });
     });
 
-    if (isHttpSnippetsEnabled) {
-        for (const { clientId, targetId } of CLIENTS) {
-            if (toRet.some((snippet) => cleanLanguage(snippet.language) === targetId)) {
-                continue;
-            }
+    try {
+        if (isHttpSnippetsEnabled) {
+            const snippet = new HTTPSnippet(getHarRequest(endpoint, example, requestBody));
+            for (const { clientId, targetId } of CLIENTS) {
+                if (toRet.some((snippet) => cleanLanguage(snippet.language) === targetId)) {
+                    continue;
+                }
 
-            if (
-                targetId === "javascript" &&
-                toRet.some((snippet) => cleanLanguage(snippet.language) === "typescript")
-            ) {
-                continue;
-            }
+                if (
+                    targetId === "javascript" &&
+                    toRet.some((snippet) => cleanLanguage(snippet.language) === "typescript")
+                ) {
+                    continue;
+                }
 
-            const code = await snippet.convert(targetId, clientId);
-            if (code != null) {
-                toRet.push({
-                    name: undefined,
-                    language: targetId,
-                    install: undefined,
-                    code: typeof code === "string" ? code : code[0],
-                    generated: true,
-                });
+                const code = await snippet.convert(targetId, clientId);
+                if (code != null) {
+                    toRet.push({
+                        name: undefined,
+                        language: targetId,
+                        install: undefined,
+                        code: typeof code === "string" ? code : code[0],
+                        generated: true,
+                    });
+                }
             }
         }
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
     }
 
     return toRet;

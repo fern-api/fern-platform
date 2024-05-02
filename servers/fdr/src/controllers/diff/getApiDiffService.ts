@@ -1,4 +1,5 @@
 import { APIV1Db, APIV1Read, DiffService, FdrAPI } from "../../api";
+import { PathParameter, PathParameterDiff, QueryParameter, QueryParameterDiff } from "../../api/generated/api";
 import { type FdrApplication } from "../../app";
 
 export function getApiDiffService(app: FdrApplication): DiffService {
@@ -15,26 +16,30 @@ export function getApiDiffService(app: FdrApplication): DiffService {
             const currentEndpoints = getEndpoints(current);
 
             const visitedEndpoints: Set<string> = new Set();
-            const endpointDiffs: FdrAPI.EndpointDiff[] = [];
+            const addedEndpoints: FdrAPI.AddedEndpoint[] = [];
+            const updatedEndpoints: FdrAPI.UpdatedEndpoint[] = [];
             for (const [endpointId, currentEndpoint] of Object.entries(currentEndpoints)) {
                 const previousEndpoint = previousEndpoints[endpointId];
+                const endpointIdentifier = {
+                    method: currentEndpoint.method,
+                    path: getEndpointPath(currentEndpoint),
+                };
                 if (previousEndpoint == null) {
-                    // TODO: Handle new endpoint
+                    addedEndpoints.push({
+                        id: endpointIdentifier,
+                    });
                     continue;
                 } else {
-                    const endpointDiff: FdrAPI.EndpointDiff = {
-                        id: {
-                            method: currentEndpoint.method,
-                            path: getEndpointPath(currentEndpoint),
-                        },
-                        pathParameterDiff: {
-                            added: [],
-                            removed: [],
-                        },
-                        queryParameterDiff: {
-                            added: [],
-                            removed: [],
-                        },
+                    const endpointDiff: FdrAPI.UpdatedEndpoint = {
+                        id: endpointIdentifier,
+                        pathParameterDiff: getPathParameterDiff({
+                            previous: previousEndpoint,
+                            current: currentEndpoint,
+                        }),
+                        queryParameterDiff: getQueryParameterDiff({
+                            previous: previousEndpoint,
+                            current: currentEndpoint,
+                        }),
                         requestBodyDiff: {
                             added: [],
                             removed: [],
@@ -44,15 +49,128 @@ export function getApiDiffService(app: FdrApplication): DiffService {
                             removed: [],
                         },
                     };
-                    endpointDiffs.push(endpointDiff);
+                    updatedEndpoints.push(endpointDiff);
                 }
                 visitedEndpoints.add(endpointId);
             }
             return res.send({
-                endpointDiffs,
+                addedEndpoints,
+                updatedEndpoints,
+                removedEndpoints: [],
+                markdown: generateMarkdownChangelog({ added: addedEndpoints, updated: updatedEndpoints }),
             });
         },
     });
+}
+
+function generateMarkdownChangelog({
+    added,
+    updated,
+}: {
+    added: FdrAPI.AddedEndpoint[];
+    updated: FdrAPI.UpdatedEndpoint[];
+}): string {
+    let markdown = "";
+    if (added.length > 0) {
+        markdown += `The following endpoints were added:
+`;
+        for (const addEndpont of added) {
+            markdown += `  - \`${addEndpont.id.method} ${addEndpont.id.path}\` \n`;
+        }
+    }
+
+    if (updated.length > 0) {
+        markdown += `The following endpoints were updated:
+`;
+
+        for (const updateEndpoint of updated) {
+            const newPathParams: string[] = [];
+            if (updateEndpoint.pathParameterDiff.added.length > 0) {
+                updateEndpoint.pathParameterDiff.added.map((param) => {
+                    newPathParams.push(param.wireKey);
+                });
+            }
+
+            const newQueryParams: string[] = [];
+            if (updateEndpoint.pathParameterDiff.added.length > 0) {
+                updateEndpoint.pathParameterDiff.added.map((param) => {
+                    newQueryParams.push(param.wireKey);
+                });
+            }
+
+            let withUpdates = "with ";
+            let addAnd = false;
+            if (newPathParams.length > 0) {
+                withUpdates += `query parameters ${newQueryParams.map((param) => `\`${param}\``).join(", ")}`;
+                addAnd = true;
+            }
+
+            if (newPathParams.length > 0) {
+                if (addAnd) {
+                    withUpdates += " and ";
+                }
+                withUpdates += `path parameters ${newPathParams.map((param) => `\`${param}\``).join(", ")}`;
+            }
+
+            markdown += `  - ${updateEndpoint.id.method} ${updateEndpoint.id.path} ${withUpdates}. `;
+        }
+    }
+
+    for (const addedEndpoint of added) {
+        markdown += `  - ${addedEndpoint.id.method} ${addedEndpoint.id.path}`;
+    }
+
+    return markdown;
+}
+
+function getPathParameterDiff({
+    previous,
+    current,
+}: {
+    previous: APIV1Db.DbEndpointDefinition;
+    current: APIV1Db.DbEndpointDefinition;
+}): PathParameterDiff {
+    const added: PathParameter[] = [];
+    const removed: PathParameter[] = [];
+    for (const currentParameter of current.path.pathParameters) {
+        const previousParameter = previous.path.pathParameters.find((maybePreviousParameter) => {
+            maybePreviousParameter.key === currentParameter.key;
+        });
+        if (previousParameter == null) {
+            added.push({
+                wireKey: currentParameter.key,
+            });
+        }
+    }
+    return {
+        added,
+        removed,
+    };
+}
+
+function getQueryParameterDiff({
+    previous,
+    current,
+}: {
+    previous: APIV1Db.DbEndpointDefinition;
+    current: APIV1Db.DbEndpointDefinition;
+}): QueryParameterDiff {
+    const added: QueryParameter[] = [];
+    const removed: QueryParameter[] = [];
+    for (const currentParameter of current.path.pathParameters) {
+        const previousParameter = previous.path.pathParameters.find((maybePreviousParameter) => {
+            maybePreviousParameter.key === currentParameter.key;
+        });
+        if (previousParameter == null) {
+            added.push({
+                wireKey: currentParameter.key,
+            });
+        }
+    }
+    return {
+        added,
+        removed,
+    };
 }
 
 function getEndpoints(apiDefinition: APIV1Db.DbApiDefinition): Record<string, APIV1Db.DbEndpointDefinition> {

@@ -218,15 +218,19 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveSnippetV1Template(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
+    private resolveSnippetV1TemplateString(template: FdrAPI.SnippetTemplate): string {
         const clientSnippet = template.clientInstantiation;
         const endpointSnippet = this.resolveV1Template(template.functionInvocation);
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        const snippet = `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
+        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
             endpointSnippet?.invocation
         }`;
+    }
+
+    private resolveSnippetV1TemplateToSnippet(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
+        const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
             case "typescript":
@@ -236,16 +240,14 @@ export class SnippetTemplateResolver {
                     type: "python",
                     sdk,
                     sync_client: snippet,
-                    // TODO: Handle the async snippet as well
-                    async_client: snippet,
+                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
                 };
             case "java":
                 return {
                     type: "java",
                     sdk,
                     sync_client: snippet,
-                    // TODO: Handle the async snippet as well
-                    async_client: snippet,
+                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
                 };
             case "go":
                 return { type: "go", sdk, client: snippet };
@@ -261,9 +263,25 @@ export class SnippetTemplateResolver {
         const template: FdrAPI.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
-                return this.resolveSnippetV1Template(sdk, template);
+                return this.resolveSnippetV1TemplateToSnippet(sdk, template);
             default:
                 throw new Error(`Unknown template version: ${template.type}`);
         }
+    }
+
+    public resolveAdditionalTemplate(key: string): string | undefined {
+        const template: FdrAPI.VersionedSnippetTemplate | undefined =
+            this.endpointSnippetTemplate.additionalTemplates != null
+                ? this.endpointSnippetTemplate.additionalTemplates[key]
+                : undefined;
+        if (template != null) {
+            switch (template.type) {
+                case "v1":
+                    return this.resolveSnippetV1TemplateString(template);
+                default:
+                    throw new Error(`Unknown template version: ${template.type}`);
+            }
+        }
+        return undefined;
     }
 }
