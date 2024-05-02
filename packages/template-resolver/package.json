@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/template-resolver",
-  "version": "0.0.0",
+  "version": "0.0.8",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
   "files": [
@@ -21,7 +21,7 @@
     "test": "vitest --passWithNoTests"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/fdr-sdk": "^0.85.1-5824999e3",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

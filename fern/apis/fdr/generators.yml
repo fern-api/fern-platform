@@ -73,6 +73,8 @@ groups:
           noSerdeLayer: true
           namespaceExport: FernInternal
           includeApiReference: true
+          extraDependencies:
+            "@fern-api/template-resolver": "^0.0.8"
 
   fiddle:
     audiences:

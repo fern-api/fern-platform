@@ -726,8 +726,8 @@ importers:
   packages/template-resolver:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../fdr-sdk
+        specifier: ^0.85.1-5824999e3
+        version: 0.85.1-5824999e3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5234,6 +5234,21 @@ packages:
   /@fal-works/esbuild-plugin-global-externals@2.1.2:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: true
+
+  /@fern-api/fdr-sdk@0.85.1-5824999e3:
+    resolution: {integrity: sha512-wHaxbTbC/RETpChOcpZjt+5T5N8JQU45Pe6/8eZ3U2Wq47E6NofdWQTTjivh2eBVvnY2aLls2uCwttDsfHfA1Q==}
+    dependencies:
+      form-data: 4.0.0
+      js-base64: 3.7.7
+      lodash: 4.17.21
+      marked: 5.1.2
+      node-fetch: 2.7.0
+      qs: 6.12.0
+      tinycolor2: 1.6.0
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@fern-api/venus-api-sdk@0.1.1:
     resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
