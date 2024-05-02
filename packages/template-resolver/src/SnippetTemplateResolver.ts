@@ -158,18 +158,16 @@ export class SnippetTemplateResolver {
                 };
             }
             case "enum": {
-                const enumValues = new Map(Object.entries(template.values));
-                const enumSdkValues = Array.from(enumValues.values());
+                const enumValues = template.values;
+                const enumSdkValues = Object.values(template.values);
                 const defaultEnumValue = enumSdkValues[0];
                 if (template.templateInput == null || defaultEnumValue == null) {
                     return undefined;
                 }
-
                 const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 const enumSdkValue =
-                    (typeof maybeEnumWireValue === "string"
-                        ? enumValues.get(maybeEnumWireValue as string)
-                        : undefined) ?? defaultEnumValue;
+                    (typeof maybeEnumWireValue === "string" ? enumValues[maybeEnumWireValue] : undefined) ??
+                    defaultEnumValue;
                 return {
                     imports,
                     invocation: template.templateString?.replace(TemplateSentinel, enumSdkValue) ?? enumSdkValue,
@@ -195,7 +193,7 @@ export class SnippetTemplateResolver {
 
                 const unionMap = maybeUnionValue as Map<string, unknown>;
                 const discriminatorValue = unionMap.get(discriminator) as string;
-                const selectedMemberTemplate = new Map(Object.entries(unionMembers)).get(discriminatorValue);
+                const selectedMemberTemplate = unionMembers[discriminatorValue];
                 const evaluatedMember: V1Snippet | undefined = selectedMemberTemplate
                     ? this.resolveV1Template(selectedMemberTemplate, payloadOverride)
                     : undefined;

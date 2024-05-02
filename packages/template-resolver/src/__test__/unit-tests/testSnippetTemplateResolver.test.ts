@@ -7,7 +7,10 @@ describe("Snippet Template Resolver", () => {
         // Example with an object, a list of strings, a list of objects, and an enum
         const payload: FdrAPI.CustomSnippetPayload = {
             pathParameters: [{ name: "tune_id", value: "someId" }],
-            queryParameters: [{ name: "offset", value: "10" }],
+            queryParameters: [
+                { name: "offset", value: "10" },
+                { name: "output_format", value: "pcm_16000" },
+            ],
             requestBody: {
                 prompt: "A prompt",
                 negative_prompt: "A negative prompt",
@@ -110,6 +113,32 @@ describe("Snippet Template Resolver", () => {
                             type: "generic",
                         },
                     },
+                    {
+                        type: "template",
+                        value: {
+                            imports: [],
+                            isOptional: true,
+                            templateString: "output_format=$FERN_INPUT",
+                            values: {
+                                mp3_22050_32: '"mp3_22050_32"',
+                                mp3_44100_32: '"mp3_44100_32"',
+                                mp3_44100_64: '"mp3_44100_64"',
+                                mp3_44100_96: '"mp3_44100_96"',
+                                mp3_44100_128: '"mp3_44100_128"',
+                                mp3_44100_192: '"mp3_44100_192"',
+                                pcm_16000: '"pcm_16000"',
+                                pcm_22050: '"pcm_22050"',
+                                pcm_24000: '"pcm_24000"',
+                                pcm_44100: '"pcm_44100"',
+                                ulaw_8000: '"ulaw_8000"',
+                            },
+                            templateInput: {
+                                location: "QUERY",
+                                path: "output_format",
+                            },
+                            type: "enum",
+                        },
+                    },
                     lorasTemplate,
                     samplerTemplate,
                 ],
@@ -139,7 +168,7 @@ describe("Snippet Template Resolver", () => {
 
         expect(customSnippet.type).toEqual("python");
         expect((customSnippet as FdrAPI.PythonSnippet).sync_client).toEqual(
-            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\ttune_id="someId",\n\t\toffset="10",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)',
+            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\ttune_id="someId",\n\t\toffset="10",\n\t\toutput_format="pcm_16000",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)',
         );
     });
 
