@@ -7,6 +7,7 @@ types:
       addedEndpoints: list<AddedEndpoint>
       removedEndpoints: list<RemovedEndpoint>
       updatedEndpoints: list<UpdatedEndpoint>
+      markdown: string
 
   RemovedEndpoint:
     properties:

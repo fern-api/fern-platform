@@ -8,4 +8,5 @@ export interface ApiDiff {
     addedEndpoints: FernRegistry.AddedEndpoint[];
     removedEndpoints: FernRegistry.RemovedEndpoint[];
     updatedEndpoints: FernRegistry.UpdatedEndpoint[];
+    markdown: string;
 }

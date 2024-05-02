@@ -57,9 +57,70 @@ export function getApiDiffService(app: FdrApplication): DiffService {
                 addedEndpoints,
                 updatedEndpoints,
                 removedEndpoints: [],
+                markdown: generateMarkdownChangelog({ added: addedEndpoints, updated: updatedEndpoints }),
             });
         },
     });
+}
+
+function generateMarkdownChangelog({
+    added,
+    updated,
+}: {
+    added: FdrAPI.AddedEndpoint[];
+    updated: FdrAPI.UpdatedEndpoint[];
+}): string {
+    let markdown = "";
+    if (added.length > 0) {
+        markdown += `The following endpoints were added:
+`;
+        for (const addEndpont of added) {
+            markdown += `  - ${addEndpont.id.method} ${addEndpont.id.path}`;
+        }
+    }
+
+    if (updated.length > 0) {
+        markdown += `The following endpoints were updated:
+`;
+
+        for (const updateEndpoint of updated) {
+            const newPathParams: string[] = [];
+            if (updateEndpoint.pathParameterDiff.added.length > 0) {
+                updateEndpoint.pathParameterDiff.added.map((param) => {
+                    newPathParams.push(param.wireKey);
+                });
+            }
+
+            const newQueryParams: string[] = [];
+            if (updateEndpoint.pathParameterDiff.added.length > 0) {
+                updateEndpoint.pathParameterDiff.added.map((param) => {
+                    newQueryParams.push(param.wireKey);
+                });
+            }
+
+            let withUpdates = "with ";
+            let addAnd = false;
+            if (newPathParams.length > 0) {
+                withUpdates += `query parameters ${newQueryParams.map((param) => `\`${param}\``).join(", ")}`;
+                addAnd = true;
+            }
+
+            if (newPathParams.length > 0) {
+                if (addAnd) {
+                    withUpdates += " and ";
+                }
+                withUpdates += `path parameters ${newPathParams.map((param) => `\`${param}\``).join(", ")}`;
+            }
+
+            markdown += `  - ${updateEndpoint.id.method} ${updateEndpoint.id.path} ${withUpdates}. `;
+        }
+    }
+
+    for (const addedEndpoint of added) {
+        markdown += `  - ${addedEndpoint.id.method} ${addedEndpoint.id.path}`;
+    }
+
+    return markdown;
 }
 
 function getPathParameterDiff({
