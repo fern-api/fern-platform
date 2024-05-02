@@ -7,6 +7,7 @@ export interface FeatureFlags {
     isSeoDisabled: boolean;
     isTocDefaultEnabled: boolean;
     isSnippetTemplatesEnabled: boolean;
+    isHttpSnippetsEnabled: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
@@ -16,6 +17,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isSeoDisabled: false,
     isTocDefaultEnabled: false,
     isSnippetTemplatesEnabled: false,
+    isHttpSnippetsEnabled: false,
 };
 
 export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);

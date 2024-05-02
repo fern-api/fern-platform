@@ -861,6 +861,9 @@ importers:
       hastscript:
         specifier: ^9.0.0
         version: 9.0.0
+      httpsnippet-lite:
+        specifier: ^3.0.5
+        version: 3.0.5
       instantsearch.js:
         specifier: ^4.63.0
         version: 4.66.0(algoliasearch@4.22.1)
@@ -9169,7 +9172,6 @@ packages:
 
   /@types/har-format@1.2.15:
     resolution: {integrity: sha512-RpQH4rXLuvTXKR0zqHq3go0RVXYv/YVqv4TnPH95VbwUxZdQlK1EtcMvQvMpDngHbt13Csh9Z4qT9AbkiQH5BA==}
-    dev: true
 
   /@types/hast@3.0.4:
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
@@ -14084,6 +14086,14 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
+  /formdata-node@4.4.1:
+    resolution: {integrity: sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==}
+    engines: {node: '>= 12.20'}
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 4.0.0-beta.3
+    dev: false
+
   /forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
@@ -14957,6 +14967,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /httpsnippet-lite@3.0.5:
+    resolution: {integrity: sha512-So4qTXY5iFj5XtFDwyz2PicUu+8NWrI8e8h+ZeZoVtMNcFQp4FFIntBHUE+JPUG6QQU8o1VHCy+X4ETRDwt9CA==}
+    engines: {node: '>=14.13'}
+    dependencies:
+      '@types/har-format': 1.2.15
+      formdata-node: 4.4.1
+      stringify-object: 3.3.0
+    dev: false
 
   /httpsnippet@2.0.0(mkdirp@3.0.1):
     resolution: {integrity: sha512-Hb2ttfB5OhasYxwChZ8QKpYX3v4plNvwMaMulUIC7M3RHRDf1Op6EMp47LfaU2sgQgfvo5spWK4xRAirMEisrg==}
@@ -17640,6 +17659,11 @@ packages:
     dependencies:
       minimatch: 3.1.2
     dev: true
+
+  /node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
+    dev: false
 
   /node-fetch-native@1.6.4:
     resolution: {integrity: sha512-IhOigYzAKHd244OC0JIMIUrjzctirCmPkaIfhDeGcEETWof5zKYUW7e7MYvChGWh/4CJeXEgsRyGzuF334rOOQ==}
@@ -22372,6 +22396,11 @@ packages:
 
   /web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
+    dev: false
+
+  /web-streams-polyfill@4.0.0-beta.3:
+    resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
+    engines: {node: '>= 14'}
     dev: false
 
   /webidl-conversions@3.0.1:
