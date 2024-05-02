@@ -307,12 +307,6 @@ types:
   SnippetsByEndpointMethod:
     type: map<commons.EndpointMethod, list<Snippet>>
 
-  # TODO: we should transition snippets to a more user friendly API like below to allow for more flexibility on the consumer side:
-  # Snippet:
-  #   properties:
-  #     imports: string[]
-  #     clientInstantiation: string
-  #     functionInvocation: string
   Snippet:
     union:
       typescript: TypeScriptSnippet

@@ -213,13 +213,27 @@ types:
     properties:
       sdk: snippets.SDK
       endpointId: commons.EndpointIdentifier
-      snippetTemplate: VersionedSnippetTemplate
+      snippetTemplate:
+        type: VersionedSnippetTemplate
+        docs: The default snippet template to use
+      additionalTemplates:
+        type: optional<map<string, VersionedSnippetTemplate>>
+        docs: |
+          Additional templates to use for this endpoint, for example if you wanted
+          an async example, you could have { "async": Template(...) }.
 
   EndpointSnippetTemplate:
     properties:
       sdk: snippets.SDK
       endpointId: commons.EndpointIdentifier
-      snippetTemplate: VersionedSnippetTemplate
+      snippetTemplate:
+        type: VersionedSnippetTemplate
+        docs: The default snippet template to use
+      additionalTemplates:
+        type: optional<map<string, VersionedSnippetTemplate>>
+        docs: |
+          Additional templates to use for this endpoint, for example if you wanted
+          an async example, you could have { "async": Template(...) }.
 
 errors:
   SnippetNotFound:
