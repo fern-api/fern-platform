@@ -57,6 +57,7 @@ export class SnippetTemplateResolver {
                 // We should warn if this ever happens, the relative directive should only really happen within containers
                 return this.accessByPath(this.payload.requestBody, location.path);
             case "QUERY":
+                console.log("this.payload.queryParameters", this.payload.queryParameters);
                 return this.accessParameterPayloadByPath(this.payload.queryParameters, location.path);
             case "PATH":
                 return this.accessParameterPayloadByPath(this.payload.pathParameters, location.path);
@@ -159,16 +160,22 @@ export class SnippetTemplateResolver {
             }
             case "enum": {
                 const enumValues = template.values;
-                const enumSdkValues = Array.from(Object.values(template.values));
+                const enumSdkValues = Object.values(template.values);
                 const defaultEnumValue = enumSdkValues[0];
+                console.log("enumValues", enumValues);
+                console.log("enumSdkValues", enumSdkValues);
+                console.log("defaultEnumValue", defaultEnumValue);
                 if (template.templateInput == null || defaultEnumValue == null) {
                     return undefined;
                 }
-
+                console.log("template.templateInput", template.templateInput);
+                console.log("payloadOverride", payloadOverride);
                 const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
+                console.log("maybeEnumWireValue", maybeEnumWireValue);
                 const enumSdkValue =
                     (typeof maybeEnumWireValue === "string" ? enumValues[maybeEnumWireValue] : undefined) ??
                     defaultEnumValue;
+                console.log("enumSdkValue", enumSdkValue);
                 return {
                     imports,
                     invocation: template.templateString?.replace(TemplateSentinel, enumSdkValue) ?? enumSdkValue,
