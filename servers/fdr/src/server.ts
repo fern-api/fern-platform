@@ -23,8 +23,6 @@ const config = getConfig();
 
 const expressApp = express();
 
-console.log("NODE_ENV before Sentry init: " + process.env.NODE_ENV);
-
 // ========= Init Sentry =========
 Sentry.init({
     dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
@@ -39,12 +37,10 @@ Sentry.init({
     tracesSampleRate: 1.0, //  Capture 100% of the transactions
     // Set sampling rate for profiling - this is relative to tracesSampleRate
     profilesSampleRate: 1.0,
-    environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
+    environment: config.applicationEnvironment,
     maxValueLength: 1000,
-    // enabled: process.env.NODE_ENV === "production", // Do not enable sentry when running local
+    enabled: config.applicationEnvironment !== "local", // Do not enable sentry when running local
 });
-
-console.log("NODE_ENV after Sentry init: " + process.env.NODE_ENV);
 
 // The request handler must be the first middleware on the app
 expressApp.use(Sentry.Handlers.requestHandler());
