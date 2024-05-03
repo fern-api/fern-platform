@@ -167,7 +167,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
-    const { basePath } = useDocsContext();
+    const { basePath, domain } = useDocsContext();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
     // const [, startTransition] = useTransition();
 
@@ -187,7 +187,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(endpoint, formState),
-                body: await serializeFormStateBody(formState.body, basePath),
+                body: await serializeFormStateBody(formState.body, basePath, domain),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
                 const [res, stream] = await executeProxyStream(req, basePath);
@@ -245,7 +245,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 },
             });
         }
-    }, [basePath, endpoint, formState]);
+    }, [basePath, domain, endpoint, formState]);
 
     return (
         <FernTooltipProvider>
@@ -283,6 +283,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
 async function serializeFormStateBody(
     body: PlaygroundFormStateBody | undefined,
     basePath: string | undefined,
+    domain: string,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
     if (body == null) {
         return undefined;
@@ -316,7 +317,10 @@ async function serializeFormStateBody(
                         assertNever(value);
                 }
             }
-            return { type: "form-data", value: formDataValue };
+            // this is a hack to allow the API Playground to send JSON blobs in form data
+            // revert this once we have a better solution
+            const isJsonBlob = domain.includes("fileforge");
+            return { type: "form-data", value: formDataValue, isJsonBlob };
         }
         case "octet-stream":
             return { type: "octet-stream", value: await serializeFile(body.value, basePath) };
