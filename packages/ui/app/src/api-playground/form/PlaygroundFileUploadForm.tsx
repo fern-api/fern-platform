@@ -1,9 +1,8 @@
-import { useEventCallback } from "@fern-ui/react-commons";
 import { Cross1Icon, FileIcon, FilePlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { uniqBy } from "lodash-es";
 import numeral from "numeral";
-import { ChangeEvent, DragEventHandler, memo, useCallback, useRef, useState } from "react";
+import { ChangeEvent, DragEventHandler, memo, useEffect, useRef, useState } from "react";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernCard } from "../../components/FernCard";
 import { WithLabelInternal } from "../WithLabel";
@@ -19,6 +18,19 @@ export interface PlaygroundFileUploadFormProps {
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     ({ id, propertyKey, type, isOptional, onValueChange, value }) => {
+        // Remove invalid files
+        // TODO: This is a temporary workaround to remove invalid files from the value.
+        // this should be handled in a better way
+        useEffect(() => {
+            if (value != null) {
+                const hasInvalidFiles = value.some((f) => !(f instanceof File));
+                if (hasInvalidFiles) {
+                    onValueChange(value.filter((f) => f instanceof File));
+                }
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
+
         const [drag, setDrag] = useState(false);
         const dragOver: DragEventHandler<HTMLElement> = (e) => {
             e.preventDefault();
@@ -54,14 +66,24 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
             const files = e.dataTransfer.files;
             handleChangeFiles(files);
         };
-        const handleRemove = useCallback(() => {
-            onValueChange(undefined);
-        }, [onValueChange]);
 
-        const handleChange = useEventCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const handleRemove = () => {
+            onValueChange(undefined);
+        };
+
+        const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
             const files = e.target.files;
-            handleChangeFiles(files);
-        });
+            if (files != null) {
+                handleChangeFiles(files);
+            }
+
+            // NOTE: the input is not controlled, so we need to clear it manually...
+            // every time the user selects a file, we record the change in-state, and then clear the input
+            // so that the input can be used again to select the same file
+            if (ref.current != null) {
+                ref.current.value = "";
+            }
+        };
 
         const ref = useRef<HTMLInputElement>(null);
         return (
