@@ -162,7 +162,7 @@ types:
   FormDataBodyProperty:
     extends: ObjectProperty
     properties:
-      contentType: optional<string>
+      contentType: optional<ContentType>
 
   FormDataFileProperty:
     union:

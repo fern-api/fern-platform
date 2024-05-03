@@ -277,6 +277,7 @@ export declare namespace ResolvedFormValue {
     interface Json {
         type: "json";
         value: unknown | undefined;
+        contentType: string | undefined;
     }
 
     interface SingleFile {
@@ -517,15 +518,18 @@ export declare namespace ResolvedFormDataRequestProperty {
         type: "file";
         key: string;
         isOptional: boolean;
+        contentType: string | string[] | undefined;
     }
     interface FileArrayProperty extends WithMetadata {
         type: "fileArray";
         key: string;
         isOptional: boolean;
+        contentType: string | string[] | undefined;
     }
 
     interface BodyProperty extends ResolvedObjectProperty {
         type: "bodyProperty";
+        contentType: string | string[] | undefined;
     }
 }
 

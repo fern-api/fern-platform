@@ -8,7 +8,12 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedFormDataRequestProperty,
+    ResolvedHttpRequestBodyShape,
+    ResolvedTypeDefinition,
+} from "../resolver/types";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
@@ -167,7 +172,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
-    const { basePath, domain } = useDocsContext();
+    const { basePath } = useDocsContext();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
     // const [, startTransition] = useTransition();
 
@@ -187,7 +192,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(endpoint, formState),
-                body: await serializeFormStateBody(formState.body, basePath, domain),
+                body: await serializeFormStateBody(endpoint.requestBody[0]?.shape, formState.body, basePath),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
                 const [res, stream] = await executeProxyStream(req, basePath);
@@ -245,7 +250,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 },
             });
         }
-    }, [basePath, domain, endpoint, formState]);
+    }, [basePath, endpoint, formState]);
 
     return (
         <FernTooltipProvider>
@@ -281,11 +286,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
 };
 
 async function serializeFormStateBody(
+    shape: ResolvedHttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
     basePath: string | undefined,
-    domain: string,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
-    if (body == null) {
+    if (shape == null || body == null || shape.type !== "formData") {
         return undefined;
     }
 
@@ -310,17 +315,27 @@ async function serializeFormStateBody(
                             ).filter(isNonNullish),
                         };
                         break;
-                    case "json":
-                        formDataValue[key] = value;
+                    case "json": {
+                        const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
+                            | ResolvedFormDataRequestProperty.BodyProperty
+                            | undefined;
+                        formDataValue[key] = {
+                            ...value,
+                            contentType:
+                                typeof property?.contentType === "string"
+                                    ? property.contentType
+                                    : Array.isArray(property?.contentType)
+                                      ? property.contentType.find((value) => value.includes("json")) ??
+                                        property.contentType[0]
+                                      : undefined,
+                        };
                         break;
+                    }
                     default:
                         assertNever(value);
                 }
             }
-            // this is a hack to allow the API Playground to send JSON blobs in form data
-            // revert this once we have a better solution
-            const isJsonBlob = domain.includes("fileforge");
-            return { type: "form-data", value: formDataValue, isJsonBlob };
+            return { type: "form-data", value: formDataValue };
         }
         case "octet-stream":
             return { type: "octet-stream", value: await serializeFile(body.value, basePath) };

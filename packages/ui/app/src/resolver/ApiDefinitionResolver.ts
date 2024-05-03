@@ -667,6 +667,7 @@ export class ApiDefinitionResolver {
                                 description,
                                 availability: property.value.availability,
                                 isOptional: property.value.isOptional,
+                                contentType: property.value.contentType,
                             };
                         }
                         case "bodyProperty": {
@@ -681,6 +682,7 @@ export class ApiDefinitionResolver {
                                 availability: property.availability,
                                 valueShape,
                                 hidden: false,
+                                contentType: property.contentType,
                             };
                         }
                     }
@@ -789,9 +791,22 @@ export class ApiDefinitionResolver {
             }),
             form: (form) => ({
                 type: "form",
-                value: mapValues(form.value, (v) =>
+                value: mapValues(form.value, (v, key) =>
                     visitDiscriminatedUnion(v, "type")._visit<ResolvedFormValue>({
-                        json: (value) => ({ type: "json", value: value.value }),
+                        json: (value) => {
+                            const property =
+                                shape?.type === "formData"
+                                    ? shape.properties.find((p) => p.key === key && p.type === "bodyProperty")
+                                    : undefined;
+                            const contentType =
+                                typeof property?.contentType === "string"
+                                    ? property.contentType
+                                    : Array.isArray(property?.contentType)
+                                      ? property.contentType.find((ct) => ct.includes("json")) ??
+                                        property.contentType[0]
+                                      : undefined;
+                            return { type: "json" as const, value: value.value, contentType };
+                        },
                         filename: (value) => ({ type: "file", fileName: value.value, fileId: undefined }),
                         filenames: (value) => ({
                             type: "fileArray",
@@ -802,7 +817,7 @@ export class ApiDefinitionResolver {
                             type: "fileArray",
                             files: value.value.map((v) => ({ type: "file", fileName: v.filename, fileId: v.data })),
                         }),
-                        _other: () => ({ type: "json", value: undefined }),
+                        _other: () => ({ type: "json", value: undefined, contentType: undefined }),
                     }),
                 ),
             }),

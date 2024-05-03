@@ -72,25 +72,25 @@ function unsafeStringifyHttpRequestExampleToCurl({
                       Object.entries(value)
                           .map(([key, value]) =>
                               visitDiscriminatedUnion(value, "type")._visit({
-                                  json: ({ value }) => {
+                                  json: ({ value, contentType }) => {
                                       if (value == null) {
                                           return "";
                                       }
 
                                       if (typeof value === "string") {
-                                          return ` \\\n     -F ${key}="${value.replace(/"/g, '\\"')}"`;
+                                          return ` \\\n     -F ${key}="${value.replace(/"/g, '\\"')}${contentType != null ? `;type=${contentType}` : ""}"`;
                                       }
 
                                       const stringValue = JSON.stringify(value, null, 2);
 
-                                      return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "\\'")}'`;
+                                      return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "\\'")}${contentType != null ? `;type=${contentType}` : ""}'`;
                                   },
                                   file: ({ fileName }) =>
                                       ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
-                                  fileArray: ({ fileNames }) =>
-                                      fileNames
+                                  fileArray: ({ files }) =>
+                                      files
                                           .map(
-                                              (fileName) =>
+                                              ({ fileName }) =>
                                                   ` \\\n     -F "${key}[]"=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
                                           )
                                           .join(""),
@@ -98,7 +98,7 @@ function unsafeStringifyHttpRequestExampleToCurl({
                               }),
                           )
                           .join(""),
-                  stream: ({ fileName }) => {
+                  bytes: ({ fileName }) => {
                       if (fileName == null) {
                           return "";
                       }

@@ -1,5 +1,3 @@
-import { JsonVariant } from "./jsonVariant";
-
 export interface SerializableFile {
     readonly name: string;
     readonly lastModified: number;
@@ -18,9 +16,17 @@ export declare namespace SerializableFormDataEntryValue {
         type: "fileArray";
         value: SerializableFile[];
     }
+
+    interface Json {
+        type: "json";
+        value: unknown;
+
+        // if contentType is not provided, assume stringified JSON. Otherwise, use the provided contentType as a Blob type
+        contentType: string | undefined;
+    }
 }
 
 export type SerializableFormDataEntryValue =
-    | JsonVariant
+    | SerializableFormDataEntryValue.Json
     | SerializableFormDataEntryValue.SingleFile
     | SerializableFormDataEntryValue.MultipleFiles;
