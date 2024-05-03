@@ -63,6 +63,30 @@ export const CSS_VARIABLES = {
     GRAYSCALE_10: "--grayscale-a10",
     GRAYSCALE_11: "--grayscale-a11",
     GRAYSCALE_12: "--grayscale-a12",
+    GRAYSCALE_1_LIGHT: "--grayscale-light-1",
+    GRAYSCALE_2_LIGHT: "--grayscale-light-2",
+    GRAYSCALE_3_LIGHT: "--grayscale-light-3",
+    GRAYSCALE_4_LIGHT: "--grayscale-light-4",
+    GRAYSCALE_5_LIGHT: "--grayscale-light-5",
+    GRAYSCALE_6_LIGHT: "--grayscale-light-6",
+    GRAYSCALE_7_LIGHT: "--grayscale-light-7",
+    GRAYSCALE_8_LIGHT: "--grayscale-light-8",
+    GRAYSCALE_9_LIGHT: "--grayscale-light-9",
+    GRAYSCALE_10_LIGHT: "--grayscale-light-10",
+    GRAYSCALE_11_LIGHT: "--grayscale-light-11",
+    GRAYSCALE_12_LIGHT: "--grayscale-light-12",
+    GRAYSCALE_1_DARK: "--grayscale-dark-1",
+    GRAYSCALE_2_DARK: "--grayscale-dark-2",
+    GRAYSCALE_3_DARK: "--grayscale-dark-3",
+    GRAYSCALE_4_DARK: "--grayscale-dark-4",
+    GRAYSCALE_5_DARK: "--grayscale-dark-5",
+    GRAYSCALE_6_DARK: "--grayscale-dark-6",
+    GRAYSCALE_7_DARK: "--grayscale-dark-7",
+    GRAYSCALE_8_DARK: "--grayscale-dark-8",
+    GRAYSCALE_9_DARK: "--grayscale-dark-9",
+    GRAYSCALE_10_DARK: "--grayscale-dark-10",
+    GRAYSCALE_11_DARK: "--grayscale-dark-11",
+    GRAYSCALE_12_DARK: "--grayscale-dark-12",
     BODY_TEXT: "--body-text",
     BODY_TEXT_INVERTED: "--body-text-inverted",
     BACKGROUND_IMAGE: "--docs-background-image",
@@ -110,9 +134,6 @@ export function getColorVariables(
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
 
-    const radixGrayscaleLight = getClosestGrayColor(tinycolor(backgroundColorLight));
-    const radixGrayscaleDark = getClosestGrayColor(tinycolor(backgroundColorDark));
-
     const accentPrimaryLightUi = increaseForegroundContrast(
         getColor(colorsV3, "accentPrimary", "light"),
         tinycolor(backgroundColorLight),
@@ -123,6 +144,9 @@ export function getColorVariables(
         tinycolor(backgroundColorDark),
         "ui",
     ).toRgb();
+
+    const radixGrayscaleLight = getBestColorScale(tinycolor(accentPrimaryLightUi));
+    const radixGrayscaleDark = getBestColorScale(tinycolor(accentPrimaryDarkUi));
 
     const accentPrimaryLightContrast = tinycolor(accentPrimaryLightUi).isLight()
         ? { r: 0, g: 0, b: 0 }
@@ -224,7 +248,8 @@ export function getColorVariables(
             [CSS_VARIABLES.ACCENT_PRIMARY_TINTED]: `${accentPrimaryDarkTinted.r}, ${accentPrimaryDarkTinted.g}, ${accentPrimaryDarkTinted.b}`,
             [CSS_VARIABLES.BACKGROUND]: `${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b}`,
             [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b}`,
-            [CSS_VARIABLES.CARD_BACKGROUND]: cardBackgroundDark?.toRgbString() ?? "var(--grayscale-a2)",
+            [CSS_VARIABLES.CARD_BACKGROUND]:
+                cardBackgroundDark?.toRgbString() ?? tinycolor(backgroundColorDark).darken(2).toRgbString(),
             [CSS_VARIABLES.SIDEBAR_BACKGROUND]: sidebarBackgroundDark?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.HEADER_BACKGROUND]: headerBackgroundDark?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a5)",
@@ -292,13 +317,9 @@ function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor
 }
 
 function getColorDistance(color1: tinycolor.Instance, color2: tinycolor.Instance): number {
-    const rgb1 = color1.toRgb();
-    const rgb2 = color2.toRgb();
-    const rMean = (rgb1.r + rgb2.r) / 2;
-    const r = rgb1.r - rgb2.r;
-    const g = rgb1.g - rgb2.g;
-    const b = rgb1.b - rgb2.b;
-    return Math.sqrt((2 + rMean / 256) * (r * r) + 4 * (g * g) + (2 + (255 - rMean) / 256) * (b * b));
+    const { r: r1, g: g1, b: b1 } = color1.toRgb();
+    const { r: r2, g: g2, b: b2 } = color2.toRgb();
+    return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
 }
 
 type RadixGray = "gray" | "mauve" | "slate" | "sage" | "olive" | "sand";
@@ -394,19 +415,39 @@ const GRAY_COLORS = {
     },
 } as const;
 
-function getClosestGrayColor(color: tinycolor.Instance): RadixGray {
-    let closestColor: RadixGray = "gray";
-    let closestDistance = Infinity;
-    for (const [gray, sampleColorGroup] of Object.entries(GRAY_COLORS)) {
-        for (const [, sampleColor] of Object.entries(sampleColorGroup)) {
-            const distance = getColorDistance(color, sampleColor);
-            if (distance < closestDistance) {
-                closestColor = gray as RadixGray;
-                closestDistance = distance;
-            }
+// function getClosestGrayColor(color: tinycolor.Instance): RadixGray {
+//     let closestColor: RadixGray = "gray";
+//     let closestDistance = Infinity;
+//     for (const [gray, sampleColorGroup] of Object.entries(GRAY_COLORS)) {
+//         for (const [, sampleColor] of Object.entries(sampleColorGroup)) {
+//             const distance = getColorDistance(color, sampleColor);
+//             if (distance < closestDistance) {
+//                 closestColor = gray as RadixGray;
+//                 closestDistance = distance;
+//             }
+//         }
+//     }
+//     return closestColor;
+// }
+
+function getBestColorScale(accentColor: tinycolor.Instance): RadixGray {
+    let minDistance = Infinity;
+    let bestColorScale: RadixGray = "gray";
+
+    for (const [key, scale] of Object.entries(GRAY_COLORS)) {
+        const scaleColors = Object.values(scale);
+        const totalDistance = scaleColors.reduce((sum, color) => {
+            const distance = getColorDistance(accentColor, color);
+            return sum + distance;
+        }, 0);
+
+        if (totalDistance < minDistance) {
+            minDistance = totalDistance;
+            bestColorScale = key as RadixGray;
         }
     }
-    return closestColor;
+
+    return bestColorScale;
 }
 
 export function getThemeColor(config: DocsV1Read.ThemeConfig): string {

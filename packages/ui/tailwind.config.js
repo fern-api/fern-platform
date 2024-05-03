@@ -43,9 +43,9 @@ module.exports = {
                 header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
                 "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
-                "card-light-elevated": "0 1px 2px rgba(17,20,24,.1), 0 3px 6px rgba(17,20,24,.06)",
+                "card-light-elevated": "0 1px 2px rgba(17,20,24,.2), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
-                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.1), 0 2px 24px rgba(221, 243, 255,.1)",
+                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.05), 0 2px 24px rgba(221, 243, 255,.05)",
             },
 
             colors: {
@@ -441,7 +441,7 @@ module.exports = {
                     "@apply shadow-accent-primary": {},
                 },
                 ".shadow-card": {
-                    "@apply shadow-card-light dark:shadow-card-dark": {},
+                    "@apply shadow-card-light": {},
                 },
                 ".shadow-card-elevated": {
                     "@apply shadow-card-light-elevated dark:shadow-card-dark-elevated": {},
