@@ -194,20 +194,20 @@ function maybeParseInt(str: string | null | undefined): number | undefined {
     return isNaN(num) ? undefined : num;
 }
 
-export function parseBlockMetaString(element: Element, defaultFallback: string): FernCodeMeta {
+export function parseBlockMetaString(element: Element, defaultFallback: string = "plaintext"): FernCodeMeta {
     const originalMeta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "").trim();
     let meta = originalMeta;
 
-    const titleMatch = meta.match(/title="((?:[^"\\]|\\.)*)"/);
-    let title = titleMatch?.[1];
+    const titleMatch = meta.match(/title=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/);
+    let title = titleMatch?.[1] ?? titleMatch?.[2];
     meta = meta.replace(titleMatch?.[0] ?? "", "");
 
-    const fileName = meta.match(/fileName="((?:[^"\\]|\\.)*)"/);
-    title = title ?? fileName?.[1];
+    const fileName = meta.match(/fileName=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/);
+    title = title ?? fileName?.[1] ?? fileName?.[2];
     meta = meta.replace(fileName?.[0] ?? "", "");
 
-    const filename = meta.match(/filename="((?:[^"\\]|\\.)*)"/);
-    title = title ?? filename?.[1];
+    const filename = meta.match(/filename=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/);
+    title = title ?? filename?.[1] ?? filename?.[2];
     meta = meta.replace(filename?.[0] ?? "", "");
 
     // i.e. maxLines=20 (default is 20)
@@ -226,9 +226,15 @@ export function parseBlockMetaString(element: Element, defaultFallback: string):
         meta = meta.replace(focused[0], "");
     }
 
-    if (originalMeta === meta && meta.length > 0) {
+    const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
+    meta = strippedMeta;
+
+    if (originalMeta === meta && meta.length > 0 && title == null) {
         title = meta;
     }
+
+    // unescape quotes
+    title = title?.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\`/g, "`");
 
     let lang = defaultFallback;
     if (
@@ -245,18 +251,19 @@ export function parseBlockMetaString(element: Element, defaultFallback: string):
         maxLines,
         lang,
         focused: focused != null,
-        highlights: parseHighlightedLineNumbers(meta),
+        highlights,
     };
 }
 
-function parseHighlightedLineNumbers(meta: string): number[] {
+function parseHighlightedLineNumbers(meta: string): [number[], string] {
     const lineNumbers: number[] = [];
     const matches = meta.matchAll(/\{(.*?)\}/g);
     for (const match of matches) {
         if (match[1]) {
             lineNumbers.push(...rangeParser(match[1]));
         }
+        meta = meta.replace(match[0], "");
     }
 
-    return lineNumbers;
+    return [lineNumbers, meta];
 }
