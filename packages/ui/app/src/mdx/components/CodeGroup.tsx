@@ -1,6 +1,8 @@
 import * as Tabs from "@radix-ui/react-tabs";
+import clsx from "clsx";
 import { useState } from "react";
 import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -15,10 +17,15 @@ export declare namespace CodeGroup {
 }
 
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items }) => {
+    const { isDarkCodeEnabled } = useFeatureFlags();
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
-    const containerClass =
-        "after:ring-default bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']";
+    const containerClass = clsx(
+        "after:ring-default bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
+        {
+            "dark bg-card": isDarkCodeEnabled,
+        },
+    );
 
     if (items.length === 1 && items[0] != null) {
         return (
