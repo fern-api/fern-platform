@@ -1,10 +1,9 @@
 export function getFileTypeFromMagicBytes(file: Uint8Array): string {
-    var arr = file.subarray(0, 4);
-    var header = "";
-    for (var i = 0; i < arr.length; i++) {
+    const arr = file.subarray(0, 4);
+    let header = "";
+    for (let i = 0; i < arr.length; i++) {
         header += arr[i].toString(16);
     }
-    console.log(header);
     let type = "";
 
     switch (header) {
