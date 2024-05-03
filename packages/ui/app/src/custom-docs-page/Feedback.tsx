@@ -86,49 +86,54 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
         }, [showFeedbackInput]),
     });
 
-    const handleClose = useCallback(() => {
-        setShowFeedbackInput(false);
-    }, []);
-
     return (
         <div className={className} ref={ref}>
             {!sent ? (
                 <div className="flex items-center justify-start gap-4">
                     <span className="t-muted text-sm font-medium">Was this page helpful?</span>
                     <FernButtonGroup>
-                        <FernButton
-                            icon={<ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
-                            variant="outlined"
-                            intent={isHelpful ? "success" : "none"}
-                            onClick={handleYes}
-                            active={isHelpful}
-                        >
-                            Yes
-                        </FernButton>
-                        <FernButton
-                            icon={
-                                <ThumbsDown
-                                    className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })}
-                                />
+                        <FeedbackFormDialog
+                            content={<FeedbackForm isHelpful={isHelpful} onSubmit={handleSubmitFeedback} />}
+                            trigger={
+                                <FernButton
+                                    icon={
+                                        <ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />
+                                    }
+                                    variant="outlined"
+                                    intent={isHelpful ? "success" : "none"}
+                                    onClick={handleYes}
+                                    active={isHelpful}
+                                >
+                                    Yes
+                                </FernButton>
                             }
-                            variant="outlined"
-                            intent={isHelpful === false ? "danger" : "none"}
-                            onClick={handleNo}
-                            active={isHelpful === false}
-                        >
-                            No
-                        </FernButton>
+                        />
+                        <FeedbackFormDialog
+                            content={<FeedbackForm isHelpful={isHelpful} onSubmit={handleSubmitFeedback} />}
+                            trigger={
+                                <FernButton
+                                    icon={
+                                        <ThumbsDown
+                                            className={clsx("opacity-60", {
+                                                "animate-thumb-rock": isHelpful === false,
+                                            })}
+                                        />
+                                    }
+                                    variant="outlined"
+                                    intent={isHelpful === false ? "danger" : "none"}
+                                    onClick={handleNo}
+                                    active={isHelpful === false}
+                                >
+                                    No
+                                </FernButton>
+                            }
+                        />
                     </FernButtonGroup>
                 </div>
             ) : (
                 <div className="flex h-6 items-center">
                     <span className="t-muted text-xs">Thank you for your feedback!</span>
                 </div>
-            )}
-            {!sent && (
-                <FeedbackFormDialog show={showFeedbackInput} targetRef={ref} onClose={handleClose}>
-                    <FeedbackForm isHelpful={isHelpful} onSubmit={handleSubmitFeedback} />
-                </FeedbackFormDialog>
             )}
         </div>
     );
