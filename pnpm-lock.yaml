@@ -975,6 +975,9 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
+      url-join:
+        specifier: 4.0.1
+        version: 4.0.1
       urljoin:
         specifier: ^0.1.5
         version: 0.1.5
