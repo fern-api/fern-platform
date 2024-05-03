@@ -4,7 +4,7 @@ import cn from "clsx";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { Fragment, ReactNode } from "react";
 import {
-    ResolvedFileUploadRequestProperty,
+    ResolvedFormDataRequestProperty,
     ResolvedRequestBody,
     ResolvedTypeDefinition,
     unwrapDescription,
@@ -129,7 +129,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 };
 
 function getDescription(
-    bodyProperty: ResolvedFileUploadRequestProperty.BodyProperty,
+    bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
     types: Record<string, ResolvedTypeDefinition>,
 ): string | MDXRemoteSerializeResult | undefined {
     if (bodyProperty.description != null) {

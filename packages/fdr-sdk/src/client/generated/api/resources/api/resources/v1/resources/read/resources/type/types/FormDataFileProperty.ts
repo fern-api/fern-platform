@@ -4,11 +4,11 @@
 
 import * as FernRegistry from "../../../../../../../../..";
 
-export type FileProperty =
-    | FernRegistry.api.v1.read.FileProperty.File_
-    | FernRegistry.api.v1.read.FileProperty.FileArray;
+export type FormDataFileProperty =
+    | FernRegistry.api.v1.read.FormDataFileProperty.File_
+    | FernRegistry.api.v1.read.FormDataFileProperty.FileArray;
 
-export declare namespace FileProperty {
+export declare namespace FormDataFileProperty {
     interface File_ extends FernRegistry.api.v1.read.FilePropertySingle {
         type: "file";
     }

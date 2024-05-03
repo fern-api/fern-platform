@@ -22,7 +22,7 @@ import {
     ResolvedError,
     ResolvedExampleEndpointRequest,
     ResolvedExampleEndpointResponse,
-    ResolvedFileUploadRequestProperty,
+    ResolvedFormDataRequestProperty,
     ResolvedFormValue,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
@@ -637,7 +637,7 @@ export class ApiDefinitionResolver {
                               name: fileUpload.value.name,
                               properties: await Promise.all(
                                   fileUpload.value.properties.map(
-                                      async (property): Promise<ResolvedFileUploadRequestProperty> => {
+                                      async (property): Promise<ResolvedFormDataRequestProperty> => {
                                           switch (property.type) {
                                               case "file": {
                                                   const description = await maybeSerializeMdxContent(

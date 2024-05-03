@@ -9,4 +9,5 @@ export interface FilePropertyArray
         FernRegistry.api.v1.register.WithAvailability {
     key: FernRegistry.api.v1.register.PropertyKey;
     isOptional: boolean;
+    contentType?: FernRegistry.api.v1.register.ContentType;
 }

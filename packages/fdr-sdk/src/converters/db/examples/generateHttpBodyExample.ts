@@ -28,8 +28,10 @@ export function generateHttpRequestBodyExample(
             return generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
         case "json":
             return generateHttpJsonRequestBodyExample(type.shape, resolveTypeById);
-        case "fileUpload":
-            return generateFileUploadRequestBodyExample(type.value, resolveTypeById);
+        case "fileUpload": // deprecated
+            return generateFormDataRequestBodyExample(type.value, resolveTypeById);
+        case "formData":
+            return generateFormDataRequestBodyExample(type, resolveTypeById);
         case "bytes": {
             if (type.isOptional) {
                 return undefined;
@@ -44,16 +46,16 @@ export function generateHttpRequestBodyExample(
     }
 }
 
-function generateFileUploadRequestBodyExample(
-    fileUploadRequest: APIV1Write.FileUploadRequest | undefined,
+function generateFormDataRequestBodyExample(
+    FormDataRequest: APIV1Write.FormDataRequest | undefined,
     resolveTypeById: ResolveTypeById,
 ) {
-    if (fileUploadRequest == null) {
+    if (FormDataRequest == null) {
         return "<filename>"; // old (deprecated) behavior
     }
 
     const example: Record<string, unknown> = {};
-    fileUploadRequest.properties.forEach((property) => {
+    FormDataRequest.properties.forEach((property) => {
         switch (property.type) {
             case "file": {
                 if (property.value.isOptional) {

@@ -142,7 +142,7 @@ types:
       - commons.WithAvailability
     properties:
       name: string
-      properties: list<FormDataEntry>
+      properties: list<FormDataProperty>
 
   BytesRequest:
     properties:
@@ -151,7 +151,7 @@ types:
 
   FormDataProperty:
     union:
-      file: FormDataFileEntry
+      file: FormDataFileProperty
       bodyProperty: FormDataBodyProperty
 
   FormDataBodyProperty:

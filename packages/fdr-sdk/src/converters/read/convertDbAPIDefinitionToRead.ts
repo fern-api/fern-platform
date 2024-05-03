@@ -134,7 +134,8 @@ function transformHttpRequest({
                 type: dbShape.type,
                 // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
-        case "fileUpload":
+        case "fileUpload": // deprecated
+        case "formData":
             return {
                 contentType: dbShape.contentType ?? "multipart/form-data",
                 description: dbShape.description,

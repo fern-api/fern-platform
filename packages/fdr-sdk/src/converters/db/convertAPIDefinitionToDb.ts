@@ -426,7 +426,8 @@ function transformHttpRequestToDb({
                 type: writeShape.type,
                 // descriptionContainsMarkdown: true,
             };
-        case "fileUpload":
+        case "fileUpload": // deprecated
+        case "formData":
             return {
                 contentType: "multipart/form-data",
                 description: writeShape.description,

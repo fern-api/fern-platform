@@ -510,7 +510,7 @@ export interface ResolvedReferenceShape {
     typeId: string;
 }
 
-export declare namespace ResolvedFileUploadRequestProperty {
+export declare namespace ResolvedFormDataRequestProperty {
     interface FileProperty extends WithMetadata {
         type: "file";
         key: string;
@@ -527,19 +527,19 @@ export declare namespace ResolvedFileUploadRequestProperty {
     }
 }
 
-export type ResolvedFileUploadRequestProperty =
-    | ResolvedFileUploadRequestProperty.FileProperty
-    | ResolvedFileUploadRequestProperty.FileArrayProperty
-    | ResolvedFileUploadRequestProperty.BodyProperty;
+export type ResolvedFormDataRequestProperty =
+    | ResolvedFormDataRequestProperty.FileProperty
+    | ResolvedFormDataRequestProperty.FileArrayProperty
+    | ResolvedFormDataRequestProperty.BodyProperty;
 
-export interface ResolvedFileUploadRequest extends WithMetadata {
+export interface ResolvedFormDataRequest extends WithMetadata {
     name: string;
-    properties: ResolvedFileUploadRequestProperty[];
+    properties: ResolvedFormDataRequestProperty[];
 }
 
 export interface ResolvedFileUpload {
     type: "fileUpload";
-    value: ResolvedFileUploadRequest | undefined;
+    value: ResolvedFormDataRequest | undefined;
 }
 
 export type ResolvedHttpRequestBodyShape =
