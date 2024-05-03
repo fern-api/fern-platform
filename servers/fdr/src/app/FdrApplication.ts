@@ -69,8 +69,7 @@ export class FdrApplication {
                 url: `redis://${config.docsCacheEndpoint}`,
                 pingInterval: 10000,
             });
-            this.docsCacheClient.on("error", (err) => this.logger.info(`Redis Error: ${err}`));
-            this.docsCacheClient.connect();
+            this.docsCacheClient.connect().catch(console.error);
         }
 
         this.services = {

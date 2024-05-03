@@ -2,7 +2,6 @@ import { AuthType } from "@prisma/client";
 import { RedisClientType } from "redis";
 import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
-import { DeploymentEnvironment } from "../../app/FdrConfig";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { FdrDao } from "../../db";
@@ -149,21 +148,20 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        if (this.app.config.deploymentEnvironment !== DeploymentEnvironment.PROD && this.redisClient) {
-            this.redisClient.set(url.hostname, JSON.stringify(cachedResponse));
+        if (this.app.config.redisEnabled) {
+            this.redisClient?.set(url.hostname, JSON.stringify(cachedResponse));
         }
         this.DOCS_CACHE[url.hostname] = cachedResponse;
     }
 
-    private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | undefined> {
-        if (this.app.config.deploymentEnvironment === DeploymentEnvironment.PROD || this.redisClient == null) {
-            return this.DOCS_CACHE[url.hostname];
+    private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse> {
+        if (this.app.config.redisEnabled) {
+            const result = await this.redisClient?.get(url.hostname);
+            if (result) {
+                return JSON.parse(result);
+            }
         }
-        const result = await this.redisClient.get(url.hostname);
-        if (result) {
-            return JSON.parse(result);
-        }
-        return undefined;
+        return this.DOCS_CACHE[url.hostname];
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {

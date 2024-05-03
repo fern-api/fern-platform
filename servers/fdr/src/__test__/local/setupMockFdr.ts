@@ -4,7 +4,7 @@ import execa from "execa";
 import express from "express";
 import http from "http";
 import { register } from "../../api";
-import { FdrApplication } from "../../app";
+import { FdrApplication, FdrConfig } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
 import { getApiDiffService } from "../../controllers/diff/getApiDiffService";
@@ -72,8 +72,11 @@ function runMockFdr(port: number): MockFdr.Instance {
         environment: `http://localhost:${port}/`,
         token: "dummy",
     });
+    const overrides: Partial<FdrConfig> = { redisEnabled: true };
+    console.log("init" + overrides);
     const fdrApplication = createMockFdrApplication({
         orgIds: ["acme", "octoai"],
+        configOverrides: overrides,
     });
     const app = express();
     register(app, {

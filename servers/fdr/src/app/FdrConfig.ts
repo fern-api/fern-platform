@@ -13,7 +13,7 @@ const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
 const DOCS_CACHE_ENDPOINT_ENV_VAR = "DOCS_CACHE_ENDPOINT";
 const ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR = "ENABLE_CUSTOMER_NOTIFICATIONS";
-const DEPLOYMENT_ENVIRONMENT_ENV_VAR = "RUNTIME_ENVIRONMENT";
+const REDIS_ENABLED_ENV_VAR = "REDIS_ENABLED";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -31,7 +31,7 @@ export interface FdrConfig {
     logLevel: string;
     docsCacheEndpoint: string;
     enableCustomerNotifications: boolean;
-    deploymentEnvironment: DeploymentEnvironment;
+    redisEnabled: boolean;
 }
 
 export enum DeploymentEnvironment {
@@ -58,7 +58,7 @@ export function getConfig(): FdrConfig {
         logLevel: process.env[LOG_LEVEL_ENV_VAR] ?? "info",
         docsCacheEndpoint: getEnvironmentVariableOrThrow(DOCS_CACHE_ENDPOINT_ENV_VAR),
         enableCustomerNotifications: getEnvironmentVariableOrThrow(ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR) === "true",
-        deploymentEnvironment: (process.env[DEPLOYMENT_ENVIRONMENT_ENV_VAR] ?? "LOCAL") as DeploymentEnvironment,
+        redisEnabled: process.env[REDIS_ENABLED_ENV_VAR] === "true",
     };
 }
 
