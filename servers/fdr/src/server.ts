@@ -40,7 +40,6 @@ Sentry.init({
     environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
     maxValueLength: 1000,
     // enabled: process.env.NODE_ENV === "production", // Do not enable sentry when running local
-    debug: true,
 });
 
 // The request handler must be the first middleware on the app
@@ -53,9 +52,6 @@ expressApp.use(cors());
 expressApp.use(compression());
 expressApp.get("/health", (_req, res) => {
     res.sendStatus(200);
-});
-expressApp.get("/debug-sentry", function mainHandler(req, res) {
-    throw new Error("Test sentry error!");
 });
 const app = new FdrApplication(config);
 
