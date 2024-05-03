@@ -216,7 +216,6 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                         variant="minimal"
                                         onClick={() => {
                                             const a = document.createElement("a");
-                                            // console.log(response);
                                             a.href = response.response.body;
                                             a.download = createFilename(response.response, response.contentType);
                                             a.click();
