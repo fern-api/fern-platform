@@ -20,7 +20,7 @@ export function generateWebhookPayloadExample(
 export function generateHttpRequestBodyExample(
     type: APIV1Write.HttpRequestBodyShape,
     resolveTypeById: ResolveTypeById,
-): unknown {
+): APIV1Write.ExampleEndpointRequest | undefined {
     switch (type.type) {
         case "object":
             return generateExampleObject(type, resolveTypeById, true, new Set(), 0);
@@ -36,12 +36,11 @@ export function generateHttpRequestBodyExample(
             if (type.isOptional) {
                 return undefined;
             }
-            const content = btoa("Hello world!");
+            let content = btoa("Hello world!");
             if (type.contentType != null) {
-                return `data:${type.contentType};base64,${content}`;
-            } else {
-                return content;
+                content = `data:${type.contentType};base64,${content}`;
             }
+            return { type: "bytes", value: { type: "base64", value: content } };
         }
     }
 }
@@ -49,12 +48,12 @@ export function generateHttpRequestBodyExample(
 function generateFormDataRequestBodyExample(
     FormDataRequest: APIV1Write.FormDataRequest | undefined,
     resolveTypeById: ResolveTypeById,
-) {
+): APIV1Write.ExampleEndpointRequest {
     if (FormDataRequest == null) {
-        return "<filename>"; // old (deprecated) behavior
+        return { type: "form", value: {} }; // old (deprecated) behavior
     }
 
-    const example: Record<string, unknown> = {};
+    const example: Record<string, APIV1Write.FormValue> = {};
     FormDataRequest.properties.forEach((property) => {
         switch (property.type) {
             case "file": {
@@ -62,32 +61,36 @@ function generateFormDataRequestBodyExample(
                     break;
                 }
                 if (property.value.type === "fileArray") {
-                    example[property.value.key] = ["<filename1>", "<filename2>"];
+                    example[property.value.key] = {
+                        type: "filenames",
+                        value: ["<filename1>", "<filename2>"],
+                    };
                 } else {
-                    example[property.value.key] = "<filename1>";
+                    example[property.value.key] = {
+                        type: "filename",
+                        value: "<filename1>",
+                    };
                 }
                 break;
             }
             case "bodyProperty": {
-                example[property.key] = generateExampleFromTypeReference(
-                    property.valueType,
-                    resolveTypeById,
-                    true,
-                    new Set(),
-                    0,
-                );
+                example[property.key] = {
+                    type: "json",
+                    value: generateExampleFromTypeReference(property.valueType, resolveTypeById, true, new Set(), 0)
+                        .value,
+                };
                 break;
             }
         }
     });
 
-    return example;
+    return { type: "form", value: example };
 }
 
 function generateHttpJsonRequestBodyExample(
     shape: APIV1Write.JsonBodyShape,
     resolveTypeById: ResolveTypeById,
-): unknown {
+): APIV1Write.ExampleEndpointRequest {
     switch (shape.type) {
         case "object":
             return generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
@@ -130,7 +133,7 @@ function generateExampleObject(
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number,
-): Record<string, unknown> {
+): APIV1Write.ExampleEndpointRequest {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
         const value = generateExampleFromTypeReference(
@@ -144,7 +147,7 @@ function generateExampleObject(
             example[property.key] = value;
         }
     }
-    return example;
+    return { type: "json", value: example };
 }
 
 export function generateExampleFromTypeReference(
@@ -153,7 +156,7 @@ export function generateExampleFromTypeReference(
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number,
-): unknown {
+): APIV1Write.ExampleEndpointRequest {
     let example;
 
     switch (reference.type) {
@@ -214,7 +217,7 @@ export function generateExampleFromTypeReference(
                     ignoreOptionals,
                     visited,
                     depth + 1,
-                ) as string]: generateExampleFromTypeReference(
+                ).value as string]: generateExampleFromTypeReference(
                     reference.valueType,
                     resolveTypeById,
                     ignoreOptionals,
@@ -233,7 +236,7 @@ export function generateExampleFromTypeReference(
             assertNever(reference);
     }
 
-    return example;
+    return { type: "json", value: example };
 }
 
 function generateExampleFromId(

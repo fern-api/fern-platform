@@ -27,6 +27,7 @@ export * from "./ExampleEndpointCall";
 export * from "./CustomCodeSample";
 export * from "./ExampleEndpointRequest";
 export * from "./FormValue";
+export * from "./BytesValue";
 export * from "./FilenameWithData";
 export * from "./FileId";
 export * from "./ExampleEndpointResponse";

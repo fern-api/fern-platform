@@ -411,37 +411,24 @@ function transformHttpRequestToDb({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
-            return {
-                contentType: "application/json",
-                description: writeShape.description,
-                // htmlDescription,
-                type: writeShape.type,
-                // descriptionContainsMarkdown: true,
-            };
         case "reference":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type,
-                // descriptionContainsMarkdown: true,
             };
         case "fileUpload": // deprecated
         case "formData":
             return {
                 contentType: "multipart/form-data",
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type,
-                // descriptionContainsMarkdown: true,
             };
         case "json":
             return {
                 contentType: writeShape.type.contentType,
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type.shape,
-                // descriptionContainsMarkdown: true,
             };
         case "bytes":
             return {

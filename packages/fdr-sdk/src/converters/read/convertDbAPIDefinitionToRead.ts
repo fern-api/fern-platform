@@ -119,29 +119,18 @@ function transformHttpRequest({
 }): WithoutQuestionMarks<APIV1Read.HttpRequest> {
     switch (dbShape.type.type) {
         case "object":
-            return {
-                contentType: dbShape.contentType ?? "application/json",
-                description: dbShape.description,
-                // htmlDescription: dbShape.htmlDescription,
-                type: dbShape.type,
-                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
-            };
         case "reference":
             return {
                 contentType: dbShape.contentType ?? "application/json",
                 description: dbShape.description,
-                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "fileUpload": // deprecated
         case "formData":
             return {
                 contentType: dbShape.contentType ?? "multipart/form-data",
                 description: dbShape.description,
-                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "bytes":
             return {
