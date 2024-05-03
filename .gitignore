@@ -51,3 +51,6 @@ lerna-debug.log*
 /playwright/.cache/
 
 *storybook.log
+
+#ide
+.idea/
