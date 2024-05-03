@@ -21,6 +21,7 @@ const serverlessConfiguration: AWS = {
             GITHUB_APP_CLIENT_ID: process?.env.GITHUB_APP_CLIENT_ID ?? "placeholder",
             GITHUB_APP_CLIENT_SECRET: process?.env.GITHUB_APP_CLIENT_SECRET ?? "placeholder",
             GITHUB_APP_WEBHOOK_SECRET: process?.env.GITHUB_APP_WEBHOOK_SECRET ?? "placeholder",
+            BOT_FERN_TOKEN: process?.env.BOT_FERN_TOKEN ?? "placeholder",
         },
     },
     functions: { updateOpenApiSpec },

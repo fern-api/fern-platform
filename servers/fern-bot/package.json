@@ -16,15 +16,12 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.15.0-rc63",
     "@fern-api/fs-utils": "0.15.0-rc63",
     "@octokit/openapi-types": "^22.1.0",
-    "find-up": "^7.0.0",
-    "js-yaml": "^4.1.0",
+    "execa": "^5.1.1",
     "octokit": "^3.2.0",
     "simple-git": "^3.24.0",
-    "tmp-promise": "^3.0.3",
-    "zod": "^3.22.4"
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@octokit/types": "^13.4.1",
