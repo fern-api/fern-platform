@@ -245,7 +245,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 },
             });
         }
-    }, [basePath, endpoint, formState]);
+    }, [basePath, domain, endpoint, formState]);
 
     return (
         <FernTooltipProvider>
