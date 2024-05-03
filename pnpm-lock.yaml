@@ -260,6 +260,9 @@ importers:
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../core-utils
+      url-join:
+        specifier: 4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -267,6 +270,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.26
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       depcheck:
         specifier: ^1.4.3
         version: 1.4.3
@@ -969,6 +975,9 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
+      url-join:
+        specifier: 4.0.1
+        version: 4.0.1
       vfile:
         specifier: ^6.0.1
         version: 6.0.1
@@ -1045,6 +1054,9 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@5.2.6)

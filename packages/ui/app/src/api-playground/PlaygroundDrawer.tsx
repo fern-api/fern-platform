@@ -363,7 +363,12 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 )}
                 <div className="flex h-full flex-col rounded-lg">
                     <div>{layoutBreakpoint === "mobile" ? mobileHeader : desktopHeader}</div>
-                    <FernErrorBoundary component="PlaygroundDrawer" className="flex h-full items-center justify-center">
+                    <FernErrorBoundary
+                        component="PlaygroundDrawer"
+                        className="flex h-full items-center justify-center"
+                        showError={true}
+                        reset={resetWithoutExample}
+                    >
                         {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
                             <PlaygroundEndpoint
                                 endpoint={matchedEndpoint}
