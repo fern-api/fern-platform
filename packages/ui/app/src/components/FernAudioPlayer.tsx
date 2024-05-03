@@ -78,7 +78,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             }}
                         />
                         <FernButton
-                            icon={isPlaying ? <Pause /> : <Play className="-mr-0.5 fill-accent-primary-contrast" />}
+                            icon={isPlaying ? <Pause /> : <Play className="-mr-0.5 fill-accent-contrast" />}
                             variant="filled"
                             intent="primary"
                             rounded

@@ -114,7 +114,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
 
                             <span
                                 className={cn("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
-                                    "bg-tag-primary text-accent": connected,
+                                    "bg-tag-primary t-accent": connected,
                                     "bg-tag-danger text-intent-danger": !connected,
                                 })}
                             >
