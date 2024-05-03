@@ -23,6 +23,8 @@ const config = getConfig();
 
 const expressApp = express();
 
+console.log("NODE_ENV before Sentry init: " + process.env.NODE_ENV);
+
 // ========= Init Sentry =========
 Sentry.init({
     dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
@@ -41,6 +43,8 @@ Sentry.init({
     maxValueLength: 1000,
     // enabled: process.env.NODE_ENV === "production", // Do not enable sentry when running local
 });
+
+console.log("NODE_ENV after Sentry init: " + process.env.NODE_ENV);
 
 // The request handler must be the first middleware on the app
 expressApp.use(Sentry.Handlers.requestHandler());
