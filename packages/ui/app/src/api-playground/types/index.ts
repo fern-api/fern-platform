@@ -29,11 +29,12 @@ export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequ
             return {
                 type: "file",
                 fileName: value.value?.name,
+                fileId: undefined,
             };
         case "fileArray":
             return {
                 type: "fileArray",
-                fileNames: value.value.map((file) => file.name),
+                files: value.value.map((file) => ({ type: "file", fileName: file.name, fileId: undefined })),
             };
         case "json":
             return {

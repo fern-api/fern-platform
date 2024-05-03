@@ -251,7 +251,7 @@ export interface ResolvedExampleEndpointCall {
 export type ResolvedExampleEndpointRequest =
     | ResolvedExampleEndpointRequest.Json
     | ResolvedExampleEndpointRequest.Form
-    | ResolvedExampleEndpointRequest.Stream;
+    | ResolvedExampleEndpointRequest.Bytes;
 
 export declare namespace ResolvedExampleEndpointRequest {
     interface Json {
@@ -264,9 +264,10 @@ export declare namespace ResolvedExampleEndpointRequest {
         value: Record<string, ResolvedFormValue>;
     }
 
-    interface Stream {
-        type: "stream";
-        fileName: string;
+    interface Bytes {
+        type: "bytes";
+        value: string | undefined; // base64 encoded
+        fileName: string | undefined;
     }
 }
 
@@ -281,11 +282,12 @@ export declare namespace ResolvedFormValue {
     interface SingleFile {
         type: "file";
         fileName: string;
+        fileId: string | undefined; // lookup file by UUID
     }
 
     interface MultipleFiles {
         type: "fileArray";
-        fileNames: string[];
+        files: SingleFile[];
     }
 }
 
@@ -537,18 +539,14 @@ export interface ResolvedFormDataRequest extends WithMetadata {
     properties: ResolvedFormDataRequestProperty[];
 }
 
-export interface ResolvedFileUpload {
-    type: "fileUpload";
-    value: ResolvedFormDataRequest | undefined;
+export interface ResolvedFormData extends ResolvedFormDataRequest {
+    type: "formData";
 }
 
-export type ResolvedHttpRequestBodyShape =
-    | ResolvedFileUpload
-    | APIV1Read.HttpRequestBodyShape.Bytes
-    | ResolvedTypeShape;
+export type ResolvedHttpRequestBodyShape = ResolvedFormData | APIV1Read.HttpRequestBodyShape.Bytes | ResolvedTypeShape;
 
 interface ResolvedHttpRequestBodyShapeVisitor<T> {
-    fileUpload: (shape: ResolvedFileUpload) => T;
+    formData: (shape: ResolvedFormData) => T;
     bytes: (shape: APIV1Read.BytesRequest) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
@@ -557,8 +555,8 @@ export function visitResolvedHttpRequestBodyShape<T>(
     shape: ResolvedHttpRequestBodyShape,
     visitor: ResolvedHttpRequestBodyShapeVisitor<T>,
 ): T {
-    if (shape.type === "fileUpload") {
-        return visitor.fileUpload(shape);
+    if (shape.type === "formData") {
+        return visitor.formData(shape);
     } else if (shape.type === "bytes") {
         return visitor.bytes(shape);
     } else {

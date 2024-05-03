@@ -304,7 +304,7 @@ function shouldShowExpandCollapse(
         enum: () => false,
         alias: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         unknown: () => false,
-        fileUpload: () => false,
+        formData: () => false,
         integer: () => false,
         double: () => false,
         long: () => false,

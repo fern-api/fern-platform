@@ -1,7 +1,6 @@
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { FernCard } from "../components/FernCard";
-import { FernErrorTag } from "../components/FernErrorBoundary";
 import {
     ResolvedEndpointDefinition,
     ResolvedTypeDefinition,
@@ -139,8 +138,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     const handleFormDataFileChange = useCallback(
         (key: string, files: ReadonlyArray<File> | undefined) => {
             const type =
-                endpoint.requestBody[0]?.shape.type === "fileUpload"
-                    ? endpoint.requestBody[0]?.shape.value?.properties.find((p) => p.key === key)?.type
+                endpoint.requestBody[0]?.shape.type === "formData"
+                    ? endpoint.requestBody[0]?.shape.properties.find((p) => p.key === key)?.type
                     : undefined;
             if (files == null || files.length === 0) {
                 setFormDataEntry(key, undefined);
@@ -224,35 +223,19 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
             {endpoint.requestBody[0] != null &&
                 visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
-                    fileUpload: (fileUpload) => {
-                        const fileUploadFormValue = formState?.body?.type === "form-data" ? formState?.body.value : {};
-                        if (fileUpload.value == null) {
-                            // eslint-disable-next-line no-console
-                            console.error(
-                                "Generated API Reference is missing file upload metadata. Please upgrade the Fern CLI to 0.19.7 or greater.",
-                            );
-                        }
-                        return fileUpload.value == null ? (
-                            <div>
-                                <div className="mb-4 px-4">
-                                    <h5 className="t-muted m-0">Body</h5>
-                                </div>
-                                <FernErrorTag
-                                    component="PlaygroundEndpointForm"
-                                    error="File upload is not supported on this endpoint"
-                                />
-                            </div>
-                        ) : (
+                    formData: (formData) => {
+                        const formDataFormValue = formState?.body?.type === "form-data" ? formState?.body.value : {};
+                        return (
                             <div className="min-w-0 flex-1 shrink">
                                 <div className="mb-4 px-4">
-                                    <h5 className="t-muted m-0">{titleCase(fileUpload.value.name)}</h5>
+                                    <h5 className="t-muted m-0">{titleCase(formData.name)}</h5>
                                 </div>
                                 <FernCard className="rounded-xl p-4 shadow-sm">
                                     <ul className="list-none space-y-8">
-                                        {fileUpload.value.properties.map((property) =>
+                                        {formData.properties.map((property) =>
                                             visitDiscriminatedUnion(property, "type")._visit({
                                                 file: (file) => {
-                                                    const currentValue = fileUploadFormValue[property.key];
+                                                    const currentValue = formDataFormValue[property.key];
                                                     return (
                                                         <li key={property.key}>
                                                             <PlaygroundFileUploadForm
@@ -275,7 +258,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                     );
                                                 },
                                                 fileArray: (fileArray) => {
-                                                    const currentValue = fileUploadFormValue[property.key];
+                                                    const currentValue = formDataFormValue[property.key];
                                                     return (
                                                         <li key={property.key}>
                                                             <PlaygroundFileUploadForm
@@ -301,7 +284,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                                             id="body"
                                                             property={bodyProperty}
                                                             onChange={handleFormDataJsonChange}
-                                                            value={fileUploadFormValue[property.key]?.value}
+                                                            value={formDataFormValue[property.key]?.value}
                                                             types={types}
                                                         />
                                                     </li>
