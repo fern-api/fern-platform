@@ -817,4 +817,8 @@
             }
         }
     }
+
+    .fern-api-property-key {
+        @apply font-mono t-default font-semibold text-sm;
+    }
 }
