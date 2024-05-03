@@ -31,7 +31,7 @@
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
-    "urljoin": "^0.1.5"
+    "url-join": "4.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

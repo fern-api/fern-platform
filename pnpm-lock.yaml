@@ -260,9 +260,9 @@ importers:
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../core-utils
-      urljoin:
-        specifier: ^0.1.5
-        version: 0.1.5
+      url-join:
+        specifier: 4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
