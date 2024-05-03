@@ -39,7 +39,7 @@ Sentry.init({
     profilesSampleRate: 1.0,
     environment: config.applicationEnvironment,
     maxValueLength: 1000,
-    enabled: config.applicationEnvironment !== "local", // Do not enable sentry when running local
+    enabled: config.applicationEnvironment === "dev" || config.applicationEnvironment == "prod",
 });
 
 // The request handler must be the first middleware on the app
