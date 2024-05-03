@@ -69,18 +69,18 @@ export const CSS_VARIABLES = {
     GRAYSCALE_10: "--grayscale-a10",
     GRAYSCALE_11: "--grayscale-a11",
     GRAYSCALE_12: "--grayscale-a12",
-    ACCENT_1: "--accent-a1",
-    ACCENT_2: "--accent-a2",
-    ACCENT_3: "--accent-a3",
-    ACCENT_4: "--accent-a4",
-    ACCENT_5: "--accent-a5",
-    ACCENT_6: "--accent-a6",
-    ACCENT_7: "--accent-a7",
-    ACCENT_8: "--accent-a8",
-    ACCENT_9: "--accent-a9",
-    ACCENT_10: "--accent-a10",
-    ACCENT_11: "--accent-a11",
-    ACCENT_12: "--accent-a12",
+    ACCENT_1: "--accent-1",
+    ACCENT_2: "--accent-2",
+    ACCENT_3: "--accent-3",
+    ACCENT_4: "--accent-4",
+    ACCENT_5: "--accent-5",
+    ACCENT_6: "--accent-6",
+    ACCENT_7: "--accent-7",
+    ACCENT_8: "--accent-8",
+    ACCENT_9: "--accent-9",
+    ACCENT_10: "--accent-10",
+    ACCENT_11: "--accent-11",
+    ACCENT_12: "--accent-12",
     ACCENT_SURFACE: "--accent-surface",
     GRAY_SURFACE: "--gray-surface",
     BODY_TEXT: "--body-text",
@@ -127,10 +127,12 @@ export function getColorVariables(
     light: Record<string, string | undefined>;
     dark: Record<string, string | undefined>;
 } {
-    const isBgGradientLight = colorsV3.light?.background.type === "gradient";
-    const isBgGradientDark = colorsV3.dark?.background.type === "gradient";
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
+    const shouldUseAccentColorLight =
+        colorsV3.light?.background.type === "gradient" || tinycolor(backgroundColorLight).toHexString() === "#ffffff";
+    const shouldUseAccentColorDark =
+        colorsV3.dark?.background.type === "gradient" || tinycolor(backgroundColorDark).toHexString() === "#000000";
 
     const accentPrimaryLightUi = increaseForegroundContrast(
         getColor(colorsV3, "accentPrimary", "light"),
@@ -144,10 +146,10 @@ export function getColorVariables(
     ).toRgb();
 
     const radixGrayscaleLight = getClosestGrayScale(
-        tinycolor(isBgGradientLight ? accentPrimaryLightUi : backgroundColorLight).toHexString(),
+        tinycolor(shouldUseAccentColorLight ? accentPrimaryLightUi : backgroundColorLight).toHexString(),
     );
     const radixGrayscaleDark = getClosestGrayScale(
-        tinycolor(isBgGradientDark ? accentPrimaryDarkUi : backgroundColorDark).toHexString(),
+        tinycolor(shouldUseAccentColorDark ? accentPrimaryDarkUi : backgroundColorDark).toHexString(),
     );
 
     const radixColorsLight = generateRadixColors({
@@ -248,7 +250,7 @@ export function getColorVariables(
                 cardBackgroundLight?.toRgbString() ?? tinycolor("white").setAlpha(0.7).toRgbString(),
             [CSS_VARIABLES.SIDEBAR_BACKGROUND]: sidebarBackgroundLight?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.HEADER_BACKGROUND]: headerBackgroundLight?.toRgbString() ?? "transparent",
-            [CSS_VARIABLES.BORDER]: borderLight?.toRgbString() ?? "var(--grayscale-a3)",
+            [CSS_VARIABLES.BORDER]: borderLight?.toRgbString() ?? "var(--grayscale-a4)",
             [CSS_VARIABLES.BORDER_CONCEALED]: borderLight?.toRgbString() ?? "var(--grayscale-a2)",
             [CSS_VARIABLES.BODY_TEXT]: "0, 0, 0",
             [CSS_VARIABLES.BODY_TEXT_INVERTED]: "255, 255, 255",
