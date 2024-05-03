@@ -480,7 +480,7 @@ export function getInitialEndpointRequestFormStateWithExample(
                                     : { type: "json", value: exampleValue.value },
                       ),
                   }
-                : exampleCall.requestBody?.type === "stream"
+                : exampleCall.requestBody?.type === "bytes"
                   ? {
                         type: "octet-stream",
                         value: undefined,

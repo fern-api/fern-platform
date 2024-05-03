@@ -40,6 +40,8 @@ export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequ
             return {
                 type: "json",
                 value: value.value,
+                // TODO: bring in content type from the shape of the form data
+                contentType: undefined,
             };
         default:
             assertNever(value);
