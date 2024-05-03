@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { noop } from "lodash-es";
-import { buildRequestUrl } from "../../api-playground/utils";
+import { compact, noop } from "lodash-es";
+import urljoin from "url-join";
 import { ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "../../resolver/types";
 import { getEndpointEnvironmentUrl } from "../../util/endpoint";
 
@@ -23,7 +23,7 @@ export function convertEndpointExampleToHttpRequestExample(
     requestBody: ResolvedExampleEndpointRequest | null | undefined,
 ): HttpRequestExample {
     const environmentUrl = getEndpointEnvironmentUrl(endpoint);
-    const url = buildRequestUrl(environmentUrl, endpoint.path, example.pathParameters);
+    const url = urljoin(compact([environmentUrl, example.path]));
 
     const headers: Record<string, unknown> = { ...example.headers };
 
