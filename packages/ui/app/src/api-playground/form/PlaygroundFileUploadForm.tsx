@@ -106,12 +106,12 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                         <div className="divide-default divide-y">
                             {value.map((file) => (
                                 <div key={file.name} className="flex justify-between py-2 px-4">
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2 shrink min-w-0">
                                         <div>
                                             <FileIcon />
                                         </div>
-                                        <span className="inline-flex items-baseline gap-2">
-                                            <span className="text-sm">{file.name}</span>
+                                        <span className="inline-flex items-baseline gap-2 shrink min-w-0">
+                                            <span className="text-sm truncate">{file.name}</span>
                                             <span className="t-muted text-xs">
                                                 ({numeral(file.size).format("0.0b")})
                                             </span>
