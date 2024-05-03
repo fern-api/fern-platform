@@ -108,6 +108,7 @@ module.exports = {
                 },
 
                 "card-background": "var(--card-background)",
+                "card-solid": "var(--card-background-solid)",
                 "sidebar-background": "var(--sidebar-background)",
                 "header-background": "var(--header-background)",
 

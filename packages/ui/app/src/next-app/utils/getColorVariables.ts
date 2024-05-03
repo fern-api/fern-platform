@@ -52,6 +52,7 @@ export const CSS_VARIABLES = {
     // contrast colors are useful for rendering text on top of where accent is the background color
     ACCENT_PRIMARY_CONTRAST: "--accent-contrast",
     CARD_BACKGROUND: "--card-background",
+    CARD_BACKGROUND_SOLID: "--card-background-solid",
     SIDEBAR_BACKGROUND: "--sidebar-background",
     HEADER_BACKGROUND: "--header-background",
     BORDER: "--border",
@@ -126,6 +127,8 @@ export function getColorVariables(
     light: Record<string, string | undefined>;
     dark: Record<string, string | undefined>;
 } {
+    const isBgGradientLight = colorsV3.light?.background.type === "gradient";
+    const isBgGradientDark = colorsV3.dark?.background.type === "gradient";
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
 
@@ -140,8 +143,12 @@ export function getColorVariables(
         "ui",
     ).toRgb();
 
-    const radixGrayscaleLight = getClosestGrayScale(tinycolor(backgroundColorLight).toHexString());
-    const radixGrayscaleDark = getClosestGrayScale(tinycolor(backgroundColorDark).toHexString());
+    const radixGrayscaleLight = getClosestGrayScale(
+        tinycolor(isBgGradientLight ? accentPrimaryLightUi : backgroundColorLight).toHexString(),
+    );
+    const radixGrayscaleDark = getClosestGrayScale(
+        tinycolor(isBgGradientDark ? accentPrimaryDarkUi : backgroundColorDark).toHexString(),
+    );
 
     const radixColorsLight = generateRadixColors({
         appearance: "light",
@@ -282,7 +289,10 @@ export function getColorVariables(
             [CSS_VARIABLES.BACKGROUND]: `${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b}`,
             [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b}`,
             [CSS_VARIABLES.CARD_BACKGROUND]:
-                cardBackgroundDark?.toRgbString() ?? tinycolor(backgroundColorDark).darken(2).toRgbString(),
+                cardBackgroundDark?.toRgbString() ??
+                tinycolor(backgroundColorDark).darken(2).setAlpha(0.5).toRgbString(),
+            [CSS_VARIABLES.CARD_BACKGROUND_SOLID]:
+                cardBackgroundDark?.toRgbString() ?? tinycolor(backgroundColorDark).darken(1).toRgbString(),
             [CSS_VARIABLES.SIDEBAR_BACKGROUND]: sidebarBackgroundDark?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.HEADER_BACKGROUND]: headerBackgroundDark?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a4)",
