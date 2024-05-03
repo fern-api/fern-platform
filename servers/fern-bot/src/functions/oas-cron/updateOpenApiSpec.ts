@@ -1,6 +1,7 @@
 import { evaluateEnv } from "@libs/env";
 import { handlerWrapper } from "@libs/handler-wrapper";
-import { updateOpenApiSpecsInternal } from "./actions/updateOpenApiSpecs";
+import { updateOpenApiSpecsInternal } from "./actions/updateOpenApiSpec_legacy";
+// import { updateOpenApiSpecsInternal } from "./actions/updateOpenApiSpecs";
 
 const updateOpenApiSpec = async (_event: unknown) => {
     console.debug("Beginning scheduled run of `updateOpenApiSpec`, received event:", _event);

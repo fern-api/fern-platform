@@ -26,9 +26,12 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         await mkdir(fullRepoPath, { recursive: true });
     }
 
+    const installationToken = ((await octokit.auth({ type: "installation" })) as any).token;
     const git = simpleGit(fullRepoPath);
+
+    const authedCloneUrl = repository.clone_url.replace("https://", `https://x-access-token:${installationToken}@`);
     // Clone the repo to fullRepoPath and update the branch
-    await git.clone(repository.clone_url, ".");
+    await git.clone(authedCloneUrl, ".");
     try {
         // If you can fetch the branch, checkout the branch
         await git.fetch(branchRemoteName, OPENAPI_UPDATE_BRANCH);
