@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { generateChangelog, generateCommitMessage } from "@libs/cohere";
 import { Env } from "@libs/env";
 import { components } from "@octokit/openapi-types";
 import execa from "execa";
@@ -18,6 +19,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
     const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
 
     const branchRemoteName = "origin";
+    const originDefaultBranch = `${branchRemoteName}/${repository.default_branch}`;
 
     console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
     if (!(await doesPathExist(fullRepoPath))) {
@@ -38,7 +40,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         // TODO: we could honestly probably just delete the branch and recreate it
         // my concern with that is if there are more changes we decide to make in other actions
         // to the same branch that are not OpenAPI related, that we'd lose if we deleted and reupdated the spec.
-        await git.merge(["-X", "theirs", `${branchRemoteName}/${repository.default_branch}`]);
+        await git.merge(["-X", "theirs", originDefaultBranch]);
     } catch (e) {
         console.log(`Branch does not exist, create and checkout`);
         await git.checkoutBranch(OPENAPI_UPDATE_BRANCH, branchRemoteName);
@@ -46,6 +48,16 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
 
     // Run API update command which will pull the new spec from the specified
     // origin and write it to disk we can then commit it to github from there.
+    //
+    // TODO: Figure out if we should have an admin app token or if we should
+    // try to pull the token from the repo secrets. The annoying thing with the
+    // repo secrets is that we have to know the name of the secret.
+    //
+    // const fernToken = await octokit.rest.actions.getRepoSecret({
+    //     owner: repository.owner.name,
+    //     repo: repository.name,
+    //     secret_name: "FERN_TOKEN",
+    // });
     try {
         const command = execa("fern", ["api", "update"], {
             env: {
@@ -65,7 +77,8 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         console.log("Changes detected, committing and pushing");
         // Add + commit files
         await git.add(["-A"]);
-        await git.commit(":herb: Update API Spec");
+        const commitDiff = await git.diff();
+        await git.commit(await generateCommitMessage(commitDiff));
 
         // Push the changes
         await git.push([
@@ -74,13 +87,14 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
             `${OPENAPI_UPDATE_BRANCH}:refs/heads/${OPENAPI_UPDATE_BRANCH}`,
         ]);
 
+        const fullDiff = await git.diff([originDefaultBranch]);
         // Open a PR
         await createOrUpdatePullRequest(
             octokit,
             {
-                title: ":herb: [Scheduled] Update API Spec",
+                title: ":herb: :sparkles: [Scheduled] Update API Spec",
                 base: "main",
-                body: `This PR updates the API spec from the specified origin at: ${origin}`,
+                body: await generateChangelog(fullDiff),
             },
             repository.full_name,
             repository.full_name,
@@ -94,6 +108,6 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
 
     await app.eachRepository(async (installation) => {
         console.log("Encountered installation", installation.repository.full_name);
-        await updateOpenApiSpecInternal(installation.octokit, installation.repository, env.BOT_FERN_TOKEN);
+        await updateOpenApiSpecInternal(installation.octokit, installation.repository, env.FERN_BOT_FERN_TOKEN);
     });
 }
