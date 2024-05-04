@@ -12,6 +12,7 @@ const ALGOLIA_SEARCH_API_KEY_ENV_VAR = "ALGOLIA_SEARCH_API_KEY";
 const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
 const ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR = "ENABLE_CUSTOMER_NOTIFICATIONS";
+const APPLICATION_ENVIRONMENT_ENV_VAR = "APPLICATION_ENVIRONMENT";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -28,6 +29,7 @@ export interface FdrConfig {
     slackToken: string;
     logLevel: string;
     enableCustomerNotifications: boolean;
+    applicationEnvironment: string;
 }
 
 export function getConfig(): FdrConfig {
@@ -46,6 +48,7 @@ export function getConfig(): FdrConfig {
         slackToken: getEnvironmentVariableOrThrow(SLACK_TOKEN_ENV_VAR),
         logLevel: process.env[LOG_LEVEL_ENV_VAR] ?? "info",
         enableCustomerNotifications: getEnvironmentVariableOrThrow(ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR) === "true",
+        applicationEnvironment: getEnvironmentVariableOrThrow(APPLICATION_ENVIRONMENT_ENV_VAR),
     };
 }
 

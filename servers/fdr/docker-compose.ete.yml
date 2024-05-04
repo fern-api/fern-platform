@@ -17,6 +17,7 @@ services:
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
+      APPLICATION_ENVIRONMENT: ete
   postgres:
     image: postgres:10.3
     restart: always

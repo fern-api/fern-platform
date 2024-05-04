@@ -121,6 +121,7 @@ export function createMockFdrConfig(): FdrConfig {
         slackToken: "",
         logLevel: "debug",
         enableCustomerNotifications: false,
+        applicationEnvironment: "mock",
     };
 }
 
