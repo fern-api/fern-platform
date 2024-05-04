@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from "redis";
-import { CachedDocsResponse } from "./DocsCacheInterface";
+import { CachedDocsResponse } from "./DocsDefinitionCache";
 
 export default class RedisDocsDefinitionStore {
     private client: RedisClientType;
@@ -9,10 +9,6 @@ export default class RedisDocsDefinitionStore {
     }
 
     public initializeCache() {
-        this.client.on("connect", () => {
-            console.log("Connected!");
-        });
-
         this.client.connect().catch(console.error);
     }
 

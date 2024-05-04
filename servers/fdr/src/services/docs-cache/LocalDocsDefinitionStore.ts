@@ -1,4 +1,4 @@
-import { CachedDocsResponse } from "./DocsCacheInterface";
+import { CachedDocsResponse } from "./DocsDefinitionCache";
 
 export default class LocalDocsDefinitionStore {
     private localCache: Record<string, CachedDocsResponse>;

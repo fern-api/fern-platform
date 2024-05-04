@@ -27,7 +27,7 @@ export interface DocsDefinitionCache {
     }): Promise<void>;
 }
 
-interface CachedDocsResponse {
+export interface CachedDocsResponse {
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
