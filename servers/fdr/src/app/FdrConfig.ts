@@ -11,7 +11,9 @@ const ALGOLIA_SEARCH_INDEX_ENV_VAR = "ALGOLIA_SEARCH_INDEX";
 const ALGOLIA_SEARCH_API_KEY_ENV_VAR = "ALGOLIA_SEARCH_API_KEY";
 const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
+const DOCS_CACHE_ENDPOINT_ENV_VAR = "DOCS_CACHE_ENDPOINT";
 const ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR = "ENABLE_CUSTOMER_NOTIFICATIONS";
+const REDIS_ENABLED_ENV_VAR = "REDIS_ENABLED";
 const APPLICATION_ENVIRONMENT_ENV_VAR = "APPLICATION_ENVIRONMENT";
 
 export interface FdrConfig {
@@ -28,7 +30,9 @@ export interface FdrConfig {
     algoliaSearchIndex: string;
     slackToken: string;
     logLevel: string;
+    docsCacheEndpoint: string;
     enableCustomerNotifications: boolean;
+    redisEnabled: boolean;
     applicationEnvironment: string;
 }
 
@@ -47,7 +51,9 @@ export function getConfig(): FdrConfig {
         algoliaSearchApiKey: getEnvironmentVariableOrThrow(ALGOLIA_SEARCH_API_KEY_ENV_VAR),
         slackToken: getEnvironmentVariableOrThrow(SLACK_TOKEN_ENV_VAR),
         logLevel: process.env[LOG_LEVEL_ENV_VAR] ?? "info",
+        docsCacheEndpoint: getEnvironmentVariableOrThrow(DOCS_CACHE_ENDPOINT_ENV_VAR),
         enableCustomerNotifications: getEnvironmentVariableOrThrow(ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR) === "true",
+        redisEnabled: process.env[REDIS_ENABLED_ENV_VAR] === "true",
         applicationEnvironment: getEnvironmentVariableOrThrow(APPLICATION_ENVIRONMENT_ENV_VAR),
     };
 }

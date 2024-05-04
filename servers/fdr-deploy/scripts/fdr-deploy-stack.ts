@@ -135,6 +135,7 @@ export class FdrDeployStack extends Stack {
                     LOG_LEVEL: getLogLevel(environmentType),
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
+                    REDIS_ENABLED: (environmentType !== "PROD").toString(),
                     APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
                 },
                 containerName: CONTAINER_NAME,

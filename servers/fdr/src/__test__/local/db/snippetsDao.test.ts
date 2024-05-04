@@ -1,5 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { fdrApplication } from "../setupMockFdr";
+import { createMockFdrApplication } from "../../mock";
+
+const fdrApplication = createMockFdrApplication({
+    orgIds: ["acme", "octoai"],
+});
 
 it("snippet api dao", async () => {
     // create snippets

@@ -16,7 +16,9 @@ services:
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
+      DOCS_CACHE_ENDPOINT: dummy
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
+      REDIS_ENABLED: "false"
       APPLICATION_ENVIRONMENT: ete
   postgres:
     image: postgres:10.3
@@ -33,3 +35,8 @@ services:
       - 9191:9191
     environment:
       initialBuckets: fdr
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    command: ["redis-server"]

@@ -105,28 +105,46 @@ class MockRevalidatorService implements RevalidatorService {
     }
 }
 
-export function createMockFdrConfig(): FdrConfig {
-    return {
-        awsAccessKey: "",
-        awsSecretKey: "",
-        s3BucketName: "fdr",
-        s3BucketRegion: "us-east-1",
-        venusUrl: "",
-        s3UrlOverride: "http://s3-mock:9090",
-        domainSuffix: ".docs.buildwithfern.com",
-        algoliaAppId: "",
-        algoliaAdminApiKey: "",
-        algoliaSearchIndex: "",
-        algoliaSearchApiKey: "",
-        slackToken: "",
-        logLevel: "debug",
-        enableCustomerNotifications: false,
-        applicationEnvironment: "mock",
-    };
+export const baseMockFdrConfig: FdrConfig = {
+    awsAccessKey: "",
+    awsSecretKey: "",
+    s3BucketName: "fdr",
+    s3BucketRegion: "us-east-1",
+    venusUrl: "",
+    s3UrlOverride: "http://s3-mock:9090",
+    domainSuffix: ".docs.buildwithfern.com",
+    algoliaAppId: "",
+    algoliaAdminApiKey: "",
+    algoliaSearchIndex: "",
+    algoliaSearchApiKey: "",
+    slackToken: "",
+    logLevel: "debug",
+    docsCacheEndpoint: process.env["DOCS_CACHE_ENDPOINT"] || "",
+    enableCustomerNotifications: false,
+    applicationEnvironment: "mock",
+    redisEnabled: false,
+};
+
+export function getMockFdrConfig(overrides?: Partial<FdrConfig>): FdrConfig {
+    if (overrides) {
+        return {
+            ...baseMockFdrConfig,
+            ...overrides,
+        };
+    }
+    return baseMockFdrConfig;
 }
 
-export function createMockFdrApplication({ orgIds, services }: { orgIds?: string[]; services?: Partial<FdrServices> }) {
-    return new FdrApplication(createMockFdrConfig(), {
+export function createMockFdrApplication({
+    orgIds,
+    services,
+    configOverrides,
+}: {
+    orgIds?: string[];
+    services?: Partial<FdrServices>;
+    configOverrides?: Partial<FdrConfig>;
+}) {
+    return new FdrApplication(getMockFdrConfig(configOverrides), {
         auth: new MockAuthService({
             orgIds: orgIds ?? [],
         }),

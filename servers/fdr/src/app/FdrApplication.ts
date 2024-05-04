@@ -13,10 +13,12 @@ import {
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
 import { DocsDefinitionCache, DocsDefinitionCacheImpl } from "../services/docs-cache/DocsDefinitionCache";
+import LocalDocsDefinitionStore from "../services/docs-cache/LocalDocsDefinitionStore";
+import RedisDocsDefinitionStore from "../services/docs-cache/RedisDocsDefinitionStore";
 import { RevalidatorService, RevalidatorServiceImpl } from "../services/revalidator/RevalidatorService";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
-import type { FdrConfig } from "./FdrConfig";
+import { type FdrConfig } from "./FdrConfig";
 
 export interface FdrServices {
     readonly auth: AuthService;
@@ -61,6 +63,7 @@ export class FdrApplication {
         const prisma = new PrismaClient({
             log: ["info", "warn", "error"],
         });
+
         this.services = {
             auth: services?.auth ?? new AuthServiceImpl(this),
             db: services?.db ?? new DatabaseServiceImpl(prisma),
@@ -73,8 +76,19 @@ export class FdrApplication {
             slack: services?.slack ?? new SlackServiceImpl(this),
             revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
         };
+
         this.dao = new FdrDao(prisma);
-        this.docsDefinitionCache = new DocsDefinitionCacheImpl(this, this.dao);
+
+        const redisDatastore = config.redisEnabled
+            ? new RedisDocsDefinitionStore(`redis://${this.config.docsCacheEndpoint}`)
+            : undefined;
+
+        this.docsDefinitionCache = new DocsDefinitionCacheImpl(
+            this,
+            this.dao,
+            new LocalDocsDefinitionStore(),
+            redisDatastore,
+        );
 
         if ("prepareStackTrace" in Error) {
             Error.prepareStackTrace = (err, stack) =>
@@ -88,5 +102,9 @@ export class FdrApplication {
                     })),
                 });
         }
+    }
+
+    public async initialize(): Promise<void> {
+        await this.docsDefinitionCache.initialize();
     }
 }
