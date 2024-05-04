@@ -148,7 +148,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <Tabs.Trigger
                                             key={requestBody.contentType}
                                             value={requestBody.contentType}
-                                            className="group flex min-h-10 cursor-default items-center px-0 py-2 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] data-[state=active]:shadow-accent-primary"
+                                            className="group flex min-h-10 cursor-default items-center px-0 py-2 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] data-[state=active]:shadow-accent"
                                         >
                                             <span className="t-muted rounded px-2 py-1 text-xs group-data-[state=active]:t-default group-hover:bg-tag-default group-data-[state=active]:font-semibold">
                                                 {requestBody.contentType}

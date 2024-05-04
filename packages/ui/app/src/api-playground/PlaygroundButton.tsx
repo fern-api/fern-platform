@@ -16,7 +16,7 @@ export const PlaygroundButton: FC<{ state: PlaygroundSelectionState }> = ({ stat
             <FernTooltip
                 content={
                     <span>
-                        Customize and run in <span className="font-semibold text-accent-primary">API Playground</span>
+                        Customize and run in <span className="font-semibold t-accent">API Playground</span>
                     </span>
                 }
             >

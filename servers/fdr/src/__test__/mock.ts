@@ -121,6 +121,7 @@ export const baseMockFdrConfig: FdrConfig = {
     logLevel: "debug",
     docsCacheEndpoint: process.env["DOCS_CACHE_ENDPOINT"] || "",
     enableCustomerNotifications: false,
+    applicationEnvironment: "mock",
     redisEnabled: false,
 };
 

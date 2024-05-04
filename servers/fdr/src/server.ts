@@ -37,9 +37,9 @@ Sentry.init({
     tracesSampleRate: 1.0, //  Capture 100% of the transactions
     // Set sampling rate for profiling - this is relative to tracesSampleRate
     profilesSampleRate: 1.0,
-    environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
+    environment: config.applicationEnvironment,
     maxValueLength: 1000,
-    // enabled: process.env.NODE_ENV === "production", // Do not enable sentry when running local
+    enabled: config.applicationEnvironment === "dev" || config.applicationEnvironment == "prod",
 });
 
 // The request handler must be the first middleware on the app

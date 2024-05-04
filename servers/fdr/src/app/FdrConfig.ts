@@ -14,6 +14,7 @@ const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
 const DOCS_CACHE_ENDPOINT_ENV_VAR = "DOCS_CACHE_ENDPOINT";
 const ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR = "ENABLE_CUSTOMER_NOTIFICATIONS";
 const REDIS_ENABLED_ENV_VAR = "REDIS_ENABLED";
+const APPLICATION_ENVIRONMENT_ENV_VAR = "APPLICATION_ENVIRONMENT";
 
 export interface FdrConfig {
     venusUrl: string;
@@ -32,13 +33,7 @@ export interface FdrConfig {
     docsCacheEndpoint: string;
     enableCustomerNotifications: boolean;
     redisEnabled: boolean;
-}
-
-export enum DeploymentEnvironment {
-    LOCAL = "LOCAL",
-    DEV = "DEV",
-    DEV2 = "DEV2",
-    PROD = "PROD",
+    applicationEnvironment: string;
 }
 
 export function getConfig(): FdrConfig {
@@ -59,6 +54,7 @@ export function getConfig(): FdrConfig {
         docsCacheEndpoint: getEnvironmentVariableOrThrow(DOCS_CACHE_ENDPOINT_ENV_VAR),
         enableCustomerNotifications: getEnvironmentVariableOrThrow(ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR) === "true",
         redisEnabled: process.env[REDIS_ENABLED_ENV_VAR] === "true",
+        applicationEnvironment: getEnvironmentVariableOrThrow(APPLICATION_ENVIRONMENT_ENV_VAR),
     };
 }
 

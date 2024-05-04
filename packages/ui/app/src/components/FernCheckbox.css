@@ -15,5 +15,5 @@
 }
 
 .fern-checkbox-indicator {
-    @apply size-4 bg-accent flex items-center justify-center text-accent-primary-contrast rounded-sm;
+    @apply size-4 bg-accent flex items-center justify-center text-accent-contrast rounded-sm;
 }

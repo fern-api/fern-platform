@@ -26,7 +26,7 @@ export function Badge({
                     "text-white dark:text-black": !minimal && intent !== "primary",
                     "dark:ring-white/30 ring-black/30": outlined,
                     "bg-intent-default": intent === "none",
-                    "bg-accent-primary text-accent-primary-contrast": intent === "primary" && !minimal,
+                    "bg-accent text-accent-contrast": intent === "primary" && !minimal,
                     "bg-intent-success": intent === "success" && !minimal,
                     "bg-intent-warning": intent === "warning" && !minimal,
                     "bg-intent-danger": intent === "danger" && !minimal,

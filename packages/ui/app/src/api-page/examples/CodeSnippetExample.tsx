@@ -78,7 +78,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
             copyToClipboardText={useCallback(() => code, [code])}
             {...props}
             className={clsx(className, {
-                "dark bg-card": isDarkCodeEnabled,
+                "dark bg-card-solid": isDarkCodeEnabled,
             })}
         >
             <FernSyntaxHighlighter

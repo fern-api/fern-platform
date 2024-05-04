@@ -111,7 +111,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
             data-route={anchorRoute.toLowerCase()}
             className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
-                "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
+                "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
             <div className="flex items-baseline gap-2">

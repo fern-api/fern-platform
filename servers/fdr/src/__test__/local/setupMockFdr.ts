@@ -38,7 +38,7 @@ export async function setup({ provide }: { provide: (key: string, value: any) =>
             throw new Error("teardown called twice");
         }
         teardown = true;
-        //await execa("docker-compose", ["-f", "docker-compose.test.yml", "down"], { stdio: "inherit" });
+        await execa("docker-compose", ["-f", "docker-compose.test.yml", "down"], { stdio: "inherit" });
         return new Promise<void>((resolve) => {
             instance.server?.close(() => resolve());
         });

@@ -18,7 +18,8 @@ services:
       SLACK_TOKEN: dummy
       DOCS_CACHE_ENDPOINT: dummy
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
-      DEVELOPMENT_ENVIRONMENT: ""
+      REDIS_ENABLED: "false"
+      APPLICATION_ENVIRONMENT: ete
   postgres:
     image: postgres:10.3
     restart: always

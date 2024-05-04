@@ -1,7 +1,12 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
-import { gray, mauve, olive, sage, sand, slate } from "@radix-ui/colors";
 import tinycolor from "tinycolor2";
+import {
+    darkGrayColors,
+    generateRadixColors,
+    getClosestGrayScale,
+    lightGrayColors,
+} from "../../util/generateRadixColors";
 
 interface ColorConfig {
     dark: DocsV1Read.RgbaColor;
@@ -39,14 +44,15 @@ const DEFAULT_COLORS: {
 };
 
 export const CSS_VARIABLES = {
-    ACCENT_PRIMARY: "--accent-primary",
-    ACCENT_PRIMARY_AA: "--accent-primary-aa",
-    ACCENT_PRIMARY_AAA: "--accent-primary-aaa",
-    ACCENT_PRIMARY_TINTED: "--accent-primary-tinted", // for hover state
+    ACCENT_PRIMARY: "--accent",
+    ACCENT_PRIMARY_AA: "--accent-aa",
+    ACCENT_PRIMARY_AAA: "--accent-aaa",
+    ACCENT_PRIMARY_TINTED: "--accent-tinted", // for hover state
     BACKGROUND: "--background",
     // contrast colors are useful for rendering text on top of where accent is the background color
-    ACCENT_PRIMARY_CONTRAST: "--accent-primary-contrast",
+    ACCENT_PRIMARY_CONTRAST: "--accent-contrast",
     CARD_BACKGROUND: "--card-background",
+    CARD_BACKGROUND_SOLID: "--card-background-solid",
     SIDEBAR_BACKGROUND: "--sidebar-background",
     HEADER_BACKGROUND: "--header-background",
     BORDER: "--border",
@@ -63,30 +69,20 @@ export const CSS_VARIABLES = {
     GRAYSCALE_10: "--grayscale-a10",
     GRAYSCALE_11: "--grayscale-a11",
     GRAYSCALE_12: "--grayscale-a12",
-    GRAYSCALE_1_LIGHT: "--grayscale-light-1",
-    GRAYSCALE_2_LIGHT: "--grayscale-light-2",
-    GRAYSCALE_3_LIGHT: "--grayscale-light-3",
-    GRAYSCALE_4_LIGHT: "--grayscale-light-4",
-    GRAYSCALE_5_LIGHT: "--grayscale-light-5",
-    GRAYSCALE_6_LIGHT: "--grayscale-light-6",
-    GRAYSCALE_7_LIGHT: "--grayscale-light-7",
-    GRAYSCALE_8_LIGHT: "--grayscale-light-8",
-    GRAYSCALE_9_LIGHT: "--grayscale-light-9",
-    GRAYSCALE_10_LIGHT: "--grayscale-light-10",
-    GRAYSCALE_11_LIGHT: "--grayscale-light-11",
-    GRAYSCALE_12_LIGHT: "--grayscale-light-12",
-    GRAYSCALE_1_DARK: "--grayscale-dark-1",
-    GRAYSCALE_2_DARK: "--grayscale-dark-2",
-    GRAYSCALE_3_DARK: "--grayscale-dark-3",
-    GRAYSCALE_4_DARK: "--grayscale-dark-4",
-    GRAYSCALE_5_DARK: "--grayscale-dark-5",
-    GRAYSCALE_6_DARK: "--grayscale-dark-6",
-    GRAYSCALE_7_DARK: "--grayscale-dark-7",
-    GRAYSCALE_8_DARK: "--grayscale-dark-8",
-    GRAYSCALE_9_DARK: "--grayscale-dark-9",
-    GRAYSCALE_10_DARK: "--grayscale-dark-10",
-    GRAYSCALE_11_DARK: "--grayscale-dark-11",
-    GRAYSCALE_12_DARK: "--grayscale-dark-12",
+    ACCENT_1: "--accent-1",
+    ACCENT_2: "--accent-2",
+    ACCENT_3: "--accent-3",
+    ACCENT_4: "--accent-4",
+    ACCENT_5: "--accent-5",
+    ACCENT_6: "--accent-6",
+    ACCENT_7: "--accent-7",
+    ACCENT_8: "--accent-8",
+    ACCENT_9: "--accent-9",
+    ACCENT_10: "--accent-10",
+    ACCENT_11: "--accent-11",
+    ACCENT_12: "--accent-12",
+    ACCENT_SURFACE: "--accent-surface",
+    GRAY_SURFACE: "--gray-surface",
     BODY_TEXT: "--body-text",
     BODY_TEXT_INVERTED: "--body-text-inverted",
     BACKGROUND_IMAGE: "--docs-background-image",
@@ -133,6 +129,10 @@ export function getColorVariables(
 } {
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
+    const shouldUseAccentColorLight =
+        colorsV3.light?.background.type === "gradient" || tinycolor(backgroundColorLight).toHexString() === "#ffffff";
+    const shouldUseAccentColorDark =
+        colorsV3.dark?.background.type === "gradient" || tinycolor(backgroundColorDark).toHexString() === "#000000";
 
     const accentPrimaryLightUi = increaseForegroundContrast(
         getColor(colorsV3, "accentPrimary", "light"),
@@ -145,15 +145,29 @@ export function getColorVariables(
         "ui",
     ).toRgb();
 
-    const radixGrayscaleLight = getBestColorScale(tinycolor(accentPrimaryLightUi));
-    const radixGrayscaleDark = getBestColorScale(tinycolor(accentPrimaryDarkUi));
+    const radixGrayscaleLight = getClosestGrayScale(
+        tinycolor(shouldUseAccentColorLight ? accentPrimaryLightUi : backgroundColorLight).toHexString(),
+    );
+    const radixGrayscaleDark = getClosestGrayScale(
+        tinycolor(shouldUseAccentColorDark ? accentPrimaryDarkUi : backgroundColorDark).toHexString(),
+    );
 
-    const accentPrimaryLightContrast = tinycolor(accentPrimaryLightUi).isLight()
-        ? { r: 0, g: 0, b: 0 }
-        : { r: 255, g: 255, b: 255 };
-    const accentPrimaryDarkContrast = tinycolor(accentPrimaryDarkUi).isLight()
-        ? { r: 0, g: 0, b: 0 }
-        : { r: 255, g: 255, b: 255 };
+    const radixColorsLight = generateRadixColors({
+        appearance: "light",
+        accent: tinycolor(accentPrimaryLightUi).toHexString(),
+        gray: lightGrayColors[radixGrayscaleLight][6].toString(),
+        background: tinycolor(backgroundColorLight).toHexString(),
+    });
+
+    const radixColorsDark = generateRadixColors({
+        appearance: "dark",
+        accent: tinycolor(accentPrimaryDarkUi).toHexString(),
+        gray: darkGrayColors[radixGrayscaleDark][6].toString(),
+        background: tinycolor(backgroundColorDark).toHexString(),
+    });
+
+    const accentPrimaryLightContrast = tinycolor(radixColorsLight.accentContrast).toRgb();
+    const accentPrimaryDarkContrast = tinycolor(radixColorsDark.accentContrast).toRgb();
 
     const accentPrimaryLightTinted = (
         tinycolor(accentPrimaryLightUi).isLight()
@@ -211,6 +225,20 @@ export function getColorVariables(
             [CSS_VARIABLES.GRAYSCALE_10]: getRadixGrayVar(radixGrayscaleLight, 10),
             [CSS_VARIABLES.GRAYSCALE_11]: getRadixGrayVar(radixGrayscaleLight, 11),
             [CSS_VARIABLES.GRAYSCALE_12]: getRadixGrayVar(radixGrayscaleLight, 12),
+            [CSS_VARIABLES.ACCENT_1]: radixColorsLight.accentScale[0],
+            [CSS_VARIABLES.ACCENT_2]: radixColorsLight.accentScale[1],
+            [CSS_VARIABLES.ACCENT_3]: radixColorsLight.accentScale[2],
+            [CSS_VARIABLES.ACCENT_4]: radixColorsLight.accentScale[3],
+            [CSS_VARIABLES.ACCENT_5]: radixColorsLight.accentScale[4],
+            [CSS_VARIABLES.ACCENT_6]: radixColorsLight.accentScale[5],
+            [CSS_VARIABLES.ACCENT_7]: radixColorsLight.accentScale[6],
+            [CSS_VARIABLES.ACCENT_8]: radixColorsLight.accentScale[7],
+            [CSS_VARIABLES.ACCENT_9]: radixColorsLight.accentScale[8],
+            [CSS_VARIABLES.ACCENT_10]: radixColorsLight.accentScale[9],
+            [CSS_VARIABLES.ACCENT_11]: radixColorsLight.accentScale[10],
+            [CSS_VARIABLES.ACCENT_12]: radixColorsLight.accentScale[11],
+            [CSS_VARIABLES.ACCENT_SURFACE]: radixColorsLight.accentSurfaceWideGamut,
+            [CSS_VARIABLES.GRAY_SURFACE]: radixColorsLight.graySurfaceWideGamut,
 
             [CSS_VARIABLES.ACCENT_PRIMARY]: `${accentPrimaryLightUi.r}, ${accentPrimaryLightUi.g}, ${accentPrimaryLightUi.b}`,
             [CSS_VARIABLES.ACCENT_PRIMARY_AA]: `${accentPrimaryLightAA.r}, ${accentPrimaryLightAA.g}, ${accentPrimaryLightAA.b}`,
@@ -241,6 +269,20 @@ export function getColorVariables(
             [CSS_VARIABLES.GRAYSCALE_10]: getRadixGrayVar(radixGrayscaleDark, 10),
             [CSS_VARIABLES.GRAYSCALE_11]: getRadixGrayVar(radixGrayscaleDark, 11),
             [CSS_VARIABLES.GRAYSCALE_12]: getRadixGrayVar(radixGrayscaleDark, 12),
+            [CSS_VARIABLES.ACCENT_1]: radixColorsDark.accentScale[0],
+            [CSS_VARIABLES.ACCENT_2]: radixColorsDark.accentScale[1],
+            [CSS_VARIABLES.ACCENT_3]: radixColorsDark.accentScale[2],
+            [CSS_VARIABLES.ACCENT_4]: radixColorsDark.accentScale[3],
+            [CSS_VARIABLES.ACCENT_5]: radixColorsDark.accentScale[4],
+            [CSS_VARIABLES.ACCENT_6]: radixColorsDark.accentScale[5],
+            [CSS_VARIABLES.ACCENT_7]: radixColorsDark.accentScale[6],
+            [CSS_VARIABLES.ACCENT_8]: radixColorsDark.accentScale[7],
+            [CSS_VARIABLES.ACCENT_9]: radixColorsDark.accentScale[8],
+            [CSS_VARIABLES.ACCENT_10]: radixColorsDark.accentScale[9],
+            [CSS_VARIABLES.ACCENT_11]: radixColorsDark.accentScale[10],
+            [CSS_VARIABLES.ACCENT_12]: radixColorsDark.accentScale[11],
+            [CSS_VARIABLES.ACCENT_SURFACE]: radixColorsDark.accentSurfaceWideGamut,
+            [CSS_VARIABLES.GRAY_SURFACE]: radixColorsDark.graySurfaceWideGamut,
 
             [CSS_VARIABLES.ACCENT_PRIMARY]: `${accentPrimaryDarkUi.r}, ${accentPrimaryDarkUi.g}, ${accentPrimaryDarkUi.b}`,
             [CSS_VARIABLES.ACCENT_PRIMARY_AA]: `${accentPrimaryDarkAA.r}, ${accentPrimaryDarkAA.g}, ${accentPrimaryDarkAA.b}`,
@@ -249,11 +291,14 @@ export function getColorVariables(
             [CSS_VARIABLES.BACKGROUND]: `${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b}`,
             [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b}`,
             [CSS_VARIABLES.CARD_BACKGROUND]:
-                cardBackgroundDark?.toRgbString() ?? tinycolor(backgroundColorDark).darken(2).toRgbString(),
+                cardBackgroundDark?.toRgbString() ??
+                tinycolor(backgroundColorDark).darken(2).setAlpha(0.5).toRgbString(),
+            [CSS_VARIABLES.CARD_BACKGROUND_SOLID]:
+                cardBackgroundDark?.toRgbString() ?? tinycolor(backgroundColorDark).darken(1).toRgbString(),
             [CSS_VARIABLES.SIDEBAR_BACKGROUND]: sidebarBackgroundDark?.toRgbString() ?? "transparent",
             [CSS_VARIABLES.HEADER_BACKGROUND]: headerBackgroundDark?.toRgbString() ?? "transparent",
-            [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a5)",
-            [CSS_VARIABLES.BORDER_CONCEALED]: borderDark?.toRgbString() ?? "var(--grayscale-a3)",
+            [CSS_VARIABLES.BORDER]: borderDark?.toRgbString() ?? "var(--grayscale-a4)",
+            [CSS_VARIABLES.BORDER_CONCEALED]: borderDark?.toRgbString() ?? "var(--grayscale-a2)",
             [CSS_VARIABLES.BODY_TEXT]: "255, 255, 255",
             [CSS_VARIABLES.BODY_TEXT_INVERTED]: "0, 0, 0",
             [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(colorsV3.dark?.backgroundImage, files),
@@ -316,138 +361,10 @@ function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor
     return tinycolor({ h, s, v: 1 - v });
 }
 
-function getColorDistance(color1: tinycolor.Instance, color2: tinycolor.Instance): number {
-    const { r: r1, g: g1, b: b1 } = color1.toRgb();
-    const { r: r2, g: g2, b: b2 } = color2.toRgb();
-    return Math.sqrt((r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2);
-}
-
 type RadixGray = "gray" | "mauve" | "slate" | "sage" | "olive" | "sand";
 
 function getRadixGrayVar(gray: RadixGray, scale: number): string {
     return `var(--${gray}-a${scale})`;
-}
-
-const GRAY_COLORS = {
-    gray: {
-        1: tinycolor(gray.gray1),
-        2: tinycolor(gray.gray2),
-        3: tinycolor(gray.gray3),
-        4: tinycolor(gray.gray4),
-        5: tinycolor(gray.gray5),
-        6: tinycolor(gray.gray6),
-        7: tinycolor(gray.gray7),
-        8: tinycolor(gray.gray8),
-        9: tinycolor(gray.gray9),
-        10: tinycolor(gray.gray10),
-        11: tinycolor(gray.gray11),
-        12: tinycolor(gray.gray12),
-    },
-    mauve: {
-        1: tinycolor(mauve.mauve1),
-        2: tinycolor(mauve.mauve2),
-        3: tinycolor(mauve.mauve3),
-        4: tinycolor(mauve.mauve4),
-        5: tinycolor(mauve.mauve5),
-        6: tinycolor(mauve.mauve6),
-        7: tinycolor(mauve.mauve7),
-        8: tinycolor(mauve.mauve8),
-        9: tinycolor(mauve.mauve9),
-        10: tinycolor(mauve.mauve10),
-        11: tinycolor(mauve.mauve11),
-        12: tinycolor(mauve.mauve12),
-    },
-    slate: {
-        1: tinycolor(slate.slate1),
-        2: tinycolor(slate.slate2),
-        3: tinycolor(slate.slate3),
-        4: tinycolor(slate.slate4),
-        5: tinycolor(slate.slate5),
-        6: tinycolor(slate.slate6),
-        7: tinycolor(slate.slate7),
-        8: tinycolor(slate.slate8),
-        9: tinycolor(slate.slate9),
-        10: tinycolor(slate.slate10),
-        11: tinycolor(slate.slate11),
-        12: tinycolor(slate.slate12),
-    },
-    sage: {
-        1: tinycolor(sage.sage1),
-        2: tinycolor(sage.sage2),
-        3: tinycolor(sage.sage3),
-        4: tinycolor(sage.sage4),
-        5: tinycolor(sage.sage5),
-        6: tinycolor(sage.sage6),
-        7: tinycolor(sage.sage7),
-        8: tinycolor(sage.sage8),
-        9: tinycolor(sage.sage9),
-        10: tinycolor(sage.sage10),
-        11: tinycolor(sage.sage11),
-        12: tinycolor(sage.sage12),
-    },
-    olive: {
-        1: tinycolor(olive.olive1),
-        2: tinycolor(olive.olive2),
-        3: tinycolor(olive.olive3),
-        4: tinycolor(olive.olive4),
-        5: tinycolor(olive.olive5),
-        6: tinycolor(olive.olive6),
-        7: tinycolor(olive.olive7),
-        8: tinycolor(olive.olive8),
-        9: tinycolor(olive.olive9),
-        10: tinycolor(olive.olive10),
-        11: tinycolor(olive.olive11),
-        12: tinycolor(olive.olive12),
-    },
-    sand: {
-        1: tinycolor(sand.sand1),
-        2: tinycolor(sand.sand2),
-        3: tinycolor(sand.sand3),
-        4: tinycolor(sand.sand4),
-        5: tinycolor(sand.sand5),
-        6: tinycolor(sand.sand6),
-        7: tinycolor(sand.sand7),
-        8: tinycolor(sand.sand8),
-        9: tinycolor(sand.sand9),
-        10: tinycolor(sand.sand10),
-        11: tinycolor(sand.sand11),
-        12: tinycolor(sand.sand12),
-    },
-} as const;
-
-// function getClosestGrayColor(color: tinycolor.Instance): RadixGray {
-//     let closestColor: RadixGray = "gray";
-//     let closestDistance = Infinity;
-//     for (const [gray, sampleColorGroup] of Object.entries(GRAY_COLORS)) {
-//         for (const [, sampleColor] of Object.entries(sampleColorGroup)) {
-//             const distance = getColorDistance(color, sampleColor);
-//             if (distance < closestDistance) {
-//                 closestColor = gray as RadixGray;
-//                 closestDistance = distance;
-//             }
-//         }
-//     }
-//     return closestColor;
-// }
-
-function getBestColorScale(accentColor: tinycolor.Instance): RadixGray {
-    let minDistance = Infinity;
-    let bestColorScale: RadixGray = "gray";
-
-    for (const [key, scale] of Object.entries(GRAY_COLORS)) {
-        const scaleColors = Object.values(scale);
-        const totalDistance = scaleColors.reduce((sum, color) => {
-            const distance = getColorDistance(accentColor, color);
-            return sum + distance;
-        }, 0);
-
-        if (totalDistance < minDistance) {
-            minDistance = totalDistance;
-            bestColorScale = key as RadixGray;
-        }
-    }
-
-    return bestColorScale;
 }
 
 export function getThemeColor(config: DocsV1Read.ThemeConfig): string {
