@@ -82,9 +82,6 @@ export class FdrApplication {
         const redisDatastore = config.redisEnabled
             ? new RedisDocsDefinitionStore(`redis://${this.config.docsCacheEndpoint}`)
             : undefined;
-        if (redisDatastore) {
-            redisDatastore.initializeCache();
-        }
 
         this.docsDefinitionCache = new DocsDefinitionCacheImpl(
             this,
@@ -105,5 +102,9 @@ export class FdrApplication {
                     })),
                 });
         }
+    }
+
+    public async initialize(): Promise<void> {
+        await this.docsDefinitionCache.initialize();
     }
 }

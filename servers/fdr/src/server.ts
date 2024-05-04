@@ -50,52 +50,65 @@ expressApp.use(Sentry.Handlers.tracingHandler());
 
 expressApp.use(cors());
 expressApp.use(compression());
-expressApp.get("/health", (_req, res) => {
-    res.sendStatus(200);
-});
+
 const app = new FdrApplication(config);
 
-try {
-    expressApp.use(express.json({ limit: "50mb" }));
-    register(expressApp, {
-        docs: {
-            v1: {
-                read: {
-                    _root: getDocsReadService(app),
+expressApp.get("/health", (_req, res) => {
+    const cacheInitialized = app.docsDefinitionCache.isInitialized();
+    if (!cacheInitialized) {
+        app.logger.error("The docs definition cache is not initilialized. Erroring the health check.");
+        res.sendStatus(500);
+    } else {
+        res.sendStatus(200);
+    }
+});
+
+void startServer();
+
+async function startServer(): Promise<void> {
+    try {
+        await app.initialize();
+        expressApp.use(express.json({ limit: "50mb" }));
+        register(expressApp, {
+            docs: {
+                v1: {
+                    read: {
+                        _root: getDocsReadService(app),
+                    },
+                    write: {
+                        _root: getDocsWriteService(app),
+                    },
                 },
-                write: {
-                    _root: getDocsWriteService(app),
+                v2: {
+                    read: {
+                        _root: getDocsReadV2Service(app),
+                    },
+                    write: {
+                        _root: getDocsWriteV2Service(app),
+                    },
                 },
             },
-            v2: {
-                read: {
-                    _root: getDocsReadV2Service(app),
-                },
-                write: {
-                    _root: getDocsWriteV2Service(app),
-                },
-            },
-        },
-        api: {
-            v1: {
-                read: {
-                    _root: getReadApiService(app),
-                },
-                register: {
-                    _root: getRegisterApiService(app),
+            api: {
+                v1: {
+                    read: {
+                        _root: getReadApiService(app),
+                    },
+                    register: {
+                        _root: getRegisterApiService(app),
+                    },
                 },
             },
-        },
-        snippets: getSnippetsService(app),
-        snippetsFactory: getSnippetsFactoryService(app),
-        templates: getTemplatesService(app),
-        diff: getApiDiffService(app),
-    });
-    registerBackgroundTasks(app);
-    app.logger.info(`Listening for requests on port ${PORT}`);
-    // The error handler must be registered before any other error middleware and after all controllers
-    expressApp.use(Sentry.Handlers.errorHandler());
-    expressApp.listen(PORT);
-} catch (err) {
-    app.logger.error("Failed to start express server", err);
+            snippets: getSnippetsService(app),
+            snippetsFactory: getSnippetsFactoryService(app),
+            templates: getTemplatesService(app),
+            diff: getApiDiffService(app),
+        });
+        registerBackgroundTasks(app);
+        app.logger.info(`Listening for requests on port ${PORT}`);
+        // The error handler must be registered before any other error middleware and after all controllers
+        expressApp.use(Sentry.Handlers.errorHandler());
+        expressApp.listen(PORT);
+    } catch (err) {
+        app.logger.error("Failed to start express server", err);
+    }
 }

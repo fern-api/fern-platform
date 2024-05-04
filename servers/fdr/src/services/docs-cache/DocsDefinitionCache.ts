@@ -25,9 +25,19 @@ export interface DocsDefinitionCache {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<void>;
+
+    initialize(): Promise<void>;
+
+    isInitialized(): boolean;
 }
 
+/**
+ * All modifications to this type must be forward compatible.
+ * In other words, only add optional properties.
+ */
 export interface CachedDocsResponse {
+    /** Adding a version to the cached response to allow for breaks in the future. */
+    version: "v1";
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
@@ -38,6 +48,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     private localDocsCache: LocalDocsDefinitionStore;
     private redisDocsCache: RedisDocsDefinitionStore | undefined;
     private DOCS_WRITE_MONITOR: Record<string, Semaphore> = {};
+    private initialized: boolean = false;
 
     constructor(
         private readonly app: FdrApplication,
@@ -47,6 +58,17 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     ) {
         this.localDocsCache = localDocsCache;
         this.redisDocsCache = redisDocsCache;
+    }
+
+    public isInitialized(): boolean {
+        return this.initialized;
+    }
+
+    public async initialize(): Promise<void> {
+        if (this.redisDocsCache) {
+            await this.redisDocsCache.initializeCache();
+        }
+        this.initialized = true;
     }
 
     // allows us to block reads from writing to the cache while we are updating it
@@ -176,6 +198,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 docsV2: dbDocs,
             });
             return {
+                version: "v1",
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
@@ -197,6 +220,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
+                version: "v1",
                 updatedTime: new Date(),
                 dbFiles: v1Docs.dbFiles ?? {},
                 response: {

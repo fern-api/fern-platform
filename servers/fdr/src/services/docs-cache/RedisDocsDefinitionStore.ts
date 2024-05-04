@@ -1,4 +1,5 @@
 import { createClient, RedisClientType } from "redis";
+import { LOGGER } from "../../app/FdrApplication";
 import { CachedDocsResponse } from "./DocsDefinitionCache";
 
 export default class RedisDocsDefinitionStore {
@@ -8,11 +9,15 @@ export default class RedisDocsDefinitionStore {
         this.client = createClient({ url: cacheEndpointUrl, pingInterval: 10000 });
     }
 
-    public initializeCache() {
+    public async initializeCache(): Promise<void> {
         this.client.on("error", (err) => {
-            console.info(`Supressed Redis client error: ${err}`);
+            LOGGER.error(`Supressed Redis client error: ${err}`);
         });
-        this.client.connect().catch(console.error);
+        try {
+            await this.client.connect();
+        } catch (err) {
+            LOGGER.error(`Supressed Redis client error: ${err}`);
+        }
     }
 
     public async get({ url }: { url: URL }): Promise<CachedDocsResponse | null> {
