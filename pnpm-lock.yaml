@@ -1471,6 +1471,9 @@ importers:
       path-resolver:
         specifier: '*'
         version: 0.0.2
+      redis:
+        specifier: ^4.6.13
+        version: 4.6.13
       uuid:
         specifier: ^9.0.0
         version: 9.0.1
