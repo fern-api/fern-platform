@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import * as redis from "redis";
 import winston from "winston";
 import { FdrDao } from "../db";
 import { AlgoliaServiceImpl, type AlgoliaService } from "../services/algolia";
@@ -14,6 +13,8 @@ import {
 import { AuthServiceImpl, type AuthService } from "../services/auth";
 import { DatabaseServiceImpl, type DatabaseService } from "../services/db";
 import { DocsDefinitionCache, DocsDefinitionCacheImpl } from "../services/docs-cache/DocsDefinitionCache";
+import LocalDocsDefinitionStore from "../services/docs-cache/LocalDocsDefinitionStore";
+import RedisDocsDefinitionStore from "../services/docs-cache/RedisDocsDefinitionStore";
 import { RevalidatorService, RevalidatorServiceImpl } from "../services/revalidator/RevalidatorService";
 import { S3ServiceImpl, type S3Service } from "../services/s3";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
@@ -44,7 +45,6 @@ export class FdrApplication {
     public readonly services: FdrServices;
     public readonly dao: FdrDao;
     public readonly docsDefinitionCache: DocsDefinitionCache;
-    public readonly docsCacheClient?: redis.RedisClientType;
     public readonly logger = LOGGER;
 
     public constructor(
@@ -64,14 +64,6 @@ export class FdrApplication {
             log: ["info", "warn", "error"],
         });
 
-        if (config.docsCacheEndpoint) {
-            this.docsCacheClient = redis.createClient({
-                url: `redis://${config.docsCacheEndpoint}`,
-                pingInterval: 10000,
-            });
-            this.docsCacheClient.connect().catch(console.error);
-        }
-
         this.services = {
             auth: services?.auth ?? new AuthServiceImpl(this),
             db: services?.db ?? new DatabaseServiceImpl(prisma),
@@ -86,7 +78,20 @@ export class FdrApplication {
         };
 
         this.dao = new FdrDao(prisma);
-        this.docsDefinitionCache = new DocsDefinitionCacheImpl(this, this.dao, this.docsCacheClient);
+
+        const redisDatastore = config.redisEnabled
+            ? new RedisDocsDefinitionStore(`redis://${this.config.docsCacheEndpoint}`)
+            : undefined;
+        if (redisDatastore) {
+            redisDatastore.initializeCache();
+        }
+
+        this.docsDefinitionCache = new DocsDefinitionCacheImpl(
+            this,
+            this.dao,
+            new LocalDocsDefinitionStore(),
+            redisDatastore,
+        );
 
         if ("prepareStackTrace" in Error) {
             Error.prepareStackTrace = (err, stack) =>

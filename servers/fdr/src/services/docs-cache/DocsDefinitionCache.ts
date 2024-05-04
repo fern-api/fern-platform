@@ -1,5 +1,4 @@
 import { AuthType } from "@prisma/client";
-import { RedisClientType } from "redis";
 import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
@@ -7,6 +6,8 @@ import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Se
 import { FdrDao } from "../../db";
 import type { IndexSegment } from "../algolia";
 import { Semaphore } from "../revalidator/Semaphore";
+import LocalDocsDefinitionStore from "./LocalDocsDefinitionStore";
+import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
@@ -34,14 +35,19 @@ interface CachedDocsResponse {
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
-    private DOCS_CACHE: Record<string, CachedDocsResponse> = {};
+    private localDocsCache: LocalDocsDefinitionStore;
+    private redisDocsCache: RedisDocsDefinitionStore | undefined;
     private DOCS_WRITE_MONITOR: Record<string, Semaphore> = {};
 
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
-        private readonly redisClient?: RedisClientType,
-    ) {}
+        localDocsCache: LocalDocsDefinitionStore,
+        redisDocsCache: RedisDocsDefinitionStore | undefined,
+    ) {
+        this.localDocsCache = localDocsCache;
+        this.redisDocsCache = redisDocsCache;
+    }
 
     // allows us to block reads from writing to the cache while we are updating it
     private getDocsWriteMonitor(hostname: string): Semaphore {
@@ -87,7 +93,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
         // we don't want to cache from READ if we are currently updating the cache via WRITE
         if (!this.getDocsWriteMonitor(url.hostname).isLocked()) {
-            this.cacheResponse({ url, cachedResponse: dbResponse });
+            this.cacheResponse({ url, value: dbResponse });
         }
 
         if (dbResponse.isPrivate) {
@@ -141,27 +147,24 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 return await this.getDocsWriteMonitor(docsUrl.hostname).use(async () => {
                     const url = docsUrl.toURL();
                     const dbResponse = await this.getDocsForUrlFromDatabase({ url });
-                    this.cacheResponse({ url, cachedResponse: dbResponse });
+                    this.cacheResponse({ url, value: dbResponse });
                 });
             }),
         );
     }
 
-    private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        if (this.app.config.redisEnabled) {
-            this.redisClient?.set(url.hostname, JSON.stringify(cachedResponse));
+    private cacheResponse({ url, value }: { url: URL; value: CachedDocsResponse }): void {
+        if (this.redisDocsCache) {
+            this.redisDocsCache.set({ url, value });
         }
-        this.DOCS_CACHE[url.hostname] = cachedResponse;
+        this.localDocsCache.set({ url, value });
     }
 
-    private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse> {
-        if (this.app.config.redisEnabled) {
-            const result = await this.redisClient?.get(url.hostname);
-            if (result) {
-                return JSON.parse(result);
-            }
+    private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | null> {
+        if (this.redisDocsCache) {
+            return await this.redisDocsCache.get({ url });
         }
-        return this.DOCS_CACHE[url.hostname];
+        return this.localDocsCache.get({ url });
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
