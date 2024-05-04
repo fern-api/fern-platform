@@ -111,7 +111,7 @@ export class FdrDeployStack extends Stack {
             hostedZoneId: environmentInfo.route53Info.hostedZoneId,
             zoneName: environmentInfo.route53Info.hostedZoneName,
         });
-        const redisEnabled = environmentType === "PROD";
+        const redisEnabled = environmentType !== "PROD";
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
