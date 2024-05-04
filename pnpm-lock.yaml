@@ -843,9 +843,15 @@ importers:
       algoliasearch:
         specifier: ^4.22.1
         version: 4.22.1
+      bezier-easing:
+        specifier: ^2.1.0
+        version: 2.1.0
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      colorjs.io:
+        specifier: ^0.5.0
+        version: 0.5.0
       estree-util-visit:
         specifier: ^2.0.0
         version: 2.0.0
@@ -11112,6 +11118,10 @@ packages:
       open: 8.4.2
     dev: true
 
+  /bezier-easing@2.1.0:
+    resolution: {integrity: sha512-gbIqZ/eslnUFC1tjEvtz0sgx+xTK20wDnYMIA27VA04R7w6xxXQPZDbibjA9DTWZRA2CXtwHykkVzlCaAJAZig==}
+    dev: false
+
   /big-integer@1.6.52:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
     engines: {node: '>=0.6'}
@@ -11734,6 +11744,10 @@ packages:
   /colorette@2.0.19:
     resolution: {integrity: sha512-3tlv/dIP7FWvj3BsbHrGLJ6l/oKh1O3TcgBqMn+yyCagOxc23fyzDS6HypQbgxWbkpDnf52p1LuR4eWDQ/K9WQ==}
     dev: true
+
+  /colorjs.io@0.5.0:
+    resolution: {integrity: sha512-qekjTiBLM3F/sXKks/ih5aWaHIGu+Ftel0yKEvmpbKvmxpNOhojKgha5uiWEUOqEpRjC1Tq3nJRT7WgdBOxIGg==}
+    dev: false
 
   /colors@1.4.0:
     resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}

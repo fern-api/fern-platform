@@ -40,8 +40,8 @@ module.exports = {
                 "8xl": "88rem",
             },
             boxShadow: {
-                header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
-                "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+                header: "0px 4px 24px 0px rgba(var(--accent), 10%)",
+                "header-dark": "0px 4px 24px 0px rgba(var(--accent), 10%)",
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.2), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
@@ -52,13 +52,14 @@ module.exports = {
                 "fern-green": "#49932B",
                 "fern-green-dark": "#ADFF8C",
 
-                "accent-primary": withOpacity("--accent-primary"),
-                "accent-primary-aa": withOpacity("--accent-primary-aa"),
-                "accent-primary-aaa": withOpacity("--accent-primary-aaa"),
-                "accent-primary-tinted": withOpacity("--accent-primary-tinted"),
-                "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
-                "accent-highlight": "rgba(var(--accent-primary), 20%)",
-                "accent-highlight-faded": "rgba(var(--accent-primary), 10%)",
+                accent: withOpacity("--accent"),
+                "accent-aa": withOpacity("--accent-aa"),
+                "accent-aaa": withOpacity("--accent-aaa"),
+                "accent-tinted": "var(--accent-10)",
+                "accent-contrast": withOpacity("--accent-contrast"),
+                "accent-muted": `var(--accent-6)`,
+                "accent-highlight": "var(--accent-3)",
+                "accent-highlight-faded": "var(--accent-2)",
                 background: withOpacity("--background"),
 
                 "method-get": "var(--green-a10)",
@@ -107,20 +108,21 @@ module.exports = {
                 },
 
                 "card-background": "var(--card-background)",
+                "card-solid": "var(--card-background-solid)",
                 "sidebar-background": "var(--sidebar-background)",
                 "header-background": "var(--header-background)",
 
                 // "border-default": "var(--grayscale-a5)",
                 "border-default": "var(--border)",
                 "border-concealed": "var(--border-concealed)",
-                "border-accent-muted": "rgba(var(--accent-primary), 0.50)",
+                "border-accent-muted": "rgba(var(--accent), 0.50)",
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",
                 "border-danger": "var(--red-a8)",
                 "border-info": "var(--blue-a8)",
 
                 "border-default-soft": "var(--grayscale-a6)",
-                "border-primary-soft": "rgba(var(--accent-primary), 30%)",
+                "border-primary-soft": "rgba(var(--accent), 30%)",
                 "border-warning-soft": "var(--amber-a6)",
                 "border-success-soft": "var(--green-a6)",
                 "border-danger-soft": "var(--red-a6)",
@@ -133,7 +135,7 @@ module.exports = {
                 faded: "var(--grayscale-a9)",
 
                 "tag-default-soft": "var(--grayscale-a2)",
-                "tag-primary-soft": "rgba(var(--accent-primary), 10%)",
+                "tag-primary-soft": "rgba(var(--accent), 10%)",
                 "tag-warning-soft": "var(--amber-a2)",
                 "tag-success-soft": "var(--green-a2)",
                 "tag-danger-soft": "var(--red-a2)",
@@ -142,7 +144,7 @@ module.exports = {
                 "tag-default": "var(--grayscale-a3)",
                 "tag-default-solid": "var(--grayscale-3)",
                 "tag-default-hover": "var(--grayscale-a4)",
-                "tag-primary": "rgba(var(--accent-primary), 15%)",
+                "tag-primary": "rgba(var(--accent), 15%)",
                 "tag-warning": "var(--amber-a3)",
                 "tag-success": "var(--green-a3)",
                 "tag-danger": "var(--red-a3)",
@@ -288,13 +290,13 @@ module.exports = {
                     "@apply text-text-muted dark:text-text-muted dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]": {},
                 },
                 ".t-accent": {
-                    "@apply text-accent-primary-aa": {},
+                    "@apply text-accent-aa": {},
                 },
                 ".t-accent-aaa": {
-                    "@apply text-accent-primary-aaa": {},
+                    "@apply text-accent-aaa": {},
                 },
                 ".t-accent-contrast": {
-                    "@apply text-accent-primary-contrast": {},
+                    "@apply text-accent-contrast": {},
                 },
                 ".t-success": {
                     "@apply text-intent-success": {},
@@ -321,29 +323,8 @@ module.exports = {
                 ".bg-card": {
                     "@apply bg-card-background": {},
                 },
-                ".bg-accent": {
-                    "@apply bg-accent-primary": {},
-                },
-                ".bg-accent-muted": {
-                    "@apply bg-accent-primary/70": {},
-                },
-                ".bg-accent-aa": {
-                    "@apply bg-accent-primary-aa": {},
-                },
-                ".bg-accent-aaa": {
-                    "@apply bg-accent-primary-aaa": {},
-                },
-                ".bg-accent-contrast": {
-                    "@apply bg-accent-primary-contrast": {},
-                },
-                ".bg-accent-tinted": {
-                    "@apply bg-accent-primary-tinted": {},
-                },
-                ".bg-accent-highlight": {
-                    "@apply bg-accent-primary/20": {},
-                },
-                ".bg-accent-highlight-faded": {
-                    "@apply bg-accent-primary/10": {},
+                ".bg-card-surface": {
+                    "@apply bg-card dark:bg-white/5": {},
                 },
                 ".bg-border-primary": {
                     "@apply bg-border-accent-muted": {},
@@ -436,9 +417,6 @@ module.exports = {
                 // },
                 ".shadow-border-primary": {
                     "@apply shadow-border-accent-muted": {},
-                },
-                ".shadow-accent": {
-                    "@apply shadow-accent-primary": {},
                 },
                 ".shadow-card": {
                     "@apply shadow-card-light": {},
