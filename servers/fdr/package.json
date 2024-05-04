@@ -22,7 +22,7 @@
     "@sentry/profiling-node": "^7.112.2",
     "@slack/web-api": "^6.9.0",
     "@ungap/url-search-params": "0.2.2",
-    "algoliasearch": "^4.22.1",
+    "algoliasearch": "^4.23.3",
     "axios": "^1.6.5",
     "axios-logger": "^2.6.2",
     "compression": "^1.7.4",
