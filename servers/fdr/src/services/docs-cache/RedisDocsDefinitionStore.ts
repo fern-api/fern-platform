@@ -9,6 +9,9 @@ export default class RedisDocsDefinitionStore {
     }
 
     public initializeCache() {
+        this.client.on("error", (err) => {
+            console.info(`Supressed Redis client error: ${err}`);
+        });
         this.client.connect().catch(console.error);
     }
 
