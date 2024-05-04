@@ -111,12 +111,14 @@ export class FdrDeployStack extends Stack {
             hostedZoneId: environmentInfo.route53Info.hostedZoneId,
             zoneName: environmentInfo.route53Info.hostedZoneName,
         });
+        const redisEnabled = environmentType === "PROD";
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
             cpu: environmentType === "PROD" ? 4096 : 512,
             memoryLimitMiB: environmentType === "PROD" ? 8192 : 1024,
-            desiredCount: 1, // TODO: make this 2 in prod
+            // if redis is enabled, then increase count of services to 2
+            desiredCount: redisEnabled ? 2 : 1,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
@@ -135,7 +137,7 @@ export class FdrDeployStack extends Stack {
                     LOG_LEVEL: getLogLevel(environmentType),
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
-                    REDIS_ENABLED: (environmentType !== "PROD").toString(),
+                    REDIS_ENABLED: redisEnabled.toString(),
                     APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
                 },
                 containerName: CONTAINER_NAME,
