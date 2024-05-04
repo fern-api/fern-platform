@@ -31,7 +31,7 @@ export async function setup({ provide }: { provide: (key: string, value: any) =>
     await execa("pnpm", ["prisma", "migrate", "deploy"], {
         stdio: "inherit",
     });
-    const instance = runMockFdr(9999);
+    const instance = await runMockFdr(9999);
     provide("url", `http://localhost:${instance.port}/`);
     return async () => {
         if (teardown) {
@@ -64,7 +64,7 @@ declare namespace MockFdr {
     }
 }
 
-function runMockFdr(port: number): MockFdr.Instance {
+async function runMockFdr(port: number): Promise<MockFdr.Instance> {
     const unauthedClient = new FdrClient({
         environment: `http://localhost:${port}/`,
     });
@@ -78,6 +78,7 @@ function runMockFdr(port: number): MockFdr.Instance {
         configOverrides: overrides,
     });
     const app = express();
+    await fdrApplication.initialize();
     register(app, {
         docs: {
             v1: {
