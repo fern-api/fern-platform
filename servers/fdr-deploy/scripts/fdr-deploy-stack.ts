@@ -173,9 +173,11 @@ export class FdrDeployStack extends Stack {
         if (options.redis) {
             const scalableTaskCount = fargateService.service.autoScaleTaskCount({
                 maxCapacity: options.maxTaskCount,
+                minCapacity: options.desiredTaskCount,
             });
-            scalableTaskCount.scaleOnCpuUtilization("CpuUtilizationScaling", {
-                targetUtilizationPercent: 50,
+            scalableTaskCount.scaleOnRequestCount("RequestCountScaling", {
+                targetGroup: fargateService.targetGroup,
+                requestsPerTarget: 1000,
             });
         }
 
