@@ -36,6 +36,8 @@ interface FdrStackOptions {
     redis: boolean;
     maxTaskCount: number;
     desiredTaskCount: number;
+    cpu: number;
+    memory: number;
 }
 
 export class FdrDeployStack extends Stack {
@@ -118,12 +120,11 @@ export class FdrDeployStack extends Stack {
             hostedZoneId: environmentInfo.route53Info.hostedZoneId,
             zoneName: environmentInfo.route53Info.hostedZoneName,
         });
-        const redisEnabled = environmentType !== "PROD";
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
-            cpu: environmentType === "PROD" ? 4096 : 512,
-            memoryLimitMiB: environmentType === "PROD" ? 8192 : 1024,
+            cpu: options.cpu,
+            memoryLimitMiB: options.memory,
             desiredCount: options.desiredTaskCount,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
@@ -143,7 +144,7 @@ export class FdrDeployStack extends Stack {
                     LOG_LEVEL: getLogLevel(environmentType),
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
-                    REDIS_ENABLED: redisEnabled.toString(),
+                    REDIS_ENABLED: options.redis.toString(),
                     APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
                 },
                 containerName: CONTAINER_NAME,

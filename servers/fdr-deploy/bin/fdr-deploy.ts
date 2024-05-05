@@ -30,6 +30,8 @@ async function main() {
                         desiredTaskCount: 2,
                         maxTaskCount: 4,
                         redis: true,
+                        memory: 1024,
+                        cpu: 512,
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
@@ -47,6 +49,8 @@ async function main() {
                         desiredTaskCount: 1,
                         maxTaskCount: 1,
                         redis: false,
+                        memory: 8192,
+                        cpu: 4096,
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
