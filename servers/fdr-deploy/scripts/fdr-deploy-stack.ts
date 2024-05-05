@@ -32,6 +32,12 @@ interface ElastiCacheProps {
     readonly ingressSecurityGroup?: SecurityGroup;
 }
 
+interface FdrStackOptions {
+    redis: boolean;
+    maxTaskCount: number;
+    desiredTaskCount: number;
+}
+
 export class FdrDeployStack extends Stack {
     constructor(
         scope: Construct,
@@ -39,6 +45,7 @@ export class FdrDeployStack extends Stack {
         version: string,
         environmentType: EnvironmentType,
         environmentInfo: EnvironmentInfo,
+        options: FdrStackOptions,
         props?: StackProps,
     ) {
         super(scope, id, props);
@@ -117,8 +124,7 @@ export class FdrDeployStack extends Stack {
             cluster,
             cpu: environmentType === "PROD" ? 4096 : 512,
             memoryLimitMiB: environmentType === "PROD" ? 8192 : 1024,
-            // if redis is enabled, then increase count of services to 2
-            desiredCount: redisEnabled ? 2 : 1,
+            desiredCount: options.desiredTaskCount,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
@@ -163,6 +169,14 @@ export class FdrDeployStack extends Stack {
                       }
                     : undefined,
         });
+        if (options.redis) {
+            const scalableTaskCount = fargateService.service.autoScaleTaskCount({
+                maxCapacity: options.maxTaskCount,
+            });
+            scalableTaskCount.scaleOnCpuUtilization("CpuUtilizationScaling", {
+                targetUtilizationPercent: 50,
+            });
+        }
 
         new ARecord(this, "api-domain", {
             zone: hostedZone,
