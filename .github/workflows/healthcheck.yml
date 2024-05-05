@@ -1,0 +1,36 @@
+name: Docs Healthchecks
+
+on:
+  push:
+    branches:
+      - dsinghvi/incident-2024-05-05-404-checking
+  workflow_call:
+  workflow_dispatch:
+  schedule:
+    - cron: 1 */6 * * *
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: 🧪 Build Healthchecks CLI
+        run: |
+          pnpm --filter=@fern-api/healthchecks dist:cli
+
+      - name: Run Healthchecks
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        run: |
+          node packages/healthchecks/dist/cli.cjs run docs

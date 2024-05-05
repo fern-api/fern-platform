@@ -8,7 +8,7 @@ void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-healthchecks")
     .strict()
     .command(
-        "run",
+        "docs run",
         "Run healthchecks on a deployed docs website",
         (argv) =>
             argv
