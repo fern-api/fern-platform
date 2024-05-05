@@ -1,6 +1,5 @@
 const PORT = 8080;
 
-// eslint-disable-next-line vitest/expect-expect
 it("check health", async () => {
     // wait ten seconds
     await sleep(10000);
