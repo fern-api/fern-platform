@@ -34,6 +34,7 @@ interface ElastiCacheProps {
 
 interface FdrStackOptions {
     redis: boolean;
+    redisClusteringModeEnabled: boolean;
     maxTaskCount: number;
     desiredTaskCount: number;
     cpu: number;
@@ -145,6 +146,7 @@ export class FdrDeployStack extends Stack {
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
                     REDIS_ENABLED: options.redis.toString(),
+                    REDIS_CLUSTERING_MODE_ENABLED: options.redisClusteringModeEnabled.toString(),
                     APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
                 },
                 containerName: CONTAINER_NAME,
