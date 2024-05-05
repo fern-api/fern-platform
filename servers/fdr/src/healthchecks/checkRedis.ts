@@ -42,11 +42,11 @@ export async function checkRedis({ redis }: { redis: RedisDocsDefinitionStore })
         const healthcheckURL = new URL(HEALTHCHECK_KEY);
         await redis.set({ url: healthcheckURL, value: HEALTHCHECK_DOCS_RESPONSE });
         const record = await redis.get({ url: healthcheckURL });
-        
-        if (record?.response.baseUrl.domain !== HEALTHCHECK_KEY) {
+
+        if (record?.response.baseUrl.domain !== healthcheckURL.hostname) {
             return false;
         }
-        
+
         return true;
     } catch (err) {
         LOGGER.error("Encountered error while retrieving and storing redis entries", err);

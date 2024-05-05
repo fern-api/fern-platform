@@ -16,7 +16,7 @@ services:
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
-      DOCS_CACHE_ENDPOINT: localhost:6379
+      DOCS_CACHE_ENDPOINT: redis:6379
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
       REDIS_ENABLED: "true"
       APPLICATION_ENVIRONMENT: ete
