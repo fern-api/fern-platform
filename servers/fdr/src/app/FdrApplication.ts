@@ -81,7 +81,10 @@ export class FdrApplication {
         this.dao = new FdrDao(prisma);
 
         this.redisDatastore = config.redisEnabled
-            ? new RedisDocsDefinitionStore(`redis://${this.config.docsCacheEndpoint}`)
+            ? new RedisDocsDefinitionStore({
+                  cacheEndpointUrl: `redis://${this.config.docsCacheEndpoint}`,
+                  clusterModeEnabled: config.redisClusteringEnabled,
+              })
             : undefined;
 
         this.docsDefinitionCache = new DocsDefinitionCacheImpl(

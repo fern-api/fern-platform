@@ -1,33 +1,35 @@
-import { createCluster, RedisClientType, RedisClusterType } from "redis";
+import { RedisClientType, RedisClusterType, createClient, createCluster } from "redis";
 import { LOGGER } from "../../app/FdrApplication";
 import { CachedDocsResponse } from "./DocsDefinitionCache";
+
+export declare namespace RedisDocsDefinitionStore {
+    interface Args {
+        clusterModeEnabled: boolean;
+        cacheEndpointUrl: string;
+    }
+}
 
 export default class RedisDocsDefinitionStore {
     private client: RedisClusterType | RedisClientType;
 
-    public constructor(cacheEndpointUrl: string) {
-        this.client = createCluster({
-            rootNodes: [
-                {
-                    url: cacheEndpointUrl,
-                },
-            ],
-            defaults: {
-                pingInterval: 10000,
-            },
-        });
-        // this.client = createClient({ url: cacheEndpointUrl, pingInterval: 10000 });
+    public constructor({ cacheEndpointUrl, clusterModeEnabled }: RedisDocsDefinitionStore.Args) {
+        this.client = clusterModeEnabled
+            ? createCluster({
+                  rootNodes: [
+                      {
+                          url: cacheEndpointUrl,
+                      },
+                  ],
+                  defaults: {
+                      pingInterval: 10000,
+                  },
+              })
+            : createClient({ url: cacheEndpointUrl, pingInterval: 10000 });
+        this.client.on("error", (error) => LOGGER.error("Encountered error from redis", error));
     }
 
     public async initializeCache(): Promise<void> {
-        this.client.on("error", (err) => {
-            LOGGER.error(`Supressed Redis client error: ${err}`);
-        });
-        try {
-            await this.client.connect();
-        } catch (err) {
-            LOGGER.error(`Supressed Redis client error: ${err}`);
-        }
+        await this.client.connect();
     }
 
     public async get({ url }: { url: URL }): Promise<CachedDocsResponse | null> {

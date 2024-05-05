@@ -123,6 +123,7 @@ export const baseMockFdrConfig: FdrConfig = {
     enableCustomerNotifications: false,
     applicationEnvironment: "mock",
     redisEnabled: false,
+    redisClusteringEnabled: false,
 };
 
 export function getMockFdrConfig(overrides?: Partial<FdrConfig>): FdrConfig {
