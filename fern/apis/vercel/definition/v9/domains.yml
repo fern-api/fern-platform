@@ -1,0 +1,31 @@
+types: 
+  ListDomainsResponse: 
+    properties: 
+      domains: list<Domain>
+  
+  Domain: 
+    properties: 
+      name: string
+
+service:
+  base-path: /v9/projects/{projectId}/domains
+  path-parameters: 
+    projectId: string
+  auth: true
+  endpoints:
+    list:
+      docs: | 
+        See Vercel's docs over here: https://vercel.com/docs/rest-api/endpoints/domains#list-all-the-domains
+      method: GET
+      path: /diff
+      request:
+        name: ListDomainsRequest
+        query-parameters:
+          limit: 
+            type: string
+            docs: | 
+              The limit of domains to return. 
+          teamId: 
+            type: string
+            docs: The team id to filter by
+      response: ListDomainsResponse

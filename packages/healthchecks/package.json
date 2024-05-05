@@ -16,11 +16,12 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern-scripts": "./dist/bundle.cjs"
+    "fern-health": "./dist/cli.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "dist:cli": "tsup ./src/cli.ts --format cjs",
     "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -31,11 +32,10 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
-  "dependencies": {
-    "yargs": "^17.4.1",
-    "@fern-api/fdr-sdk": "workspace:*"
-  },
   "devDependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-fern/vercel": "0.0.1",
+    "@fern-ui/fdr-utils": "workspace:*",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
     "@types/yargs": "^17.0.32",
@@ -43,9 +43,11 @@
     "depcheck": "^1.4.3",
     "esbuild": "^0.15.7",
     "eslint": "^8.56.0",
-    "vitest": "^1.5.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
-    "typescript": "4.9.5"
+    "tsup": "^8.0.2",
+    "typescript": "4.9.5",
+    "vitest": "^1.5.0",
+    "yargs": "^17.4.1"
   }
 }
