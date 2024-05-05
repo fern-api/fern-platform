@@ -4,22 +4,19 @@
 import * as FernRegistry from "../../..";
 export declare type SdkRequest = FernRegistry.SdkRequest.Typescript | FernRegistry.SdkRequest.Python | FernRegistry.SdkRequest.Go | FernRegistry.SdkRequest.Ruby | FernRegistry.SdkRequest.Java;
 export declare namespace SdkRequest {
-    interface Typescript extends FernRegistry.TypeScriptSdkRequest, _Base {
+    interface Typescript extends FernRegistry.TypeScriptSdkRequest {
         type: "typescript";
     }
-    interface Python extends FernRegistry.PythonSdkRequest, _Base {
+    interface Python extends FernRegistry.PythonSdkRequest {
         type: "python";
     }
-    interface Go extends FernRegistry.GoSdkRequest, _Base {
+    interface Go extends FernRegistry.GoSdkRequest {
         type: "go";
     }
-    interface Ruby extends FernRegistry.RubySdkRequest, _Base {
+    interface Ruby extends FernRegistry.RubySdkRequest {
         type: "ruby";
     }
-    interface Java extends FernRegistry.JavaSdkRequest, _Base {
+    interface Java extends FernRegistry.JavaSdkRequest {
         type: "java";
-    }
-    interface _Base {
-        version?: string;
     }
 }

@@ -3,4 +3,5 @@
  */
 export interface GoSdkRequest {
     githubRepo: string;
+    version?: string;
 }
