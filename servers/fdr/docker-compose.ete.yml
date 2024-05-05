@@ -65,33 +65,33 @@ services:
     image: bitnami/redis-cluster:latest
     restart: unless-stopped
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
       REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
 
   redis_2:
     image: bitnami/redis-cluster:latest
     restart: unless-stopped
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
       REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
 
   redis_3:
     image: bitnami/redis-cluster:latest
     restart: unless-stopped
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
       REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
 
   redis_4:
     image: bitnami/redis-cluster:latest
     restart: unless-stopped
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
       REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
 
   redis_5:
     image: bitnami/redis-cluster:latest
     restart: unless-stopped
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
       REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
