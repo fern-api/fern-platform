@@ -16,7 +16,7 @@ services:
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
-      DOCS_CACHE_ENDPOINT: redis:6379
+      DOCS_CACHE_ENDPOINT: redis_1:6379
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
       REDIS_ENABLED: "true"
       APPLICATION_ENVIRONMENT: ete
@@ -35,8 +35,18 @@ services:
       - 9191:9191
     environment:
       initialBuckets: fdr
-  redis:
+  redis_1:
     image: redis
     ports:
       - 6379:6379
-    command: ["redis-server"]
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+  redis_2:
+    image: "redis:7-alpine"
+    container_name: redis_2
+    ports:
+      - "6362:6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]

@@ -1,12 +1,22 @@
-import { createClient, RedisClientType } from "redis";
+import { createCluster, RedisClientType, RedisClusterType } from "redis";
 import { LOGGER } from "../../app/FdrApplication";
 import { CachedDocsResponse } from "./DocsDefinitionCache";
 
 export default class RedisDocsDefinitionStore {
-    private client: RedisClientType;
+    private client: RedisClusterType | RedisClientType;
 
     public constructor(cacheEndpointUrl: string) {
-        this.client = createClient({ url: cacheEndpointUrl, pingInterval: 10000 });
+        this.client = createCluster({
+            rootNodes: [
+                {
+                    url: cacheEndpointUrl,
+                },
+            ],
+            defaults: {
+                pingInterval: 10000,
+            },
+        });
+        // this.client = createClient({ url: cacheEndpointUrl, pingInterval: 10000 });
     }
 
     public async initializeCache(): Promise<void> {

@@ -19,4 +19,6 @@ services:
     image: redis
     ports:
       - 6379:6379
-    command: ["redis-server"]
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
