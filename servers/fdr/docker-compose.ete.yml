@@ -51,7 +51,7 @@ services:
       - 6379:6379
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
-      REDIS_CLUSTER_CREATOR: yes
+      REDIS_CLUSTER_CREATOR: "yes"
       REDIS_CLUSTER_REPLICAS: 1
       REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
     depends_on:
