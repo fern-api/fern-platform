@@ -16,9 +16,9 @@ services:
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
-      DOCS_CACHE_ENDPOINT: dummy
+      DOCS_CACHE_ENDPOINT: localhost:6379
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
-      REDIS_ENABLED: "false"
+      REDIS_ENABLED: "true"
       APPLICATION_ENVIRONMENT: ete
   postgres:
     image: postgres:10.3
