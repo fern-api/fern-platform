@@ -115,7 +115,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
         // we don't want to cache from READ if we are currently updating the cache via WRITE
         if (!this.getDocsWriteMonitor(url.hostname).isLocked()) {
-            this.cacheResponse({ url, value: dbResponse });
+            await this.cacheResponse({ url, value: dbResponse });
         }
 
         if (dbResponse.isPrivate) {
@@ -169,15 +169,15 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 return await this.getDocsWriteMonitor(docsUrl.hostname).use(async () => {
                     const url = docsUrl.toURL();
                     const dbResponse = await this.getDocsForUrlFromDatabase({ url });
-                    this.cacheResponse({ url, value: dbResponse });
+                    await this.cacheResponse({ url, value: dbResponse });
                 });
             }),
         );
     }
 
-    private cacheResponse({ url, value }: { url: URL; value: CachedDocsResponse }): void {
+    private async cacheResponse({ url, value }: { url: URL; value: CachedDocsResponse }): Promise<void> {
         if (this.redisDocsCache) {
-            this.redisDocsCache.set({ url, value });
+            await this.redisDocsCache.set({ url, value });
         }
         this.localDocsCache.set({ url, value });
     }

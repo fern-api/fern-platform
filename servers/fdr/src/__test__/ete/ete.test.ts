@@ -1,10 +1,13 @@
-import axios from "axios";
-
 const PORT = 8080;
 
-// We don't spin up the server in this test.
 it("check health", async () => {
+    // wait ten seconds
+    await sleep(10000);
     // register empty definition
-    const healthResponse = await axios.get(`http://localhost:${PORT}/health`);
-    expect(healthResponse.status).toEqual(200);
-});
+    const response = await fetch(`http://localhost:${PORT}/health`);
+    expect(response.status).toEqual(200);
+}, 100_000);
+
+function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}

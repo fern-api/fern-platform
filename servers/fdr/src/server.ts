@@ -16,6 +16,7 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplatesService } from "./controllers/snippets/getTemplatesService";
+import { checkRedis } from "./healthchecks/checkRedis";
 
 const PORT = 8080;
 
@@ -53,14 +54,20 @@ expressApp.use(compression());
 
 const app = new FdrApplication(config);
 
-expressApp.get("/health", (_req, res) => {
+expressApp.get("/health", async (_req, res) => {
     const cacheInitialized = app.docsDefinitionCache.isInitialized();
     if (!cacheInitialized) {
         app.logger.error("The docs definition cache is not initilialized. Erroring the health check.");
         res.sendStatus(500);
-    } else {
-        res.sendStatus(200);
     }
+    if (app.redisDatastore != null) {
+        const redisHealthCheckSuccessful = await checkRedis({ redis: app.redisDatastore });
+        if (!redisHealthCheckSuccessful) {
+            app.logger.error("Records cannot be successfully written and read from redis");
+            res.sendStatus(500);
+        }
+    }
+    res.sendStatus(200);
 });
 
 void startServer();
