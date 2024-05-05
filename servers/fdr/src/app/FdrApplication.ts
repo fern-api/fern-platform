@@ -46,6 +46,7 @@ export class FdrApplication {
     public readonly dao: FdrDao;
     public readonly docsDefinitionCache: DocsDefinitionCache;
     public readonly logger = LOGGER;
+    public readonly redisDatastore;
 
     public constructor(
         public readonly config: FdrConfig,
@@ -79,7 +80,7 @@ export class FdrApplication {
 
         this.dao = new FdrDao(prisma);
 
-        const redisDatastore = config.redisEnabled
+        this.redisDatastore = config.redisEnabled
             ? new RedisDocsDefinitionStore(`redis://${this.config.docsCacheEndpoint}`)
             : undefined;
 
@@ -87,7 +88,7 @@ export class FdrApplication {
             this,
             this.dao,
             new LocalDocsDefinitionStore(),
-            redisDatastore,
+            this.redisDatastore,
         );
 
         if ("prepareStackTrace" in Error) {

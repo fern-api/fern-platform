@@ -28,7 +28,7 @@ export default class RedisDocsDefinitionStore {
         return null;
     }
 
-    public set({ url, value }: { url: URL; value: CachedDocsResponse }): void {
-        this.client.set(url.hostname, JSON.stringify(value));
+    public async set({ url, value }: { url: URL; value: CachedDocsResponse }): Promise<void> {
+        await this.client.set(url.hostname, JSON.stringify(value));
     }
 }
