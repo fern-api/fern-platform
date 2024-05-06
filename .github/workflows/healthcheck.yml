@@ -30,6 +30,6 @@ jobs:
           pnpm turbo compile
           pnpm --filter=@fern-api/healthchecks dist:cli
 
-      - name: Run Healthchecks
+      - name: Run HealthchecksY
         run: |
           node packages/healthchecks/dist/cli.cjs docs run

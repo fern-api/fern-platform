@@ -6,6 +6,7 @@ types:
   Domain: 
     properties: 
       name: string
+      verified: boolean
 
 service:
   base-path: /v9/projects/{projectId}/domains

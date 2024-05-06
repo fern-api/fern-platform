@@ -19,5 +19,8 @@ export async function getAllFernDocsWebsites(): Promise<string[]> {
         limit: "100",
         teamId: "team_6FKOM5nw037hv8g2mTk3gaH7",
     });
-    return [...CUSTOM_SUBPATHS, ...listDomainsResponse.domains.map((customDomain) => customDomain.name)];
+    const verifiedDomains = listDomainsResponse.domains
+        .filter((customDomain) => customDomain.verified)
+        .map((customDomain) => customDomain.name);
+    return [...CUSTOM_SUBPATHS, ...verifiedDomains];
 }
