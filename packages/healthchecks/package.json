@@ -19,8 +19,7 @@
     "fern-health": "./dist/cli.cjs"
   },
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "rm -rf ./dist && tsc --build --clean",
     "dist:cli": "tsup ./src/cli.ts --format cjs",
     "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
@@ -33,9 +32,10 @@
     "depcheck": "depcheck"
   },
   "devDependencies": {
+    "@fern-ui/core-utils": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-fern/vercel": "0.0.1",
     "@fern-ui/fdr-utils": "workspace:*",
+    "@fern-fern/vercel": "0.0.1",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
     "@types/yargs": "^17.0.32",
