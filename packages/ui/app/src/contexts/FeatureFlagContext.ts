@@ -8,6 +8,7 @@ export interface FeatureFlags {
     isTocDefaultEnabled: boolean;
     isSnippetTemplatesEnabled: boolean;
     isHttpSnippetsEnabled: boolean;
+    isInlineFeedbackEnabled: boolean;
     isDarkCodeEnabled: boolean;
 }
 
@@ -19,6 +20,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isTocDefaultEnabled: false,
     isSnippetTemplatesEnabled: false,
     isHttpSnippetsEnabled: false,
+    isInlineFeedbackEnabled: false,
     isDarkCodeEnabled: false,
 };
 

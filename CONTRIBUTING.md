@@ -35,7 +35,7 @@ code .
 **Step 3: Install dependencies**
 
 ```
-yarn
+pnpm install
 ```
 
 ### Compiling

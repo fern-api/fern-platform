@@ -3,7 +3,7 @@ import { AccordionGroup } from "./AccordionGroup";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof AccordionGroup> = {
-    title: "MDX/AccordionGroup",
+    title: "General/AccordionGroup",
     component: AccordionGroup,
     tags: ["autodocs"],
     args: {
