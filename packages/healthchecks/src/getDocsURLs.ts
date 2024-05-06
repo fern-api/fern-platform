@@ -11,7 +11,7 @@ const CUSTOM_SUBPATHS = [
     "https://buildwithfern.com/learn",
 ];
 
-const DOMAINS_TO_SKIP = ["app.buildwithfern.com", "api-docs.codecombat.com"];
+const DOMAINS_TO_SKIP = ["app.buildwithfern.com", "api-docs.codecombat.com", "app-staging.buildwithfern.com"];
 
 /**
  * Returns all the live fern docs urls
