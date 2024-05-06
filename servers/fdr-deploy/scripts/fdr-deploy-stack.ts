@@ -103,7 +103,8 @@ export class FdrDeployStack extends Stack {
             cacheName: "FernDocsCache",
             IVpc: vpc,
             numCacheShards: 1,
-            numCacheReplicasPerShard: environmentType === EnvironmentType.Prod ? 2 : undefined,
+            // TODO(dsinghvi): bump this to > 1
+            numCacheReplicasPerShard: undefined,
             clusterMode: "enabled",
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,

@@ -51,7 +51,7 @@ async function main() {
                         maxTaskCount: 10,
                         redis: true,
                         memory: 4096,
-                        redisClusteringModeEnabled: true,
+                        redisClusteringModeEnabled: false,
                         cpu: 2048,
                     },
                     {
