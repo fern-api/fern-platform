@@ -5,7 +5,8 @@ const VERCEL = new VercelClient({
 });
 
 const CUSTOM_SUBPATHS = [
-    "https://www.assemblyai.com/docs/api-reference/overview",
+    // Commented out because was giving errors
+    // "https://www.assemblyai.com/docs/api-reference/overview",
     "https://primer.io/docs/api",
     "https://docs.astronomer.io/api",
     "https://buildwithfern.com/learn",
