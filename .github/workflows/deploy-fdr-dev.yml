@@ -40,6 +40,7 @@ jobs:
       ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
       ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
       ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+      APPLICATION_ENVIRONMENT: dev
     steps:
       - uses: actions/checkout@v4
       - name: 📥 Install

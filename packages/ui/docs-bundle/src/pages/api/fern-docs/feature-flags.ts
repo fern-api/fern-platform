@@ -13,6 +13,7 @@ interface EdgeConfigResponse {
     "snippet-template-enabled": string[];
     "http-snippets-enabled": string[];
     "inline-feedback-enabled": string[];
+    "dark-code-enabled": string[];
 }
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
@@ -31,6 +32,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             "snippet-template-enabled",
             "http-snippets-enabled",
             "inline-feedback-enabled",
+            "dark-code-enabled",
         ]);
 
         const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"]);
@@ -41,6 +43,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(domain, config["snippet-template-enabled"]);
         const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"]);
         const isInlineFeedbackEnabled = checkDomainMatchesCustomers(domain, config["inline-feedback-enabled"]);
+        const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -51,6 +54,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isSnippetTemplatesEnabled: isSnippetTemplatesEnabled || isDevelopment(domain),
             isHttpSnippetsEnabled,
             isInlineFeedbackEnabled,
+            isDarkCodeEnabled,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -64,6 +68,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isSnippetTemplatesEnabled: isDevelopment(domain),
             isHttpSnippetsEnabled: false,
             isInlineFeedbackEnabled: isFern(domain),
+            isDarkCodeEnabled: false,
         };
     }
 }

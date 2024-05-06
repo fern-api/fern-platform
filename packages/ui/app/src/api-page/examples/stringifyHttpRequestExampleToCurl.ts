@@ -85,10 +85,15 @@ function unsafeStringifyHttpRequestExampleToCurl({
 
                                       return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "\\'")}'`;
                                   },
-                                  file: ({ fileName }) =>
-                                      ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
+                                  file: ({ fileName }) => {
+                                      if (fileName == null) {
+                                          return "";
+                                      }
+                                      return ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`;
+                                  },
                                   fileArray: ({ fileNames }) =>
                                       fileNames
+                                          .filter((fileName) => fileName != null)
                                           .map(
                                               (fileName) =>
                                                   ` \\\n     -F "${key}[]"=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,

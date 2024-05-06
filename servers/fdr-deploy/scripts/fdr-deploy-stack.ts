@@ -32,6 +32,15 @@ interface ElastiCacheProps {
     readonly ingressSecurityGroup?: SecurityGroup;
 }
 
+interface FdrStackOptions {
+    redis: boolean;
+    redisClusteringModeEnabled: boolean;
+    maxTaskCount: number;
+    desiredTaskCount: number;
+    cpu: number;
+    memory: number;
+}
+
 export class FdrDeployStack extends Stack {
     constructor(
         scope: Construct,
@@ -39,6 +48,7 @@ export class FdrDeployStack extends Stack {
         version: string,
         environmentType: EnvironmentType,
         environmentInfo: EnvironmentInfo,
+        options: FdrStackOptions,
         props?: StackProps,
     ) {
         super(scope, id, props);
@@ -114,9 +124,9 @@ export class FdrDeployStack extends Stack {
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
-            cpu: environmentType === "PROD" ? 4096 : 512,
-            memoryLimitMiB: environmentType === "PROD" ? 8192 : 1024,
-            desiredCount: 1, // TODO: make this 2 in prod
+            cpu: options.cpu,
+            memoryLimitMiB: options.memory,
+            desiredCount: options.desiredTaskCount,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
@@ -135,6 +145,9 @@ export class FdrDeployStack extends Stack {
                     LOG_LEVEL: getLogLevel(environmentType),
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
+                    REDIS_ENABLED: options.redis.toString(),
+                    REDIS_CLUSTERING_MODE_ENABLED: options.redisClusteringModeEnabled.toString(),
+                    APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
@@ -159,6 +172,16 @@ export class FdrDeployStack extends Stack {
                       }
                     : undefined,
         });
+        if (options.redis) {
+            const scalableTaskCount = fargateService.service.autoScaleTaskCount({
+                maxCapacity: options.maxTaskCount,
+                minCapacity: options.desiredTaskCount,
+            });
+            scalableTaskCount.scaleOnRequestCount("RequestCountScaling", {
+                targetGroup: fargateService.targetGroup,
+                requestsPerTarget: 1000,
+            });
+        }
 
         new ARecord(this, "api-domain", {
             zone: hostedZone,

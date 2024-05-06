@@ -1,12 +1,17 @@
 import { addHours, subHours } from "date-fns";
 import lodash from "lodash";
-import { fdrApplication, prisma } from "./setupMockFdr";
+import { createMockFdrApplication } from "../mock";
+import { prisma } from "./setupMockFdr";
 import { createMockDocs, createMockIndexSegment, getUniqueDocsForUrl } from "./util";
 const { uniqueId } = lodash;
 
 function getUniqueSegment(): string {
     return `seg_${Math.random()}`;
 }
+
+const fdrApplication = createMockFdrApplication({
+    orgIds: ["acme", "octoai"],
+});
 
 describe("algolia index segment deleter", () => {
     it("correctly deletes old inactive index segments for unversioned docs", async () => {

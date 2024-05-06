@@ -7,8 +7,8 @@ export function WssTag({ small = false, active = false }: { small?: boolean; act
         <FernTooltip content="WebSocket Channel">
             <span
                 className={cn("uppercase font-mono inline-flex justify-center items-center leading-none", {
-                    ["bg-accent-primary/10 dark:bg-accent-primary-dark/10 text-accent-primary-aaa"]: !active,
-                    ["bg-accent-primary dark:bg-accent-primary-dark t-accent-contrast"]: active,
+                    ["bg-accent/10 dark:bg-accent-dark/10 text-accent-aaa"]: !active,
+                    ["bg-accent dark:bg-accent-dark t-accent-contrast"]: active,
                     ["rounded-md h-[18px] text-[10px] w-9"]: small,
                     ["py-1 px-2 rounded-lg h-6 text-xs"]: !small,
                 })}

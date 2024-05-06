@@ -1,17 +1,20 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
+import { FernButton } from "./FernButton";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
     error: unknown;
     className?: string;
     resetErrorBoundary?: () => void;
+    reset?: () => void;
     refreshOnError?: boolean;
+    showError?: boolean;
 }
 
 export function FernErrorTag({
@@ -20,12 +23,16 @@ export function FernErrorTag({
     className,
     errorDescription,
     showError,
+    reset,
+    resetErrorBoundary,
 }: {
     component: string; // component displayName where the error occurred
     error: unknown;
     className?: string;
     errorDescription?: string;
     showError?: boolean;
+    reset?: () => void;
+    resetErrorBoundary?: () => void;
 }): ReactElement | null {
     useEffect(() => {
         // eslint-disable-next-line no-console
@@ -45,6 +52,18 @@ export function FernErrorTag({
                 <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
                     <ExclamationTriangleIcon />
                     <span>{stringifyError(error)}</span>
+                    {reset != null && (
+                        <FernButton
+                            icon={<ReloadIcon />}
+                            variant="minimal"
+                            rounded
+                            onClick={() => {
+                                reset();
+                                resetErrorBoundary?.();
+                            }}
+                            size="small"
+                        />
+                    )}
                 </span>
             </div>
         );
@@ -67,7 +86,9 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     className,
     error,
     resetErrorBoundary,
+    reset,
     refreshOnError,
+    showError,
 }) => {
     const router = useRouter();
 
@@ -91,7 +112,16 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
         };
     }, [resetErrorBoundary, router.events]);
 
-    return <FernErrorTag error={error} className={className} component={component ?? "FernErrorBoundary"} />;
+    return (
+        <FernErrorTag
+            error={error}
+            className={className}
+            component={component ?? "FernErrorBoundary"}
+            showError={showError}
+            reset={reset}
+            resetErrorBoundary={resetErrorBoundary}
+        />
+    );
 };
 
 const getFallbackComponent = memoize(function getFallbackComponent(
