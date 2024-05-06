@@ -32,7 +32,6 @@
     "depcheck": "depcheck"
   },
   "devDependencies": {
-    "@fern-ui/core-utils": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-fern/vercel": "0.0.1",

@@ -642,9 +642,6 @@ importers:
       '@fern-fern/vercel':
         specifier: 0.0.1
         version: 0.0.1
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../commons/core-utils
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../commons/fdr-utils
