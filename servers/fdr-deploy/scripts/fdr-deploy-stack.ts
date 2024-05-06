@@ -39,6 +39,7 @@ interface FdrStackOptions {
     desiredTaskCount: number;
     cpu: number;
     memory: number;
+    cacheName: string;
 }
 
 export class FdrDeployStack extends Stack {
@@ -100,7 +101,7 @@ export class FdrDeployStack extends Stack {
         });
 
         const fernDocsCacheEndpoint = this.constructElastiCacheInstance(this, {
-            cacheName: "FernDocsCache",
+            cacheName: options.cacheName,
             IVpc: vpc,
             numCacheShards: 1,
             // TODO(dsinghvi): bump this to > 1
