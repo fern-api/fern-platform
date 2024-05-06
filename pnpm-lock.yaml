@@ -954,8 +954,8 @@ importers:
         specifier: ^5.1.10
         version: 5.1.10(react-dom@18.2.0)(react@18.2.0)
       react-virtuoso:
-        specifier: ^4.7.7
-        version: 4.7.7(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^4.7.10
+        version: 4.7.10(react-dom@18.2.0)(react@18.2.0)
       rehype-katex:
         specifier: ^7.0.0
         version: 7.0.0
@@ -19595,8 +19595,8 @@ packages:
       scheduler: 0.23.0
     dev: true
 
-  /react-virtuoso@4.7.7(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-n9NdMNaAtxHYH6e3H6zr1Kb08sp+1XPVnfE4cEMgrvmPBLugd9eeJtQo/1uA+SHhGaPX3uqZOuQsfKbX1r8P/A==}
+  /react-virtuoso@4.7.10(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-l+fnBf/G1Fp6pHCnhFq2Ra4lkZtT6c5XrS9rCS0OA6de7WGLZviCo0y61CUZZG79TeAw3L7O4czeNPiqh9CIrg==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16 || >=17 || >= 18'
