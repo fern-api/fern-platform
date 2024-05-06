@@ -1,9 +1,6 @@
 name: Docs Healthchecks
 
 on:
-  push:
-    branches:
-      - dsinghvi/incident-2024-05-05-404-checking
   workflow_call:
   workflow_dispatch:
   schedule:
@@ -30,6 +27,6 @@ jobs:
           pnpm turbo compile
           pnpm --filter=@fern-api/healthchecks dist:cli
 
-      - name: Run HealthchecksY
+      - name: Run Healthchecks
         run: |
           node packages/healthchecks/dist/cli.cjs docs run
