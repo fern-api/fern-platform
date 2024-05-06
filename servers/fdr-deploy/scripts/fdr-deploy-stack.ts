@@ -285,8 +285,8 @@ export class FdrDeployStack extends Stack {
 
         cacheReplicationGroup.addDependency(cacheSubnetGroup);
 
-        const cacheEndpointAddress = cacheReplicationGroup.attrPrimaryEndPointAddress;
-        const cacheEndpointPort = cacheReplicationGroup.attrPrimaryEndPointPort;
+        const cacheEndpointAddress = cacheReplicationGroup.attrConfigurationEndPointAddress;
+        const cacheEndpointPort = cacheReplicationGroup.attrConfigurationEndPointPort;
 
         cacheSecurityGroup.addIngressRule(
             props.ingressSecurityGroup || Peer.anyIpv4(),
