@@ -57,6 +57,7 @@ export const useHighlightLink: () => () => Promise<void> = () => {
                 toast.error("Could not create URL");
             }
         }
+        return;
     }, [generateFragment, selection]);
 
     return createAndCopyHighlightLink;

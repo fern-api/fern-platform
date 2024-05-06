@@ -1,5 +1,6 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
@@ -9,6 +10,8 @@ import { FernDropdown } from "../components/FernDropdown";
 import { FernInput } from "../components/FernInput";
 import { FernRadioGroup } from "../components/FernRadioGroup";
 import { FernTextarea } from "../components/FernTextarea";
+
+const MotionFernRadioGroup = motion(FernRadioGroup);
 
 interface FeedbackFormProps {
     isHelpful: boolean | undefined;
@@ -112,7 +115,8 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layou
             </label>
 
             {feedbackOptions.length > 0 ? (
-                <FernRadioGroup
+                <MotionFernRadioGroup
+                    layoutId={legend}
                     id="feedbackReason"
                     className="mt-4"
                     value={feedbackId}
