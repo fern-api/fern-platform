@@ -54,7 +54,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const currentSlug = useMemo(() => selectedSlug?.split("/") ?? [], [selectedSlug]);
     const layoutBreakpoint = useLayoutBreakpoint();
 
-    const docsMainContent = useMemo(() => <DocsMainContent />, []);
+    const docsMainContent = <DocsMainContent />;
 
     return (
         <PlaygroundContextProvider>
