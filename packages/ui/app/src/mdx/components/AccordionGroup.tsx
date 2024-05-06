@@ -64,7 +64,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                         <RadixAccordion.Trigger className="group flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors hover:bg-tag-default data-[state=open]:rounded-b-none cursor-pointer">
                             <ChevronRightIcon className="duration-400 t-muted size-4 transition-transform ease-shift group-data-[state=open]:rotate-90" />
                             <h6
-                                className="t-default m-0 -mb-px flex max-w-max whitespace-nowrap text-base leading-6"
+                                className="t-default m-0 -mb-px flex max-w-max text-base leading-6 text-left"
                                 data-anchor={toc ? id : undefined}
                             >
                                 {title}
