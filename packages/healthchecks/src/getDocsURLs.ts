@@ -5,9 +5,9 @@ const VERCEL = new VercelClient({
 });
 
 const CUSTOM_SUBPATHS = [
-    "https://www.assemblyai.com/docs/api-reference/",
+    "https://www.assemblyai.com/docs/api-reference/overview",
     "https://primer.io/docs/api",
-    "https://astronomer.io/docs/api",
+    "https://docs.astronomer.io/api",
     "https://buildwithfern.com/learn",
 ];
 
@@ -16,8 +16,9 @@ const CUSTOM_SUBPATHS = [
  */
 export async function getAllFernDocsWebsites(): Promise<string[]> {
     const listDomainsResponse = await VERCEL.v9.domains.list("fern-prod", {
-        limit: "100",
+        limit: 100,
         teamId: "team_6FKOM5nw037hv8g2mTk3gaH7",
+        withGitRepoInfo: false,
     });
     const verifiedDomains = listDomainsResponse.domains
         .filter((customDomain) => customDomain.verified)
