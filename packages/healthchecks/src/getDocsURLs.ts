@@ -11,6 +11,8 @@ const CUSTOM_SUBPATHS = [
     "https://buildwithfern.com/learn",
 ];
 
+const DOMAINS_TO_SKIP = ["app.buildwithfern.com", "api-docs.codecombat.com"];
+
 /**
  * Returns all the live fern docs urls
  */
@@ -22,6 +24,7 @@ export async function getAllFernDocsWebsites(): Promise<string[]> {
     });
     const verifiedDomains = listDomainsResponse.domains
         .filter((customDomain) => customDomain.verified)
-        .map((customDomain) => customDomain.name);
+        .map((customDomain) => customDomain.name)
+        .filter((domain) => !DOMAINS_TO_SKIP.includes(domain));
     return [...CUSTOM_SUBPATHS, ...verifiedDomains];
 }
