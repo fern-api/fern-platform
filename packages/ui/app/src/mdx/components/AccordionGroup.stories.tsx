@@ -3,27 +3,36 @@ import { AccordionGroup } from "./AccordionGroup";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof AccordionGroup> = {
-  title: "MDX/AccordionGroup",
-  component: AccordionGroup,
-  tags: ["autodocs"],
-  args: {
-    items: [
-      {
-        title: "Accordion Item 1",
-        children: "Accordion Item 1 Content",
-      },
-      {
-        title: "Accordion Item 2",
-        children: "Accordion Item 2 Content",
-      },
-    ],
-  },
+    title: "MDX/AccordionGroup",
+    component: AccordionGroup,
+    tags: ["autodocs"],
+    args: {
+        items: [
+            {
+                title: "Accordion Item 1. This is a long title to test the wrapping of the title.",
+                children:
+                    "Accordion Item 1 Content. Irure sunt enim proident est excepteur aute qui aliquip. Irure sunt enim proident est excepteur aute qui aliquip.",
+            },
+            {
+                title: "Accordion Item 2",
+                children: "Accordion Item 2 Content",
+            },
+        ],
+    },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
-  args: {},
+    args: {},
+};
+
+export const Mobile: Story = {
+    args: {},
+    parameters: {
+        viewport: {
+            defaultViewport: "mobile1",
+        },
+    },
 };
