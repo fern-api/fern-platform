@@ -47,12 +47,12 @@ async function main() {
                     environmentType,
                     environmentInfo,
                     {
-                        desiredTaskCount: 1,
-                        maxTaskCount: 1,
-                        redis: false,
-                        memory: 8192,
-                        redisClusteringModeEnabled: false,
-                        cpu: 4096,
+                        desiredTaskCount: 3,
+                        maxTaskCount: 10,
+                        redis: true,
+                        memory: 4096,
+                        redisClusteringModeEnabled: true,
+                        cpu: 2048,
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
