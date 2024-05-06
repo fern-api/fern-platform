@@ -21,7 +21,6 @@ const serverlessConfiguration: AWS = {
             GITHUB_APP_CLIENT_ID: process?.env.GITHUB_APP_CLIENT_ID ?? "placeholder",
             GITHUB_APP_CLIENT_SECRET: process?.env.GITHUB_APP_CLIENT_SECRET ?? "placeholder",
             GITHUB_APP_WEBHOOK_SECRET: process?.env.GITHUB_APP_WEBHOOK_SECRET ?? "placeholder",
-            FERN_BOT_FERN_TOKEN: process?.env.FERN_BOT_FERN_TOKEN ?? "placeholder",
             CO_API_KEY: process?.env.CO_API_KEY ?? "placeholder",
         },
     },

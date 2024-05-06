@@ -4,7 +4,6 @@ export interface Env {
     GITHUB_APP_CLIENT_ID: string;
     GITHUB_APP_CLIENT_SECRET: string;
     GITHUB_APP_WEBHOOK_SECRET: string;
-    FERN_BOT_FERN_TOKEN: string;
 }
 
 export function evaluateEnv(): Env {
@@ -14,6 +13,5 @@ export function evaluateEnv(): Env {
         GITHUB_APP_CLIENT_ID: process?.env.GITHUB_APP_CLIENT_ID,
         GITHUB_APP_CLIENT_SECRET: process?.env.GITHUB_APP_CLIENT_SECRET,
         GITHUB_APP_WEBHOOK_SECRET: process?.env.GITHUB_APP_WEBHOOK_SECRET,
-        FERN_BOT_FERN_TOKEN: process?.env.FERN_BOT_FERN_TOKEN,
     };
 }

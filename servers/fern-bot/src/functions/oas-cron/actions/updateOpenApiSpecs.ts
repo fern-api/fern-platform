@@ -14,7 +14,7 @@ import { createOrUpdatePullRequest } from "../github/utilities";
 const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
 type Repository = components["schemas"]["repository"];
 
-async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repository, fernToken: string): Promise<void> {
+async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repository): Promise<void> {
     const tmpDir = await tmp.dir();
     const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
 
@@ -62,11 +62,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
     //     secret_name: "FERN_TOKEN",
     // });
     try {
-        const command = execa("fern", ["api", "update"], {
-            env: {
-                FERN_TOKEN: fernToken,
-            },
-        });
+        const command = execa("fern", ["api", "update"]);
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
         await command;
@@ -111,6 +107,6 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
 
     await app.eachRepository(async (installation) => {
         console.log("Encountered installation", installation.repository.full_name);
-        await updateOpenApiSpecInternal(installation.octokit, installation.repository, env.FERN_BOT_FERN_TOKEN);
+        await updateOpenApiSpecInternal(installation.octokit, installation.repository);
     });
 }
