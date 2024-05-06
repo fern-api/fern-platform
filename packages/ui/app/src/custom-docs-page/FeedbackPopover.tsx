@@ -100,7 +100,6 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
         const handleSubmitFeedback = useCallback(
             ({
                 feedbackId,
-                feedbackMessage,
             }: {
                 feedbackId: string;
                 feedbackMessage: string;
@@ -108,8 +107,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                 showEmailInput: boolean | "indeterminate";
             }) => {
                 capturePosthogEvent("feedback_submitted", {
-                    satisfied: true,
-                    message: feedbackMessage,
+                    satisfied: isHelpful,
                     feedback: feedbackId,
                     selectedText: selection?.toString().trim(),
                 });
@@ -119,7 +117,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                     setIsHelpful(undefined);
                 }, 3000);
             },
-            [selection],
+            [isHelpful, selection],
         );
 
         const handleOpenChange = useCallback((isOpen: boolean) => {
@@ -167,11 +165,11 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                 <Selection.Trigger ref={forwardedRef}>{children}</Selection.Trigger>
                 <Selection.Portal>
                     <MotionSelectionContent
+                        layout
                         transition={{ type: "spring", duration: 0.4, bounce: 0 }}
                         sideOffset={8}
                         className={clsx(
                             "z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl min-w-80",
-                            "data-[state=open]:animate-slide-down-and-fade data-[state=closed]:animate-slide-up-and-fade",
                             {
                                 "p-2 space-y-2": isHelpful !== undefined,
                             },
@@ -187,38 +185,44 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                             )}
                         </MotionFernButtonGroup>
 
-                        {isHelpful !== undefined && (
-                            <motion.div
-                                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                                initial={{ opacity: 0, y: 25 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -25 }}
-                                key={isHelpful === undefined ? "y" : "n"}
-                            >
-                                {isFeedbackSubmitted ? (
+                        {isHelpful !== undefined &&
+                            (isFeedbackSubmitted ? (
+                                <motion.div
+                                    transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.5 }}
+                                    key={isFeedbackSubmitted === undefined ? "y" : "n"}
+                                    className="space-y-2 py-2"
+                                >
                                     <motion.div
-                                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                                        initial={{ opacity: 0, scale: 0.5 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.5 }}
-                                        key={isFeedbackSubmitted === undefined ? "y" : "n"}
-                                        className="space-y-2 py-2"
+                                        layoutId="icon-container"
+                                        className="bg-tag-primary t-accent h-8 w-8 mx-auto rounded-md flex items-center justify-center"
                                     >
-                                        <div className="bg-tag-primary t-accent h-8 w-8 mx-auto rounded-md flex items-center justify-center">
-                                            <Check />
-                                        </div>
-                                        <p className="text-md font-semibold text-center">Feedback received!</p>
-                                        <p className="t-muted text-sm text-center">Thank you for improving the docs.</p>
+                                        <Check />
                                     </motion.div>
-                                ) : (
+                                    <motion.p layoutId="success-title" className="text-md font-semibold text-center">
+                                        Feedback received!
+                                    </motion.p>
+                                    <motion.p layoutId="success-description" className="t-muted text-sm text-center">
+                                        Thank you for improving the docs.
+                                    </motion.p>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                                    initial={{ opacity: 0, y: 25 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -25 }}
+                                    key={isHelpful === undefined ? "y" : "n"}
+                                >
                                     <FeedbackForm
                                         layoutDensity="condensed"
                                         onSubmit={handleSubmitFeedback}
                                         isHelpful={isHelpful}
                                     />
-                                )}
-                            </motion.div>
-                        )}
+                                </motion.div>
+                            ))}
                     </MotionSelectionContent>
                 </Selection.Portal>
             </Selection.Root>
