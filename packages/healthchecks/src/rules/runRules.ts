@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import { FdrClient } from "@fern-api/fdr-sdk";
+import { AllPagesLoadRule } from "./all-pages-load";
 
 export interface RuleArgs {
     url: string;
@@ -12,23 +14,30 @@ export interface Rule {
 }
 
 export interface RuleResult {
+    name: string;
     success: boolean;
     message: string;
 }
 
 function getAllRules(): Rule[] {
-    return [];
+    return [new AllPagesLoadRule()];
 }
 
-export async function runRules({ url, stack }: { url: string; stack: "dev" | "prod" }): Promise<RuleResult[]> {
+const FDR_CLIENT = new FdrClient({ environment: "https://registry.buildwithfern.com" });
+
+export async function runRules({ url }: { url: string }): Promise<RuleResult[]> {
     const rules = getAllRules();
-    const results = await Promise.all(
-        rules.map((rule) =>
-            rule.run({
+    const rulePromises: Promise<RuleResult>[] = [];
+    for (const rule of rules) {
+        try {
+            const rulePromise = rule.run({
                 url,
-                fdr: stack === "dev" ? new FdrClient({ environment: "" }) : new FdrClient({ environment: "" }),
-            }),
-        ),
-    );
-    return results;
+                fdr: FDR_CLIENT,
+            });
+            rulePromises.push(rulePromise);
+        } catch (error) {
+            console.error(`Error running rule ${rule.name}`);
+        }
+    }
+    return await Promise.all(rulePromises);
 }
