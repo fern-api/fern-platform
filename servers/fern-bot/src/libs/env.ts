@@ -14,7 +14,7 @@ export function evaluateEnv(): Env {
     const repoToRunOn = process?.env.REPO_TO_RUN_ON;
     return {
         GITHUB_APP_ID: process?.env.GITHUB_APP_ID,
-        GITHUB_APP_PRIVATE_KEY: process?.env.GITHUB_APP_PRIVATE_KEY,
+        GITHUB_APP_PRIVATE_KEY: process?.env.GITHUB_APP_PRIVATE_KEY?.replaceAll("\\n", "\n"),
         GITHUB_APP_CLIENT_ID: process?.env.GITHUB_APP_CLIENT_ID,
         GITHUB_APP_CLIENT_SECRET: process?.env.GITHUB_APP_CLIENT_SECRET,
         GITHUB_APP_WEBHOOK_SECRET: process?.env.GITHUB_APP_WEBHOOK_SECRET,

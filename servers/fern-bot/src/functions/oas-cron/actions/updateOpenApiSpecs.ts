@@ -26,6 +26,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         await mkdir(fullRepoPath, { recursive: true });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const installationToken = ((await octokit.auth({ type: "installation" })) as any).token;
     const git = simpleGit(fullRepoPath);
 
@@ -35,7 +36,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
     try {
         // If you can fetch the branch, checkout the branch
         await git.fetch(branchRemoteName, OPENAPI_UPDATE_BRANCH);
-        console.log(`Branch exists, checking out`);
+        console.log("Branch exists, checking out");
         await git.checkout(OPENAPI_UPDATE_BRANCH);
         // Merge the default branch into this branch to update it
         // prefer the default branch changes
@@ -45,7 +46,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         // to the same branch that are not OpenAPI related, that we'd lose if we deleted and reupdated the spec.
         await git.merge(["-X", "theirs", originDefaultBranch]);
     } catch (e) {
-        console.log(`Branch does not exist, create and checkout`);
+        console.log("Branch does not exist, create and checkout");
         await git.checkoutBranch(OPENAPI_UPDATE_BRANCH, branchRemoteName);
     }
 
