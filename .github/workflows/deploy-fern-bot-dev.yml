@@ -8,6 +8,8 @@ on:
       - ".github/workflows/deploy-fern-bot-dev.yml"
 
 env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
   GITHUB_APP_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_ID }}
   GITHUB_APP_PRIVATE_KEY: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_PRIVATE_KEY }}
