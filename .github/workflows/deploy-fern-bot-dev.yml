@@ -26,4 +26,4 @@ jobs:
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
-          pnpm --filter "@fern-platform/fern-bot" deploy --stage development
+          pnpm --filter "@fern-platform/fern-bot" release --stage development

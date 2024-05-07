@@ -4,7 +4,7 @@
   "main": "serverless.ts",
   "scripts": {
     "compile": "sls package",
-    "deploy": "sls deploy",
+    "release": "sls deploy",
     "invoke": "sls invoke",
     "lint": "eslint --max-warnings 0 src --ext .ts",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
