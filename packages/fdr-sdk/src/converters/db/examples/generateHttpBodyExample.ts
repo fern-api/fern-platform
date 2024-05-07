@@ -111,24 +111,45 @@ function generateHttpJsonRequestBodyExample(
 export function generateHttpResponseBodyExample(
     type: APIV1Write.HttpResponseBodyShape,
     resolveTypeById: ResolveTypeById,
-): unknown {
+): APIV1Write.ExampleEndpointResponse | undefined {
     switch (type.type) {
         case "object":
-            return generateExampleObject(type, resolveTypeById, false, new Set(), 0);
+            return {
+                type: "json",
+                value: generateExampleObject(type, resolveTypeById, false, new Set(), 0),
+            };
         case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById, false, new Set(), 0);
+            return {
+                type: "json",
+                value: generateExampleFromTypeReference(type.value, resolveTypeById, false, new Set(), 0),
+            };
         case "fileDownload":
-            return "";
+            return { type: "filename", value: "<filename>" };
         case "streamingText":
-            return "example-text";
         case "streamCondition":
-            return "example-text";
+            return { type: "stream", value: ["example-text"] };
         case "stream": {
             switch (type.shape.type) {
-                case "object":
-                    return generateExampleObject(type.shape, resolveTypeById, false, new Set(), 0);
-                case "reference":
-                    return generateExampleFromTypeReference(type.shape.value, resolveTypeById, false, new Set(), 0);
+                case "object": {
+                    const chunk = generateExampleObject(type.shape, resolveTypeById, false, new Set(), 0);
+                    return {
+                        type: "stream",
+                        value: [chunk, chunk],
+                    };
+                }
+                case "reference": {
+                    const chunk = generateExampleFromTypeReference(
+                        type.shape.value,
+                        resolveTypeById,
+                        false,
+                        new Set(),
+                        0,
+                    );
+                    return {
+                        type: "stream",
+                        value: [chunk, chunk],
+                    };
+                }
             }
         }
     }
