@@ -5,6 +5,7 @@ on:
     branches: main
     paths:
       - "servers/fern-bot/**"
+      - ".github/workflows/deploy-fern-bot-dev.yml"
 
 env:
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
