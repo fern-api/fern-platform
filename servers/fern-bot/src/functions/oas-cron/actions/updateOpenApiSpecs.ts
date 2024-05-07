@@ -53,7 +53,7 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
     // Run API update command which will pull the new spec from the specified
     // origin and write it to disk we can then commit it to github from there.
     try {
-        const command = execa("npx", ["fern", "api", "update"], { cwd: fullRepoPath });
+        const command = execa("npx", ["fern-api", "api", "update"], { cwd: fullRepoPath });
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
         await command;
