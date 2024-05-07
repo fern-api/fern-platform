@@ -1,7 +1,6 @@
 {
   "name": "@fern-platform/fern-bot",
   "version": "0.0.0",
-  "main": "serverless.ts",
   "scripts": {
     "compile": "sls package",
     "release": "sls deploy",
