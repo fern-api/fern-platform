@@ -18,15 +18,15 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, active
                 method === "GET"
                     ? "green"
                     : method === "DELETE"
-                        ? "red"
-                        : method === "POST"
-                            ? "blue"
-                            : method === "STREAM" || method === "WSS"
-                                ? "accent"
-                                : "yellow"
+                      ? "red"
+                      : method === "POST"
+                        ? "blue"
+                        : method === "STREAM" || method === "WSS"
+                          ? "accent"
+                          : "yellow"
             }
             variant={active ? "solid" : "subtle"}
-            className={clsx("w-10", className)}
+            className={clsx("w-11", className)}
             {...rest}
         >
             {method === FdrAPI.api.v1.read.HttpMethod.Delete ? "DEL" : method}
