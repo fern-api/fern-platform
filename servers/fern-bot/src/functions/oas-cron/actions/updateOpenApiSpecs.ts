@@ -51,18 +51,8 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
 
     // Run API update command which will pull the new spec from the specified
     // origin and write it to disk we can then commit it to github from there.
-    //
-    // TODO: Figure out if we should have an admin app token or if we should
-    // try to pull the token from the repo secrets. The annoying thing with the
-    // repo secrets is that we have to know the name of the secret.
-    //
-    // const fernToken = await octokit.rest.actions.getRepoSecret({
-    //     owner: repository.owner.name,
-    //     repo: repository.name,
-    //     secret_name: "FERN_TOKEN",
-    // });
     try {
-        const command = execa("fern", ["api", "update"]);
+        const command = execa("npx", ["fern", "api", "update"], { cwd: fullRepoPath });
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
         await command;
@@ -75,8 +65,8 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
     if (!(await git.status()).isClean()) {
         console.log("Changes detected, committing and pushing");
         // Add + commit files
-        await git.add(["-A"]);
         const commitDiff = await git.diff();
+        await git.add(["-A"]);
         await git.commit(await generateCommitMessage(commitDiff));
 
         // Push the changes

@@ -6,7 +6,6 @@
     "compile": "sls package",
     "deploy": "sls deploy",
     "invoke": "sls invoke",
-    "test": "sls test",
     "lint": "eslint --max-warnings 0 src --ext .ts",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:fix": "pnpm lint --fix",
