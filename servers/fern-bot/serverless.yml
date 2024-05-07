@@ -1,0 +1,37 @@
+service: "fern-bot"
+frameworkVersion: "3"
+plugins: ["serverless-esbuild"]
+provider:
+  name: aws
+  runtime: nodejs18.x
+  deploymentMethod: direct
+  region: "us-east-1"
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+    GITHUB_APP_ID: ${env:GITHUB_APP_ID, 'placeholder'}
+    GITHUB_APP_PRIVATE_KEY: ${env:GITHUB_APP_PRIVATE_KEY, 'placeholder'}
+    GITHUB_APP_CLIENT_ID: ${env:GITHUB_APP_CLIENT_ID, 'placeholder'}
+    GITHUB_APP_CLIENT_SECRET: ${env:GITHUB_APP_CLIENT_SECRET, 'placeholder'}
+    GITHUB_APP_WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
+    CO_API_KEY: ${env:CO_API_KEY, 'placeholder'}
+    REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
+functions:
+  updateOpenApiSpec:
+    handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
+    events:
+      - schedule:
+          rate: cron(0 0 * * ? *)
+          enabled: true
+package:
+  individually: true
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude: ["aws-sdk"]
+    target: "node18"
+    define: { "require.resolve": undefined }
+    platform: "node"
+    concurrency: 10
