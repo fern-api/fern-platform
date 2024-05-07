@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { withStream } from "../../commons/withStream";
+import { withStream } from "../../commons/HttpMethodTag";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useViewportSize } from "../../hooks/useViewportSize";
@@ -225,9 +225,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                     <div>
                         {endpoint.responseBody?.shape.type === "stream" ? (
-                            withStream(<h1 className="my-0 inline leading-tight">{endpoint.title}</h1>)
+                            withStream(<h1 className="my-0 inline leading-none">{endpoint.title}</h1>, "lg")
                         ) : (
-                            <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
+                            <h1 className="my-0 inline leading-none">{endpoint.title}</h1>
                         )}
                         {endpoint.availability != null && (
                             <span className="relative">

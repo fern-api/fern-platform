@@ -1,17 +1,22 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { memo } from "react";
-import { Tag } from "../components/Tag";
+import { ReactNode, memo } from "react";
+import { FernTooltip } from "../components/FernTooltip";
+import { Tag, TagProps } from "../components/Tag";
 export declare namespace HttpMethodTag {
-    export interface Props {
+    export interface Props extends TagProps {
         method: FdrAPI.api.v1.read.HttpMethod | "STREAM" | "WSS";
-        size?: "sm" | "lg";
-        className?: string;
         active?: boolean;
     }
 }
 
-const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, active, className, ...rest }) => {
+const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
+    method,
+    active,
+    size = "sm",
+    className,
+    ...rest
+}) => {
     return (
         <Tag
             colorScheme={
@@ -26,12 +31,32 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, active
                           : "yellow"
             }
             variant={active ? "solid" : "subtle"}
-            className={clsx("w-11", className)}
+            className={clsx({ "w-11": size === "sm" }, className)}
+            size={size}
             {...rest}
         >
             {method === FdrAPI.api.v1.read.HttpMethod.Delete ? "DEL" : method}
         </Tag>
     );
 };
+
+export function withStream(text: ReactNode, size: "sm" | "lg" = "sm"): ReactNode {
+    return (
+        <span className="inline-flex items-center gap-2">
+            <span>{text}</span>
+            <UnmemoizedHttpMethodTag size={size} method="STREAM" />
+        </span>
+    );
+}
+export function withWss(text: ReactNode, size: "sm" | "lg" = "sm"): ReactNode {
+    return (
+        <span className="inline-flex items-center gap-2">
+            <span>{text}</span>
+            <FernTooltip content="WebSocket Channel">
+                <UnmemoizedHttpMethodTag size={size} method="WSS" />
+            </FernTooltip>
+        </span>
+    );
+}
 
 export const HttpMethodTag = memo(UnmemoizedHttpMethodTag);

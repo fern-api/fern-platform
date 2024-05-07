@@ -7,8 +7,6 @@ import { isEqual, last, sortBy } from "lodash-es";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { StreamTag } from "../commons/withStream";
-import { WssTag } from "../commons/withWss";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -229,12 +227,12 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
                 SidebarNode.isApiPage(item) ? (
                     item.apiType === "endpoint" ? (
                         item.stream ? (
-                            <StreamTag small active={selected} />
+                            <HttpMethodTag method="STREAM" size="sm" active={selected} />
                         ) : (
                             httpMethodTags[item.method]
                         )
                     ) : item.apiType === "websocket" ? (
-                        <WssTag small active={selected} />
+                        <HttpMethodTag method="WSS" size="sm" active={selected} />
                     ) : null
                 ) : null
             }
