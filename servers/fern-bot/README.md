@@ -93,7 +93,7 @@ The project code base is mainly located within the `src` folder. This folder is 
 │       └── lambda.ts           # Lambda middleware
 │
 ├── package.json
-├── serverless.ts               # Serverless service file
+├── serverless.yml              # Serverless configuration file
 ├── tsconfig.json               # Typescript compiler configuration
 └── tsconfig.paths.json         # Typescript paths
 ```

@@ -14,7 +14,7 @@ async function coChat(prompt: string): Promise<string> {
 }
 
 export async function generateCommitMessage(diff: string): Promise<string> {
-    if (diff === "") {
+    if (diff === " ") {
         return DEFAULT_GITHUB_MESSAGE;
     }
 
