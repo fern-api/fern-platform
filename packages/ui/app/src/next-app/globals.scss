@@ -36,7 +36,7 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* 
+    /*
     html.dark {
         background-color: var(--accent);
     } */
@@ -820,5 +820,9 @@
 
     .fern-api-property-key {
         @apply font-mono t-default font-semibold text-sm;
+    }
+
+    .custom-backdrop [data-rmiz-modal-overlay="visible"] {
+        @apply bg-text-default/20;
     }
 }
