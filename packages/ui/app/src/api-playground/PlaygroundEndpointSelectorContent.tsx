@@ -154,7 +154,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectEndpoint(apiGroup, endpointItem)}
-                                                rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
+                                                rightIcon={<HttpMethodTag method={endpointItem.method} size="sm" />}
                                             />
                                         </FernTooltip>
                                     </li>

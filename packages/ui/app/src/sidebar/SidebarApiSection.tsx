@@ -208,11 +208,11 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
     const selected = isEqual(item.slug, selectedSlug);
 
     const httpMethodTags: Record<APIV1Read.HttpMethod, ReactElement> = {
-        GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} small active={selected} />,
-        POST: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Post} small active={selected} />,
-        PUT: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Put} small active={selected} />,
-        PATCH: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Patch} small active={selected} />,
-        DELETE: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Delete} small active={selected} />,
+        GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} size="sm" active={selected} />,
+        POST: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Post} size="sm" active={selected} />,
+        PUT: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Put} size="sm" active={selected} />,
+        PATCH: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Patch} size="sm" active={selected} />,
+        DELETE: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Delete} size="sm" active={selected} />,
     };
     return (
         <SidebarSlugLink

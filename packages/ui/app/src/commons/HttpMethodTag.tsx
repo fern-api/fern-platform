@@ -3,8 +3,8 @@ import cn from "clsx";
 import { memo } from "react";
 export declare namespace HttpMethodTag {
     export interface Props {
-        method: FdrAPI.api.v1.read.HttpMethod;
         small?: boolean;
+        method: FdrAPI.api.v1.read.HttpMethod | "STREAM" | "WSS";
         className?: string;
         active?: boolean;
     }
