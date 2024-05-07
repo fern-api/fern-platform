@@ -95,7 +95,15 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
 export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
     const app: App = setupGithubApp(env);
 
+    if (env.REPO_TO_RUN_ON !== undefined) {
+        console.log("REPO_TO_RUN_ON has been specified, only running on:", env.REPO_TO_RUN_ON);
+    }
     await app.eachRepository(async (installation) => {
+        if (env.REPO_TO_RUN_ON !== undefined && installation.repository.full_name !== env.REPO_TO_RUN_ON) {
+            return;
+        } else if (env.REPO_TO_RUN_ON !== undefined) {
+            console.log("REPO_TO_RUN_ON has been found, running logic.");
+        }
         console.log("Encountered installation", installation.repository.full_name);
         await updateOpenApiSpecInternal(installation.octokit, installation.repository);
     });

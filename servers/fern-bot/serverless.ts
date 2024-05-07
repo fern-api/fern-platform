@@ -1,6 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 
 import updateOpenApiSpec from "@functions/oas-cron";
+import { OMIT } from "@libs/env";
 
 const serverlessConfiguration: AWS = {
     service: "fern-bot",
@@ -24,6 +25,7 @@ const serverlessConfiguration: AWS = {
             GITHUB_APP_CLIENT_SECRET: process?.env.GITHUB_APP_CLIENT_SECRET ?? "placeholder",
             GITHUB_APP_WEBHOOK_SECRET: process?.env.GITHUB_APP_WEBHOOK_SECRET ?? "placeholder",
             CO_API_KEY: process?.env.CO_API_KEY ?? "placeholder",
+            REPO_TO_RUN_ON: process?.env.REPO_TO_RUN_ON ?? OMIT,
         },
     },
     functions: { updateOpenApiSpec },
