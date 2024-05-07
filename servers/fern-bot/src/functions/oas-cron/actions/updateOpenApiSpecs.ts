@@ -14,7 +14,12 @@ import { createOrUpdatePullRequest } from "../github/utilities";
 const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
 type Repository = components["schemas"]["repository"];
 
-async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repository): Promise<void> {
+async function updateOpenApiSpecInternal(
+    octokit: Octokit,
+    repository: Repository,
+    fernBotLoginName: string,
+    fernBotLoginId: string,
+): Promise<void> {
     const tmpDir = await tmp.dir();
     const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
 
@@ -33,6 +38,9 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
     const authedCloneUrl = repository.clone_url.replace("https://", `https://x-access-token:${installationToken}@`);
     // Clone the repo to fullRepoPath and update the branch
     await git.clone(authedCloneUrl, ".");
+    // Configure git to show the app as the committer
+    await git.addConfig("user.name", fernBotLoginName);
+    await git.addConfig("user.email", `${fernBotLoginId}+${fernBotLoginName}@users.noreply.github.com`);
     try {
         // If you can fetch the branch, checkout the branch
         await git.fetch(branchRemoteName, OPENAPI_UPDATE_BRANCH);
@@ -106,6 +114,11 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
         }
         console.log("Encountered installation", installation.repository.full_name);
-        await updateOpenApiSpecInternal(installation.octokit, installation.repository);
+        await updateOpenApiSpecInternal(
+            installation.octokit,
+            installation.repository,
+            env.GITHUB_APP_LOGIN_NAME,
+            env.GITHUB_APP_LOGIN_ID,
+        );
     });
 }

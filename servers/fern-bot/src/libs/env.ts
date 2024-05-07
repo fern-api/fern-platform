@@ -2,6 +2,8 @@
 export const OMIT = "OMIT";
 
 export interface Env {
+    GITHUB_APP_LOGIN_NAME: string;
+    GITHUB_APP_LOGIN_ID: string;
     GITHUB_APP_ID: string;
     GITHUB_APP_PRIVATE_KEY: string;
     GITHUB_APP_CLIENT_ID: string;
@@ -13,6 +15,8 @@ export interface Env {
 export function evaluateEnv(): Env {
     const repoToRunOn = process?.env.REPO_TO_RUN_ON;
     return {
+        GITHUB_APP_LOGIN_NAME: process?.env.GITHUB_APP_LOGIN_NAME,
+        GITHUB_APP_LOGIN_ID: process?.env.GITHUB_APP_LOGIN_ID,
         GITHUB_APP_ID: process?.env.GITHUB_APP_ID,
         GITHUB_APP_PRIVATE_KEY: process?.env.GITHUB_APP_PRIVATE_KEY?.replaceAll("\\n", "\n"),
         GITHUB_APP_CLIENT_ID: process?.env.GITHUB_APP_CLIENT_ID,
