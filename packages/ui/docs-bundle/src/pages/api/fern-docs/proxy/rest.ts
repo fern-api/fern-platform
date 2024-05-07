@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
+import { unknownToString } from "@fern-ui/ui";
 import { NextResponse, type NextRequest } from "next/server";
 
 export const runtime = "edge";
@@ -60,10 +61,17 @@ export async function buildRequestBody(body: ProxyRequest.SerializableBody | und
                             return [key, files] as const;
                         }
                         case "json": {
-                            if (body.isJsonBlob) {
+                            if (value.contentType != null) {
                                 return [
                                     key,
-                                    new Blob([JSON.stringify(value.value)], { type: "application/json" }),
+                                    new Blob(
+                                        [
+                                            value.contentType.includes("application/json")
+                                                ? JSON.stringify(value.value)
+                                                : unknownToString(value.value),
+                                        ],
+                                        { type: value.contentType },
+                                    ),
                                 ] as const;
                             }
                             return [key, JSON.stringify(value.value)] as const;

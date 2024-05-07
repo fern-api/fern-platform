@@ -46,7 +46,6 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
                     <CodeSnippetExample
                         className="max-h-full"
                         title="Payload"
-                        type="primary"
                         onClick={(e) => {
                             e.stopPropagation();
                         }}

@@ -4,9 +4,9 @@
 
 import * as FernRegistry from "../../../../../../../../..";
 
-export interface FileUploadRequest
+export interface FormDataRequest
     extends FernRegistry.api.v1.register.WithDescription,
         FernRegistry.api.v1.register.WithAvailability {
     name: string;
-    properties: FernRegistry.api.v1.register.FileUploadRequestProperty[];
+    properties: FernRegistry.api.v1.register.FormDataProperty[];
 }

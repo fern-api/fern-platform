@@ -251,7 +251,7 @@ export interface ResolvedExampleEndpointCall {
 export type ResolvedExampleEndpointRequest =
     | ResolvedExampleEndpointRequest.Json
     | ResolvedExampleEndpointRequest.Form
-    | ResolvedExampleEndpointRequest.Stream;
+    | ResolvedExampleEndpointRequest.Bytes;
 
 export declare namespace ResolvedExampleEndpointRequest {
     interface Json {
@@ -264,9 +264,10 @@ export declare namespace ResolvedExampleEndpointRequest {
         value: Record<string, ResolvedFormValue>;
     }
 
-    interface Stream {
-        type: "stream";
-        fileName: string;
+    interface Bytes {
+        type: "bytes";
+        value: string | undefined; // base64 encoded
+        fileName: string | undefined;
     }
 }
 
@@ -276,16 +277,18 @@ export declare namespace ResolvedFormValue {
     interface Json {
         type: "json";
         value: unknown | undefined;
+        contentType: string | undefined;
     }
 
     interface SingleFile {
         type: "file";
         fileName: string;
+        fileId: string | undefined; // lookup file by UUID
     }
 
     interface MultipleFiles {
         type: "fileArray";
-        fileNames: string[];
+        files: SingleFile[];
     }
 }
 
@@ -328,6 +331,13 @@ export interface ResolvedError extends WithMetadata {
     shape: ResolvedTypeShape | undefined;
     statusCode: number;
     name: string | undefined;
+    examples: ResolvedExampleError[];
+}
+
+export interface ResolvedExampleError {
+    name: string | undefined;
+    description: string | undefined;
+    responseBody: unknown | undefined;
 }
 
 export interface ResolvedObjectProperty extends WithMetadata {
@@ -440,7 +450,7 @@ export interface ResolvedDiscriminatedUnionShape extends WithMetadata {
 export interface ResolvedOptionalShape extends WithMetadata {
     type: "optional";
     shape: NonOptionalTypeShapeWithReference;
-    defaultsTo: unknown | undefined;
+    defaultValue: unknown | undefined;
 }
 
 export interface ResolvedListShape extends WithMetadata {
@@ -510,45 +520,44 @@ export interface ResolvedReferenceShape {
     typeId: string;
 }
 
-export declare namespace ResolvedFileUploadRequestProperty {
+export declare namespace ResolvedFormDataRequestProperty {
     interface FileProperty extends WithMetadata {
         type: "file";
         key: string;
         isOptional: boolean;
+        contentType: string | string[] | undefined;
     }
     interface FileArrayProperty extends WithMetadata {
         type: "fileArray";
         key: string;
         isOptional: boolean;
+        contentType: string | string[] | undefined;
     }
 
     interface BodyProperty extends ResolvedObjectProperty {
         type: "bodyProperty";
+        contentType: string | string[] | undefined;
     }
 }
 
-export type ResolvedFileUploadRequestProperty =
-    | ResolvedFileUploadRequestProperty.FileProperty
-    | ResolvedFileUploadRequestProperty.FileArrayProperty
-    | ResolvedFileUploadRequestProperty.BodyProperty;
+export type ResolvedFormDataRequestProperty =
+    | ResolvedFormDataRequestProperty.FileProperty
+    | ResolvedFormDataRequestProperty.FileArrayProperty
+    | ResolvedFormDataRequestProperty.BodyProperty;
 
-export interface ResolvedFileUploadRequest extends WithMetadata {
+export interface ResolvedFormDataRequest extends WithMetadata {
     name: string;
-    properties: ResolvedFileUploadRequestProperty[];
+    properties: ResolvedFormDataRequestProperty[];
 }
 
-export interface ResolvedFileUpload {
-    type: "fileUpload";
-    value: ResolvedFileUploadRequest | undefined;
+export interface ResolvedFormData extends ResolvedFormDataRequest {
+    type: "formData";
 }
 
-export type ResolvedHttpRequestBodyShape =
-    | ResolvedFileUpload
-    | APIV1Read.HttpRequestBodyShape.Bytes
-    | ResolvedTypeShape;
+export type ResolvedHttpRequestBodyShape = ResolvedFormData | APIV1Read.HttpRequestBodyShape.Bytes | ResolvedTypeShape;
 
 interface ResolvedHttpRequestBodyShapeVisitor<T> {
-    fileUpload: (shape: ResolvedFileUpload) => T;
+    formData: (shape: ResolvedFormData) => T;
     bytes: (shape: APIV1Read.BytesRequest) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
@@ -557,8 +566,8 @@ export function visitResolvedHttpRequestBodyShape<T>(
     shape: ResolvedHttpRequestBodyShape,
     visitor: ResolvedHttpRequestBodyShapeVisitor<T>,
 ): T {
-    if (shape.type === "fileUpload") {
-        return visitor.fileUpload(shape);
+    if (shape.type === "formData") {
+        return visitor.formData(shape);
     } else if (shape.type === "bytes") {
         return visitor.bytes(shape);
     } else {

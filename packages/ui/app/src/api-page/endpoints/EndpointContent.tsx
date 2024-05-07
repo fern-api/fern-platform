@@ -301,6 +301,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 requestHeight={requestHeight}
                                 responseHeight={responseHeight}
+                                selectedError={selectedError}
                             />
                         )}
                     </div>

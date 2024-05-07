@@ -259,6 +259,20 @@ module.exports = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: 0 },
                 },
+                "thumb-rock": {
+                    "0%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "30%": {
+                        transform: "rotate(15deg)",
+                    },
+                    "80%": {
+                        transform: "rotate(-10deg)",
+                    },
+                    "100%": {
+                        transform: "rotate(0deg)",
+                    },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -272,6 +286,7 @@ module.exports = {
                 shine: "shine 5s ease-in-out infinite",
                 "slide-down": "slide-down 400ms cubic-bezier(0.87, 0, 0.13, 1)",
                 "slide-up": "slide-up 400ms cubic-bezier(0.87, 0, 0.13, 1)",
+                "thumb-rock": "thumb-rock 500ms both",
             },
         },
     },

@@ -12,6 +12,7 @@ interface EdgeConfigResponse {
     "toc-default-enabled": string[]; // toc={true} in Steps, Tabs, and Accordions
     "snippet-template-enabled": string[];
     "http-snippets-enabled": string[];
+    "inline-feedback-enabled": string[];
     "dark-code-enabled": string[];
 }
 
@@ -30,6 +31,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             "toc-default-enabled",
             "snippet-template-enabled",
             "http-snippets-enabled",
+            "inline-feedback-enabled",
             "dark-code-enabled",
         ]);
 
@@ -40,6 +42,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isTocDefaultEnabled = checkDomainMatchesCustomers(domain, config["toc-default-enabled"]);
         const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(domain, config["snippet-template-enabled"]);
         const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"]);
+        const isInlineFeedbackEnabled = checkDomainMatchesCustomers(domain, config["inline-feedback-enabled"]);
         const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"]);
 
         return {
@@ -50,6 +53,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isTocDefaultEnabled,
             isSnippetTemplatesEnabled: isSnippetTemplatesEnabled || isDevelopment(domain),
             isHttpSnippetsEnabled,
+            isInlineFeedbackEnabled,
             isDarkCodeEnabled,
         };
     } catch (e) {
@@ -63,6 +67,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isTocDefaultEnabled: false,
             isSnippetTemplatesEnabled: isDevelopment(domain),
             isHttpSnippetsEnabled: false,
+            isInlineFeedbackEnabled: isFern(domain),
             isDarkCodeEnabled: false,
         };
     }
@@ -102,5 +107,17 @@ function isDevelopment(domain: string): boolean {
     if (process.env.NODE_ENV !== "production") {
         return true;
     }
+    return false;
+}
+
+function isFern(domain: string): boolean {
+    if (
+        ["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].some(
+            (d) => d === domain,
+        )
+    ) {
+        return true;
+    }
+
     return false;
 }

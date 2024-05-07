@@ -5,4 +5,5 @@ import * as FernRegistry from "../../../../../../../../..";
 export interface FilePropertyArray extends FernRegistry.api.v1.register.WithDescription, FernRegistry.api.v1.register.WithAvailability {
     key: FernRegistry.api.v1.register.PropertyKey;
     isOptional: boolean;
+    contentType?: FernRegistry.api.v1.register.ContentType;
 }

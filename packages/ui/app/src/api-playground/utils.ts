@@ -509,8 +509,8 @@ export function stringifyCurl({
                           }
                           return { type: "form", value: newValue };
                       },
-                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Stream | undefined =>
-                          value != null ? { type: "stream", fileName: value.name } : undefined,
+                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Bytes | undefined =>
+                          value != null ? { type: "bytes", fileName: value.name, value: undefined } : undefined,
                       _other: () => undefined,
                   }),
     });
@@ -619,7 +619,7 @@ export function getDefaultValuesForBody(
         return undefined;
     }
     return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
-        fileUpload: () => ({ type: "form-data", value: {} }),
+        formData: () => ({ type: "form-data", value: {} }),
         bytes: () => ({ type: "octet-stream", value: undefined }),
         typeShape: (typeShape) => ({
             type: "json",
@@ -712,8 +712,8 @@ export function hasRequiredFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: (fileUpload) =>
-            fileUpload.value?.properties.some((property) =>
+        formData: (formData) =>
+            formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => !file.isOptional,
                     fileArray: (fileArray) => !fileArray.isOptional,
@@ -758,8 +758,8 @@ export function hasOptionalFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: (fileUpload) =>
-            fileUpload.value?.properties.some((property) =>
+        formData: (formData) =>
+            formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => file.isOptional,
                     fileArray: (fileArray) => fileArray.isOptional,

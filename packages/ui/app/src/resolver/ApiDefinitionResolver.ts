@@ -22,7 +22,8 @@ import {
     ResolvedError,
     ResolvedExampleEndpointRequest,
     ResolvedExampleEndpointResponse,
-    ResolvedFileUploadRequestProperty,
+    ResolvedFormData,
+    ResolvedFormDataRequestProperty,
     ResolvedFormValue,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
@@ -281,6 +282,12 @@ export class ApiDefinitionResolver {
                     shape,
                     description,
                     availability: error.availability,
+                    examples:
+                        error.examples?.map((example) => ({
+                            name: example.name,
+                            description: example.description,
+                            responseBody: example.responseBody.value,
+                        })) ?? [],
                 };
             }),
         );
@@ -627,51 +634,17 @@ export class ApiDefinitionResolver {
                 description: undefined,
                 availability: undefined,
             }),
-            fileUpload: async (fileUpload) => ({
-                type: "fileUpload",
-                value:
-                    fileUpload.value != null
-                        ? {
-                              description: await maybeSerializeMdxContent(fileUpload.value.description),
-                              availability: fileUpload.value.availability,
-                              name: fileUpload.value.name,
-                              properties: await Promise.all(
-                                  fileUpload.value.properties.map(
-                                      async (property): Promise<ResolvedFileUploadRequestProperty> => {
-                                          switch (property.type) {
-                                              case "file": {
-                                                  const description = await maybeSerializeMdxContent(
-                                                      property.value.description,
-                                                  );
-                                                  return {
-                                                      type: property.value.type,
-                                                      key: property.value.key,
-                                                      description,
-                                                      availability: property.value.availability,
-                                                      isOptional: property.value.isOptional,
-                                                  };
-                                              }
-                                              case "bodyProperty": {
-                                                  const [description, valueShape] = await Promise.all([
-                                                      maybeSerializeMdxContent(property.description),
-                                                      this.apiTypeResolver.resolveTypeReference(property.valueType),
-                                                  ]);
-                                                  return {
-                                                      type: "bodyProperty",
-                                                      key: property.key,
-                                                      description,
-                                                      availability: property.availability,
-                                                      valueShape,
-                                                      hidden: false,
-                                                  };
-                                              }
-                                          }
-                                      },
-                                  ),
-                              ),
-                          }
-                        : undefined,
-            }),
+            formData: this.resolveFormData,
+            fileUpload: (fileUpload) =>
+                fileUpload.value != null
+                    ? this.resolveFormData(fileUpload.value)
+                    : Promise.resolve({
+                          type: "formData",
+                          name: "Form Data",
+                          properties: [],
+                          description: undefined,
+                          availability: undefined,
+                      }),
             bytes: (bytes) => Promise.resolve(bytes),
             reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
             _other: () =>
@@ -681,6 +654,47 @@ export class ApiDefinitionResolver {
                     description: undefined,
                 }),
         });
+    }
+
+    async resolveFormData(formData: APIV1Read.FormDataRequest): Promise<ResolvedFormData> {
+        return {
+            type: "formData",
+            description: await maybeSerializeMdxContent(formData.description),
+            availability: formData.availability,
+            name: formData.name,
+            properties: await Promise.all(
+                formData.properties.map(async (property): Promise<ResolvedFormDataRequestProperty> => {
+                    switch (property.type) {
+                        case "file": {
+                            const description = await maybeSerializeMdxContent(property.value.description);
+                            return {
+                                type: property.value.type,
+                                key: property.value.key,
+                                description,
+                                availability: property.value.availability,
+                                isOptional: property.value.isOptional,
+                                contentType: property.value.contentType,
+                            };
+                        }
+                        case "bodyProperty": {
+                            const [description, valueShape] = await Promise.all([
+                                maybeSerializeMdxContent(property.description),
+                                this.apiTypeResolver.resolveTypeReference(property.valueType),
+                            ]);
+                            return {
+                                type: "bodyProperty",
+                                key: property.key,
+                                description,
+                                availability: property.availability,
+                                valueShape,
+                                hidden: false,
+                                contentType: property.contentType,
+                            };
+                        }
+                    }
+                }),
+            ),
+        };
     }
 
     resolveResponseBodyShape(
@@ -783,15 +797,37 @@ export class ApiDefinitionResolver {
             }),
             form: (form) => ({
                 type: "form",
-                value: mapValues(form.value, (v) =>
+                value: mapValues(form.value, (v, key) =>
                     visitDiscriminatedUnion(v, "type")._visit<ResolvedFormValue>({
-                        filenameWithData: (value) => ({ type: "file", fileName: value.filename }),
-                        json: (value) => ({ type: "json", value: value.value }),
-                        filename: (value) => ({ type: "file", fileName: value.value }),
-                        _other: () => ({ type: "json", value: undefined }), // TODO: handle other types
+                        json: (value) => {
+                            const property =
+                                shape?.type === "formData"
+                                    ? shape.properties.find((p) => p.key === key && p.type === "bodyProperty")
+                                    : undefined;
+                            const contentType =
+                                typeof property?.contentType === "string"
+                                    ? property.contentType
+                                    : Array.isArray(property?.contentType)
+                                      ? property.contentType.find((ct) => ct.includes("json")) ??
+                                        property.contentType[0]
+                                      : undefined;
+                            return { type: "json" as const, value: value.value, contentType };
+                        },
+                        filename: (value) => ({ type: "file", fileName: value.value, fileId: undefined }),
+                        filenames: (value) => ({
+                            type: "fileArray",
+                            files: value.value.map((v) => ({ type: "file", fileName: v, fileId: undefined })),
+                        }),
+                        filenameWithData: (value) => ({ type: "file", fileName: value.filename, fileId: value.data }),
+                        filenamesWithData: (value) => ({
+                            type: "fileArray",
+                            files: value.value.map((v) => ({ type: "file", fileName: v.filename, fileId: v.data })),
+                        }),
+                        _other: () => ({ type: "json", value: undefined, contentType: undefined }),
                     }),
                 ),
             }),
+            bytes: (bytes) => ({ type: "bytes", value: bytes.value.value, fileName: undefined }),
             _other: () => undefined,
         });
     }
