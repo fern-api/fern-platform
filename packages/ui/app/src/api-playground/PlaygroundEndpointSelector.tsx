@@ -4,7 +4,7 @@ import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import cn from "clsx";
 import { FC, Fragment, useCallback, useRef } from "react";
-import { withStream } from "../commons/withStream";
+import { withStream } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { usePlaygroundContext } from "./PlaygroundContext";
 import { ApiGroup, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
