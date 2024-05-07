@@ -328,6 +328,13 @@ export interface ResolvedError extends WithMetadata {
     shape: ResolvedTypeShape | undefined;
     statusCode: number;
     name: string | undefined;
+    examples: ResolvedExampleError[];
+}
+
+export interface ResolvedExampleError {
+    name: string | undefined;
+    description: string | undefined;
+    responseBody: unknown | undefined;
 }
 
 export interface ResolvedObjectProperty extends WithMetadata {

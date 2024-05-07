@@ -1,20 +1,16 @@
 "use client";
-import dynamic from "next/dynamic";
 import { memo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
-import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../resolver/types";
+import { FernTag } from "../../components/FernTag";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedExampleEndpointCall } from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
+import { CodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-
-const CodeSnippetExample = dynamic(
-    () => import("../examples/CodeSnippetExample").then(({ CodeSnippetExample }) => CodeSnippetExample),
-    { ssr: true },
-);
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -25,19 +21,16 @@ export declare namespace EndpointContentCodeSnippets {
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
         requestCodeSnippet: string;
-        // requestHast: Root;
         requestCurlJson: unknown;
         responseCodeSnippet: string;
-        // responseHast: Root | undefined;
         responseJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
         requestHeight: number;
         responseHeight: number;
+        selectedError: ResolvedError | undefined;
     }
 }
-
-// const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
     api,
@@ -49,16 +42,15 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     requestCodeSnippet,
     requestCurlJson,
     responseCodeSnippet,
-    // responseHast,
     responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
-    // requestHeight,
-    // responseHeight,
+    selectedError,
 }) => {
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
         <div className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full">
+            {/* TODO: Replace this with a proper segmented control component */}
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <FernButtonGroup className="min-w-0 shrink">
                     {selectedClientGroup?.examples.map((example) => (
@@ -87,12 +79,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         environment={endpoint.defaultEnvironment?.baseUrl}
                     />
                 }
-                // afterTitle={<span className="t-accent mx-1 px-1 text-xs">{selectedClient.name}</span>}
-                type="primary"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                // copyToClipboardText={() => requestCodeSnippet}
                 actions={
                     <>
                         <PlaygroundButton
@@ -113,19 +102,27 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     </>
                 }
                 code={requestCodeSnippet}
-                language={selectedClient.language === "curl" ? "bash" : selectedClient.language}
+                language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
                 jsonStartLine={
                     selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
-                // scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
-            {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" type={"primary"} />}
+            {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" />}
             {example.responseBody != null && endpoint.responseBody?.shape.type !== "fileDownload" && (
                 <CodeSnippetExample
-                    title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                    type={example.responseStatusCode >= 400 ? "warning" : "primary"}
+                    title={
+                        selectedError == null ? (
+                            "Response"
+                        ) : (
+                            <span className="inline-block gap-2">
+                                <FernTag intent="danger">{selectedError.statusCode}</FernTag>
+                                <span className="text-intent-accent">{selectedError.name}</span>
+                            </span>
+                        )
+                    }
+                    isError={example.responseStatusCode >= 400}
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
@@ -133,7 +130,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     language="json"
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={responseJson}
-                    // scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
                 />
             )}
         </div>
