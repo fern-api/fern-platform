@@ -27,6 +27,9 @@ jobs:
       CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
@@ -45,6 +48,9 @@ jobs:
       CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
