@@ -38,7 +38,7 @@
 
     /* 
     html.dark {
-        background-color: var(--accent-primary);
+        background-color: var(--accent);
     } */
 
     *,
@@ -707,7 +707,7 @@
 
         &.interactive {
             @apply cursor-pointer shadow-card;
-            @apply hover:shadow-card-elevated hover:border-primary transition-all;
+            @apply hover:shadow-card-elevated hover:border-accent transition-all;
             @apply active:shadow-card-elevated active:border-primary;
 
             &.active {
@@ -767,7 +767,7 @@
     }
 
     .fern-numeric-input-group:focus-within .fern-numeric-input-step {
-        @apply ring-accent-primary hover:bg-tag-primary t-accent hover:t-accent border-primary;
+        @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step:first-child {
@@ -780,7 +780,7 @@
 
     .fern-input,
     .fern-textarea {
-        @apply caret-accent-primary py-2 px-2.5 text-sm;
+        @apply caret-accent py-2 px-2.5 text-sm;
         @apply max-sm:text-base;
     }
 
@@ -795,7 +795,7 @@
     }
 
     .fern-mdx-link {
-        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa;
+        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;
         @apply font-semibold;
 
         h1 &,
@@ -816,5 +816,9 @@
                 @apply t-accent;
             }
         }
+    }
+
+    .fern-api-property-key {
+        @apply font-mono t-default font-semibold text-sm;
     }
 }

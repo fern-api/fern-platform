@@ -36,7 +36,7 @@ const EMPTY_EXAMPLE = {
     pathParameters: {},
     queryParameters: {},
     headers: {},
-    path: "",
+    path: "/api",
     responseStatusCode: 0,
     codeExamples: {},
     codeSamples: [],

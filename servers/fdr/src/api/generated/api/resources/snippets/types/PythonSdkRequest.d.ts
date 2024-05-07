@@ -3,4 +3,5 @@
  */
 export interface PythonSdkRequest {
     package: string;
+    version?: string;
 }

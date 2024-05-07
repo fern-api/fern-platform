@@ -1,5 +1,7 @@
+import clsx from "clsx";
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
 import { getJsonLineNumbers } from "./getJsonLineNumbers";
@@ -29,8 +31,10 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     jsonStartLine,
     scrollAreaStyle,
     measureHeight,
+    className,
     ...props
 }) => {
+    const { isDarkCodeEnabled } = useFeatureFlags();
     const codeBlockRef = createRef<HTMLPreElement>();
     const viewportRef = createRef<ScrollToHandle>();
 
@@ -70,7 +74,13 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     }, [requestHighlightLines, viewportRef]);
 
     return (
-        <TitledExample copyToClipboardText={useCallback(() => code, [code])} {...props}>
+        <TitledExample
+            copyToClipboardText={useCallback(() => code, [code])}
+            {...props}
+            className={clsx(className, {
+                "dark bg-card-solid": isDarkCodeEnabled,
+            })}
+        >
             <FernSyntaxHighlighter
                 id={id}
                 className="rounded-t-0 rounded-b-[inherit]"

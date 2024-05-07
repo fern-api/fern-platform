@@ -8,6 +8,8 @@ export interface FeatureFlags {
     isTocDefaultEnabled: boolean;
     isSnippetTemplatesEnabled: boolean;
     isHttpSnippetsEnabled: boolean;
+    isInlineFeedbackEnabled: boolean;
+    isDarkCodeEnabled: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
@@ -18,6 +20,8 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isTocDefaultEnabled: false,
     isSnippetTemplatesEnabled: false,
     isHttpSnippetsEnabled: false,
+    isInlineFeedbackEnabled: false,
+    isDarkCodeEnabled: false,
 };
 
 export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);

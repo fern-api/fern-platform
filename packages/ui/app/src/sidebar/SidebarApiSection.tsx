@@ -216,6 +216,9 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
     };
     return (
         <SidebarSlugLink
+            className={cn({
+                "first:mt-6": depth === 0,
+            })}
             slug={item.slug}
             shallow={shallow}
             title={item.title}

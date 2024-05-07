@@ -3,7 +3,6 @@ import cn from "clsx";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useRouteListener } from "../../contexts/useRouteListener";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
@@ -102,13 +101,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
             <div className="group/anchor-container flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} />
                 <span className="inline-flex items-baseline gap-2">
-                    <MonospaceText
-                        className={cn("t-default text-sm", {
-                            "t-accent": isActive,
-                        })}
-                    >
-                        {name}
-                    </MonospaceText>
+                    <span className="fern-api-property-key">{name}</span>
                     {typeShorthand}
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>

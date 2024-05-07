@@ -14,6 +14,7 @@ env:
   FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
 jobs:
   sdk:
@@ -34,6 +35,7 @@ jobs:
       ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
       ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
       ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+      APPLICATION_ENVIRONMENT: prod
     steps:
       - uses: actions/checkout@v4
       - name: 📥 Install
@@ -78,7 +80,7 @@ jobs:
       - name: Smoke Test Dev Docs
         env:
           NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
-          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd smoke-test
           npm install -g fern-api
@@ -91,3 +93,8 @@ jobs:
           else
               exit 1
           fi
+
+  healthchecks:
+    needs: deploy_prod
+    uses: ./.github/workflows/healthcheck.yml
+    secrets: inherit
