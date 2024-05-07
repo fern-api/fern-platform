@@ -7,8 +7,6 @@ import { isEqual, last, sortBy } from "lodash-es";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { StreamTag } from "../commons/withStream";
-import { WssTag } from "../commons/withWss";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
@@ -208,11 +206,11 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
     const selected = isEqual(item.slug, selectedSlug);
 
     const httpMethodTags: Record<APIV1Read.HttpMethod, ReactElement> = {
-        GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} small active={selected} />,
-        POST: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Post} small active={selected} />,
-        PUT: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Put} small active={selected} />,
-        PATCH: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Patch} small active={selected} />,
-        DELETE: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Delete} small active={selected} />,
+        GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} size="sm" active={selected} />,
+        POST: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Post} size="sm" active={selected} />,
+        PUT: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Put} size="sm" active={selected} />,
+        PATCH: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Patch} size="sm" active={selected} />,
+        DELETE: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Delete} size="sm" active={selected} />,
     };
     return (
         <SidebarSlugLink
@@ -229,12 +227,12 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
                 SidebarNode.isApiPage(item) ? (
                     item.apiType === "endpoint" ? (
                         item.stream ? (
-                            <StreamTag small active={selected} />
+                            <HttpMethodTag method="STREAM" size="sm" active={selected} />
                         ) : (
                             httpMethodTags[item.method]
                         )
                     ) : item.apiType === "websocket" ? (
-                        <WssTag small active={selected} />
+                        <HttpMethodTag method="WSS" size="sm" active={selected} />
                     ) : null
                 ) : null
             }
