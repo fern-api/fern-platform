@@ -9,6 +9,8 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+    GITHUB_APP_LOGIN_NAME: ${env:GITHUB_APP_LOGIN_NAME, 'fern-api[bot]'}
+    GITHUB_APP_LOGIN_ID: ${env:GITHUB_APP_LOGIN_ID, 'placeholder'}
     GITHUB_APP_ID: ${env:GITHUB_APP_ID, 'placeholder'}
     GITHUB_APP_PRIVATE_KEY: ${env:GITHUB_APP_PRIVATE_KEY, 'placeholder'}
     GITHUB_APP_CLIENT_ID: ${env:GITHUB_APP_CLIENT_ID, 'placeholder'}
