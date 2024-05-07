@@ -65,14 +65,14 @@ types:
       minimum: optional<integer>
       maximum: optional<integer>
       default: optional<integer>
-  
+
   DoubleType:
     properties:
       minimum: optional<double>
       maximum: optional<double>
       default: optional<double>
-  
-  StringType: 
+
+  StringType:
     properties:
       regex: optional<string>
       minLength: optional<integer>
@@ -138,13 +138,13 @@ types:
       booleanLiteral: boolean
       stringLiteral: string
 
-  FileUploadRequest:
+  FormDataRequest:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       name: string
-      properties: list<FileUploadRequestProperty>
+      properties: list<FormDataProperty>
 
   BytesRequest:
     extends:
@@ -154,12 +154,17 @@ types:
       isOptional: boolean
       contentType: optional<string>
 
-  FileUploadRequestProperty:
+  FormDataProperty:
     union:
-      file: FileProperty
-      bodyProperty: ObjectProperty
+      file: FormDataFileProperty
+      bodyProperty: FormDataBodyProperty
 
-  FileProperty:
+  FormDataBodyProperty:
+    extends: ObjectProperty
+    properties:
+      contentType: optional<ContentType>
+
+  FormDataFileProperty:
     union:
       file: FilePropertySingle
       fileArray: FilePropertyArray
@@ -171,6 +176,7 @@ types:
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
 
   FilePropertyArray:
     extends:
@@ -179,3 +185,10 @@ types:
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
+
+  ContentType:
+    discriminated: false
+    union:
+      - string
+      - list<string>

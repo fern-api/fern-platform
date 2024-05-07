@@ -136,25 +136,30 @@ types:
       booleanLiteral: boolean
       stringLiteral: string
 
-  FileUploadRequest:
+  FormDataRequest:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       name: string
-      properties: list<FileUploadRequestProperty>
+      properties: list<FormDataProperty>
 
   BytesRequest:
     properties:
       isOptional: boolean
       contentType: optional<string>
 
-  FileUploadRequestProperty:
+  FormDataProperty:
     union:
-      file: FileProperty
-      bodyProperty: ObjectProperty
+      file: FormDataFileProperty
+      bodyProperty: FormDataBodyProperty
 
-  FileProperty:
+  FormDataBodyProperty:
+    extends: ObjectProperty
+    properties:
+      contentType: optional<ContentType>
+
+  FormDataFileProperty:
     union:
       file: FilePropertySingle
       fileArray: FilePropertyArray
@@ -166,6 +171,7 @@ types:
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
 
   FilePropertyArray:
     extends:
@@ -174,3 +180,10 @@ types:
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
+
+  ContentType:
+    discriminated: false
+    union:
+      - string
+      - list<string>

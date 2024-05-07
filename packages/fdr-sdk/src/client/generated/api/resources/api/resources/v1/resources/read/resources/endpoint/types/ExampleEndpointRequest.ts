@@ -6,7 +6,8 @@ import * as FernRegistry from "../../../../../../../../..";
 
 export type ExampleEndpointRequest =
     | FernRegistry.api.v1.read.ExampleEndpointRequest.Json
-    | FernRegistry.api.v1.read.ExampleEndpointRequest.Form;
+    | FernRegistry.api.v1.read.ExampleEndpointRequest.Form
+    | FernRegistry.api.v1.read.ExampleEndpointRequest.Bytes;
 
 export declare namespace ExampleEndpointRequest {
     interface Json {
@@ -17,5 +18,10 @@ export declare namespace ExampleEndpointRequest {
     interface Form {
         type: "form";
         value: Record<string, FernRegistry.api.v1.read.FormValue>;
+    }
+
+    interface Bytes {
+        type: "bytes";
+        value: FernRegistry.api.v1.read.BytesValue;
     }
 }

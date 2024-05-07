@@ -9,4 +9,5 @@ export interface FilePropertySingle
         FernRegistry.api.v1.read.WithAvailability {
     key: FernRegistry.api.v1.read.PropertyKey;
     isOptional: boolean;
+    contentType?: FernRegistry.api.v1.read.ContentType;
 }

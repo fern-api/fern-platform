@@ -206,15 +206,15 @@ function getHarRequest(
                         fileName: value.fileName,
                     });
                 } else if (value.type === "fileArray") {
-                    for (const fileName of value.fileNames) {
+                    for (const fileName of value.files) {
                         request.postData.params.push({
                             name,
-                            fileName,
+                            fileName: fileName.fileName,
                         });
                     }
                 }
             }
-        } else if (requestBody.type === "stream") {
+        } else if (requestBody.type === "bytes") {
             // TODO: verify this is correct
             request.postData.params = [{ name: "file", fileName: requestBody.fileName }];
         }

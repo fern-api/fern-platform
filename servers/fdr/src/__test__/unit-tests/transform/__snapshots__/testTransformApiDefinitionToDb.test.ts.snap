@@ -413,11 +413,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
               "path": "/api/adjustments/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "amount_cents": 0,
-                "service_line_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "source": "ERA",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -526,7 +522,7 @@ current organization_id, then a response code of \`403\` will be returned.
                 "adjustment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -805,10 +801,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/auth/v2/token",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "client_id": "string",
-                "client_secret": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -846,10 +839,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/auth/v2/token",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "client_id": "string",
-                "client_secret": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -857,12 +847,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   "client_secret": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "TooManyRequestsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -969,10 +954,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/billing_notes/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "text": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -1204,17 +1186,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/bulk-claim-actions/v1/execute",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "action": {
-                  "type": "void",
-                },
-                "claims": {
-                  "claim_ids": [
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  ],
-                  "type": "claim_id_set",
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -1351,17 +1323,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/bulk-claim-actions/v1/validate",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "action": {
-                  "type": "void",
-                },
-                "claims": {
-                  "claim_ids": [
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  ],
-                  "type": "claim_id_set",
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -1644,11 +1606,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/chargemasters/v2/entries",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "chargemaster_entry_ids": [
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ],
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -2605,12 +2563,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -2641,12 +2594,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -2893,12 +2841,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -2929,12 +2872,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -3150,12 +3088,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -3186,12 +3119,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -3596,24 +3524,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -3697,24 +3608,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -3736,17 +3630,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ConfigForScopeComputationHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -3778,24 +3662,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -3817,17 +3684,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ScopeDoesNotSupportConfigurableRulesHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -3859,24 +3716,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -3898,17 +3738,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "UnknownScopeHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -3940,24 +3770,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -3979,31 +3792,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "errors": [
-                    {
-                      "type": "invalid_statement",
-                      "value": {
-                        "available_actions": [
-                          {
-                            "action": {
-                              "type": "hold_claim_available_action",
-                            },
-                            "description": "string",
-                            "display_name": "string",
-                          },
-                        ],
-                        "provided_action": {
-                          "type": "hold_claim",
-                        },
-                        "type": "action_not_available_error",
-                      },
-                    },
-                  ],
-                },
-                "errorName": "RuleValidationHttpFailure",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -4387,12 +4176,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "RuleNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -4680,7 +4464,7 @@ current organization_id, then a response code of \`403\` will be returned.
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -4749,17 +4533,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "RuleNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -4788,22 +4567,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ConfigForScopeComputationHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -4837,22 +4606,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ScopeDoesNotSupportConfigurableRulesHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -4886,22 +4645,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "UnknownScopeHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -4935,36 +4684,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "configurable_rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "errors": [
-                    {
-                      "type": "invalid_statement",
-                      "value": {
-                        "available_actions": [
-                          {
-                            "action": {
-                              "type": "hold_claim_available_action",
-                            },
-                            "description": "string",
-                            "display_name": "string",
-                          },
-                        ],
-                        "provided_action": {
-                          "type": "hold_claim",
-                        },
-                        "type": "action_not_available_error",
-                      },
-                    },
-                  ],
-                },
-                "errorName": "RuleValidationHttpFailure",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -5199,12 +4924,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "rule_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "RuleNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -5406,14 +5126,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -5491,14 +5204,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -5510,17 +5216,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ConfigForScopeComputationHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -5552,14 +5248,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -5571,17 +5260,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ScopeDoesNotSupportConfigurableRulesHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -5613,14 +5292,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1/config-for-scope",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -5632,17 +5304,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "UnknownScopeHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -5781,24 +5443,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1/validate",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -5850,24 +5495,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules/v1/validate",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "scope": {
-                  "phase_id": "string",
-                  "pipeline_id": "string",
-                  "step_id": "string",
-                  "type": "step_locator",
-                },
-                "statement": {
-                  "action": {
-                    "type": "hold_claim",
-                  },
-                  "condition": {
-                    "conditions": [],
-                    "type": "and",
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -5889,17 +5517,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "scope": {
-                    "phase_id": "string",
-                    "pipeline_id": "string",
-                    "step_id": "string",
-                    "type": "step_locator",
-                  },
-                },
-                "errorName": "ConfigForScopeComputationHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -6217,23 +5835,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "native_primitive",
-                    "value": "INTEGER",
-                  },
-                },
-                "value": {
-                  "type": "primitive_value",
-                  "value": {
-                    "type": "integer",
-                    "value": 0,
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -6318,23 +5920,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "native_primitive",
-                    "value": "INTEGER",
-                  },
-                },
-                "value": {
-                  "type": "primitive_value",
-                  "value": {
-                    "type": "integer",
-                    "value": 0,
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -6355,25 +5941,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "provided_type": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "native_primitive",
-                      "value": "INTEGER",
-                    },
-                  },
-                  "provided_value": {
-                    "type": "primitive_value",
-                    "value": {
-                      "type": "integer",
-                      "value": 0,
-                    },
-                  },
-                },
-                "errorName": "TypeDoesNotMatchValueHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -6413,23 +5981,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/configurable-rules-variables/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "name": "string",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "native_primitive",
-                    "value": "INTEGER",
-                  },
-                },
-                "value": {
-                  "type": "primitive_value",
-                  "value": {
-                    "type": "integer",
-                    "value": 0,
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -6450,12 +6002,7 @@ current organization_id, then a response code of \`403\` will be returned.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "name": "string",
-                },
-                "errorName": "VariableWithNameAlreadyExistsHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -6799,12 +6346,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "VariableNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -7054,7 +6596,7 @@ current organization_id, then a response code of \`403\` will be returned.
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -7125,30 +6667,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "provided_type": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "native_primitive",
-                      "value": "INTEGER",
-                    },
-                  },
-                  "provided_value": {
-                    "type": "primitive_value",
-                    "value": {
-                      "type": "integer",
-                      "value": 0,
-                    },
-                  },
-                },
-                "errorName": "TypeDoesNotMatchValueHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -7190,17 +6714,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "VariableNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -7229,33 +6748,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "existing_type": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "native_primitive",
-                      "value": "INTEGER",
-                    },
-                  },
-                  "new_type": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "native_primitive",
-                      "value": "INTEGER",
-                    },
-                  },
-                  "rules_used_in": [
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  ],
-                },
-                "errorName": "VariableTypeChangeNotAllowedHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -7300,17 +6798,12 @@ current organization_id, then a response code of \`403\` will be returned.
                 "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "name": "string",
-                },
-                "errorName": "VariableWithNameAlreadyExistsHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -7562,15 +7055,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "rules_used_in": [
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  ],
-                  "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "VariableInUseHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -7604,12 +7089,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "variable_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                },
-                "errorName": "VariableNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -8491,20 +7971,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "path": "/api/contracts/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "contracting_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "effective_date": "string",
-                "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "regions": {
-                  "states": [
-                    "AA",
-                  ],
-                  "type": "states",
-                },
-                "rendering_provider_ids": [
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ],
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -8898,7 +8365,7 @@ Max items is 100.
                 "contract_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -9427,11 +8894,7 @@ value, overriding what was set before.
               "path": "/api/diagnoses/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "code": "string",
-                "code_type": "ABF",
-                "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -9541,7 +9004,7 @@ value, overriding what was set before.
                 "diagnosis_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -9867,7 +9330,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -9924,17 +9387,12 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -10956,12 +10414,7 @@ or encounter external id.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -11201,12 +10654,7 @@ or encounter external id.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -11237,12 +10685,7 @@ or encounter external id.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -11504,12 +10947,7 @@ or encounter external id.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -11541,12 +10979,7 @@ or encounter external id.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -11765,12 +11198,7 @@ or encounter external id.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -14109,49 +13537,7 @@ or encounter external id.
               "path": "/api/encounters/v4",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "benefits_assigned_to_provider": true,
-                "billable_status": "BILLABLE",
-                "billing_provider": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                    "zip_plus_four_code": "string",
-                  },
-                  "npi": "string",
-                  "tax_id": "string",
-                },
-                "date_of_service": "string",
-                "diagnoses": [
-                  {
-                    "code": "string",
-                    "code_type": "ABF",
-                  },
-                ],
-                "external_id": "string",
-                "patient": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                  },
-                  "date_of_birth": "string",
-                  "external_id": "string",
-                  "first_name": "string",
-                  "gender": "male",
-                  "last_name": "string",
-                },
-                "patient_authorized_release": true,
-                "place_of_service_code": "01",
-                "provider_accepts_assignment": true,
-                "rendering_provider": {
-                  "npi": "string",
-                },
-                "responsible_party": "INSURANCE_PAY",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -15048,49 +14434,7 @@ or encounter external id.
               "path": "/api/encounters/v4",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "benefits_assigned_to_provider": true,
-                "billable_status": "BILLABLE",
-                "billing_provider": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                    "zip_plus_four_code": "string",
-                  },
-                  "npi": "string",
-                  "tax_id": "string",
-                },
-                "date_of_service": "string",
-                "diagnoses": [
-                  {
-                    "code": "string",
-                    "code_type": "ABF",
-                  },
-                ],
-                "external_id": "string",
-                "patient": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                  },
-                  "date_of_birth": "string",
-                  "external_id": "string",
-                  "first_name": "string",
-                  "gender": "male",
-                  "last_name": "string",
-                },
-                "patient_authorized_release": true,
-                "place_of_service_code": "01",
-                "provider_accepts_assignment": true,
-                "rendering_provider": {
-                  "npi": "string",
-                },
-                "responsible_party": "INSURANCE_PAY",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -15137,12 +14481,7 @@ or encounter external id.
                   "responsible_party": "INSURANCE_PAY",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "external_id": "string",
-                },
-                "errorName": "EncounterExternalIdUniquenessError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -15169,49 +14508,7 @@ or encounter external id.
               "path": "/api/encounters/v4",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "benefits_assigned_to_provider": true,
-                "billable_status": "BILLABLE",
-                "billing_provider": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                    "zip_plus_four_code": "string",
-                  },
-                  "npi": "string",
-                  "tax_id": "string",
-                },
-                "date_of_service": "string",
-                "diagnoses": [
-                  {
-                    "code": "string",
-                    "code_type": "ABF",
-                  },
-                ],
-                "external_id": "string",
-                "patient": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                  },
-                  "date_of_birth": "string",
-                  "external_id": "string",
-                  "first_name": "string",
-                  "gender": "male",
-                  "last_name": "string",
-                },
-                "patient_authorized_release": true,
-                "place_of_service_code": "01",
-                "provider_accepts_assignment": true,
-                "rendering_provider": {
-                  "npi": "string",
-                },
-                "responsible_party": "INSURANCE_PAY",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -15258,12 +14555,7 @@ or encounter external id.
                   "responsible_party": "INSURANCE_PAY",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -15290,49 +14582,7 @@ or encounter external id.
               "path": "/api/encounters/v4",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "benefits_assigned_to_provider": true,
-                "billable_status": "BILLABLE",
-                "billing_provider": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                    "zip_plus_four_code": "string",
-                  },
-                  "npi": "string",
-                  "tax_id": "string",
-                },
-                "date_of_service": "string",
-                "diagnoses": [
-                  {
-                    "code": "string",
-                    "code_type": "ABF",
-                  },
-                ],
-                "external_id": "string",
-                "patient": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                  },
-                  "date_of_birth": "string",
-                  "external_id": "string",
-                  "first_name": "string",
-                  "gender": "male",
-                  "last_name": "string",
-                },
-                "patient_authorized_release": true,
-                "place_of_service_code": "01",
-                "provider_accepts_assignment": true,
-                "rendering_provider": {
-                  "npi": "string",
-                },
-                "responsible_party": "INSURANCE_PAY",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -15379,14 +14629,7 @@ or encounter external id.
                   "responsible_party": "INSURANCE_PAY",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "missing_fields": [
-                    "string",
-                  ],
-                },
-                "errorName": "EncounterGuarantorMissingContactInfoError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -15415,49 +14658,7 @@ or encounter external id.
               "path": "/api/encounters/v4",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "benefits_assigned_to_provider": true,
-                "billable_status": "BILLABLE",
-                "billing_provider": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                    "zip_plus_four_code": "string",
-                  },
-                  "npi": "string",
-                  "tax_id": "string",
-                },
-                "date_of_service": "string",
-                "diagnoses": [
-                  {
-                    "code": "string",
-                    "code_type": "ABF",
-                  },
-                ],
-                "external_id": "string",
-                "patient": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                  },
-                  "date_of_birth": "string",
-                  "external_id": "string",
-                  "first_name": "string",
-                  "gender": "male",
-                  "last_name": "string",
-                },
-                "patient_authorized_release": true,
-                "place_of_service_code": "01",
-                "provider_accepts_assignment": true,
-                "rendering_provider": {
-                  "npi": "string",
-                },
-                "responsible_party": "INSURANCE_PAY",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -15504,15 +14705,7 @@ or encounter external id.
                   "responsible_party": "INSURANCE_PAY",
                 },
               },
-              "responseBody": {
-                "content": [
-                  {
-                    "fieldName": "string",
-                    "humanReadableMessage": "string",
-                  },
-                ],
-                "errorName": "HttpRequestValidationsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -15542,49 +14735,7 @@ or encounter external id.
               "path": "/api/encounters/v4",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "benefits_assigned_to_provider": true,
-                "billable_status": "BILLABLE",
-                "billing_provider": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                    "zip_plus_four_code": "string",
-                  },
-                  "npi": "string",
-                  "tax_id": "string",
-                },
-                "date_of_service": "string",
-                "diagnoses": [
-                  {
-                    "code": "string",
-                    "code_type": "ABF",
-                  },
-                ],
-                "external_id": "string",
-                "patient": {
-                  "address": {
-                    "address1": "string",
-                    "city": "string",
-                    "state": "AA",
-                    "zip_code": "string",
-                  },
-                  "date_of_birth": "string",
-                  "external_id": "string",
-                  "first_name": "string",
-                  "gender": "male",
-                  "last_name": "string",
-                },
-                "patient_authorized_release": true,
-                "place_of_service_code": "01",
-                "provider_accepts_assignment": true,
-                "rendering_provider": {
-                  "npi": "string",
-                },
-                "responsible_party": "INSURANCE_PAY",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -15631,12 +14782,7 @@ or encounter external id.
                   "responsible_party": "INSURANCE_PAY",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "CashPayPayerError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -16055,7 +15201,7 @@ in bounds of the diagnoses list field
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -16912,17 +16058,12 @@ in bounds of the diagnoses list field
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "external_id": "string",
-                },
-                "errorName": "EncounterExternalIdUniquenessError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -16951,17 +16092,12 @@ in bounds of the diagnoses list field
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -16990,17 +16126,12 @@ in bounds of the diagnoses list field
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -17029,20 +16160,12 @@ in bounds of the diagnoses list field
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": [
-                  {
-                    "fieldName": "string",
-                    "humanReadableMessage": "string",
-                  },
-                ],
-                "errorName": "HttpRequestValidationsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -18534,7 +17657,7 @@ submitted to the payor.
                 "enrollment_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -18793,12 +17916,7 @@ submitted to the payor.
               "path": "/api/enrollments/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "enrollment_type": "CLAIMS",
-                "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "priority": "HIGH_PRIORITY",
-                "provider_npi": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -18904,12 +18022,7 @@ submitted to the payor.
               "path": "/api/enrollments/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "enrollment_type": "CLAIMS",
-                "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "priority": "HIGH_PRIORITY",
-                "provider_npi": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -18919,12 +18032,7 @@ submitted to the payor.
                   "provider_npi": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -19699,17 +18807,7 @@ submitted to the payor.
               "path": "/api/expected-network-status-tia/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "contracted_state": "AA",
-                "date_of_service": "2023-01-01",
-                "market": "san_francisco",
-                "rendering_provider_npi": "string",
-                "service_facility_state": "AA",
-                "service_facility_zip_code": "string",
-                "subscriber_member_id": "string",
-                "subscriber_payer_id": "string",
-                "subscriber_payer_name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -19762,17 +18860,7 @@ submitted to the payor.
               "path": "/api/expected-network-status-tia/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "contracted_state": "AA",
-                "date_of_service": "2023-01-01",
-                "market": "san_francisco",
-                "rendering_provider_npi": "string",
-                "service_facility_state": "AA",
-                "service_facility_zip_code": "string",
-                "subscriber_member_id": "string",
-                "subscriber_payer_id": "string",
-                "subscriber_payer_name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -19787,12 +18875,7 @@ submitted to the payor.
                   "subscriber_payer_name": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -19819,17 +18902,7 @@ submitted to the payor.
               "path": "/api/expected-network-status-tia/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "contracted_state": "AA",
-                "date_of_service": "2023-01-01",
-                "market": "san_francisco",
-                "rendering_provider_npi": "string",
-                "service_facility_state": "AA",
-                "service_facility_zip_code": "string",
-                "subscriber_member_id": "string",
-                "subscriber_payer_id": "string",
-                "subscriber_payer_name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -19844,12 +18917,7 @@ submitted to the payor.
                   "subscriber_payer_name": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -20061,15 +19129,7 @@ submitted to the payor.
               "path": "/api/expected-network-status/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "billing_provider_npi": "string",
-                "billing_provider_tin": "string",
-                "contracted_state": "AA",
-                "date_of_service": "string",
-                "rendering_provider_npi": "string",
-                "subscriber_payer_id": "string",
-                "subscriber_payer_name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -20541,15 +19601,7 @@ submitted to the payor.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": [
-                  {
-                    "fieldName": "string",
-                    "humanReadableMessage": "string",
-                  },
-                ],
-                "errorName": "HttpRequestValidationsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -20584,10 +19636,7 @@ submitted to the payor.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": "string",
-                "errorName": "ExportFilesUnavailableError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -20617,10 +19666,7 @@ submitted to the payor.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": "string",
-                "errorName": "MissingDailyIncrementalExportFileError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -20650,10 +19696,7 @@ submitted to the payor.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": "string",
-                "errorName": "ExportNotYetAvailableError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -20683,10 +19726,7 @@ submitted to the payor.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": "string",
-                "errorName": "ExportDateTooEarlyError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -20949,12 +19989,7 @@ Must be within 30 days of start_date.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -21392,13 +20427,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "fieldName": "string",
-                  "humanReadableMessage": "string",
-                },
-                "errorName": "HttpRequestValidationError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -21808,11 +20837,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "external_id": "string",
-                "first_name": "string",
-                "last_name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -21891,11 +20916,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "external_id": "string",
-                "first_name": "string",
-                "last_name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -21904,12 +20925,7 @@ doesn't data wrangle the modeling into the presentation shape.
                   "last_name": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "EncounterHasExistingGuarantorError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -22154,7 +21170,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "guarantor_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -22456,7 +21472,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "individual_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -22799,24 +21815,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "service_lines": {
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32": {
-                    "carcs": [
-                      {
-                        "amount_cents": 0,
-                        "group_code": "CO",
-                        "reason_code": "1",
-                      },
-                    ],
-                    "rarcs": [
-                      {
-                        "reason_code": "M1",
-                      },
-                    ],
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -22876,24 +21875,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "service_lines": {
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32": {
-                    "carcs": [
-                      {
-                        "amount_cents": 0,
-                        "group_code": "CO",
-                        "reason_code": "1",
-                      },
-                    ],
-                    "rarcs": [
-                      {
-                        "reason_code": "M1",
-                      },
-                    ],
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -22915,26 +21897,7 @@ doesn't data wrangle the modeling into the presentation shape.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "errors": {
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32": [
-                      {
-                        "index": 0,
-                        "property_error": {
-                          "type": "group_code_error",
-                          "value": {
-                            "human_readable_description": "string",
-                            "type": "other",
-                          },
-                        },
-                        "type": "carc_error",
-                      },
-                    ],
-                  },
-                },
-                "errorName": "ValidateInsuranceAdjustmentFieldsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -23094,27 +22057,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "check_date": "2023-01-01",
-                "payer_claim_number": "string",
-                "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "service_lines": {
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32": {
-                    "carcs": [
-                      {
-                        "amount_cents": 0,
-                        "group_code": "CO",
-                        "reason_code": "1",
-                      },
-                    ],
-                    "rarcs": [
-                      {
-                        "reason_code": "M1",
-                      },
-                    ],
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -23167,27 +22110,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "check_date": "2023-01-01",
-                "payer_claim_number": "string",
-                "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "service_lines": {
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32": {
-                    "carcs": [
-                      {
-                        "amount_cents": 0,
-                        "group_code": "CO",
-                        "reason_code": "1",
-                      },
-                    ],
-                    "rarcs": [
-                      {
-                        "reason_code": "M1",
-                      },
-                    ],
-                  },
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -23212,21 +22135,7 @@ doesn't data wrangle the modeling into the presentation shape.
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "errors": {
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32": [
-                      {
-                        "type": "denial_reason_error",
-                        "value": {
-                          "type": "at_least_one_denial_carc_required",
-                        },
-                      },
-                    ],
-                  },
-                },
-                "errorName": "CreateInsuranceAdjustmentFieldsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -23412,12 +22321,7 @@ doesn't data wrangle the modeling into the presentation shape.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -23575,7 +22479,7 @@ doesn't data wrangle the modeling into the presentation shape.
                 "insurance_card_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -23918,13 +22822,7 @@ doesn't data wrangle the modeling into the presentation shape.
               "path": "/api/internal-api-testing/v1/movies",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "director": {
-                  "name": "string",
-                },
-                "name": "string",
-                "year_of_release": 0,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -23969,13 +22867,7 @@ doesn't data wrangle the modeling into the presentation shape.
               "path": "/api/internal-api-testing/v1/movies",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "director": {
-                  "name": "string",
-                },
-                "name": "string",
-                "year_of_release": 0,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -23986,12 +22878,7 @@ doesn't data wrangle the modeling into the presentation shape.
                   "year_of_release": 0,
                 },
               },
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -24161,12 +23048,7 @@ doesn't data wrangle the modeling into the presentation shape.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -24431,12 +23313,7 @@ identified by the id, then 403 response will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -24467,12 +23344,7 @@ identified by the id, then 403 response will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -24856,16 +23728,7 @@ upon creation of the invoice.
                 "preview_mode": true,
                 "should_send": true,
               },
-              "requestBody": {
-                "due_date": "string",
-                "items": [
-                  {
-                    "amount_cents": 0,
-                    "service_line_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  },
-                ],
-                "patient_external_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -24948,16 +23811,7 @@ upon creation of the invoice.
                 "preview_mode": true,
                 "should_send": true,
               },
-              "requestBody": {
-                "due_date": "string",
-                "items": [
-                  {
-                    "amount_cents": 0,
-                    "service_line_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  },
-                ],
-                "patient_external_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -24971,12 +23825,7 @@ upon creation of the invoice.
                   "patient_external_id": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -25268,12 +24117,7 @@ upon creation of the invoice.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -25481,12 +24325,7 @@ upon creation of the invoice.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -25639,18 +24478,7 @@ upon creation of the invoice.
               "path": "/api/managed-emr-configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "additional_details": {
-                  "auth_base_url": "string",
-                  "canvas_client_id": "string",
-                  "canvas_client_secret": "string",
-                  "canvas_export_organization_name": "string",
-                  "type": "canvas",
-                },
-                "create_tasks_for_non_billable_encounters": true,
-                "enabled": true,
-                "process_updates_for_existing_encounters": true,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -25716,18 +24544,7 @@ upon creation of the invoice.
               "path": "/api/managed-emr-configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "additional_details": {
-                  "auth_base_url": "string",
-                  "canvas_client_id": "string",
-                  "canvas_client_secret": "string",
-                  "canvas_export_organization_name": "string",
-                  "type": "canvas",
-                },
-                "create_tasks_for_non_billable_encounters": true,
-                "enabled": true,
-                "process_updates_for_existing_encounters": true,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -25743,12 +24560,7 @@ upon creation of the invoice.
                   "process_updates_for_existing_encounters": true,
                 },
               },
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -25878,7 +24690,7 @@ upon creation of the invoice.
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -25935,17 +24747,12 @@ upon creation of the invoice.
                 "managed_emr_config_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -26116,12 +24923,7 @@ upon creation of the invoice.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -26498,9 +25300,7 @@ upon creation of the invoice.
               "path": "/api/organization-payers/v1/add",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "payer_uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -27045,13 +25845,7 @@ upon creation of the invoice.
               "path": "/api/organization_providers/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "is_billing": true,
-                "is_rendering": true,
-                "license_type": "MD",
-                "npi": "string",
-                "provider_type": "INDIVIDUAL",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -27219,7 +26013,7 @@ upon creation of the invoice.
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -28142,23 +26936,7 @@ upon creation of the invoice.
               "path": "/api/organization-providers/v3",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "is_billing": true,
-                "is_rendering": true,
-                "license_type": "MD",
-                "npi": "string",
-                "provider_type": "INDIVIDUAL",
-                "qualifications": [
-                  {
-                    "identifier_code": "MCR",
-                    "identifier_value": {
-                      "provider_number": "string",
-                      "state": "AA",
-                      "type": "medicare_provider_identifier",
-                    },
-                  },
-                ],
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -28285,23 +27063,7 @@ upon creation of the invoice.
               "path": "/api/organization-providers/v3",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "is_billing": true,
-                "is_rendering": true,
-                "license_type": "MD",
-                "npi": "string",
-                "provider_type": "INDIVIDUAL",
-                "qualifications": [
-                  {
-                    "identifier_code": "MCR",
-                    "identifier_value": {
-                      "provider_number": "string",
-                      "state": "AA",
-                      "type": "medicare_provider_identifier",
-                    },
-                  },
-                ],
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -28322,13 +27084,7 @@ upon creation of the invoice.
                   ],
                 },
               },
-              "responseBody": {
-                "content": {
-                  "fieldName": "string",
-                  "humanReadableMessage": "string",
-                },
-                "errorName": "HttpRequestValidationError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -28459,7 +27215,7 @@ upon creation of the invoice.
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -28572,18 +27328,12 @@ upon creation of the invoice.
                 "organization_provider_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "fieldName": "string",
-                  "humanReadableMessage": "string",
-                },
-                "errorName": "HttpRequestValidationError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -28802,12 +27552,7 @@ upon creation of the invoice.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -28986,11 +27731,7 @@ upon creation of the invoice.
               "path": "/api/organization-tags/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "description": "string",
-                "tag_name": "string",
-                "tag_type": "system",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -29031,11 +27772,7 @@ upon creation of the invoice.
               "path": "/api/organization-tags/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "description": "string",
-                "tag_name": "string",
-                "tag_type": "system",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -29044,12 +27781,7 @@ upon creation of the invoice.
                   "tag_type": "system",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -29076,11 +27808,7 @@ upon creation of the invoice.
               "path": "/api/organization-tags/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "description": "string",
-                "tag_name": "string",
-                "tag_type": "system",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -29089,12 +27817,7 @@ upon creation of the invoice.
                   "tag_type": "system",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -29287,12 +28010,7 @@ upon creation of the invoice.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -29323,12 +28041,7 @@ upon creation of the invoice.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -29435,14 +28148,7 @@ upon creation of the invoice.
               "path": "/api/page-sessions/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "app_session_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "end_datetime": "2023-01-01T00:00:00Z",
-                "end_reason": "organization_switch",
-                "route": "string",
-                "start_datetime": "2023-01-01T00:00:00Z",
-                "start_reason": "browser_load",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -29674,12 +28380,7 @@ identified by the id, then 403 response will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -29710,12 +28411,7 @@ identified by the id, then 403 response will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -30014,13 +28710,7 @@ identified by the id, then 403 response will be returned
               "path": "/api/patient_payment_configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "auto_collect": true,
-                "auto_collect_threshold_cents": 0,
-                "auto_invoice": true,
-                "days_until_due": 0,
-                "patient_external_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -30069,13 +28759,7 @@ identified by the id, then 403 response will be returned
               "path": "/api/patient_payment_configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "auto_collect": true,
-                "auto_collect_threshold_cents": 0,
-                "auto_invoice": true,
-                "days_until_due": 0,
-                "patient_external_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -30086,12 +28770,7 @@ identified by the id, then 403 response will be returned
                   "patient_external_id": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -30262,7 +28941,7 @@ If the authenticated user does not have the permission to update the PatientPaym
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -30307,17 +28986,12 @@ If the authenticated user does not have the permission to update the PatientPaym
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -30346,17 +29020,12 @@ If the authenticated user does not have the permission to update the PatientPaym
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -30570,12 +29239,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -30606,12 +29270,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -30859,12 +29518,7 @@ by the id, then 403 will be returned
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -31153,12 +29807,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -31189,12 +29838,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -31289,9 +29933,7 @@ by the id, then 403 will be returned
               "path": "/api/patient-payments/v2",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "amount_cents": 0,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -31610,7 +30252,7 @@ by the id, then 403 will be returned
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -31665,17 +30307,12 @@ by the id, then 403 will be returned
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -31704,17 +30341,12 @@ by the id, then 403 will be returned
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -31743,17 +30375,12 @@ by the id, then 403 will be returned
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32058,12 +30685,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32094,12 +30716,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32130,12 +30747,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32369,12 +30981,7 @@ the current organization_id of the authenticated user.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32685,12 +31292,7 @@ authenticated user, then response code of 403 will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32721,12 +31323,7 @@ authenticated user, then response code of 403 will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -32906,9 +31503,7 @@ The order of specificity from the most specific to least specific is \`service_l
               "path": "/api/patient-payments/v3",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "amount_cents": 0,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -32963,21 +31558,14 @@ The order of specificity from the most specific to least specific is \`service_l
               "path": "/api/patient-payments/v3",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "amount_cents": 0,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "amount_cents": 0,
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33004,21 +31592,14 @@ The order of specificity from the most specific to least specific is \`service_l
               "path": "/api/patient-payments/v3",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "amount_cents": 0,
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "amount_cents": 0,
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33315,7 +31896,7 @@ The order of specificity from the most specific to least specific is \`service_l
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -33370,17 +31951,12 @@ The order of specificity from the most specific to least specific is \`service_l
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33409,17 +31985,12 @@ The order of specificity from the most specific to least specific is \`service_l
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33448,17 +32019,12 @@ The order of specificity from the most specific to least specific is \`service_l
                 "patient_payment_id": ":patient_payment_id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33795,12 +32361,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33831,12 +32392,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -33867,12 +32423,7 @@ current organization_id, then a response code of \`403\` will be returned.
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -34487,12 +33038,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "MissingPrimarySubscriberError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -34525,12 +33071,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "InvalidBase64EncodingError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35068,12 +33609,7 @@ identified by the id, then 403 response will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35104,12 +33640,7 @@ identified by the id, then 403 response will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35427,15 +33958,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "path": "/api/payment_account_configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "account_name": "string",
-                "api_token": "string",
-                "billing_provider_npis": [
-                  "string",
-                ],
-                "enabled": true,
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -35492,15 +34015,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "path": "/api/payment_account_configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "account_name": "string",
-                "api_token": "string",
-                "billing_provider_npis": [
-                  "string",
-                ],
-                "enabled": true,
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -35513,12 +34028,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35545,15 +34055,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "path": "/api/payment_account_configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "account_name": "string",
-                "api_token": "string",
-                "billing_provider_npis": [
-                  "string",
-                ],
-                "enabled": true,
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -35566,12 +34068,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35598,15 +34095,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               "path": "/api/payment_account_configs/v1",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "account_name": "string",
-                "api_token": "string",
-                "billing_provider_npis": [
-                  "string",
-                ],
-                "enabled": true,
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -35619,12 +34108,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "PaymentAccountConfigNameAlreadyExistsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35873,9 +34357,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -35928,21 +34410,14 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -35971,21 +34446,14 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -36014,21 +34482,14 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -36057,21 +34518,14 @@ If there already exists a PaymentAccountConfig for the organization with the sam
                 "id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "type": "chargebee",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "chargebee",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "PaymentAccountConfigNameAlreadyExistsError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -36285,12 +34739,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -36321,12 +34770,7 @@ by the id, then 403 will be returned
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -36456,12 +34900,7 @@ and the third party payment processor's customer can be identified by the patien
               "path": "/api/payment_account_configs/v1/verify_can_invoice",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "claim_ids": [
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ],
-                "patient_external_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -36511,12 +34950,7 @@ and the third party payment processor's customer can be identified by the patien
               "path": "/api/payment_account_configs/v1/verify_can_invoice",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "claim_ids": [
-                  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ],
-                "patient_external_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -36526,12 +34960,7 @@ and the third party payment processor's customer can be identified by the patien
                   "patient_external_id": "string",
                 },
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -36621,7 +35050,7 @@ Verification includes that the provided token has all of the appropriate permiss
               "path": "/api/payment_account_configs/v1/verify_api_token",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": "string",
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": "string",
@@ -37268,12 +35697,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -37306,12 +35730,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -37902,12 +36321,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -37938,12 +36352,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -37974,12 +36383,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "entity_name": "string",
-                },
-                "errorName": "EntityConflictError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -38184,19 +36588,7 @@ customer page will be returned (this generally is a page listing the existing cu
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "other_payer_adjudication_details": {
-                  "check_date": "string",
-                  "paid_amount_cents": 0,
-                  "patient_responsibility_cents": 0,
-                  "service_adjustments": [
-                    {
-                      "adjustment_amount_cents": 0,
-                      "adjustment_group_code": "CO",
-                    },
-                  ],
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -38247,19 +36639,7 @@ customer page will be returned (this generally is a page listing the existing cu
                 "encounter_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {
-                "other_payer_adjudication_details": {
-                  "check_date": "string",
-                  "paid_amount_cents": 0,
-                  "patient_responsibility_cents": 0,
-                  "service_adjustments": [
-                    {
-                      "adjustment_amount_cents": 0,
-                      "adjustment_group_code": "CO",
-                    },
-                  ],
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -38276,12 +36656,7 @@ customer page will be returned (this generally is a page listing the existing cu
                   },
                 },
               },
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -38463,12 +36838,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -38654,12 +37024,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -38779,7 +37144,7 @@ customer page will be returned (this generally is a page listing the existing cu
                 "service_facility_id": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -39105,12 +37470,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -39141,12 +37501,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnauthorizedError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -39404,12 +37759,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -39625,11 +37975,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "path": "/api/tags/v3",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "color": "black",
-                "description": "string",
-                "tag_id": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -40186,12 +38532,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -40408,12 +38749,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "message": "string",
-                },
-                "errorName": "UnprocessableEntityError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -40730,12 +39066,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "id": "string",
-                },
-                "errorName": "EntityNotFoundError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -40976,12 +39307,7 @@ customer page will be returned (this generally is a page listing the existing cu
               "queryParameters": {},
               "requestBody": undefined,
               "requestBodyV3": undefined,
-              "responseBody": {
-                "content": {
-                  "work_queue_id": "string",
-                },
-                "errorName": "WorkQueueNotFoundHttpError",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -80014,15 +78340,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/execute-workflow-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "inputs": [
-                {
-                  "name": "string",
-                  "type": "STRING",
-                  "value": "string",
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80054,15 +78372,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/execute-workflow-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "inputs": [
-                {
-                  "name": "string",
-                  "type": "STRING",
-                  "value": "string",
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80075,7 +78385,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80097,15 +78407,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/execute-workflow-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "inputs": [
-                {
-                  "name": "string",
-                  "type": "STRING",
-                  "value": "string",
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80118,7 +78420,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80140,15 +78442,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/execute-workflow-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "inputs": [
-                {
-                  "name": "string",
-                  "type": "STRING",
-                  "value": "string",
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80161,7 +78455,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80377,15 +78671,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80486,15 +78772,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80507,7 +78785,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80529,15 +78807,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80550,9 +78820,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {
-              "detail": "string",
-            },
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {
@@ -80576,15 +78844,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80597,7 +78857,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80619,15 +78879,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80640,7 +78892,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80836,15 +79088,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80876,15 +79120,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80897,7 +79133,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -80919,15 +79155,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80940,9 +79168,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {
-              "detail": "string",
-            },
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {
@@ -80966,15 +79192,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -80987,7 +79205,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81009,15 +79227,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/generate-stream",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "requests": [
-                {
-                  "input_values": {
-                    "string": {},
-                  },
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -81030,7 +79240,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81200,9 +79410,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/search",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "query": "string",
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -81267,16 +79475,14 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/search",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "query": "string",
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "query": "string",
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81298,16 +79504,14 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/search",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "query": "string",
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "query": "string",
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81329,16 +79533,14 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/search",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "query": "string",
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "query": "string",
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81515,11 +79717,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/submit-completion-actuals",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "actuals": [
-                {},
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -81547,11 +79745,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/submit-completion-actuals",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "actuals": [
-                {},
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -81560,7 +79754,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81582,11 +79776,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/submit-completion-actuals",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "actuals": [
-                {},
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -81595,7 +79785,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81617,11 +79807,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/submit-completion-actuals",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "actuals": [
-                {},
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -81630,7 +79816,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 ],
               },
             },
-            "responseBody": {},
+            "responseBody": undefined,
             "responseBodyV3": {
               "type": "json",
               "value": {},
@@ -81739,13 +79925,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             "path": "/v1/submit-workflow-execution-actuals",
             "pathParameters": {},
             "queryParameters": {},
-            "requestBody": {
-              "actuals": [
-                {
-                  "output_type": "STRING",
-                },
-              ],
-            },
+            "requestBody": undefined,
             "requestBodyV3": {
               "type": "json",
               "value": {
@@ -82161,13 +80341,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               "path": "/v1/document-indexes",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "indexing_config": {
-                  "string": {},
-                },
-                "label": "string",
-                "name": "string",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -82556,7 +80730,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 "id": ":id",
               },
               "queryParameters": {},
-              "requestBody": {},
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {},
@@ -82874,10 +81048,10 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               "path": "/v1/upload-document",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": "<filename>",
+              "requestBody": undefined,
               "requestBodyV3": {
-                "type": "json",
-                "value": "<filename>",
+                "type": "form",
+                "value": {},
               },
               "responseBody": {
                 "document_id": "string",
@@ -82905,12 +81079,12 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               "path": "/v1/upload-document",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": "<filename>",
+              "requestBody": undefined,
               "requestBodyV3": {
-                "type": "json",
-                "value": "<filename>",
+                "type": "form",
+                "value": {},
               },
-              "responseBody": {},
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {},
@@ -82932,12 +81106,12 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               "path": "/v1/upload-document",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": "<filename>",
+              "requestBody": undefined,
               "requestBodyV3": {
-                "type": "json",
-                "value": "<filename>",
+                "type": "form",
+                "value": {},
               },
-              "responseBody": {},
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {},
@@ -82959,12 +81133,12 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               "path": "/v1/upload-document",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": "<filename>",
+              "requestBody": undefined,
               "requestBodyV3": {
-                "type": "json",
-                "value": "<filename>",
+                "type": "form",
+                "value": {},
               },
-              "responseBody": {},
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {},
@@ -83276,11 +81450,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
                 "id": ":id",
               },
               "queryParameters": {},
-              "requestBody": {
-                "input_values": {
-                  "string": {},
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -83450,36 +81620,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "path": "/v1/registered-prompts/register",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "label": "string",
-                "model": "string",
-                "name": "string",
-                "parameters": {
-                  "frequency_penalty": 1,
-                  "max_tokens": 0,
-                  "presence_penalty": 1,
-                  "temperature": 1,
-                  "top_p": 1,
-                },
-                "prompt": {
-                  "input_variables": [
-                    {
-                      "key": "string",
-                    },
-                  ],
-                  "prompt_block_data": {
-                    "blocks": [
-                      {
-                        "block_type": "CHAT_MESSAGE",
-                        "id": "string",
-                        "properties": {},
-                      },
-                    ],
-                    "version": 0,
-                  },
-                },
-                "provider": "ANTHROPIC",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -83577,36 +81718,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "path": "/v1/registered-prompts/register",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "label": "string",
-                "model": "string",
-                "name": "string",
-                "parameters": {
-                  "frequency_penalty": 1,
-                  "max_tokens": 0,
-                  "presence_penalty": 1,
-                  "temperature": 1,
-                  "top_p": 1,
-                },
-                "prompt": {
-                  "input_variables": [
-                    {
-                      "key": "string",
-                    },
-                  ],
-                  "prompt_block_data": {
-                    "blocks": [
-                      {
-                        "block_type": "CHAT_MESSAGE",
-                        "id": "string",
-                        "properties": {},
-                      },
-                    ],
-                    "version": 0,
-                  },
-                },
-                "provider": "ANTHROPIC",
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -83640,9 +81752,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                   "provider": "ANTHROPIC",
                 },
               },
-              "responseBody": {
-                "detail": "string",
-              },
+              "responseBody": undefined,
               "responseBodyV3": {
                 "type": "json",
                 "value": {
@@ -83827,13 +81937,7 @@ or overwritten with default values.",
                 "id": ":id",
               },
               "queryParameters": {},
-              "requestBody": {
-                "inputs": [
-                  {
-                    "key": "string",
-                  },
-                ],
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {
@@ -84152,12 +82256,7 @@ or overwritten with default values.",
                 "id": ":id",
               },
               "queryParameters": {},
-              "requestBody": {
-                "evaluation_params": {},
-                "input_values": {
-                  "string": {},
-                },
-              },
+              "requestBody": undefined,
               "requestBodyV3": {
                 "type": "json",
                 "value": {

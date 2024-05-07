@@ -8,3 +8,4 @@ export * from "./resolver/types";
 export { REGISTRY_SERVICE } from "./services/registry";
 export * from "./sidebar/serializer";
 export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
+export { unknownToString } from "./util/unknownToString";

@@ -7,10 +7,11 @@ import * as FernRegistry from "../../../../../../../../..";
 export type HttpRequestBodyShape =
     | FernRegistry.api.v1.read.HttpRequestBodyShape.Object_
     | FernRegistry.api.v1.read.HttpRequestBodyShape.Reference
+    | FernRegistry.api.v1.read.HttpRequestBodyShape.Bytes
+    | FernRegistry.api.v1.read.HttpRequestBodyShape.FormData
     /**
      * `fileUpload` is optional only to be backwards compatible. It should be required. */
-    | FernRegistry.api.v1.read.HttpRequestBodyShape.FileUpload
-    | FernRegistry.api.v1.read.HttpRequestBodyShape.Bytes;
+    | FernRegistry.api.v1.read.HttpRequestBodyShape.FileUpload;
 
 export declare namespace HttpRequestBodyShape {
     interface Object_ extends FernRegistry.api.v1.read.ObjectType {
@@ -22,12 +23,16 @@ export declare namespace HttpRequestBodyShape {
         value: FernRegistry.api.v1.read.TypeReference;
     }
 
-    interface FileUpload {
-        type: "fileUpload";
-        value?: FernRegistry.api.v1.read.FileUploadRequest;
-    }
-
     interface Bytes extends FernRegistry.api.v1.read.BytesRequest {
         type: "bytes";
+    }
+
+    interface FormData extends FernRegistry.api.v1.read.FormDataRequest {
+        type: "formData";
+    }
+
+    interface FileUpload {
+        type: "fileUpload";
+        value?: FernRegistry.api.v1.read.FormDataRequest;
     }
 }

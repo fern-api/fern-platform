@@ -7,7 +7,9 @@ import * as FernRegistry from "../../../../../../../../..";
 export type FormValue =
     | FernRegistry.api.v1.register.FormValue.Json
     | FernRegistry.api.v1.register.FormValue.Filename
-    | FernRegistry.api.v1.register.FormValue.FilenameWithData;
+    | FernRegistry.api.v1.register.FormValue.Filenames
+    | FernRegistry.api.v1.register.FormValue.FilenameWithData
+    | FernRegistry.api.v1.register.FormValue.FilenamesWithData;
 
 export declare namespace FormValue {
     interface Json {
@@ -20,7 +22,17 @@ export declare namespace FormValue {
         value: string;
     }
 
+    interface Filenames {
+        type: "filenames";
+        value: string[];
+    }
+
     interface FilenameWithData extends FernRegistry.api.v1.register.FilenameWithData {
         type: "filenameWithData";
+    }
+
+    interface FilenamesWithData {
+        type: "filenamesWithData";
+        value: FernRegistry.api.v1.register.FilenameWithData[];
     }
 }
