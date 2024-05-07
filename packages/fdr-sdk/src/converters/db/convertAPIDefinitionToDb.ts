@@ -473,19 +473,21 @@ export function transformExampleEndpointCall({
             snippets,
         }),
         requestBodyV3:
-            writeShape.requestBodyV3 ?? writeShape.requestBody != null
+            writeShape.requestBodyV3 ??
+            (writeShape.requestBody != null
                 ? {
                       type: "json",
                       value: writeShape.requestBody,
                   }
-                : undefined,
+                : undefined),
         responseBodyV3:
-            writeShape.responseBodyV3 ?? writeShape.responseBody != null
+            writeShape.responseBodyV3 ??
+            (writeShape.responseBody != null
                 ? {
                       type: "json",
                       value: writeShape.responseBody,
                   }
-                : undefined,
+                : undefined),
         codeSamples: writeShape.codeSamples ?? [],
     };
 }

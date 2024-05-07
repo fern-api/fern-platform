@@ -22,10 +22,14 @@ export function generateHttpRequestBodyExample(
     resolveTypeById: ResolveTypeById,
 ): APIV1Write.ExampleEndpointRequest | undefined {
     switch (type.type) {
-        case "object":
-            return generateExampleObject(type, resolveTypeById, true, new Set(), 0);
-        case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
+        case "object": {
+            const value = generateExampleObject(type, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
+        case "reference": {
+            const value = generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
         case "json":
             return generateHttpJsonRequestBodyExample(type.shape, resolveTypeById);
         case "fileUpload": // deprecated
@@ -76,8 +80,7 @@ function generateFormDataRequestBodyExample(
             case "bodyProperty": {
                 example[property.key] = {
                     type: "json",
-                    value: generateExampleFromTypeReference(property.valueType, resolveTypeById, true, new Set(), 0)
-                        .value,
+                    value: generateExampleFromTypeReference(property.valueType, resolveTypeById, true, new Set(), 0),
                 };
                 break;
             }
@@ -92,10 +95,14 @@ function generateHttpJsonRequestBodyExample(
     resolveTypeById: ResolveTypeById,
 ): APIV1Write.ExampleEndpointRequest {
     switch (shape.type) {
-        case "object":
-            return generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
-        case "reference":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+        case "object": {
+            const value = generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
+        case "reference": {
+            const value = generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
         default:
             assertNever(shape);
     }
@@ -133,7 +140,7 @@ function generateExampleObject(
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number,
-): APIV1Write.ExampleEndpointRequest {
+): Record<string, unknown> {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
         const value = generateExampleFromTypeReference(
@@ -147,7 +154,7 @@ function generateExampleObject(
             example[property.key] = value;
         }
     }
-    return { type: "json", value: example };
+    return example;
 }
 
 export function generateExampleFromTypeReference(
@@ -156,7 +163,7 @@ export function generateExampleFromTypeReference(
     ignoreOptionals: boolean,
     visited: Set<string>,
     depth: number,
-): APIV1Write.ExampleEndpointRequest {
+): unknown {
     let example;
 
     switch (reference.type) {
@@ -217,7 +224,7 @@ export function generateExampleFromTypeReference(
                     ignoreOptionals,
                     visited,
                     depth + 1,
-                ).value as string]: generateExampleFromTypeReference(
+                ) as string]: generateExampleFromTypeReference(
                     reference.valueType,
                     resolveTypeById,
                     ignoreOptionals,
@@ -236,7 +243,7 @@ export function generateExampleFromTypeReference(
             assertNever(reference);
     }
 
-    return { type: "json", value: example };
+    return example;
 }
 
 function generateExampleFromId(
