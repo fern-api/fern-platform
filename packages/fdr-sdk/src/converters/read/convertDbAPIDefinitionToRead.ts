@@ -162,19 +162,21 @@ export function convertExampleEndpointCall({
         responseBody: dbShape.responseBody,
         codeExamples: dbShape.codeExamples,
         requestBodyV3:
-            dbShape.requestBodyV3 ?? dbShape.requestBody != null
+            dbShape.requestBodyV3 ??
+            (dbShape.requestBody != null
                 ? {
                       type: "json",
                       value: dbShape.requestBody,
                   }
-                : undefined,
+                : undefined),
         responseBodyV3:
-            dbShape.responseBodyV3 ?? dbShape.responseBody != null
+            dbShape.responseBodyV3 ??
+            (dbShape.responseBody != null
                 ? {
                       type: "json",
                       value: dbShape.responseBody,
                   }
-                : undefined,
+                : undefined),
         codeSamples: dbShape.codeSamples ?? [],
     };
 }
