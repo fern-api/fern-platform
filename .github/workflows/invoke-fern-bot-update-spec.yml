@@ -9,9 +9,9 @@ on:
         options:
           - production
           - development
-    repo:
-      description: "The repo to run the action against (of the form `owner/repo_name`), if omitted runs on all repos the app is installed on"
-      type: string
+      repo:
+        description: "The repo to run the action against (of the form `owner/repo_name`), if omitted runs on all repos the app is installed on"
+        type: string
 
 jobs:
   invoke_dev:
