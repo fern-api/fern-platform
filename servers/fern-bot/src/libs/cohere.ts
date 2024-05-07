@@ -197,7 +197,7 @@ export async function generateChangelog(diff: string): Promise<string> {
             }
             -}
             +}
-            \ No newline at end of file
+            \\ No newline at end of file
             \`\`\`
         Changelog:
             ## Summary

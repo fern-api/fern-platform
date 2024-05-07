@@ -8,7 +8,9 @@
     "lint": "eslint --max-warnings 0 src --ext .ts",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:fix": "pnpm lint --fix",
-    "proxy": "smee -u https://smee.io/3DXoSvCO2NH87w8e"
+    "proxy": "smee -u https://smee.io/3DXoSvCO2NH87w8e",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix"
   },
   "engines": {
     "node": ">=14.15.0"
