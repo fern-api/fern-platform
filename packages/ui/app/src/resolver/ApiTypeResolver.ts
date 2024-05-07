@@ -131,7 +131,7 @@ export class ApiTypeResolver {
                     type: "optional",
                     shape: await this.unwrapOptionalRaw(await this.resolveTypeReference(optional.itemType)),
                     availability: undefined,
-                    defaultsTo: undefined,
+                    defaultValue: optional.defaultValue,
                     description: undefined,
                 }),
                 list: async (list) => ({

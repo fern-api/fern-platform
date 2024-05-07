@@ -7,6 +7,7 @@ import {
     unwrapOptional,
     unwrapReference,
 } from "../../../resolver/types";
+import { unknownToString } from "../../../util/unknownToString";
 
 export interface TypeShorthandOptions {
     plural?: boolean;
@@ -29,15 +30,15 @@ export function renderTypeShorthandRoot(
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {unaliasedShape.type === "optional" && unaliasedShape.defaultsTo !== undefined && (
-                <span>{renderDefaultTo(unaliasedShape.defaultsTo)}</span>
+            {unaliasedShape.type === "optional" && unaliasedShape.defaultValue !== undefined && (
+                <span>{renderDefaultTo(unaliasedShape.defaultValue)}</span>
             )}
         </span>
     );
 }
 
 function renderDefaultTo(defaultsTo: unknown): string {
-    return `Defaults to ${JSON.stringify(defaultsTo)}`;
+    return `Defaults to ${unknownToString(defaultsTo)}`;
 }
 
 export function renderTypeShorthand(
