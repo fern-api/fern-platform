@@ -2,7 +2,6 @@
 import { memo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
-import { FernTag } from "../../components/FernTag";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedExampleEndpointCall } from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample } from "../examples/CodeSnippetExample";
@@ -11,6 +10,7 @@ import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
+import { ErrorCodeSnippetExample } from "./ErrorCodeSnippetExample";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -110,28 +110,22 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }
             />
             {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" />}
-            {example.responseBody != null && endpoint.responseBody?.shape.type !== "fileDownload" && (
-                <CodeSnippetExample
-                    title={
-                        selectedError == null ? (
-                            "Response"
-                        ) : (
-                            <span className="inline-block gap-2">
-                                <FernTag intent="danger">{selectedError.statusCode}</FernTag>
-                                <span className="text-intent-accent">{selectedError.name}</span>
-                            </span>
-                        )
-                    }
-                    isError={example.responseStatusCode >= 400}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
-                    code={responseCodeSnippet}
-                    language="json"
-                    hoveredPropertyPath={hoveredResponsePropertyPath}
-                    json={responseJson}
-                />
-            )}
+            {example.responseBody != null &&
+                endpoint.responseBody?.shape.type !== "fileDownload" &&
+                (selectedError == null ? (
+                    <CodeSnippetExample
+                        title={"Response"}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        code={responseCodeSnippet}
+                        language="json"
+                        hoveredPropertyPath={hoveredResponsePropertyPath}
+                        json={responseJson}
+                    />
+                ) : (
+                    <ErrorCodeSnippetExample resolvedError={selectedError} defaultValue={responseJson} />
+                ))}
         </div>
     );
 };
