@@ -68,7 +68,13 @@ export async function getDocsPageProps(
         throw new Error("Failed to fetch docs");
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const start2 = Date.now();
+    const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const end2 = Date.now();
+
+    // eslint-disable-next-line no-console
+    console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
+    return toRet;
 }
 
 export async function getPrivateDocsPageProps(
