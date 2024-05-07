@@ -14,7 +14,12 @@ import { createOrUpdatePullRequest } from "../github/utilities";
 const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
 type Repository = components["schemas"]["repository"];
 
-async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repository): Promise<void> {
+async function updateOpenApiSpecInternal(
+    octokit: Octokit,
+    repository: Repository,
+    fernBotLoginName: string,
+    fernBotLoginId: string,
+): Promise<void> {
     const tmpDir = await tmp.dir();
     const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
 
@@ -26,16 +31,20 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         await mkdir(fullRepoPath, { recursive: true });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const installationToken = ((await octokit.auth({ type: "installation" })) as any).token;
     const git = simpleGit(fullRepoPath);
 
     const authedCloneUrl = repository.clone_url.replace("https://", `https://x-access-token:${installationToken}@`);
     // Clone the repo to fullRepoPath and update the branch
     await git.clone(authedCloneUrl, ".");
+    // Configure git to show the app as the committer
+    await git.addConfig("user.name", fernBotLoginName);
+    await git.addConfig("user.email", `${fernBotLoginId}+${fernBotLoginName}@users.noreply.github.com`);
     try {
         // If you can fetch the branch, checkout the branch
         await git.fetch(branchRemoteName, OPENAPI_UPDATE_BRANCH);
-        console.log(`Branch exists, checking out`);
+        console.log("Branch exists, checking out");
         await git.checkout(OPENAPI_UPDATE_BRANCH);
         // Merge the default branch into this branch to update it
         // prefer the default branch changes
@@ -45,14 +54,14 @@ async function updateOpenApiSpecInternal(octokit: Octokit, repository: Repositor
         // to the same branch that are not OpenAPI related, that we'd lose if we deleted and reupdated the spec.
         await git.merge(["-X", "theirs", originDefaultBranch]);
     } catch (e) {
-        console.log(`Branch does not exist, create and checkout`);
+        console.log("Branch does not exist, create and checkout");
         await git.checkoutBranch(OPENAPI_UPDATE_BRANCH, branchRemoteName);
     }
 
     // Run API update command which will pull the new spec from the specified
     // origin and write it to disk we can then commit it to github from there.
     try {
-        const command = execa("npx", ["fern", "api", "update"], { cwd: fullRepoPath });
+        const command = execa("npx", ["fern-api", "api", "update"], { cwd: fullRepoPath });
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
         await command;
@@ -105,6 +114,11 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
         }
         console.log("Encountered installation", installation.repository.full_name);
-        await updateOpenApiSpecInternal(installation.octokit, installation.repository);
+        await updateOpenApiSpecInternal(
+            installation.octokit,
+            installation.repository,
+            env.GITHUB_APP_LOGIN_NAME,
+            env.GITHUB_APP_LOGIN_ID,
+        );
     });
 }
