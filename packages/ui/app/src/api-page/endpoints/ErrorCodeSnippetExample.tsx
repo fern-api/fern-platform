@@ -46,7 +46,7 @@ export function ErrorCodeSnippetExample({
                         <span className="ml-2 text-sm text-intent-danger">{resolvedError.name}</span>
                     ) : (
                         <FernDropdown options={options} value={`${selectedIndex}`} onValueChange={handleValueChange}>
-                            <FernButton variant="minimal" rightIcon={<CaretDownIcon />}>
+                            <FernButton variant="minimal" intent="danger" rightIcon={<CaretDownIcon />}>
                                 {selectedExample?.name}
                             </FernButton>
                         </FernDropdown>
