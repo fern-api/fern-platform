@@ -31,7 +31,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
                           : "yellow"
             }
             variant={active ? "solid" : "subtle"}
-            className={clsx({ "w-11": size === "sm" }, className)}
+            className={clsx("uppercase", { "w-11": size === "sm" }, className)}
             size={size}
             {...rest}
         >

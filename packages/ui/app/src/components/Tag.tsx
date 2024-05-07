@@ -11,11 +11,17 @@ export interface TagProps extends PropsWithChildren {
 /**
  * The `Tag` component is used for items that need to be labeled, categorized, or organized using keywords that describe them.
  */
-export const Tag: FC<TagProps> = ({ children, size = "lg", variant = "subtle", colorScheme = "accent", className }) => {
+export const Tag: FC<TagProps> = ({
+    children,
+    size = "lg",
+    variant = "subtle",
+    colorScheme = "accent",
+    className,
+}) => {
     return (
         <div
             className={clsx(
-                "uppercase font-mono inline-flex justify-center items-center leading-none",
+                "font-mono inline-flex justify-center items-center leading-none",
                 {
                     "rounded-md h-[18px] text-[10px] px-1.5": size === "sm",
                     "py-1 px-2 rounded-lg h-6 text-xs": size === "lg",
@@ -39,9 +45,8 @@ export const Tag: FC<TagProps> = ({ children, size = "lg", variant = "subtle", c
                     "bg-method-delete text-text-default-inverted": colorScheme === "red" && variant === "solid",
 
                     // Accent
-                    "bg-accent/10 dark:bg-accent-dark/10 text-accent-aaa":
-                        colorScheme === "accent" && variant === "subtle",
-                    "bg-accent dark:bg-accent-dark t-accent-contrast": colorScheme === "accent" && variant === "solid",
+                    "bg-accent/10 text-accent-aaa": colorScheme === "accent" && variant === "subtle",
+                    "bg-accent t-accent-contrast": colorScheme === "accent" && variant === "solid",
                 },
                 className,
             )}
