@@ -15,3 +15,4 @@ bundle.c?js
 out
 pnpm-lock.yaml
 **/generated/
+**/.serverless/**
