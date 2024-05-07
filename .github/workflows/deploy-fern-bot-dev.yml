@@ -19,6 +19,9 @@ jobs:
   deploy_dev:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
