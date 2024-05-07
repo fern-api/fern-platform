@@ -25,7 +25,9 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
-      errors: optional<list<ErrorDeclaration>>
+      errors:
+        type: optional<list<ErrorDeclaration>>
+        availability: deprecated
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
 
@@ -128,6 +130,7 @@ types:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
+      examples: optional<list<ErrorExample>>
 
   HttpResponseBodyShape:
     union:
@@ -232,3 +235,14 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
+
+  ErrorExample:
+    extends:
+      - commons.WithDescription
+    properties:
+      name: optional<string>
+      responseBody: ExampleErrorResponse
+
+  ExampleErrorResponse:
+    union:
+      json: unknown

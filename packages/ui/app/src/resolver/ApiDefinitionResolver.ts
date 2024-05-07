@@ -281,6 +281,12 @@ export class ApiDefinitionResolver {
                     shape,
                     description,
                     availability: error.availability,
+                    examples:
+                        error.examples?.map((example) => ({
+                            name: example.name,
+                            description: example.description,
+                            responseBody: example.responseBody.value,
+                        })) ?? [],
                 };
             }),
         );

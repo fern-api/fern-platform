@@ -5,8 +5,8 @@ export function StreamTag({ small = false, active = false }: { small?: boolean; 
     return (
         <span
             className={cn("uppercase font-mono inline-flex justify-center items-center leading-none", {
-                ["bg-accent/10 dark:bg-accent-dark/10 text-accent-aaa"]: !active,
-                ["bg-accent dark:bg-accent-dark t-accent-contrast"]: active,
+                ["bg-accent/10 text-accent-aaa"]: !active,
+                ["bg-accent t-accent-contrast"]: active,
                 ["rounded-md h-[18px] text-[10px] w-9"]: small,
                 ["py-1 px-2 rounded-lg h-6 text-xs"]: !small,
             })}

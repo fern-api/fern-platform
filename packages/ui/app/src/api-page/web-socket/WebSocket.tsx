@@ -312,7 +312,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                             <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
-                                    type={"primary"}
                                     actions={
                                         <PlaygroundButton
                                             state={{
@@ -348,7 +347,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     </FernScrollArea>
                                 </TitledExample>
                                 {exampleMessages.length > 0 && (
-                                    <TitledExample title={"Messages"} type={"primary"} className="min-h-0 shrink">
+                                    <TitledExample title={"Messages"} className="min-h-0 shrink">
                                         <FernScrollArea className="rounded-b-[inherit]">
                                             <WebSocketMessages messages={exampleMessages} />
                                         </FernScrollArea>

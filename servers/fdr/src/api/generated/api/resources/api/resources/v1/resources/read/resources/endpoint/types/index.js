@@ -33,6 +33,8 @@ export * from "./FormValue";
 export * from "./FilenameWithData";
 export * from "./FileId";
 export * from "./ExampleEndpointResponse";
+export * from "./ErrorExample";
+export * from "./ExampleErrorResponse";
 export * from "./PythonSnippet";
 export * from "./TypescriptSnippet";
 export * from "./GoSnippet";

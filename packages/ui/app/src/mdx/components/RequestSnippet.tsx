@@ -142,7 +142,6 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                         environment={endpoint.defaultEnvironment?.baseUrl}
                     />
                 }
-                type="primary"
                 actions={
                     clients.length > 1 ? (
                         <CodeExampleClientDropdown
@@ -218,7 +217,6 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
         <div className="mb-5 mt-3">
             <CodeSnippetExample
                 title="Response"
-                type="primary"
                 // actions={undefined}
                 code={responseJsonString}
                 language="json"

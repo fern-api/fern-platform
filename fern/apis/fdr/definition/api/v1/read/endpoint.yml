@@ -29,7 +29,9 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
-      errors: list<ErrorDeclaration>
+      errors:
+        type: list<ErrorDeclaration>
+        availability: deprecated
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
       snippetTemplates: optional<EndpointSnippetTemplates>
@@ -179,6 +181,7 @@ types:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
+      examples: optional<list<ErrorExample>>
 
   # examples
 
@@ -257,6 +260,17 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
+
+  ErrorExample:
+    extends:
+      - commons.WithDescription
+    properties:
+      name: optional<string>
+      responseBody: ExampleErrorResponse
+
+  ExampleErrorResponse:
+    union:
+      json: unknown
 
   PythonSnippet:
     properties:
