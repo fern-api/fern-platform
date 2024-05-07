@@ -54478,11 +54478,14 @@ async function updateOpenApiSpecInternal(octokit, repository) {
 }
 async function updateOpenApiSpecsInternal(env) {
   const app = setupGithubApp(env);
+  if (env.REPO_TO_RUN_ON !== void 0) {
+    console.log("REPO_TO_RUN_ON has been specified, only running on:", env.REPO_TO_RUN_ON);
+  }
   await app.eachRepository(async (installation) => {
     if (env.REPO_TO_RUN_ON !== void 0 && installation.repository.full_name !== env.REPO_TO_RUN_ON) {
       return;
     } else if (env.REPO_TO_RUN_ON !== void 0) {
-      console.log("Running on specified:", env.REPO_TO_RUN_ON);
+      console.log("REPO_TO_RUN_ON has been found, running logic.");
     }
     console.log("Encountered installation", installation.repository.full_name);
     await updateOpenApiSpecInternal(installation.octokit, installation.repository);
