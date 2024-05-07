@@ -25,7 +25,7 @@ export class SnippetTemplateResolver {
     }
 
     private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        return path != null && jsonObject != null ? get(jsonObject, path) : jsonObject;
+        return path != null && jsonObject != null && path.length > 0 ? get(jsonObject, path) : jsonObject;
     }
 
     private accessParameterPayloadByPath(
@@ -36,7 +36,7 @@ export class SnippetTemplateResolver {
         const parameterName = splitPath.shift();
 
         if (parameterName != null && parameterPayloads != null) {
-            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === locationPath);
+            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === parameterName);
             if (selectedParameter != null) {
                 return this.accessByPath(selectedParameter.value, splitPath);
             }
@@ -73,7 +73,14 @@ export class SnippetTemplateResolver {
             case "generic": {
                 if (template.templateInputs == null || template.templateInputs.length === 0) {
                     // TODO: If the field is required return SOMETHING, ideally from the default example
-                    return undefined;
+                    return {
+                        imports: [],
+                        invocation: template.templateString.replace(
+                            // TODO: fix the typescript generator to create literals not as types
+                            TemplateSentinel,
+                            "",
+                        ),
+                    };
                 }
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const input of template.templateInputs) {
@@ -158,18 +165,16 @@ export class SnippetTemplateResolver {
                 };
             }
             case "enum": {
-                const enumValues = new Map(Object.entries(template.values));
-                const enumSdkValues = Array.from(enumValues.values());
+                const enumValues = template.values;
+                const enumSdkValues = Object.values(template.values);
                 const defaultEnumValue = enumSdkValues[0];
                 if (template.templateInput == null || defaultEnumValue == null) {
                     return undefined;
                 }
-
                 const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 const enumSdkValue =
-                    (typeof maybeEnumWireValue === "string"
-                        ? enumValues.get(maybeEnumWireValue as string)
-                        : undefined) ?? defaultEnumValue;
+                    (typeof maybeEnumWireValue === "string" ? enumValues[maybeEnumWireValue] : undefined) ??
+                    defaultEnumValue;
                 return {
                     imports,
                     invocation: template.templateString?.replace(TemplateSentinel, enumSdkValue) ?? enumSdkValue,
@@ -195,7 +200,7 @@ export class SnippetTemplateResolver {
 
                 const unionMap = maybeUnionValue as Map<string, unknown>;
                 const discriminatorValue = unionMap.get(discriminator) as string;
-                const selectedMemberTemplate = new Map(Object.entries(unionMembers)).get(discriminatorValue);
+                const selectedMemberTemplate = unionMembers[discriminatorValue];
                 const evaluatedMember: V1Snippet | undefined = selectedMemberTemplate
                     ? this.resolveV1Template(selectedMemberTemplate, payloadOverride)
                     : undefined;
@@ -213,15 +218,19 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveSnippetV1Template(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
+    private resolveSnippetV1TemplateString(template: FdrAPI.SnippetTemplate): string {
         const clientSnippet = template.clientInstantiation;
         const endpointSnippet = this.resolveV1Template(template.functionInvocation);
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        const snippet = `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
+        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
             endpointSnippet?.invocation
         }`;
+    }
+
+    private resolveSnippetV1TemplateToSnippet(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
+        const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
             case "typescript":
@@ -231,16 +240,14 @@ export class SnippetTemplateResolver {
                     type: "python",
                     sdk,
                     sync_client: snippet,
-                    // TODO: Handle the async snippet as well
-                    async_client: snippet,
+                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
                 };
             case "java":
                 return {
                     type: "java",
                     sdk,
                     sync_client: snippet,
-                    // TODO: Handle the async snippet as well
-                    async_client: snippet,
+                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
                 };
             case "go":
                 return { type: "go", sdk, client: snippet };
@@ -256,9 +263,25 @@ export class SnippetTemplateResolver {
         const template: FdrAPI.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
-                return this.resolveSnippetV1Template(sdk, template);
+                return this.resolveSnippetV1TemplateToSnippet(sdk, template);
             default:
                 throw new Error(`Unknown template version: ${template.type}`);
         }
+    }
+
+    public resolveAdditionalTemplate(key: string): string | undefined {
+        const template: FdrAPI.VersionedSnippetTemplate | undefined =
+            this.endpointSnippetTemplate.additionalTemplates != null
+                ? this.endpointSnippetTemplate.additionalTemplates[key]
+                : undefined;
+        if (template != null) {
+            switch (template.type) {
+                case "v1":
+                    return this.resolveSnippetV1TemplateString(template);
+                default:
+                    throw new Error(`Unknown template version: ${template.type}`);
+            }
+        }
+        return undefined;
     }
 }

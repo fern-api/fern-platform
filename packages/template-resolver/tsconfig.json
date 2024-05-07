@@ -1,11 +1,5 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-    "rootDir": ".",
-    "module": "CommonJS",
-    "esModuleInterop": true
-  },
+  "compilerOptions": { "composite": true, "outDir": "dist", "rootDir": "." },
   "include": ["./src/**/*"]
 }
