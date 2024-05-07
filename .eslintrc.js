@@ -129,7 +129,7 @@ module.exports = {
             },
         },
         {
-            files: ["servers/fdr/**/*"],
+            files: ["servers/fdr/**/*", "servers/fern-bot/**/*"],
             rules: {
                 eqeqeq: "off",
                 "no-console": "off",

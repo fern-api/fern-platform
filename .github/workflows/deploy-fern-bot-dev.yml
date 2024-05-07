@@ -1,0 +1,29 @@
+name: Deploy FernBot Dev
+
+on:
+  push:
+    branches: main
+    paths:
+      - "servers/fern-bot/**"
+      - ".github/workflows/deploy-fern-bot-dev.yml"
+
+env:
+  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+  GITHUB_APP_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_ID }}
+  GITHUB_APP_PRIVATE_KEY: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_PRIVATE_KEY }}
+  GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_ID }}
+  GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_SECRET }}
+  GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
+  CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
+
+jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+      - name: 🚀 serverless deploy
+        run: |
+          pnpm --filter "@fern-platform/fern-bot" install
+          pnpm --filter "@fern-platform/fern-bot" release --stage development
