@@ -41,7 +41,7 @@ export function ErrorCodeSnippetExample({
         <CodeSnippetExample
             title={
                 <span className="inline-flex items-center">
-                    <FernTag intent="danger">{resolvedError.statusCode}</FernTag>
+                    <FernTag colorScheme="red">{resolvedError.statusCode}</FernTag>
                     {options.length === 0 ? (
                         <span className="ml-2 text-sm text-intent-danger">{resolvedError.name}</span>
                     ) : (

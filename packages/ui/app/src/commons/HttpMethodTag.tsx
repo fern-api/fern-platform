@@ -1,10 +1,10 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import { ReactNode, memo } from "react";
+import { FernTag, FernTagProps } from "../components/FernTag";
 import { FernTooltip } from "../components/FernTooltip";
-import { Tag, TagProps } from "../components/Tag";
 export declare namespace HttpMethodTag {
-    export interface Props extends TagProps {
+    export interface Props extends FernTagProps {
         method: FdrAPI.api.v1.read.HttpMethod | "STREAM" | "WSS";
         active?: boolean;
     }
@@ -18,7 +18,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
     ...rest
 }) => {
     return (
-        <Tag
+        <FernTag
             colorScheme={
                 method === "GET"
                     ? "green"
@@ -28,7 +28,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
                         ? "blue"
                         : method === "STREAM" || method === "WSS"
                           ? "accent"
-                          : "yellow"
+                          : "amber"
             }
             variant={active ? "solid" : "subtle"}
             className={clsx("uppercase", { "w-11": size === "sm" }, className)}
@@ -36,7 +36,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
             {...rest}
         >
             {method === FdrAPI.api.v1.read.HttpMethod.Delete ? "DEL" : method}
-        </Tag>
+        </FernTag>
     );
 };
 

@@ -7,7 +7,6 @@ import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag, withStream } from "../commons/HttpMethodTag";
-import { Chip } from "../components/Chip";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
@@ -176,7 +175,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                                rightIcon={<Chip name="WSS" small />}
+                                                rightIcon={<HttpMethodTag method="WSS" />}
                                             />
                                         </FernTooltip>
                                     </li>
