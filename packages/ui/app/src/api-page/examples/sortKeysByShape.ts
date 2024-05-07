@@ -92,18 +92,18 @@ export function sortKeysByShape(
         stringLiteral: () => obj,
         unknown: () => obj,
         reference: ({ typeId }) => sortKeysByShape(obj, types[typeId], types),
-        fileUpload: ({ value }) => {
-            if (value == null || !isPlainObject(obj)) {
+        formData: ({ properties }) => {
+            if (!isPlainObject(obj)) {
                 return obj;
             }
 
             return mapValues(
                 sortKeysBy(
                     obj,
-                    value.properties.map((p) => p.key),
+                    properties.map((p) => p.key),
                 ),
                 (v, key) => {
-                    const property = value.properties.find((p) => p.key === key);
+                    const property = properties.find((p) => p.key === key);
 
                     if (property == null) {
                         return v;

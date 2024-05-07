@@ -1,5 +1,5 @@
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { DownloadIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -10,6 +10,9 @@ import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { FernTabs } from "../components/FernTabs";
+import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
@@ -20,7 +23,7 @@ import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundEndpointRequestFormState } from "./types";
+import { PlaygroundEndpointRequestFormState, ProxyResponse } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 
@@ -47,6 +50,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     sendRequest,
     types,
 }) => {
+    const { domain } = useDocsContext();
+    const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -143,11 +148,25 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 <CopyToClipboardButton
                     content={() =>
                         requestType === "curl"
-                            ? stringifyCurl(endpoint, formState, false)
+                            ? stringifyCurl({
+                                  endpoint,
+                                  formState,
+                                  redacted: false,
+                              })
                             : requestType === "javascript"
-                              ? stringifyFetch(endpoint, formState, false)
+                              ? stringifyFetch({
+                                    endpoint,
+                                    formState,
+                                    redacted: false,
+                                    isSnippetTemplatesEnabled,
+                                })
                               : requestType === "python"
-                                ? stringifyPythonRequests(endpoint, formState, false)
+                                ? stringifyPythonRequests({
+                                      endpoint,
+                                      formState,
+                                      redacted: false,
+                                      isSnippetTemplatesEnabled,
+                                  })
                                 : ""
                     }
                     className="-mr-2"
@@ -189,7 +208,21 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     loading: () => <div />,
                     loaded: (response) =>
                         response.type === "file" ? (
-                            <div />
+                            <FernTooltipProvider>
+                                <FernTooltip content="Download file">
+                                    <FernButton
+                                        icon={<DownloadIcon />}
+                                        size="small"
+                                        variant="minimal"
+                                        onClick={() => {
+                                            const a = document.createElement("a");
+                                            a.href = response.response.body;
+                                            a.download = createFilename(response.response, response.contentType);
+                                            a.click();
+                                        }}
+                                    />
+                                </FernTooltip>
+                            </FernTooltipProvider>
                         ) : (
                             <CopyToClipboardButton
                                 content={() =>
@@ -202,7 +235,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 className="-mr-2"
                             />
                         ),
-                    failed: () => <div />,
+                    failed: () => (
+                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                            Failed
+                        </span>
+                    ),
                 })}
             </div>
             {visitLoadable(response, {
@@ -217,17 +254,25 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 loaded: (response) =>
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
-                    ) : response.response.contentType.startsWith("audio/") ? (
+                    ) : response.contentType.startsWith("audio/") ||
+                      (domain.includes("ircamamplify") && response.contentType === "binary/octet-stream") ? (
                         <FernAudioPlayer
-                            src={response.response.src}
-                            title={"Untitled"}
+                            src={response.response.body}
                             className="flex h-full items-center justify-center p-4"
+                        />
+                    ) : response.contentType.includes("application/pdf") ? (
+                        <iframe
+                            src={response.response.body}
+                            className="size-full"
+                            title="PDF preview"
+                            allowFullScreen
                         />
                     ) : (
                         <FernErrorTag
                             component="PlaygroundEndpointContent"
-                            error={`File preview not supported for ${response.response.contentType}`}
+                            error={`File preview not supported for ${response.contentType}`}
                             className="flex h-full items-center justify-center"
+                            showError
                         />
                     ),
                 failed: (e) => (
@@ -235,6 +280,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         component="PlaygroundEndpointContent"
                         error={e}
                         className="flex h-full items-center justify-center"
+                        showError={true}
                     />
                 ),
             })}
@@ -301,3 +347,19 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
         </div>
     );
 };
+
+function createFilename(body: ProxyResponse.SerializableFileBody, contentType: string): string {
+    const headers = new Headers(body.headers);
+    const contentDisposition = headers.get("Content-Disposition");
+
+    if (contentDisposition != null) {
+        const filename = contentDisposition.split("filename=")[1];
+        if (filename != null) {
+            return filename;
+        }
+    }
+
+    // TODO: use a more deterministic way to generate filenames
+    const extension = contentType.split("/")[1];
+    return `${crypto.randomUUID()}.${extension}`;
+}

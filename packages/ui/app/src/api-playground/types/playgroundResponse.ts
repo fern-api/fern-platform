@@ -10,18 +10,18 @@ export declare namespace PlaygroundResponse {
         time: number;
     }
 
-    export interface Json extends ProxyResponse.Success {
+    export interface Json {
         type: "json";
+        response: ProxyResponse.SerializableBody;
+        contentType: string;
         time: number;
+        size: string | null;
     }
 
     export interface File {
         type: "file";
-        response: {
-            status: number;
-            src: string;
-            contentType: string;
-        };
+        response: ProxyResponse.SerializableFileBody;
+        contentType: string;
         time: number;
         size: string | null;
     }

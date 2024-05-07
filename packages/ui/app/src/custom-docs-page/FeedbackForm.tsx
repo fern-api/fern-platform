@@ -1,7 +1,9 @@
 import { useKeyboardPress } from "@fern-ui/react-commons";
+import clsx from "clsx";
+import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 import { FernButton } from "../components/FernButton";
 import { FernCheckbox } from "../components/FernCheckbox";
 import { FernDropdown } from "../components/FernDropdown";
@@ -9,37 +11,40 @@ import { FernInput } from "../components/FernInput";
 import { FernRadioGroup } from "../components/FernRadioGroup";
 import { FernTextarea } from "../components/FernTextarea";
 
+const MotionFernRadioGroup = motion(FernRadioGroup);
+
 interface FeedbackFormProps {
-    feedback: "yes" | "no" | undefined;
+    isHelpful: boolean | undefined;
     onSubmit: (feedback: {
         feedbackId: string;
         feedbackMessage: string;
         email: string;
         showEmailInput: boolean | "indeterminate";
     }) => void;
+    layoutDensity?: "condensed" | "verbose";
 }
 
 const SHOW_EMAIL_INPUT_ATOM = atomWithStorage<boolean | "indeterminate">("feedback-show-email-input", false);
 const EMAIL_ATOM = atomWithStorage<string>("feedback-email", "");
 
-export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
+export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layoutDensity = "verbose" }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [feedbackId, setFeedbackId] = useState<string>();
     const [feedbackMessage, setFeedbackMessage] = useState<string>("");
     const [showEmailInput, setShowEmailInput] = useAtom(SHOW_EMAIL_INPUT_ATOM);
     const [email, setEmail] = useAtom(EMAIL_ATOM);
 
-    const legend = feedback === "yes" ? "What did you like?" : feedback === "no" ? "What went wrong?" : "Feedback";
+    const legend = isHelpful ? "What did you like?" : isHelpful === false ? "What went wrong?" : "Feedback";
     const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
-        const options = feedback === "yes" ? POSITIVE_FEEDBACK : feedback === "no" ? NEGATIVE_FEEDBACK : [];
+        const options = isHelpful ? POSITIVE_FEEDBACK : isHelpful === false ? NEGATIVE_FEEDBACK : [];
         const transformedOptions: FernDropdown.Option[] = options.map(
             (option): FernDropdown.Option => ({
                 type: "value",
                 value: option.feedbackId,
                 label: option.title,
-                helperText: option.description,
+                helperText: layoutDensity === "verbose" && option.description,
                 children: (active) =>
-                    active ? (
+                    active && layoutDensity === "verbose" ? (
                         <FernTextarea
                             ref={textareaRef}
                             // autoFocus={true}
@@ -52,7 +57,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
             }),
         );
 
-        if (transformedOptions.length > 0) {
+        if (transformedOptions.length > 0 && layoutDensity === "verbose") {
             transformedOptions.push({
                 type: "value",
                 value: "other",
@@ -71,7 +76,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
             });
         }
         return transformedOptions;
-    }, [feedback, feedbackMessage]);
+    }, [isHelpful, feedbackMessage, layoutDensity]);
 
     useKeyboardPress({
         key: "Escape",
@@ -84,7 +89,8 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
         capture: true,
     });
 
-    const handleSubmitFeedback = () => {
+    const handleSubmitFeedback = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (feedbackId == null) {
             return;
         }
@@ -97,16 +103,27 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
     };
 
     return (
-        <form className="p-0">
-            <legend className="text-lg font-semibold">{legend}</legend>
+        <form onSubmit={handleSubmitFeedback} className="p-0">
+            <label
+                htmlFor="feedbackReason"
+                className={clsx({
+                    "text-lg font-semibold": layoutDensity === "verbose",
+                    "t-muted text-sm font-medium": layoutDensity === "condensed",
+                })}
+            >
+                {legend}
+            </label>
 
             {feedbackOptions.length > 0 ? (
-                <FernRadioGroup
+                <MotionFernRadioGroup
+                    layoutId={legend}
+                    id="feedbackReason"
                     className="mt-4"
                     value={feedbackId}
                     onValueChange={setFeedbackId}
                     options={feedbackOptions}
                     autoFocus={true}
+                    compact={layoutDensity === "condensed"}
                 />
             ) : (
                 <FernTextarea
@@ -118,34 +135,38 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ feedback, onSubmit }) => {
                 />
             )}
 
-            <hr className="my-4 border-border-concealed" />
+            {layoutDensity === "verbose" && (
+                <>
+                    <hr className="my-4 border-border-concealed" />
 
-            <div className="mt-4">
-                <FernCheckbox
-                    label="Yes, it's okay to follow up by email."
-                    checked={showEmailInput}
-                    onCheckedChange={setShowEmailInput}
-                    autoFocus={false}
-                >
-                    {showEmailInput && (
-                        <FernInput
-                            className="mt-2"
-                            type="email"
-                            placeholder="yourname@email.com"
-                            value={email}
-                            onValueChange={setEmail}
-                        />
-                    )}
-                </FernCheckbox>
-            </div>
+                    <div className="mt-4">
+                        <FernCheckbox
+                            label="Yes, it's okay to follow up by email."
+                            checked={showEmailInput}
+                            onCheckedChange={setShowEmailInput}
+                            autoFocus={false}
+                        >
+                            {showEmailInput && (
+                                <FernInput
+                                    className="mt-2"
+                                    type="email"
+                                    placeholder="yourname@email.com"
+                                    value={email}
+                                    onValueChange={setEmail}
+                                />
+                            )}
+                        </FernCheckbox>
+                    </div>
+                </>
+            )}
 
             <FernButton
                 full={true}
                 intent="primary"
                 className="mt-4 rounded-md"
-                onClick={handleSubmitFeedback}
+                type="submit"
                 disabled={feedbackId == null}
-                size="large"
+                size={layoutDensity === "verbose" ? "large" : "normal"}
             >
                 Send feedback
             </FernButton>
@@ -160,7 +181,7 @@ interface FeedbackItem {
     satisfied: boolean;
 }
 
-const POSITIVE_FEEDBACK: FeedbackItem[] = [
+export const POSITIVE_FEEDBACK: FeedbackItem[] = [
     {
         feedbackId: "accurate",
         title: "Accurate",
@@ -187,7 +208,7 @@ const POSITIVE_FEEDBACK: FeedbackItem[] = [
     },
 ];
 
-const NEGATIVE_FEEDBACK: FeedbackItem[] = [
+export const NEGATIVE_FEEDBACK: FeedbackItem[] = [
     {
         feedbackId: "inaccurate",
         title: "Inaccurate",

@@ -16,7 +16,13 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
     return (
         <FernTooltip
             open={wasJustCopied ? true : description == null ? false : undefined}
-            content={wasJustCopied ? "Copied!" : description != null ? <Markdown mdx={description} /> : undefined}
+            content={
+                wasJustCopied ? (
+                    "Copied!"
+                ) : description != null ? (
+                    <Markdown mdx={description} className="text-xs" />
+                ) : undefined
+            }
         >
             <span
                 className={cn(

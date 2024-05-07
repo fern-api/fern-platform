@@ -4,6 +4,7 @@ import { resolve } from "path";
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
     snippetsConfigWithSdkId: {},
+    snippetTemplatesByEndpoint: {},
 });
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");

@@ -12,8 +12,7 @@ import * as FernRegistry from "../../../..";
  *         apiId: "vellum-ai",
  *         sdks: [{
  *                 type: "python",
- *                 package: "vellum-ai",
- *                 version: "1.2.1"
+ *                 package: "vellum-ai"
  *             }]
  *     }
  */
@@ -35,5 +34,5 @@ export interface ListSnippetsRequest {
      * snippets for the latest published SDKs will be returned.
      *
      */
-    sdks?: FernRegistry.Sdk[];
+    sdks?: FernRegistry.SdkRequest[];
 }

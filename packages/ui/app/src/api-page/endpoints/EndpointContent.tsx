@@ -216,7 +216,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         >
             <div
                 className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                    "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
                 ref={setContainerRef}
                 data-route={`/${endpoint.slug.join("/")}`}
@@ -248,30 +248,28 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 </div>
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
-                        className="flex min-w-0 max-w-content-width flex-1 flex-col"
+                        className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
                         style={{
                             minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}
                     >
                         <ApiPageDescription
-                            className="mt-8 text-base leading-6"
+                            className="text-base leading-6 mb-12"
                             description={endpoint.description}
                             isMarkdown={true}
                         />
 
-                        <div className="mt-12 first:mt-8">
-                            <EndpointContentLeft
-                                endpoint={endpoint}
-                                showErrors={showErrors}
-                                onHoverRequestProperty={onHoverRequestProperty}
-                                onHoverResponseProperty={onHoverResponseProperty}
-                                selectedError={selectedError}
-                                setSelectedError={setSelectedError}
-                                contentType={contentType}
-                                setContentType={setContentType}
-                                types={types}
-                            />
-                        </div>
+                        <EndpointContentLeft
+                            endpoint={endpoint}
+                            showErrors={showErrors}
+                            onHoverRequestProperty={onHoverRequestProperty}
+                            onHoverResponseProperty={onHoverResponseProperty}
+                            selectedError={selectedError}
+                            setSelectedError={setSelectedError}
+                            contentType={contentType}
+                            setContentType={setContentType}
+                            types={types}
+                        />
                     </div>
 
                     <div
@@ -283,9 +281,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             "max-h-[150vh] md:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "md:pt-8 md:mt-0 md:top-header-height",
+                            "md:py-8 md:mt-0 md:top-header-height",
                         )}
-                        style={{ height: `${exampleHeight}px` }}
+                        // style={{ height: `${exampleHeight}px` }}
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
@@ -303,6 +301,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 requestHeight={requestHeight}
                                 responseHeight={responseHeight}
+                                selectedError={selectedError}
                             />
                         )}
                     </div>

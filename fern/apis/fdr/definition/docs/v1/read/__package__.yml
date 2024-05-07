@@ -255,11 +255,22 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    union:
+      group: NavigationTabGroup
+      link: NavigationTabLink
+
+  NavigationTabGroup:
     properties:
       title: string
       icon: optional<string>
       items: list<NavigationItem>
       urlSlug: string
+
+  NavigationTabLink:
+    properties:
+      title: string
+      icon: optional<string>
+      url: Url
 
   UnversionedUntabbedNavigationConfig:
     properties:
@@ -371,6 +382,8 @@ types:
       changelog: optional<ChangelogSection>
       fullSlug: optional<list<string>>
       navigation: optional<ApiNavigationConfigRoot>
+      longScrolling: optional<boolean>
+      flattened: optional<boolean>
 
   ApiNavigationConfigRoot:
     properties:

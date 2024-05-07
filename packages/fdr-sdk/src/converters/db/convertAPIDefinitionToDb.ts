@@ -1,8 +1,8 @@
 import lodash from "lodash";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { titleCase } from "../utils/titleCase";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
@@ -218,6 +218,10 @@ function transformEndpoint({
         // htmlDescription,
         authed: writeShape.auth,
         // descriptionContainsMarkdown: true,
+        snippetTemplates: snippets.getSnippetTemplateForEndpoint({
+            endpointPath: getEndpointPathAsString(writeShape),
+            endpointMethod: writeShape.method,
+        }),
     };
 }
 
@@ -407,36 +411,24 @@ function transformHttpRequestToDb({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
-            return {
-                contentType: "application/json",
-                description: writeShape.description,
-                // htmlDescription,
-                type: writeShape.type,
-                // descriptionContainsMarkdown: true,
-            };
         case "reference":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type,
-                // descriptionContainsMarkdown: true,
             };
-        case "fileUpload":
+        case "fileUpload": // deprecated
+        case "formData":
             return {
                 contentType: "multipart/form-data",
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type,
-                // descriptionContainsMarkdown: true,
             };
         case "json":
             return {
                 contentType: writeShape.type.contentType,
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type.shape,
-                // descriptionContainsMarkdown: true,
             };
         case "bytes":
             return {
@@ -481,19 +473,21 @@ export function transformExampleEndpointCall({
             snippets,
         }),
         requestBodyV3:
-            writeShape.requestBodyV3 ?? writeShape.requestBody != null
+            writeShape.requestBodyV3 ??
+            (writeShape.requestBody != null
                 ? {
                       type: "json",
                       value: writeShape.requestBody,
                   }
-                : undefined,
+                : undefined),
         responseBodyV3:
-            writeShape.responseBodyV3 ?? writeShape.responseBody != null
+            writeShape.responseBodyV3 ??
+            (writeShape.responseBody != null
                 ? {
                       type: "json",
                       value: writeShape.responseBody,
                   }
-                : undefined,
+                : undefined),
         codeSamples: writeShape.codeSamples ?? [],
     };
 }

@@ -6,4 +6,5 @@ export interface ErrorDeclarationV2 extends FernRegistry.api.v1.read.WithDescrip
     type?: FernRegistry.api.v1.read.TypeShape;
     statusCode: number;
     name?: string;
+    examples?: FernRegistry.api.v1.read.ErrorExample[];
 }

@@ -14,12 +14,23 @@ export interface SidebarVersionInfo {
     availability: DocsV1Read.VersionAvailability | null;
 }
 
-export interface SidebarTab {
+interface SidebarTabGroup {
+    type: "tabGroup";
     title: string;
-    icon?: string;
+    icon: string | undefined;
     index: number;
     slug: readonly string[];
 }
+
+interface SidebarTabLink {
+    type: "tabLink";
+    title: string;
+    icon: string | undefined;
+    index: number;
+    url: string;
+}
+
+export type SidebarTab = SidebarTabGroup | SidebarTabLink;
 
 export interface SidebarNavigationRaw {
     currentTabIndex: number | undefined;
@@ -37,25 +48,37 @@ export interface SidebarNavigation extends Omit<SidebarNavigationRaw, "currentNo
 export type SidebarNodeRaw = SidebarNodeRaw.PageGroup | SidebarNodeRaw.ApiSection | SidebarNodeRaw.Section;
 
 export declare namespace SidebarNodeRaw {
-    export type VisitableNode = SidebarNodeRaw.Root | SidebarNodeRaw.Page | SidebarNodeRaw.Root["items"][0];
-    export type ParentNode = SidebarNodeRaw.Root | SidebarNodeRaw.Root["items"][0];
+    export type VisitableNode =
+        | SidebarNodeRaw.Root
+        | SidebarNodeRaw.Page
+        | SidebarNodeRaw.VersionGroup
+        | SidebarNodeRaw.TabGroup
+        | SidebarNodeRaw;
+    export type ParentNode =
+        | SidebarNodeRaw.Root
+        | SidebarNodeRaw.VersionGroup
+        | SidebarNodeRaw.TabGroup
+        | SidebarNodeRaw;
     export type NavigationNode = SidebarNodeRaw.Root | SidebarNodeRaw.VersionGroup | SidebarNodeRaw.TabGroup;
 
     export interface Root {
         type: "root";
         slug: readonly string[];
-        items: readonly SidebarNodeRaw.VersionGroup[] | readonly SidebarNodeRaw.TabGroup[] | readonly SidebarNodeRaw[];
+        items: readonly SidebarNodeRaw.VersionGroup[] | readonly SidebarNodeRaw.Tab[] | readonly SidebarNodeRaw[];
     }
 
     export interface VersionGroup extends SidebarVersionInfo {
         type: "versionGroup";
-        items: readonly SidebarNodeRaw.TabGroup[] | readonly SidebarNodeRaw[];
+        items: readonly SidebarNodeRaw.Tab[] | readonly SidebarNodeRaw[];
     }
 
-    export interface TabGroup extends SidebarTab {
-        type: "tabGroup";
+    export type Tab = TabLink | TabGroup;
+
+    export interface TabGroup extends SidebarTabGroup {
         items: readonly SidebarNodeRaw[];
     }
+
+    export type TabLink = SidebarTabLink;
 
     export interface PageGroup {
         type: "pageGroup";
@@ -152,12 +175,14 @@ export declare namespace SidebarNode {
     export interface Root {
         type: "root";
         slug: readonly string[];
-        items: readonly VersionGroup[] | readonly TabGroup[] | readonly SidebarNode[];
+        items: readonly VersionGroup[] | readonly Tab[] | readonly SidebarNode[];
     }
 
     export interface VersionGroup extends Omit<SidebarNodeRaw.VersionGroup, "items"> {
-        items: readonly TabGroup[] | readonly SidebarNode[];
+        items: readonly Tab[] | readonly SidebarNode[];
     }
+
+    export type Tab = SidebarNodeRaw.TabLink | TabGroup;
 
     export interface TabGroup extends Omit<SidebarNodeRaw.TabGroup, "items"> {
         items: readonly SidebarNode[];
@@ -178,6 +203,7 @@ export declare namespace SidebarNode {
         changelog: ChangelogPage | undefined;
         summaryPage: ApiSummaryPage | undefined;
         description: MDXRemoteSerializeResult | string | undefined;
+        isSidebarFlattened: boolean;
     }
 
     export interface Section extends Omit<SidebarNodeRaw.Section, "items"> {

@@ -30,11 +30,11 @@ service:
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks:
-              type: optional<list<SDK>>
+              type: optional<list<SDKRequest>>
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
-            endpoint: EndpointIdentifier
+            endpoint: commons.EndpointIdentifier
             # TODO: Nice to have, allow client variable name to be configurable
             # clientName:
             #   type: optional<string>
@@ -116,7 +116,7 @@ service:
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks:
-              type: optional<list<SDK>>
+              type: optional<list<SDKRequest>>
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
@@ -140,7 +140,7 @@ service:
             sdks:
               - type: python
                 package: vellum-ai
-                version: 1.2.1
+                # version: 1.2.1
           response:
             body:
               next: 2
@@ -206,22 +206,43 @@ service:
                         })
 
 types:
-  EndpointIdentifier:
+  SDKRequest:
+    union:
+      typescript: TypeScriptSDKRequest
+      python: PythonSDKRequest
+      go: GoSDKRequest
+      ruby: RubySDKRequest
+      java: JavaSDKRequest
+
+  TypeScriptSDKRequest:
     properties:
-      path: EndpointPath
-      method: EndpointMethod
+      package: string
+      version: optional<string>
 
-  EndpointPath:
-    type: string
-    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+  PythonSDKRequest:
+    properties:
+      package: string
+      version: optional<string>
 
-  EndpointMethod:
-    enum:
-      - PUT
-      - POST
-      - GET
-      - PATCH
-      - DELETE
+  GoSDKRequest:
+    properties:
+      githubRepo: string
+      version: optional<string>
+
+  RubySDKRequest:
+    properties:
+      gem: string
+      version: optional<string>
+
+  JavaSDKRequest:
+    properties:
+      group:
+        type: string
+        docs: The maven repository group (e.g. `com.stripe.java`)
+      artifact:
+        type: string
+        docs: The artifact (e.g. `stripe-java`)
+      version: optional<string>
 
   SDK:
     union:
@@ -281,20 +302,14 @@ types:
         type: optional<integer>
         docs: If present, pass this into the `page` query parameter to load the next page.
       snippets:
-        type: map<EndpointPath, SnippetsByEndpointMethod>
+        type: map<commons.EndpointPath, SnippetsByEndpointMethod>
         docs: |
           The snippets are returned as a map of endpoint path (e.g. `/api/users`) 
           to a map of endpoint method (e.g. `POST`) to snippets.
 
   SnippetsByEndpointMethod:
-    type: map<EndpointMethod, list<Snippet>>
+    type: map<commons.EndpointMethod, list<Snippet>>
 
-  # TODO: we should transition snippets to a more user friendly API like below to allow for more flexibility on the consumer side:
-  # Snippet:
-  #   properties:
-  #     imports: string[]
-  #     clientInstantiation: string
-  #     functionInvocation: string
   Snippet:
     union:
       typescript: TypeScriptSnippet

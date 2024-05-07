@@ -11,6 +11,7 @@ interface PlaygroundWebSocketContentProps {
     messages: WebSocketMessage[];
     types: Record<string, ResolvedTypeDefinition>;
     startSesssion: () => void;
+    clearMessages: () => void;
     sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
     connected: boolean;
     error: string | null;
@@ -24,6 +25,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
     messages,
     sendMessage,
     startSesssion,
+    clearMessages,
     connected,
     error,
 }) => {
@@ -60,6 +62,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                     setFormState={setFormState}
                     sendMessage={sendMessage}
                     startSession={startSesssion}
+                    clearMessages={clearMessages}
                     connected={connected}
                     error={error}
                 />

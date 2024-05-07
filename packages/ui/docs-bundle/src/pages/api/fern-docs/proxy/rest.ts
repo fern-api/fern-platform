@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
+import { unknownToString } from "@fern-ui/ui";
 import { NextResponse, type NextRequest } from "next/server";
-import { jsonResponse } from "../../../../utils/serverResponse";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -30,7 +30,7 @@ async function dataURLtoBlob(dataUrl: string): Promise<Blob> {
     return new Blob([u8arr], { type: mime });
 }
 
-async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
+export async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
     if (body == null) {
         return undefined;
     }
@@ -60,8 +60,22 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
                             );
                             return [key, files] as const;
                         }
-                        case "json":
+                        case "json": {
+                            if (value.contentType != null) {
+                                return [
+                                    key,
+                                    new Blob(
+                                        [
+                                            value.contentType.includes("application/json")
+                                                ? JSON.stringify(value.value)
+                                                : unknownToString(value.value),
+                                        ],
+                                        { type: value.contentType },
+                                    ),
+                                ] as const;
+                            }
                             return [key, JSON.stringify(value.value)] as const;
+                        }
                         default:
                             assertNever(value);
                     }
@@ -94,7 +108,7 @@ async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined)
     }
 }
 
-export default async function POST(req: NextRequest): Promise<NextResponse> {
+export default async function POST(req: NextRequest): Promise<NextResponse<null | ProxyResponse>> {
     if (req.method !== "POST") {
         return new NextResponse(null, { status: 405 });
     }
@@ -140,9 +154,8 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         }
         const responseHeaders = response.headers;
 
-        return NextResponse.json(
+        return NextResponse.json<ProxyResponse>(
             {
-                error: false,
                 response: {
                     headers: Object.fromEntries(responseHeaders.entries()),
                     ok: response.ok,
@@ -161,12 +174,6 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-
-        return jsonResponse<ProxyResponse>(500, {
-            error: true,
-            status: 500,
-            time: -1,
-            size: null,
-        });
+        return new NextResponse(null, { status: 500 });
     }
 }

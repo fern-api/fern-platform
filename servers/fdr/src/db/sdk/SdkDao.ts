@@ -1,7 +1,13 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
-import { Language, PrismaClient } from "@prisma/client";
+import { Language, Prisma, PrismaClient } from "@prisma/client";
+import { DefaultArgs } from "@prisma/client/runtime/library";
 import { SdkIdFactory } from "../snippets/SdkIdFactory";
 import { SdkId } from "../types";
+
+type PrismaTransaction = Omit<
+    PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>,
+    "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
+>;
 
 export interface SdkIdForPackage {
     typescriptSdk?: APIV1Write.TypescriptPackage & { sdkId: string };
@@ -11,22 +17,73 @@ export interface SdkIdForPackage {
     javaSdk?: APIV1Write.JavaCoordinate & { sdkId: string };
 }
 
+interface SdkPackageRequest {
+    sdkPackage: string;
+    language: Language;
+    version?: string;
+}
+
+export interface SdkPackage extends SdkPackageRequest {
+    id: string;
+    sdk: Buffer;
+}
+
 export interface SdkDao {
+    createSdk(sdk: SdkPackage, tx?: PrismaClient): Promise<void>;
+
+    createSdkIfNotExists(sdk: SdkPackage, tx?: PrismaClient, overwrite?: boolean): Promise<void>;
+
     getSdkIdsForPackages(snippetConfig: APIV1Write.SnippetsConfig): Promise<SdkIdForPackage>;
 
-    getSdkIdForPackage({
-        sdkPackage,
-        language,
-        version,
-    }: {
-        sdkPackage: string;
-        language: Language;
-        version?: string;
-    }): Promise<SdkId | undefined>;
+    getSdkIdForPackage({ sdkPackage, language, version }: SdkPackageRequest): Promise<SdkId | undefined>;
 }
 
 export class SdkDaoImpl implements SdkDao {
     constructor(private readonly prisma: PrismaClient) {}
+
+    public async createManySdks(sdks: SdkPackage[], tx?: PrismaTransaction): Promise<void> {
+        await (tx ?? this.prisma).sdk.createMany({
+            data: sdks.map((sdk) => ({
+                id: sdk.id,
+                package: sdk.sdkPackage,
+                language: sdk.language,
+                version: sdk.version,
+                sdk: sdk.sdk,
+            })),
+            skipDuplicates: true,
+        });
+    }
+
+    public async createSdk(sdk: SdkPackage, tx?: PrismaTransaction): Promise<void> {
+        await (tx ?? this.prisma).sdk.create({
+            data: {
+                id: sdk.id,
+                package: sdk.sdkPackage,
+                language: sdk.language,
+                version: sdk.version,
+                sdk: sdk.sdk,
+            },
+        });
+    }
+
+    public async createSdkIfNotExists(sdk: SdkPackage, tx?: PrismaTransaction, overwrite?: boolean): Promise<void> {
+        const dbSdk = await (tx ?? this.prisma).sdk.findUnique({
+            where: {
+                id: sdk.id,
+            },
+        });
+        if (dbSdk == null || overwrite === true) {
+            // Overwrite the SDK and all of its snippets that already exist.
+            if (dbSdk !== null && overwrite === true) {
+                await (tx ?? this.prisma).sdk.delete({
+                    where: {
+                        id: sdk.id,
+                    },
+                });
+            }
+            await this.createSdk(sdk, tx);
+        }
+    }
 
     public async getSdkIdsForPackages(snippetConfig: APIV1Write.SnippetsConfig): Promise<SdkIdForPackage> {
         const result: SdkIdForPackage = {};
@@ -74,15 +131,7 @@ export class SdkDaoImpl implements SdkDao {
         return result;
     }
 
-    public async getSdkIdForPackage({
-        sdkPackage,
-        language,
-        version,
-    }: {
-        sdkPackage: string;
-        language: Language;
-        version?: string;
-    }): Promise<string | undefined> {
+    public async getSdkIdForPackage({ sdkPackage, language, version }: SdkPackageRequest): Promise<string | undefined> {
         let id: string | undefined;
         if (version != null) {
             switch (language) {

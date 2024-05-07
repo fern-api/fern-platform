@@ -35,6 +35,7 @@ it("docs register", async () => {
     await fdr.docs.v1.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
+
     // load docs
     const docs = getAPIResponse(
         await fdr.docs.v1.read.getDocsForDomain({
@@ -57,7 +58,7 @@ it("docs register", async () => {
     });
 });
 
-it.skip("docs register V2", async () => {
+it("docs register V2", async () => {
     const fdr = getClient({ authed: true, url: inject("url") });
     // register docs
     const startDocsRegisterResponse = getAPIResponse(

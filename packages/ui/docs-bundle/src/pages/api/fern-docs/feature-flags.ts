@@ -8,6 +8,12 @@ interface EdgeConfigResponse {
     "api-playground-enabled": string[];
     "api-scrolling-disabled": string[];
     whitelabeled: string[];
+    "seo-disabled": string[];
+    "toc-default-enabled": string[]; // toc={true} in Steps, Tabs, and Accordions
+    "snippet-template-enabled": string[];
+    "http-snippets-enabled": string[];
+    "inline-feedback-enabled": string[];
+    "dark-code-enabled": string[];
 }
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
@@ -21,16 +27,34 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             "api-playground-enabled",
             "api-scrolling-disabled",
             "whitelabeled",
+            "seo-disabled",
+            "toc-default-enabled",
+            "snippet-template-enabled",
+            "http-snippets-enabled",
+            "inline-feedback-enabled",
+            "dark-code-enabled",
         ]);
 
         const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"]);
         const isApiScrollingDisabled = checkDomainMatchesCustomers(domain, config["api-scrolling-disabled"]);
         const isWhitelabeled = checkDomainMatchesCustomers(domain, config.whitelabeled);
+        const isSeoDisabled = checkDomainMatchesCustomers(domain, config["seo-disabled"]);
+        const isTocDefaultEnabled = checkDomainMatchesCustomers(domain, config["toc-default-enabled"]);
+        const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(domain, config["snippet-template-enabled"]);
+        const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"]);
+        const isInlineFeedbackEnabled = checkDomainMatchesCustomers(domain, config["inline-feedback-enabled"]);
+        const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
             isApiScrollingDisabled,
             isWhitelabeled,
+            isSeoDisabled: isSeoDisabledOverrides(domain) || isSeoDisabled,
+            isTocDefaultEnabled,
+            isSnippetTemplatesEnabled: isSnippetTemplatesEnabled || isDevelopment(domain),
+            isHttpSnippetsEnabled,
+            isInlineFeedbackEnabled,
+            isDarkCodeEnabled,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -39,6 +63,12 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain),
             isApiScrollingDisabled: false,
             isWhitelabeled: false,
+            isSeoDisabled: isSeoDisabledOverrides(domain),
+            isTocDefaultEnabled: false,
+            isSnippetTemplatesEnabled: isDevelopment(domain),
+            isHttpSnippetsEnabled: false,
+            isInlineFeedbackEnabled: isFern(domain),
+            isDarkCodeEnabled: false,
         };
     }
 }
@@ -48,12 +78,46 @@ function checkDomainMatchesCustomers(domain: string, customers: readonly string[
 }
 
 function isApiPlaygroundEnabledOverrides(domain: string): boolean {
-    if (["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].includes(domain)) {
+    if (
+        ["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].some(
+            (d) => d === domain,
+        )
+    ) {
         return true;
     }
 
     if (process.env.NODE_ENV !== "production") {
         return true;
     }
+    return false;
+}
+
+function isSeoDisabledOverrides(domain: string): boolean {
+    if (domain.includes(".docs.staging.buildwithfern.com")) {
+        return true;
+    }
+    return isDevelopment(domain);
+}
+
+function isDevelopment(domain: string): boolean {
+    if (domain.includes(".docs.dev.buildwithfern.com") || domain.includes(".docs.staging.buildwithfern.com")) {
+        return true;
+    }
+
+    if (process.env.NODE_ENV !== "production") {
+        return true;
+    }
+    return false;
+}
+
+function isFern(domain: string): boolean {
+    if (
+        ["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].some(
+            (d) => d === domain,
+        )
+    ) {
+        return true;
+    }
+
     return false;
 }

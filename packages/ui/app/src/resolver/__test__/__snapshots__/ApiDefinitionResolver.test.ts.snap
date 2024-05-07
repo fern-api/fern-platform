@@ -52,6 +52,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
             "merchants",
             "get-merchants",
           ],
+          "snippetTemplates": undefined,
           "title": "Get Merchants",
           "type": "endpoint",
         },
@@ -80,7 +81,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
           "key": "offers",
           "valueShape": {
             "availability": undefined,
-            "defaultsTo": undefined,
+            "defaultValue": undefined,
             "description": undefined,
             "shape": {
               "availability": undefined,
@@ -110,7 +111,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
           "key": "merchant",
           "valueShape": {
             "availability": undefined,
-            "defaultsTo": undefined,
+            "defaultValue": undefined,
             "description": undefined,
             "shape": {
               "type": "reference",

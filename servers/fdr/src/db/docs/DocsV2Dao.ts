@@ -29,7 +29,7 @@ export interface LoadDocsConfigResponse {
 }
 
 export interface DocsV2Dao {
-    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<void>;
+    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean>;
 
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
 
@@ -48,7 +48,7 @@ export interface DocsV2Dao {
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
-    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<void> {
+    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean> {
         const matchedDomains = await this.prisma.docsV2.findMany({
             select: {
                 orgID: true,
@@ -61,11 +61,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             distinct: ["orgID", "domain"],
         });
 
-        matchedDomains.forEach((matchedDomain) => {
-            if (matchedDomain.orgID !== orgId) {
-                throw new FdrAPI.DomainBelongsToAnotherOrgError();
-            }
-        });
+        return matchedDomains.every((matchedDomain) => matchedDomain.orgID === orgId);
     }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {

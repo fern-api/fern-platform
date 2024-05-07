@@ -53,7 +53,7 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
     const lines = code.split("\n").length;
 
     const TokenRenderer =
-        (maxLines != null && lines <= maxLines + 100) || lines <= 500
+        (maxLines != null && lines <= maxLines + 100) || lines <= 500 || maxLines == null
             ? FernSyntaxHighlighterTokens
             : FernSyntaxHighlighterTokensVirtualized;
 

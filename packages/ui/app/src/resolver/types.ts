@@ -42,7 +42,7 @@ export function dereferenceObjectProperties(
         // however, we do NOT sort the properties by key because the initial order of properties may be significant
         return sortBy(
             [...directProperties],
-            (property) => unwrapReference(property.valueShape, types).type === "optional",
+            (property) => unwrapAlias(property.valueShape, types).type === "optional",
             (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         );
     }
@@ -55,7 +55,7 @@ export function dereferenceObjectProperties(
     // since there are extended properties, the initial order of properties are not significant, and we should sort by key
     return sortBy(
         [...directProperties, ...filteredExtendedProperties],
-        (property) => unwrapReference(property.valueShape, types).type === "optional",
+        (property) => unwrapAlias(property.valueShape, types).type === "optional",
         (property) => (property.availability === "Deprecated" ? 2 : property.availability === "Beta" ? 1 : 0),
         (property) => property.key,
     );
@@ -231,6 +231,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     responseBody: ResolvedResponseBody | undefined;
     errors: ResolvedError[];
     examples: ResolvedExampleEndpointCall[];
+    snippetTemplates: APIV1Read.EndpointSnippetTemplates | undefined;
 }
 
 export interface ResolvedExampleEndpointCall {
@@ -250,7 +251,7 @@ export interface ResolvedExampleEndpointCall {
 export type ResolvedExampleEndpointRequest =
     | ResolvedExampleEndpointRequest.Json
     | ResolvedExampleEndpointRequest.Form
-    | ResolvedExampleEndpointRequest.Stream;
+    | ResolvedExampleEndpointRequest.Bytes;
 
 export declare namespace ResolvedExampleEndpointRequest {
     interface Json {
@@ -263,9 +264,10 @@ export declare namespace ResolvedExampleEndpointRequest {
         value: Record<string, ResolvedFormValue>;
     }
 
-    interface Stream {
-        type: "stream";
-        fileName: string;
+    interface Bytes {
+        type: "bytes";
+        value: string | undefined; // base64 encoded
+        fileName: string | undefined;
     }
 }
 
@@ -275,16 +277,18 @@ export declare namespace ResolvedFormValue {
     interface Json {
         type: "json";
         value: unknown | undefined;
+        contentType: string | undefined;
     }
 
     interface SingleFile {
         type: "file";
         fileName: string;
+        fileId: string | undefined; // lookup file by UUID
     }
 
     interface MultipleFiles {
         type: "fileArray";
-        fileNames: string[];
+        files: SingleFile[];
     }
 }
 
@@ -327,6 +331,13 @@ export interface ResolvedError extends WithMetadata {
     shape: ResolvedTypeShape | undefined;
     statusCode: number;
     name: string | undefined;
+    examples: ResolvedExampleError[];
+}
+
+export interface ResolvedExampleError {
+    name: string | undefined;
+    description: string | undefined;
+    responseBody: unknown | undefined;
 }
 
 export interface ResolvedObjectProperty extends WithMetadata {
@@ -353,6 +364,10 @@ export declare namespace ResolvedEndpointPathParts {
 
 export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPathParts[]): string {
     return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
+}
+
+export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEndpointPathParts[]): string {
+    return pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join("");
 }
 
 export interface ResolvedWebSocketChannel {
@@ -435,7 +450,7 @@ export interface ResolvedDiscriminatedUnionShape extends WithMetadata {
 export interface ResolvedOptionalShape extends WithMetadata {
     type: "optional";
     shape: NonOptionalTypeShapeWithReference;
-    defaultsTo: unknown | undefined;
+    defaultValue: unknown | undefined;
 }
 
 export interface ResolvedListShape extends WithMetadata {
@@ -498,51 +513,51 @@ export function hasMetadata(shape: ResolvedTypeShape): shape is Exclude<Resolved
 export type DereferencedTypeShape = Exclude<ResolvedTypeShape, ResolvedReferenceShape>;
 export type NonOptionalTypeShape = Exclude<DereferencedTypeShape, ResolvedOptionalShape>;
 export type NonOptionalTypeShapeWithReference = Exclude<ResolvedTypeShape, ResolvedOptionalShape>;
+export type UnaliasedTypeShape = Exclude<DereferencedTypeShape, ResolvedAliasShape>;
 
 export interface ResolvedReferenceShape {
     type: "reference";
     typeId: string;
 }
 
-export declare namespace ResolvedFileUploadRequestProperty {
+export declare namespace ResolvedFormDataRequestProperty {
     interface FileProperty extends WithMetadata {
         type: "file";
         key: string;
         isOptional: boolean;
+        contentType: string | string[] | undefined;
     }
     interface FileArrayProperty extends WithMetadata {
         type: "fileArray";
         key: string;
         isOptional: boolean;
+        contentType: string | string[] | undefined;
     }
 
     interface BodyProperty extends ResolvedObjectProperty {
         type: "bodyProperty";
+        contentType: string | string[] | undefined;
     }
 }
 
-export type ResolvedFileUploadRequestProperty =
-    | ResolvedFileUploadRequestProperty.FileProperty
-    | ResolvedFileUploadRequestProperty.FileArrayProperty
-    | ResolvedFileUploadRequestProperty.BodyProperty;
+export type ResolvedFormDataRequestProperty =
+    | ResolvedFormDataRequestProperty.FileProperty
+    | ResolvedFormDataRequestProperty.FileArrayProperty
+    | ResolvedFormDataRequestProperty.BodyProperty;
 
-export interface ResolvedFileUploadRequest extends WithMetadata {
+export interface ResolvedFormDataRequest extends WithMetadata {
     name: string;
-    properties: ResolvedFileUploadRequestProperty[];
+    properties: ResolvedFormDataRequestProperty[];
 }
 
-export interface ResolvedFileUpload {
-    type: "fileUpload";
-    value: ResolvedFileUploadRequest | undefined;
+export interface ResolvedFormData extends ResolvedFormDataRequest {
+    type: "formData";
 }
 
-export type ResolvedHttpRequestBodyShape =
-    | ResolvedFileUpload
-    | APIV1Read.HttpRequestBodyShape.Bytes
-    | ResolvedTypeShape;
+export type ResolvedHttpRequestBodyShape = ResolvedFormData | APIV1Read.HttpRequestBodyShape.Bytes | ResolvedTypeShape;
 
 interface ResolvedHttpRequestBodyShapeVisitor<T> {
-    fileUpload: (shape: ResolvedFileUpload) => T;
+    formData: (shape: ResolvedFormData) => T;
     bytes: (shape: APIV1Read.BytesRequest) => T;
     typeShape: (shape: ResolvedTypeShape) => T;
 }
@@ -551,8 +566,8 @@ export function visitResolvedHttpRequestBodyShape<T>(
     shape: ResolvedHttpRequestBodyShape,
     visitor: ResolvedHttpRequestBodyShapeVisitor<T>,
 ): T {
-    if (shape.type === "fileUpload") {
-        return visitor.fileUpload(shape);
+    if (shape.type === "formData") {
+        return visitor.formData(shape);
     } else if (shape.type === "bytes") {
         return visitor.bytes(shape);
     } else {
@@ -609,6 +624,33 @@ export function unwrapReference(
         }
         return unwrapReference(nestedShape, types);
     }
+
+    if (shape.type === "alias") {
+        return {
+            ...shape,
+            shape: unwrapReference(shape.shape, types),
+        };
+    }
+
+    return shape;
+}
+
+export function unwrapAlias(
+    shape: ResolvedTypeShape,
+    types: Record<string, ResolvedTypeDefinition>,
+): DereferencedTypeShape {
+    shape = unwrapReference(shape, types);
+    if (shape.type === "alias") {
+        return unwrapAlias(shape.shape, types);
+    }
+
+    if (shape.type === "optional") {
+        return {
+            ...shape,
+            shape: unwrapAlias(shape.shape, types) as NonOptionalTypeShapeWithReference,
+        };
+    }
+
     return shape;
 }
 
@@ -620,6 +662,14 @@ export function unwrapOptional(
     if (shape.type === "optional") {
         return unwrapOptional(shape.shape, types);
     }
+
+    if (shape.type === "alias") {
+        return {
+            ...shape,
+            shape: unwrapOptional(shape.shape, types),
+        };
+    }
+
     return shape;
 }
 

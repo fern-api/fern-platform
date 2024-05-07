@@ -4,9 +4,10 @@ import execa from "execa";
 import express from "express";
 import http from "http";
 import { register } from "../../api";
-import { FdrApplication } from "../../app";
+import { FdrApplication, FdrConfig } from "../../app";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
+import { getApiDiffService } from "../../controllers/diff/getApiDiffService";
 import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "../../controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Service";
@@ -30,7 +31,7 @@ export async function setup({ provide }: { provide: (key: string, value: any) =>
     await execa("pnpm", ["prisma", "migrate", "deploy"], {
         stdio: "inherit",
     });
-    const instance = runMockFdr(9999);
+    const instance = await runMockFdr(9999);
     provide("url", `http://localhost:${instance.port}/`);
     return async () => {
         if (teardown) {
@@ -48,10 +49,6 @@ export const prisma = new PrismaClient({
     log: ["query", "info", "warn", "error"],
 });
 
-export const fdrApplication = createMockFdrApplication({
-    orgIds: ["acme", "octoai"],
-});
-
 function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -67,7 +64,7 @@ declare namespace MockFdr {
     }
 }
 
-function runMockFdr(port: number): MockFdr.Instance {
+async function runMockFdr(port: number): Promise<MockFdr.Instance> {
     const unauthedClient = new FdrClient({
         environment: `http://localhost:${port}/`,
     });
@@ -75,7 +72,13 @@ function runMockFdr(port: number): MockFdr.Instance {
         environment: `http://localhost:${port}/`,
         token: "dummy",
     });
+    const overrides: Partial<FdrConfig> = { redisEnabled: true };
+    const fdrApplication = createMockFdrApplication({
+        orgIds: ["acme", "octoai"],
+        configOverrides: overrides,
+    });
     const app = express();
+    await fdrApplication.initialize();
     register(app, {
         docs: {
             v1: {
@@ -96,6 +99,7 @@ function runMockFdr(port: number): MockFdr.Instance {
         snippets: getSnippetsService(fdrApplication),
         snippetsFactory: getSnippetsFactoryService(fdrApplication),
         templates: getTemplatesService(fdrApplication),
+        diff: getApiDiffService(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);

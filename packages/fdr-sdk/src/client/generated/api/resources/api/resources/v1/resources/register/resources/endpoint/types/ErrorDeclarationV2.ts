@@ -10,4 +10,5 @@ export interface ErrorDeclarationV2
     type?: FernRegistry.api.v1.register.TypeShape;
     statusCode: number;
     name?: string;
+    examples?: FernRegistry.api.v1.register.ErrorExample[];
 }

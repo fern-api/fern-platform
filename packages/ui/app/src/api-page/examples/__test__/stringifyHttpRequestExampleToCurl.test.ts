@@ -29,13 +29,14 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     errors: [],
     examples: [],
     description: undefined,
+    snippetTemplates: undefined,
 };
 
 const EMPTY_EXAMPLE = {
     pathParameters: {},
     queryParameters: {},
     headers: {},
-    path: "",
+    path: "/api",
     responseStatusCode: 0,
     codeExamples: {},
     codeSamples: [],

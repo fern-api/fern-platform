@@ -8,7 +8,12 @@ import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
 import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedFormDataRequestProperty,
+    ResolvedHttpRequestBodyShape,
+    ResolvedTypeDefinition,
+} from "../resolver/types";
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
@@ -33,14 +38,14 @@ interface PlaygroundEndpointProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-interface ProxyResponseWithMetadata {
-    result: ProxyResponse;
-    time: number;
-    metadata: ProxyResponse.SerializableResponse;
-}
+// interface ProxyResponseWithMetadata {
+//     result: ProxyResponse;
+//     time: number;
+//     metadata: ProxyResponse.SerializableResponse;
+// }
 
-function executeProxy(req: ProxyRequest, basePath: string = ""): Promise<ProxyResponseWithMetadata> {
-    const startTime = performance.now();
+function executeProxy(req: ProxyRequest, basePath: string = ""): Promise<PlaygroundResponse> {
+    // const startTime = performance.now();
     return fetch(resolve(basePath, "/api/fern-docs/proxy/rest"), {
         method: "POST",
         headers: {
@@ -48,21 +53,10 @@ function executeProxy(req: ProxyRequest, basePath: string = ""): Promise<ProxyRe
         },
         body: JSON.stringify(req),
         mode: "no-cors",
-    }).then(async (response): Promise<ProxyResponseWithMetadata> => {
-        const proxyTime = performance.now() - startTime;
-        return {
-            result: await response.json(),
-            time: proxyTime,
-            metadata: {
-                headers: Object.fromEntries(response.headers.entries()),
-                ok: response.ok,
-                redirected: response.redirected,
-                status: response.status,
-                statusText: response.statusText,
-                type: response.type,
-                url: response.url,
-            },
-        };
+    }).then(async (res): Promise<PlaygroundResponse> => {
+        // const proxyTime = performance.now() - startTime;
+        const proxyResponse = (await res.json()) as ProxyResponse;
+        return { type: "json", ...proxyResponse, contentType: res.headers.get("Content-Type") ?? "application/json" };
     });
 }
 
@@ -98,16 +92,16 @@ function executeProxyStream(req: ProxyRequest, basePath: string = ""): Promise<[
     });
 }
 
-interface FileDownloadResponse {
-    ok: boolean;
-    status: number;
-    statusText: string;
-    src: string;
-    contentType: string;
-    size?: number;
-}
+// interface FileDownloadResponse {
+//     ok: boolean;
+//     status: number;
+//     statusText: string;
+//     src: string;
+//     contentType: string;
+//     size?: number;
+// }
 
-async function executeFileDownload(req: ProxyRequest, basePath: string = ""): Promise<FileDownloadResponse> {
+async function executeFileDownload(req: ProxyRequest, basePath: string = ""): Promise<PlaygroundResponse> {
     const r = await fetch(resolve(basePath, "/api/fern-docs/proxy/file"), {
         method: "POST",
         headers: {
@@ -119,16 +113,54 @@ async function executeFileDownload(req: ProxyRequest, basePath: string = ""): Pr
 
     const contentType = r.headers.get("Content-Type") ?? "application/octet-stream";
 
-    const src = r.blob().then((blob) => URL.createObjectURL(blob));
+    if (
+        contentType.startsWith("text/") ||
+        contentType.startsWith("application/json") ||
+        contentType.startsWith("application/javascript") ||
+        contentType.startsWith("application/xml")
+    ) {
+        let body = await r.text();
+        try {
+            body = JSON.parse(body);
+        } catch (e) {
+            // ignore
+        }
+        return {
+            type: "json",
+            time: 0,
+            size: null,
+            response: {
+                headers: Object.fromEntries(r.headers.entries()),
+                ok: r.ok,
+                redirected: r.redirected,
+                status: r.status,
+                statusText: r.statusText,
+                type: r.type,
+                url: r.url,
+                body,
+            },
+            contentType,
+        };
+    }
+
+    const body = await r.blob().then((blob) => URL.createObjectURL(blob));
     const contentLength = r.headers.get("Content-Length");
 
     return {
-        ok: r.ok,
-        status: r.status,
-        statusText: r.statusText,
-        src: await src,
+        type: "file",
+        response: {
+            headers: Object.fromEntries(r.headers.entries()),
+            ok: r.ok,
+            redirected: r.redirected,
+            status: r.status,
+            statusText: r.statusText,
+            type: r.type,
+            url: r.url,
+            body,
+        },
+        time: 0,
+        size: contentLength ?? null,
         contentType,
-        size: contentLength ? parseInt(contentLength) : undefined,
     };
 }
 
@@ -160,7 +192,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(endpoint, formState),
-                body: await serializeFormStateBody(formState.body, basePath),
+                body: await serializeFormStateBody(endpoint.requestBody[0]?.shape, formState.body, basePath),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
                 const [res, stream] = await executeProxyStream(req, basePath);
@@ -181,43 +213,21 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 }
             } else if (endpoint.responseBody?.shape.type === "fileDownload") {
                 const res = await executeFileDownload(req, basePath);
-                if (res.ok) {
-                    setResponse(
-                        loaded({
-                            type: "file",
-                            response: {
-                                src: res.src,
-                                status: res.status,
-                                contentType: res.contentType,
-                            },
-                            time: 0,
-                            size: null,
-                        }),
-                    );
-                } else {
-                    setResponse(failed(new Error(`Failed to download file: ${res.statusText}`)));
-                }
+                setResponse(loaded(res));
             } else {
-                const loadedResponse = await executeProxy(req, basePath);
-                if (!loadedResponse.result.error) {
-                    setResponse(loaded({ type: "json", ...loadedResponse.result }));
+                const res = await executeProxy(req, basePath);
+                setResponse(loaded(res));
+                if (res.type !== "stream") {
                     capturePosthogEvent("api_playground_request_received", {
                         endpointId: endpoint.id,
                         endpointName: endpoint.name,
                         method: endpoint.method,
                         docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
                         response: {
-                            status: loadedResponse.result.response.status,
-                            statusText: loadedResponse.result.response.statusText,
-                            time: loadedResponse.result.time,
-                            size: loadedResponse.result.size,
-                        },
-                        proxy: {
-                            ok: loadedResponse.metadata.ok,
-                            status: loadedResponse.metadata.status,
-                            statusText: loadedResponse.metadata.statusText,
-                            type: loadedResponse.metadata.type,
-                            time: loadedResponse.time,
+                            status: res.response.status,
+                            statusText: res.response.statusText,
+                            time: res.time,
+                            size: res.size,
                         },
                     });
                 }
@@ -276,10 +286,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
 };
 
 async function serializeFormStateBody(
+    shape: ResolvedHttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
     basePath: string | undefined,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
-    if (body == null) {
+    if (shape == null || body == null || shape.type !== "formData") {
         return undefined;
     }
 
@@ -304,9 +315,22 @@ async function serializeFormStateBody(
                             ).filter(isNonNullish),
                         };
                         break;
-                    case "json":
-                        formDataValue[key] = value;
+                    case "json": {
+                        const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
+                            | ResolvedFormDataRequestProperty.BodyProperty
+                            | undefined;
+                        formDataValue[key] = {
+                            ...value,
+                            contentType:
+                                typeof property?.contentType === "string"
+                                    ? property.contentType
+                                    : Array.isArray(property?.contentType)
+                                      ? property.contentType.find((value) => value.includes("json")) ??
+                                        property.contentType[0]
+                                      : undefined,
+                        };
                         break;
+                    }
                     default:
                         assertNever(value);
                 }
@@ -352,7 +376,7 @@ async function serializeFile(
     file: File | undefined,
     basePath: string | undefined,
 ): Promise<SerializableFile | undefined> {
-    if (file == null) {
+    if (file == null || !isFile(file)) {
         return undefined;
     }
     return {
@@ -362,4 +386,8 @@ async function serializeFile(
         type: file.type,
         dataUrl: await blobToDataURL(file, basePath),
     };
+}
+
+function isFile(value: any): value is File {
+    return value instanceof File;
 }

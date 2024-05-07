@@ -4,9 +4,11 @@ import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { useCreateSearchService } from "../services/useSearchService";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
@@ -28,6 +30,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const { layout, colors, currentVersionIndex } = useDocsContext();
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
+    const { isInlineFeedbackEnabled } = useFeatureFlags();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
@@ -50,6 +53,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const currentSlug = useMemo(() => selectedSlug?.split("/") ?? [], [selectedSlug]);
     const layoutBreakpoint = useLayoutBreakpoint();
+
+    const docsMainContent = <DocsMainContent />;
 
     return (
         <PlaygroundContextProvider>
@@ -91,7 +96,11 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     {layout?.disableHeader && <div className="hidden w-sidebar-width lg:block" />}
 
                     <main className="fern-main">
-                        <DocsMainContent />
+                        {isInlineFeedbackEnabled ? (
+                            <FeedbackPopover>{docsMainContent}</FeedbackPopover>
+                        ) : (
+                            docsMainContent
+                        )}
                     </main>
                 </div>
 

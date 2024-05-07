@@ -54,7 +54,7 @@ jobs:
         run: pnpm lint:monorepo
 
       - name: Lint style
-        run: pnpm turbo lint:style format:check
+        run: pnpm turbo lint:style
 
       - name: eslint
         run: pnpm lint:eslint

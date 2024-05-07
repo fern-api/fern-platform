@@ -8,5 +8,6 @@ export * as DocsV1Write from "./generated/api/resources/docs/resources/v1/resour
 export * as DocsV2Read from "./generated/api/resources/docs/resources/v2/resources/read";
 export * as DocsV2Write from "./generated/api/resources/docs/resources/v2/resources/write";
 export { visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "./visitDbNavigationConfig";
+export { visitDbNavigationTab, visitWriteNavigationTab } from "./visitNavigationTab";
 export { visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "./visitReadNavigationConfig";
 export { visitUnversionedWriteNavigationConfig, visitWriteNavigationConfig } from "./visitWriteNavigationConfig";

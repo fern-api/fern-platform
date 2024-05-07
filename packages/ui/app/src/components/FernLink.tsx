@@ -34,10 +34,16 @@ function FernRelativeLink(props: ComponentProps<typeof Link>) {
 }
 
 export function toUrlObject(url: string | UrlObject): UrlObject {
+    if (url == null) {
+        return {};
+    }
     return typeof url === "string" ? parse(url) : url;
 }
 
 export function formatUrlString(url: string | UrlObject): string {
+    if (url == null) {
+        return "";
+    }
     return typeof url === "string" ? url : format(url);
 }
 

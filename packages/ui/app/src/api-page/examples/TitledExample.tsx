@@ -5,7 +5,7 @@ import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboard
 export declare namespace TitledExample {
     export interface Props {
         title: ReactNode;
-        type: "primary" | "warning";
+        isError?: boolean;
         actions?: ReactElement;
         className?: string;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
@@ -17,13 +17,13 @@ export declare namespace TitledExample {
 }
 
 export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<TitledExample.Props>>(function TitledExample(
-    { title, type, className, actions, children, copyToClipboardText, onClick, disableClipboard = false },
+    { title, isError, className, actions, children, copyToClipboardText, onClick, disableClipboard = false },
     ref,
 ) {
     return (
         <div
             className={cn(
-                "rounded-xl flex flex-col bg-card after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
+                "rounded-xl overflow-hidden flex flex-col bg-card after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
                 className,
             )}
             onClick={onClick}
@@ -31,16 +31,16 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
         >
             <div
                 className={cn("rounded-t-xl h-10", {
-                    "bg-tag-default-soft": type === "primary",
-                    "bg-tag-danger-soft": type === "warning",
+                    "bg-tag-default-soft": !isError,
+                    "bg-tag-danger-soft": isError,
                 })}
             >
                 <div className="mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0] shadow-border-default">
                     {typeof title === "string" ? (
                         <div
-                            className={cn("text-xs uppercase px-1", {
-                                "t-muted": type === "primary",
-                                "t-danger": type === "warning",
+                            className={cn("text-sm px-1", {
+                                "t-muted": !isError,
+                                "t-danger": isError,
                             })}
                         >
                             {title}

@@ -1,6 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
-import { toNumber } from "lodash-es";
 import {
     AnchorHTMLAttributes,
     Children,
@@ -152,15 +151,10 @@ export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom
 
         return { type: "url", url: src };
     }, [files, src]);
+
     return (
-        <Zoom>
-            {/* <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} /> */}
-            <FernImage
-                src={fernImageSrc}
-                {...rest}
-                height={height != null ? toNumber(height) : undefined}
-                width={height != null ? toNumber(width) : undefined}
-            />
+        <Zoom zoomImg={{ src: fernImageSrc?.url }}>
+            <FernImage src={fernImageSrc} {...rest} />
         </Zoom>
     );
 };

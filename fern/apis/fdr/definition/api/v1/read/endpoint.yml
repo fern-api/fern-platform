@@ -3,6 +3,7 @@
 imports:
   type: type.yml
   commons: commons.yml
+  snippetTemplate: ../../../templates.yml
 
 types:
   EnvironmentId: string
@@ -28,9 +29,17 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
-      errors: list<ErrorDeclaration>
+      errors:
+        type: list<ErrorDeclaration>
+        availability: deprecated
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
+      snippetTemplates: optional<EndpointSnippetTemplates>
+
+  EndpointSnippetTemplates:
+    properties:
+      typescript: optional<snippetTemplate.VersionedSnippetTemplate>
+      python: optional<snippetTemplate.VersionedSnippetTemplate>
 
   Environment:
     properties:
@@ -91,10 +100,13 @@ types:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-      fileUpload:
-        type: optional<type.FileUploadRequest>
-        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
       bytes: type.BytesRequest
+      formData: type.FormDataRequest
+
+      # deprecated, use formData
+      fileUpload:
+        type: optional<type.FormDataRequest>
+        docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
 
   HttpResponse:
     extends: commons.WithDescription
@@ -172,6 +184,7 @@ types:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
+      examples: optional<list<ErrorExample>>
 
   # examples
 
@@ -231,12 +244,19 @@ types:
     union:
       json: unknown
       form: map<string, FormValue>
+      bytes: BytesValue
 
   FormValue:
     union:
       json: unknown
       filename: string
+      filenames: list<string>
       filenameWithData: FilenameWithData
+      filenamesWithData: list<FilenameWithData>
+
+  BytesValue:
+    union:
+      base64: string
 
   FilenameWithData:
     properties:
@@ -250,6 +270,17 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
+
+  ErrorExample:
+    extends:
+      - commons.WithDescription
+    properties:
+      name: optional<string>
+      responseBody: ExampleErrorResponse
+
+  ExampleErrorResponse:
+    union:
+      json: unknown
 
   PythonSnippet:
     properties:

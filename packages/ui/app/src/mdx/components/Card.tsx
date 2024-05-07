@@ -26,7 +26,7 @@ export declare namespace Card {
 export const Card: React.FC<Card.Props> = ({
     title,
     icon,
-    iconSize,
+    iconSize = 8,
     color,
     darkModeColor,
     lightModeColor,
@@ -35,7 +35,7 @@ export const Card: React.FC<Card.Props> = ({
     href,
     badge,
 }) => {
-    const className = cn("text-sm border p-4 not-prose rounded-lg relative block");
+    const className = cn("text-base border p-6 not-prose rounded-xl relative block");
 
     const content = (
         <>
@@ -63,16 +63,16 @@ export const Card: React.FC<Card.Props> = ({
                     <span
                         className="card-icon"
                         style={{
-                            width: iconSize != null ? `${iconSize * 4}px` : undefined,
-                            height: iconSize != null ? `${iconSize * 4}px` : undefined,
+                            width: `${iconSize * 4}px`,
+                            height: `${iconSize * 4}px`,
                         }}
                     >
                         {icon}
                     </span>
                 ) : null}
-                <div>
+                <div className="space-y-1">
                     <div className="t-default text-base font-semibold">{title}</div>
-                    {children != null && <div className="t-muted mt-1 leading-snug">{children}</div>}
+                    {children != null && <div className="t-muted">{children}</div>}
                 </div>
             </div>
         </>

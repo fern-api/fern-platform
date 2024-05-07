@@ -1,8 +1,8 @@
 import { visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
 import lodash from "lodash";
-import NodeCache from "node-cache";
 import { v4 as uuidv4 } from "uuid";
+import { Cache } from "../../Cache";
 import { DocsV1Db } from "../../api";
 import type { FdrApplication } from "../../app";
 import type { DocsVersion } from "../../types";
@@ -48,17 +48,14 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
         maxKeysToCache: 5_000,
     };
 
-    private apiKeysCache: NodeCache;
+    private apiKeysCache: Cache<string>;
 
     private get algolia() {
         return this.app.services.algolia;
     }
 
     constructor(private readonly app: FdrApplication) {
-        this.apiKeysCache = new NodeCache({
-            stdTTL: AlgoliaIndexSegmentManagerServiceImpl.config.apiKeyTTLHours * SECONDS_IN_ONE_HOUR,
-            maxKeys: AlgoliaIndexSegmentManagerServiceImpl.config.maxKeysToCache,
-        });
+        this.apiKeysCache = new Cache(AlgoliaIndexSegmentManagerServiceImpl.config.maxKeysToCache, SECONDS_IN_ONE_HOUR);
     }
 
     public generateIndexSegmentsForDefinition({
@@ -129,7 +126,7 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     }
 
     public getOrGenerateSearchApiKeyForIndexSegment(indexSegmentId: string) {
-        const cachedKey = this.apiKeysCache.get<string>(indexSegmentId);
+        const cachedKey = this.apiKeysCache.get(indexSegmentId);
         if (typeof cachedKey === "string") {
             return cachedKey;
         } else {
@@ -138,7 +135,7 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     }
 
     public getSearchApiKeyForIndexSegment(indexSegmentId: string) {
-        const cachedKey = this.apiKeysCache.get<string>(indexSegmentId);
+        const cachedKey = this.apiKeysCache.get(indexSegmentId);
         return cachedKey;
     }
 

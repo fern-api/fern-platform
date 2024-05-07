@@ -59,6 +59,7 @@ export class Write {
             switch ((_response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error)?.error) {
                 case "InvalidDomainError":
                 case "InvalidCustomDomainError":
+                case "DomainBelongsToAnotherOrgError":
                     return {
                         ok: false,
                         error: _response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error,

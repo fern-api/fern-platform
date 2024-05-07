@@ -20,77 +20,89 @@ export function generateWebhookPayloadExample(
 export function generateHttpRequestBodyExample(
     type: APIV1Write.HttpRequestBodyShape,
     resolveTypeById: ResolveTypeById,
-): unknown {
+): APIV1Write.ExampleEndpointRequest | undefined {
     switch (type.type) {
-        case "object":
-            return generateExampleObject(type, resolveTypeById, true, new Set(), 0);
-        case "reference":
-            return generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
+        case "object": {
+            const value = generateExampleObject(type, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
+        case "reference": {
+            const value = generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
         case "json":
             return generateHttpJsonRequestBodyExample(type.shape, resolveTypeById);
-        case "fileUpload":
-            return generateFileUploadRequestBodyExample(type.value, resolveTypeById);
+        case "fileUpload": // deprecated
+            return generateFormDataRequestBodyExample(type.value, resolveTypeById);
+        case "formData":
+            return generateFormDataRequestBodyExample(type, resolveTypeById);
         case "bytes": {
             if (type.isOptional) {
                 return undefined;
             }
-            const content = btoa("Hello world!");
+            let content = btoa("Hello world!");
             if (type.contentType != null) {
-                return `data:${type.contentType};base64,${content}`;
-            } else {
-                return content;
+                content = `data:${type.contentType};base64,${content}`;
             }
+            return { type: "bytes", value: { type: "base64", value: content } };
         }
     }
 }
 
-function generateFileUploadRequestBodyExample(
-    fileUploadRequest: APIV1Write.FileUploadRequest | undefined,
+function generateFormDataRequestBodyExample(
+    FormDataRequest: APIV1Write.FormDataRequest | undefined,
     resolveTypeById: ResolveTypeById,
-) {
-    if (fileUploadRequest == null) {
-        return "<filename>"; // old (deprecated) behavior
+): APIV1Write.ExampleEndpointRequest {
+    if (FormDataRequest == null) {
+        return { type: "form", value: {} }; // old (deprecated) behavior
     }
 
-    const example: Record<string, unknown> = {};
-    fileUploadRequest.properties.forEach((property) => {
+    const example: Record<string, APIV1Write.FormValue> = {};
+    FormDataRequest.properties.forEach((property) => {
         switch (property.type) {
             case "file": {
                 if (property.value.isOptional) {
                     break;
                 }
                 if (property.value.type === "fileArray") {
-                    example[property.value.key] = ["<filename1>", "<filename2>"];
+                    example[property.value.key] = {
+                        type: "filenames",
+                        value: ["<filename1>", "<filename2>"],
+                    };
                 } else {
-                    example[property.value.key] = "<filename1>";
+                    example[property.value.key] = {
+                        type: "filename",
+                        value: "<filename1>",
+                    };
                 }
                 break;
             }
             case "bodyProperty": {
-                example[property.key] = generateExampleFromTypeReference(
-                    property.valueType,
-                    resolveTypeById,
-                    true,
-                    new Set(),
-                    0,
-                );
+                example[property.key] = {
+                    type: "json",
+                    value: generateExampleFromTypeReference(property.valueType, resolveTypeById, true, new Set(), 0),
+                };
                 break;
             }
         }
     });
 
-    return example;
+    return { type: "form", value: example };
 }
 
 function generateHttpJsonRequestBodyExample(
     shape: APIV1Write.JsonBodyShape,
     resolveTypeById: ResolveTypeById,
-): unknown {
+): APIV1Write.ExampleEndpointRequest {
     switch (shape.type) {
-        case "object":
-            return generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
-        case "reference":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+        case "object": {
+            const value = generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
+        case "reference": {
+            const value = generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+            return { type: "json", value };
+        }
         default:
             assertNever(shape);
     }

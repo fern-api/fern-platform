@@ -1,6 +1,13 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional, unwrapReference } from "../../../resolver/types";
+import {
+    ResolvedTypeDefinition,
+    ResolvedTypeShape,
+    unwrapAlias,
+    unwrapOptional,
+    unwrapReference,
+} from "../../../resolver/types";
+import { unknownToString } from "../../../util/unknownToString";
 
 export interface TypeShorthandOptions {
     plural?: boolean;
@@ -14,23 +21,24 @@ export function renderTypeShorthandRoot(
     isResponse: boolean = false,
 ): ReactNode {
     const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
+    const unaliasedShape = unwrapAlias(shape, types);
     return (
         <span className="t-muted inline-flex items-baseline gap-2 text-xs">
             <span>{typeShorthand}</span>
-            {shape.type === "optional" ? (
+            {unaliasedShape.type === "optional" ? (
                 <span>{isResponse ? "Optional" : "Optional"}</span>
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {shape.type === "optional" && shape.defaultsTo !== undefined && (
-                <span>{renderDefaultTo(shape.defaultsTo)}</span>
+            {unaliasedShape.type === "optional" && unaliasedShape.defaultValue !== undefined && (
+                <span>{renderDefaultTo(unaliasedShape.defaultValue)}</span>
             )}
         </span>
     );
 }
 
 function renderDefaultTo(defaultsTo: unknown): string {
-    return `Defaults to ${JSON.stringify(defaultsTo)}`;
+    return `Defaults to ${unknownToString(defaultsTo)}`;
 }
 
 export function renderTypeShorthand(

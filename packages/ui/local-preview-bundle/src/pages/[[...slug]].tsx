@@ -3,6 +3,7 @@ import { getNavigationRoot } from "@fern-ui/fdr-utils";
 import {
     DocsPage,
     DocsPageResult,
+    FeatureFlags,
     NextApp,
     convertNavigatableToResolvedPath,
     serializeSidebarNodeDescriptionMdx,
@@ -120,6 +121,19 @@ async function getDocsPageProps(
         navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
     );
 
+    // TODO: get feature flags from the API
+    const featureFlags: FeatureFlags = {
+        isApiPlaygroundEnabled: false,
+        isApiScrollingDisabled: false,
+        isWhitelabeled: false,
+        isSeoDisabled: true,
+        isTocDefaultEnabled: false,
+        isSnippetTemplatesEnabled: false,
+        isHttpSnippetsEnabled: false,
+        isInlineFeedbackEnabled: false,
+        isDarkCodeEnabled: false,
+    };
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
         rawSidebarNodes: navigation.found.sidebarNodes,
@@ -130,6 +144,7 @@ async function getDocsPageProps(
             showError: true,
         },
         domain: docs.baseUrl.domain,
+        featureFlags,
     });
 
     if (resolvedPath == null) {
@@ -153,12 +168,6 @@ async function getDocsPageProps(
             },
         };
     }
-
-    const featureFlags = {
-        isApiPlaygroundEnabled: false,
-        isApiScrollingDisabled: false,
-        isWhitelabeled: false,
-    };
 
     const props: DocsPage.Props = {
         baseUrl: docs.baseUrl,

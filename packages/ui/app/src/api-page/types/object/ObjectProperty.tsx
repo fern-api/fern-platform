@@ -1,7 +1,6 @@
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useRouteListener } from "../../../contexts/useRouteListener";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
@@ -112,21 +111,19 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
             data-route={anchorRoute.toLowerCase()}
             className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
-                "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
+                "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative inline-flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
-                    <MonospaceText
-                        className={cn("t-default text-sm", {
-                            "t-accent": isActive,
-                        })}
+                    <span
+                        className="fern-api-property-key"
                         onMouseEnter={onMouseEnterPropertyName}
                         onMouseOut={onMouseOutPropertyName}
                     >
                         {property.key}
-                    </MonospaceText>
+                    </span>
                 </div>
                 {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
                 {property.availability != null && (

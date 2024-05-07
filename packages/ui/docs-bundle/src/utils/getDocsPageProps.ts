@@ -68,7 +68,13 @@ export async function getDocsPageProps(
         throw new Error("Failed to fetch docs");
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const start2 = Date.now();
+    const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const end2 = Date.now();
+
+    // eslint-disable-next-line no-console
+    console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
+    return toRet;
 }
 
 export async function getPrivateDocsPageProps(
@@ -195,6 +201,8 @@ async function convertDocsToDocsPageProps({
         navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
     );
 
+    const featureFlags = await getFeatureFlags(xFernHost);
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
         rawSidebarNodes: navigation.found.sidebarNodes,
@@ -202,6 +210,7 @@ async function convertDocsToDocsPageProps({
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
         domain: docs.baseUrl.domain,
+        featureFlags,
     });
 
     if (resolvedPath == null) {
@@ -219,8 +228,6 @@ async function convertDocsToDocsPageProps({
             },
         };
     }
-
-    const featureFlags = await getFeatureFlags(xFernHost);
 
     const props: DocsPage.Props = {
         baseUrl: docs.baseUrl,

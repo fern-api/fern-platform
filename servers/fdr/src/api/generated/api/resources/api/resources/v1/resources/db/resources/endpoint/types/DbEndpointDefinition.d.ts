@@ -20,4 +20,5 @@ export interface DbEndpointDefinition extends FernRegistry.api.v1.read.WithDescr
     errors?: FernRegistry.api.v1.read.ErrorDeclaration[];
     errorsV2?: FernRegistry.api.v1.read.ErrorDeclarationV2[];
     examples: FernRegistry.api.v1.read.ExampleEndpointCall[];
+    snippetTemplates?: FernRegistry.api.v1.read.EndpointSnippetTemplates;
 }

@@ -1,3 +1,5 @@
+import { CustomSnippetPayload } from "@fern-api/fdr-sdk/dist/client/generated/api";
+import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
@@ -12,6 +14,7 @@ import {
     ResolvedTypeShape,
     ResolvedWebSocketChannel,
     dereferenceObjectProperties,
+    stringifyResolvedEndpointPathPartsTemplate,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
@@ -87,11 +90,17 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
         .join("\n");
 }
 
-export function stringifyFetch(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyFetch({
+    endpoint,
+    formState,
+    redacted,
+    isSnippetTemplatesEnabled,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    isSnippetTemplatesEnabled: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -100,6 +109,31 @@ export function stringifyFetch(
     // TODO: ensure case insensitivity
     if (headers["Content-Type"] === "multipart/form-data") {
         delete headers["Content-Type"]; // fetch will set this automatically
+    }
+
+    const snippetTemplate = endpoint.snippetTemplates?.typescript;
+
+    if (snippetTemplate != null && isSnippetTemplatesEnabled) {
+        const resolver = new SnippetTemplateResolver({
+            payload: convertToCustomSnippetPayload(formState),
+            endpointSnippetTemplate: {
+                sdk: {
+                    type: "typescript",
+                    package: "",
+                    version: "",
+                },
+                endpointId: {
+                    path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
+                    method: endpoint.method,
+                },
+                snippetTemplate,
+            },
+        });
+        const resolvedTemplate = resolver.resolve();
+
+        if (resolvedTemplate.type === "typescript") {
+            return resolvedTemplate.client;
+        }
     }
 
     function buildFetch(body: string | undefined) {
@@ -165,11 +199,17 @@ ${buildFetch("formData")}`;
     });
 }
 
-export function stringifyPythonRequests(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyPythonRequests({
+    endpoint,
+    formState,
+    redacted,
+    isSnippetTemplatesEnabled,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    isSnippetTemplatesEnabled: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -182,6 +222,32 @@ export function stringifyPythonRequests(
         json?: string;
         data?: string;
         files?: string;
+    }
+
+    const snippetTemplate = endpoint.snippetTemplates?.python;
+
+    if (snippetTemplate != null && isSnippetTemplatesEnabled) {
+        const resolver = new SnippetTemplateResolver({
+            payload: convertToCustomSnippetPayload(formState),
+            endpointSnippetTemplate: {
+                sdk: {
+                    type: "python",
+                    package: "",
+                    version: "",
+                },
+                endpointId: {
+                    path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
+                    method: endpoint.method,
+                },
+                snippetTemplate,
+            },
+        });
+
+        const resolvedTemplate = resolver.resolve();
+
+        if (resolvedTemplate.type === "python") {
+            return resolvedTemplate.sync_client;
+        }
     }
 
     function buildRequests({ json, data, files }: PythonRequestParams) {
@@ -266,6 +332,17 @@ ${buildRequests({ data: f.value != null ? `open('${f.value?.name}', 'rb').read()
 
 ${buildRequests({})}`,
     });
+}
+
+export function convertToCustomSnippetPayload(formState: PlaygroundEndpointRequestFormState): CustomSnippetPayload {
+    return {
+        pathParameters: Object.entries(formState.pathParameters).map(([name, value]) => ({ name, value })),
+        queryParameters: Object.entries(formState.queryParameters).map(([name, value]) => ({ name, value })),
+
+        // should headers use obfuscateSecret?
+        headers: Object.entries(formState.headers).map(([name, value]) => ({ name, value })),
+        requestBody: formState.body?.value,
+    };
 }
 
 export function obfuscateSecret(secret: string): string {
@@ -395,11 +472,15 @@ export function buildUnredactedHeaders(
     return headers;
 }
 
-export function stringifyCurl(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyCurl({
+    endpoint,
+    formState,
+    redacted,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -428,8 +509,8 @@ export function stringifyCurl(
                           }
                           return { type: "form", value: newValue };
                       },
-                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Stream | undefined =>
-                          value != null ? { type: "stream", fileName: value.name } : undefined,
+                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Bytes | undefined =>
+                          value != null ? { type: "bytes", fileName: value.name, value: undefined } : undefined,
                       _other: () => undefined,
                   }),
     });
@@ -538,7 +619,7 @@ export function getDefaultValuesForBody(
         return undefined;
     }
     return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
-        fileUpload: () => ({ type: "form-data", value: {} }),
+        formData: () => ({ type: "form-data", value: {} }),
         bytes: () => ({ type: "octet-stream", value: undefined }),
         typeShape: (typeShape) => ({
             type: "json",
@@ -631,8 +712,8 @@ export function hasRequiredFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: (fileUpload) =>
-            fileUpload.value?.properties.some((property) =>
+        formData: (formData) =>
+            formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => !file.isOptional,
                     fileArray: (fileArray) => !fileArray.isOptional,
@@ -677,8 +758,8 @@ export function hasOptionalFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: (fileUpload) =>
-            fileUpload.value?.properties.some((property) =>
+        formData: (formData) =>
+            formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => file.isOptional,
                     fileArray: (fileArray) => fileArray.isOptional,

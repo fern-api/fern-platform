@@ -30,7 +30,7 @@ export interface GetSnippetRequest {
      * snippets for the latest published SDKs will be returned.
      *
      */
-    sdks?: FernRegistry.Sdk[];
+    sdks?: FernRegistry.SdkRequest[];
     endpoint: FernRegistry.EndpointIdentifier;
     /**
      * The JSON payload to be used as the input for the code snippet. This should just be thought of as the
