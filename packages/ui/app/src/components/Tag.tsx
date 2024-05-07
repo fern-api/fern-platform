@@ -14,7 +14,7 @@ export const Tag: FC<TagProps> = ({ children, size = "lg", variant = "subtle", c
       className={clsx(
         "uppercase font-mono inline-flex justify-center items-center leading-none",
         {
-          "rounded-md h-[18px] text-[10px] w-9": size === "sm",
+          "rounded-md h-[18px] text-[10px] px-1.5": size === "sm",
           "py-1 px-2 rounded-lg h-6 text-xs": size === "lg",
         },
         {
