@@ -450,7 +450,7 @@ export interface ResolvedDiscriminatedUnionShape extends WithMetadata {
 export interface ResolvedOptionalShape extends WithMetadata {
     type: "optional";
     shape: NonOptionalTypeShapeWithReference;
-    defaultsTo: unknown | undefined;
+    defaultValue: unknown | undefined;
 }
 
 export interface ResolvedListShape extends WithMetadata {
