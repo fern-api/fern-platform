@@ -3,7 +3,7 @@ import { components } from "@octokit/openapi-types";
 import { mkdir } from "fs/promises";
 import { Octokit } from "octokit";
 import * as path from "path";
-import simpleGit from "simple-git";
+import simpleGit, { SimpleGit } from "simple-git";
 import tmp from "tmp-promise";
 
 interface CreatePRRequest {
@@ -97,7 +97,7 @@ function getErrorMessage(error: unknown) {
 export const DEFAULT_REMOTE_NAME = "origin";
 export type Repository = components["schemas"]["repository"];
 
-export async function configureGit(repository: Repository): Promise<[any, string]> {
+export async function configureGit(repository: Repository): Promise<[SimpleGit, string]> {
     const tmpDir = await tmp.dir();
     const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
     if (!(await doesPathExist(fullRepoPath))) {
@@ -107,12 +107,12 @@ export async function configureGit(repository: Repository): Promise<[any, string
 }
 
 export async function cloneRepo(
-    git: any,
+    git: SimpleGit,
     repository: Repository,
     octokit: Octokit,
     fernBotLoginName: string,
     fernBotLoginId: string,
-) {
+): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const installationToken = ((await octokit.auth({ type: "installation" })) as any).token;
 
@@ -124,7 +124,11 @@ export async function cloneRepo(
     await git.addConfig("user.email", `${fernBotLoginId}+${fernBotLoginName}@users.noreply.github.com`);
 }
 
-export async function getOrUpdateBranch(git: any, defaultBranchName: string, branchToCheckoutName: string) {
+export async function getOrUpdateBranch(
+    git: SimpleGit,
+    defaultBranchName: string,
+    branchToCheckoutName: string,
+): Promise<void> {
     try {
         // If you can fetch the branch, checkout the branch
         await git.fetch(DEFAULT_REMOTE_NAME, branchToCheckoutName);
