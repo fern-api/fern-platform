@@ -153,7 +153,7 @@ export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom
     }, [files, src]);
 
     return (
-        <Zoom zoomImg={{ src: fernImageSrc?.url }}>
+        <Zoom zoomImg={{ src: fernImageSrc?.url }} classDialog="custom-backdrop">
             <FernImage src={fernImageSrc} {...rest} />
         </Zoom>
     );
