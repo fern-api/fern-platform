@@ -13,6 +13,7 @@ export interface ApiSection {
     showErrors?: boolean;
     changelog?: FernRegistry.docs.v1.write.ChangelogSection;
     hidden?: boolean;
+    urlSlugOverride?: string;
     fullSlug?: string[];
     navigation?: FernRegistry.docs.v1.write.ApiNavigationConfigRoot;
     longScrolling?: boolean;

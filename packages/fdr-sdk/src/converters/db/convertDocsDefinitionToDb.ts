@@ -175,7 +175,7 @@ export function transformNavigationItemForDb(
                 longScrolling: writeShape.longScrolling,
                 flattened: writeShape.flattened,
                 fullSlug: writeShape.fullSlug,
-                urlSlug: kebabCase(writeShape.title),
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 artifacts:
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
