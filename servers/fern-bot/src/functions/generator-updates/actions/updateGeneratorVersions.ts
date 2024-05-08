@@ -1,4 +1,3 @@
-import { generateChangelog, generateCommitMessage } from "@libs/cohere";
 import { Env } from "@libs/env";
 import { execFernCli } from "@libs/fern";
 import { setupGithubApp } from "@libs/github/octokit";
@@ -8,14 +7,13 @@ import {
     configureGit,
     createOrUpdatePullRequest,
     getOrUpdateBranch,
+    type Repository,
 } from "@libs/github/utilities";
-import { components } from "@octokit/openapi-types";
 import { App, Octokit } from "octokit";
 
-const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
-type Repository = components["schemas"]["repository"];
+const GENERATOR_UPDATE_BRANCH = "fern/update-generators";
 
-async function updateOpenApiSpecInternal(
+async function updateGeneratorVersionInternal(
     octokit: Octokit,
     repository: Repository,
     fernBotLoginName: string,
@@ -26,12 +24,13 @@ async function updateOpenApiSpecInternal(
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
 
     const originDefaultBranch = `${DEFAULT_REMOTE_NAME}/${repository.default_branch}`;
-    await getOrUpdateBranch(git, originDefaultBranch, OPENAPI_UPDATE_BRANCH);
+    await getOrUpdateBranch(git, originDefaultBranch, GENERATOR_UPDATE_BRANCH);
 
     try {
         // Run API update command which will pull the new spec from the specified
         // origin and write it to disk we can then commit it to github from there.
-        await execFernCli("api update", fullRepoPath);
+        await execFernCli("upgrade", fullRepoPath);
+        await execFernCli("generator upgrade", fullRepoPath);
     } catch (error) {
         return;
     }
@@ -40,34 +39,38 @@ async function updateOpenApiSpecInternal(
     if (!(await git.status()).isClean()) {
         console.log("Changes detected, committing and pushing");
         // Add + commit files
-        const commitDiff = await git.diff();
         await git.add(["-A"]);
-        await git.commit(await generateCommitMessage(commitDiff));
+        await git.commit("(chore): upgrade generator versions to latest");
 
         // Push the changes
         await git.push([
             "--force-with-lease",
             DEFAULT_REMOTE_NAME,
-            `${OPENAPI_UPDATE_BRANCH}:refs/heads/${OPENAPI_UPDATE_BRANCH}`,
+            `${GENERATOR_UPDATE_BRANCH}:refs/heads/${GENERATOR_UPDATE_BRANCH}`,
         ]);
 
-        const fullDiff = await git.diff([originDefaultBranch]);
         // Open a PR
         await createOrUpdatePullRequest(
             octokit,
             {
-                title: ":herb: :sparkles: [Scheduled] Update API Spec",
+                title: ":herb: :sparkles: [Scheduled] Upgrade SDK Generator Versions",
                 base: "main",
-                body: await generateChangelog(fullDiff),
+                // TODO: This should really pull from the changelogs the generators maintain in the Fern repo
+                body: `## Automated Upgrade PR
+
+                <br/>
+                ---
+
+                This Pull Request has been auto-generated as part of Fern's release process.`,
             },
             repository.full_name,
             repository.full_name,
-            OPENAPI_UPDATE_BRANCH,
+            GENERATOR_UPDATE_BRANCH,
         );
     }
 }
 
-export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
+export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {
     const app: App = setupGithubApp(env);
 
     if (env.REPO_TO_RUN_ON !== undefined) {
@@ -80,7 +83,7 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
         }
         console.log("Encountered installation", installation.repository.full_name);
-        await updateOpenApiSpecInternal(
+        await updateGeneratorVersionInternal(
             installation.octokit,
             installation.repository,
             env.GITHUB_APP_LOGIN_NAME,
