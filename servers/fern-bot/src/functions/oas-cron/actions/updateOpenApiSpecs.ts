@@ -61,7 +61,14 @@ async function updateOpenApiSpecInternal(
     // Run API update command which will pull the new spec from the specified
     // origin and write it to disk we can then commit it to github from there.
     try {
-        const command = execa("npx", ["fern-api", "api", "update"], { cwd: fullRepoPath });
+        // Running the commands on Lambdas is a bit odd...
+        // so here we make sure the CLI is bundled via the `external` block in serverless.yml
+        // and then execute the command directly via node_modules.
+        process.env.NPM_CONFIG_CACHE = "/tmp/.npm";
+        process.env.HOME = "/tmp";
+        const command = execa(`${process.cwd()}/node_modules/fern-api/cli.cjs`, ["api", "update"], {
+            cwd: fullRepoPath,
+        });
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
         await command;
