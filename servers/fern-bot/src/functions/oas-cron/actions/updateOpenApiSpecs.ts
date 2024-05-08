@@ -2,12 +2,12 @@ import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { generateChangelog, generateCommitMessage } from "@libs/cohere";
 import { Env } from "@libs/env";
 import { components } from "@octokit/openapi-types";
-import execa from "execa";
 import { mkdir } from "fs/promises";
 import { App, Octokit } from "octokit";
 import * as path from "path";
 import simpleGit from "simple-git";
 import tmp from "tmp-promise";
+import { execFernCli } from "../../../libs/fern";
 import { setupGithubApp } from "../github/octokit";
 import { createOrUpdatePullRequest } from "../github/utilities";
 
@@ -58,22 +58,11 @@ async function updateOpenApiSpecInternal(
         await git.checkoutBranch(OPENAPI_UPDATE_BRANCH, branchRemoteName);
     }
 
-    // Run API update command which will pull the new spec from the specified
-    // origin and write it to disk we can then commit it to github from there.
     try {
-        // Running the commands on Lambdas is a bit odd...
-        // so here we make sure the CLI is bundled via the `external` block in serverless.yml
-        // and then execute the command directly via node_modules.
-        process.env.NPM_CONFIG_CACHE = "/tmp/.npm";
-        process.env.HOME = "/tmp";
-        const command = execa(`${process.cwd()}/node_modules/fern-api/cli.cjs`, ["api", "update"], {
-            cwd: fullRepoPath,
-        });
-        command.stdout?.pipe(process.stdout);
-        command.stderr?.pipe(process.stderr);
-        await command;
+        // Run API update command which will pull the new spec from the specified
+        // origin and write it to disk we can then commit it to github from there.
+        await execFernCli("api update", fullRepoPath);
     } catch (error) {
-        console.error(`\`fern api update\` failed. stderr: ${error.stderr} (${error.exitCode})`);
         return;
     }
 
