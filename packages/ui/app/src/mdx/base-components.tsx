@@ -116,9 +116,9 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
                 !isValidElement(child)
                     ? child
                     : isImgElement(child)
-                      ? cloneElement<ImgProps>(child, { disableZoom: true })
+                      ? cloneElement<ImgProps>(child, { noZoom: true })
                       : child.type === "img"
-                        ? createElement(Image, { ...child.props, disableZoom: true })
+                        ? createElement(Image, { ...child.props, noZoom: true })
                         : child,
             )}
         </FernLink>
@@ -126,19 +126,17 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
 };
 
 export interface ImgProps extends ComponentProps<"img"> {
-    disableZoom?: boolean;
+    noZoom?: boolean;
 }
 
 function isImgElement(element: ReactElement): element is ReactElement<ImgProps> {
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, height, width, noZoom, ...rest }) => {
     const { files } = useDocsContext();
     // const mounted = useMounted();
-    // if (!mounted || disableZoom) {
-    //     return <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} />;
-    // }
+
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
         if (src == null) {
             return undefined;
@@ -151,6 +149,10 @@ export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom
 
         return { type: "url", url: src };
     }, [files, src]);
+
+    if (noZoom) {
+        return <FernImage src={fernImageSrc} {...rest} />;
+    }
 
     return (
         <Zoom zoomImg={{ src: fernImageSrc?.url }} classDialog="custom-backdrop">
