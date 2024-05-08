@@ -36,7 +36,7 @@ functions:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
     events:
       - schedule:
-          rate: cron(0 0 * * ? *)
+          rate: cron(0 1 * * MON *)
           enabled: true
 custom:
   esbuild:
