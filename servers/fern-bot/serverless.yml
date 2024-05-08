@@ -21,19 +21,26 @@ provider:
 functions:
   updateOpenApiSpec:
     handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
+    # Adding a layer to have git available in the lambda
+    # https://github.com/lambci/git-lambda-layer
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
     events:
       - schedule:
           rate: cron(0 0 * * ? *)
           enabled: true
-package:
-  individually: true
 custom:
   esbuild:
+    minify: true
     bundle: true
-    minify: false
     sourcemap: true
-    exclude: ["aws-sdk"]
     target: "node18"
-    define: { "require.resolve": undefined }
     platform: "node"
     concurrency: 10
+    packager: pnpm
+    external:
+      - fern-api
+      - fern
+    packagerOptions:
+      scripts:
+        - npm install -g fern-api
