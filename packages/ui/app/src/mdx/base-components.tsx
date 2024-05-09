@@ -116,10 +116,10 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
                 !isValidElement(child)
                     ? child
                     : isImgElement(child)
-                        ? cloneElement<ImgProps>(child, { noZoom: true })
-                        : child.type === "img"
-                            ? createElement(Image, { ...child.props, noZoom: true })
-                            : child,
+                      ? cloneElement<ImgProps>(child, { noZoom: true })
+                      : child.type === "img"
+                        ? createElement(Image, { ...child.props, noZoom: true })
+                        : child,
             )}
         </FernLink>
     );
@@ -133,7 +133,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, height: h, width: w, noZoom, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, ...rest }) => {
     const { files } = useDocsContext();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
@@ -149,11 +149,23 @@ export const Image: FC<ImgProps> = ({ className, src, height: h, width: w, noZoo
         return { type: "url", url: src };
     }, [files, src]);
 
-    const height: number | undefined = useMemo(() => h !== undefined ? Number(h) : undefined, [h]);
-    const width: number | undefined = useMemo(() => w !== undefined ? Number(w) : undefined, [w]);
+    function checkForUnits(str: string | number | undefined): string | number | undefined {
+        const regex = /(em|rem)/g;
+        if (typeof str === "undefined") {
+            return undefined;
+        }
+        if (regex.test(String(str))) {
+            return undefined;
+        } else {
+            return str;
+        }
+    }
+
+    const width = checkForUnits(w);
+    const height = checkForUnits(h);
 
     if (noZoom) {
-        return <FernImage src={fernImageSrc} height={height} width={width} {...rest} />;
+        return <FernImage src={fernImageSrc} width={width as number} height={height as number} {...rest} />;
     }
 
     return (
