@@ -133,7 +133,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, style, ...rest }) => {
     const { files } = useDocsContext();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
@@ -141,36 +141,56 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
             return undefined;
         }
 
+        // if src starts with `file:`, assume it's a referenced file; fallback to src if not found
         if (src.startsWith("file:")) {
             const fileId = src.slice(5);
-            return files[fileId];
+            return files[fileId] ?? { type: "url", url: src };
         }
 
         return { type: "url", url: src };
     }, [files, src]);
 
-    function checkForUnits(str: string | number | undefined): string | number | undefined {
-        const regex = /(em|rem)/g;
-        if (typeof str === "undefined") {
-            return undefined;
-        }
-        if (regex.test(String(str))) {
-            return undefined;
-        } else {
-            return str;
-        }
-    }
+    const width = stripUnits(w);
+    const height = stripUnits(h);
 
-    const width = checkForUnits(w);
-    const height = checkForUnits(h);
+    const fernImage = (
+        <FernImage
+            src={fernImageSrc}
+            width={width}
+            height={height}
+            style={{
+                width: w,
+                height: h,
+                ...style,
+            }}
+            {...rest}
+        />
+    );
 
     if (noZoom) {
-        return <FernImage src={fernImageSrc} width={width as number} height={height as number} {...rest} />;
+        return fernImage;
     }
 
     return (
         <Zoom zoomImg={{ src: fernImageSrc?.url }} classDialog="custom-backdrop">
-            <FernImage src={fernImageSrc} {...rest} />
+            {fernImage}
         </Zoom>
     );
 };
+
+// preserves pixel widths and heights, but strips units from other values
+function stripUnits(str: string | number | undefined): number | `${number}` | undefined {
+    if (str == null || typeof str === "number") {
+        return str;
+    } else if (/^\d+$/.test(str)) {
+        // if str is a number, return it as a string
+        return str as `${number}`;
+    } else if (/^\d+(\.\d+)?(px)$/.test(str)) {
+        // if str is a number followed by "px", return the number as a string
+        return str.slice(0, -2) as `${number}`;
+    }
+
+    // TODO: handle rem
+
+    return undefined;
+}
