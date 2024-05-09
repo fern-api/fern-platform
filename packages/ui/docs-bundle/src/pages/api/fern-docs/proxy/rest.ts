@@ -76,7 +76,7 @@ export async function buildRequestBody(body: ProxyRequest.SerializableBody | und
                             } else if (body.isJsonBlob) {
                                 return [
                                     key,
-                                    new Blob([JSON.stringify(value.value)], { type: value.contentType }),
+                                    new Blob([JSON.stringify(value.value)], { type: "application/json" }),
                                 ] as const;
                             }
                             return [key, JSON.stringify(value.value)] as const;
