@@ -116,10 +116,10 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
                 !isValidElement(child)
                     ? child
                     : isImgElement(child)
-                      ? cloneElement<ImgProps>(child, { noZoom: true })
-                      : child.type === "img"
-                        ? createElement(Image, { ...child.props, noZoom: true })
-                        : child,
+                        ? cloneElement<ImgProps>(child, { noZoom: true })
+                        : child.type === "img"
+                            ? createElement(Image, { ...child.props, noZoom: true })
+                            : child,
             )}
         </FernLink>
     );
@@ -149,8 +149,8 @@ export const Image: FC<ImgProps> = ({ className, src, height: h, width: w, noZoo
         return { type: "url", url: src };
     }, [files, src]);
 
-    const height: number = useMemo(() => Number(h ?? 0), [h]);
-    const width: number = useMemo(() => Number(w ?? 0), [w]);
+    const height: number | undefined = useMemo(() => h !== undefined ? Number(h) : undefined, [h]);
+    const width: number | undefined = useMemo(() => w !== undefined ? Number(w) : undefined, [w]);
 
     if (noZoom) {
         return <FernImage src={fernImageSrc} height={height} width={width} {...rest} />;
