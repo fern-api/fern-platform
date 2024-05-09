@@ -133,7 +133,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, height, width, noZoom, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, height: h, width: w, noZoom, ...rest }) => {
     const { files } = useDocsContext();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
@@ -149,8 +149,11 @@ export const Image: FC<ImgProps> = ({ className, src, height, width, noZoom, ...
         return { type: "url", url: src };
     }, [files, src]);
 
+    const height: number = useMemo(() => Number(h ?? 0), [h]);
+    const width: number = useMemo(() => Number(w ?? 0), [w]);
+
     if (noZoom) {
-        return <FernImage src={fernImageSrc} height={Number(height)} width={Number(width)} {...rest} />;
+        return <FernImage src={fernImageSrc} height={height} width={width} {...rest} />;
     }
 
     return (
