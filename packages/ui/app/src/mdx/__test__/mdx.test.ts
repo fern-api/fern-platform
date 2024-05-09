@@ -5,6 +5,7 @@ import { replaceBrokenBrTags, serializeMdxWithFrontmatter } from "../mdx";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
     const serializedContent = await serializeMdxWithFrontmatter(content, { development: false });
+    // eslint-disable-next-line deprecation/deprecation
     const result = renderer.create(createElement(MdxContent, { mdx: serializedContent })).toJSON();
 
     assert(result != null);

@@ -197,7 +197,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                                 >
                                     <motion.div
                                         layoutId="icon-container"
-                                        className="bg-tag-primary t-accent h-8 w-8 mx-auto rounded-md flex items-center justify-center"
+                                        className="bg-tag-primary t-accent size-8 mx-auto rounded-md flex items-center justify-center"
                                     >
                                         <Check />
                                     </motion.div>
