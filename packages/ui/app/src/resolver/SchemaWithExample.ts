@@ -77,12 +77,14 @@ export declare namespace ResolvedExampleEndpointResponseWithSchema {
         type: "json";
         value: unknown | undefined;
         schema: ResolvedTypeShape;
+        statusCode: number;
     }
 
     interface Filename {
         type: "filename";
         value: string | undefined;
         schema: APIV1Read.HttpResponseBodyShape.FileDownload;
+        statusCode: number;
     }
 
     interface Stream {
@@ -223,6 +225,7 @@ function mergeResponseBodySchemaWithExample(
                 type: "filename",
                 value: example?.type === "filename" ? example.value : undefined,
                 schema,
+                statusCode: responseBody.statusCode,
             }),
             streamingText: (schema) => {
                 if (example?.type === "stream") {
@@ -256,7 +259,7 @@ function mergeResponseBodySchemaWithExample(
                     return undefined;
                 }
 
-                return { type: "json", schema, value: example.value };
+                return { type: "json", schema, value: example.value, statusCode: responseBody.statusCode };
             },
         },
     );

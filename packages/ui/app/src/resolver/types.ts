@@ -360,6 +360,7 @@ export interface ResolvedObjectProperty extends WithMetadata {
 
 export interface ResolvedResponseBody extends WithMetadata {
     shape: ResolvedHttpResponseBodyShape;
+    statusCode: number;
 }
 
 export type ResolvedEndpointPathParts = ResolvedEndpointPathParts.Literal | ResolvedEndpointPathParts.PathParameter;

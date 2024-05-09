@@ -11,6 +11,7 @@ import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnip
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
+import { getSuccessMessageForStatus } from "../utils/getSuccessMessageForStatus";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
@@ -114,7 +115,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
                     json: (value) => (
                         <JsonCodeSnippetExample
-                            title="Response"
+                            title={renderResponseTitle(value.statusCode, endpoint.method)}
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}
@@ -123,7 +124,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         />
                     ),
                     // TODO: support other media types
-                    filename: () => <AudioExample title="Response" />,
+                    filename: (value) => (
+                        <AudioExample title={renderResponseTitle(value.statusCode, endpoint.method)} />
+                    ),
                     stream: (value) => (
                         <WebSocketMessages
                             messages={value.value.map((event) => ({
@@ -156,3 +159,14 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 };
 
 export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSnippets);
+
+function renderResponseTitle(statusCode: number, method: string) {
+    return (
+        <span className="text-sm px-1 t-muted">
+            {"Response - "}
+            <span className="text-intent-success">
+                {`${statusCode} ${getSuccessMessageForStatus(statusCode, method)}`}
+            </span>
+        </span>
+    );
+}
