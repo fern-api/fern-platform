@@ -14,8 +14,6 @@ import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
 
-import * as Sentry from "@sentry/nextjs";
-
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(
         { organization: await maybeGetWorkosOrganization(xFernHost) },
@@ -73,15 +71,6 @@ export async function getDocsPageProps(
     const start2 = Date.now();
     const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
     const end2 = Date.now();
-
-    try {
-        if (url.includes("privategpt")) {
-            Sentry.getCurrentHub().getClient()?.getOptions().enabled = false;
-        }
-    } catch {
-        // eslint-disable-next-line no-console
-        console.log(`Unable to disable Sentry for ${url}`);
-    }
 
     // eslint-disable-next-line no-console
     console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
