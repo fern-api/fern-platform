@@ -290,7 +290,7 @@ async function serializeFormStateBody(
     body: PlaygroundFormStateBody | undefined,
     basePath: string | undefined,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
-    if (shape == null || body == null || shape.type !== "formData") {
+    if (shape == null || body == null) {
         return undefined;
     }
 
@@ -316,6 +316,9 @@ async function serializeFormStateBody(
                         };
                         break;
                     case "json": {
+                        if (shape.type !== "formData") {
+                            return undefined;
+                        }
                         const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
                             | ResolvedFormDataRequestProperty.BodyProperty
                             | undefined;
