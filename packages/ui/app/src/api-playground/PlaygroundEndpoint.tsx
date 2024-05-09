@@ -192,7 +192,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(endpoint, formState),
-                body: await serializeFormStateBody(endpoint.requestBody[0]?.shape, formState.body, basePath),
+                body: await serializeFormStateBody(endpoint.requestBody?.shape, formState.body, basePath),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
                 const [res, stream] = await executeProxyStream(req, basePath);

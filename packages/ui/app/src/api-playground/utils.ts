@@ -391,7 +391,7 @@ function buildRedactedHeaders(
         });
     }
 
-    const requestBody = endpoint.requestBody[0];
+    const requestBody = endpoint.requestBody;
     if (endpoint.method !== "GET" && requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
     }
@@ -464,7 +464,7 @@ export function buildUnredactedHeaders(
         });
     }
 
-    const requestBody = endpoint.requestBody[0];
+    const requestBody = endpoint.requestBody;
     if (endpoint.method !== "GET" && requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
     }

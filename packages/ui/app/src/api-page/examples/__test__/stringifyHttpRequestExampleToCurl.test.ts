@@ -24,7 +24,7 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     pathParameters: [],
     queryParameters: [],
     headers: [],
-    requestBody: [],
+    requestBody: undefined,
     responseBody: undefined,
     errors: [],
     examples: [],

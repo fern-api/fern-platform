@@ -301,8 +301,8 @@ export class ApiDefinitionResolver {
                 headersPromise,
                 errorsPromise,
                 descriptionPromise,
-                endpoint.request != null ? [await this.resolveRequestBody(endpoint.request)] : [],
-                endpoint.response != null ? await this.resolveResponseBody(endpoint.response) : undefined,
+                endpoint.request != null ? this.resolveRequestBody(endpoint.request) : undefined,
+                endpoint.response != null ? this.resolveResponseBody(endpoint.response) : undefined,
             ]);
 
         const path = endpoint.path.parts.map((pathPart): ResolvedEndpointPathParts => {
@@ -360,10 +360,7 @@ export class ApiDefinitionResolver {
 
         toRet.examples = await Promise.all(
             endpoint.examples.map(async (example) => {
-                const requestBody = this.resolveExampleEndpointRequest(
-                    example.requestBodyV3,
-                    toRet.requestBody[0]?.shape,
-                );
+                const requestBody = this.resolveExampleEndpointRequest(example.requestBodyV3, toRet.requestBody?.shape);
                 const responseBody = this.resolveExampleEndpointResponse(
                     example.responseBodyV3,
                     toRet.responseBody?.shape,
@@ -753,7 +750,17 @@ export class ApiDefinitionResolver {
                 value: json.value != null ? this.safeSortKeysByShape(json.value, shape) : undefined,
             }),
             filename: (filename) => ({ type: "filename", value: filename.value }),
-            stream: (stream) => ({ type: "stream", value: stream.value }),
+            stream: (stream) => ({
+                type: "stream",
+                value: stream.value.map((streamValue) => this.safeSortKeysByShape(streamValue, shape)),
+            }),
+            sse: (sse) => ({
+                type: "sse",
+                value: sse.value.map((sse) => ({
+                    event: sse.event,
+                    data: this.safeSortKeysByShape(sse.data, shape),
+                })),
+            }),
             _other: () => undefined,
         });
     }
@@ -762,6 +769,9 @@ export class ApiDefinitionResolver {
         value: unknown,
         shape: ResolvedTypeShape | ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape | null | undefined,
     ): unknown {
+        if (value == null) {
+            return value;
+        }
         try {
             return this.stripUndefines(sortKeysByShape(value, shape, this.resolvedTypes));
         } catch (e) {
@@ -793,7 +803,7 @@ export class ApiDefinitionResolver {
         return visitDiscriminatedUnion(requestBodyV3, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
             json: (json) => ({
                 type: "json",
-                value: json.value != null ? this.safeSortKeysByShape(json.value, shape) : undefined,
+                value: this.safeSortKeysByShape(json.value, shape),
             }),
             form: (form) => ({
                 type: "form",

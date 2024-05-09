@@ -227,7 +227,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     pathParameters: ResolvedObjectProperty[];
     queryParameters: ResolvedObjectProperty[];
     headers: ResolvedObjectProperty[];
-    requestBody: ResolvedRequestBody[];
+    requestBody: ResolvedRequestBody | undefined;
     responseBody: ResolvedResponseBody | undefined;
     errors: ResolvedError[];
     examples: ResolvedExampleEndpointCall[];
@@ -295,7 +295,8 @@ export declare namespace ResolvedFormValue {
 export type ResolvedExampleEndpointResponse =
     | ResolvedExampleEndpointResponse.Json
     | ResolvedExampleEndpointResponse.Filename
-    | ResolvedExampleEndpointResponse.Stream;
+    | ResolvedExampleEndpointResponse.Stream
+    | ResolvedExampleEndpointResponse.ServerSentEvents;
 
 export declare namespace ResolvedExampleEndpointResponse {
     interface Json {
@@ -312,7 +313,18 @@ export declare namespace ResolvedExampleEndpointResponse {
         type: "stream";
         value: unknown[];
     }
+
+    interface ServerSentEvent {
+        event: string;
+        data: unknown | undefined;
+    }
+
+    interface ServerSentEvents {
+        type: "sse";
+        value: ServerSentEvent[];
+    }
 }
+
 export interface ResolvedCodeSnippet {
     name: string | undefined;
     language: string;
@@ -582,10 +594,13 @@ export interface ResolvedStreamShape {
 
 export type ResolvedHttpResponseBodyShape =
     | APIV1Read.HttpResponseBodyShape.FileDownload
-    | APIV1Read.HttpResponseBodyShape.StreamingText
-    | APIV1Read.HttpResponseBodyShape.StreamCondition
-    | ResolvedStreamShape
+    | ResolvedHttpResponseStreamShape
     | ResolvedTypeShape;
+
+export type ResolvedHttpResponseStreamShape =
+    | ResolvedStreamShape
+    | APIV1Read.HttpResponseBodyShape.StreamingText
+    | APIV1Read.HttpResponseBodyShape.StreamCondition;
 
 interface ResolvedHttpResponseBodyShapeVisitor<T> {
     fileDownload: (shape: APIV1Read.HttpResponseBodyShape.FileDownload) => T;

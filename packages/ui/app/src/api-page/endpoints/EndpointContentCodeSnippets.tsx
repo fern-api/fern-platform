@@ -1,13 +1,17 @@
 "use client";
-import { memo } from "react";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactNode, memo, useMemo } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
+import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedExampleEndpointCall } from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
-import { CodeSnippetExample } from "../examples/CodeSnippetExample";
+import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
+import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 import { ErrorCodeSnippetExample } from "./ErrorCodeSnippetExample";
@@ -22,12 +26,8 @@ export declare namespace EndpointContentCodeSnippets {
         onClickClient: (example: CodeExample) => void;
         requestCodeSnippet: string;
         requestCurlJson: unknown;
-        responseCodeSnippet: string;
-        responseJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
-        requestHeight: number;
-        responseHeight: number;
         selectedError: ResolvedError | undefined;
     }
 }
@@ -41,12 +41,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     onClickClient,
     requestCodeSnippet,
     requestCurlJson,
-    responseCodeSnippet,
-    responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
     selectedError,
 }) => {
+    const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
     return (
         <div className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full">
@@ -109,23 +108,49 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
             />
-            {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" />}
-            {example.responseBody != null &&
-                endpoint.responseBody?.shape.type !== "fileDownload" &&
-                (selectedError == null ? (
-                    <CodeSnippetExample
-                        title={"Response"}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
-                        code={responseCodeSnippet}
-                        language="json"
-                        hoveredPropertyPath={hoveredResponsePropertyPath}
-                        json={responseJson}
-                    />
-                ) : (
-                    <ErrorCodeSnippetExample resolvedError={selectedError} defaultValue={responseJson} />
-                ))}
+            {selectedError != null && <ErrorCodeSnippetExample resolvedError={selectedError} />}
+            {exampleWithSchema.responseBody != null &&
+                selectedError == null &&
+                visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
+                    json: (value) => (
+                        <JsonCodeSnippetExample
+                            title="Response"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            hoveredPropertyPath={hoveredResponsePropertyPath}
+                            json={value.value}
+                        />
+                    ),
+                    // TODO: support other media types
+                    filename: () => <AudioExample title="Response" />,
+                    stream: (value) => (
+                        <WebSocketMessages
+                            messages={value.value.map((event) => ({
+                                type: undefined,
+                                origin: undefined,
+                                displayName: undefined,
+                                data: event,
+                            }))}
+                        />
+                    ),
+                    sse: (value) => (
+                        <WebSocketMessages
+                            messages={value.value.map(({ event, data }) => ({
+                                type: event,
+                                origin: undefined,
+                                displayName: undefined,
+                                data,
+                            }))}
+                        />
+                    ),
+                    _other: () => (
+                        <FernErrorTag
+                            component="EndpointContentCodeSnippets"
+                            error="example.responseBody is an unknown type"
+                        />
+                    ),
+                })}
         </div>
     );
 };
