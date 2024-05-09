@@ -56,12 +56,14 @@ async function updateGeneratorVersionInternal(
                 title: ":herb: :sparkles: [Scheduled] Upgrade SDK Generator Versions",
                 base: "main",
                 // TODO: This should really pull from the changelogs the generators maintain in the Fern repo
+                // at the least the CLI should output the versions of the generators it's upgrading, so we can display that
                 body: `## Automated Upgrade PR
 
-                <br/>
-                ---
+<br/>
 
-                This Pull Request has been auto-generated as part of Fern's release process.`,
+---
+
+This Pull Request has been auto-generated as part of Fern's release process.`,
             },
             repository.full_name,
             repository.full_name,
