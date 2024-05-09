@@ -35,9 +35,9 @@ Sentry.init({
         nodeProfilingIntegration(),
     ],
     // Performance Monitoring
-    tracesSampleRate: 1.0, //  Capture 100% of the transactions
+    tracesSampleRate: config.applicationEnvironment == "prod" ? 0.75 : 0.5, //  Capture 75% of the transactions
     // Set sampling rate for profiling - this is relative to tracesSampleRate
-    profilesSampleRate: 1.0,
+    profilesSampleRate: config.applicationEnvironment == "prod" ? 0.75 : 0.5,
     environment: config.applicationEnvironment,
     maxValueLength: 1000,
     enabled: config.applicationEnvironment === "dev" || config.applicationEnvironment == "prod",

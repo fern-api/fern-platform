@@ -5,6 +5,7 @@ export declare namespace ProxyRequest {
     export interface SerializableFormData {
         type: "form-data";
         value: Record<string, SerializableFormDataEntryValue>;
+        isJsonBlob?: boolean; // this is a hack to allow the API Playground to send JSON blobs in form data
     }
 
     export interface SerializableOctetStream {

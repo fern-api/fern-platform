@@ -47,6 +47,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
               },
               "type": "list",
             },
+            "statusCode": 200,
           },
           "slug": [
             "merchants",
