@@ -60,6 +60,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.13.1",
     "eslint-plugin-vitest": "^0.3.26",
+    "eslint-config-custom": "workspace:*",
     "execa": "^5.1.1",
     "husky": "^8.0.1",
     "immer": "^9.0.15",
