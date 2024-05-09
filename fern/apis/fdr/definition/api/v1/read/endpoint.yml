@@ -112,6 +112,9 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
+      statusCode: 
+        type: optional<integer>
+        docs: Defaults to 200
 
   JsonBodyShape:
     union:
