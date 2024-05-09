@@ -76,8 +76,9 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: packages/ui/app
-  
-  fern-generate: 
+          onlyChanged: true
+
+  fern-generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
