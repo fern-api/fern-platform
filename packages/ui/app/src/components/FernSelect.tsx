@@ -6,7 +6,7 @@ import { FC, forwardRef } from "react";
 export const FernSelect: FC<Select.SelectProps> = () => (
     <Select.Root>
         <Select.Trigger
-            className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-[15px] text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+            className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-icon text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
             aria-label="Food"
         >
             <Select.Value placeholder="Select a fruit…" />
@@ -29,7 +29,7 @@ export const FernSelect: FC<Select.SelectProps> = () => (
                         <FernSelectItem value="pineapple">Pineapple</FernSelectItem>
                     </Select.Group>
 
-                    <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
+                    <Select.Separator className="bg-violet6 m-[5px] h-px" />
 
                     <Select.Group>
                         <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">
@@ -44,7 +44,7 @@ export const FernSelect: FC<Select.SelectProps> = () => (
                         <FernSelectItem value="leek">Leek</FernSelectItem>
                     </Select.Group>
 
-                    <Select.Separator className="bg-violet6 m-[5px] h-[1px]" />
+                    <Select.Separator className="bg-violet6 m-[5px] h-px" />
 
                     <Select.Group>
                         <Select.Label className="text-mauve11 px-[25px] text-xs leading-[25px]">Meat</Select.Label>
