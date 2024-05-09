@@ -2,7 +2,7 @@
   "name": "@fern-platform/fern-bot",
   "version": "0.0.0",
   "scripts": {
-    "compile": "sls package",
+    "package": "sls package",
     "release": "sls deploy",
     "invoke": "sls invoke",
     "lint": "eslint --max-warnings 0 src --ext .ts",
