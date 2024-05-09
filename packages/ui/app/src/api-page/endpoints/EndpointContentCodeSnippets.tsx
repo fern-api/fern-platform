@@ -8,6 +8,7 @@ import { CodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
+import { getSuccessMessageForStatus } from "../utils/getSuccessMessageForStatus";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 import { ErrorCodeSnippetExample } from "./ErrorCodeSnippetExample";
@@ -110,11 +111,24 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }
             />
             {endpoint.responseBody?.shape.type === "fileDownload" && <AudioExample title="Response" />}
+
             {example.responseBody != null &&
                 endpoint.responseBody?.shape.type !== "fileDownload" &&
                 (selectedError == null ? (
                     <CodeSnippetExample
-                        title={"Response"}
+                        title={
+                            <div className="text-sm px-1 t-muted">
+                                Response -{" "}
+                                <span className="text-intent-success">
+                                    {endpoint.responseBody?.statusCode +
+                                        " " +
+                                        getSuccessMessageForStatus(
+                                            endpoint.responseBody?.statusCode as number,
+                                            endpoint.method,
+                                        )}
+                                </span>
+                            </div>
+                        }
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
