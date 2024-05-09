@@ -414,7 +414,7 @@ export class ApiDefinitionResolver {
             this.resolveResponseBodyShape(response.type),
             maybeSerializeMdxContent(response.description),
         ]);
-        return { shape, description, availability: undefined };
+        return { shape, description, statusCode: response?.statusCode ?? 200, availability: undefined };
     }
 
     // HACKHACK: this handles the case where FernIR is unable to interpret the security scheme for AsyncAPI
