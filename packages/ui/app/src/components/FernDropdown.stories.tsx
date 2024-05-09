@@ -40,13 +40,18 @@ const meta: Meta<typeof FernDropdown> = {
         type: "value",
         label: "Option 3",
         value: "option3",
+        tooltip: "This is a tooltip",
         helperText: "This is a helper text",
       },
       {
         type: "value",
         label: "Option 4",
         value: "option4",
-        helperText: "This is a helper text",
+        helperText: <span className="text-inherit inline-flex items-baseline gap-2 text-xs">
+          <span>helloWorld</span>
+          <span>Optional</span>
+          <span>Object</span>
+        </span>,
       }
     ]
   },
