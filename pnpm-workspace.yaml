@@ -7,3 +7,4 @@ packages:
   - "!servers/**/lib"
   - "!servers/**/dist"
   - "!servers/**/generated"
+  - "!servers/**/fern-bot"
