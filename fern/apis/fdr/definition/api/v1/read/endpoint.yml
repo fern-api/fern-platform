@@ -270,6 +270,12 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
+      sse: list<ExampleServerSentEvent>
+
+  ExampleServerSentEvent:
+    properties:
+      event: string
+      data: unknown
 
   ErrorExample:
     extends:
