@@ -54,3 +54,4 @@ lerna-debug.log*
 
 #ide
 .idea/
+*.cookie
