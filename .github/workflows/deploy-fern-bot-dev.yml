@@ -1,6 +1,8 @@
 name: Deploy FernBot Dev
 
 on:
+  # TODO: REMOVE, Testing CI deploys
+  pull_request:
   push:
     branches: main
     paths:
@@ -25,9 +27,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: 📥 Install
-        uses: ./.github/actions/install
+      - name: ⎔ Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
       - name: 🚀 serverless deploy
         run: |
-          pnpm --filter "@fern-platform/fern-bot" install
-          pnpm --filter "@fern-platform/fern-bot" release --stage development
+          cd servers/fern-bot
+          pnpm --ignore-workspace install
+          pnpm release --stage development

@@ -30,12 +30,20 @@ jobs:
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
       - uses: actions/checkout@v4
-      - name: 📥 Install
-        uses: ./.github/actions/install
+      - name: ⎔ Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
       - name: 🚀 serverless deploy
         run: |
-          pnpm --filter "@fern-platform/fern-bot" install
-          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpec --stage development
+          cd servers/fern-bot
+          pnpm --ignore-workspace install
+          pnpm release --stage development
 
   invoke_prod:
     if: ${{ github.event.inputs.environment == 'production' }}
@@ -53,9 +61,17 @@ jobs:
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
       - uses: actions/checkout@v4
-      - name: 📥 Install
-        uses: ./.github/actions/install
+      - name: ⎔ Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
       - name: 🚀 serverless deploy
         run: |
-          pnpm --filter "@fern-platform/fern-bot" install
-          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpec --stage production
+          cd servers/fern-bot
+          pnpm --ignore-workspace install
+          pnpm release --stage production
