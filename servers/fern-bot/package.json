@@ -2,6 +2,7 @@
   "name": "@fern-platform/fern-bot",
   "version": "0.0.0",
   "scripts": {
+    "compile": "tsc --build",
     "package": "sls package",
     "release": "sls deploy",
     "invoke": "sls invoke",
