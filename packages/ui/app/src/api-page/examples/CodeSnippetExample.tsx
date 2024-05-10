@@ -103,3 +103,12 @@ export const CodeSnippetExample: FC<CodeSnippetExample.Props> = (props) => {
         </FernErrorBoundary>
     );
 };
+
+export declare namespace JsonCodeSnippetExample {
+    export interface Props extends Omit<CodeSnippetExample.Props, "language" | "jsonStartLine" | "code"> {}
+}
+
+export const JsonCodeSnippetExample: FC<JsonCodeSnippetExample.Props> = (props) => {
+    const code = useMemo(() => JSON.stringify(props.json, null, 2), [props.json]);
+    return <CodeSnippetExample {...props} language="json" code={code} />;
+};

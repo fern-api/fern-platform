@@ -123,7 +123,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode);
     }, [endpoint.examples, selectedError]);
 
-    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody[0]?.contentType);
+    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
     const clients = useMemo(() => generateCodeExamples(examples), [examples]);
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
@@ -295,12 +295,8 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
                                 requestCodeSnippet={selectedClient.code}
                                 requestCurlJson={requestJson}
-                                responseCodeSnippet={responseCodeSnippet}
-                                responseJson={responseJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
-                                requestHeight={requestHeight}
-                                responseHeight={responseHeight}
                                 selectedError={selectedError}
                             />
                         )}

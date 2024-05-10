@@ -1,3 +1,4 @@
+import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { ReactElement, useMemo, useState } from "react";
 import { FernButton } from "../../components/FernButton";
@@ -8,13 +9,9 @@ import { CodeSnippetExample } from "../examples/CodeSnippetExample";
 
 export interface ErrorCodeSnippetExampleProps {
     resolvedError: ResolvedError;
-    defaultValue: unknown;
 }
 
-export function ErrorCodeSnippetExample({
-    resolvedError,
-    defaultValue,
-}: ErrorCodeSnippetExampleProps): ReactElement | null {
+export function ErrorCodeSnippetExample({ resolvedError }: ErrorCodeSnippetExampleProps): ReactElement | null {
     const [selectedExample, setSelectedExample] = useState<ResolvedExampleError | undefined>(resolvedError.examples[0]);
     const selectedIndex = selectedExample != null ? resolvedError.examples.indexOf(selectedExample) : -1;
 
@@ -22,7 +19,7 @@ export function ErrorCodeSnippetExample({
         setSelectedExample(resolvedError.examples[parseInt(value, 10)]);
     };
 
-    const value = selectedExample?.responseBody ?? defaultValue ?? "";
+    const value = selectedExample?.responseBody ?? EMPTY_OBJECT;
 
     const options = useMemo(
         () =>
