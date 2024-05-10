@@ -9,7 +9,7 @@ import {
     FlattenedWebSocketChannel,
     FlattenedWebhookDefinition,
 } from "@fern-ui/fdr-utils";
-import { mapValues } from "lodash-es";
+import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
 import { FeatureFlags } from "../contexts/FeatureFlagContext";
@@ -53,8 +53,9 @@ export class ApiDefinitionResolver {
         pages: Record<string, DocsV1Read.PageContent>,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
+        domain: string,
     ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(apiDefinition, pages, featureFlags);
+        const resolver = new ApiDefinitionResolver(apiDefinition, pages, featureFlags, domain);
         return resolver.resolveApiDefinition(title, mdxOptions);
     }
 
@@ -65,6 +66,7 @@ export class ApiDefinitionResolver {
         private apiDefinition: FlattenedApiDefinition,
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
+        private domain: string,
         // filteredTypes?: string[],
     ) {
         this.apiDefinition = apiDefinition;
@@ -814,24 +816,42 @@ export class ApiDefinitionResolver {
                                 shape?.type === "formData"
                                     ? shape.properties.find((p) => p.key === key && p.type === "bodyProperty")
                                     : undefined;
+                            // this is a hack to allow the API Playground to send JSON blobs in form data
+                            // revert this once we have a better solution
                             const contentType =
-                                typeof property?.contentType === "string"
-                                    ? property.contentType
-                                    : Array.isArray(property?.contentType)
-                                      ? property.contentType.find((ct) => ct.includes("json")) ??
-                                        property.contentType[0]
-                                      : undefined;
+                                compact(property?.contentType)[0] ??
+                                (this.domain.includes("fileforge") ? "application/json" : undefined);
                             return { type: "json" as const, value: value.value, contentType };
                         },
-                        filename: (value) => ({ type: "file", fileName: value.value, fileId: undefined }),
+                        filename: (value) => ({
+                            type: "file",
+                            fileName: value.value,
+                            fileId: undefined,
+                            contentType: undefined,
+                        }),
                         filenames: (value) => ({
                             type: "fileArray",
-                            files: value.value.map((v) => ({ type: "file", fileName: v, fileId: undefined })),
+                            files: value.value.map((v) => ({
+                                type: "file",
+                                fileName: v,
+                                fileId: undefined,
+                                contentType: undefined,
+                            })),
                         }),
-                        filenameWithData: (value) => ({ type: "file", fileName: value.filename, fileId: value.data }),
+                        filenameWithData: (value) => ({
+                            type: "file",
+                            fileName: value.filename,
+                            fileId: value.data,
+                            contentType: undefined,
+                        }),
                         filenamesWithData: (value) => ({
                             type: "fileArray",
-                            files: value.value.map((v) => ({ type: "file", fileName: v.filename, fileId: v.data })),
+                            files: value.value.map((v) => ({
+                                type: "file",
+                                fileName: v.filename,
+                                fileId: v.data,
+                                contentType: undefined,
+                            })),
                         }),
                         _other: () => ({ type: "json", value: undefined, contentType: undefined }),
                     }),

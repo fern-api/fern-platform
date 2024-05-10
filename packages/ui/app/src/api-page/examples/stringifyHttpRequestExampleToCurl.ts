@@ -85,18 +85,18 @@ function unsafeStringifyHttpRequestExampleToCurl({
 
                                       return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "\\'")}${contentType != null ? `;type=${contentType}` : ""}'`;
                                   },
-                                  file: ({ fileName }) => {
+                                  file: ({ fileName, contentType }) => {
                                       if (fileName == null) {
                                           return "";
                                       }
-                                      return ` \\\n     -F ${key}=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`;
+                                      return ` \\\n     -F ${key}=@${fileName.includes(" ") || contentType != null ? `"${fileName}${contentType != null ? `;type=${contentType}` : ""}"` : fileName}`;
                                   },
                                   fileArray: ({ files }) =>
                                       files
                                           .filter((file) => file.fileName != null)
                                           .map(
-                                              ({ fileName }) =>
-                                                  ` \\\n     -F "${key}[]"=@${fileName.includes(" ") ? `"${fileName}"` : fileName}`,
+                                              ({ fileName, contentType }) =>
+                                                  ` \\\n     -F "${key}[]"=@${fileName.includes(" ") || contentType != null ? `"${fileName}${contentType != null ? `;type=${contentType}` : ""}"` : fileName}`,
                                           )
                                           .join(""),
                                   _other: () => "",

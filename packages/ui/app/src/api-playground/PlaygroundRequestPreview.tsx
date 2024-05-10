@@ -1,5 +1,6 @@
 import { FC, useMemo } from "react";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundEndpointRequestFormState } from "./types";
@@ -13,6 +14,7 @@ interface PlaygroundRequestPreviewProps {
 
 export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ endpoint, formState, requestType }) => {
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
+    const { domain } = useDocsContext();
     const code = useMemo(
         () =>
             requestType === "curl"
@@ -20,6 +22,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
                       endpoint,
                       formState,
                       redacted: true,
+                      domain,
                   })
                 : requestType === "javascript"
                   ? stringifyFetch({

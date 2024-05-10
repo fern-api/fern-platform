@@ -476,10 +476,12 @@ export function stringifyCurl({
     endpoint,
     formState,
     redacted,
+    domain,
 }: {
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundEndpointRequestFormState;
     redacted: boolean;
+    domain: string;
 }): string {
     if (endpoint == null) {
         return "";
@@ -497,9 +499,18 @@ export function stringifyCurl({
                 : visitDiscriminatedUnion(formState.body, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
                       json: ({ value }) => ({ type: "json", value }),
                       "form-data": ({ value }): ResolvedExampleEndpointRequest.Form | undefined => {
+                          const properties =
+                              endpoint.requestBody?.shape.type === "formData"
+                                  ? endpoint.requestBody.shape.properties
+                                  : [];
                           const newValue: Record<string, ResolvedFormValue> = {};
                           for (const [key, v] of Object.entries(value)) {
-                              const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(v);
+                              const property = properties.find((property) => property.key === key);
+                              const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
+                                  v,
+                                  property,
+                                  domain,
+                              );
                               if (convertedV != null) {
                                   newValue[key] = convertedV;
                               }

@@ -18,6 +18,7 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
+            "fern.docs.buildwithfern.com",
         );
         expect(resolved).toMatchSnapshot();
     });

@@ -111,6 +111,7 @@ export async function convertNavigatableToResolvedPath({
             pages,
             mdxOptions,
             featureFlags,
+            domain,
         );
         return {
             type: "api-page",
@@ -181,6 +182,7 @@ export async function convertNavigatableToResolvedPath({
                                 pages,
                                 mdxOptions,
                                 featureFlags,
+                                domain,
                             ),
                         ];
                     }),

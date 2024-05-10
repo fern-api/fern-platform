@@ -284,6 +284,7 @@ export declare namespace ResolvedFormValue {
         type: "file";
         fileName: string;
         fileId: string | undefined; // lookup file by UUID
+        contentType: string | undefined;
     }
 
     interface MultipleFiles {

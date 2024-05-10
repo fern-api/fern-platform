@@ -84,6 +84,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
                 pages,
                 undefined,
                 featureFlags,
+                docs.body.baseUrl.domain,
             ),
         );
     } catch (err) {
