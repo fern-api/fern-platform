@@ -260,6 +260,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
                         style={{
+                            // TODO: do we still need to set minHeight here?
                             minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}
                     >
@@ -294,7 +295,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             "md:py-8 md:mt-0 md:top-header-height",
                         )}
                         style={{
-                            minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? `${exampleHeight}px` : undefined,
+                            minHeight: `${exampleHeight}px`,
                         }}
                     >
                         {isInViewport && (
