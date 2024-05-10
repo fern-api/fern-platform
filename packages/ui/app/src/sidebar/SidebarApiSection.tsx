@@ -28,39 +28,21 @@ export const SidebarApiSection: React.FC<SidebarApiSectionProps> = ({
 }) => {
     const { selectedSlug } = useCollapseSidebar();
 
+    if (apiSection.isSidebarFlattened) {
+        return (
+            <li>
+                <FlattenedApiSection
+                    apiSection={apiSection}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    depth={depth}
+                />
+            </li>
+        );
+    }
+
     return depth === 0 ? (
         <li>
-            {apiSection.isSidebarFlattened ? (
-                <ul className="fern-sidebar-group">
-                    {apiSection.items.map((item) =>
-                        visitDiscriminatedUnion(item, "type")._visit({
-                            apiSection: (item) => (
-                                <SidebarApiSection
-                                    key={item.id}
-                                    apiSection={item}
-                                    registerScrolledToPathListener={registerScrolledToPathListener}
-                                    depth={depth}
-                                />
-                            ),
-                            page: (item) => (
-                                <SidebarApiSlugLink
-                                    key={joinUrlSlugs(...item.slug)}
-                                    item={item}
-                                    api={apiSection.api}
-                                    registerScrolledToPathListener={registerScrolledToPathListener}
-                                    depth={depth}
-                                />
-                            ),
-                            _other: () => (
-                                <FernErrorTag
-                                    component="SidebarApiSection"
-                                    error="Tried to render unknown api section."
-                                />
-                            ),
-                        }),
-                    )}
-                </ul>
-            ) : apiSection.summaryPage != null ? (
+            {apiSection.summaryPage != null ? (
                 <SidebarSlugLink
                     className={cn({
                         "mt-6": depth === 0,
@@ -306,3 +288,34 @@ export const ExpandableSidebarApiSection: React.FC<ExpandableSidebarApiSectionPr
         </SidebarSlugLink>
     );
 };
+
+function FlattenedApiSection({ apiSection, registerScrolledToPathListener, depth }: SidebarApiSectionProps) {
+    return (
+        <ul className="fern-sidebar-group">
+            {apiSection.items.map((item) =>
+                visitDiscriminatedUnion(item, "type")._visit({
+                    apiSection: (item) => (
+                        <SidebarApiSection
+                            key={item.id}
+                            apiSection={item}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            depth={depth}
+                        />
+                    ),
+                    page: (item) => (
+                        <SidebarApiSlugLink
+                            key={joinUrlSlugs(...item.slug)}
+                            item={item}
+                            api={apiSection.api}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            depth={depth}
+                        />
+                    ),
+                    _other: () => (
+                        <FernErrorTag component="SidebarApiSection" error="Tried to render unknown api section." />
+                    ),
+                }),
+            )}
+        </ul>
+    );
+}

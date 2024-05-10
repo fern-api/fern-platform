@@ -18,6 +18,7 @@ afterEach(cleanup);
 
 describe("CopyToClipboardButton", () => {
     it("renders correctly", async () => {
+        // eslint-disable-next-line deprecation/deprecation
         const component = renderer.create(<CopyToClipboardButton testId="copy-btn" content={"test"} />);
         const tree = component.toJSON() as renderer.ReactTestRendererJSON;
         expect(tree).toMatchSnapshot();
