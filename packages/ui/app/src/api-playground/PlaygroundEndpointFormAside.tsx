@@ -196,8 +196,8 @@ export function PlaygroundEndpointFormAside({
                         </div>
                     )}
 
-                    {endpoint.requestBody[0] != null &&
-                        visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
+                    {endpoint.requestBody != null &&
+                        visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
                             formData: () => null,
                             bytes: () => null,
                             typeShape: (shape) => {

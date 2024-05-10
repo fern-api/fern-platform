@@ -7,7 +7,7 @@ import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboard
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
 export interface WebSocketMessage {
-    type: string;
+    type: string | undefined;
     origin: APIV1Read.WebSocketMessageOrigin | undefined;
     displayName: string | undefined;
     data: unknown | undefined;
@@ -58,16 +58,13 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                             <span className="min-w-0 shrink truncate font-mono text-xs">
                                 {JSON.stringify(message.data)}
                             </span>
-                            <span
-                                className={cn("flex-1 inline-flex justify-end", {
-                                    // "justify-start": event.action === "send",
-                                    // "justify-end": event.action === "recieve",
-                                })}
-                            >
-                                <span className="t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap">
-                                    {message.displayName ?? message.type}
+                            {message.displayName != null || message.type != null ? (
+                                <span className="flex-1 inline-flex justify-end">
+                                    <span className="t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap">
+                                        {message.displayName ?? message.type}
+                                    </span>
                                 </span>
-                            </span>
+                            ) : null}
 
                             <CopyToClipboardButton
                                 className="-my-2 -ml-1 -mr-2"

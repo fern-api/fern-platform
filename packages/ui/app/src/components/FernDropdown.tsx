@@ -34,6 +34,7 @@ export declare namespace FernDropdown {
         usePortal?: boolean;
         side?: "top" | "right" | "bottom" | "left";
         align?: "start" | "center" | "end";
+        defaultOpen?: boolean;
     }
 }
 
@@ -46,8 +47,9 @@ export function FernDropdown({
     usePortal = true,
     side,
     align,
+    defaultOpen = false,
 }: PropsWithChildren<FernDropdown.Props>): ReactElement {
-    const [isOpen, setOpen] = useState(false);
+    const [isOpen, setOpen] = useState(defaultOpen);
     const handleOpenChange = useCallback(
         (toOpen: boolean) => {
             setOpen(toOpen);
@@ -76,7 +78,7 @@ export function FernDropdown({
     );
 
     return (
-        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={true}>
+        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={true} defaultOpen={defaultOpen}>
             <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
             {usePortal ? <DropdownMenu.Portal>{renderDropdownContent()}</DropdownMenu.Portal> : renderDropdownContent()}
         </DropdownMenu.Root>
@@ -84,7 +86,7 @@ export function FernDropdown({
 }
 
 function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOption; value: string | undefined }) {
-    const helperTextRef = useRef<HTMLSpanElement>(null);
+    const helperTextRef = useRef<HTMLDivElement>(null);
     const activeRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
     useEffect(() => {
         if (option.value === value) {
@@ -112,29 +114,31 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
 
     function renderButtonContent() {
         return (
-            <>
-                {value != null && (
+            <div className="w-60">
+                <div className="flex items-center">
                     <span className="fern-dropdown-item-indicator">
-                        <DropdownMenu.ItemIndicator asChild={true}>
-                            <CheckIcon />
-                        </DropdownMenu.ItemIndicator>
+                        {value != null && (
+                            <DropdownMenu.ItemIndicator asChild={true}>
+                                <CheckIcon />
+                            </DropdownMenu.ItemIndicator>
+                        )}
                     </span>
-                )}
 
-                {option.icon && <span className="mr-2 inline-flex items-center">{option.icon}</span>}
-                <span className="inline-flex items-baseline">
-                    <span className={option.labelClassName}>{option.label ?? option.value}</span>
-                    {option.helperText != null && (
-                        <span className="ml-2 max-w-[300px] shrink truncate text-xs opacity-60" ref={helperTextRef}>
-                            {option.helperText}
-                        </span>
-                    )}
-                </span>
-                <span className="ml-auto space-x-1 pl-2">
-                    {option.rightElement && <span>{option.rightElement}</span>}
-                    {(isEllipsisActive || (option.tooltip != null && option.tooltip !== "")) && <InfoCircledIcon />}
-                </span>
-            </>
+                    {option.icon && <span className="mr-2 inline-flex items-center">{option.icon}</span>}
+
+                    <div className={option.labelClassName}>{option.label ?? option.value}</div>
+                    <span className="ml-auto space-x-1 pl-2">
+                        {option.rightElement && <span>{option.rightElement}</span>}
+                        {(isEllipsisActive || (option.tooltip != null && option.tooltip !== "")) && <InfoCircledIcon />}
+                    </span>
+                </div>
+
+                {option.helperText != null && (
+                    <div className="mt-0.5 ml-5 text-xs opacity-60 text-start leading-snug" ref={helperTextRef}>
+                        {option.helperText}
+                    </div>
+                )}
+            </div>
         );
     }
 

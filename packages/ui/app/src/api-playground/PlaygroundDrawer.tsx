@@ -421,7 +421,7 @@ function getInitialEndpointRequestFormState(
         headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
-        body: getDefaultValuesForBody(endpoint?.requestBody[0]?.shape, types),
+        body: getDefaultValuesForBody(endpoint?.requestBody?.shape, types),
     };
 }
 

@@ -1,9 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import * as Tabs from "@radix-ui/react-tabs";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
-import { FernCard } from "../../components/FernCard";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
@@ -55,8 +53,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     onHoverResponseProperty,
     selectedError,
     setSelectedError,
-    contentType,
-    setContentType,
+    // contentType,
+    // setContentType,
     types,
 }) => {
     const requestExpandAll = useBooleanState(false);
@@ -135,7 +133,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </div>
                 </EndpointSection>
             )}
-            {endpoint.requestBody.length > 1 ? (
+            {/* {endpoint.requestBody.length > 1 && (
                 <Tabs.Root asChild={true} value={contentType} onValueChange={setContentType}>
                     <FernCard className="-mx-4 rounded-xl shadow-sm">
                         <div className="rounded-t-[inherit] bg-tag-default-soft">
@@ -184,18 +182,19 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         </div>
                     </FernCard>
                 </Tabs.Root>
-            ) : endpoint.requestBody[0] != null ? (
+            )} */}
+            {endpoint.requestBody != null && (
                 <EndpointSection
-                    key={endpoint.requestBody[0].contentType}
+                    key={endpoint.requestBody.contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
                     route={"/" + endpoint.slug.join("/")}
                     expandAll={requestExpandAll.setTrue}
                     collapseAll={requestExpandAll.setFalse}
-                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody[0].shape, types)}
+                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody.shape, types)}
                 >
                     <EndpointRequestSection
-                        requestBody={endpoint.requestBody[0]}
+                        requestBody={endpoint.requestBody}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
                         route={"/" + endpoint.slug.join("/")}
@@ -203,7 +202,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         types={types}
                     />
                 </EndpointSection>
-            ) : null}
+            )}
             {endpoint.responseBody != null && (
                 <EndpointSection
                     title="Response"

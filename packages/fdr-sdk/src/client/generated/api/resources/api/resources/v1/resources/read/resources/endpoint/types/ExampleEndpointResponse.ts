@@ -7,7 +7,8 @@ import * as FernRegistry from "../../../../../../../../..";
 export type ExampleEndpointResponse =
     | FernRegistry.api.v1.read.ExampleEndpointResponse.Json
     | FernRegistry.api.v1.read.ExampleEndpointResponse.Filename
-    | FernRegistry.api.v1.read.ExampleEndpointResponse.Stream;
+    | FernRegistry.api.v1.read.ExampleEndpointResponse.Stream
+    | FernRegistry.api.v1.read.ExampleEndpointResponse.Sse;
 
 export declare namespace ExampleEndpointResponse {
     interface Json {
@@ -23,5 +24,10 @@ export declare namespace ExampleEndpointResponse {
     interface Stream {
         type: "stream";
         value: unknown[];
+    }
+
+    interface Sse {
+        type: "sse";
+        value: FernRegistry.api.v1.read.ExampleServerSentEvent[];
     }
 }

@@ -138,8 +138,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     const handleFormDataFileChange = useCallback(
         (key: string, files: ReadonlyArray<File> | undefined) => {
             const type =
-                endpoint.requestBody[0]?.shape.type === "formData"
-                    ? endpoint.requestBody[0]?.shape.properties.find((p) => p.key === key)?.type
+                endpoint.requestBody?.shape.type === "formData"
+                    ? endpoint.requestBody?.shape.properties.find((p) => p.key === key)?.type
                     : undefined;
             if (files == null || files.length === 0) {
                 setFormDataEntry(key, undefined);
@@ -221,8 +221,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </div>
             )}
 
-            {endpoint.requestBody[0] != null &&
-                visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
+            {endpoint.requestBody != null &&
+                visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
                     formData: (formData) => {
                         const formDataFormValue = formState?.body?.type === "form-data" ? formState?.body.value : {};
                         return (
