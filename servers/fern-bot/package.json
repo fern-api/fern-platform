@@ -20,6 +20,7 @@
     "@fern-api/fs-utils": "0.15.0-rc63",
     "@octokit/openapi-types": "^22.1.0",
     "cohere-ai": "^7.9.5",
+    "execa": "^9.0.2",
     "fern-api": "^0.21.0",
     "find-up": "^7.0.0",
     "js-yaml": "^4.1.0",
