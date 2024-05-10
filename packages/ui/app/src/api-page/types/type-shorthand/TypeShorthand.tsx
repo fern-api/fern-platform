@@ -23,7 +23,7 @@ export function renderTypeShorthandRoot(
     const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     const unaliasedShape = unwrapAlias(shape, types);
     return (
-        <span className="t-muted inline-flex items-baseline gap-2 text-xs">
+        <span className="text-inherit inline-flex items-baseline gap-2 text-xs">
             <span>{typeShorthand}</span>
             {unaliasedShape.type === "optional" ? (
                 <span>{isResponse ? "Optional" : "Optional"}</span>
