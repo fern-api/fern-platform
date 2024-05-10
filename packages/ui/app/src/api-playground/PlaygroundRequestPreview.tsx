@@ -39,7 +39,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
                           isSnippetTemplatesEnabled,
                       })
                     : "",
-        [endpoint, formState, isSnippetTemplatesEnabled, requestType],
+        [domain, endpoint, formState, isSnippetTemplatesEnabled, requestType],
     );
     return (
         <FernSyntaxHighlighter
