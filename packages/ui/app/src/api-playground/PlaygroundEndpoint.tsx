@@ -2,6 +2,7 @@ import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { compact } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import { resolve } from "url";
 import { capturePosthogEvent } from "../analytics/posthog";
@@ -325,13 +326,11 @@ async function serializeFormStateBody(
                             | undefined;
                         formDataValue[key] = {
                             ...value,
+                            // this is a hack to allow the API Playground to send JSON blobs in form data
+                            // revert this once we have a better solution
                             contentType:
-                                typeof property?.contentType === "string"
-                                    ? property.contentType
-                                    : Array.isArray(property?.contentType)
-                                      ? property.contentType.find((value) => value.includes("json")) ??
-                                        property.contentType[0]
-                                      : undefined,
+                                compact(property?.contentType)[0] ??
+                                (domain.includes("fileforge") ? "application/json" : undefined),
                         };
                         break;
                     }
@@ -339,10 +338,7 @@ async function serializeFormStateBody(
                         assertNever(value);
                 }
             }
-            // this is a hack to allow the API Playground to send JSON blobs in form data
-            // revert this once we have a better solution
-            const isJsonBlob = domain.includes("fileforge");
-            return { type: "form-data", value: formDataValue, isJsonBlob };
+            return { type: "form-data", value: formDataValue };
         }
         case "octet-stream":
             return { type: "octet-stream", value: await serializeFile(body.value, basePath) };

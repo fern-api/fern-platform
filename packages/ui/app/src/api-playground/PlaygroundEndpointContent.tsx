@@ -152,6 +152,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                   endpoint,
                                   formState,
                                   redacted: false,
+                                  domain,
                               })
                             : requestType === "javascript"
                               ? stringifyFetch({
