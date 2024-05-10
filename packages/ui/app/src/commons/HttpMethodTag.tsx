@@ -24,7 +24,7 @@ const METHOD_COLOR_SCHEMES: Record<HttpMethodTag.Props["method"], FernTagColorSc
 const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
     method,
     active,
-    size = "sm",
+    size = "lg",
     className,
     ...rest
 }) => {
