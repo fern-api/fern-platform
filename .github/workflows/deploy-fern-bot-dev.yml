@@ -2,9 +2,10 @@ name: Deploy FernBot Dev
 
 on:
   push:
-    branches: main
-    paths:
+    branches: 
+      - main
       - dsinghvi/fern-bot-runs-tsc-build
+    paths:
       - "servers/fern-bot/**"
       - ".github/workflows/deploy-fern-bot-dev.yml"
 
