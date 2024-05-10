@@ -117,6 +117,9 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
+      statusCode:
+        type: optional<integer>
+        docs: Defaults to 200
 
   ErrorDeclaration:
     extends:
@@ -246,6 +249,12 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
+      sse: list<ExampleServerSentEvent>
+
+  ExampleServerSentEvent:
+    properties:
+      event: string
+      data: unknown
 
   ErrorExample:
     extends:

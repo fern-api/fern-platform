@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import Error, { ErrorProps } from "next/error";
 import { ReactElement } from "react";
 
@@ -35,3 +35,8 @@ export const getServerSideProps: GetServerSideProps<ErrorProps> = async ({ req, 
 export default function Page(props: ErrorProps): ReactElement {
     return <Error {...props} />;
 }
+
+// TODO: Uncomment this code to enable Sentry error tracking
+// Page.getInitialProps = async (contextData: NextPageContext) => {
+//     await Sentry.captureUnderscoreErrorException(contextData);
+// };

@@ -116,9 +116,9 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
                 !isValidElement(child)
                     ? child
                     : isImgElement(child)
-                      ? cloneElement<ImgProps>(child, { disableZoom: true })
+                      ? cloneElement<ImgProps>(child, { noZoom: true })
                       : child.type === "img"
-                        ? createElement(Image, { ...child.props, disableZoom: true })
+                        ? createElement(Image, { ...child.props, noZoom: true })
                         : child,
             )}
         </FernLink>
@@ -126,35 +126,71 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
 };
 
 export interface ImgProps extends ComponentProps<"img"> {
-    disableZoom?: boolean;
+    noZoom?: boolean;
 }
 
 function isImgElement(element: ReactElement): element is ReactElement<ImgProps> {
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, height, width, disableZoom, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, style, ...rest }) => {
     const { files } = useDocsContext();
-    // const mounted = useMounted();
-    // if (!mounted || disableZoom) {
-    //     return <img {...rest} className={cn(className, "max-w-full")} src={src} alt={alt} />;
-    // }
+
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
         if (src == null) {
             return undefined;
         }
 
+        // if src starts with `file:`, assume it's a referenced file; fallback to src if not found
         if (src.startsWith("file:")) {
             const fileId = src.slice(5);
-            return files[fileId];
+            return files[fileId] ?? { type: "url", url: src };
         }
 
         return { type: "url", url: src };
     }, [files, src]);
 
+    const width = stripUnits(w);
+    const height = stripUnits(h);
+
+    const fernImage = (
+        <FernImage
+            src={fernImageSrc}
+            width={width}
+            height={height}
+            style={{
+                width: w,
+                height: h,
+                ...style,
+            }}
+            {...rest}
+        />
+    );
+
+    if (noZoom) {
+        return fernImage;
+    }
+
     return (
-        <Zoom zoomImg={{ src: fernImageSrc?.url }}>
-            <FernImage src={fernImageSrc} {...rest} />
+        <Zoom zoomImg={{ src: fernImageSrc?.url }} classDialog="custom-backdrop">
+            {fernImage}
         </Zoom>
     );
 };
+
+// preserves pixel widths and heights, but strips units from other values
+function stripUnits(str: string | number | undefined): number | `${number}` | undefined {
+    if (str == null || typeof str === "number") {
+        return str;
+    } else if (/^\d+$/.test(str)) {
+        // if str is a number, return it as a string
+        return str as `${number}`;
+    } else if (/^\d+(\.\d+)?(px)$/.test(str)) {
+        // if str is a number followed by "px", return the number as a string
+        return str.slice(0, -2) as `${number}`;
+    }
+
+    // TODO: handle rem
+
+    return undefined;
+}

@@ -6,4 +6,6 @@ import * as FernRegistry from "../../../../../../../../..";
 
 export interface HttpResponse extends FernRegistry.api.v1.read.WithDescription {
     type: FernRegistry.api.v1.read.HttpResponseBodyShape;
+    /** Defaults to 200 */
+    statusCode?: number;
 }

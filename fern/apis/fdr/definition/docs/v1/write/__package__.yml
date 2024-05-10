@@ -334,6 +334,7 @@ types:
       showErrors: optional<boolean>
       changelog: optional<ChangelogSection>
       hidden: optional<boolean>
+      urlSlugOverride: optional<string>
       fullSlug: optional<list<string>>
       navigation: optional<ApiNavigationConfigRoot>
       longScrolling: optional<boolean>

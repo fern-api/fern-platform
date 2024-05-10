@@ -41,7 +41,7 @@ jobs:
         run: pnpm format:check
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: CLI
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,8 +76,9 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: packages/ui/app
-  
-  fern-generate: 
+          onlyChanged: true
+
+  fern-generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

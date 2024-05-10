@@ -179,7 +179,7 @@ function getHarRequest(
     }));
     request.headers = Object.entries(example.headers).map(([name, value]) => ({ name, value: unknownToString(value) }));
 
-    let mimeType = endpoint.requestBody[0]?.contentType as string | undefined;
+    let mimeType = endpoint.requestBody?.contentType as string | undefined;
 
     if (requestBody != null) {
         if (mimeType == null) {

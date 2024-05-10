@@ -140,7 +140,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     <span className="inline-flex items-center gap-2">
                                         {"Handshake"}
                                         <span className="inline-block rounded-full bg-tag-default p-1">
-                                            <Wifi className="t-muted size-[15px]" strokeWidth={1.5} />
+                                            <Wifi className="t-muted size-icon" strokeWidth={1.5} />
                                         </span>
                                     </span>
                                 }

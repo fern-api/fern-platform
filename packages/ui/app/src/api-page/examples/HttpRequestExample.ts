@@ -46,8 +46,8 @@ export function convertEndpointExampleToHttpRequestExample(
 
     const body: ResolvedExampleEndpointRequest | null | undefined = requestBody;
 
-    if (endpoint.requestBody[0]?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
+    if (endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody?.contentType;
     }
 
     if (body != null && headers["Content-Type"] == null) {

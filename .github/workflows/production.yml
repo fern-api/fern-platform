@@ -93,7 +93,7 @@ jobs:
       - name: Smoke Test
         env:
           NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
-          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd smoke-test
           npm install -g fern-api

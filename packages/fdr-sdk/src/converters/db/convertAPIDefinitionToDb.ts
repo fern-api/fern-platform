@@ -394,7 +394,7 @@ function groupExamplesByStatusCode(examples: APIV1Write.ExampleEndpointCall[]) {
     const successExamples: APIV1Write.ExampleEndpointCall[] = [];
     const errorExamples: APIV1Write.ExampleEndpointCall[] = [];
     examples.forEach((example) => {
-        if (example.responseStatusCode >= 200 && example.responseStatusCode < 300) {
+        if (example.responseStatusCode < 400) {
             successExamples.push(example);
         } else {
             errorExamples.push(example);

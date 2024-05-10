@@ -32,7 +32,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         <section key={item.date} id={item.date} className="flex items-start">
                             <div className="prose relative mr-8 w-content-width flex-1 dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 first:prose-h2:mt-0">
                                 <div className="absolute -right-4 flex h-full w-[10px] items-start justify-center">
-                                    <div className="bg-accent z-10 h-2 w-2 rounded-full" />
+                                    <div className="bg-accent z-10 size-2 rounded-full" />
                                     <div className="z-5 absolute h-full w-0.5 bg-border-default" />
                                 </div>
                                 <div className="pb-16">
@@ -46,7 +46,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                     <MdxContent mdx={item.markdown} />
                                 </div>
                             </div>
-                            <div className="-mt-2 w-[18rem]">
+                            <div className="-mt-2 w-72">
                                 <span className="t-muted text-base">{Changelog.toShortDateString(item.date)}</span>
                             </div>
                         </section>
