@@ -36,7 +36,7 @@ const verifySignature = async (app: App, request: Request): Promise<void> => {
         // @ts-expect-error: octokit does not export the type needed here to be able to cast
         name: eventName,
         signature: request.headers.get("x-hub-signature-256")?.replace(/sha256=/, "") ?? "",
-        payload: await request.json(),
+        payload: await request.text(),
     });
 };
 

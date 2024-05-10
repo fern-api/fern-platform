@@ -2,7 +2,8 @@ name: Deploy FernBot Dev
 
 on:
   push:
-    branches: main
+    branches: 
+      - main
     paths:
       - "servers/fern-bot/**"
       - ".github/workflows/deploy-fern-bot-dev.yml"
@@ -28,5 +29,7 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
       - name: 🚀 serverless deploy
+        env: 
+          CI: false
         run: |
           pnpm --filter "@fern-platform/fern-bot" release --stage development
