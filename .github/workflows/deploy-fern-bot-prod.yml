@@ -26,6 +26,8 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
       - name: 🚀 serverless deploy
+        env: 
+            CI: false
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" release --stage production
