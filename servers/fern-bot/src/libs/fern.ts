@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
-import execa from "execa";
+import { execa } from "execa";
 
 export async function execFernCli(command: string, cwd?: string): Promise<void> {
     const commandParts = command.split(" ");
