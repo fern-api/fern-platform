@@ -5,7 +5,7 @@ import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernLink } from "./FernLink";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
-type Intent = "none" | "primary" | "success" | "warning" | "danger";
+export type Intent = "none" | "primary" | "success" | "warning" | "danger";
 
 interface FernButtonSharedProps {
     className?: string;

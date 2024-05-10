@@ -188,7 +188,7 @@
         @apply shadow-xl;
 
         .fern-dropdown-item {
-            @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center;
+            @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center text-left;
             @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
 
             .fern-dropdown-item-indicator {

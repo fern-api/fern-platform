@@ -1,11 +1,12 @@
 import cn from "clsx";
 import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
+import { Intent } from "../../components/FernButton";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 
 export declare namespace TitledExample {
     export interface Props {
         title: ReactNode;
-        isError?: boolean;
+        intent?: Intent;
         actions?: ReactElement;
         className?: string;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
@@ -17,7 +18,7 @@ export declare namespace TitledExample {
 }
 
 export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<TitledExample.Props>>(function TitledExample(
-    { title, isError, className, actions, children, copyToClipboardText, onClick, disableClipboard = false },
+    { title, intent = "none", className, actions, children, copyToClipboardText, onClick, disableClipboard = false },
     ref,
 ) {
     return (
@@ -31,16 +32,20 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
         >
             <div
                 className={cn("rounded-t-xl h-10", {
-                    "bg-tag-default-soft": !isError,
-                    "bg-tag-danger-soft": isError,
+                    "bg-tag-default-soft": intent === "none" || intent === "primary",
+                    "bg-tag-warning-soft": intent === "warning",
+                    "bg-tag-success-soft": intent === "success",
+                    "bg-tag-danger-soft": intent === "danger",
                 })}
             >
                 <div className="mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0] shadow-border-default">
                     {typeof title === "string" ? (
                         <div
                             className={cn("text-sm px-1", {
-                                "t-muted": !isError,
-                                "t-danger": isError,
+                                "t-muted": intent === "none" || intent === "primary",
+                                "t-warning": intent === "warning",
+                                "t-success": intent === "success",
+                                "t-danger": intent === "danger",
                             })}
                         >
                             {title}

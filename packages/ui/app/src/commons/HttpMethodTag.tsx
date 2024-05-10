@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import { ReactNode, memo } from "react";
 import { FernTag, FernTagColorScheme, FernTagProps } from "../components/FernTag";
@@ -6,7 +6,7 @@ import { FernTooltip } from "../components/FernTooltip";
 
 export declare namespace HttpMethodTag {
     export interface Props extends FernTagProps {
-        method: FdrAPI.api.v1.read.HttpMethod | "STREAM" | "WSS";
+        method: APIV1Read.HttpMethod | "STREAM" | "WSS";
         active?: boolean;
     }
 }
@@ -24,7 +24,7 @@ const METHOD_COLOR_SCHEMES: Record<HttpMethodTag.Props["method"], FernTagColorSc
 const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
     method,
     active,
-    size = "sm",
+    size = "lg",
     className,
     ...rest
 }) => {
