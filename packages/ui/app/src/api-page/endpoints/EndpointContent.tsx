@@ -297,7 +297,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 requestCurlJson={requestJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
+                                showErrors={showErrors}
                                 selectedError={selectedError}
+                                errors={endpoint.errors}
+                                setSelectedError={setSelectedError}
                             />
                         )}
                     </div>

@@ -1,21 +1,29 @@
 "use client";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ReactNode, memo, useMemo } from "react";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactNode, memo, useEffect, useMemo, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { FernTag } from "../../components/FernTag";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedExampleEndpointCall } from "../../resolver/types";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedError,
+    ResolvedExampleEndpointCall,
+    ResolvedExampleError,
+} from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
-import { getSuccessMessageForStatus } from "../utils/getSuccessMessageForStatus";
+import { getMessageForStatus } from "../utils/getMessageForStatus";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-import { ErrorCodeSnippetExample } from "./ErrorCodeSnippetExample";
+import { ErrorExampleSelect } from "./ErrorExampleSelect";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -29,7 +37,10 @@ export declare namespace EndpointContentCodeSnippets {
         requestCurlJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
+        showErrors: boolean;
+        errors: ResolvedError[];
         selectedError: ResolvedError | undefined;
+        setSelectedError: (error: ResolvedError | undefined) => void;
     }
 }
 
@@ -44,10 +55,63 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     requestCurlJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
+    showErrors,
+    errors,
     selectedError,
+    setSelectedError,
 }) => {
+    const [selectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(undefined);
+
+    const handleSelectErrorAndExample = (
+        error: ResolvedError | undefined,
+        example: ResolvedExampleError | undefined,
+    ) => {
+        setSelectedError(error);
+        setSelectedErrorExample(example);
+    };
+
+    // if the selected error is not in the list of errors, reset the selected error
+    useEffect(() => {
+        setSelectedErrorExample((prevSelectedErrorExample) => {
+            if (selectedError == null) {
+                return undefined;
+            } else if (
+                prevSelectedErrorExample != null &&
+                selectedError.examples.findIndex((e) => e === prevSelectedErrorExample) === -1
+            ) {
+                return selectedError.examples[0];
+            }
+            return prevSelectedErrorExample;
+        });
+    }, [selectedError]);
+
     const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
+
+    const successTitle =
+        exampleWithSchema.responseBody != null
+            ? visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
+                  json: (value) => renderResponseTitle(value.statusCode, endpoint.method),
+                  filename: (value) => renderResponseTitle(value.statusCode, endpoint.method),
+                  stream: () => "Streamed Response",
+                  sse: () => "Server-Sent Events",
+                  _other: () => "Response",
+              })
+            : "Response";
+
+    const errorSelector = showErrors ? (
+        <ErrorExampleSelect
+            selectedError={selectedError}
+            selectedErrorExample={selectedErrorExample}
+            errors={errors}
+            setSelectedErrorAndExample={handleSelectErrorAndExample}
+        >
+            {successTitle}
+        </ErrorExampleSelect>
+    ) : (
+        <span className="text-sm t-muted">{successTitle}</span>
+    );
+
     return (
         <div className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full">
             {/* TODO: Replace this with a proper segmented control component */}
@@ -109,13 +173,29 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
             />
-            {selectedError != null && <ErrorCodeSnippetExample resolvedError={selectedError} />}
+            {selectedError != null && (
+                <JsonCodeSnippetExample
+                    title={errorSelector}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                    hoveredPropertyPath={hoveredResponsePropertyPath}
+                    json={selectedErrorExample?.responseBody ?? EMPTY_OBJECT}
+                    intent={
+                        selectedError.statusCode >= 400
+                            ? "danger"
+                            : selectedError.statusCode >= 300
+                              ? "warning"
+                              : "default"
+                    }
+                />
+            )}
             {exampleWithSchema.responseBody != null &&
                 selectedError == null &&
                 visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
                     json: (value) => (
                         <JsonCodeSnippetExample
-                            title={renderResponseTitle(value.statusCode, endpoint.method)}
+                            title={errorSelector}
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}
@@ -124,28 +204,30 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         />
                     ),
                     // TODO: support other media types
-                    filename: (value) => (
-                        <AudioExample title={renderResponseTitle(value.statusCode, endpoint.method)} />
-                    ),
+                    filename: () => <AudioExample title={errorSelector} />,
                     stream: (value) => (
-                        <WebSocketMessages
-                            messages={value.value.map((event) => ({
-                                type: undefined,
-                                origin: undefined,
-                                displayName: undefined,
-                                data: event,
-                            }))}
-                        />
+                        <TitledExample title={errorSelector}>
+                            <WebSocketMessages
+                                messages={value.value.map((event) => ({
+                                    type: undefined,
+                                    origin: undefined,
+                                    displayName: undefined,
+                                    data: event,
+                                }))}
+                            />
+                        </TitledExample>
                     ),
                     sse: (value) => (
-                        <WebSocketMessages
-                            messages={value.value.map(({ event, data }) => ({
-                                type: event,
-                                origin: undefined,
-                                displayName: undefined,
-                                data,
-                            }))}
-                        />
+                        <TitledExample title={errorSelector}>
+                            <WebSocketMessages
+                                messages={value.value.map(({ event, data }) => ({
+                                    type: event,
+                                    origin: undefined,
+                                    displayName: undefined,
+                                    data,
+                                }))}
+                            />
+                        </TitledExample>
                     ),
                     _other: () => (
                         <FernErrorTag
@@ -160,13 +242,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 
 export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSnippets);
 
-function renderResponseTitle(statusCode: number, method: string) {
+function renderResponseTitle(statusCode: number, method?: APIV1Read.HttpMethod) {
     return (
-        <span className="text-sm px-1 t-muted">
-            {"Response - "}
-            <span className="text-intent-success">
-                {`${statusCode} ${getSuccessMessageForStatus(statusCode, method)}`}
-            </span>
+        <span className="inline-flex items-center gap-2">
+            <FernTag colorScheme="green">{statusCode}</FernTag>
+            <span>{getMessageForStatus(statusCode, method)}</span>
         </span>
     );
 }

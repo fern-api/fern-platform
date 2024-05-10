@@ -1,8 +1,8 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import Link from "next/link";
 import { PropsWithChildren, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { FernLink } from "./FernLink";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
@@ -114,7 +114,7 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
 
     function renderButtonContent() {
         return (
-            <div className="w-60">
+            <div>
                 <div className="flex items-center">
                     <span className="fern-dropdown-item-indicator">
                         {value != null && (
@@ -160,13 +160,13 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
             <div>
                 <DropdownMenu.RadioItem asChild={true} value={option.value}>
                     {option.href != null ? (
-                        <Link
+                        <FernLink
                             ref={option.value === value ? activeRef : undefined}
                             href={option.href}
                             className={cn("fern-dropdown-item", option.className)}
                         >
                             {renderButtonContent()}
-                        </Link>
+                        </FernLink>
                     ) : (
                         <button
                             ref={option.value === value ? activeRef : undefined}

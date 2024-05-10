@@ -1,29 +1,36 @@
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { ReactElement, useMemo, useState } from "react";
+import { ReactElement, ReactNode, useMemo, useState } from "react";
 import { FernButton } from "../../components/FernButton";
 import { FernDropdown } from "../../components/FernDropdown";
 import { FernTag } from "../../components/FernTag";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
-import { CodeSnippetExample } from "../examples/CodeSnippetExample";
+import { JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 
 export interface ErrorCodeSnippetExampleProps {
-    resolvedError: ResolvedError;
+    successfulResponseTitle?: ReactNode;
+    selectedError: ResolvedError;
+    errors: ResolvedError[];
+    setSelectedError: (error: ResolvedError | undefined) => void;
 }
 
-export function ErrorCodeSnippetExample({ resolvedError }: ErrorCodeSnippetExampleProps): ReactElement | null {
-    const [selectedExample, setSelectedExample] = useState<ResolvedExampleError | undefined>(resolvedError.examples[0]);
-    const selectedIndex = selectedExample != null ? resolvedError.examples.indexOf(selectedExample) : -1;
+export function ErrorCodeSnippetExample({
+    selectedError,
+    errors,
+    setSelectedError,
+}: ErrorCodeSnippetExampleProps): ReactElement | null {
+    const [selectedExample, setSelectedExample] = useState<ResolvedExampleError | undefined>(selectedError.examples[0]);
+    const selectedIndex = selectedExample != null ? selectedError.examples.indexOf(selectedExample) : -1;
 
     const handleValueChange = (value: string) => {
-        setSelectedExample(resolvedError.examples[parseInt(value, 10)]);
+        setSelectedExample(selectedError.examples[parseInt(value, 10)]);
     };
 
     const value = selectedExample?.responseBody ?? EMPTY_OBJECT;
 
     const options = useMemo(
         () =>
-            resolvedError.examples.map((example, idx): FernDropdown.Option => {
+            selectedError.examples.map((example, idx): FernDropdown.Option => {
                 return {
                     type: "value",
                     value: `${idx}`,
@@ -31,16 +38,16 @@ export function ErrorCodeSnippetExample({ resolvedError }: ErrorCodeSnippetExamp
                     helperText: example.description,
                 };
             }),
-        [resolvedError.examples],
+        [selectedError.examples],
     );
 
     return (
-        <CodeSnippetExample
+        <JsonCodeSnippetExample
             title={
                 <span className="inline-flex items-center">
-                    <FernTag colorScheme="red">{resolvedError.statusCode}</FernTag>
+                    <FernTag colorScheme="red">{selectedError.statusCode}</FernTag>
                     {options.length === 0 ? (
-                        <span className="ml-2 text-sm text-intent-danger">{resolvedError.name}</span>
+                        <span className="ml-2 text-sm text-intent-danger">{selectedError.name}</span>
                     ) : (
                         <FernDropdown options={options} value={`${selectedIndex}`} onValueChange={handleValueChange}>
                             <FernButton variant="minimal" intent="danger" rightIcon={<CaretDownIcon />}>
@@ -50,12 +57,12 @@ export function ErrorCodeSnippetExample({ resolvedError }: ErrorCodeSnippetExamp
                     )}
                 </span>
             }
-            isError={resolvedError.statusCode >= 400}
+            intent={
+                selectedError.statusCode >= 400 ? "danger" : selectedError.statusCode >= 300 ? "warning" : "default"
+            }
             onClick={(e) => {
                 e.stopPropagation();
             }}
-            code={JSON.stringify(value, null, 2)}
-            language="json"
             json={value}
         />
     );
