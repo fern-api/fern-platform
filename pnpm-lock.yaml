@@ -1444,8 +1444,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/template-resolver
       '@fern-api/venus-api-sdk':
-        specifier: ^0.3.0-2-g994ae9e
-        version: 0.3.1
+        specifier: ^0.6.2-1-gbbd1ac5
+        version: 0.6.2-1-gbbd1ac5
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.9
         version: 0.0.9
@@ -4294,8 +4294,8 @@ packages:
       - debug
     dev: false
 
-  /@fern-api/venus-api-sdk@0.3.1:
-    resolution: {integrity: sha512-vFeLlnk4HwcsbUC7xZrfkjGV3A4hqJzQjAfpdyFcxI8rMg/PkIA/VZJYacPuI8r2Vu87inpyQ9W8649aChL2HQ==}
+  /@fern-api/venus-api-sdk@0.6.2-1-gbbd1ac5:
+    resolution: {integrity: sha512-Sa1i7krrEfqSbHHuP/9k9JABsF6A6AkKM4LZRu1h7+Z3LajbRoEDbdjuuTZWfkdN5OU/LF+mzeO8ejLKhzoh6g==}
     dependencies:
       '@types/url-join': 4.0.1
       axios: 0.27.2

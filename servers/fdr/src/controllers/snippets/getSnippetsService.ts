@@ -22,6 +22,11 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
             });
+            await app.services.auth.checkOrgHasSnippetsApiAccess({
+                authHeader: req.headers.authorization,
+                orgId: apiInfo.orgId,
+                failHard: true,
+            });
             const payload = req.body.payload;
             if (payload == null) {
                 const response: DbSnippetsPage = await app.dao.snippets().loadSnippetsPage({
@@ -79,6 +84,11 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
             const apiInfo = await apiInferrer.resolveApi({
                 orgId: req.body.orgId,
                 apiId: req.body.apiId,
+            });
+            await app.services.auth.checkOrgHasSnippetsApiAccess({
+                authHeader: req.headers.authorization,
+                orgId: apiInfo.orgId,
+                failHard: true,
             });
             // TODO: The cast shouldn't be necessary but the query parameter is being
             // passed in as a string (even though it's typed as a number), so we

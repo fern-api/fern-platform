@@ -97,7 +97,7 @@ async function getSnippetTemplatesIfEnabled({
     snippetsConfigurationWithSdkIds: SdkIdForPackage;
 }): Promise<SnippetTemplatesByEndpoint> {
     try {
-        const hasSnippetTemplatesAccess = await app.services.auth.checkOrgHasSnippetsApiAccess({
+        const hasSnippetTemplatesAccess = await app.services.auth.checkOrgHasSnippetTemplateAccess({
             authHeader: authorization,
             orgId,
             failHard: false,

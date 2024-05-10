@@ -14,7 +14,7 @@ export function getTemplatesService(app: FdrApplication): TemplatesService {
             //     orgId: req.body.orgId,
             //     apiId: req.body.apiId,
             // });
-            // await app.services.auth.checkOrgHasSnippetsApiAccess({
+            // await app.services.auth.checkOrgHasSnippetTemplateAccess({
             //     authHeader: req.headers.authorization,
             //     orgId: apiInfo.orgId,
             //     failHard: true,
@@ -51,7 +51,7 @@ export function getTemplatesService(app: FdrApplication): TemplatesService {
             //     orgId: req.body.orgId,
             //     apiId: req.body.apiId,
             // });
-            // await app.services.auth.checkOrgHasSnippetsApiAccess({
+            // await app.services.auth.checkOrgHasSnippetTemplateAccess({
             //     authHeader: req.headers.authorization,
             //     orgId: apiInfo.orgId,
             //     failHard: true,
