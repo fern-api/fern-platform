@@ -4,6 +4,7 @@ on:
   push:
     branches: main
     paths:
+      - dsinghvi/fern-bot-runs-tsc-build
       - "servers/fern-bot/**"
       - ".github/workflows/deploy-fern-bot-dev.yml"
 
