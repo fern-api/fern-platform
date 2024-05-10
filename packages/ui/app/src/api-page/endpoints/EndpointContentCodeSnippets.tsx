@@ -1,7 +1,7 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ReactNode, memo, useEffect, useMemo, useState } from "react";
+import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
@@ -41,6 +41,7 @@ export declare namespace EndpointContentCodeSnippets {
         errors: ResolvedError[];
         selectedError: ResolvedError | undefined;
         setSelectedError: (error: ResolvedError | undefined) => void;
+        measureHeight: (height: number) => void;
     }
 }
 
@@ -59,7 +60,24 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     errors,
     selectedError,
     setSelectedError,
+    measureHeight,
 }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (ref.current != null) {
+            measureHeight(ref.current.clientHeight);
+            const resizeObserver = new ResizeObserver(([entry]) => {
+                measureHeight(entry.contentRect.height);
+            });
+            resizeObserver.observe(ref.current);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+        return;
+    }, [measureHeight]);
+
     const [selectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(undefined);
 
     const handleSelectErrorAndExample = (
@@ -113,7 +131,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     return (
-        <div className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full">
+        <div
+            className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full max-h-fit"
+            ref={ref}
+        >
             {/* TODO: Replace this with a proper segmented control component */}
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <FernButtonGroup className="min-w-0 shrink">

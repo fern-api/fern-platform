@@ -25,6 +25,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
         <div
             className={cn(
                 "rounded-xl overflow-hidden flex flex-col bg-card after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
+                "max-md:max-h-vh-minus-header-padded",
                 className,
             )}
             onClick={onClick}
