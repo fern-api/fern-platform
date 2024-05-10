@@ -205,8 +205,18 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     ]);
 
     const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 26;
-    const exampleHeight =
+    const initialExampleHeight =
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
+
+    const [exampleHeight, setExampleHeight] = useState(initialExampleHeight);
+
+    // Reset the example height (not in view) if the viewport height changes
+    useEffect(() => {
+        if (!isInViewport) {
+            setExampleHeight(initialExampleHeight);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialExampleHeight]);
 
     return (
         <div
@@ -250,6 +260,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
                         style={{
+                            // TODO: do we still need to set minHeight here?
                             minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}
                     >
@@ -283,7 +294,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             // header offset
                             "md:py-8 md:mt-0 md:top-header-height",
                         )}
-                        // style={{ height: `${exampleHeight}px` }}
+                        style={{
+                            minHeight: `${exampleHeight}px`,
+                        }}
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
@@ -301,6 +314,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 selectedError={selectedError}
                                 errors={endpoint.errors}
                                 setSelectedError={setSelectedError}
+                                measureHeight={setExampleHeight}
                             />
                         )}
                     </div>
