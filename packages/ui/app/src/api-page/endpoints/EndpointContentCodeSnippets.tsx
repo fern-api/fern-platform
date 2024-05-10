@@ -3,9 +3,9 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode, memo, useEffect, useMemo, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
+import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { FernTag } from "../../components/FernTag";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -181,13 +181,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     }}
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={selectedErrorExample?.responseBody ?? EMPTY_OBJECT}
-                    intent={
-                        selectedError.statusCode >= 400
-                            ? "danger"
-                            : selectedError.statusCode >= 300
-                              ? "warning"
-                              : "default"
-                    }
+                    intent={statusCodeToIntent(selectedError.statusCode)}
                 />
             )}
             {exampleWithSchema.responseBody != null &&
@@ -245,7 +239,7 @@ export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSni
 function renderResponseTitle(statusCode: number, method?: APIV1Read.HttpMethod) {
     return (
         <span className="inline-flex items-center gap-2">
-            <FernTag colorScheme="green">{statusCode}</FernTag>
+            <StatusCodeTag statusCode={statusCode} />
             <span>{getMessageForStatus(statusCode, method)}</span>
         </span>
     );

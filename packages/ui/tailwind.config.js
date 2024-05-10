@@ -322,6 +322,12 @@ module.exports = {
                 ".t-danger": {
                     "@apply text-intent-danger": {},
                 },
+                ".text-intent-default": {
+                    "@apply text-text-default": {},
+                },
+                ".text-intent-none": {
+                    "@apply text-text-default": {},
+                },
                 // Background
                 // ".bg-background": {
                 //     "@apply bg-background-light dark:bg-background-dark": {},

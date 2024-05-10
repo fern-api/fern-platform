@@ -2,8 +2,8 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
-import { FernButton } from "../../components/FernButton";
-import { FernTag } from "../../components/FernTag";
+import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
+import { FernButton, Intent } from "../../components/FernButton";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
 
@@ -43,30 +43,18 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     }
 
     const renderValue = () => {
-        if (selectedError != null && selectedErrorExample?.name != null) {
-            return (
-                <span className="text-intent-danger inline-flex gap-2 items-center">
-                    <FernTag colorScheme="red">{selectedError.statusCode}</FernTag>
-                    {selectedErrorExample.name}
-                </span>
-            );
-        } else if (selectedError != null && selectedExampleIndex >= 0) {
+        if (selectedError != null) {
             const content = `${
                 selectedError.examples.length > 1
                     ? `${selectedError.name ?? getMessageForStatus(selectedError.statusCode)} Example ${selectedExampleIndex + 1}`
                     : selectedError.name ?? getMessageForStatus(selectedError.statusCode)
             }`;
             return (
-                <span className="text-intent-danger inline-flex gap-2 items-center">
-                    <FernTag colorScheme="red">{selectedError.statusCode}</FernTag>
-                    {content}
-                </span>
-            );
-        } else if (selectedError != null) {
-            return (
-                <span className="text-intent-danger inline-flex gap-2 items-center">
-                    <FernTag colorScheme="red">{selectedError.statusCode}</FernTag>
-                    {selectedError.name ?? getMessageForStatus(selectedError.statusCode)}
+                <span className={clsx("inline-flex gap-2 items-center")}>
+                    <StatusCodeTag statusCode={selectedError.statusCode} />
+                    <span className={`text-intent-${statusCodeToIntent(selectedError.statusCode)}`}>
+                        {selectedErrorExample?.name ?? content}
+                    </span>
                 </span>
             );
         } else {
@@ -85,7 +73,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     }
                     variant="minimal"
                     className="-ml-1 pl-1"
-                    intent={selectedError != null ? "danger" : "none"}
+                    intent={selectedError != null ? statusCodeToIntent(selectedError.statusCode) : "none"}
                 >
                     <Select.Value>{renderValue()}</Select.Value>
                 </FernButton>
@@ -103,28 +91,30 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                             <Fragment key={i}>
                                 <Select.Separator className="bg-tag-default m-[5px] h-px" />
                                 <Select.Group>
-                                    {/* <Select.Label className="t-danger px-[25px] text-sm leading-[25px] flex gap-2 items-center">
-                                        <FernTag colorScheme="red">
-                                            {error.statusCode}
-                                        </FernTag>
-                                        <span>{error.name ?? getMessageForStatus(error.statusCode)}</span>
-                                    </Select.Label> */}
                                     {error.examples.map((example, j) => (
-                                        <FernSelectItem value={`${i}:${j}`} key={j} intent="danger">
-                                            <span className="text-intent-danger inline-flex gap-2 items-center">
-                                                <FernTag colorScheme="red">{error.statusCode}</FernTag>
-                                                {example.name ??
-                                                    (error.examples.length > 1
-                                                        ? `${error.name ?? getMessageForStatus(error.statusCode)} Example ${j + 1}`
-                                                        : error.name ?? getMessageForStatus(error.statusCode))}
+                                        <FernSelectItem
+                                            value={`${i}:${j}`}
+                                            key={j}
+                                            intent={statusCodeToIntent(error.statusCode)}
+                                        >
+                                            <span className="inline-flex gap-2 items-center">
+                                                <StatusCodeTag statusCode={error.statusCode} />
+                                                <span className={`text-intent-${statusCodeToIntent(error.statusCode)}`}>
+                                                    {example.name ??
+                                                        (error.examples.length > 1
+                                                            ? `${error.name ?? getMessageForStatus(error.statusCode)} Example ${j + 1}`
+                                                            : error.name ?? getMessageForStatus(error.statusCode))}
+                                                </span>
                                             </span>
                                         </FernSelectItem>
                                     ))}
                                     {error.examples.length === 0 && (
-                                        <FernSelectItem value={`${i}:-1`} intent="danger">
-                                            <span className="text-intent-danger inline-flex gap-2 items-center">
-                                                <FernTag colorScheme="red">{error.statusCode}</FernTag>
-                                                {`${error.name ?? getMessageForStatus(error.statusCode)}`}
+                                        <FernSelectItem value={`${i}:-1`} intent={statusCodeToIntent(error.statusCode)}>
+                                            <span className="inline-flex gap-2 items-center">
+                                                <StatusCodeTag statusCode={error.statusCode} />
+                                                <span
+                                                    className={`text-intent-${statusCodeToIntent(error.statusCode)}`}
+                                                >{`${error.name ?? getMessageForStatus(error.statusCode)}`}</span>
                                             </span>
                                         </FernSelectItem>
                                     )}
@@ -143,14 +133,16 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
 
 export const FernSelectItem = forwardRef<
     HTMLDivElement,
-    Select.SelectItemProps & { textClassName?: string; intent?: "default" | "danger" }
->(function FernSelectItem({ children, className, textClassName, intent = "default", ...props }, forwardedRef) {
+    Select.SelectItemProps & { textClassName?: string; intent?: Intent }
+>(function FernSelectItem({ children, className, textClassName, intent = "none", ...props }, forwardedRef) {
     return (
         <Select.Item
             className={clsx(
                 "text-text-default data-[disabled]:text-text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
                 {
-                    "data-[highlighted]:bg-tag-default": intent === "default",
+                    "data-[highlighted]:bg-tag-default": intent === "none" || intent === "primary",
+                    "data-[highlighted]:bg-tag-warning": intent === "warning",
+                    "data-[highlighted]:bg-tag-success": intent === "success",
                     "data-[highlighted]:bg-tag-danger": intent === "danger",
                 },
                 className,
