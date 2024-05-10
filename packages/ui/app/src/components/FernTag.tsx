@@ -45,24 +45,24 @@ export const FernTag: FC<FernTagProps> = ({
                 },
                 {
                     // Gray
-                    "bg-tag-default text-default": colorScheme === "gray" && variant === "subtle",
-                    "bg-tag-default-inverted text-text-default-inverted": colorScheme === "gray" && variant === "solid",
+                    "bg-grayscale-a3 text-grayscale-a12": colorScheme === "gray" && variant === "subtle",
+                    "bg-grayscale-a12 text-background": colorScheme === "gray" && variant === "solid",
 
                     // Green
-                    "bg-tag-success text-intent-success": colorScheme === "green" && variant === "subtle",
-                    "bg-method-get text-background": colorScheme === "green" && variant === "solid",
+                    "bg-green-a3 text-green-a11": colorScheme === "green" && variant === "subtle",
+                    "bg-green-a10 text-background": colorScheme === "green" && variant === "solid",
 
                     // Blue
-                    "bg-tag-info text-intent-info": colorScheme === "blue" && variant === "subtle",
-                    "bg-method-post text-background": colorScheme === "blue" && variant === "solid",
+                    "bg-blue-a3 text-blue-a11": colorScheme === "blue" && variant === "subtle",
+                    "bg-blue-a10 text-background": colorScheme === "blue" && variant === "solid",
 
                     // Amber
-                    "bg-tag-warning text-intent-warning": colorScheme === "amber" && variant === "subtle",
-                    "bg-intent-warning text-background": colorScheme === "amber" && variant === "solid",
+                    "bg-amber-a3 text-amber-a11": colorScheme === "amber" && variant === "subtle",
+                    "bg-amber-a10 text-background": colorScheme === "amber" && variant === "solid",
 
                     // Red
-                    "bg-tag-danger text-intent-danger": colorScheme === "red" && variant === "subtle",
-                    "bg-method-delete text-background": colorScheme === "red" && variant === "solid",
+                    "bg-red-a3 text-red-a11": colorScheme === "red" && variant === "subtle",
+                    "bg-red-a10 text-background": colorScheme === "red" && variant === "solid",
 
                     // Accent
                     "bg-accent/10 text-accent-aaa": colorScheme === "accent" && variant === "subtle",

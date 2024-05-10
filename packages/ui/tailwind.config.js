@@ -7,6 +7,18 @@ const round = (num) =>
         .replace(/\.0$/, "");
 const em = (px, base) => `${round(px / base)}em`;
 
+const generateScale = (name) => {
+    let scale = Array.from({ length: 12 }, (_, i) => {
+        let id = i + 1;
+        return [
+            [id, `var(--${name}-${id})`],
+            [`a${id}`, `var(--${name}-a${id})`],
+        ];
+    }).flat();
+
+    return Object.fromEntries(scale);
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: "class",
@@ -53,6 +65,22 @@ module.exports = {
                 "fern-green": "#49932B",
                 "fern-green-dark": "#ADFF8C",
 
+                /* Radix palettes */
+                green: generateScale("green"),
+                "green-dark": generateScale("green-dark"),
+                amber: generateScale("amber"),
+                "amber-dark": generateScale("amber-dark"),
+                red: generateScale("red"),
+                "red-dark": generateScale("red-dark"),
+                blue: generateScale("blue"),
+                "blue-dark": generateScale("blue-dark"),
+                /* End of Radix palettes */
+
+                /* Full custom scale */
+                grayscale: generateScale("grayscale"),
+                // "accent": generateScale("accent")},
+
+                /* Tokens */
                 accent: withOpacity("--accent"),
                 "accent-aa": withOpacity("--accent-aa"),
                 "accent-aaa": withOpacity("--accent-aaa"),
