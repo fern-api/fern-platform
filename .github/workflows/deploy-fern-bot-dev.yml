@@ -40,4 +40,4 @@ jobs:
         run: |
           cd servers/fern-bot
           pnpm --ignore-workspace install
-          pnpm release --stage development
+          pnpm --ignore-workspace release --stage development

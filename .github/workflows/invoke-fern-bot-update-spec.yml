@@ -43,7 +43,7 @@ jobs:
         run: |
           cd servers/fern-bot
           pnpm --ignore-workspace install
-          pnpm release --stage development
+          pnpm --ignore-workspace release --stage development
 
   invoke_prod:
     if: ${{ github.event.inputs.environment == 'production' }}
@@ -74,4 +74,4 @@ jobs:
         run: |
           cd servers/fern-bot
           pnpm --ignore-workspace install
-          pnpm release --stage production
+          pnpm --ignore-workspace release --stage production
