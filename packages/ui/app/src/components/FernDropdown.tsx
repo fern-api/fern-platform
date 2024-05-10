@@ -114,7 +114,7 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
 
     function renderButtonContent() {
         return (
-            <div>
+            <div className="w-full">
                 <div className="flex items-center">
                     <span className="fern-dropdown-item-indicator">
                         {value != null && (
@@ -157,26 +157,24 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
             side="right"
             sideOffset={8}
         >
-            <div>
-                <DropdownMenu.RadioItem asChild={true} value={option.value}>
-                    {option.href != null ? (
-                        <FernLink
-                            ref={option.value === value ? activeRef : undefined}
-                            href={option.href}
-                            className={cn("fern-dropdown-item", option.className)}
-                        >
-                            {renderButtonContent()}
-                        </FernLink>
-                    ) : (
-                        <button
-                            ref={option.value === value ? activeRef : undefined}
-                            className={cn("fern-dropdown-item", option.className)}
-                        >
-                            {renderButtonContent()}
-                        </button>
-                    )}
-                </DropdownMenu.RadioItem>
-            </div>
+            <DropdownMenu.RadioItem asChild={true} value={option.value}>
+                {option.href != null ? (
+                    <FernLink
+                        ref={option.value === value ? activeRef : undefined}
+                        href={option.href}
+                        className={cn("fern-dropdown-item", option.className)}
+                    >
+                        {renderButtonContent()}
+                    </FernLink>
+                ) : (
+                    <button
+                        ref={option.value === value ? activeRef : undefined}
+                        className={cn("fern-dropdown-item", option.className)}
+                    >
+                        {renderButtonContent()}
+                    </button>
+                )}
+            </DropdownMenu.RadioItem>
         </FernTooltip>
     );
 }
