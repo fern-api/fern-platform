@@ -28,6 +28,7 @@ jobs:
       GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
       CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
+      CI: false
     steps:
       - uses: actions/checkout@v4
       - name: 📥 Install
@@ -51,6 +52,7 @@ jobs:
       GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_WEBHOOK_SECRET }}
       CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
+      CI: false
     steps:
       - uses: actions/checkout@v4
       - name: 📥 Install
