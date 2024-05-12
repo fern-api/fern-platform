@@ -1,5 +1,6 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
+import * as snippet from "@segment/snippet";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
@@ -86,6 +87,19 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
         ],
     );
 
+    function renderSnippet() {
+        const opts = {
+          apiKey: process.env.NEXT_PUBLIC_ANALYTICS_WRITE_KEY,
+          page: true,
+        };
+      
+        if (process.env.NODE_ENV === "development") {
+          return snippet.max(opts);
+        }
+      
+        return snippet.min(opts);
+      }
+
     return (
         <DocsContext.Provider value={value}>
             <Head>
@@ -117,7 +131,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                     ${stylesheet}
                 `}
             </style>
-
+            <Script
+                id="segment-script"
+                dangerouslySetInnerHTML={{ __html: renderSnippet() }}
+            />
             {children}
 
             {js?.inline?.map((inline, idx) => (
