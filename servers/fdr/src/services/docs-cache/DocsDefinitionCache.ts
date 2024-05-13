@@ -1,4 +1,3 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { AuthType } from "@prisma/client";
 import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
@@ -102,11 +101,14 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                             key: dbFileInfo.s3Key,
                         });
 
-                        return visitDiscriminatedUnion(dbFileInfo, "type")._visit<[string, DocsV1Read.File_]>({
-                            s3Key: () => [fileId, { type: "url", url: presignedUrl }],
-                            image: ({ s3Key, ...image }) => [fileId, { ...image, url: presignedUrl }],
-                            _other: () => [fileId, { type: "url", url: presignedUrl }],
-                        });
+                        switch (dbFileInfo.type) {
+                            case "image": {
+                                const { s3Key, ...image } = dbFileInfo;
+                                return [fileId, { ...image, url: presignedUrl }];
+                            }
+                            default:
+                                return [fileId, { type: "url", url: presignedUrl }];
+                        }
                     }),
                 ),
             );
