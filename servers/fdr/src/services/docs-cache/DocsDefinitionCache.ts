@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { AuthType } from "@prisma/client";
 import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
 import { FdrApplication } from "../../app";
@@ -37,10 +38,10 @@ export interface DocsDefinitionCache {
  */
 export interface CachedDocsResponse {
     /** Adding a version to the cached response to allow for breaks in the future. */
-    version: "v1";
+    version: "v2";
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
-    dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
+    dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2>;
     isPrivate: boolean;
 }
 
@@ -94,10 +95,20 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             if (cachedResponse.isPrivate) {
                 await this.checkUserBelongsToOrg(url, authorization);
             }
-            const updatedFileEntries = await Promise.all(
-                Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
-                    return [fileId, await this.app.services.s3.getPresignedDownloadUrl({ key: dbFileInfo.s3Key })];
-                }),
+            const filesV2: Record<string, DocsV1Read.File_> = Object.fromEntries(
+                await Promise.all(
+                    Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
+                        const presignedUrl = await this.app.services.s3.getPresignedDownloadUrl({
+                            key: dbFileInfo.s3Key,
+                        });
+
+                        return visitDiscriminatedUnion(dbFileInfo, "type")._visit<[string, DocsV1Read.File_]>({
+                            s3Key: () => [fileId, { type: "url", url: presignedUrl }],
+                            image: ({ s3Key, ...image }) => [fileId, { ...image, url: presignedUrl }],
+                            _other: () => [fileId, { type: "url", url: presignedUrl }],
+                        });
+                    }),
+                ),
             );
 
             // we always pull updated s3 URLs
@@ -105,7 +116,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 ...cachedResponse.response,
                 definition: {
                     ...cachedResponse.response.definition,
-                    files: Object.fromEntries(updatedFileEntries),
+                    filesV2,
                 },
             };
         }
@@ -198,7 +209,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 docsV2: dbDocs,
             });
             return {
-                version: "v1",
+                version: "v2",
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
@@ -220,7 +231,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
-                version: "v1",
+                version: "v2",
                 updatedTime: new Date(),
                 dbFiles: v1Docs.dbFiles ?? {},
                 response: {
