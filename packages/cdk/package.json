@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.257",
-    "archiver": "^6.0.1",
+    "archiver": "^7.0.1",
     "aws-cdk-lib": "^2.122.0",
     "axios": "^1.6.5",
     "constructs": "^10.3.0",
