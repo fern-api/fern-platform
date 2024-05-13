@@ -278,4 +278,52 @@ export const SPECIAL_TOKENS = [
     "MLP", // Multi-Layer Perceptron
     "RBM", // Restricted Boltzmann Machine
     "CRF", // Conditional Random Field
+
+    // Media
+    "PDF",
+    "PDFs",
+    "RTF",
+    "TXT",
+    "XLS",
+    "XLSX",
+    "PPT",
+
+    // Image
+    "JPG",
+    "JPEG",
+    "PNG",
+    "GIF",
+    "GIFs",
+    "SVG",
+    "TIFF",
+    "BMP",
+    "ICO",
+    "PSD",
+    "WebP",
+    "AVIF",
+    "HEIF",
+    "HEIC",
+    "EPS",
+
+    // Audio
+    "MP3",
+    "WAV",
+    "AIFF",
+    "FLAC",
+    "WMA",
+    "AAC",
+    "OGG",
+
+    // Video
+    "AVI",
+    "WMV",
+    "MOV",
+    "M4V",
+    "MP4",
+    "MPG",
+    "MPEG",
+    "FLV",
+    "SWF",
+    "MKV",
+    "WebM",
 ];
