@@ -281,6 +281,7 @@ export const SPECIAL_TOKENS = [
 
     // Media
     "PDF",
+    "PDFs",
     "RTF",
     "TXT",
     "XLS",
@@ -292,6 +293,7 @@ export const SPECIAL_TOKENS = [
     "JPEG",
     "PNG",
     "GIF",
+    "GIFs",
     "SVG",
     "TIFF",
     "BMP",
