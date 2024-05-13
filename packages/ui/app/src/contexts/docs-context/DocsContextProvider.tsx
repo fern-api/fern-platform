@@ -1,11 +1,11 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
-import * as snippet from "@segment/snippet";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
+import { renderSegmentSnippet } from "../../analytics/segment";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { getFontExtension } from "../../next-app/utils/getFontVariables";
@@ -87,18 +87,18 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
         ],
     );
 
-    function renderSnippet() {
-        const opts = {
-          apiKey: process.env.NEXT_PUBLIC_ANALYTICS_WRITE_KEY,
-          page: true,
-        };
+    // function renderSnippet() {
+    //     const opts = {
+    //       apiKey: process.env.NEXT_PUBLIC_ANALYTICS_WRITE_KEY,
+    //       page: true,
+    //     };
       
-        if (process.env.NODE_ENV === "development") {
-          return snippet.max(opts);
-        }
+    //     if (process.env.NODE_ENV === "development") {
+    //       return snippet.max(opts);
+    //     }
       
-        return snippet.min(opts);
-      }
+    //     return snippet.min(opts);
+    //   }
 
     return (
         <DocsContext.Provider value={value}>
@@ -131,10 +131,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                     ${stylesheet}
                 `}
             </style>
-            <Script
-                id="segment-script"
-                dangerouslySetInnerHTML={{ __html: renderSnippet() }}
-            />
             {children}
 
             {js?.inline?.map((inline, idx) => (
@@ -152,7 +148,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-
+            <Script
+                id="segment-script"
+                dangerouslySetInnerHTML={{ __html: renderSegmentSnippet() }}
+            />
             <CustomerAnalytics domain={baseUrl.domain} />
         </DocsContext.Provider>
     );
