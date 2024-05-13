@@ -9,6 +9,7 @@ export function register(expressApp, services) {
     expressApp.use("/v2/registry/docs", services.docs.v2.read._root.toRouter());
     expressApp.use("/v2/registry/docs", services.docs.v2.write._root.toRouter());
     expressApp.use("/registry", services.diff.toRouter());
+    expressApp.use("/docs-cache", services.docsCache.toRouter());
     expressApp.use("/snippets", services.snippetsFactory.toRouter());
     expressApp.use("/snippets", services.snippets.toRouter());
     expressApp.use("/snippet-template", services.templates.toRouter());

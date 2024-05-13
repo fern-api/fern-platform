@@ -14,4 +14,9 @@ export default class LocalDocsDefinitionStore {
     set({ url, value }: { url: URL; value: CachedDocsResponse }): void {
         this.localCache[(url.hostname, JSON.stringify(value))];
     }
+
+    delete({ url }: { url: URL }): void {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete this.localCache[url.hostname];
+    }
 }
