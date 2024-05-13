@@ -61,7 +61,7 @@
     "eslint-plugin-tailwindcss": "^3.13.1",
     "eslint-plugin-vitest": "^0.3.26",
     "execa": "^5.1.1",
-    "husky": "^8.0.1",
+    "husky": "^9.0.11",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
     "jsonc-parser": "~2.2.1",
