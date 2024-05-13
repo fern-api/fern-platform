@@ -118,6 +118,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                     ${stylesheet}
                 `}
             </style>
+            
             {children}
 
             {js?.inline?.map((inline, idx) => (
