@@ -9,6 +9,7 @@ import { registerBackgroundTasks } from "./background";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
 import { getApiDiffService } from "./controllers/diff/getApiDiffService";
+import { getDocsCacheService } from "./controllers/docs-cache/getDocsCacheService";
 import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "./controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service";
@@ -109,6 +110,7 @@ async function startServer(): Promise<void> {
             snippetsFactory: getSnippetsFactoryService(app),
             templates: getTemplatesService(app),
             diff: getApiDiffService(app),
+            docsCache: getDocsCacheService(app),
         });
         registerBackgroundTasks(app);
         app.logger.info(`Listening for requests on port ${PORT}`);
