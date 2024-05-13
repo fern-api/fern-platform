@@ -136,10 +136,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-            <Script
-                id="segment-script"
-                dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(baseUrl.domain) }}
-            />
+            <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(baseUrl.domain) }} />
             <CustomerAnalytics domain={baseUrl.domain} />
         </DocsContext.Provider>
     );
