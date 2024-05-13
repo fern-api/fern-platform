@@ -1150,7 +1150,7 @@ importers:
         specifier: ^3.335.0
         version: 3.574.0
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.540.0
+        specifier: ^3.574.0
         version: 3.574.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
@@ -1438,7 +1438,7 @@ importers:
         specifier: ^3.335.0
         version: 3.574.0
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.540.0
+        specifier: ^3.574.0
         version: 3.574.0
       '@fern-api/fdr-sdk':
         specifier: workspace:*
