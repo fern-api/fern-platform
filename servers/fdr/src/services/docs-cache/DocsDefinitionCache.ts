@@ -30,7 +30,7 @@ export interface DocsDefinitionCache {
 
     isInitialized(): boolean;
 
-    invalidateCache(url: URL): void;
+    invalidateCache(url: URL): Promise<void>;
 }
 
 /**
