@@ -140,7 +140,7 @@ export function stringifyFetch({
         if (endpoint == null) {
             return "";
         }
-        return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
+        return `// ${endpoint.title} (${endpoint.method} ${endpoint.path
             .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
             .join("")})
 const response = await fetch("${buildEndpointUrl(endpoint, formState)}", {
@@ -254,7 +254,7 @@ export function stringifyPythonRequests({
         if (endpoint == null) {
             return "";
         }
-        return `# ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
+        return `# ${endpoint.title} (${endpoint.method} ${buildPath(endpoint.path)})
 response = requests.${endpoint.method.toLowerCase()}(
   "${buildEndpointUrl(endpoint, formState)}",
   headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${

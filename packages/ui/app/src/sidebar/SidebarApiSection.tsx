@@ -213,7 +213,7 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
             rightElement={
                 SidebarNode.isApiPage(item) ? (
                     item.apiType === "endpoint" ? (
-                        item.stream ? (
+                        item.stream && isStream ? (
                             <HttpMethodTag method="STREAM" size="sm" active={selected} />
                         ) : (
                             httpMethodTags[item.method]

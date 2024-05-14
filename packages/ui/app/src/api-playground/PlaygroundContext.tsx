@@ -103,7 +103,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     endpointId: newSelectionState.endpointId,
-                    endpointName: matchedEndpoint?.name,
+                    endpointName: matchedEndpoint?.title,
                 });
                 if (matchedEndpoint != null && globalFormState[createFormStateKey(newSelectionState)] == null) {
                     setGlobalFormState((currentFormState) => {
@@ -127,7 +127,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     webSocketId: newSelectionState.webSocketId,
-                    webSocketName: matchedWebSocket?.name,
+                    webSocketName: matchedWebSocket?.title,
                 });
             }
         },
