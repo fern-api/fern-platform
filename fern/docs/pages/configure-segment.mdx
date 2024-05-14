@@ -11,8 +11,14 @@ description: Learn about how to enable analytics collection in Segment for a cus
   
   ### Step 2: Connect Requested Analytics Destinations
   
-  Customers may request analytics in one or multiple destinations. You'll need to connect each one to the existing source (https://app.segment.com/buildwithfern/sources/build_with_fern/overview). Example destinations are Posthog, Google Analytics, and Hubspot
+  Customers may request analytics in one or multiple destinations. You send data to destinations by connecting them to a source (https://app.segment.com/buildwithfern/sources/build_with_fern/overview). Example destinations are Posthog, Google Analytics, and Hubspot. 
   
+  Aside: Segment limits how many instances (25) of a single destination type we can connect to a single source. To get around this, we use Segment functions which pipe the data to our own analytics instance + send it to the customer's analytics instance with HTTP requests.
+  
+  For destination where we use Segment functions you do NOT need to connect a new destination to the source, you'll simply update the destination function as described below. This is currently only configured for Posthog. 
+  
+  For other destination types, simply add an instance of the destination type and follow the instructions in Segment to connect it to the customer's instance.
+
   ### Step 3: Configure Destinations
   Each destination may require some configuration. 
   
