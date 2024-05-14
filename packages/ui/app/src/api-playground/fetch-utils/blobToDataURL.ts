@@ -15,6 +15,7 @@ export async function blobToDataURL(environment: string, file: File): Promise<st
             method: "PUT",
             body: file,
             headers: { "Content-Type": file.type },
+            mode: "cors",
         });
 
         return get;

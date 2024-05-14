@@ -19,6 +19,10 @@ import {
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
+import { blobToDataURL } from "./fetch-utils/blobToDataURL";
+import { executeProxyFile } from "./fetch-utils/executeProxyFile";
+import { executeProxyRest } from "./fetch-utils/executeProxyRest";
+import { executeProxyStream } from "./fetch-utils/executeProxyStream";
 import type {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormStateBody,
@@ -28,10 +32,6 @@ import type {
 } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
-import { blobToDataURL } from "./utils/blobToDataURL";
-import { executeProxyFile } from "./utils/executeProxyFile";
-import { executeProxyRest } from "./utils/executeProxyRest";
-import { executeProxyStream } from "./utils/executeProxyStream";
 
 interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;
