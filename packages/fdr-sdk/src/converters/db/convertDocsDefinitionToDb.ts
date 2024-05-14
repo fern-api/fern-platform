@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import { kebabCase } from "lodash-es";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -13,7 +13,6 @@ import { isNavigationTabLink } from "../../client/visitNavigationTab";
 import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
-const { kebabCase } = lodash;
 
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
