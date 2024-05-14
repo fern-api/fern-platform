@@ -31,7 +31,7 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: FdrAPI.ParameterPayload[],
-        locationPath?: string
+        locationPath?: string,
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
@@ -79,7 +79,7 @@ export class SnippetTemplateResolver {
                         invocation: template.templateString.replace(
                             // TODO: fix the typescript generator to create literals not as types
                             TemplateSentinel,
-                            ""
+                            "",
                         ),
                     };
                 }
@@ -106,7 +106,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
                           ),
                       }
                     : undefined;
@@ -131,7 +131,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
                     ),
                 };
             }
@@ -161,7 +161,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
                     ),
                 };
             }
@@ -207,7 +207,7 @@ export class SnippetTemplateResolver {
 
                 const evaluatedMember: V1Snippet | undefined = this.resolveV1Template(
                     selectedMemberTemplate,
-                    payloadOverride
+                    payloadOverride,
                 );
                 return evaluatedMember != null
                     ? {
