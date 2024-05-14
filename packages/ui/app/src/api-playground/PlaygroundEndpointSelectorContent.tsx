@@ -3,10 +3,10 @@ import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { noop } from "lodash-es";
+import { compact, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { HttpMethodTag, withStream } from "../commons/HttpMethodTag";
+import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
@@ -50,7 +50,11 @@ export function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
                     api: apiSection.api,
                     id: apiSection.id,
                     breadcrumbs: [apiSection.title],
-                    items: apiSection.items.filter((item): item is SidebarNode.ApiPage => item.type === "page"),
+                    items: apiSection.items
+                        .filter((item): item is SidebarNode.ApiPage => item.type === "page")
+                        .flatMap((item): SidebarNode.ApiPage[] =>
+                            SidebarNode.isEndpointPage(item) ? compact([item, item.stream]) : [item],
+                        ),
                 });
 
                 result.push(
@@ -142,11 +146,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                             side="right"
                                         >
                                             <FernButton
-                                                text={
-                                                    endpointItem.apiType === "endpoint" && endpointItem.stream
-                                                        ? withStream(text)
-                                                        : text
-                                                }
+                                                text={text}
                                                 className="w-full rounded-none text-left"
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}

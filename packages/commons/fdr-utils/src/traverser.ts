@@ -42,6 +42,11 @@ function visitPage(
     } else {
         traverseState.next = page;
     }
+
+    if (SidebarNode.isEndpointPage(page) && page.stream != null) {
+        return visitPage(page.stream, currentNode, traverseState, sectionTitleBreadcrumbs);
+    }
+
     return traverseState;
 }
 
