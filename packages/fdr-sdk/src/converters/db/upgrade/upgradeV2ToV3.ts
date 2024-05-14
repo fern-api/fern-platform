@@ -1,6 +1,5 @@
-import lodash from "lodash";
+import { mapValues } from "lodash-es";
 import { DocsV1Db } from "../../../client";
-const { mapValues } = lodash;
 
 export function upgradeV2ToV3(v2: DocsV1Db.DocsDefinitionDb.V2): DocsV1Db.DocsDefinitionDb.V3 {
     return {
