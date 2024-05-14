@@ -4,18 +4,30 @@ description: Learn about how to enable analytics collection in Segment for a cus
 ---
 
 <Steps>
+
   ### Step 1: Navigate to Segment
+  
   Go to https://app.segment.com/buildwithfern/overview
+  
   ### Step 2: Connect Requested Analytics Destinations
+  
   Customers may request analytics in one or multiple destinations. You'll need to connect each one to the existing source (https://app.segment.com/buildwithfern/sources/build_with_fern/overview). Example destinations are Posthog, Google Analytics, and Hubspot
-  ### Step 2A: Configure Destinations
+  
+  ### Step 3: Configure Destinations
   Each destination may require some configuration. 
+  
   For Posthog:
+  
     Background: we collect our own analytics in Posthog based on all buildwithfern docs sites in addition to sending data to our customers' posthog instances. To enable this, we use Segment destination functions to route events to the customer's instance.
-    Step 0: Get the customer's Posthog write key and docs domain (eg hume.docs.buildwithfern.com)
+    
+    Step 0: Get the customer's Posthog write key and docs domain (eg https://dev.hume.ai/intro)
+    
     Step 1: Navigate to the 'Send Pageviews to Posthog' function (https://app.segment.com/buildwithfern/functions/catalog/ifnd_6642809e38542e19d398034e/edit/code)
+    
     Step 2: Add a new entry to DESTINATION_MAP with k:v of docs_domain:posthog_write_key. For example if I want to send events on 'blake.docs.buildwithfern.com' to the Posthog instance with writekey 'abcdefg', I add 'blake.docs.buildwithfern.com': 'abcdefg' to the DESTINATION_MAP
+    
     Step 3: Test! Use the built-in test function to grab sample events and run the updated function on them. You should get an 'Output: Success' message if everything goes smoothly. Try to test with at least 1 example from the new customer's site and 1 from a different docs site. 
+    
     Step 4: Save and Deploy. Once you deploy your changes will go live and the events should start populating in the customer's posthog instance.
 </Steps>
 
