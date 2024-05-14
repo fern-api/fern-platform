@@ -4,7 +4,7 @@ import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/l
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { compact } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
-import urljoin from "url-join";
+import { resolve } from "url";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
 import { FernTooltipProvider } from "../components/FernTooltip";
@@ -47,7 +47,7 @@ interface PlaygroundEndpointProps {
 
 function executeProxy(req: ProxyRequest, basePath: string = ""): Promise<PlaygroundResponse> {
     // const startTime = performance.now();
-    return fetch(urljoin(basePath, "/api/fern-docs/proxy/rest"), {
+    return fetch(resolve(basePath, "/api/fern-docs/proxy/rest"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -67,7 +67,7 @@ interface ResponseChunk {
 }
 
 function executeProxyStream(req: ProxyRequest, basePath: string = ""): Promise<[Response, Stream<ResponseChunk>]> {
-    return fetch(urljoin(basePath, "/api/fern-docs/proxy/stream"), {
+    return fetch(resolve(basePath, "/api/fern-docs/proxy/stream"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function executeProxyStream(req: ProxyRequest, basePath: string = ""): Promise<[
 // }
 
 async function executeFileDownload(req: ProxyRequest, basePath: string = ""): Promise<PlaygroundResponse> {
-    const r = await fetch(urljoin(basePath, "/api/fern-docs/proxy/file"), {
+    const r = await fetch(resolve(basePath, "/api/fern-docs/proxy/file"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -352,7 +352,7 @@ async function blobToDataURL(file: File, basePath: string = "") {
     // if blob is larger than 1MB, we will upload it to S3 and return the URL
     // TODO: we should probably measure that the _entire_ request is less than 4.5MB
     if (file.size > 1024 * 1024) {
-        const response = await fetch(urljoin(basePath, `/api/fern-docs/upload?file=${encodeURIComponent(file.name)}`), {
+        const response = await fetch(resolve(basePath, `/api/fern-docs/upload?file=${encodeURIComponent(file.name)}`), {
             method: "GET",
         });
 
@@ -369,7 +369,7 @@ async function blobToDataURL(file: File, basePath: string = "") {
 
     return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
-        reader.onloadend = () => urljoin(reader.result as string);
+        reader.onloadend = () => resolve(reader.result as string);
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
