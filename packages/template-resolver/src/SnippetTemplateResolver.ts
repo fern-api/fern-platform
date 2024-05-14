@@ -198,8 +198,8 @@ export class SnippetTemplateResolver {
                     return undefined;
                 }
 
-                const unionMap = maybeUnionValue as Map<string, unknown>;
-                const discriminatorValue = unionMap.get(discriminator) as string;
+                const unionMap = maybeUnionValue as { [key: string]: unknown };
+                const discriminatorValue = unionMap[discriminator] as string;
                 const selectedMemberTemplate = unionMembers[discriminatorValue];
                 const evaluatedMember: V1Snippet | undefined = selectedMemberTemplate
                     ? this.resolveV1Template(selectedMemberTemplate, payloadOverride)
