@@ -2,7 +2,7 @@ import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import { compact } from "lodash-es";
+import { compact, once } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
@@ -42,7 +42,20 @@ interface PlaygroundEndpointProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-const APP_BUILDWITHFERN_COM = "https://app.buildwithfern.com";
+const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
+
+const getAppBuildwithfernCom = once((): string => {
+    if (process.env.NODE_ENV === "development") {
+        return "http://localhost:3000";
+    }
+
+    // see: https://vercel.com/docs/projects/environment-variables/system-environment-variables#framework-environment-variables
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "development") {
+        return `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? APP_BUILDWITHFERN_COM}`;
+    }
+
+    return `https://${APP_BUILDWITHFERN_COM}`;
+});
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     endpoint,
@@ -57,11 +70,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
     const proxyEnvironment = urljoin(
-        proxyShouldUseAppBuildwithfernCom ? APP_BUILDWITHFERN_COM : basePath ?? "",
+        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath ?? "",
         "/api/fern-docs/proxy",
     );
     const uploadEnvironment = urljoin(
-        proxyShouldUseAppBuildwithfernCom ? APP_BUILDWITHFERN_COM : basePath ?? "",
+        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath ?? "",
         "/api/fern-docs/upload",
     );
 
