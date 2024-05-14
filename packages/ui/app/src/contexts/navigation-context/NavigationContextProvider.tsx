@@ -188,6 +188,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             if (!options.shallow) {
                 userIsScrolling = false;
                 userHasScrolled = false;
+                try {
+                    if (window.analytics) {
+                        window.analytics.page({ url: window.location.href, path: route });
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.error("Failed to send page view to Segment:", error);
+                }
             }
             navigateToPath(route);
             closeMobileSidebar();

@@ -28,6 +28,7 @@ import type {
 } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
+import { blobToDataURL } from "./utils/blobToDataURL";
 import { executeProxyFile } from "./utils/executeProxyFile";
 import { executeProxyRest } from "./utils/executeProxyRest";
 import { executeProxyStream } from "./utils/executeProxyStream";
@@ -59,6 +60,10 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
         proxyShouldUseAppBuildwithfernCom ? APP_BUILDWITHFERN_COM : basePath ?? "",
         "/api/fern-docs/proxy",
     );
+    const uploadEnvironment = urljoin(
+        proxyShouldUseAppBuildwithfernCom ? APP_BUILDWITHFERN_COM : basePath ?? "",
+        "/api/fern-docs/upload",
+    );
 
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
@@ -76,7 +81,12 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
                 headers: buildUnredactedHeaders(endpoint, formState),
-                body: await serializeFormStateBody(endpoint.requestBody?.shape, formState.body, basePath, domain),
+                body: await serializeFormStateBody(
+                    uploadEnvironment,
+                    endpoint.requestBody?.shape,
+                    formState.body,
+                    domain,
+                ),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
                 const [res, stream] = await executeProxyStream(proxyEnvironment, req);
@@ -134,7 +144,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 },
             });
         }
-    }, [basePath, domain, endpoint, formState, proxyEnvironment]);
+    }, [domain, endpoint, formState, proxyEnvironment, uploadEnvironment]);
 
     return (
         <FernTooltipProvider>
@@ -170,9 +180,9 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
 };
 
 async function serializeFormStateBody(
+    environment: string,
     shape: ResolvedHttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
-    basePath: string | undefined,
     domain: string,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
     if (shape == null || body == null) {
@@ -189,14 +199,14 @@ async function serializeFormStateBody(
                     case "file":
                         formDataValue[key] = {
                             type: "file",
-                            value: await serializeFile(value.value, basePath),
+                            value: await serializeFile(environment, value.value),
                         };
                         break;
                     case "fileArray":
                         formDataValue[key] = {
                             type: "fileArray",
                             value: (
-                                await Promise.all(value.value.map((value) => serializeFile(value, basePath)))
+                                await Promise.all(value.value.map((value) => serializeFile(environment, value)))
                             ).filter(isNonNullish),
                         };
                         break;
@@ -224,44 +234,13 @@ async function serializeFormStateBody(
             return { type: "form-data", value: formDataValue };
         }
         case "octet-stream":
-            return { type: "octet-stream", value: await serializeFile(body.value, basePath) };
+            return { type: "octet-stream", value: await serializeFile(environment, body.value) };
         default:
             assertNever(body);
     }
 }
 
-async function blobToDataURL(file: File, basePath: string = "") {
-    // vercel edge function has a maximum request size of 4.5MB, so we need to upload large files to S3
-    // if blob is larger than 1MB, we will upload it to S3 and return the URL
-    // TODO: we should probably measure that the _entire_ request is less than 4.5MB
-    if (file.size > 1024 * 1024) {
-        const response = await fetch(urljoin(basePath, `/api/fern-docs/upload?file=${encodeURIComponent(file.name)}`), {
-            method: "GET",
-        });
-
-        const { put, get } = (await response.json()) as { put: string; get: string };
-
-        await fetch(put, {
-            method: "PUT",
-            body: file,
-            headers: { "Content-Type": file.type },
-        });
-
-        return get;
-    }
-
-    return new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => urljoin(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
-async function serializeFile(
-    file: File | undefined,
-    basePath: string | undefined,
-): Promise<SerializableFile | undefined> {
+async function serializeFile(environment: string, file: File | undefined): Promise<SerializableFile | undefined> {
     if (file == null || !isFile(file)) {
         return undefined;
     }
@@ -270,7 +249,7 @@ async function serializeFile(
         lastModified: file.lastModified,
         size: file.size,
         type: file.type,
-        dataUrl: await blobToDataURL(file, basePath),
+        dataUrl: await blobToDataURL(environment, file),
     };
 }
 

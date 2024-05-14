@@ -5,6 +5,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
+import { renderSegmentSnippet } from "../../analytics/segment";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { getFontExtension } from "../../next-app/utils/getFontVariables";
@@ -135,7 +136,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-
+            <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(baseUrl.domain) }} />
             <CustomerAnalytics domain={baseUrl.domain} />
         </DocsContext.Provider>
     );
