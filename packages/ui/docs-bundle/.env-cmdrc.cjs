@@ -19,7 +19,7 @@ module.exports = {
         NEXT_PUBLIC_APPLICATION_ENVIRONMENT: process.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT,
         NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX: "search_index_prod",
         NEXT_PUBLIC_FONTAWESOME_CDN_HOST: process.env.FONTAWESOME_CDN_HOST,
-        NEXT_PUBLIC_SEGMENT_API_KEY: process.env.NEXT_PUBLIC_SEGMENT_API_KEY
+        NEXT_PUBLIC_SEGMENT_API_KEY: process.env.SEGMENT_API_KEY
     },
     "fern-preview": {
         NEXT_PUBLIC_FDR_ORIGIN: "http://localhost:3000"
