@@ -1,8 +1,7 @@
 import { DocsV1Write } from "@fern-api/fdr-sdk";
-import lodash from "lodash";
+import { uniqueId } from "lodash-es";
 import { inject } from "vitest";
 import { getAPIResponse, getClient } from "../util";
-const { uniqueId } = lodash;
 
 export const FONT_FILE_ID = uniqueId();
 export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
