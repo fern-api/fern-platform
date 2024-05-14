@@ -6,6 +6,7 @@ import {
     FlattenedApiDefinitionPackageItem,
     flattenApiDefinition,
 } from "./flattenApiDefinition";
+import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
 import { SidebarNodeRaw } from "./types";
 
 function resolveSidebarNodeRawApiSection(
@@ -19,16 +20,30 @@ function resolveSidebarNodeRawApiSection(
     const items = subpackage.items
         .map((item) =>
             FlattenedApiDefinitionPackageItem.visit<SidebarNodeRaw.ApiPageOrSubpackage | undefined>(item, {
-                endpoint: (endpoint) => ({
+                endpoint: (endpoint): SidebarNodeRaw.EndpointPage => ({
                     type: "page",
                     apiType: "endpoint",
                     api,
                     id: endpoint.id,
                     slug: endpoint.slug,
-                    title: endpoint.name != null ? endpoint.name : stringifyEndpointPathParts(endpoint.path.parts),
+                    title: endpoint.name,
                     description: endpoint.description,
                     method: endpoint.method,
-                    stream: endpoint.response?.type.type === "stream",
+                    stream:
+                        endpoint.stream != null
+                            ? {
+                                  type: "page",
+                                  apiType: "endpoint",
+                                  api,
+                                  id: endpoint.stream.id,
+                                  slug: endpoint.stream.slug,
+                                  title: endpoint.stream.name,
+                                  description: endpoint.stream.description,
+                                  method: endpoint.stream.method,
+                                  icon: undefined,
+                                  hidden: false,
+                              }
+                            : undefined,
                     icon: undefined,
                     hidden: false,
                 }),
@@ -118,10 +133,6 @@ function resolveSidebarNodeRawApiSection(
                 : undefined,
         flattenedApiDefinition: undefined, // only the top-level api section should have this
     };
-}
-
-function stringifyEndpointPathParts(path: APIV1Read.EndpointPathPart[]): string {
-    return "/" + path.map((part) => (part.type === "literal" ? part.value : `${part.value}`)).join("/");
 }
 
 export function resolveSidebarNodesRoot(

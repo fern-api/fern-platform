@@ -3,6 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { useAtomValue } from "jotai";
 import { isEqual, last, sortBy } from "lodash-es";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
@@ -14,6 +15,7 @@ import { Changelog } from "../util/dateUtils";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarSlugLink } from "./SidebarLink";
+import { FERN_STREAM_ATOM } from "./atom";
 
 export interface SidebarApiSectionProps {
     apiSection: SidebarNode.ApiSection;
@@ -180,12 +182,15 @@ interface SidebarApiSlugLinkProps {
 }
 
 function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }: SidebarApiSlugLinkProps) {
+    const isStream = useAtomValue(FERN_STREAM_ATOM);
     const { selectedSlug } = useCollapseSidebar();
     const { activeNavigatable } = useNavigationContext();
     const shallow =
         activeNavigatable != null && SidebarNode.isApiPage(activeNavigatable) && activeNavigatable.api === api;
 
-    const selected = isEqual(item.slug, selectedSlug);
+    const itemSlug = SidebarNode.isEndpointPage(item) && item.stream != null && isStream ? item.stream.slug : item.slug;
+
+    const selected = isEqual(itemSlug, selectedSlug);
 
     const httpMethodTags: Record<APIV1Read.HttpMethod, ReactElement> = {
         GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} size="sm" active={selected} />,
@@ -199,7 +204,7 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
             className={cn({
                 "first:mt-6": depth === 0,
             })}
-            slug={item.slug}
+            slug={itemSlug}
             shallow={shallow}
             title={item.title}
             registerScrolledToPathListener={registerScrolledToPathListener}
@@ -208,7 +213,7 @@ function SidebarApiSlugLink({ item, registerScrolledToPathListener, depth, api }
             rightElement={
                 SidebarNode.isApiPage(item) ? (
                     item.apiType === "endpoint" ? (
-                        item.stream ? (
+                        item.stream && isStream ? (
                             <HttpMethodTag method="STREAM" size="sm" active={selected} />
                         ) : (
                             httpMethodTags[item.method]

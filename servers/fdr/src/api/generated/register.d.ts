@@ -3,6 +3,7 @@
  */
 import express from "express";
 import { DiffService } from "./api/resources/diff/service/DiffService";
+import { DocsCacheService } from "./api/resources/docsCache/service/DocsCacheService";
 import { SnippetsFactoryService } from "./api/resources/snippetsFactory/service/SnippetsFactoryService";
 import { SnippetsService } from "./api/resources/snippets/service/SnippetsService";
 import { TemplatesService } from "./api/resources/templates/service/TemplatesService";
@@ -14,6 +15,7 @@ import { ReadService as docs_v2_read_RootService } from "./api/resources/docs/re
 import { WriteService as docs_v2_write_RootService } from "./api/resources/docs/resources/v2/resources/write/service/WriteService";
 export declare function register(expressApp: express.Express | express.Router, services: {
     diff: DiffService;
+    docsCache: DocsCacheService;
     snippetsFactory: SnippetsFactoryService;
     snippets: SnippetsService;
     templates: TemplatesService;

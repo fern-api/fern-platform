@@ -18,7 +18,6 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     apiSectionId: "",
     environments: [MOCK_ENV],
     method: "GET",
-    name: undefined,
     title: "",
     path: [{ type: "literal", value: "/api" }],
     pathParameters: [],
@@ -30,6 +29,7 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     examples: [],
     description: undefined,
     snippetTemplates: undefined,
+    stream: undefined,
 };
 
 const EMPTY_EXAMPLE = {

@@ -38,7 +38,6 @@ import {
     ResolvedWebSocketChannel,
     ResolvedWebhookDefinition,
     ResolvedWithApiDefinition,
-    stringifyResolvedEndpointPathParts,
 } from "./types";
 
 interface MergedAuthAndHeaders {
@@ -337,7 +336,6 @@ export class ApiDefinitionResolver {
 
         const toRet: ResolvedEndpointDefinition = {
             type: "endpoint",
-            name: endpoint.name,
             id: endpoint.id,
             slug: endpoint.slug,
             description,
@@ -348,7 +346,7 @@ export class ApiDefinitionResolver {
             environments: endpoint.environments,
             method: endpoint.method,
             examples: [],
-            title: endpoint.name != null ? endpoint.name : stringifyResolvedEndpointPathParts(path),
+            title: endpoint.name,
             defaultEnvironment: endpoint.defaultEnvironment,
             path,
             pathParameters,
@@ -358,6 +356,10 @@ export class ApiDefinitionResolver {
             responseBody,
             errors,
             snippetTemplates: endpoint.snippetTemplates,
+            stream:
+                endpoint.stream != null
+                    ? await this.resolveEndpointDefinition(apiPackageId, endpoint.stream)
+                    : undefined,
         };
 
         toRet.examples = await Promise.all(

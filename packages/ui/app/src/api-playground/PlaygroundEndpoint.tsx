@@ -185,7 +185,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
         try {
             capturePosthogEvent("api_playground_request_sent", {
                 endpointId: endpoint.id,
-                endpointName: endpoint.name,
+                endpointName: endpoint.title,
                 method: endpoint.method,
                 docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
             });
@@ -221,7 +221,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 if (res.type !== "stream") {
                     capturePosthogEvent("api_playground_request_received", {
                         endpointId: endpoint.id,
-                        endpointName: endpoint.name,
+                        endpointName: endpoint.title,
                         method: endpoint.method,
                         docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
                         response: {
@@ -245,7 +245,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
                 data: {
                     endpointId: endpoint.id,
-                    endpointName: endpoint.name,
+                    endpointName: endpoint.title,
                     method: endpoint.method,
                     route: `/${joinUrlSlugs(...endpoint.slug)}`,
                 },

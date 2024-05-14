@@ -152,7 +152,7 @@ export declare namespace SidebarNodeRaw {
         api: FdrAPI.ApiId;
         apiType: "endpoint";
         method: APIV1Read.HttpMethod;
-        stream?: boolean;
+        stream?: EndpointPage;
     }
 
     export interface ApiSummaryPage extends Page {
@@ -228,7 +228,7 @@ export declare namespace SidebarNode {
         api: FdrAPI.ApiId;
         apiType: "endpoint";
         method: APIV1Read.HttpMethod;
-        stream?: boolean;
+        stream?: EndpointPage;
     }
 
     export interface ApiSummaryPage extends Page {

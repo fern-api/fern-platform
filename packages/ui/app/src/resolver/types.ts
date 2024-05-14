@@ -104,6 +104,12 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
             if (item.type === "page") {
                 return [];
             }
+            if (item.type === "endpoint" && item.stream != null) {
+                return [
+                    { ...item, package: apiPackage },
+                    { ...item.stream, package: apiPackage },
+                ];
+            }
             return [{ ...item, package: apiPackage }];
         });
     }
@@ -221,7 +227,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     method: APIV1Read.HttpMethod;
-    name: string | undefined;
+    // name: string | undefined;
     title: string;
     path: ResolvedEndpointPathParts[];
     pathParameters: ResolvedObjectProperty[];
@@ -232,6 +238,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     errors: ResolvedError[];
     examples: ResolvedExampleEndpointCall[];
     snippetTemplates: APIV1Read.EndpointSnippetTemplates | undefined;
+    stream: ResolvedEndpointDefinition | undefined;
 }
 
 export interface ResolvedExampleEndpointCall {

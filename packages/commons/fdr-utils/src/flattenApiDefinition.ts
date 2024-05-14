@@ -1,5 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, titleCase } from "@fern-ui/core-utils";
+import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
 
 /**
  * Flattened API Definition lightly transforms the APIV1Read.ApiDefinition into a more usable format:
@@ -24,7 +25,7 @@ export interface FlattenedEndpointDefinition {
     type: "endpoint";
     id: string;
     slug: string[];
-    name: string | undefined;
+    name: string;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
     authed: boolean;
@@ -39,6 +40,9 @@ export interface FlattenedEndpointDefinition {
     errors: APIV1Read.ErrorDeclarationV2[];
     examples: APIV1Read.ExampleEndpointCall[];
     snippetTemplates: APIV1Read.EndpointSnippetTemplates | undefined;
+
+    // stream variant of the endpoint
+    stream: FlattenedEndpointDefinition | undefined;
 }
 
 export interface FlattenedWebSocketChannel {
@@ -193,12 +197,15 @@ function flattenPackage(
         };
     }
 
-    const endpoints = currentPackage.endpoints.map(
-        (endpoint): FlattenedEndpointDefinition => ({
+    const endpoints: FlattenedEndpointDefinition[] = [];
+    const methodAndPathToEndpoint = new Map<string, FlattenedEndpointDefinition>();
+
+    currentPackage.endpoints.forEach((endpoint) => {
+        const flattenedEndpoint: FlattenedEndpointDefinition = {
             type: "endpoint",
             id: endpoint.id,
             slug: [...parentSlugs, endpoint.urlSlug],
-            name: endpoint.name,
+            name: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
             description: endpoint.description,
             availability: endpoint.availability,
             authed: endpoint.authed,
@@ -215,8 +222,31 @@ function flattenPackage(
             errors: endpoint.errorsV2 ?? [],
             examples: endpoint.examples,
             snippetTemplates: endpoint.snippetTemplates,
-        }),
-    );
+            stream: undefined,
+        };
+        const methodAndPath = `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`;
+        const existingEndpoint = methodAndPathToEndpoint.get(methodAndPath);
+
+        if (existingEndpoint != null) {
+            if (existingEndpoint.stream == null && isStreamResponse(flattenedEndpoint.response)) {
+                existingEndpoint.stream = flattenedEndpoint;
+                flattenedEndpoint.name = nameWithStreamSuffix(existingEndpoint.name);
+                return;
+            } else if (isStreamResponse(existingEndpoint.response) && !isStreamResponse(flattenedEndpoint.response)) {
+                const idx = endpoints.indexOf(existingEndpoint);
+                if (idx !== -1) {
+                    flattenedEndpoint.stream = existingEndpoint;
+                    existingEndpoint.name = nameWithStreamSuffix(flattenedEndpoint.name);
+                    // replace the existing endpoint with the new one
+                    endpoints[idx] = flattenedEndpoint;
+                    return;
+                }
+            }
+        }
+
+        endpoints.push(flattenedEndpoint);
+        methodAndPathToEndpoint.set(methodAndPath, flattenedEndpoint);
+    });
 
     const websockets = currentPackage.websockets.map(
         (websocket): FlattenedWebSocketChannel => ({
@@ -385,4 +415,22 @@ function maybeMergeSubpackages(subpackages: FlattenedSubpackage[], domain: strin
         }
     }
     return subpackages;
+}
+function isStreamResponse(response: APIV1Read.HttpResponse | undefined) {
+    if (response == null) {
+        return false;
+    }
+    return visitDiscriminatedUnion(response.type, "type")._visit<boolean>({
+        object: () => false,
+        reference: () => false,
+        fileDownload: () => false,
+        streamingText: () => true,
+        stream: () => true,
+        streamCondition: () => true,
+        _other: () => false,
+    });
+}
+
+function nameWithStreamSuffix(name: string) {
+    return name.toLowerCase().includes("stream") ? name : `${name} Stream`;
 }

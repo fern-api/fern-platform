@@ -80,7 +80,15 @@ export function visitSidebarNodeRaw(
             }
             return true;
         },
-        page: () => true,
+        page: (page) => {
+            if (SidebarNodeRaw.isEndpointPage(page) && page.stream != null) {
+                const flag = visitSidebarNodeRaw(page.stream, visit, parentNodes);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
+        },
         root: (root) => {
             for (const item of root.items) {
                 if (item.type === "tabLink") {

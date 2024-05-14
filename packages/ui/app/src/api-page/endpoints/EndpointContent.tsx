@@ -3,21 +3,22 @@ import cn from "clsx";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { withStream } from "../../commons/HttpMethodTag";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useViewportSize } from "../../hooks/useViewportSize";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
-import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
+import { FERN_LANGUAGE_ATOM, FERN_STREAM_ATOM } from "../../sidebar/atom";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
+import { AnimatedTitle } from "./AnimatedTitle";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
+import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -31,7 +32,7 @@ export declare namespace EndpointContent {
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
-        setContainerRef: (ref: HTMLElement | null) => void;
+        containerRef: React.Ref<HTMLDivElement | null>;
         isInViewport: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -67,19 +68,26 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     api,
     showErrors,
-    endpoint,
+    endpoint: endpointProp,
     breadcrumbs,
     hideBottomSeparator = false,
-    setContainerRef,
+    containerRef,
     isInViewport: initiallyInViewport,
     types,
 }) => {
+    const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
+    const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
+
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    useImperativeHandle(containerRef, () => ref.current);
+
     const router = useRouter();
     const { layout } = useDocsContext();
     const layoutBreakpoint = useLayoutBreakpoint();
     const viewportSize = useViewportSize();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
-    const { ref: containerRef } = useInView({
+    const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
@@ -222,31 +230,51 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         <div
             className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
             onClick={() => setSelectedError(undefined)}
-            ref={containerRef}
+            ref={viewportRef}
         >
             <div
                 className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
-                ref={setContainerRef}
+                ref={ref}
                 data-route={`/${endpoint.slug.join("/")}`}
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    <div>
-                        {endpoint.responseBody?.shape.type === "stream" ? (
-                            withStream(<h1 className="my-0 inline leading-none">{endpoint.title}</h1>, "lg")
-                        ) : (
-                            <h1 className="my-0 inline leading-none">{endpoint.title}</h1>
-                        )}
-                        {endpoint.availability != null && (
-                            <span className="relative">
-                                <EndpointAvailabilityTag
-                                    className="absolute -top-1.5 left-2.5 inline-block"
-                                    availability={endpoint.availability}
-                                />
-                            </span>
-                        )}
+                    <div className="flex items-center">
+                        <div className="flex-1">
+                            <h1 className="my-0 inline leading-none">
+                                <AnimatedTitle>{endpoint.title}</AnimatedTitle>
+                            </h1>
+
+                            {endpointProp.stream != null && (
+                                <span className="inline-block ml-2 align-text-bottom">
+                                    <StreamingEnabledToggle
+                                        value={isStream}
+                                        setValue={(value) => {
+                                            setIsStream(value);
+                                            const endpoint =
+                                                value && endpointProp.stream != null
+                                                    ? endpointProp.stream
+                                                    : endpointProp;
+                                            void router.replace(`/${endpoint.slug.join("/")}`, undefined, {
+                                                shallow: true,
+                                            });
+                                            setTimeout(() => {
+                                                if (ref.current != null) {
+                                                    ref.current.scrollIntoView({ behavior: "instant" });
+                                                }
+                                            }, 0);
+                                        }}
+                                    />
+                                </span>
+                            )}
+                            {endpoint.availability != null && (
+                                <span className="inline-block ml-2 align-text-bottom">
+                                    <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
+                                </span>
+                            )}
+                        </div>
                     </div>
                     <EndpointUrlWithOverflow
                         path={endpoint.path}

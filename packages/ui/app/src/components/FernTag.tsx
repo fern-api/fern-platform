@@ -20,6 +20,7 @@ export const FernTagColorSchemes: { [key: string]: FernTagColorScheme } = {
 
 export interface FernTagProps extends PropsWithChildren {
     size?: FernTagSize;
+    rounded?: boolean;
     variant?: "subtle" | "solid";
     colorScheme?: FernTagColorScheme;
     className?: string;
@@ -30,6 +31,7 @@ export interface FernTagProps extends PropsWithChildren {
  */
 export const FernTag: FC<FernTagProps> = ({
     children,
+    rounded = false,
     size = "lg",
     variant = "subtle",
     colorScheme = "gray",
@@ -40,8 +42,11 @@ export const FernTag: FC<FernTagProps> = ({
             className={clsx(
                 "font-mono inline-flex justify-center items-center leading-none",
                 {
-                    "rounded-md h-[18px] text-[10px] px-1.5": size === "sm",
-                    "py-1 px-2 rounded-lg h-6 text-xs": size === "lg",
+                    "h-[18px] text-[10px] px-1.5": size === "sm",
+                    "py-1 px-2 h-6 text-xs": size === "lg",
+                    "rounded-md": size === "sm" && !rounded,
+                    "rounded-lg": size === "lg" && !rounded,
+                    "rounded-full": rounded,
                 },
                 {
                     // Gray
@@ -65,7 +70,7 @@ export const FernTag: FC<FernTagProps> = ({
                     "bg-red-a10 text-red-1": colorScheme === "red" && variant === "solid",
 
                     // Accent
-                    "bg-accent/10 text-accent-aaa": colorScheme === "accent" && variant === "subtle",
+                    "bg-accent/20 text-accent-aaa": colorScheme === "accent" && variant === "subtle",
                     "bg-accent t-accent-contrast": colorScheme === "accent" && variant === "solid",
                 },
                 className,

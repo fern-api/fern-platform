@@ -29,6 +29,8 @@ export interface DocsDefinitionCache {
     initialize(): Promise<void>;
 
     isInitialized(): boolean;
+
+    invalidateCache(url: URL): Promise<void>;
 }
 
 /**
@@ -79,6 +81,13 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             this.DOCS_WRITE_MONITOR[hostname] = monitor;
         }
         return monitor;
+    }
+
+    public async invalidateCache(url: URL): Promise<void> {
+        if (this.redisDocsCache) {
+            await this.redisDocsCache.delete({ url });
+        }
+        this.localDocsCache.delete({ url });
     }
 
     public async getDocsForUrl({
