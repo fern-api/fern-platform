@@ -7,11 +7,26 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60 * 5; // 5 minutes
 
 export default async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
-    try {
-        if (req.method !== "POST") {
-            return new NextResponse(null, { status: 405 });
-        }
+    if (req.method !== "POST" && req.method !== "OPTIONS") {
+        return new NextResponse(null, { status: 405 });
+    }
 
+    const origin = req.headers.get("Origin");
+    if (origin == null) {
+        return new NextResponse(null, { status: 400 });
+    }
+
+    const corsHeaders = {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Headers": "Content-Type",
+    };
+
+    if (req.method === "OPTIONS") {
+        return new NextResponse(null, { status: 204, headers: corsHeaders });
+    }
+
+    try {
         const proxyRequest = (await req.json()) as ProxyRequest;
         const requestBody = await buildRequestBody(proxyRequest.body);
         const headers = new Headers(proxyRequest.headers);
@@ -28,14 +43,19 @@ export default async function POST(req: NextRequest): Promise<NextResponse<null 
             body: requestBody,
         });
 
+        const responseHeaders = new Headers(response.headers);
+        Object.entries(corsHeaders).forEach(([key, value]) => {
+            responseHeaders.set(key, value);
+        });
+
         return new NextResponse(response.body, {
-            headers: response.headers,
+            headers: responseHeaders,
             status: response.status,
             statusText: response.statusText,
         });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return new NextResponse(null, { status: 500 });
+        return new NextResponse(null, { status: 500, headers: corsHeaders });
     }
 }

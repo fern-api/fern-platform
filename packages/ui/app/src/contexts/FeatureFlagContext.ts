@@ -10,6 +10,7 @@ export interface FeatureFlags {
     isHttpSnippetsEnabled: boolean;
     isInlineFeedbackEnabled: boolean;
     isDarkCodeEnabled: boolean;
+    proxyShouldUseAppBuildwithfernCom: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
@@ -22,6 +23,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isHttpSnippetsEnabled: false,
     isInlineFeedbackEnabled: false,
     isDarkCodeEnabled: false,
+    proxyShouldUseAppBuildwithfernCom: false,
 };
 
 export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);

@@ -8,6 +8,7 @@ import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
 import { FernTooltipProvider } from "../components/FernTooltip";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import {
     ResolvedEndpointDefinition,
@@ -18,17 +19,18 @@ import {
 import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import { Stream } from "./Stream";
 import type {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormStateBody,
     ProxyRequest,
-    ProxyResponse,
     SerializableFile,
     SerializableFormDataEntryValue,
 } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
+import { executeProxyFile } from "./utils/executeProxyFile";
+import { executeProxyRest } from "./utils/executeProxyRest";
+import { executeProxyStream } from "./utils/executeProxyStream";
 
 interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;
@@ -39,131 +41,7 @@ interface PlaygroundEndpointProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-// interface ProxyResponseWithMetadata {
-//     result: ProxyResponse;
-//     time: number;
-//     metadata: ProxyResponse.SerializableResponse;
-// }
-
-function executeProxy(req: ProxyRequest, basePath: string = ""): Promise<PlaygroundResponse> {
-    // const startTime = performance.now();
-    return fetch(urljoin(basePath, "/api/fern-docs/proxy/rest"), {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(req),
-        mode: "no-cors",
-    }).then(async (res): Promise<PlaygroundResponse> => {
-        // const proxyTime = performance.now() - startTime;
-        const proxyResponse = (await res.json()) as ProxyResponse;
-        return { type: "json", ...proxyResponse, contentType: res.headers.get("Content-Type") ?? "application/json" };
-    });
-}
-
-interface ResponseChunk {
-    data: string;
-    time: number;
-}
-
-function executeProxyStream(req: ProxyRequest, basePath: string = ""): Promise<[Response, Stream<ResponseChunk>]> {
-    return fetch(urljoin(basePath, "/api/fern-docs/proxy/stream"), {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(req),
-        mode: "no-cors",
-    }).then(async (response): Promise<[Response, Stream<ResponseChunk>]> => {
-        if (response.body == null) {
-            throw new Error("Response body is null");
-        }
-        const stream = new Stream<ResponseChunk>({
-            stream: response.body,
-            parse: async (i) => {
-                const d = i as { data: string; time: number };
-                return {
-                    data: d.data,
-                    time: d.time,
-                };
-            },
-            terminator: "\n",
-        });
-        return [response, stream];
-    });
-}
-
-// interface FileDownloadResponse {
-//     ok: boolean;
-//     status: number;
-//     statusText: string;
-//     src: string;
-//     contentType: string;
-//     size?: number;
-// }
-
-async function executeFileDownload(req: ProxyRequest, basePath: string = ""): Promise<PlaygroundResponse> {
-    const r = await fetch(urljoin(basePath, "/api/fern-docs/proxy/file"), {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(req),
-        mode: "no-cors",
-    });
-
-    const contentType = r.headers.get("Content-Type") ?? "application/octet-stream";
-
-    if (
-        contentType.startsWith("text/") ||
-        contentType.startsWith("application/json") ||
-        contentType.startsWith("application/javascript") ||
-        contentType.startsWith("application/xml")
-    ) {
-        let body = await r.text();
-        try {
-            body = JSON.parse(body);
-        } catch (e) {
-            // ignore
-        }
-        return {
-            type: "json",
-            time: 0,
-            size: null,
-            response: {
-                headers: Object.fromEntries(r.headers.entries()),
-                ok: r.ok,
-                redirected: r.redirected,
-                status: r.status,
-                statusText: r.statusText,
-                type: r.type,
-                url: r.url,
-                body,
-            },
-            contentType,
-        };
-    }
-
-    const body = await r.blob().then((blob) => URL.createObjectURL(blob));
-    const contentLength = r.headers.get("Content-Length");
-
-    return {
-        type: "file",
-        response: {
-            headers: Object.fromEntries(r.headers.entries()),
-            ok: r.ok,
-            redirected: r.redirected,
-            status: r.status,
-            statusText: r.statusText,
-            type: r.type,
-            url: r.url,
-            body,
-        },
-        time: 0,
-        size: contentLength ?? null,
-        contentType,
-    };
-}
+const APP_BUILDWITHFERN_COM = "https://app.buildwithfern.com";
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     endpoint,
@@ -174,8 +52,13 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     types,
 }): ReactElement => {
     const { basePath, domain } = useDocsContext();
+    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
-    // const [, startTransition] = useTransition();
+
+    const proxyEnvironment = urljoin(
+        proxyShouldUseAppBuildwithfernCom ? APP_BUILDWITHFERN_COM : basePath ?? "",
+        "/api/fern-docs/proxy",
+    );
 
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
@@ -196,7 +79,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 body: await serializeFormStateBody(endpoint.requestBody?.shape, formState.body, basePath, domain),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
-                const [res, stream] = await executeProxyStream(req, basePath);
+                const [res, stream] = await executeProxyStream(proxyEnvironment, req);
                 for await (const item of stream) {
                     setResponse((lastValue) =>
                         loaded({
@@ -213,10 +96,10 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     );
                 }
             } else if (endpoint.responseBody?.shape.type === "fileDownload") {
-                const res = await executeFileDownload(req, basePath);
+                const res = await executeProxyFile(proxyEnvironment, req);
                 setResponse(loaded(res));
             } else {
-                const res = await executeProxy(req, basePath);
+                const res = await executeProxyRest(proxyEnvironment, req);
                 setResponse(loaded(res));
                 if (res.type !== "stream") {
                     capturePosthogEvent("api_playground_request_received", {
@@ -251,7 +134,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 },
             });
         }
-    }, [basePath, domain, endpoint, formState]);
+    }, [basePath, domain, endpoint, formState, proxyEnvironment]);
 
     return (
         <FernTooltipProvider>

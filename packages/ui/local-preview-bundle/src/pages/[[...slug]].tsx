@@ -1,6 +1,7 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk";
 import { getNavigationRoot } from "@fern-ui/fdr-utils";
 import {
+    DEFAULT_FEATURE_FLAGS,
     DocsPage,
     DocsPageResult,
     FeatureFlags,
@@ -122,17 +123,7 @@ async function getDocsPageProps(
     );
 
     // TODO: get feature flags from the API
-    const featureFlags: FeatureFlags = {
-        isApiPlaygroundEnabled: false,
-        isApiScrollingDisabled: false,
-        isWhitelabeled: false,
-        isSeoDisabled: true,
-        isTocDefaultEnabled: false,
-        isSnippetTemplatesEnabled: false,
-        isHttpSnippetsEnabled: false,
-        isInlineFeedbackEnabled: false,
-        isDarkCodeEnabled: false,
-    };
+    const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
