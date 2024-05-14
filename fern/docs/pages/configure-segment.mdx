@@ -20,19 +20,19 @@ description: Learn about how to enable analytics collection in Segment for a cus
   For other destination types, simply add an instance of the destination type and follow the instructions in Segment to connect it to the customer's instance.
 
   ### Step 3: Configure Destinations
-  Each destination may require some configuration. 
+  Each destination may require some configuration:
   
   For Posthog:
   
     Background: we collect our own analytics in Posthog based on all buildwithfern docs sites in addition to sending data to our customers' Posthog instances. To enable this, we use Segment destination functions to route events to the customer's instance.
     
-    Step 0: Get the customer's Posthog write key and docs domain (eg https://dev.hume.ai/intro)
+    Substep 0: Get the customer's Posthog write key and docs domain (eg https://dev.hume.ai/intro)
     
-    Step 1: Navigate to the 'Send Pageviews to Posthog' function (https://app.segment.com/buildwithfern/functions/catalog/ifnd_6642809e38542e19d398034e/edit/code)
+    Substep 1: Navigate to the 'Send Pageviews to Posthog' function (https://app.segment.com/buildwithfern/functions/catalog/ifnd_6642809e38542e19d398034e/edit/code)
     
-    Step 2: Add a new entry to DESTINATION_MAP with k:v of docs_domain:posthog_write_key. For example if I want to send events on 'blake.docs.buildwithfern.com' to the Posthog instance with writekey 'abcdefg', I add 'blake.docs.buildwithfern.com': 'abcdefg' to the DESTINATION_MAP
+    Substep 2: Add a new entry to DESTINATION_MAP with k:v of docs_domain:posthog_write_key. For example if I want to send events on 'blake.docs.buildwithfern.com' to the Posthog instance with writekey 'abcdefg', I add 'blake.docs.buildwithfern.com': 'abcdefg' to the DESTINATION_MAP
     
-    Step 3: Test! Use the built-in test function to grab sample events and run the updated function on them. You should get an 'Output: Success' message if everything goes smoothly. Try to test with at least 1 example from the new customer's site and 1 from a different docs site. 
+    Substep 3: Test! Use the built-in test function to grab sample events and run the updated function on them. You should get an 'Output: Success' message if everything goes smoothly. Try to test with at least 1 example from the new customer's site and 1 from a different docs site. 
     
-    Step 4: Save and Deploy. Once you deploy your changes will go live and the events should start populating in the customer's Posthog instance.
+    Substep 4: Save and Deploy. Once you deploy your changes will go live and the events should start populating in the customer's Posthog instance.
 </Steps>
