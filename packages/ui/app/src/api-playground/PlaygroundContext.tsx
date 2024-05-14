@@ -3,7 +3,7 @@ import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
-import { resolve } from "url";
+import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -78,7 +78,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             let matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
                 const r = await fetch(
-                    resolve(
+                    urljoin(
                         basePath ?? "",
                         "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
                     ),
