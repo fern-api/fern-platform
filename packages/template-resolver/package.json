@@ -22,10 +22,10 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "^0.85.1-5824999e3",
-    "lodash": "^4.17.21"
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.194",
+    "@types/lodash-es": "^4.17.12",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",

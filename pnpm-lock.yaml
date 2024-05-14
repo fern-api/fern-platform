@@ -563,8 +563,8 @@ importers:
       js-base64:
         specifier: 3.7.7
         version: 3.7.7
-      lodash:
-        specifier: ^4.17.21-es
+      lodash-es:
+        specifier: ^4.17.21
         version: 4.17.21
       marked:
         specifier: ^5.1.0
@@ -597,9 +597,9 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs
-      '@types/lodash':
-        specifier: ^4.14.194
-        version: 4.17.1
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/marked':
         specifier: ^5.0.0
         version: 5.0.2
@@ -742,16 +742,16 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: ^0.85.1-5824999e3
         version: 0.85.1-7990009b5
-      lodash:
+      lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
       '@types/jest':
         specifier: ^29.0.3
         version: 29.5.12
-      '@types/lodash':
-        specifier: ^4.14.194
-        version: 4.17.1
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
@@ -1497,7 +1497,7 @@ importers:
       httpsnippet:
         specifier: ^2.0.0
         version: 2.0.0(mkdirp@3.0.1)
-      lodash:
+      lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
       marked:
@@ -1552,9 +1552,9 @@ importers:
       '@types/httpsnippet':
         specifier: ^1.23.1
         version: 1.23.4
-      '@types/lodash':
-        specifier: ^4.14.194
-        version: 4.17.1
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/marked':
         specifier: ^5.0.0
         version: 5.0.2

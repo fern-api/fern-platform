@@ -1,14 +1,12 @@
 import { visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
-import lodash from "lodash";
+import { kebabCase } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { DocsV1Db } from "../../api";
 import type { FdrApplication } from "../../app";
 import type { DocsVersion } from "../../types";
 import type { ConfigSegmentTuple, IndexSegment } from "../algolia";
-
-const { kebabCase } = lodash;
 
 const SECONDS_IN_ONE_HOUR = 60 * 60;
 
