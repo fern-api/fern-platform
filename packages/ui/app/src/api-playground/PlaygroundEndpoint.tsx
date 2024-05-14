@@ -51,6 +51,7 @@ const getAppBuildwithfernCom = once((): string => {
 
     // see: https://vercel.com/docs/projects/environment-variables/system-environment-variables#framework-environment-variables
     if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "development") {
+        // this mimics the behavior of hitting app.buildwithfern.com in a preview environment
         return `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? APP_BUILDWITHFERN_COM}`;
     }
 
