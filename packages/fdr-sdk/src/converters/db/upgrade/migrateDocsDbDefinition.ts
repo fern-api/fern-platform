@@ -4,8 +4,6 @@ import { upgradeV1ToV2 } from "./upgradeV1ToV2";
 import { upgradeV2ToV3 } from "./upgradeV2ToV3";
 const { isPlainObject } = lodash;
 
-const { isPlainObject } = lodash;
-
 export function migrateDocsDbDefinition(buffer: unknown): DocsV1Db.DocsDefinitionDb.V3 {
     if (!isPlainObject(buffer)) {
         throw new Error("Invalid buffer");
