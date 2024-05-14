@@ -3,7 +3,7 @@ const DOMAINS_TO_SKIP = ["privategpt.docs.buildwithfern.com"];
 
 export function renderSegmentSnippet(domain: string): string {
     const opts = {
-        apiKey: process.env.NEXT_PUBLIC_ANALYTICS_WRITE_KEY,
+        apiKey: process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY,
         page: true,
     };
     // Skip rendering the snippet for certain domains
