@@ -34,7 +34,7 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
         lightModeEnabled: true,
     },
     updatedTime: new Date(),
-    version: "v1",
+    version: "v2",
 };
 
 export async function checkRedis({ redis }: { redis: RedisDocsDefinitionStore }): Promise<boolean> {

@@ -1,6 +1,7 @@
+import { migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db, FdrAPI } from "../../api";
+import { DocsV1Db } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
@@ -16,7 +17,7 @@ export interface LoadDocsDefinitionByUrlResponse {
     domain: string;
     path: string;
     algoliaIndex: string | undefined;
-    docsDefinition: DocsV1Db.DocsDefinitionDb;
+    docsDefinition: DocsV1Db.DocsDefinitionDb.V3;
     indexSegmentIds: string[];
     docsConfigInstanceId: string | null;
     updatedTime: Date;
@@ -220,12 +221,4 @@ async function createOrUpdateDocsDefinition({
             authType,
         },
     });
-}
-
-function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefinitionDb {
-    return {
-        // default to v1, but this will be overwritten if dbValue has "type" defined
-        type: "v1",
-        ...(dbValue as object),
-    } as DocsV1Db.DocsDefinitionDb;
 }

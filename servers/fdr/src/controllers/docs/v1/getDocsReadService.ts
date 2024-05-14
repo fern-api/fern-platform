@@ -1,4 +1,9 @@
-import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
+import {
+    convertDbAPIDefinitionToRead,
+    convertDbDocsConfigToRead,
+    migrateDocsDbDefinition,
+    visitDbNavigationConfig,
+} from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
 import { mapValues } from "lodash-es";
 import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService, FdrAPI } from "../../../api";
@@ -25,7 +30,7 @@ export async function getDocsForDomain({
 }: {
     app: FdrApplication;
     domain: string;
-}): Promise<{ response: DocsV1Read.DocsDefinition; dbFiles?: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo> }> {
+}): Promise<{ response: DocsV1Read.DocsDefinition; dbFiles?: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2> }> {
     const [docs, docsV2] = await Promise.all([
         app.services.db.prisma.docs.findFirst({
             where: {
@@ -234,14 +239,6 @@ function getSearchInfoFromDocs({
             };
         },
     });
-}
-
-export function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefinitionDb {
-    return {
-        // default to v1, but this will be overwritten if dbValue has "type" defined
-        type: "v1",
-        ...(dbValue as object),
-    } as DocsV1Db.DocsDefinitionDb;
 }
 
 export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {
