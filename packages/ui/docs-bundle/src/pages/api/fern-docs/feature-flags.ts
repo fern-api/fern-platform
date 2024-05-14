@@ -4,17 +4,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-interface EdgeConfigResponse {
-    "api-playground-enabled": string[];
-    "api-scrolling-disabled": string[];
-    whitelabeled: string[];
-    "seo-disabled": string[];
-    "toc-default-enabled": string[]; // toc={true} in Steps, Tabs, and Accordions
-    "snippet-template-enabled": string[];
-    "http-snippets-enabled": string[];
-    "inline-feedback-enabled": string[];
-    "dark-code-enabled": string[];
-}
+const FEATURE_FLAGS = [
+    "api-playground-enabled" as const,
+    "api-scrolling-disabled" as const,
+    "whitelabeled" as const,
+    "seo-disabled" as const,
+    "toc-default-enabled" as const,
+    "snippet-template-enabled" as const,
+    "http-snippets-enabled" as const,
+    "inline-feedback-enabled" as const,
+    "dark-code-enabled" as const,
+    "proxy-uses-app-buildwithfern" as const,
+];
+
+type FeatureFlag = (typeof FEATURE_FLAGS)[number];
+
+type EdgeConfigResponse = Record<FeatureFlag, string[]>;
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
     const domain = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host") ?? req.nextUrl.host;
@@ -23,17 +28,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Fe
 
 export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
     try {
-        const config = await getAll<EdgeConfigResponse>([
-            "api-playground-enabled",
-            "api-scrolling-disabled",
-            "whitelabeled",
-            "seo-disabled",
-            "toc-default-enabled",
-            "snippet-template-enabled",
-            "http-snippets-enabled",
-            "inline-feedback-enabled",
-            "dark-code-enabled",
-        ]);
+        const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
 
         const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"]);
         const isApiScrollingDisabled = checkDomainMatchesCustomers(domain, config["api-scrolling-disabled"]);
@@ -44,6 +39,10 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"]);
         const isInlineFeedbackEnabled = checkDomainMatchesCustomers(domain, config["inline-feedback-enabled"]);
         const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"]);
+        const proxyShouldUseAppBuildwithfernCom = checkDomainMatchesCustomers(
+            domain,
+            config["proxy-uses-app-buildwithfern"],
+        );
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -55,6 +54,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isHttpSnippetsEnabled,
             isInlineFeedbackEnabled,
             isDarkCodeEnabled,
+            proxyShouldUseAppBuildwithfernCom,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -69,6 +69,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isHttpSnippetsEnabled: false,
             isInlineFeedbackEnabled: isFern(domain),
             isDarkCodeEnabled: false,
+            proxyShouldUseAppBuildwithfernCom: false,
         };
     }
 }

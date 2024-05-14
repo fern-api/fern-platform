@@ -109,8 +109,23 @@ export async function buildRequestBody(body: ProxyRequest.SerializableBody | und
 }
 
 export default async function POST(req: NextRequest): Promise<NextResponse<null | ProxyResponse>> {
-    if (req.method !== "POST") {
+    if (req.method !== "POST" && req.method !== "OPTIONS") {
         return new NextResponse(null, { status: 405 });
+    }
+
+    const origin = req.headers.get("Origin");
+    if (origin == null) {
+        return new NextResponse(null, { status: 400 });
+    }
+
+    const corsHeaders = {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Headers": "Content-Type",
+    };
+
+    if (req.method === "OPTIONS") {
+        return new NextResponse(null, { status: 204, headers: corsHeaders });
     }
 
     // eslint-disable-next-line no-console
@@ -169,11 +184,11 @@ export default async function POST(req: NextRequest): Promise<NextResponse<null 
                 time: endTime - startTime,
                 size: responseHeaders.get("Content-Length"),
             },
-            { status: 200 },
+            { status: 200, headers: corsHeaders },
         );
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return new NextResponse(null, { status: 500 });
+        return new NextResponse(null, { status: 500, headers: corsHeaders });
     }
 }
