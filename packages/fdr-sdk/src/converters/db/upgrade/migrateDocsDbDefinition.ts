@@ -2,6 +2,7 @@ import lodash from "lodash";
 import { DocsV1Db } from "../../../client";
 import { upgradeV1ToV2 } from "./upgradeV1ToV2";
 import { upgradeV2ToV3 } from "./upgradeV2ToV3";
+const { isPlainObject } = lodash;
 
 const { isPlainObject } = lodash;
 

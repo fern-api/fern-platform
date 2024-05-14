@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import { DocsV1Db } from "../../../client";
+const { mapValues } = lodash;
 
 const { mapValues } = lodash;
 
