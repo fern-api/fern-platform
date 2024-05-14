@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { isPlainObject } from "@fern-ui/core-utils";
 import { get } from "lodash-es";
 
 interface V1Snippet {
@@ -29,7 +30,7 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: FdrAPI.ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
@@ -77,7 +78,7 @@ export class SnippetTemplateResolver {
                         invocation: template.templateString.replace(
                             // TODO: fix the typescript generator to create literals not as types
                             TemplateSentinel,
-                            "",
+                            ""
                         ),
                     };
                 }
@@ -104,7 +105,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
                           ),
                       }
                     : undefined;
@@ -129,7 +130,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -159,7 +160,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -188,21 +189,25 @@ export class SnippetTemplateResolver {
                 }
 
                 const maybeUnionValue = this.getPayloadValue(template.templateInput, payloadOverride);
-                if (
-                    maybeUnionValue == null ||
-                    Array.isArray(maybeUnionValue) ||
-                    typeof maybeUnionValue !== "object" ||
-                    !(discriminator in maybeUnionValue)
-                ) {
+                if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
                     return undefined;
                 }
 
-                const unionMap = maybeUnionValue as Map<string, unknown>;
-                const discriminatorValue = unionMap.get(discriminator) as string;
+                const discriminatorValue = maybeUnionValue[discriminator];
+                if (typeof discriminatorValue !== "string") {
+                    return undefined;
+                }
+
                 const selectedMemberTemplate = unionMembers[discriminatorValue];
-                const evaluatedMember: V1Snippet | undefined = selectedMemberTemplate
-                    ? this.resolveV1Template(selectedMemberTemplate, payloadOverride)
-                    : undefined;
+
+                if (!selectedMemberTemplate) {
+                    return undefined;
+                }
+
+                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template(
+                    selectedMemberTemplate,
+                    payloadOverride
+                );
                 return evaluatedMember != null
                     ? {
                           imports: imports.concat(evaluatedMember.imports),

@@ -742,6 +742,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: ^0.85.1-5824999e3
         version: 0.85.1-7990009b5
+      '@fern-ui/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
