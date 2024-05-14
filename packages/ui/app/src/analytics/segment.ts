@@ -2,12 +2,13 @@ import * as snippet from "@segment/snippet";
 const DOMAINS_TO_SKIP = ["privategpt.docs.buildwithfern.com"];
 
 export function renderSegmentSnippet(domain: string): string {
+    const apiKey = process.env.NEXT_PUBLIC_SEGMENT_API_KEY?.trim();
     const opts = {
-        apiKey: process.env.NEXT_PUBLIC_SEGMENT_API_KEY,
+        apiKey,
         page: true,
     };
     // Skip rendering the snippet for certain domains
-    if (DOMAINS_TO_SKIP.includes(domain)) {
+    if (DOMAINS_TO_SKIP.includes(domain) || !opts.apiKey) {
         return "";
     }
     if (process.env.NODE_ENV === "development") {
