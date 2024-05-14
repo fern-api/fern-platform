@@ -1,9 +1,8 @@
 import { addHours, subHours } from "date-fns";
-import lodash from "lodash";
+import { uniqueId } from "lodash-es";
 import { createMockFdrApplication } from "../mock";
 import { prisma } from "./setupMockFdr";
 import { createMockDocs, createMockIndexSegment, getUniqueDocsForUrl } from "./util";
-const { uniqueId } = lodash;
 
 function getUniqueSegment(): string {
     return `seg_${Math.random()}`;

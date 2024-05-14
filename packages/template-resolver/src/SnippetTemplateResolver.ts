@@ -1,6 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import lodash from "lodash";
-const { get } = lodash;
+import { get } from "lodash-es";
 
 interface V1Snippet {
     imports: string[];
