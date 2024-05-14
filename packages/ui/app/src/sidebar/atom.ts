@@ -8,6 +8,7 @@ export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
 export const APIS = atom<Record<string, ResolvedRootPackage>>({});
 export const FERN_LANGUAGE_ATOM = atomWithStorage<string>("fern-language-id", "curl");
+export const FERN_STREAM_ATOM = atomWithStorage("fern-stream", true);
 
 export function useMessageHandler(): void {
     const openSearchDialog = useOpenSearchDialog();

@@ -64,9 +64,16 @@ async function serializeApiSectionDescriptionMdx(
 async function serializePageDescriptionMdx<
     R extends SidebarNode.Page,
     P extends SidebarNodeRaw.Page = SidebarNodeRaw.Page,
->({ description, ...page }: P, options?: FernSerializeMdxOptions): Promise<R> {
+>(page: P, options?: FernSerializeMdxOptions): Promise<R> {
+    if (SidebarNodeRaw.isEndpointPage(page) && page.stream != null) {
+        return {
+            ...page,
+            description: await maybeSerializeMdxContent(page.description, options),
+            stream: await serializePageDescriptionMdx(page.stream, options),
+        } as unknown as R;
+    }
     return {
         ...page,
-        description: await maybeSerializeMdxContent(description, options),
+        description: await maybeSerializeMdxContent(page.description, options),
     } as unknown as R;
 }
