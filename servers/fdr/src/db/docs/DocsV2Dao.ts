@@ -211,6 +211,7 @@ async function createOrUpdateDocsDefinition({
             algoliaIndex: null,
             isPreview,
             authType,
+            hasPublicS3Assets: authType === "PUBLIC",
         },
         update: {
             docsDefinition: bufferDocsDefinition,
@@ -219,6 +220,7 @@ async function createOrUpdateDocsDefinition({
             indexSegmentIds,
             isPreview,
             authType,
+            hasPublicS3Assets: authType === "PUBLIC",
         },
     });
 }
