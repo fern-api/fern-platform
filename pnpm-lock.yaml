@@ -743,7 +743,7 @@ importers:
         specifier: ^0.85.1-5824999e3
         version: 0.85.1-7990009b5
       '@fern-ui/core-utils':
-        specifier: workspace:dist
+        specifier: workspace:*
         version: link:../commons/core-utils
       lodash-es:
         specifier: ^4.17.21
@@ -774,8 +774,8 @@ importers:
         specifier: ^2.7.1
         version: 2.8.8
       typescript:
-        specifier: 4.6.4
-        version: 4.6.4
+        specifier: 5.4.3
+        version: 5.4.3
 
   packages/ui/app:
     dependencies:
@@ -22793,12 +22793,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - ts-node
-    dev: true
-
-  /typescript@4.6.4:
-    resolution: {integrity: sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typescript@4.9.5:
