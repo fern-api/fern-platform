@@ -108,7 +108,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
                         const presignedUrl = await this.app.services.s3.getPresignedDownloadUrl({
                             key: dbFileInfo.s3Key,
-                            isPublic: !cachedResponse.isPrivate,
+                            isPrivate: cachedResponse.isPrivate,
                         });
 
                         switch (dbFileInfo.type) {

@@ -33,7 +33,7 @@ export interface S3Service {
         isPrivate: boolean;
     }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>>;
 
-    getPresignedDownloadUrl({ key, isPublic }: { key: string; isPublic: boolean }): Promise<string>;
+    getPresignedDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
 }
 
 export class S3ServiceImpl implements S3Service {
@@ -61,23 +61,23 @@ export class S3ServiceImpl implements S3Service {
         });
     }
 
-    async getPresignedDownloadUrl({ key, isPublic }: { key: string; isPublic: boolean }): Promise<string> {
-        // public url
-        if (isPublic) {
-            return `https://${this.app.config.publicS3.bucketName}.s3.amazonaws.com/${key}`;
+    async getPresignedDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string> {
+        if (isPrivate) {
+            // presigned url for private
+            const cachedUrl = this.presignedDownloadUrlCache.get(key);
+            if (cachedUrl != null && typeof cachedUrl === "string") {
+                return cachedUrl;
+            }
+            const command = new GetObjectCommand({
+                Bucket: this.app.config.privateS3.bucketName,
+                Key: key,
+            });
+            const signedUrl = await getSignedUrl(this.privateS3, command, { expiresIn: 604800 });
+            this.presignedDownloadUrlCache.set(key, signedUrl);
+            return signedUrl;
         }
-        // presigned url for private
-        const cachedUrl = this.presignedDownloadUrlCache.get(key);
-        if (cachedUrl != null && typeof cachedUrl === "string") {
-            return cachedUrl;
-        }
-        const command = new GetObjectCommand({
-            Bucket: this.app.config.privateS3.bucketName,
-            Key: key,
-        });
-        const signedUrl = await getSignedUrl(this.privateS3, command, { expiresIn: 604800 });
-        this.presignedDownloadUrlCache.set(key, signedUrl);
-        return signedUrl;
+
+        return `https://${this.app.config.publicS3.bucketName}.s3.amazonaws.com/${key}`;
     }
 
     async getPresignedUploadUrls({

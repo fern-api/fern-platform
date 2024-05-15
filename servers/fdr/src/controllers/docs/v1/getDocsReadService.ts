@@ -127,7 +127,7 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
             async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
                 const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({
                     key: fileDbInfo.s3Key,
-                    isPublic: false,
+                    isPrivate: true, // for backcompat
                 });
                 const readFile: DocsV1Read.File_ =
                     fileDbInfo.type === "image"
@@ -148,7 +148,7 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
             async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
                 const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({
                     key: fileDbInfo.s3Key,
-                    isPublic: false,
+                    isPrivate: true, // for backcompat
                 });
                 return [fileId, { type: "url", url: s3DownloadUrl }];
             },
