@@ -269,9 +269,13 @@ export function resolveSidebarNodes(
                             : api.skipUrlSlug
                               ? parentSlugs
                               : [...parentSlugs, ...api.urlSlug.split("/")];
+                    const definitionChildSlug =
+                        api.fullSlug != null
+                            ? [...fixedSlugs, ...api.fullSlug]
+                            : [...parentSlugs, ...api.urlSlug.split("/")];
                     const flattened = flattenApiDefinition(
                         definition,
-                        definitionSlug,
+                        definitionChildSlug,
                         api.navigation,
                         domain,
                         api.flattened,
@@ -305,7 +309,7 @@ export function resolveSidebarNodes(
                                       slug:
                                           api.changelog.fullSlug != null
                                               ? [...fixedSlugs, ...api.changelog.fullSlug]
-                                              : [...definitionSlug, ...api.changelog.urlSlug.split("/")],
+                                              : [...definitionChildSlug, ...api.changelog.urlSlug.split("/")],
                                       items: api.changelog.items.map((item) => ({
                                           date: item.date,
                                           pageId: item.pageId,
@@ -339,6 +343,10 @@ export function resolveSidebarNodes(
                 const sectionSlug =
                     section.fullSlug != null
                         ? [...fixedSlugs, ...section.fullSlug]
+                        : [...parentSlugs, ...section.urlSlug.split("/")];
+                const sectionChildSlug =
+                    section.fullSlug != null
+                        ? [...fixedSlugs, ...section.fullSlug]
                         : section.skipUrlSlug
                           ? parentSlugs
                           : [...parentSlugs, ...section.urlSlug.split("/")];
@@ -347,7 +355,7 @@ export function resolveSidebarNodes(
                     title: section.title,
                     slug: sectionSlug,
                     // if section.fullSlug is defined, the child slugs will be built from that, rather than from inherited parentSlugs
-                    items: resolveSidebarNodes(section.items, apis, pages, sectionSlug, fixedSlugs, domain),
+                    items: resolveSidebarNodes(section.items, apis, pages, sectionChildSlug, fixedSlugs, domain),
                     icon: section.icon,
                     hidden: section.hidden ?? false,
                 };
