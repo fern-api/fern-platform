@@ -125,7 +125,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                         {property.key}
                     </span>
                 </div>
-                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
+                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse, "t-muted")}
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
