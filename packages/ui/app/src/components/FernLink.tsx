@@ -49,17 +49,17 @@ function FernExternalLink({ showExternalLinkIcon, url, ...props }: FernExternalL
 
     // if the link is to a different domain, always open in a new tab
     // TODO: if the link is to the same domain, we should check if the page is a fern page, and if so, use the Link component to leverage client-side navigation
-    const isSameDomain = host === url.host;
+    const isSameSite = host === url.host;
     return (
         // eslint-disable-next-line react/jsx-no-target-blank
         <a
             {...props}
-            target={isSameDomain ? props.target : "_blank"}
-            rel={isSameDomain && props.target !== "_blank" ? props.rel : "noreferrer"}
+            target={isSameSite ? props.target : "_blank"}
+            rel={isSameSite && props.target !== "_blank" ? props.rel : "noreferrer"}
             href={formatUrlString(url)}
         >
             {props.children}
-            {!isSameDomain && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
+            {!isSameSite && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
         </a>
     );
 }
