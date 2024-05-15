@@ -36,7 +36,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                         <Accordion.Trigger
                             className={cn(
                                 "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background group-data-[state=closed]:rounded-[inherit] transition-[border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]",
-                                "sticky top-0 z-auto backdrop-blur",
+                                "sticky top-0 z-10 backdrop-blur",
                                 {
                                     "data-[state=open]:bg-tag-success":
                                         message.origin === APIV1Read.WebSocketMessageOrigin.Client,
