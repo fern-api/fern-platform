@@ -1,14 +1,23 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { ReactElement, type ComponentProps } from "react";
+import { ReactElement, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
 }
 
-export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps): ReactElement {
+export function FernLink({ showExternalLinkIcon = false, ...props }: FernLinkProps): ReactElement {
+    const { domain } = useDocsContext();
+    const [host, setHost] = useState<string>(domain);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setHost(window.location.host);
+        }
+    }, []);
+
     const url = toUrlObject(props.href);
     const isExternalUrl = checkIsExternalUrl(url);
 
@@ -19,18 +28,38 @@ export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps): Rea
         return <FernRelativeLink {...props} />;
     }
 
-    return (
-        <Link {...props} target={isExternalUrl ? "_blank" : props.target}>
-            {props.children}
-            {isExternalUrl && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
-        </Link>
-    );
+    if (isExternalUrl || checkIsHardLink(url, host)) {
+        return (
+            <FernExternalLink
+                {...props}
+                isExternalUrl={isExternalUrl}
+                showExternalLinkIcon={showExternalLinkIcon}
+                href={formatUrlString(url)}
+            />
+        );
+    }
+
+    return <Link {...props} />;
 }
 
 function FernRelativeLink(props: ComponentProps<typeof Link>) {
     const { selectedSlug } = useNavigationContext();
     const href = resolveRelativeUrl(`/${selectedSlug}`, formatUrlString(props.href));
     return <Link {...props} href={href} />;
+}
+
+interface FernExternalLinkProps extends ComponentProps<"a"> {
+    isExternalUrl: boolean;
+    showExternalLinkIcon: boolean;
+}
+
+function FernExternalLink({ isExternalUrl, showExternalLinkIcon, ...props }: FernExternalLinkProps) {
+    return (
+        <a {...props} target={isExternalUrl ? "_blank" : props.target} rel={isExternalUrl ? "noreferrer" : props.rel}>
+            {props.children}
+            {isExternalUrl && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
+        </a>
+    );
 }
 
 export function toUrlObject(url: string | UrlObject): UrlObject {
@@ -60,11 +89,11 @@ export function checkIsExternalUrl(url: UrlObject): boolean {
     return url.protocol != null && url.host != null;
 }
 
-export function checkIsRelativeUrl(url: UrlObject): boolean {
-    if (checkIsExternalUrl(url)) {
-        return false;
-    }
+export function checkIsHardLink(url: UrlObject, host: string): boolean {
+    return url.host !== host;
+}
 
+export function checkIsRelativeUrl(url: UrlObject): boolean {
     if (url.href == null) {
         return true;
     }
