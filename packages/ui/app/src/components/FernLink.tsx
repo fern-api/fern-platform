@@ -10,14 +10,6 @@ interface FernLinkProps extends ComponentProps<typeof Link> {
 }
 
 export function FernLink({ showExternalLinkIcon = false, ...props }: FernLinkProps): ReactElement {
-    const { domain } = useDocsContext();
-    const [host, setHost] = useState<string>(domain);
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            setHost(window.location.host);
-        }
-    }, []);
-
     const url = toUrlObject(props.href);
     const isExternalUrl = checkIsExternalUrl(url);
 
@@ -28,15 +20,8 @@ export function FernLink({ showExternalLinkIcon = false, ...props }: FernLinkPro
         return <FernRelativeLink {...props} />;
     }
 
-    if (isExternalUrl || checkIsHardLink(url, host)) {
-        return (
-            <FernExternalLink
-                {...props}
-                isExternalUrl={isExternalUrl}
-                showExternalLinkIcon={showExternalLinkIcon}
-                href={formatUrlString(url)}
-            />
-        );
+    if (isExternalUrl) {
+        return <FernExternalLink {...props} showExternalLinkIcon={showExternalLinkIcon} url={url} />;
     }
 
     return <Link {...props} />;
@@ -48,16 +33,30 @@ function FernRelativeLink(props: ComponentProps<typeof Link>) {
     return <Link {...props} href={href} />;
 }
 
-interface FernExternalLinkProps extends ComponentProps<"a"> {
-    isExternalUrl: boolean;
+interface FernExternalLinkProps extends Omit<ComponentProps<"a">, "href"> {
     showExternalLinkIcon: boolean;
+    url: UrlObject;
 }
 
-function FernExternalLink({ isExternalUrl, showExternalLinkIcon, ...props }: FernExternalLinkProps) {
+function FernExternalLink({ showExternalLinkIcon, url, ...props }: FernExternalLinkProps) {
+    const { domain } = useDocsContext();
+    const [host, setHost] = useState<string>(domain);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setHost(window.location.host);
+        }
+    }, []);
+    const isSameDomain = host === url.host;
     return (
-        <a {...props} target={isExternalUrl ? "_blank" : props.target} rel={isExternalUrl ? "noreferrer" : props.rel}>
+        // eslint-disable-next-line react/jsx-no-target-blank
+        <a
+            {...props}
+            target={isSameDomain ? props.target : "_blank"}
+            rel={isSameDomain && props.target !== "_blank" ? props.rel : "noreferrer"}
+            href={formatUrlString(url)}
+        >
             {props.children}
-            {isExternalUrl && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
+            {!isSameDomain && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
         </a>
     );
 }
@@ -87,10 +86,6 @@ export function resolveRelativeUrl(pathName: string, href: string): string {
 
 export function checkIsExternalUrl(url: UrlObject): boolean {
     return url.protocol != null && url.host != null;
-}
-
-export function checkIsHardLink(url: UrlObject, host: string): boolean {
-    return url.host !== host;
 }
 
 export function checkIsRelativeUrl(url: UrlObject): boolean {
