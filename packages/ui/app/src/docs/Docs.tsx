@@ -102,9 +102,8 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             docsMainContent
                         )}
                     </main>
+                    <BuiltWithFern />
                 </div>
-
-                <BuiltWithFern />
 
                 {/* Enables footer DOM injection */}
                 <footer id="fern-footer" />
