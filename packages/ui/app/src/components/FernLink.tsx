@@ -54,8 +54,16 @@ function FernExternalLink({ showExternalLinkIcon, url, ...props }: FernExternalL
         // eslint-disable-next-line react/jsx-no-target-blank
         <a
             {...props}
-            target={isSameSite ? props.target : "_blank"}
-            rel={isSameSite && props.target !== "_blank" ? props.rel : "noreferrer"}
+            target={isSameSite || props.target != null ? props.target : "_blank"}
+            rel={
+                isSameSite && props.target !== "_blank"
+                    ? props.rel
+                    : props.rel == null
+                      ? "noreferrer"
+                      : props.rel.includes("noreferrer")
+                        ? props.rel
+                        : `${props.rel} noreferrer`
+            }
             href={formatUrlString(url)}
         >
             {props.children}
