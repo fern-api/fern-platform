@@ -70,6 +70,7 @@ export async function getDocsForDomain({
                           domain: docsV2.domain,
                           updatedTime: docsV2.updatedTime,
                           authType: docsV2.authType,
+                          hasPublicS3Assets: docsV2.hasPublicS3Assets,
                       }
                     : null,
         }),
