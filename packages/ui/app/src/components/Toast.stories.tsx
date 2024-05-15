@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { toast } from "./FernToast";
-import { FernButton } from "./FernButton";
 
 const meta: Meta<typeof toast> = {
     title: "General/toast",
@@ -11,39 +10,25 @@ type Story = StoryObj<typeof toast>;
 
 export const Default: Story = {
     render: () => {
-        return (
-            <FernButton variant="outlined" intent="none" onClick={() => toast("This is a toast message!")}>
-                Create toast
-            </FernButton>
-        );
+        return <div onClick={() => toast("This is a toast message!")}>Create toast</div>;
     },
 };
 
 export const SuccessToast: Story = {
     render: () => {
-        return (
-            <FernButton variant="outlined" intent="success" onClick={() => toast.success("This is a success toast!")}>
-                Create success toast
-            </FernButton>
-        );
+        return <div onClick={() => toast.success("This is a success toast!")}>Create success toast</div>;
     },
 };
 
 export const ErrorToast: Story = {
     render: () => {
-        return (
-            <FernButton variant="outlined" intent="danger" onClick={() => toast.error("This is an error toast!")}>
-                Create error toast
-            </FernButton>
-        );
+        return <div onClick={() => toast.error("This is an error toast!")}>Create error toast</div>;
     },
 };
 
 export const PromiseToast: Story = {
     render: () => (
-        <FernButton
-            variant="outlined"
-            intent="none"
+        <div
             onClick={() =>
                 toast.promise(
                     new Promise((resolve) => {
@@ -58,18 +43,16 @@ export const PromiseToast: Story = {
             }
         >
             Create promise toast
-        </FernButton>
+        </div>
     ),
 };
 
 export const WithDescription: Story = {
     render: () => (
-        <FernButton
-            variant="outlined"
-            intent="none"
+        <div
             onClick={() => toast("This is a toast message!", { description: "And a little description to accompany" })}
         >
             Create promise toast
-        </FernButton>
+        </div>
     ),
 };
