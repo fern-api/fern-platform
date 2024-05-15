@@ -44,6 +44,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                         </h2>
                                     }
                                     <MdxContent mdx={item.markdown} />
+                                    <span className="t-muted text-base">{item.dateString}</span>
                                 </div>
                             </div>
                             <div className="-mt-2 w-72">
