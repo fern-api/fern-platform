@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import clsx from "clsx";
 import { ReactNode } from "react";
 import {
     ResolvedTypeDefinition,
@@ -19,11 +20,12 @@ export function renderTypeShorthandRoot(
     shape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
     isResponse: boolean = false,
+    className?: string,
 ): ReactNode {
     const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     const unaliasedShape = unwrapAlias(shape, types);
     return (
-        <span className="text-inherit inline-flex items-baseline gap-2 text-xs">
+        <span className={clsx("text-inherit inline-flex items-baseline gap-2 text-xs", className)}>
             <span>{typeShorthand}</span>
             {unaliasedShape.type === "optional" ? (
                 <span>{isResponse ? "Optional" : "Optional"}</span>
