@@ -104,6 +104,10 @@ export function checkIsRelativeUrl(url: UrlObject): boolean {
         return true;
     }
 
+    if (url.protocol) {
+        return false;
+    }
+
     if (url.href.startsWith("/")) {
         return false;
     }
