@@ -53,16 +53,16 @@ export function getConfig(): FdrConfig {
     return {
         venusUrl: getEnvironmentVariableOrThrow(VENUS_URL_ENV_VAR),
         awsAccessKey: getEnvironmentVariableOrThrow(AWS_ACCESS_KEY_ENV_VAR),
-        awsSecretKey: getEnvironmentVariableOrThrow(PUBLIC_S3_URL_OVERRIDE_ENV_VAR),
+        awsSecretKey: getEnvironmentVariableOrThrow(AWS_SECRET_KEY_ENV_VAR),
         publicS3: {
             bucketName: getEnvironmentVariableOrThrow(PUBLIC_S3_BUCKET_NAME_ENV_VAR),
             bucketRegion: getEnvironmentVariableOrThrow(PUBLIC_S3_BUCKET_REGION_ENV_VAR),
-            urlOverride: process.env.PUBLIC_S3_URL_OVERRIDE_ENV_VAR,
+            urlOverride: process.env[PUBLIC_S3_URL_OVERRIDE_ENV_VAR],
         },
         privateS3: {
             bucketName: getEnvironmentVariableOrThrow(PRIVATE_S3_BUCKET_NAME_ENV_VAR),
             bucketRegion: getEnvironmentVariableOrThrow(PRIVATE_S3_BUCKET_REGION_ENV_VAR),
-            urlOverride: process.env.PRIVATE_S3_URL_OVERRIDE_ENV_VAR,
+            urlOverride: process.env[PRIVATE_S3_URL_OVERRIDE_ENV_VAR],
         },
         domainSuffix: getEnvironmentVariableOrThrow(DOMAIN_SUFFIX_ENV_VAR),
         algoliaAppId: getEnvironmentVariableOrThrow(ALGOLIA_APP_ID_ENV_VAR),
