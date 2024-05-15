@@ -3,7 +3,6 @@ import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
-import { Changelog } from "../util/dateUtils";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     return (
@@ -28,30 +27,33 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         )}
                     </section>
 
-                    {resolvedPath.items.map((item) => (
-                        <section key={item.date} id={item.date} className="flex items-start">
-                            <div className="prose relative mr-8 w-content-width flex-1 dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 first:prose-h2:mt-0">
-                                <div className="absolute -right-4 flex h-full w-[10px] items-start justify-center">
-                                    <div className="bg-accent z-10 size-2 rounded-full" />
-                                    <div className="z-5 absolute h-full w-0.5 bg-border-default" />
+                    {resolvedPath.items
+                        .sort(
+                            (initial, previous) => new Date(previous.date).getTime() - new Date(initial.date).getTime(),
+                        )
+                        .map((item) => (
+                            <section key={item.date} id={item.date} className="flex items-start">
+                                <div className="prose relative mr-8 w-content-width flex-1 dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 first:prose-h2:mt-0">
+                                    <div className="absolute -right-4 flex h-full w-[10px] items-start justify-center">
+                                        <div className="bg-accent z-10 size-2 rounded-full" />
+                                        <div className="z-5 absolute h-full w-0.5 bg-border-default" />
+                                    </div>
+                                    <div className="pb-16">
+                                        {
+                                            <h2>
+                                                {(typeof item.markdown !== "string"
+                                                    ? item.markdown.frontmatter.title
+                                                    : undefined) ?? item.dateString}
+                                            </h2>
+                                        }
+                                        <MdxContent mdx={item.markdown} />
+                                    </div>
                                 </div>
-                                <div className="pb-16">
-                                    {
-                                        <h2>
-                                            {(typeof item.markdown !== "string"
-                                                ? item.markdown.frontmatter.title
-                                                : undefined) ?? item.dateString}
-                                        </h2>
-                                    }
-                                    <MdxContent mdx={item.markdown} />
+                                <div className="-mt-2 w-72">
                                     <span className="t-muted text-base">{item.dateString}</span>
                                 </div>
-                            </div>
-                            <div className="-mt-2 w-72">
-                                <span className="t-muted text-base">{Changelog.toShortDateString(item.date)}</span>
-                            </div>
-                        </section>
-                    ))}
+                            </section>
+                        ))}
 
                     <div className="max-w-content-width">
                         <BottomNavigationButtons />
