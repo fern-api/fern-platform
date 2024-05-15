@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "^0.85.1-5824999e3",
-    "@fern-ui/core-utils": "workspace:*",
+    "@fern-ui/core-utils": "workspace:dist",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
