@@ -25,7 +25,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     }
 
     return (
-        <div className="absolute bottom-0 left-1/2 z-50 my-8 flex w-fit -translate-x-1/2 justify-center">
+        <div className="mx-auto my-8 flex w-fit -translate-x-1/2 justify-center">
             <FernTooltipProvider>
                 <FernTooltip content={BUILT_WITH_FERN_TOOLTIP_CONTENT} side="top">
                     <span>
