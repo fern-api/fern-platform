@@ -1,6 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { isPlainObject } from "@fern-ui/core-utils";
-import { get } from "lodash-es";
+import { get, isPlainObject } from "lodash-es";
 
 interface V1Snippet {
     imports: string[];
