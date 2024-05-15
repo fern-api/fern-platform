@@ -1,7 +1,7 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import archiver from "archiver";
 import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
-import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { Bucket, BucketAccessControl, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
 import * as fs from "fs";
@@ -17,7 +17,7 @@ export class DocsFeStack extends Stack {
             removalPolicy: RemovalPolicy.RETAIN,
             cors: [
                 {
-                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+                    allowedMethods: [HttpMethods.GET],
                     allowedOrigins: ["*"],
                     allowedHeaders: ["*"],
                 },
@@ -30,6 +30,7 @@ export class DocsFeStack extends Stack {
                 ignorePublicAcls: false,
                 restrictPublicBuckets: false,
             },
+            accessControl: BucketAccessControl.PUBLIC_READ,
         });
 
         validateFolderIsNextJsBuildFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR);
