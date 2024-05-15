@@ -17,5 +17,6 @@
     // This improves issue grouping in Sentry.
     "sourceRoot": "/"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [{ "path": "../../packages/fdr-sdk" }, { "path": "../../packages/template-resolver" }]
 }

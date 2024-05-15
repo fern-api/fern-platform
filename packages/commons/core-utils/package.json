@@ -11,9 +11,10 @@
     "dist"
   ],
   "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "module": "dist/src/index.js",
   "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
