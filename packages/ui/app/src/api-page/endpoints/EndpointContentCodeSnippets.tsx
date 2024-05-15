@@ -6,6 +6,7 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { FernScrollArea } from "../../components/FernScrollArea";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -222,26 +223,30 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     filename: () => <AudioExample title={errorSelector} />,
                     stream: (value) => (
                         <TitledExample title={errorSelector}>
-                            <WebSocketMessages
-                                messages={value.value.map((event) => ({
-                                    type: undefined,
-                                    origin: undefined,
-                                    displayName: undefined,
-                                    data: event,
-                                }))}
-                            />
+                            <FernScrollArea className="rounded-b-[inherit]">
+                                <WebSocketMessages
+                                    messages={value.value.map((event) => ({
+                                        type: undefined,
+                                        origin: undefined,
+                                        displayName: undefined,
+                                        data: event,
+                                    }))}
+                                />
+                            </FernScrollArea>
                         </TitledExample>
                     ),
                     sse: (value) => (
                         <TitledExample title={errorSelector}>
-                            <WebSocketMessages
-                                messages={value.value.map(({ event, data }) => ({
-                                    type: event,
-                                    origin: undefined,
-                                    displayName: undefined,
-                                    data,
-                                }))}
-                            />
+                            <FernScrollArea className="rounded-b-[inherit]">
+                                <WebSocketMessages
+                                    messages={value.value.map(({ event, data }) => ({
+                                        type: event,
+                                        origin: undefined,
+                                        displayName: undefined,
+                                        data,
+                                    }))}
+                                />
+                            </FernScrollArea>
                         </TitledExample>
                     ),
                     _other: () => (
