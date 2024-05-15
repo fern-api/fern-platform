@@ -1,4 +1,4 @@
-const baseConfig = require("../tailwind.config.js");
+const baseConfig = require("../tailwind/tailwind.config.js");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,6 +8,6 @@ module.exports = {
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
         "../app/src/**/*.{ts,tsx}",
-        "../tailwind.config.js",
+        "../tailwind/tailwind.config.js",
     ],
 };
