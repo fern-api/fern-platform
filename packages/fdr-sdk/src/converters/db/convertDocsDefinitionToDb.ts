@@ -94,7 +94,8 @@ export function convertDocsDefinitionToDb({
                 writeShape.config.colorsV3 != null
                     ? transformColorsV3ForDb({ writeShape: writeShape.config.colorsV3, docsConfig: writeShape.config })
                     : undefined,
-            navbarLinks: writeShape.config.navbarLinks ?? [],
+            navbarLinks: writeShape.config.navbarLinks,
+            footerLinks: writeShape.config.footerLinks,
             title: writeShape.config.title,
             favicon: writeShape.config.favicon,
             backgroundImage: writeShape.config.backgroundImage,
@@ -103,6 +104,9 @@ export function convertDocsDefinitionToDb({
             layout: writeShape.config.layout,
             css: writeShape.config.css,
             js: writeShape.config.js,
+            metadata: writeShape.config.metadata,
+            redirects: writeShape.config.redirects,
+            integrations: writeShape.config.integrations,
         },
         pages: writeShape.pages,
     };

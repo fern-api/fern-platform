@@ -51,6 +51,7 @@ model DocsV2 {
   indexSegmentIds      Json?
   docsConfigInstanceId String?
   isPreview            Boolean  @default(false)
+  hasPublicS3Assets    Boolean  @default(false)
 
   @@id([domain, path])
 }

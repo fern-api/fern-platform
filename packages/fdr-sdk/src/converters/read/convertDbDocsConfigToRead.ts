@@ -19,7 +19,8 @@ export function convertDbDocsConfigToRead({
         colors: dbShape.colors,
         colorsV2: dbShape.colorsV2,
         colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
-        navbarLinks: dbShape.navbarLinks ?? [],
+        navbarLinks: dbShape.navbarLinks,
+        footerLinks: dbShape.footerLinks,
         title: dbShape.title,
         favicon: dbShape.favicon,
         backgroundImage: dbShape.backgroundImage,
@@ -28,6 +29,9 @@ export function convertDbDocsConfigToRead({
         layout: dbShape.layout,
         css: dbShape.css,
         js: dbShape.js,
+        metadata: dbShape.metadata,
+        redirects: dbShape.redirects,
+        integrations: dbShape.integrations,
     };
 }
 

@@ -48,29 +48,34 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
-                {navbarLinks?.map((navbarLink, idx) => (
-                    <FernLinkButton
-                        key={idx}
-                        className="group cursor-pointer"
-                        href={navbarLink.url}
-                        intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
-                        rightIcon={
-                            navbarLink.type === "primary" ||
-                            (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
-                            ) : undefined
-                        }
-                        variant={
-                            navbarLink.type === "primary"
-                                ? "outlined"
-                                : navbarLink.type === "secondary"
-                                  ? "minimal"
-                                  : navbarLink.type
-                        }
-                    >
-                        {navbarLink.text}
-                    </FernLinkButton>
-                ))}
+                {navbarLinks?.map((navbarLink, idx) =>
+                    navbarLink.type === "github" ? null : (
+                        <FernLinkButton
+                            key={idx}
+                            className="group cursor-pointer"
+                            href={navbarLink.url}
+                            icon={navbarLink.icon}
+                            intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
+                            rightIcon={
+                                navbarLink.rightIcon ??
+                                (navbarLink.type === "primary" ||
+                                (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                                    <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
+                                ) : undefined)
+                            }
+                            variant={
+                                navbarLink.type === "primary"
+                                    ? "outlined"
+                                    : navbarLink.type === "secondary"
+                                      ? "minimal"
+                                      : navbarLink.type
+                            }
+                            rounded={navbarLink.rounded}
+                        >
+                            {navbarLink.text}
+                        </FernLinkButton>
+                    ),
+                )}
 
                 {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>

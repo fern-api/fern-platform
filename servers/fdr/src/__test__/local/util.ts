@@ -59,6 +59,7 @@ export function createMockDocs({
         docsConfigInstanceId: "123",
         isPreview: false,
         authType: "PUBLIC",
+        hasPublicS3Assets: true,
     };
 }
 

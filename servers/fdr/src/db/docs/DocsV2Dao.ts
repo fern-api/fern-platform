@@ -22,6 +22,7 @@ export interface LoadDocsDefinitionByUrlResponse {
     docsConfigInstanceId: string | null;
     updatedTime: Date;
     authType: AuthType;
+    hasPublicS3Assets: boolean;
 }
 
 export interface LoadDocsConfigResponse {
@@ -87,6 +88,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             domain: docsDomain.domain,
             updatedTime: docsDomain.updatedTime,
             authType: docsDomain.authType,
+            hasPublicS3Assets: docsDomain.hasPublicS3Assets,
         };
     }
 
@@ -211,6 +213,7 @@ async function createOrUpdateDocsDefinition({
             algoliaIndex: null,
             isPreview,
             authType,
+            hasPublicS3Assets: authType === "PUBLIC",
         },
         update: {
             docsDefinition: bufferDocsDefinition,
@@ -219,6 +222,7 @@ async function createOrUpdateDocsDefinition({
             indexSegmentIds,
             isPreview,
             authType,
+            hasPublicS3Assets: authType === "PUBLIC",
         },
     });
 }

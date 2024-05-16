@@ -72,6 +72,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
+                isPrivate: req.body.authConfig?.type === "private",
             });
 
             await app.services.slack.notifyGeneratedDocs({
@@ -108,6 +109,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 domain: fernUrl.hostname,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
+                isPrivate: req.body.authConfig?.type === "private",
             });
             await app.dao.docsRegistration().storeDocsRegistrationById(docsRegistrationId, {
                 fernUrl,
