@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.14.0",
+    "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
