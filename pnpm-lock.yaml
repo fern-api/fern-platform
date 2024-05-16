@@ -36,6 +36,12 @@ importers:
       '@playwright/test':
         specifier: ^1.42.1
         version: 1.44.0
+      '@tailwindcss/forms':
+        specifier: ^0.5.7
+        version: 0.5.7(tailwindcss@3.4.3)
+      '@tailwindcss/typography':
+        specifier: ^0.5.10
+        version: 0.5.13(tailwindcss@3.4.3)
       '@types/is-ci':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1352,6 +1358,9 @@ importers:
 
   packages/ui/local-preview-bundle:
     dependencies:
+      '@emotion/is-prop-valid':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
