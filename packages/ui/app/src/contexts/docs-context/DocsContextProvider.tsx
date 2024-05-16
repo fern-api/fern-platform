@@ -1,9 +1,10 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
+import { DefaultSeo } from "next-seo";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
-import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
 import { DocsPage } from "../../next-app/DocsPage";
@@ -87,27 +88,59 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
         ],
     );
 
+    const additionalLinkTags = [];
+    if (favicon != null) {
+        additionalLinkTags.push({
+            rel: "icon",
+            href: files[favicon]?.url,
+        });
+    }
+
+    const additionalMetaTags = [
+        { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
+    ];
+
     return (
         <DocsContext.Provider value={value}>
+            <DefaultSeo
+                titleTemplate={`%s - ${title != null ? title : "Documentation"}`}
+                defaultTitle="Documentation"
+                title={title != null ? title : undefined}
+                description={`Documentation site${title != null ? ` for ${title}` : ""}`}
+                additionalLinkTags={additionalLinkTags}
+                additionalMetaTags={additionalMetaTags}
+                canonical={`https://${baseUrl.domain}`}
+                themeColor={
+                    theme === "dark" && colors.dark != null
+                        ? getThemeColor(colors.dark)
+                        : theme === "light" && colors.light != null
+                          ? getThemeColor(colors.light)
+                          : undefined
+                }
+                openGraph={{
+                    type: "website",
+                    url: `https://${baseUrl.domain}`,
+                    title: title != null ? title : undefined,
+                    description: `Documentation site${title != null ? ` for ${title}` : ""}`,
+                    // TODO: Add default image for all pages
+                    images: [],
+                }}
+                dangerouslySetAllPagesToNoIndex={renderNoIndex(baseUrl)}
+                dangerouslySetAllPagesToNoFollow={renderNoIndex(baseUrl)}
+                // twitter={{
+                //     handle: "@handle",
+                //     // The Twitter @username the card should be attributed to.
+                //     site: "@site",
+                //     cardType: "summary_large_image",
+                // }}
+            />
+
             <Head>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-                />
-                {title != null && <title>{title}</title>}
-                {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
                 {typography?.bodyFont?.variants.map((v) => getPreloadedFont(v, files))}
                 {typography?.headingsFont?.variants.map((v) => getPreloadedFont(v, files))}
                 {typography?.codeFont?.variants.map((v) => getPreloadedFont(v, files))}
-                {theme === "light" && colors.light != null && (
-                    <meta name="theme-color" content={getThemeColor(colors.light)} />
-                )}
-                {theme === "dark" && colors.dark != null && (
-                    <meta name="theme-color" content={getThemeColor(colors.dark)} />
-                )}
-                {maybeRenderNoIndex(baseUrl)}
             </Head>
-            {/* 
+            {/*
                 We concatenate all global styles into a single instance,
                 as styled JSX will only create one instance of global styles
                 for each component.
@@ -162,11 +195,11 @@ function getPreloadedFont(
     );
 }
 
-function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
+function renderNoIndex(baseUrl: DocsV2Read.BaseUrl): boolean | undefined {
     // If the basePath is present, it's not clear whether or not the site is hosted on a custom domain.
     // In this case, we don't want to render the no-track script. If this changes, we should update this logic.
     if (baseUrl.basePath != null && process.env.NODE_ENV === "production") {
-        return null;
+        return false;
     }
 
     if (
@@ -175,7 +208,7 @@ function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
         baseUrl.domain.includes(".docs.buildwithfern.com") ||
         process.env.NODE_ENV !== "production"
     ) {
-        return <meta name="robots" content="noindex, nofollow" />;
+        return true;
     }
-    return null;
+    return undefined;
 }
