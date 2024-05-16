@@ -266,13 +266,13 @@ export function resolveSidebarNodes(
                     const definitionSlug =
                         api.fullSlug != null
                             ? [...fixedSlugs, ...api.fullSlug]
-                            : api.skipUrlSlug
-                              ? parentSlugs
-                              : [...parentSlugs, ...api.urlSlug.split("/")];
+                            : [...parentSlugs, ...api.urlSlug.split("/")];
                     const definitionChildSlug =
                         api.fullSlug != null
                             ? [...fixedSlugs, ...api.fullSlug]
-                            : [...parentSlugs, ...api.urlSlug.split("/")];
+                            : api.skipUrlSlug
+                              ? parentSlugs
+                              : [...parentSlugs, ...api.urlSlug.split("/")];
                     const flattened = flattenApiDefinition(
                         definition,
                         definitionChildSlug,
