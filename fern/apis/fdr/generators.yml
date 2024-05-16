@@ -1,4 +1,5 @@
 default-group: local
+
 groups:
   local:
     generators:
@@ -10,6 +11,8 @@ groups:
         config:
           noSerdeLayer: true
           outputEsm: true
+          # extraDevDependencies:
+          #   "@types/mime": "3.0.4"
       - name: fernapi/fern-typescript-node-sdk
         version: 0.12.8-rc0
         output:
@@ -22,32 +25,35 @@ groups:
           timeoutInSeconds: infinity
           outputEsm: true
           extraDevDependencies:
-            '@types/mime': 3.0.4
+            "@types/mime": "3.0.4"
+
   internal-snippets-sdks:
     audiences:
       - snippets
     generators:
+      # Internal, unadulterated for the use of the APIs
+      - name: fernapi/fern-python-sdk
+        version: 1.2.0-rc1
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: "fern-fern-fdr-sdk"
+        config:
+          package_name: "fdr"
+          pydantic_config:
+            include_union_utils: true
+          client:
+            class_name: FdrClient
       - name: fernapi/fern-typescript-node-sdk
         version: 0.12.8-rc0
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/snippet-sdk'
+          package-name: "@fern-fern/snippet-sdk"
         config:
           namespaceExport: FdrSnippetTemplate
           includeUtilsOnUnionMembers: true
-      - name: fernapi/fern-python-sdk
-        version: 2.2.0
-        output:
-          location: pypi
-          url: pypi.buildwithfern.com
-          package-name: fern-fern-fdr-sdk
-        config:
-          package_name: fdr
-          pydantic_config:
-            include_union_utils: true
-          client:
-            class_name: FdrClient
+
   external-sdks:
     audiences:
       - external
@@ -57,18 +63,19 @@ groups:
         version: 0.12.8-rc0
         output:
           location: npm
-          package-name: '@fern/typescript-sdk'
+          package-name: "@fern/typescript-sdk"
           token: ${NPM_TOKEN}
         github:
           repository: fern-api/fern-typescript
-          license: MIT
           mode: pull-request
+          license: MIT
         config:
           noSerdeLayer: true
           namespaceExport: FernInternal
           includeApiReference: true
           extraDependencies:
-            '@fern-api/template-resolver': ^0.0.9
+            "@fern-api/template-resolver": "^0.0.9"
+
   fiddle:
     audiences:
       - fiddle

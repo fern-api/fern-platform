@@ -161,7 +161,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     },
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
-                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifier_override,
+                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
                 },
                 orderBy: {
                     createdAt: "desc",
@@ -217,7 +217,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     apiName: loadSnippetsInfo.apiId,
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
-                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifier_override,
+                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
                 },
             })
         ).map((row) => row.sdkId);
@@ -271,7 +271,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     apiName: storeSnippetsInfo.apiId,
                     endpointPath: snippet.endpoint.path,
                     endpointMethod: snippet.endpoint.method,
-                    identifierOverride: snippet.endpoint.identifier_override,
+                    identifierOverride: snippet.endpoint.identifierOverride,
                     sdkId: sdkInfo.id,
                     snippet: writeBuffer(snippet.snippet),
                 });

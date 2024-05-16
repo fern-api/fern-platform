@@ -40,14 +40,14 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 });
 
                 let snippetsForEndpoint;
-                if (req.body.endpoint.identifier_override != null) {
-                    snippetsForEndpoint = response.snippetsByEndpointId[req.body.endpoint.identifier_override];
+                if (req.body.endpoint.identifierOverride != null) {
+                    snippetsForEndpoint = response.snippetsByEndpointId[req.body.endpoint.identifierOverride];
                 }
 
-                // If you have any snippets from using the identifier_override, you're set, but if not or if the override isn't
+                // If you have any snippets from using the identifierOverride, you're set, but if not or if the override isn't
                 // specified, you'll need to go leverage the legacy route (path + method).
                 if (
-                    req.body.endpoint.identifier_override == null ||
+                    req.body.endpoint.identifierOverride == null ||
                     snippetsForEndpoint == undefined ||
                     snippetsForEndpoint.length == 0
                 ) {

@@ -19,7 +19,7 @@ types:
     properties:
       path: EndpointPath
       method: EndpointMethod
-      identifier_override:
+      identifierOverride:
         type: optional<string>
         docs: |
           The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas path and
