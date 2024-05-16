@@ -3,7 +3,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { DocsV1Write, DocsV2Write } from "../../api";
-import type { FdrApplication } from "../../app";
+import type { FdrConfig } from "../../app";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
@@ -41,8 +41,7 @@ export class S3ServiceImpl implements S3Service {
     private privateS3: S3Client;
     private presignedDownloadUrlCache = new Cache<string>(10_000, ONE_WEEK_IN_SECONDS);
 
-    constructor(private readonly app: FdrApplication) {
-        const { config } = app;
+    constructor(private readonly config: FdrConfig) {
         this.publicS3 = new S3Client({
             ...(config.publicS3.urlOverride != null ? { endpoint: config.publicS3.urlOverride } : {}),
             region: config.publicS3.bucketRegion,
@@ -69,7 +68,7 @@ export class S3ServiceImpl implements S3Service {
                 return cachedUrl;
             }
             const command = new GetObjectCommand({
-                Bucket: this.app.config.privateS3.bucketName,
+                Bucket: this.config.privateS3.bucketName,
                 Key: key,
             });
             const signedUrl = await getSignedUrl(this.privateS3, command, { expiresIn: 604800 });
@@ -140,8 +139,9 @@ export class S3ServiceImpl implements S3Service {
         isPrivate: boolean;
     }): Promise<{ url: string; key: string }> {
         const key = this.constructS3Key({ domain, time, filepath });
+        const bucketName = isPrivate ? this.config.privateS3.bucketName : this.config.publicS3.bucketName;
         const input: PutObjectCommandInput = {
-            Bucket: isPrivate ? this.app.config.privateS3.bucketName : this.app.config.publicS3.bucketName,
+            Bucket: bucketName,
             Key: key,
         };
         if (filepath.endsWith(".svg")) {
