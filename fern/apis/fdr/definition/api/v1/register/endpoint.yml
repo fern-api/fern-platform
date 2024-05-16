@@ -18,8 +18,15 @@ types:
       defaultEnvironment: optional<EnvironmentId>
       environments: optional<list<Environment>>
       method: HttpMethod
-      id: EndpointId
-      originalEndpointId: optional<string>
+      id:
+        type: EndpointId
+        docs: This is the name of the endpoint.
+      originalEndpointId:
+        type: optional<string>
+        docs: |
+          The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas
+          path and method are not (specifically for the fern definition, consider chat and chat stream).
+          This is optional to remain backcompat with old definitions of yore.
       name: optional<string>
       path: EndpointPath
       queryParameters: list<QueryParameter>

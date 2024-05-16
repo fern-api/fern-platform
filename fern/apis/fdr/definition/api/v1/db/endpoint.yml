@@ -14,12 +14,7 @@ types:
       environments: optional<list<readEndpoint.Environment>>
       method: readEndpoint.HttpMethod
       id: readEndpoint.EndpointId
-      originalEndpointId:
-        type: optional<string>
-        docs: |
-          The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas
-          path and method are not (specifically for the fern definition, consider chat and chat stream).
-          This is optional to remain backcompat with old definitions of yore.
+      originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>

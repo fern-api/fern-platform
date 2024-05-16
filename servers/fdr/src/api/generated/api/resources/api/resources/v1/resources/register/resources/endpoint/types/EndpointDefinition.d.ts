@@ -7,7 +7,13 @@ export interface EndpointDefinition extends FernRegistry.api.v1.register.WithDes
     defaultEnvironment?: FernRegistry.api.v1.register.EnvironmentId;
     environments?: FernRegistry.api.v1.register.Environment[];
     method: FernRegistry.api.v1.register.HttpMethod;
+    /** This is the name of the endpoint. */
     id: FernRegistry.api.v1.register.EndpointId;
+    /**
+     * The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas
+     * path and method are not (specifically for the fern definition, consider chat and chat stream).
+     * This is optional to remain backcompat with old definitions of yore.
+     */
     originalEndpointId?: string;
     name?: string;
     path: FernRegistry.api.v1.register.EndpointPath;
