@@ -155,6 +155,7 @@ the current organization_id of the authenticated user
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -316,6 +317,7 @@ authenticated user, then response code of 403 will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -423,6 +425,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -522,6 +525,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -625,6 +629,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -831,6 +836,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Token",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -950,6 +956,7 @@ current organization_id, then a response code of \`403\` will be returned.
             "create-billing-note",
           ],
           "name": "Create billing note",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -1042,6 +1049,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -1186,6 +1194,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Execute",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -1310,6 +1319,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Validate",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -1475,6 +1485,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -1554,6 +1565,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete Entries By Ids",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -2175,6 +2187,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -2440,6 +2453,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Service Line Adjudication Details",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -2680,6 +2694,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Statuses",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -3352,6 +3367,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -3506,6 +3522,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Legal Comparisons",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -3674,6 +3691,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -4186,6 +4204,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -4402,6 +4421,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -4765,6 +4785,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Resolve Config For Scope",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -4974,6 +4995,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Validate Rule",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -5433,6 +5455,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -5568,6 +5591,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All Variable Summaries",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -5740,6 +5764,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -6176,6 +6201,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -6462,6 +6488,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -6575,6 +6602,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All Variables Paged",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -6788,6 +6816,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -6977,6 +7006,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -7240,6 +7270,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -7357,6 +7388,7 @@ Max items is 100.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -7533,6 +7565,7 @@ Max items is 100.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -7769,6 +7802,7 @@ value, overriding what was set before.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -7881,6 +7915,7 @@ value, overriding what was set before.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -7979,6 +8014,7 @@ value, overriding what was set before.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -8124,6 +8160,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -8337,6 +8374,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update Referring Provider",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -8588,6 +8626,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Summaries",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -9217,6 +9256,7 @@ or encounter external id.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Summary",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -9479,6 +9519,7 @@ or encounter external id.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -9771,6 +9812,7 @@ or encounter external id.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Reverse Manual Insurance Adjustment Remit",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -9970,6 +10012,7 @@ or encounter external id.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Calculate Financial Information",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -10521,6 +10564,7 @@ or encounter external id.
             "get-all-encounters",
           ],
           "name": "Get all encounters",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -11183,6 +11227,7 @@ or encounter external id.
             "get-encounter",
           ],
           "name": "Get encounter",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -12308,6 +12353,7 @@ or encounter external id.
             "create-encounter",
           ],
           "name": "Create encounter",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -13280,6 +13326,7 @@ in bounds of the diagnoses list field
             "update-encounter",
           ],
           "name": "Update encounter",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -13582,6 +13629,7 @@ submitted to the payor.
             "get-attachments-for-encounter",
           ],
           "name": "Get attachments for encounter",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -13682,6 +13730,7 @@ submitted to the payor.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Generate clinical notes PDF",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -13872,6 +13921,7 @@ submitted to the payor.
             "recompute-encounter-network-status",
           ],
           "name": "Recompute encounter network status",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -13971,6 +14021,7 @@ submitted to the payor.
             "mark-encounter-not-billable",
           ],
           "name": "Mark encounter not billable",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -14161,6 +14212,7 @@ submitted to the payor.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -14306,6 +14358,7 @@ submitted to the payor.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -14487,6 +14540,7 @@ submitted to the payor.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -14612,6 +14666,7 @@ submitted to the payor.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -14876,6 +14931,7 @@ submitted to the payor.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -14990,6 +15046,7 @@ submitted to the payor.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Latest Change Enrollment Import Datetime",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -15070,6 +15127,7 @@ submitted to the payor.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Download Attachment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -15185,6 +15243,7 @@ submitted to the payor.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "List Attachments",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -15281,6 +15340,7 @@ submitted to the payor.
           "method": "PUT",
           "migratedFromUrlSlugs": undefined,
           "name": "Upload Attachment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -15372,6 +15432,7 @@ submitted to the payor.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete Attachment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -15742,6 +15803,7 @@ submitted to the payor.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Compute",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -15968,6 +16030,7 @@ submitted to the payor.
             "compute-network-status",
           ],
           "name": "Compute network status",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -16540,6 +16603,7 @@ submitted to the payor.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Exports",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -16784,6 +16848,7 @@ Must be within 30 days of start_date.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -16987,6 +17052,7 @@ Must be within 30 days of start_date.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Fee Schedule Configuration Mechanism",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -17185,6 +17251,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Grouped Fee Schedules For Payer",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -17359,6 +17426,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Bound Fee Schedule",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -17626,6 +17694,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -17752,6 +17821,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -17871,6 +17941,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -18143,6 +18214,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -18543,6 +18615,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Validate Insurance Adjustment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -18774,6 +18847,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create Insurance Adjustment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -18951,6 +19025,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "PUT",
           "migratedFromUrlSlugs": undefined,
           "name": "Upload Attachment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -19122,6 +19197,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -19265,6 +19341,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Images",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -19486,6 +19563,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create Movie",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -19650,6 +19728,7 @@ doesn't data wrangle the modeling into the presentation shape.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Movie",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -19927,6 +20006,7 @@ identified by the id, then 403 response will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -20057,6 +20137,7 @@ will be limited to only those invoices that belong to the patient_external_id
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Search",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -20361,6 +20442,7 @@ upon creation of the invoice.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -20639,6 +20721,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get By Id",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -20827,6 +20910,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21048,6 +21132,7 @@ upon creation of the invoice.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21226,6 +21311,7 @@ upon creation of the invoice.
           "method": "PUT",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21397,6 +21483,7 @@ upon creation of the invoice.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21528,6 +21615,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Search",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21632,6 +21720,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21756,6 +21845,7 @@ upon creation of the invoice.
           "method": "PUT",
           "migratedFromUrlSlugs": undefined,
           "name": "Add Organization Payer",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -21914,6 +22004,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -22049,6 +22140,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -22251,6 +22343,7 @@ upon creation of the invoice.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -22383,6 +22476,7 @@ upon creation of the invoice.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -22650,6 +22744,7 @@ upon creation of the invoice.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -22803,6 +22898,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -22950,6 +23046,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -23263,6 +23360,7 @@ upon creation of the invoice.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -23470,6 +23568,7 @@ upon creation of the invoice.
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -23677,6 +23776,7 @@ upon creation of the invoice.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -23937,6 +24037,7 @@ upon creation of the invoice.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -24161,6 +24262,7 @@ upon creation of the invoice.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -24272,6 +24374,7 @@ upon creation of the invoice.
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -24523,6 +24626,7 @@ identified by the id, then 403 response will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -24635,6 +24739,7 @@ identified by the id, then 403 response will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Search",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -24860,6 +24965,7 @@ identified by the id, then 403 response will be returned
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -25107,6 +25213,7 @@ If the authenticated user does not have the permission to update the PatientPaym
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Patch",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -25352,6 +25459,7 @@ by the id, then 403 will be returned
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -25581,6 +25689,7 @@ by the id, then 403 will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Search",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -25888,6 +25997,7 @@ by the id, then 403 will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -25998,6 +26108,7 @@ by the id, then 403 will be returned
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -26404,6 +26515,7 @@ by the id, then 403 will be returned
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -26771,6 +26883,7 @@ by the id, then 403 will be returned
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -26986,6 +27099,7 @@ the current organization_id of the authenticated user.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Search",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -27315,6 +27429,7 @@ authenticated user, then response code of 403 will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -27578,6 +27693,7 @@ The order of specificity from the most specific to least specific is \`service_l
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -27990,6 +28106,7 @@ The order of specificity from the most specific to least specific is \`service_l
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -28389,6 +28506,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -28523,6 +28641,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -28915,6 +29034,7 @@ current organization_id, then a response code of \`403\` will be returned.
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -29054,6 +29174,7 @@ slashes.
             "get-payer",
           ],
           "name": "Get payer",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -29161,6 +29282,7 @@ slashes.
             "get-all-payers",
           ],
           "name": "Get all payers",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -29459,6 +29581,7 @@ identified by the id, then 403 response will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -29564,6 +29687,7 @@ identified by the id, then 403 response will be returned
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -29903,6 +30027,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -30309,6 +30434,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Patch",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -30554,6 +30680,7 @@ by the id, then 403 will be returned
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -30735,6 +30862,7 @@ and the third party payment processor's customer can be identified by the patien
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Verify Can Invoice",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -30825,6 +30953,7 @@ Verification includes that the provided token has all of the appropriate permiss
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Verify Api Token",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -30922,6 +31051,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Verify Customer Exists",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -31136,6 +31266,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Pipeline Configurations",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -31435,6 +31566,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -31595,6 +31727,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi Paged",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -32010,6 +32143,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Post Remit",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -32278,6 +32412,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -32456,6 +32591,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Validate",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -32631,6 +32767,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Prepopulate",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -32762,6 +32899,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -33079,6 +33217,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Ledger Tables",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -33314,6 +33453,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Calculate Financial Information",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -33442,6 +33582,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -33532,6 +33673,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -33682,6 +33824,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Actions",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -33859,6 +34002,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Internal Enrollment Assignees",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -34031,6 +34175,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Assignable Users",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -34226,6 +34371,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Multi",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -34342,6 +34488,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get Assignable Users Unpaginated",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -34509,6 +34656,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get By External Id",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -34734,6 +34882,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -34845,6 +34994,7 @@ customer page will be returned (this generally is a page listing the existing cu
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Get All Work Queues",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -72541,6 +72691,7 @@ exports[`transformApiDefinitionToDb > {"name":"cyclical-1"} 1`] = `
             "retrieve-a-transaction",
           ],
           "name": "Retrieve a transaction",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -73024,6 +73175,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create Least Cost Fulfillment",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -73850,6 +74002,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "method": "POST",
         "migratedFromUrlSlugs": undefined,
         "name": "Execute Workflow Stream",
+        "originalEndpointId": undefined,
         "path": {
           "parts": [
             {
@@ -74254,6 +74407,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "method": "POST",
         "migratedFromUrlSlugs": undefined,
         "name": "Generate",
+        "originalEndpointId": undefined,
         "path": {
           "parts": [
             {
@@ -74602,6 +74756,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "method": "POST",
         "migratedFromUrlSlugs": undefined,
         "name": "Generate Stream",
+        "originalEndpointId": undefined,
         "path": {
           "parts": [
             {
@@ -74884,6 +75039,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "method": "POST",
         "migratedFromUrlSlugs": undefined,
         "name": "Search",
+        "originalEndpointId": undefined,
         "path": {
           "parts": [
             {
@@ -75160,6 +75316,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "method": "POST",
         "migratedFromUrlSlugs": undefined,
         "name": "Submit Completion Actuals",
+        "originalEndpointId": undefined,
         "path": {
           "parts": [
             {
@@ -75277,6 +75434,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
         "method": "POST",
         "migratedFromUrlSlugs": undefined,
         "name": "Submit Workflow Execution Actuals",
+        "originalEndpointId": undefined,
         "path": {
           "parts": [
             {
@@ -75563,6 +75721,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Retrieve",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -75687,6 +75846,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Create",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -75893,6 +76053,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "List",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -76041,6 +76202,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "PATCH",
           "migratedFromUrlSlugs": undefined,
           "name": "Partial Update",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -76184,6 +76346,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Destroy",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -76404,6 +76567,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Upload",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -76562,6 +76726,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "GET",
           "migratedFromUrlSlugs": undefined,
           "name": "Retrieve",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -76666,6 +76831,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Model Version Compile Prompt",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -76930,6 +77096,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Register Prompt",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -77145,6 +77312,7 @@ or overwritten with default values.",
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Upsert Sandbox Scenario",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -77290,6 +77458,7 @@ or overwritten with default values.",
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete Sandbox Scenario",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -77430,6 +77599,7 @@ or overwritten with default values.",
           "method": "POST",
           "migratedFromUrlSlugs": undefined,
           "name": "Upsert Test Suite Test Case",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
@@ -77580,6 +77750,7 @@ or overwritten with default values.",
           "method": "DELETE",
           "migratedFromUrlSlugs": undefined,
           "name": "Delete Test Suite Test Case",
+          "originalEndpointId": undefined,
           "path": {
             "parts": [
               {
