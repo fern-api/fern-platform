@@ -76,7 +76,7 @@ export class S3ServiceImpl implements S3Service {
             return signedUrl;
         }
 
-        return `https://${this.app.config.publicS3.bucketName}.s3.amazonaws.com/${key}`;
+        return `https://${this.config.publicS3.bucketName}.s3.amazonaws.com/${key}`;
     }
 
     async getPresignedUploadUrls({
