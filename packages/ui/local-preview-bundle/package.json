@@ -32,6 +32,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
