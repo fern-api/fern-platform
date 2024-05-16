@@ -25,6 +25,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
                 images: [],
+                isPrivate: true,
             });
             DOCS_REGISTRATIONS[docsRegistrationId] = {
                 domain: req.body.domain,

@@ -38,7 +38,7 @@ interface PlaygroundEndpointContentProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-const requestTypeAtom = atomWithStorage<"curl" | "javascript" | "python">("api-playground-atom-alpha", "curl");
+const requestTypeAtom = atomWithStorage<"curl" | "typescript" | "python">("api-playground-atom-alpha", "curl");
 
 export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     endpoint,
@@ -126,13 +126,13 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         cURL
                     </FernButton>
                     <FernButton
-                        onClick={() => setRequestType("javascript")}
+                        onClick={() => setRequestType("typescript")}
                         size="small"
                         variant="minimal"
-                        intent={requestType === "javascript" ? "primary" : "none"}
-                        active={requestType === "javascript"}
+                        intent={requestType === "typescript" ? "primary" : "none"}
+                        active={requestType === "typescript"}
                     >
-                        JavaScript
+                        TypeScript
                     </FernButton>
                     <FernButton
                         onClick={() => setRequestType("python")}
@@ -154,7 +154,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                   redacted: false,
                                   domain,
                               })
-                            : requestType === "javascript"
+                            : requestType === "typescript"
                               ? stringifyFetch({
                                     endpoint,
                                     formState,

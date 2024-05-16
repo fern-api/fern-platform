@@ -44,6 +44,7 @@ export interface CachedDocsResponse {
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2>;
     isPrivate: boolean;
+    usesPublicS3?: boolean;
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
@@ -108,6 +109,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
                         const presignedUrl = await this.app.services.s3.getPresignedDownloadUrl({
                             key: dbFileInfo.s3Key,
+                            isPrivate: cachedResponse.usesPublicS3 === true ? false : true,
                         });
 
                         switch (dbFileInfo.type) {
@@ -232,6 +234,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     lightModeEnabled: definition.config.colorsV3?.type !== "dark",
                 },
                 isPrivate: dbDocs.authType !== AuthType.PUBLIC,
+                usesPublicS3: dbDocs.hasPublicS3Assets,
             };
         } else {
             // TODO(dsinghvi): Stop serving the v1 APIs
@@ -254,6 +257,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     lightModeEnabled: v1Docs.response.config.colorsV3?.type !== "dark",
                 },
                 isPrivate: false,
+                usesPublicS3: false,
             };
         }
     }

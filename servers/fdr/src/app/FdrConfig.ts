@@ -1,9 +1,15 @@
 const VENUS_URL_ENV_VAR = "VENUS_URL";
 const AWS_ACCESS_KEY_ENV_VAR = "AWS_ACCESS_KEY_ID";
 const AWS_SECRET_KEY_ENV_VAR = "AWS_SECRET_ACCESS_KEY";
-const S3_BUCKET_NAME_ENV_VAR = "S3_BUCKET_NAME";
-const S3_BUCKET_REGION_ENV_VAR = "S3_BUCKET_REGION";
-const S3_URL_OVERRIDE_ENV_VAR = "S3_URL_OVERRIDE";
+
+const PUBLIC_S3_BUCKET_NAME_ENV_VAR = "PUBLIC_S3_BUCKET_NAME";
+const PUBLIC_S3_BUCKET_REGION_ENV_VAR = "PUBLIC_S3_BUCKET_REGION";
+const PUBLIC_S3_URL_OVERRIDE_ENV_VAR = "PUBLIC_S3_URL_OVERRIDE";
+
+const PRIVATE_S3_BUCKET_NAME_ENV_VAR = "PRIVATE_S3_BUCKET_NAME";
+const PRIVATE_S3_BUCKET_REGION_ENV_VAR = "PRIVATE_S3_BUCKET_REGION";
+const PRIVATE_S3_URL_OVERRIDE_ENV_VAR = "PRIVATE_S3_URL_OVERRIDE";
+
 const DOMAIN_SUFFIX_ENV_VAR = "DOMAIN_SUFFIX";
 const ALGOLIA_APP_ID_ENV_VAR = "ALGOLIA_APP_ID";
 const ALGOLIA_ADMIN_API_KEY_ENV_VAR = "ALGOLIA_ADMIN_API_KEY";
@@ -17,13 +23,18 @@ const REDIS_ENABLED_ENV_VAR = "REDIS_ENABLED";
 const REDIS_CLUSTERING_ENABLED_ENV_VAR = "REDIS_CLUSTERING_ENABLED";
 const APPLICATION_ENVIRONMENT_ENV_VAR = "APPLICATION_ENVIRONMENT";
 
+export interface S3Config {
+    bucketName: string;
+    bucketRegion: string;
+    urlOverride?: string;
+}
+
 export interface FdrConfig {
     venusUrl: string;
     awsAccessKey: string;
     awsSecretKey: string;
-    s3BucketName: string;
-    s3BucketRegion: string;
-    s3UrlOverride: string | undefined;
+    publicS3: S3Config;
+    privateS3: S3Config;
     domainSuffix: string;
     algoliaAppId: string;
     algoliaAdminApiKey: string;
@@ -43,9 +54,16 @@ export function getConfig(): FdrConfig {
         venusUrl: getEnvironmentVariableOrThrow(VENUS_URL_ENV_VAR),
         awsAccessKey: getEnvironmentVariableOrThrow(AWS_ACCESS_KEY_ENV_VAR),
         awsSecretKey: getEnvironmentVariableOrThrow(AWS_SECRET_KEY_ENV_VAR),
-        s3BucketName: getEnvironmentVariableOrThrow(S3_BUCKET_NAME_ENV_VAR),
-        s3BucketRegion: getEnvironmentVariableOrThrow(S3_BUCKET_REGION_ENV_VAR),
-        s3UrlOverride: process.env[S3_URL_OVERRIDE_ENV_VAR],
+        publicS3: {
+            bucketName: getEnvironmentVariableOrThrow(PUBLIC_S3_BUCKET_NAME_ENV_VAR),
+            bucketRegion: getEnvironmentVariableOrThrow(PUBLIC_S3_BUCKET_REGION_ENV_VAR),
+            urlOverride: process.env[PUBLIC_S3_URL_OVERRIDE_ENV_VAR],
+        },
+        privateS3: {
+            bucketName: getEnvironmentVariableOrThrow(PRIVATE_S3_BUCKET_NAME_ENV_VAR),
+            bucketRegion: getEnvironmentVariableOrThrow(PRIVATE_S3_BUCKET_REGION_ENV_VAR),
+            urlOverride: process.env[PRIVATE_S3_URL_OVERRIDE_ENV_VAR],
+        },
         domainSuffix: getEnvironmentVariableOrThrow(DOMAIN_SUFFIX_ENV_VAR),
         algoliaAppId: getEnvironmentVariableOrThrow(ALGOLIA_APP_ID_ENV_VAR),
         algoliaAdminApiKey: getEnvironmentVariableOrThrow(ALGOLIA_ADMIN_API_KEY_ENV_VAR),

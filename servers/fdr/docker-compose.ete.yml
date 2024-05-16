@@ -8,8 +8,10 @@ services:
       VENUS_URL: dummy
       AWS_ACCESS_KEY_ID: dummy
       AWS_SECRET_ACCESS_KEY: dummy
-      S3_BUCKET_NAME: dummy
-      S3_BUCKET_REGION: dummy
+      PUBLIC_S3_BUCKET_NAME: dummy
+      PUBLIC_S3_BUCKET_REGION: dummy
+      PRIVATE_S3_BUCKET_NAME: dummy
+      PRIVATE_S3_BUCKET_REGION: dummy
       DOMAIN_SUFFIX: dummy
       ALGOLIA_APP_ID: dummy
       ALGOLIA_ADMIN_API_KEY: dummy
