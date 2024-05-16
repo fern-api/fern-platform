@@ -69,6 +69,11 @@ types:
 
   Url: string
 
+  FileIdOrUrl:
+    union:
+      fileId: FileId
+      url: Url
+
   DocsDefinition:
     properties:
       pages: map<PageId, PageContent>
@@ -82,18 +87,29 @@ types:
   DocsConfig:
     properties:
       title: optional<string>
+
+      # navigation
       navigation: NavigationConfig
+      navbarLinks: optional<list<NavbarLink>>
+      footerLinks: optional<list<FooterLink>>
 
       # logo
       logoHeight: optional<Height>
       logoHref: optional<Url>
       favicon: optional<FileId>
 
+      # seo
+      metadata: optional<MetadataConfig>
+      redirects: optional<list<RedirectConfig>>
+      # TODO: customize 404 page/behavior
+
       # styles
       colorsV3: optional<ColorsConfigV3>
-      navbarLinks: optional<list<NavbarLink>>
       layout: optional<DocsLayoutConfig>
       typographyV2: optional<DocsTypographyConfigV2>
+
+      # integrations
+      integrations: optional<IntegrationsConfig>
 
       # css and js
       css: optional<CssConfig>
@@ -197,6 +213,7 @@ types:
       filled: NavbarLinkMetadata
       outlined: NavbarLinkMetadata
       minimal: NavbarLinkMetadata
+      github: NavbarGithubMetadata
 
       # deprecated
       primary: NavbarLinkMetadata # -> outlined
@@ -205,7 +222,14 @@ types:
   NavbarLinkMetadata:
     properties:
       url: string
-      text: string
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
+  NavbarGithubMetadata:
+    properties:
+      url: string # github repo url
 
   NavigationConfig:
     discriminated: false
@@ -496,6 +520,56 @@ types:
       - beforeInteractive
       - afterInteractive # default
       - lazyOnload
+
+  IntegrationsConfig:
+    properties:
+      intercom: optional<string>
+
+  MetadataConfig:
+    properties:
+      "og:site_name": optional<string>
+      "og:title": optional<string>
+      "og:description": optional<string>
+      "og:url": optional<string>
+      "og:image": optional<FileIdOrUrl>
+      "og:image:width": optional<double>
+      "og:image:height": optional<double>
+      "og:locale": optional<string>
+      "og:logo": optional<FileIdOrUrl>
+      "twitter:title": optional<string>
+      "twitter:description": optional<string>
+      "twitter:image": optional<FileIdOrUrl>
+      "twitter:handle": optional<string>
+      "twitter:site": optional<string>
+      "twitter:url": optional<string>
+      "twitter:card": optional<TwitterCardSetting>
+
+  RedirectConfig:
+    properties:
+      source: string
+      destination: string
+
+  TwitterCardSetting:
+    enum:
+      - summary
+      - summary_large_image
+      - app
+      - player
+
+  FooterLink:
+    union:
+      github: Url
+      twitter: Url
+      x: Url
+      linkedin: Url
+      youtube: Url
+      instagram: Url
+      facebook: Url
+      discord: Url
+      slack: Url
+      hackernews: Url
+      medium: Url
+      website: Url
 
 errors:
   DocsRegistrationIdNotFound:

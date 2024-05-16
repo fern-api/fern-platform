@@ -3,5 +3,8 @@
  */
 export interface NavbarLinkMetadata {
     url: string;
-    text: string;
+    text?: string;
+    icon?: string;
+    rightIcon?: string;
+    rounded?: boolean;
 }
