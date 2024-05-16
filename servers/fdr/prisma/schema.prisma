@@ -83,31 +83,33 @@ model OverwrittenAlgoliaIndex {
 }
 
 model SnippetTemplate {
-  id                  String     @id
-  orgId               String
-  apiName             String
-  apiDefinitionId     String
-  endpointPath        String
-  endpointMethod      HttpMethod
-  sdkId               String
+  id                      String     @id
+  orgId                   String
+  apiName                 String
+  apiDefinitionId         String
+  endpointPath            String
+  endpointMethod          HttpMethod
+  identifierOverride      String?
+  sdkId                   String
   // sdk                 Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
-  version             SnippetTemplateSemanticVersion
+  version                 SnippetTemplateSemanticVersion
   
   // The actual templates themselves held as binary data to save encoding the schema, which may change
-  functionInvocation  Bytes
-  clientInstantiation Bytes
+  functionInvocation      Bytes
+  clientInstantiation     Bytes
 }
 
 model Snippet {
-  id             String     @id
-  orgId          String
-  apiName        String
-  endpointPath   String
-  endpointMethod HttpMethod
-  sdkId          String
-  sdk            Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
-  snippet        Bytes
-  createdAt      DateTime   @default(now())
+  id                      String     @id
+  orgId                   String
+  apiName                 String
+  endpointPath            String
+  endpointMethod          HttpMethod
+  identifierOverride      String?
+  sdkId                   String
+  sdk                     Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+  snippet                 Bytes
+  createdAt               DateTime   @default(now())
 }
 
 model Sdk {

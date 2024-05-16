@@ -9,6 +9,12 @@ export interface DbEndpointDefinition extends FernRegistry.api.v1.read.WithDescr
     environments?: FernRegistry.api.v1.read.Environment[];
     method: FernRegistry.api.v1.read.HttpMethod;
     id: FernRegistry.api.v1.read.EndpointId;
+    /**
+     * The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas
+     * path and method are not (specifically for the fern definition, consider chat and chat stream).
+     * This is optional to remain backcompat with old definitions of yore.
+     */
+    originalEndpointId?: string;
     urlSlug: string;
     migratedFromUrlSlugs?: string[];
     name?: string;

@@ -12,6 +12,7 @@ export interface EndpointDefinition
     environments?: FernRegistry.api.v1.register.Environment[];
     method: FernRegistry.api.v1.register.HttpMethod;
     id: FernRegistry.api.v1.register.EndpointId;
+    originalEndpointId: string;
     name?: string;
     path: FernRegistry.api.v1.register.EndpointPath;
     queryParameters: FernRegistry.api.v1.register.QueryParameter[];
