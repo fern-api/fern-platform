@@ -1,7 +1,7 @@
 import { SidebarNode, getUnversionedSlug, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { renderToString } from "react-dom/server";
@@ -268,11 +268,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 ],
             )}
         >
-            <Head>
-                {activeTitle != null && <title>{title != null ? `${activeTitle} – ${title}` : activeTitle}</title>}
-                {activeDescription != null && <meta name="description" content={activeDescription} />}
-                {frontmatter?.image != null && <meta property="og:image" content={frontmatter.image} />}
-            </Head>
+            <NextSeo
+                title={activeTitle}
+                description={activeDescription}
+                // TODO: swap out with custom url
+                canonical={`https://${domain}/${resolvedPath.fullSlug}`}
+                openGraph={{
+                    title: activeTitle != null ? `${activeTitle} – ${title}` : undefined,
+                    description: activeDescription,
+                    images: frontmatter?.image != null ? [{ url: frontmatter.image }] : undefined,
+                    url: `https://${domain}/${resolvedPath.fullSlug}`,
+                }}
+            />
             {children}
         </NavigationContext.Provider>
     );

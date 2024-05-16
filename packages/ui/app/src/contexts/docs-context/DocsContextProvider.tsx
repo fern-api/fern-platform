@@ -119,6 +119,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 }
                 openGraph={{
                     type: "website",
+                    // TODO: default to custom domain, and only fall back to the base domain if no custom domain is set
                     url: `https://${baseUrl.domain}`,
                     title: title != null ? title : undefined,
                     description: `Documentation site${title != null ? ` for ${title}` : ""}`,
