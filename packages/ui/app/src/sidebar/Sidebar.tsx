@@ -54,7 +54,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             <SearchSidebar searchService={searchService}>
                 <FernScrollArea
                     rootClassName="flex-1"
-                    className={cn("group/sidebar mask-grad-top-6 px-4 pb-12", {
+                    className={cn("group/sidebar mask-grad-top-6 mask-grad-bottom-6 px-4 pb-12", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}
                     scrollbars="vertical"

@@ -184,6 +184,10 @@
         mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
     }
 
+    .mask-grad-bottom-6 {
+        mask-image: linear-gradient(to top, transparent 0, rgba(0, 0, 0, 100%) 24px);
+    }
+
     .fern-dropdown {
         @apply relative z-50;
         @apply animate-popover;
