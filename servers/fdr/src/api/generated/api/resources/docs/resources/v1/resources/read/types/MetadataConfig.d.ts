@@ -14,6 +14,7 @@ export interface MetadataConfig {
     "og:logo"?: FernRegistry.docs.v1.read.FileIdOrUrl;
     "twitter:title"?: string;
     "twitter:description"?: string;
+    "twitter:handle"?: string;
     "twitter:image"?: FernRegistry.docs.v1.read.FileIdOrUrl;
     "twitter:site"?: string;
     "twitter:url"?: string;

@@ -17,6 +17,7 @@ export interface MetadataConfig {
     "twitter:title"?: string;
     "twitter:description"?: string;
     "twitter:image"?: FernRegistry.docs.v1.write.FileIdOrUrl;
+    "twitter:handle"?: string;
     "twitter:site"?: string;
     "twitter:url"?: string;
     "twitter:card"?: FernRegistry.docs.v1.write.TwitterCardSetting;

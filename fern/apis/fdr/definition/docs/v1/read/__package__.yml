@@ -637,6 +637,7 @@ types:
       "og:logo": optional<FileIdOrUrl>
       "twitter:title": optional<string>
       "twitter:description": optional<string>
+      "twitter:handle": optional<string>
       "twitter:image": optional<FileIdOrUrl>
       "twitter:site": optional<string>
       "twitter:url": optional<string>

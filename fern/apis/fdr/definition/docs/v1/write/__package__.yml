@@ -539,6 +539,7 @@ types:
       "twitter:title": optional<string>
       "twitter:description": optional<string>
       "twitter:image": optional<FileIdOrUrl>
+      "twitter:handle": optional<string>
       "twitter:site": optional<string>
       "twitter:url": optional<string>
       "twitter:card": optional<TwitterCardSetting>

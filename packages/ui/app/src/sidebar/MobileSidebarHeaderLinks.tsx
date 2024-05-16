@@ -12,6 +12,10 @@ interface HeaderSidebarSlugLinkProps {
 }
 
 export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ navbarLink }) => {
+    if (navbarLink.type === "github") {
+        // TODO: Implement GitHub link
+        return null;
+    }
     return (
         <Link
             className={cn(
@@ -43,31 +47,36 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                 "lg:hidden": layout?.disableHeader !== true,
             })}
         >
-            {navbarLinks?.map((navbarLink, idx) => (
-                <FernLinkButton
-                    key={idx}
-                    href={navbarLink.url}
-                    text={navbarLink.text}
-                    rightIcon={
-                        navbarLink.type === "primary" ||
-                        (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                            <ArrowRightIcon className="!size-5" />
-                        ) : undefined
-                    }
-                    className={cn("w-full", {
-                        "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
-                    })}
-                    variant={
-                        navbarLink.type === "primary"
-                            ? "outlined"
-                            : navbarLink.type === "secondary"
-                              ? "minimal"
-                              : navbarLink.type
-                    }
-                    intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
-                    size={["mobile", "sm", "md"].includes(layoutBreakpoint) ? "large" : "normal"}
-                />
-            ))}
+            {navbarLinks?.map((navbarLink, idx) =>
+                // TODO: Implement GitHub link
+                navbarLink.type === "github" ? null : (
+                    <FernLinkButton
+                        key={idx}
+                        icon={navbarLink.icon}
+                        href={navbarLink.url}
+                        text={navbarLink.text}
+                        rightIcon={
+                            navbarLink.rightIcon ??
+                            (navbarLink.type === "primary" ||
+                            (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                                <ArrowRightIcon className="!size-5" />
+                            ) : undefined)
+                        }
+                        className={cn("w-full", {
+                            "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
+                        })}
+                        variant={
+                            navbarLink.type === "primary"
+                                ? "outlined"
+                                : navbarLink.type === "secondary"
+                                  ? "minimal"
+                                  : navbarLink.type
+                        }
+                        intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
+                        size={["mobile", "sm", "md"].includes(layoutBreakpoint) ? "large" : "normal"}
+                    />
+                ),
+            )}
         </div>
     );
 }
