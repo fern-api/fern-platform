@@ -10,7 +10,6 @@ import {
     serializeSidebarNodeDescriptionMdx,
 } from "@fern-ui/ui";
 import { Router, useRouter } from "next/router";
-import type { GetServerSideProps } from "next/types";
 import { ReactElement, useEffect, useState } from "react";
 
 export default function LocalPreviewDocs({ port }: { port: number }): ReactElement {
@@ -61,12 +60,8 @@ export default function LocalPreviewDocs({ port }: { port: number }): ReactEleme
     return <NextApp router={router as Router} pageProps={docsProps} Component={DocsPage} />;
 }
 
-export const getServerSideProps: GetServerSideProps<{ port: number }> = async () => {
-    return {
-        props: {
-            port: parseInt(process.env.PORT ?? "3000", 10),
-        },
-    };
+LocalPreviewDocs.getInitialProps = () => {
+    return { port: parseInt(process.env.PORT ?? "3000", 10) };
 };
 
 async function loadDocsForUrl(port: number) {
