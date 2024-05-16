@@ -104,7 +104,7 @@ const nextConfig = {
             },
             {
                 protocol: "https",
-                hostname: "fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com",
+                hostname: "fdr-prod-docs-files-public.s3.amazonaws.com",
                 port: "",
             },
             {
@@ -114,7 +114,7 @@ const nextConfig = {
             },
             {
                 protocol: "https",
-                hostname: "fdr-dev2-docs-files-public.s3.us-east-1.amazonaws.com",
+                hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
                 port: "",
             },
         ],
