@@ -6,7 +6,7 @@
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/commons/fdr-utils"
   },
-  "private": true,
+  "private": false,
   "files": [
     "dist"
   ],
