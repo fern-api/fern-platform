@@ -10,6 +10,9 @@
     "autoprefixer",
     "postcss",
     "postcss-import",
+    "@tailwindcss/typography",
+    "@tailwindcss/forms",
+    "tailwindcss",
     "cssnano",
     "unist-util-visit",
     "@shikijs/transformers",
@@ -19,7 +22,8 @@
     "@storybook/addon-links",
     "@storybook/addon-onboarding",
     "@storybook/blocks",
-    "@storybook/test"
+    "@storybook/test",
+    "@emotion/is-prop-valid"
   ],
   "ignore-patterns": ["dist"]
 }
