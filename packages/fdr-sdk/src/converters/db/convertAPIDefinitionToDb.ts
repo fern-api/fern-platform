@@ -504,7 +504,7 @@ function transformCodeExamples({
     const maybePythonSnippet = snippets.getPythonCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
-        identifierOverride: endpointDefinition.id,
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
