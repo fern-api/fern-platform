@@ -60,7 +60,7 @@ function getLanguage(response: PlaygroundResponse): string {
     } else if (response.contentType.includes("text/css")) {
         return "css";
     } else if (response.contentType.includes("text/javascript")) {
-        return "javascript";
+        return "typescript";
     } else if (response.contentType.includes("text/plain")) {
         return "text";
     } else {
