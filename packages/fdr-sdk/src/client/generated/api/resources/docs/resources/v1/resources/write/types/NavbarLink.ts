@@ -8,6 +8,7 @@ export type NavbarLink =
     | FernRegistry.docs.v1.write.NavbarLink.Filled
     | FernRegistry.docs.v1.write.NavbarLink.Outlined
     | FernRegistry.docs.v1.write.NavbarLink.Minimal
+    | FernRegistry.docs.v1.write.NavbarLink.Github
     | FernRegistry.docs.v1.write.NavbarLink.Primary
     | FernRegistry.docs.v1.write.NavbarLink.Secondary;
 
@@ -22,6 +23,10 @@ export declare namespace NavbarLink {
 
     interface Minimal extends FernRegistry.docs.v1.write.NavbarLinkMetadata {
         type: "minimal";
+    }
+
+    interface Github extends FernRegistry.docs.v1.write.NavbarGithubMetadata {
+        type: "github";
     }
 
     interface Primary extends FernRegistry.docs.v1.write.NavbarLinkMetadata {

@@ -5,13 +5,17 @@ import * as FernRegistry from "../../../../../../..";
 export interface DocsConfig {
     title?: string;
     navigation: FernRegistry.docs.v1.read.NavigationConfig;
+    navbarLinks?: FernRegistry.docs.v1.read.NavbarLink[];
+    footerLinks?: FernRegistry.docs.v1.read.FooterLink[];
     logoHeight?: FernRegistry.docs.v1.read.Height;
     logoHref?: FernRegistry.docs.v1.read.Url;
     favicon?: FernRegistry.docs.v1.read.FileId;
+    metadata?: FernRegistry.docs.v1.read.MetadataConfig;
+    redirects?: FernRegistry.docs.v1.read.RedirectConfig[];
     colorsV3?: FernRegistry.docs.v1.read.ColorsConfigV3;
-    navbarLinks?: FernRegistry.docs.v1.read.NavbarLink[];
     layout?: FernRegistry.docs.v1.read.DocsLayoutConfig;
     typographyV2?: FernRegistry.docs.v1.read.DocsTypographyConfigV2;
+    integrations?: FernRegistry.docs.v1.read.IntegrationsConfig;
     css?: FernRegistry.docs.v1.read.CssConfig;
     js?: FernRegistry.docs.v1.read.JsConfig;
     backgroundImage?: FernRegistry.docs.v1.read.FileId;
