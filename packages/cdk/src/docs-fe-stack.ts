@@ -1,7 +1,7 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import archiver from "archiver";
 import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
-import { PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { AnyPrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
@@ -36,6 +36,7 @@ export class DocsFeStack extends Stack {
             new PolicyStatement({
                 resources: [bucket.arnForObjects("*"), bucket.bucketArn],
                 actions: ["s3:List*", "s3:Get*"],
+                principals: [new AnyPrincipal()],
             }),
         );
 
