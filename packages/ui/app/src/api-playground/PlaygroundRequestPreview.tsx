@@ -9,7 +9,7 @@ import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils"
 interface PlaygroundRequestPreviewProps {
     endpoint: ResolvedEndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
-    requestType: "curl" | "javascript" | "python";
+    requestType: "curl" | "typescript" | "python";
 }
 
 export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ endpoint, formState, requestType }) => {
@@ -24,7 +24,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
                       redacted: true,
                       domain,
                   })
-                : requestType === "javascript"
+                : requestType === "typescript"
                   ? stringifyFetch({
                         endpoint,
                         formState,
