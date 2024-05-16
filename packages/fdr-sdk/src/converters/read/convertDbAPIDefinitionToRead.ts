@@ -73,6 +73,7 @@ function transformEndpoint({
         migratedFromUrlSlugs: dbShape.migratedFromUrlSlugs,
         method: dbShape.method,
         id: dbShape.id,
+        originalEndpointId: dbShape.originalEndpointId,
         name: dbShape.name,
         path: dbShape.path,
         queryParameters: dbShape.queryParameters,

@@ -12,7 +12,7 @@ export interface EndpointDefinition extends FernRegistry.api.v1.read.WithDescrip
     environments: FernRegistry.api.v1.read.Environment[];
     method: FernRegistry.api.v1.read.HttpMethod;
     id: FernRegistry.api.v1.read.EndpointId;
-    originalEndpointId: string;
+    originalEndpointId?: string;
     urlSlug: string;
     migratedFromUrlSlugs?: string[];
     name?: string;

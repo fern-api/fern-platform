@@ -23,7 +23,7 @@ export function getApiDiffService(app: FdrApplication): DiffService {
                 const endpointIdentifier = {
                     method: currentEndpoint.method,
                     path: getEndpointPath(currentEndpoint),
-                    id: currentEndpoint.id,
+                    identifierOverride: currentEndpoint.id,
                 };
                 if (previousEndpoint == null) {
                     addedEndpoints.push({

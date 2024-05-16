@@ -84,7 +84,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
             snippetCollector.collect({
                 endpointPath: dbSnippetRow.endpointPath,
                 endpointMethod: dbSnippetRow.endpointMethod,
-                identifierOverride: dbSnippetRow.identifierOverride,
+                identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
                 snippet,
             });
         }
@@ -189,7 +189,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 snippetCollector.collect({
                     endpointPath: dbSnippetRow.endpointPath,
                     endpointMethod: dbSnippetRow.endpointMethod,
-                    identifierOverride: dbSnippetRow.identifierOverride,
+                    identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
                     snippet,
                 });
             }
@@ -197,7 +197,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 nextPage:
                     snippetDbRows.length === DEFAULT_SNIPPETS_PAGE_SIZE ? (loadSnippetsInfo.page ?? 1) + 1 : undefined,
                 snippets: snippetCollector.get(),
-                snippetsByEndpointId: snippetCollector.get(),
+                snippetsByEndpointId: snippetCollector.getByIdentifierOverride(),
             };
         });
     }

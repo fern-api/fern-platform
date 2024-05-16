@@ -21,7 +21,7 @@ types:
       environments: list<Environment>
       method: HttpMethod
       id: EndpointId
-      originalEndpointId: string
+      originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>

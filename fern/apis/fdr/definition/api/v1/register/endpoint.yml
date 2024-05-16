@@ -19,7 +19,7 @@ types:
       environments: optional<list<Environment>>
       method: HttpMethod
       id: EndpointId
-      originalEndpointId: string
+      originalEndpointId: optional<string>
       name: optional<string>
       path: EndpointPath
       queryParameters: list<QueryParameter>

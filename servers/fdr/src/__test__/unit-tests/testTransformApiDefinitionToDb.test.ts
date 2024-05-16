@@ -5,6 +5,8 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
     snippetsConfigWithSdkId: {},
     snippetTemplatesByEndpoint: {},
+    snippetsBySdkIdAndEndpointId: {},
+    snippetTemplatesByEndpointId: {},
 });
 
 it("api register", async () => {
