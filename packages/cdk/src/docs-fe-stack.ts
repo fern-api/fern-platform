@@ -48,6 +48,7 @@ export class DocsFeStack extends Stack {
                 sources: [Source.asset(local_preview_bundle_dist_zip)],
                 destinationBucket: bucket,
                 extract: false,
+                memoryLimit: 1024,
             });
         });
     }
