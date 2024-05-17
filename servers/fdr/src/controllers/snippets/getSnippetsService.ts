@@ -38,12 +38,27 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                         page: undefined,
                     },
                 });
-                const snippetsForEndpointPath = response.snippets[req.body.endpoint.path];
-                if (snippetsForEndpointPath === undefined) {
-                    return res.send([]);
+
+                let snippetsForEndpoint;
+                if (req.body.endpoint.identifierOverride != null) {
+                    snippetsForEndpoint = response.snippetsByEndpointId[req.body.endpoint.identifierOverride];
                 }
-                const snippetsForEndpointMethod = snippetsForEndpointPath[req.body.endpoint.method];
-                return res.send(snippetsForEndpointMethod ?? []);
+
+                // If you have any snippets from using the identifierOverride, you're set, but if not or if the override isn't
+                // specified, you'll need to go leverage the legacy route (path + method).
+                if (
+                    req.body.endpoint.identifierOverride == null ||
+                    snippetsForEndpoint == undefined ||
+                    snippetsForEndpoint.length == 0
+                ) {
+                    const snippetsForEndpointPath = response.snippets[req.body.endpoint.path];
+                    if (snippetsForEndpointPath === undefined) {
+                        return res.send([]);
+                    }
+                    const snippetsForEndpointMethod = snippetsForEndpointPath[req.body.endpoint.method];
+                    snippetsForEndpoint = snippetsForEndpointMethod ?? [];
+                }
+                return res.send(snippetsForEndpoint ?? []);
             } else {
                 try {
                     const snippets: Snippet[] = [];

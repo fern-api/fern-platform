@@ -21,6 +21,7 @@ types:
       environments: list<Environment>
       method: HttpMethod
       id: EndpointId
+      originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>
@@ -112,7 +113,7 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
-      statusCode: 
+      statusCode:
         type: optional<integer>
         docs: Defaults to 200
 

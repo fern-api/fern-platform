@@ -14,6 +14,7 @@ types:
       environments: optional<list<readEndpoint.Environment>>
       method: readEndpoint.HttpMethod
       id: readEndpoint.EndpointId
+      originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>

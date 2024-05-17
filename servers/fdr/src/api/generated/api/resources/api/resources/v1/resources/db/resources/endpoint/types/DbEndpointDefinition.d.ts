@@ -9,6 +9,7 @@ export interface DbEndpointDefinition extends FernRegistry.api.v1.read.WithDescr
     environments?: FernRegistry.api.v1.read.Environment[];
     method: FernRegistry.api.v1.read.HttpMethod;
     id: FernRegistry.api.v1.read.EndpointId;
+    originalEndpointId?: string;
     urlSlug: string;
     migratedFromUrlSlugs?: string[];
     name?: string;

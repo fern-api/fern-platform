@@ -20,6 +20,7 @@ export interface LoadDbSnippetsPage {
 
 export interface DbSnippetsPage {
     snippets: Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>;
+    snippetsByEndpointId: Record<string, FdrAPI.Snippet[]>;
     nextPage: number | undefined;
 }
 
@@ -39,11 +40,17 @@ export interface SdkInfo {
 }
 
 export interface SnippetsDao {
+    // TODO(armando): whenever we call this, we should call this other endpoint too
     loadAllSnippetsForSdkIds(
         sdkIds: string[],
     ): Promise<Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>>;
 
+    loadAllSnippetsForSdkIdsByEndpointId(sdkIds: string[]): Promise<Record<string, Record<string, FdrAPI.Snippet[]>>>;
+
+    // TODO(armando): same here
     loadAllSnippetsBySdkId(sdkId: string): Promise<Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
+
+    loadAllSnippetsBySdkIdByEndpointId(sdkId: string): Promise<Record<string, FdrAPI.Snippet[]>>;
 
     loadSnippetsPage({ loadSnippetsInfo }: { loadSnippetsInfo: LoadDbSnippetsPage }): Promise<DbSnippetsPage>;
 
@@ -52,19 +59,7 @@ export interface SnippetsDao {
 
 export class SnippetsDaoImpl implements SnippetsDao {
     constructor(private readonly prisma: PrismaClient) {}
-
-    public async loadAllSnippetsForSdkIds(
-        sdkIds: string[],
-    ): Promise<Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>>> {
-        const result: Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>> = {};
-        for (const sdkId of sdkIds) {
-            const snippets = await this.loadAllSnippetsBySdkId(sdkId);
-            result[sdkId] = snippets;
-        }
-        return result;
-    }
-
-    public async loadAllSnippetsBySdkId(sdkId: string): Promise<Record<string, FdrAPI.SnippetsByEndpointMethod>> {
+    private async loadAllSnippetsToCollector(sdkId: string): Promise<EndpointSnippetCollector> {
         const dbSdkRow = await this.prisma.sdk.findFirst({
             where: {
                 id: {
@@ -89,9 +84,43 @@ export class SnippetsDaoImpl implements SnippetsDao {
             snippetCollector.collect({
                 endpointPath: dbSnippetRow.endpointPath,
                 endpointMethod: dbSnippetRow.endpointMethod,
+                identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
                 snippet,
             });
         }
+
+        return snippetCollector;
+    }
+
+    public async loadAllSnippetsBySdkIdByEndpointId(sdkId: string): Promise<Record<string, FdrAPI.Snippet[]>> {
+        const snippetCollector = await this.loadAllSnippetsToCollector(sdkId);
+        return snippetCollector.getByIdentifierOverride();
+    }
+
+    public async loadAllSnippetsForSdkIdsByEndpointId(
+        sdkIds: string[],
+    ): Promise<Record<string, Record<string, FdrAPI.Snippet[]>>> {
+        const result: Record<string, Record<string, FdrAPI.Snippet[]>> = {};
+        for (const sdkId of sdkIds) {
+            const snippets = await this.loadAllSnippetsBySdkIdByEndpointId(sdkId);
+            result[sdkId] = snippets;
+        }
+        return result;
+    }
+
+    public async loadAllSnippetsForSdkIds(
+        sdkIds: string[],
+    ): Promise<Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>>> {
+        const result: Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>> = {};
+        for (const sdkId of sdkIds) {
+            const snippets = await this.loadAllSnippetsBySdkId(sdkId);
+            result[sdkId] = snippets;
+        }
+        return result;
+    }
+
+    public async loadAllSnippetsBySdkId(sdkId: string): Promise<Record<string, FdrAPI.SnippetsByEndpointMethod>> {
+        const snippetCollector = await this.loadAllSnippetsToCollector(sdkId);
         return snippetCollector.get();
     }
 
@@ -132,6 +161,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     },
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
+                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
                 },
                 orderBy: {
                     createdAt: "desc",
@@ -159,6 +189,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 snippetCollector.collect({
                     endpointPath: dbSnippetRow.endpointPath,
                     endpointMethod: dbSnippetRow.endpointMethod,
+                    identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
                     snippet,
                 });
             }
@@ -166,6 +197,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 nextPage:
                     snippetDbRows.length === DEFAULT_SNIPPETS_PAGE_SIZE ? (loadSnippetsInfo.page ?? 1) + 1 : undefined,
                 snippets: snippetCollector.get(),
+                snippetsByEndpointId: snippetCollector.getByIdentifierOverride(),
             };
         });
     }
@@ -185,6 +217,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     apiName: loadSnippetsInfo.apiId,
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
+                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
                 },
             })
         ).map((row) => row.sdkId);
@@ -238,6 +271,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     apiName: storeSnippetsInfo.apiId,
                     endpointPath: snippet.endpoint.path,
                     endpointMethod: snippet.endpoint.method,
+                    identifierOverride: snippet.endpoint.identifierOverride,
                     sdkId: sdkInfo.id,
                     snippet: writeBuffer(snippet.snippet),
                 });

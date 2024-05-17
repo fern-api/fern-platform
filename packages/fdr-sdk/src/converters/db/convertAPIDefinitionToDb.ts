@@ -182,6 +182,7 @@ function transformEndpoint({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
+
     return {
         availability: writeShape.availability,
         environments: writeShape.environments,
@@ -192,6 +193,7 @@ function transformEndpoint({
         migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
         method: writeShape.method,
         id: writeShape.id,
+        originalEndpointId: writeShape.originalEndpointId,
         name: writeShape.name,
         path: writeShape.path,
         queryParameters: writeShape.queryParameters,
@@ -220,6 +222,7 @@ function transformEndpoint({
         snippetTemplates: snippets.getSnippetTemplateForEndpoint({
             endpointPath: getEndpointPathAsString(writeShape),
             endpointMethod: writeShape.method,
+            identifierOverride: writeShape.originalEndpointId,
         }),
     };
 }
@@ -501,18 +504,22 @@ function transformCodeExamples({
     const maybePythonSnippet = snippets.getPythonCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     const maybeGoSnippet = snippets.getGoCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     const maybeRubySnippet = snippets.getRubyCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     return {
         nodeAxios: "",
