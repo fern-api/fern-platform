@@ -40,8 +40,6 @@ export class DocsFeStack extends Stack {
             }),
         );
 
-        validateFolderIsNextJsBuildFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR);
-
         const local_preview_bundle_dist_zip = path.resolve(__dirname, "../../ui/local-preview-bundle/dist/out.zip");
         void zipFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR, local_preview_bundle_dist_zip).then(() => {
             new BucketDeployment(this, "deploy-local-preview-bundle2", {
@@ -57,18 +55,6 @@ export class DocsFeStack extends Stack {
 function mkdir(dir: string) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
-    }
-}
-
-function validateFolderIsNextJsBuildFolder(sourceFolder: string) {
-    // test that source folder exists and is a folder
-    if (!fs.existsSync(sourceFolder) || !fs.statSync(sourceFolder).isDirectory()) {
-        throw new Error(`${sourceFolder} does not exist`);
-    }
-
-    // contains BUILD_ID file
-    if (!fs.existsSync(path.join(sourceFolder, "BUILD_ID"))) {
-        throw new Error(`${sourceFolder} does not contain a BUILD_ID file`);
     }
 }
 
