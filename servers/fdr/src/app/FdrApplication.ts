@@ -73,7 +73,7 @@ export class FdrApplication {
                 services?.algoliaIndexSegmentDeleter ?? new AlgoliaIndexSegmentDeleterServiceImpl(this),
             algoliaIndexSegmentManager:
                 services?.algoliaIndexSegmentManager ?? new AlgoliaIndexSegmentManagerServiceImpl(this),
-            s3: services?.s3 ?? new S3ServiceImpl(this),
+            s3: services?.s3 ?? new S3ServiceImpl(this.config),
             slack: services?.slack ?? new SlackServiceImpl(this),
             revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
         };
