@@ -1,8 +1,7 @@
+import { FernButton, FernInput, FernInputProps } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { EyeOpenIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { FC } from "react";
-import { FernButton } from "../components/FernButton";
-import { FernInput, FernInputProps } from "../components/FernInput";
 
 export const PasswordInputGroup: FC<FernInputProps> = ({ ref, ...props }) => {
     const showPassword = useBooleanState(false);

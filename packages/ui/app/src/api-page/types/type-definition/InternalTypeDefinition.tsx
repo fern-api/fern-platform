@@ -1,10 +1,9 @@
+import { FernErrorBoundary, FernTooltipProvider } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
 import { Chip } from "../../../components/Chip";
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { useRouteListener } from "../../../contexts/useRouteListener";
 import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";

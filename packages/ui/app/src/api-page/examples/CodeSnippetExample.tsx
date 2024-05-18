@@ -1,6 +1,6 @@
+import { FernErrorBoundary } from "@fern-ui/components";
 import clsx from "clsx";
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";

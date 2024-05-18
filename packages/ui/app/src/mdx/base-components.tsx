@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { FernCard } from "@fern-ui/components";
 import cn from "clsx";
 import {
     AnchorHTMLAttributes,
@@ -13,7 +14,6 @@ import {
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { FernCard } from "../components/FernCard";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";

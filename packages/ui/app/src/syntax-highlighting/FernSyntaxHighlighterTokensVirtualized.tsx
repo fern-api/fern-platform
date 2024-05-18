@@ -1,9 +1,9 @@
+import { FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import type { Element } from "hast";
 import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 import { visit } from "unist-util-visit";
-import { FernScrollArea } from "../components/FernScrollArea";
 import { HastToJSX } from "../mdx/common/HastToJsx";
 import { parseStringStyle } from "../util/parseStringStyle";
 import "./FernSyntaxHighlighter.css";

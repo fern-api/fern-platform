@@ -1,3 +1,4 @@
+import { FernErrorBoundary } from "@fern-ui/components";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { createStore, Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
@@ -6,7 +7,6 @@ import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";

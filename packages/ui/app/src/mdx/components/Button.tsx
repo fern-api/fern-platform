@@ -1,6 +1,6 @@
+import { FernButton, FernButtonGroup, FernLinkButton } from "@fern-ui/components";
 import clsx from "clsx";
 import { ComponentProps, ReactElement, ReactNode } from "react";
-import { FernButton, FernButtonGroup, FernLinkButton } from "../../components/FernButton";
 
 export declare namespace Button {
     export interface Props {

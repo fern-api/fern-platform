@@ -1,4 +1,5 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernButton, FernButtonGroup, FernErrorBoundary, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
@@ -8,9 +9,6 @@ import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {

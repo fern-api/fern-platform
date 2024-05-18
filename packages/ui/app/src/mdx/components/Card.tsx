@@ -1,7 +1,6 @@
+import { FernCard, FernLinkCard, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn from "clsx";
 import { isValidElement } from "react";
-import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
-import { FernCard, FernLinkCard } from "../../components/FernCard";
 import { Badge } from "./Badge";
 import "./Card.css";
 

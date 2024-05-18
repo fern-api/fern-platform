@@ -6,7 +6,12 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*",
+    "../components/src/FontAwesomeIcon.tsx",
+    "../components/src/Toast.stories.tsx",
+    "../components/src/shared-component-types.ts"
+  ],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },

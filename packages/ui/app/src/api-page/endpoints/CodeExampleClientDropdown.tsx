@@ -1,7 +1,5 @@
+import { FernButton, FernDropdown, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
-import { FernButton } from "../../components/FernButton";
-import { FernDropdown } from "../../components/FernDropdown";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 
 export declare namespace CodeExampleClientDropdown {

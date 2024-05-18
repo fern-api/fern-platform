@@ -1,4 +1,4 @@
-import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { FernErrorTag } from "@fern-ui/components";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";

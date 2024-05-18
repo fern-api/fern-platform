@@ -1,9 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { FernLinkButton } from "@fern-ui/components";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { FernLinkButton } from "../components/FernButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 

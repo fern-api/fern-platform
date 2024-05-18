@@ -1,8 +1,6 @@
+import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { memo, useCallback, useMemo, useState } from "react";
-import { FernButton } from "../../components/FernButton";
-import { FernDropdown } from "../../components/FernDropdown";
-import { FernSegmentedControl } from "../../components/FernSegmentedControl";
 import { Markdown } from "../../mdx/Markdown";
 import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
 import { getDefaultValueForType, matchesTypeReference } from "../utils";

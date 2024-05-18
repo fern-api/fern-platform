@@ -1,6 +1,6 @@
+import { FernErrorBoundary } from "@fern-ui/components";
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import React from "react";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import type { SerializedMdxContent } from "./mdx";
 import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components";
 

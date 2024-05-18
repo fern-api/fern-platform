@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { FC, PropsWithChildren } from "react";
-import { ColorScheme, Size } from "../util/shared-component-types";
+import { ColorScheme, Size } from "./shared-component-types";
 
 export type FernTagSize = Extract<Size, "sm" | "lg">;
 export const FernTagSizes: { [key: string]: FernTagSize } = {

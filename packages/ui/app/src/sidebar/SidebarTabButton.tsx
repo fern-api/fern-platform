@@ -1,7 +1,7 @@
+import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import { memo } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernLink } from "../components/FernLink";
 
 export declare namespace SidebarTabButton {
