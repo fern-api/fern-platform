@@ -1,10 +1,11 @@
 "use client";
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { FernButton, FernButtonGroup, FernErrorTag, FernScrollArea } from "@fern-ui/components";
+import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
+import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,

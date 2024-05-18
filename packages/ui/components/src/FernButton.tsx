@@ -5,7 +5,7 @@ import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
 export type Intent = "none" | "primary" | "success" | "warning" | "danger";
 
-interface FernButtonSharedProps {
+export interface FernButtonSharedProps {
     className?: string;
     icon?: string | ReactNode;
     rightIcon?: string | ReactNode;
@@ -108,7 +108,7 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
     );
 });
 
-function renderButtonContent(
+export function renderButtonContent(
     { icon: leftIcon, rightIcon, mono = false, text, children }: PropsWithChildren<FernButtonSharedProps>,
     buttonTextRef?: React.RefObject<HTMLSpanElement>,
 ) {
@@ -131,7 +131,7 @@ function renderButtonContent(
     );
 }
 
-function getButtonClassName({
+export function getButtonClassName({
     className,
     variant = "filled",
     intent = "none",

@@ -3,7 +3,6 @@ import {
     FernButton,
     FernButtonGroup,
     FernCard,
-    FernErrorTag,
     FernTabs,
     FernTooltip,
     FernTooltipProvider,
@@ -15,6 +14,7 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { FernErrorTag } from "../components/FernErrorBoundary";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";

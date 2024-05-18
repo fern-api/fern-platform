@@ -1,10 +1,4 @@
-import {
-    checkIsExternalUrl,
-    checkIsRelativeUrl,
-    formatUrlString,
-    resolveRelativeUrl,
-    toUrlObject,
-} from "@fern-ui/components";
+import { checkIsExternalUrl, checkIsRelativeUrl, formatUrlString, resolveRelativeUrl, toUrlObject } from "../FernLink";
 
 describe("checkIsExternalUrl", () => {
     it("returns true for external URLs", () => {

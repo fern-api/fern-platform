@@ -1,6 +1,6 @@
-import { FernErrorBoundary } from "@fern-ui/components";
 import { forwardRef, useMemo } from "react";
 import { captureSentryError } from "../analytics/sentry";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "./FernSyntaxHighlighter.css";
 import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
 import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";

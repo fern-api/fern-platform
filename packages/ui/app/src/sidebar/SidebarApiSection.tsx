@@ -1,5 +1,4 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { FernErrorTag } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
@@ -9,6 +8,7 @@ import { isEqual, last, sortBy } from "lodash-es";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
 import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { FernErrorTag } from "../components/FernErrorBoundary";
 import { API_ARTIFACTS_TITLE } from "../config";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { Changelog } from "../util/dateUtils";

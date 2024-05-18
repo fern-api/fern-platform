@@ -1,8 +1,9 @@
-import { FernErrorBoundaryProps, FernErrorTag, FernScrollArea, RemoteFontAwesomeIcon } from "@fern-ui/components";
+import { FernScrollArea, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
+import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
 import { Feedback } from "../custom-docs-page/Feedback";
 import { TableOfContents } from "../custom-docs-page/TableOfContents";
 import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";

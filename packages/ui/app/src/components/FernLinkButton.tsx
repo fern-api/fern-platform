@@ -1,4 +1,4 @@
-import { getButtonClassName, renderButtonContent } from "@fern-ui/components";
+import { FernButtonSharedProps, getButtonClassName, renderButtonContent } from "@fern-ui/components";
 import Link from "next/link";
 import { ComponentProps, PropsWithChildren, forwardRef } from "react";
 import { FernLink } from "./FernLink";
