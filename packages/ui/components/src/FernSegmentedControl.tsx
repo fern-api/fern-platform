@@ -4,6 +4,7 @@ import { FC } from "react";
 import { FernButton } from "./FernButton";
 import { FernDropdown } from "./FernDropdown";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import "./index.scss";
 
 interface FernSegmentedControlProps {
     className?: string;

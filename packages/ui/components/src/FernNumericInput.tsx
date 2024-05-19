@@ -12,6 +12,7 @@ import {
     useState,
 } from "react";
 import { FernButton } from "./FernButton";
+import "./index.scss";
 
 export interface FernNumericInputProps extends ComponentProps<"input"> {
     inputClassName?: string;

@@ -1,5 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { FC, PropsWithChildren, useRef, useState } from "react";
+import "./index.scss";
 
 interface FernCollapseProps {
     isOpen?: boolean;

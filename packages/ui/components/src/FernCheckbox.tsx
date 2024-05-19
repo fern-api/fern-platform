@@ -3,6 +3,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, ReactNode } from "react";
 import "./FernCheckbox.css";
+import "./index.scss";
 
 interface FernCheckboxProps extends Checkbox.CheckboxProps {
     labelClassName?: string;

@@ -1,6 +1,7 @@
 import * as Switch from "@radix-ui/react-switch";
 import cn from "clsx";
 import { ReactElement } from "react";
+import "./index.scss";
 
 export function FernSwitch(props: Switch.SwitchProps): ReactElement {
     return (

@@ -3,6 +3,7 @@ import moment from "moment";
 import { createRef, ReactElement, useEffect, useState } from "react";
 import { FastForward, Pause, Play, Rewind, RotateCcw, Volume2, VolumeX } from "react-feather";
 import { FernButton, FernButtonGroup } from "./FernButton";
+import "./index.scss";
 
 export interface FernAudioPlayerProps {
     /** The URL of the audio file to play */

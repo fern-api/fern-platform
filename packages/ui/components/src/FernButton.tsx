@@ -1,5 +1,5 @@
 import cn from "clsx";
-import { ComponentProps, forwardRef, PropsWithChildren, ReactNode, useRef } from "react";
+import { ComponentProps, forwardRef, PropsWithChildren, ReactElement, ReactNode, useRef } from "react";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
@@ -111,7 +111,7 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
 export function renderButtonContent(
     { icon: leftIcon, rightIcon, mono = false, text, children }: PropsWithChildren<FernButtonSharedProps>,
     buttonTextRef?: React.RefObject<HTMLSpanElement>,
-) {
+): ReactElement {
     children = children ?? text;
     return (
         <span className="fern-button-content">
@@ -144,7 +144,7 @@ export function getButtonClassName({
     rightIcon,
     text,
     children,
-}: PropsWithChildren<FernButtonSharedProps>) {
+}: PropsWithChildren<FernButtonSharedProps>): string {
     children = children ?? text;
     return cn(className, "fern-button", variant, size, {
         [intent]: intent !== "none",
