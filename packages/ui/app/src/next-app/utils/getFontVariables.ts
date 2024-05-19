@@ -28,9 +28,15 @@ function generateFontFace(
     if (file == null) {
         return undefined;
     }
+    let fontExtension: string;
+    try {
+        fontExtension = getFontExtension(new URL(file.url).pathname);
+    } catch (err) {
+        fontExtension = getFontExtension(file.url);
+    }
     const lines: string[] = [
         `font-family: '${fontConfig.name}'`,
-        `src: url('${file.url}') format('${getFontExtension(new URL(file.url).pathname)}')`,
+        `src: url('${file.url}') format('${fontExtension}')`,
         `font-weight: ${variant.weight?.join(" ") ?? "100 900"}`,
         `font-style: ${variant.style?.[0] ?? "normal"}`,
         `font-display: ${fontConfig.display ?? "swap"}`,

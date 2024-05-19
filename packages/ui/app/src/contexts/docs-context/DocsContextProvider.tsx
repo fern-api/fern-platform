@@ -150,13 +150,19 @@ function getPreloadedFont(
     if (file == null) {
         return null;
     }
+    let fontExtension: string;
+    try {
+        fontExtension = getFontExtension(new URL(file).pathname);
+    } catch (err) {
+        fontExtension = getFontExtension(file);
+    }
     return (
         <link
             key={variant.fontFile}
             rel="preload"
             href={file}
             as="font"
-            type={`font/${getFontExtension(new URL(file).pathname)}`}
+            type={`font/${fontExtension}`}
             crossOrigin="anonymous"
         />
     );
