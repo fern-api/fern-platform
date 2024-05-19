@@ -30,7 +30,7 @@ function generateFontFace(
     }
     const lines: string[] = [
         `font-family: '${fontConfig.name}'`,
-        `src: url('${file.url}') format('${getFontExtension(file.url)}')`,
+        `src: url('${file.url}') format('${getFontExtension(new URL(file.url).pathname)}')`,
         `font-weight: ${variant.weight?.join(" ") ?? "100 900"}`,
         `font-style: ${variant.style?.[0] ?? "normal"}`,
         `font-display: ${fontConfig.display ?? "swap"}`,
