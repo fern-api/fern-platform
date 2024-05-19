@@ -156,7 +156,7 @@ function getPreloadedFont(
             rel="preload"
             href={file}
             as="font"
-            type={`font/${getFontExtension(new URL(file).pathname)}`}
+            type={`font/${getFontExtension(file)}`}
             crossOrigin="anonymous"
         />
     );
