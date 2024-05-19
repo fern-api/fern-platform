@@ -7,21 +7,9 @@
     "directory": "packages/components"
   },
   "private": true,
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build && pnpm --filter=@fern-ui/components copy-files",
-    "copy-files": "copyfiles -u 1 src/**/*.css src/**/*.scss dist/",
+    "compile": "tsc && vite build",
     "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
