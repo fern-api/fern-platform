@@ -7,6 +7,17 @@
     "directory": "packages/components"
   },
   "private": true,
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsc && vite build",
