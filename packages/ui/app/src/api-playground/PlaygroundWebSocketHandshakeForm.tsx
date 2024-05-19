@@ -1,5 +1,5 @@
+import { FernCard } from "@fern-ui/components";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { FernCard } from "../components/FernCard";
 import { Callout } from "../mdx/components/Callout";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";

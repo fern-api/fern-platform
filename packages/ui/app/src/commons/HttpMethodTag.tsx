@@ -1,8 +1,7 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernTag, FernTagColorScheme, FernTagProps, FernTooltip } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactNode, memo } from "react";
-import { FernTag, FernTagColorScheme, FernTagProps } from "../components/FernTag";
-import { FernTooltip } from "../components/FernTooltip";
 
 export declare namespace HttpMethodTag {
     export interface Props extends FernTagProps {

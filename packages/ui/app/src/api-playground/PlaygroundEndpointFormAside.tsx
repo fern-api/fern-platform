@@ -1,3 +1,4 @@
+import { FernButton, FernButtonGroup, FernCollapse, FernScrollArea } from "@fern-ui/components";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
@@ -7,9 +8,6 @@ import { isUndefined } from "lodash-es";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernCollapse } from "../components/FernCollapse";
-import { FernScrollArea } from "../components/FernScrollArea";
 import { useNavigationContext } from "../contexts/navigation-context";
 import {
     dereferenceObjectProperties,

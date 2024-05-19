@@ -1,8 +1,8 @@
+import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { range } from "lodash-es";
 import { FC, ReactNode } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { useCollapseSidebar } from "./CollapseSidebarContext";
 
 interface SidebarHeadingProps {

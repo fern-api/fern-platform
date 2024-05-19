@@ -4,8 +4,8 @@ import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+import { FernButton } from "../../../components/src/FernButton";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
-import { FernButton } from "./FernButton";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred

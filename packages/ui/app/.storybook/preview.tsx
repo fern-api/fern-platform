@@ -1,8 +1,7 @@
+import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
 import React from "react";
-import { Toaster } from "../src/components/FernToast";
-import { FernTooltipProvider } from "../src/components/FernTooltip";
 import "../src/next-app/globals.scss";
 import "./variables.css";
 

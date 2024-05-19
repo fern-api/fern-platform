@@ -1,5 +1,6 @@
 import cn from "clsx";
 import { forwardRef } from "react";
+import "./index.scss";
 
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {

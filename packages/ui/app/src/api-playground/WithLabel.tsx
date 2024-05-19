@@ -1,10 +1,9 @@
+import { FernButton, FernTooltip } from "@fern-ui/components";
 import { Cross1Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
-import { FernButton } from "../components/FernButton";
-import { FernTooltip } from "../components/FernTooltip";
 import { Markdown } from "../mdx/Markdown";
 import {
     ResolvedObjectProperty,

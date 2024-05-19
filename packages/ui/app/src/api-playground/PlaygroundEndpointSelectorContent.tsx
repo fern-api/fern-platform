@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernButton, FernInput, FernScrollArea, FernTooltip } from "@fern-ui/components";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
@@ -7,10 +8,6 @@ import { compact, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { FernButton } from "../components/FernButton";
-import { FernInput } from "../components/FernInput";
-import { FernScrollArea } from "../components/FernScrollArea";
-import { FernTooltip } from "../components/FernTooltip";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });

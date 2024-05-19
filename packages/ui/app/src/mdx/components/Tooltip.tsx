@@ -1,5 +1,5 @@
+import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { PropsWithChildren, ReactElement, ReactNode } from "react";
-import { FernTooltip, FernTooltipProvider } from "../../components/FernTooltip";
 
 interface TooltipProps {
     tip: string | ReactNode;

@@ -4,6 +4,7 @@ import { FC } from "react";
 import { FernDropdown } from "./FernDropdown";
 import "./FernRadioGroup.css";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import "./index.scss";
 
 interface FernRadioGroupProps extends RadioGroup.RadioGroupProps {
     options: FernDropdown.Option[];

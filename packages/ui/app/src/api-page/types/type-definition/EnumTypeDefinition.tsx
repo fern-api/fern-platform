@@ -1,11 +1,9 @@
+import { FernButton, FernInput, FernTooltipProvider } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import React, { ReactElement, useState } from "react";
 import { Search } from "react-feather";
-import { FernButton } from "../../../components/FernButton";
-import { FernInput } from "../../../components/FernInput";
-import { FernTooltipProvider } from "../../../components/FernTooltip";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";

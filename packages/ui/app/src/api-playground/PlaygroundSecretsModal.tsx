@@ -1,12 +1,10 @@
+import { FernButton, FernButtonGroup, FernModal, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ArrowRightIcon, Cross1Icon, TrashIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { FC, useState } from "react";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernModal } from "../components/FernModal";
-import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { obfuscateSecret } from "./utils";
 

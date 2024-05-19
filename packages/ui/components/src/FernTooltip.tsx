@@ -1,10 +1,11 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import cn from "clsx";
 import { FC, ReactNode } from "react";
-import { useIsReady } from "../contexts/useIsReady";
+import "./index.scss";
 
 interface FernTooltipProps extends Tooltip.TooltipProps, Omit<Tooltip.TooltipContentProps, "content"> {
     content: ReactNode | undefined;
+    isReady?: boolean;
 }
 
 export const FernTooltip: FC<FernTooltipProps> = ({
@@ -15,9 +16,9 @@ export const FernTooltip: FC<FernTooltipProps> = ({
     onOpenChange,
     delayDuration,
     disableHoverableContent,
+    isReady,
     ...props
 }) => {
-    const isReady = useIsReady();
     if (content == null || content === "" || !isReady) {
         return <>{children}</>;
     }

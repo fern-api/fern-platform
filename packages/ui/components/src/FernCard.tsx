@@ -1,21 +1,10 @@
 import cn from "clsx";
-import { LinkProps } from "next/link";
-import { ComponentProps, forwardRef, PropsWithChildren } from "react";
-import { FernLink } from "./FernLink";
+import { ComponentProps, forwardRef } from "react";
+import "./index.scss";
 
-interface FernCardProps {
+export interface FernCardProps {
     className?: string;
 }
-
-export const FernLinkCard = forwardRef<HTMLAnchorElement, PropsWithChildren<FernCardProps & LinkProps>>(
-    function FernLinkCard({ children, className, ...props }, ref) {
-        return (
-            <FernLink className={cn("fern-card interactive", className)} {...props} ref={ref}>
-                {children}
-            </FernLink>
-        );
-    },
-);
 
 export const FernCard = forwardRef<HTMLDivElement, ComponentProps<"div">>(function FernCard(
     { children, className, ...props },

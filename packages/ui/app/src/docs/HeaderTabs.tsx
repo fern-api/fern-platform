@@ -1,5 +1,5 @@
+import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { ReactElement } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 

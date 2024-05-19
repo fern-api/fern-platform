@@ -1,8 +1,6 @@
+import { FernButton, FernDropdown, FernInput, FernInputProps } from "@fern-ui/components";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { ReactElement, useEffect, useMemo, useState } from "react";
-import { FernButton } from "../../components/FernButton";
-import { FernDropdown } from "../../components/FernDropdown";
-import { FernInput, FernInputProps } from "../../components/FernInput";
 
 interface Voice {
     voice_id: string;

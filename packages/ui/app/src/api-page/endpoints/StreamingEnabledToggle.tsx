@@ -1,6 +1,6 @@
+import { FernChip } from "@fern-ui/components";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { FC, PropsWithChildren } from "react";
-import { FernChip } from "../../components/FernChip";
 
 export declare namespace StreamingEnabledToggle {
     export interface Props {
