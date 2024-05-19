@@ -10,8 +10,6 @@
         "autoprefixer",
         "postcss",
         "postcss-import",
-        "cssnano",
-        "unist-util-visit",
         "@shikijs/transformers",
         "@chromatic-com/storybook",
         "@storybook/addon-essentials",

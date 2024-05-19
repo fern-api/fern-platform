@@ -19,8 +19,9 @@
     "*.scss"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build && pnpm --filter=@fern-ui/components copy-files",
+    "copy-files": "copyfiles -u 1 src/**/*.css src/**/*.scss dist/",
     "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -51,6 +52,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@shikijs/transformers": "^1.2.2",
     "clsx": "^2.1.0",
+    "copyfiles": "^2.4.1",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -91,6 +93,11 @@
     "typescript": "5.4.3",
     "vite": "^5.2.6",
     "vitest": "^1.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.74.1"
   },
   "eslintConfig": {
     "extends": [
