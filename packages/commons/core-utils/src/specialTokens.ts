@@ -278,6 +278,8 @@ export const SPECIAL_TOKENS = [
     "MLP", // Multi-Layer Perceptron
     "RBM", // Restricted Boltzmann Machine
     "CRF", // Conditional Random Field
+    "Spark",
+    "Airflow",
 
     // Media
     "PDF",
@@ -326,4 +328,55 @@ export const SPECIAL_TOKENS = [
     "SWF",
     "MKV",
     "WebM",
+
+        // Cloud Computing
+    "GCP",        // Google Cloud Platform
+    "AZURE",      // Microsoft Azure
+    "AWS",        // Amazon Web Services
+    "VM",         // Virtual Machines
+    "VPC",        // Virtual Private Cloud
+    "S3",         // AWS Simple Storage Service
+    "EC2",        // AWS Elastic Compute Cloud
+    "Lambda",     // AWS Lambda
+    "Azure Functions",
+    "Google App Engine",
+    "Kubernetes",
+    "Docker",
+
+    // Data Storage and Databases
+    "DynamoDB",
+    "CosmosDB",
+    "BigQuery",
+    "Redshift",
+    "Snowflake",
+    "Cassandra",
+    "MongoDB",
+    "Hadoop",
+
+    // Security and Compliance
+    "SOC1",       // Service Organization Control 1
+    "SOC2",       // Service Organization Control 2
+    "SOC3",       // Service Organization Control 3
+    "PCI DSS",    // Payment Card Industry Data Security Standard
+    "WAF",        // Web Application Firewall
+    "IAM",        // Identity and Access Management
+
+    // Networking
+    "SDN",        // Software-Defined Networking
+    "MPLS",       // Multi-Protocol Label Switching
+    "BGP",        // Border Gateway Protocol
+
+    // Software Development
+    "CI/CD",      // Continuous Integration/Continuous Deployment
+    "Git",
+    "Jenkins",
+    "Terraform",
+    "Ansible",
+
+    // Frameworks and Libraries
+    "React",
+    "Angular",
+    "Vue.js",
+    "Node.js",
+    ".NET",
 ];
