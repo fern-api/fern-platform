@@ -278,8 +278,6 @@ export const SPECIAL_TOKENS = [
     "MLP", // Multi-Layer Perceptron
     "RBM", // Restricted Boltzmann Machine
     "CRF", // Conditional Random Field
-    "Spark",
-    "Airflow",
 
     // Media
     "PDF",
