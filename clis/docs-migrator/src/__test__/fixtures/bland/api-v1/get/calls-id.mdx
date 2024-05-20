@@ -94,15 +94,13 @@ If at any point an error occurs, it will be recorded in the `error_message` fiel
 - `no-answer`: The call was not answered.
 - `null`: Not enabled, or still processing the result.
 
-    <Accordion title="Notes:">
+        <Accordion title="Notes:">
+
   - Determinations are based on audio from the first five seconds of the phone call.
   - `unknown` is most likely a human, especially if there are multiple transcripts.
-  - Optimize calls for accurate results by getting humans to respond in the first five seconds:
-    - Increase `speed` in `voice_settings`
-    - Use with `wait_for_greeting`
-    - Use a short greeting in `first_sentence` such as "Hello?" or "Hi, is this \{\{name\}\}?"
-  </Accordion>
-</ResponseField>
+  - Optimize calls for accurate results by getting humans to respond in the first five seconds: - Increase `speed` in `voice_settings` - Use with `wait_for_greeting` - Use a short greeting in `first_sentence` such as "Hello?" or "Hi, is this \{\{name\}\}?"
+    </Accordion>
+    </ResponseField>
 
 <ResponseField name="endpoint_url" type="string">
   The URL that was called to dispatch the phone call.
