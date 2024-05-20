@@ -36,7 +36,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-fern/vercel": "0.0.3",
     "@types/jest": "^29.5.11",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.12.12",
     "@types/yargs": "^17.0.32",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.3",
