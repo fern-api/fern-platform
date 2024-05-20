@@ -118,7 +118,8 @@ export class ApiTypeResolver {
         const uncached = Promise.resolve(
             visitDiscriminatedUnion(typeReference, "type")._visit<ResolvedTypeShape | Promise<ResolvedTypeShape>>({
                 literal: (literal) => ({
-                    ...literal.value,
+                    type: "literal",
+                    value: literal.value,
                     description: undefined,
                     availability: undefined,
                 }),
@@ -131,7 +132,6 @@ export class ApiTypeResolver {
                     type: "optional",
                     shape: await this.unwrapOptionalRaw(await this.resolveTypeReference(optional.itemType)),
                     availability: undefined,
-                    defaultValue: optional.defaultValue,
                     description: undefined,
                 }),
                 list: async (list) => ({
@@ -161,7 +161,8 @@ export class ApiTypeResolver {
                     return { type: "reference", typeId };
                 },
                 primitive: (primitive) => ({
-                    type: primitive.value.type,
+                    type: "primitive",
+                    value: primitive.value,
                     description: undefined,
                     availability: undefined,
                 }),

@@ -14,7 +14,7 @@ function path(key: string): ResolvedEndpointPathParts.PathParameter {
     return {
         type: "pathParameter",
         key,
-        valueShape: { type: "string", description: undefined, availability: undefined },
+        valueShape: { type: "primitive", description: undefined, availability: undefined, value: { type: "string" } },
         hidden: false,
         description: undefined,
         availability: undefined,

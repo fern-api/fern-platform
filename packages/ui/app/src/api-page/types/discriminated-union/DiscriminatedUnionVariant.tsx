@@ -43,8 +43,11 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 {
                     key: discriminant,
                     valueShape: {
-                        type: "stringLiteral",
-                        value: unionVariant.discriminantValue,
+                        type: "literal",
+                        value: {
+                            type: "stringLiteral",
+                            value: unionVariant.discriminantValue,
+                        },
                         description: undefined,
                         availability: undefined,
                     },
