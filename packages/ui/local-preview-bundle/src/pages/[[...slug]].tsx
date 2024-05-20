@@ -65,13 +65,9 @@ export default function LocalPreviewDocs(): ReactElement {
                             position: "top-center",
                             dismissible: false,
                         });
-                        // eslint-disable-next-line no-console
-                        console.log("Reloading...");
                     } else if (data.type === "finishReload") {
                         await loadData();
                         toast.dismiss(toastInstance.current);
-                        // eslint-disable-next-line no-console
-                        console.log("Reloaded.");
                     }
                 }
             } catch (error) {
@@ -100,8 +96,6 @@ export default function LocalPreviewDocs(): ReactElement {
                 if (isCanceled) {
                     return;
                 }
-                // eslint-disable-next-line no-console
-                console.debug(result);
                 if (result.type === "props") {
                     setDocsProps(result.props);
                 } else if (result.type === "notFound") {
