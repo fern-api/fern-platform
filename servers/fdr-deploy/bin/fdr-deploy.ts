@@ -48,12 +48,12 @@ async function main() {
                     environmentType,
                     environmentInfo,
                     {
-                        desiredTaskCount: 3,
-                        maxTaskCount: 10,
+                        desiredTaskCount: 6,
+                        maxTaskCount: 16,
                         redis: true,
-                        memory: 4096,
+                        memory: 2048,
                         redisClusteringModeEnabled: false,
-                        cpu: 2048,
+                        cpu: 1024,
                         cacheName: "FernDocsCacheTwo",
                     },
                     {
