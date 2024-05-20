@@ -17,3 +17,4 @@ pnpm-lock.yaml
 **/generated/
 **/.serverless/**
 clis/docs-migrator/src/__test__/fixtures/**
+clis/docs-migrator/src/__test__/fixtures/bland/api-reference/endpoint/call.mdx
