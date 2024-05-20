@@ -1,7 +1,9 @@
 export { Stream } from "./api-playground/Stream";
 export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
+export { toast } from "./components/FernToast";
 export { DEFAULT_FEATURE_FLAGS } from "./contexts/FeatureFlagContext";
 export type { FeatureFlags } from "./contexts/FeatureFlagContext";
+export { LocalPreviewContextProvider } from "./contexts/LocalPreviewContext";
 export * from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";
 export { ApiDefinitionResolver } from "./resolver/ApiDefinitionResolver";

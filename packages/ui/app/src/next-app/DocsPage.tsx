@@ -3,7 +3,6 @@ import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
-import { Toaster } from "../components/FernToast";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
@@ -56,7 +55,6 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     <Docs logoHeight={logoHeight} logoHref={logoHref} />
                 </NavigationContextProvider>
             </DocsContextProvider>
-            <Toaster />
         </FeatureFlagContext.Provider>
     );
 }

@@ -1,5 +1,6 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
+import { ThemeProvider } from "next-themes";
 import React from "react";
 import { Toaster } from "../src/components/FernToast";
 import { FernTooltipProvider } from "../src/components/FernTooltip";
@@ -8,10 +9,12 @@ import "./variables.css";
 
 const globalDecorator = (Story) => (
     <React.Fragment>
-        <FernTooltipProvider>
-            <Story />
-            <Toaster />
-        </FernTooltipProvider>
+        <ThemeProvider>
+            <FernTooltipProvider>
+                <Story />
+                <Toaster />
+            </FernTooltipProvider>
+        </ThemeProvider>
     </React.Fragment>
 );
 export const decorators = [

@@ -1431,6 +1431,9 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/loadable':
+        specifier: workspace:*
+        version: link:../../commons/loadable
       '@fern-ui/ui':
         specifier: workspace:*
         version: link:../app
