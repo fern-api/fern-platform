@@ -16,3 +16,4 @@ out
 pnpm-lock.yaml
 **/generated/
 **/.serverless/**
+clis/docs-migrators/src/__test__/fixtures/**
