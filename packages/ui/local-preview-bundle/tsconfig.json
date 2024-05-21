@@ -10,7 +10,6 @@
     { "path": "../app" },
     { "path": "../../fdr-sdk" },
     { "path": "../../commons/fdr-utils" },
-    { "path": "../../commons/loadable" },
     { "path": "../../commons/react/react-commons" }
   ]
 }

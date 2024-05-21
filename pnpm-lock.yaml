@@ -1431,9 +1431,6 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
-      '@fern-ui/loadable':
-        specifier: workspace:*
-        version: link:../../commons/loadable
       '@fern-ui/react-commons':
         specifier: workspace:*
         version: link:../../commons/react/react-commons
