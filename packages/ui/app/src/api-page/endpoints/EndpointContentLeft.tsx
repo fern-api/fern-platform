@@ -289,8 +289,8 @@ function shouldShowExpandCollapse(
     depth = 0,
 ): boolean {
     return visitDiscriminatedUnion(shape, "type")._visit({
-        string: () => false,
-        boolean: () => false,
+        primitive: () => false,
+        literal: () => false,
         object: (object) =>
             depth > 1
                 ? true
@@ -304,18 +304,9 @@ function shouldShowExpandCollapse(
         alias: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         unknown: () => false,
         formData: () => false,
-        integer: () => false,
-        double: () => false,
-        long: () => false,
-        datetime: () => false,
-        uuid: () => false,
-        base64: () => false,
-        date: () => false,
         optional: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         list: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         set: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        booleanLiteral: () => false,
-        stringLiteral: () => false,
         reference: ({ typeId }) => {
             const referenceShape = types[typeId];
             if (referenceShape == null) {

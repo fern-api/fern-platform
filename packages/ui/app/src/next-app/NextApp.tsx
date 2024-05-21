@@ -40,7 +40,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                             <JotaiProvider store={store}>
                                 <LayoutBreakpointProvider>
                                     <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                                    {pageProps != null && <Component {...pageProps} />}
+                                    <Component {...pageProps} />
                                 </LayoutBreakpointProvider>
                             </JotaiProvider>
                         </RouteListenerContextProvider>

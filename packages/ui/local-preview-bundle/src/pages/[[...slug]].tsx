@@ -1,14 +1,11 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk";
 import { toast } from "@fern-ui/components";
-import { DocsPage, LocalPreviewContextProvider, NextApp } from "@fern-ui/ui";
-import { Router, useRouter } from "next/router";
+import { useDeepCompareEffect } from "@fern-ui/react-commons";
+import { DocsPage, useSetThemeColors } from "@fern-ui/ui";
+import { useRouter } from "next/router";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
 import { getDocsPageProps } from "../utils/getDocsPageProps";
-
-const IS_LOCAL_PREVIEW = {
-    isLocalPreview: true,
-};
 
 interface LocalPreviewWebsocketMessage {
     version: 1;
@@ -77,8 +74,22 @@ export default function LocalPreviewDocs(): ReactElement {
                 await loadData();
             }
         };
+        websocket.onconnecting = () => {
+            if (websocket.reconnectAttempts > 0) {
+                toastInstance.current = toast.error("Disconnected from server. Reconnecting...", {
+                    id: toastInstance.current,
+                    duration: Number.POSITIVE_INFINITY,
+                    dismissible: true,
+                    position: "top-center",
+                });
+            }
+        };
+        websocket.onopen = () => {
+            toast.dismiss(toastInstance.current);
+        };
         return () => {
             websocket.close();
+            toast.dismiss(toastInstance.current);
             isCanceled = true;
         };
     }, []);
@@ -120,11 +131,16 @@ export default function LocalPreviewDocs(): ReactElement {
         };
     }, [docs, router]);
 
-    return (
-        <LocalPreviewContextProvider value={IS_LOCAL_PREVIEW}>
-            <NextApp router={router as Router} pageProps={docsProps} Component={DocsPage} />
-        </LocalPreviewContextProvider>
-    );
+    const setThemeColors = useSetThemeColors();
+    useDeepCompareEffect(() => {
+        setThemeColors(docsProps?.colors);
+    }, [docsProps?.colors]);
+
+    if (docsProps == null) {
+        return <></>;
+    }
+
+    return <DocsPage {...docsProps} />;
 }
 
 async function loadDocsForUrl(origin: string) {

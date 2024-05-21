@@ -30,8 +30,8 @@ export function sortKeysByShape(
         return obj;
     }
     return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
-        string: () => obj,
-        boolean: () => obj,
+        primitive: () => obj,
+        literal: () => obj,
         object: (object) => {
             const objectProperties = dereferenceObjectProperties(object, types);
             return isPlainObject(obj)
@@ -76,20 +76,11 @@ export function sortKeysByShape(
             });
         },
         enum: () => obj,
-        integer: () => obj,
-        double: () => obj,
-        long: () => obj,
-        datetime: () => obj,
-        uuid: () => obj,
-        base64: () => obj,
-        date: () => obj,
         optional: ({ shape }) => sortKeysByShape(obj, shape, types),
         list: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape, types)) : obj),
         set: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape, types)) : obj),
         map: ({ valueShape }) =>
             isPlainObject(obj) ? mapValues(obj, (value) => sortKeysByShape(value, valueShape, types)) : obj,
-        booleanLiteral: () => obj,
-        stringLiteral: () => obj,
         unknown: () => obj,
         reference: ({ typeId }) => sortKeysByShape(obj, types[typeId], types),
         formData: ({ properties }) => {

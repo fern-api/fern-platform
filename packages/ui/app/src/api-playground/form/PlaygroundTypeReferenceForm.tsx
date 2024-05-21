@@ -163,151 +163,162 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                 />
             </WithLabel>
         ),
-        string: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                {domain.includes("elevenlabs") && property?.key === "voice_id" ? (
-                    <PlaygroundElevenLabsVoiceIdForm
-                        id={id}
-                        className="w-full"
-                        value={typeof value === "string" ? value : ""}
-                        onValueChange={onChange}
-                        onFocus={() => {
-                            setFocusedParameter(id);
-                        }}
-                        disabled={disabled}
-                    />
-                ) : (
-                    <FernInput
-                        id={id}
-                        className="w-full"
-                        value={typeof value === "string" ? value : ""}
-                        onValueChange={onChange}
-                        onFocus={() => {
-                            setFocusedParameter(id);
-                        }}
-                        disabled={disabled}
-                    />
-                )}
-            </WithLabel>
-        ),
-        boolean: () => {
-            const checked = typeof value === "boolean" ? value : undefined;
-            return (
-                <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                    <div className="flex items-center justify-start gap-3">
-                        {/* <label className="t-muted font-mono text-sm leading-none">
+        primitive: (primitive) =>
+            visitDiscriminatedUnion(primitive.value, "type")._visit<ReactElement | null>({
+                string: (string) => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        {domain.includes("elevenlabs") && property?.key === "voice_id" ? (
+                            <PlaygroundElevenLabsVoiceIdForm
+                                id={id}
+                                className="w-full"
+                                value={typeof value === "string" ? value : ""}
+                                onValueChange={onChange}
+                                onFocus={() => {
+                                    setFocusedParameter(id);
+                                }}
+                                disabled={disabled}
+                            />
+                        ) : (
+                            <FernInput
+                                id={id}
+                                className="w-full"
+                                value={typeof value === "string" ? value : ""}
+                                onValueChange={onChange}
+                                onFocus={() => {
+                                    setFocusedParameter(id);
+                                }}
+                                disabled={disabled}
+                                placeholder={string.default}
+                            />
+                        )}
+                    </WithLabel>
+                ),
+                boolean: () => {
+                    const checked = typeof value === "boolean" ? value : undefined;
+                    return (
+                        <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                            <div className="flex items-center justify-start gap-3">
+                                {/* <label className="t-muted font-mono text-sm leading-none">
                         {checked == null ? "undefined" : checked ? "true" : "false"}
                     </label> */}
-                        <FernSwitch checked={checked} onCheckedChange={onChange} id={id} disabled={disabled} />
-                    </div>
-                </WithLabel>
-            );
-        },
-        integer: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernNumericInput
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "number" ? value : undefined}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disallowFloat={true}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
-        double: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernNumericInput
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "number" ? value : undefined}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
-        long: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernNumericInput
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "number" ? value : undefined}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disallowFloat={true}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
-        datetime: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernInput
-                    id={id}
-                    type="datetime-local"
-                    className="w-full"
-                    placeholder="MM/DD/YYYY HH:MM"
-                    value={typeof value === "string" ? value : undefined}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
-        uuid: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernInput
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "string" ? value : ""}
-                    placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
-        base64: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernTextarea
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "string" ? value : ""}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
-        date: () => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <FernInput
-                    id={id}
-                    type="date"
-                    className="w-full"
-                    placeholder="MM/DD/YYYY"
-                    value={typeof value === "string" ? value : undefined}
-                    onValueChange={onChange}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
+                                <FernSwitch checked={checked} onCheckedChange={onChange} id={id} disabled={disabled} />
+                            </div>
+                        </WithLabel>
+                    );
+                },
+                integer: (integer) => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernNumericInput
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "number" ? value : undefined}
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disallowFloat={true}
+                            disabled={disabled}
+                            defaultValue={integer.default}
+                            max={integer.maximum}
+                            min={integer.minimum}
+                        />
+                    </WithLabel>
+                ),
+                double: (double) => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernNumericInput
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "number" ? value : undefined}
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disabled={disabled}
+                            defaultValue={double.default}
+                            max={double.maximum}
+                            min={double.minimum}
+                        />
+                    </WithLabel>
+                ),
+                long: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernNumericInput
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "number" ? value : undefined}
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disallowFloat={true}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                datetime: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernInput
+                            id={id}
+                            type="datetime-local"
+                            className="w-full"
+                            placeholder="MM/DD/YYYY HH:MM"
+                            value={typeof value === "string" ? value : undefined}
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                uuid: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernInput
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "string" ? value : ""}
+                            placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                base64: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernTextarea
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "string" ? value : ""}
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                date: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernInput
+                            id={id}
+                            type="date"
+                            className="w-full"
+                            placeholder="MM/DD/YYYY"
+                            value={typeof value === "string" ? value : undefined}
+                            onValueChange={onChange}
+                            onFocus={() => {
+                                setFocusedParameter(id);
+                            }}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                _other: () => null,
+            }),
         optional: () => null, // should be handled by the parent
         list: (list) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
@@ -331,16 +342,20 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                 />
             </WithLabel>
         ),
-        stringLiteral: (literal) => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <span>{literal.value}</span>
-            </WithLabel>
-        ),
-        booleanLiteral: (literal) => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <span>{literal.value ? "TRUE" : "FALSE"}</span>
-            </WithLabel>
-        ),
+        literal: (literal) =>
+            visitDiscriminatedUnion(literal.value, "type")._visit({
+                stringLiteral: (stringLiteral) => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <span>{stringLiteral.value}</span>
+                    </WithLabel>
+                ),
+                booleanLiteral: (stringLiteral) => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <span>{stringLiteral.value ? "TRUE" : "FALSE"}</span>
+                    </WithLabel>
+                ),
+                _other: () => null,
+            }),
         unknown: () => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                 <FernTextarea
