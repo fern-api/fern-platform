@@ -471,7 +471,6 @@ export interface ResolvedDiscriminatedUnionShape extends WithMetadata {
 export interface ResolvedOptionalShape extends WithMetadata {
     type: "optional";
     shape: NonOptionalTypeShapeWithReference;
-    defaultValue: unknown | undefined;
 }
 
 export interface ResolvedListShape extends WithMetadata {
@@ -516,12 +515,12 @@ interface ResolvedAliasShape extends WithMetadata {
 
 export type ResolvedTypeShape =
     | ResolvedTypeDefinition
-    | (APIV1Read.PrimitiveType & WithMetadata)
+    | (APIV1Read.TypeReference.Primitive & WithMetadata)
     | ResolvedOptionalShape
     | ResolvedListShape
     | ResolvedSetShape
     | ResolvedMapShape
-    | (APIV1Read.LiteralType & WithMetadata)
+    | (APIV1Read.TypeReference.Literal & WithMetadata)
     | APIV1Read.TypeReference.Unknown
     | ResolvedReferenceShape;
 

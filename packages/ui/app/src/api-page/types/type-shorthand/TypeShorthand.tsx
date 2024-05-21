@@ -1,5 +1,7 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import clsx from "clsx";
+import numeral from "numeral";
 import { ReactNode } from "react";
 import {
     ResolvedTypeDefinition,
@@ -8,7 +10,6 @@ import {
     unwrapOptional,
     unwrapReference,
 } from "../../../resolver/types";
-import { unknownToString } from "../../../util/unknownToString";
 
 export interface TypeShorthandOptions {
     plural?: boolean;
@@ -24,6 +25,10 @@ export function renderTypeShorthandRoot(
 ): ReactNode {
     const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     const unaliasedShape = unwrapAlias(shape, types);
+    const defaultsTo =
+        unaliasedShape.type === "optional" && unaliasedShape.shape.type === "primitive"
+            ? renderDefaultTo(unaliasedShape.shape.value)
+            : null;
     return (
         <span className={clsx("text-inherit inline-flex items-baseline gap-2 text-xs", className)}>
             <span>{typeShorthand}</span>
@@ -32,15 +37,29 @@ export function renderTypeShorthandRoot(
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {unaliasedShape.type === "optional" && unaliasedShape.defaultValue !== undefined && (
-                <span>{renderDefaultTo(unaliasedShape.defaultValue)}</span>
-            )}
+            {defaultsTo != null && <span>{`Defaults to ${defaultsTo}`}</span>}
         </span>
     );
 }
 
-function renderDefaultTo(defaultsTo: unknown): string {
-    return `Defaults to ${unknownToString(defaultsTo)}`;
+function renderDefaultTo(shape: APIV1Read.PrimitiveType): string | undefined {
+    return visitDiscriminatedUnion(shape, "type")._visit<string | undefined>({
+        string: (string) => string.default,
+        integer: (integer) => {
+            if (integer.default == null) {
+                return undefined;
+            }
+            return numeral(integer.default).format("0,0");
+        },
+        double: (double) => double.default?.toString(),
+        boolean: () => undefined,
+        long: () => undefined,
+        datetime: () => undefined,
+        uuid: () => undefined,
+        base64: () => undefined,
+        date: () => undefined,
+        _other: () => undefined,
+    });
 }
 
 export function renderTypeShorthand(
@@ -56,15 +75,19 @@ export function renderTypeShorthand(
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
     return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
         // primitives
-        string: () => (plural ? "strings" : maybeWithArticle("a", "string")),
-        integer: () => (plural ? "integers" : maybeWithArticle("an", "integer")),
-        double: () => (plural ? "doubles" : maybeWithArticle("a", "double")),
-        long: () => (plural ? "longs" : maybeWithArticle("a", "long")),
-        boolean: () => (plural ? "booleans" : maybeWithArticle("a", "boolean")),
-        datetime: () => (plural ? "datetimes" : maybeWithArticle("a", "datetime")),
-        uuid: () => (plural ? "UUIDs" : maybeWithArticle("a", "UUID")),
-        base64: () => (plural ? "Base64 strings" : maybeWithArticle("a", "Base64 string")),
-        date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
+        primitive: (primitive) =>
+            visitDiscriminatedUnion(primitive.value, "type")._visit({
+                string: () => (plural ? "strings" : maybeWithArticle("a", "string")),
+                integer: () => (plural ? "integers" : maybeWithArticle("an", "integer")),
+                double: () => (plural ? "doubles" : maybeWithArticle("a", "double")),
+                long: () => (plural ? "longs" : maybeWithArticle("a", "long")),
+                boolean: () => (plural ? "booleans" : maybeWithArticle("a", "boolean")),
+                datetime: () => (plural ? "datetimes" : maybeWithArticle("a", "datetime")),
+                uuid: () => (plural ? "UUIDs" : maybeWithArticle("a", "UUID")),
+                base64: () => (plural ? "Base64 strings" : maybeWithArticle("a", "Base64 string")),
+                date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
+                _other: () => "<unknown>",
+            }),
 
         // referenced shapes
         object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
@@ -95,8 +118,12 @@ export function renderTypeShorthand(
             )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
 
         // literals
-        stringLiteral: (value) => `"${value.value}"`,
-        booleanLiteral: (value) => `${value.value}`,
+        literal: (literal) =>
+            visitDiscriminatedUnion(literal.value, "type")._visit({
+                stringLiteral: (value) => `"${value.value}"`,
+                booleanLiteral: (value) => `${value.value}`,
+                _other: () => "<unknown>",
+            }),
 
         // other
         unknown: () => "any",
