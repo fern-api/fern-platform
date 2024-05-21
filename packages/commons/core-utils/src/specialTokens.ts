@@ -327,7 +327,7 @@ export const SPECIAL_TOKENS = [
     "MKV",
     "WebM",
 
-        // Cloud Computing
+    // Cloud Computing
     "GCP",        // Google Cloud Platform
     "AWS",        // Amazon Web Services
     "VM",         // Virtual Machines
