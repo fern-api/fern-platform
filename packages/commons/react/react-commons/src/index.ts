@@ -2,7 +2,7 @@ export { PREVENT_DEFAULT } from "./preventDefault";
 export { STOP_PROPAGATION } from "./stopPropagation";
 export { useBooleanState } from "./useBooleanState";
 export { useCopyToClipboard } from "./useCopyToClipboard";
-export { useDeepCompareMemoize } from "./useDeepEquals";
+export { useDeepCompareEffect, useDeepCompareMemoize } from "./useDeepEquals";
 export { useDimensions, type Dimensions } from "./useDimensions";
 export { useEventCallback } from "./useEventCallback";
 export { useInterval } from "./useInterval";
