@@ -18,14 +18,6 @@ wss.on("connection", function connection(ws) {
     ws.on("close", () => {
         connections.delete(ws);
     });
-    // // every 5 seconds send a message to the client
-    // const interval = setInterval(() => {
-    //     ws.send(JSON.stringify({ reload: true }));
-    // }, 5000);
-
-    // ws.on("close", function close() {
-    //     clearInterval(interval);
-    // });
 });
 
 expressApp.post("/v2/registry/docs/load-with-url", async (_, res) => {
