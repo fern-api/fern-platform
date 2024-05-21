@@ -24,7 +24,9 @@
 @import "@radix-ui/colors/red-dark-alpha.css";
 @import "@radix-ui/colors/amber-dark-alpha.css";
 @import "@radix-ui/colors/blue-dark-alpha.css";
-@import "@fern-ui/components/index.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
     html {

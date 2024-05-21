@@ -6,7 +6,6 @@ module.exports = {
     content: [
         "./src/**/*.{ts,tsx}",
         "../tailwind.config.js",
-        "./node_modules/@fern-ui/components/**/*.{ts,tsx,js,jsx}",
-        path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{js,jsx,ts,tsx}")
-    ]
+        path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
+    ],
 };

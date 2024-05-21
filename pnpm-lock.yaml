@@ -1397,6 +1397,9 @@ importers:
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1
+      '@fern-ui/components':
+        specifier: workspace:^
+        version: link:../components
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
