@@ -172,7 +172,9 @@ export function transformNavigationItemForDb(
     switch (writeShape.type) {
         case "api":
             return {
-                ...writeShape,
+                type: "api",
+                title: writeShape.title,
+                api: writeShape.api,
                 icon: writeShape.icon,
                 hidden: writeShape.hidden ?? false,
                 longScrolling: writeShape.longScrolling,
@@ -199,7 +201,8 @@ export function transformNavigationItemForDb(
                               hidden: writeShape.changelog.hidden ?? false,
                           }
                         : undefined,
-                navigation: transformApiSectionNavigationForDb(writeShape.navigation),
+                navigation: transformApiSectionNavigationV1ForDb(writeShape.navigation),
+                navigationV2: transformApiSectionNavigationV2ForDb(writeShape.navigationV2),
             };
         case "page":
             return transformPageNavigationItemForDb(writeShape);
@@ -425,25 +428,52 @@ function transformPageNavigationItemForDb(
     };
 }
 
-function transformApiSectionNavigationForDb(
-    writeShape: DocsV1Write.ApiNavigationConfigRoot | undefined,
+function transformApiSectionNavigationV2ForDb(
+    writeShape: DocsV1Write.ApiNavigationConfigRootV2 | undefined,
+): DocsV1Db.ApiSection["navigationV2"] | undefined {
+    if (writeShape == null) {
+        return undefined;
+    }
+    return {
+        items: transformItemsV2(writeShape.items),
+        summaryPageId: writeShape.summaryPageId,
+    };
+}
+
+function transformItemsV2(items: DocsV1Write.ApiNavigationConfigItemV2[]) {
+    return items.map((item): DocsV1Read.ApiNavigationConfigItemV2 => {
+        if (item.type === "subpackage") {
+            return {
+                type: "subpackage",
+                subpackageId: item.subpackageId,
+                items: transformItemsV2(item.items),
+            };
+        } else if (item.type === "page") {
+            return transformPageNavigationItemForDb(item);
+        }
+        return item;
+    });
+}
+
+function transformApiSectionNavigationV1ForDb(
+    writeShape: DocsV1Write.ApiNavigationConfigRootV1 | undefined,
 ): DocsV1Db.ApiSection["navigation"] | undefined {
     if (writeShape == null) {
         return undefined;
     }
     return {
-        items: transformItems(writeShape.items),
+        items: transformItemsV1(writeShape.items),
         summaryPageId: writeShape.summaryPageId,
     };
 }
 
-function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
-    return items.map((item): DocsV1Read.ApiNavigationConfigItem => {
+function transformItemsV1(items: DocsV1Write.ApiNavigationConfigItemV1[]) {
+    return items.map((item): DocsV1Read.ApiNavigationConfigItemV1 => {
         if (item.type === "subpackage") {
             return {
                 type: "subpackage",
                 subpackageId: item.subpackageId,
-                items: transformItems(item.items),
+                items: transformItemsV1(item.items),
             };
         } else if (item.type === "page") {
             return transformPageNavigationItemForDb(item);

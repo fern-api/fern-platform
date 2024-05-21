@@ -9,14 +9,14 @@ export interface MetadataConfig {
     "og:title"?: string;
     "og:description"?: string;
     "og:url"?: string;
-    "og:image"?: FernRegistry.docs.v1.write.FileIdOrUrl;
+    "og:image"?: FernRegistry.docs.v1.commons.FileIdOrUrl;
     "og:image:width"?: number;
     "og:image:height"?: number;
     "og:locale"?: string;
-    "og:logo"?: FernRegistry.docs.v1.write.FileIdOrUrl;
+    "og:logo"?: FernRegistry.docs.v1.commons.FileIdOrUrl;
     "twitter:title"?: string;
     "twitter:description"?: string;
-    "twitter:image"?: FernRegistry.docs.v1.write.FileIdOrUrl;
+    "twitter:image"?: FernRegistry.docs.v1.commons.FileIdOrUrl;
     "twitter:handle"?: string;
     "twitter:site"?: string;
     "twitter:url"?: string;

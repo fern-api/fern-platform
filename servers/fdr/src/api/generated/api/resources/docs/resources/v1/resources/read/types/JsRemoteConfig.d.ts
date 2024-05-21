@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface JsRemoteConfig {
-    url: FernRegistry.docs.v1.read.Url;
+    url: FernRegistry.docs.v1.commons.Url;
     strategy?: FernRegistry.docs.v1.read.JsScriptStrategy;
 }

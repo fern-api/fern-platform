@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface LogoV2 {
-    dark?: FernRegistry.docs.v1.read.FileId;
-    light?: FernRegistry.docs.v1.read.FileId;
+    dark?: FernRegistry.docs.v1.commons.FileId;
+    light?: FernRegistry.docs.v1.commons.FileId;
 }

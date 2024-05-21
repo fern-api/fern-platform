@@ -1,7 +1,36 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
+  FileId: string
+  PageId: string
+  Url: string
   SubpackageId: string
   EndpointId: string
   WebSocketId: string
   WebhookId: string
+
+  FileIdOrUrl:
+    union:
+      fileId: FileId
+      url: Url
+
+  EndpointLocator:
+    properties:
+      subpackageLocator:
+        type: list<SubpackageId>
+        docs: |
+          The location of the subpackage that contains this endpoint.
+
+          - `[]` means that the endpoint is located at the root level of the API.
+          - `[subpackage1, subpackage2]` means that the endpoint is located at subpackage1.subpackage2 (2 levels deep).
+      endpointId: EndpointId
+
+  WebSocketLocator:
+    properties:
+      subpackageLocator: list<SubpackageId>
+      webSocketId: WebSocketId
+
+  WebhookLocator:
+    properties:
+      subpackageLocator: list<SubpackageId>
+      webhookId: WebhookId

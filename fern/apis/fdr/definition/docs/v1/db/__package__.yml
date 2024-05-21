@@ -5,6 +5,7 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
+  commons: ../commons/commons.yml
 
 types:
   DocsDefinitionDb:
@@ -15,26 +16,26 @@ types:
 
   DocsDefinitionDbV1:
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<docsReadV1.ColorsConfig>
 
   DocsDefinitionDbV2:
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<docsReadV1.ColorsConfig>
       typography: optional<docsReadV1.DocsTypographyConfig>
 
   DocsDefinitionDbV3:
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfoV2>
+      files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
 
   DocsDbConfig:
@@ -48,15 +49,15 @@ types:
 
       # logo
       logoHeight: optional<docsReadV1.Height>
-      logoHref: optional<docsReadV1.Url>
-      favicon: optional<docsReadV1.FileId>
+      logoHref: optional<commons.Url>
+      favicon: optional<commons.FileId>
 
       # seo
       metadata: optional<docsReadV1.MetadataConfig>
       redirects: optional<list<docsReadV1.RedirectConfig>>
 
       # styles
-      backgroundImage: optional<docsReadV1.FileId>
+      backgroundImage: optional<commons.FileId>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
       layout: optional<docsReadV1.DocsLayoutConfig>
       typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
@@ -70,7 +71,7 @@ types:
 
       # deprecated
       logo:
-        type: optional<docsReadV1.FileId>
+        type: optional<commons.FileId>
         availability: deprecated
       logoV2:
         type: optional<docsReadV1.LogoV2>
@@ -165,7 +166,8 @@ types:
       changelog: optional<docsReadV1.ChangelogSection>
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
-      navigation: optional<docsReadV1.ApiNavigationConfigRoot>
+      navigation: optional<docsReadV1.ApiNavigationConfigRootV1>
+      navigationV2: optional<docsReadV1.ApiNavigationConfigRootV2>
       longScrolling: optional<boolean>
       flattened: optional<boolean>
 

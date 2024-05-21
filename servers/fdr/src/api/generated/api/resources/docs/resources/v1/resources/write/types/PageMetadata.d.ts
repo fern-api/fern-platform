@@ -3,10 +3,10 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface PageMetadata {
+    id: FernRegistry.docs.v1.commons.PageId;
     title: string;
     icon?: string;
     hidden?: boolean;
-    id: FernRegistry.docs.v1.write.PageId;
     urlSlugOverride?: string;
     fullSlug?: string[];
 }

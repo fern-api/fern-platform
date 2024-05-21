@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../..";
 export interface FontConfig {
     name: string;
-    fontFile: FernRegistry.docs.v1.read.FileId;
+    fontFile: FernRegistry.docs.v1.commons.FileId;
 }

@@ -1,17 +1,25 @@
 import { kebabCase } from "lodash-es";
 import tinycolor from "tinycolor2";
-import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
+import {
+    APIV1Read,
+    DocsV1Db,
+    DocsV1Read,
+    visitDbNavigationConfig,
+    visitUnversionedDbNavigationConfig,
+} from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export function convertDbDocsConfigToRead({
     dbShape,
+    apis,
 }: {
     dbShape: DocsV1Db.DocsDbConfig;
+    apis: Record<string, APIV1Read.ApiDefinition>;
 }): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
-        navigation: transformNavigationConfigToRead(dbShape.navigation),
+        navigation: transformNavigationV1ConfigToRead(dbShape.navigation, apis),
         logo: dbShape.logo,
         logoV2: dbShape.logoV2,
         logoHeight: dbShape.logoHeight,
@@ -95,19 +103,23 @@ function transformTypographyV2ToV1(
     };
 }
 
-export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConfig): DocsV1Read.NavigationConfig {
+export function transformNavigationV1ConfigToRead(
+    dbShape: DocsV1Db.NavigationConfig,
+    apis: Record<string, APIV1Read.ApiDefinition>,
+): DocsV1Read.NavigationConfig {
     return visitDbNavigationConfig<DocsV1Read.NavigationConfig>(dbShape, {
         unversioned: (config) => {
-            return transformUnversionedNavigationConfigForDb(config);
+            return transformUnversionedNavigationConfigForDb(config, apis);
         },
         versioned: (config) => {
-            return transformVersionedNavigationConfigToRead(config);
+            return transformVersionedNavigationConfigToRead(config, apis);
         },
     });
 }
 
 function transformVersionedNavigationConfigToRead(
     config: DocsV1Db.VersionedNavigationConfig,
+    apis: Record<string, APIV1Read.ApiDefinition>,
 ): WithoutQuestionMarks<DocsV1Read.VersionedNavigationConfig> {
     return {
         versions: config.versions.map(
@@ -115,7 +127,7 @@ function transformVersionedNavigationConfigToRead(
                 urlSlug: version.urlSlug ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,
-                config: transformUnversionedNavigationConfigForDb(version.config),
+                config: transformUnversionedNavigationConfigForDb(version.config, apis),
             }),
         ),
     };
@@ -123,28 +135,32 @@ function transformVersionedNavigationConfigToRead(
 
 function transformUnversionedNavigationConfigForDb(
     config: DocsV1Db.UnversionedNavigationConfig,
+    apis: Record<string, APIV1Read.ApiDefinition>,
 ): DocsV1Read.UnversionedNavigationConfig {
     return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(config, {
         tabbed: (config) => {
             return {
-                tabs: config.tabs.map(transformNavigationTabForDb),
+                tabs: config.tabs.map((item) => transformNavigationTabForDb(item, apis)),
             };
         },
         untabbed: (config) => {
             return {
-                items: config.items.map(transformNavigationItemForDb),
+                items: config.items.map((item) => transformNavigationItemForDb(item, apis)),
             };
         },
     });
 }
 
-export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): DocsV1Read.NavigationTab {
+export function transformNavigationTabForDb(
+    dbShape: DocsV1Db.NavigationTab,
+    apis: Record<string, APIV1Read.ApiDefinition>,
+): DocsV1Read.NavigationTab {
     return visitDbNavigationTab<DocsV1Read.NavigationTab>(dbShape, {
         link: (link) => ({ type: "link", ...link }),
         group: (group) => ({
             type: "group",
             ...group,
-            items: group.items.map(transformNavigationItemForDb),
+            items: group.items.map((item) => transformNavigationItemForDb(item, apis)),
         }),
     });
 }
@@ -153,12 +169,16 @@ export function isNavigationTabLink(tab: DocsV1Db.NavigationTab): tab is DocsV1R
     return (tab as DocsV1Read.NavigationTabLink).url != null;
 }
 
-export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): DocsV1Read.NavigationItem {
+export function transformNavigationItemForDb(
+    dbShape: DocsV1Db.NavigationItem,
+    apis: Record<string, APIV1Read.ApiDefinition>,
+): DocsV1Read.NavigationItem {
     switch (dbShape.type) {
         case "api":
             return {
                 ...dbShape,
                 showErrors: dbShape.showErrors ?? false,
+                navigationV2: dbShape.navigationV2 ?? migrateApiNavigationV1ToV2(dbShape.navigation, apis[dbShape.api]),
             };
         case "page":
         case "link":
@@ -166,7 +186,7 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
         case "section":
             return {
                 ...dbShape,
-                items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
+                items: dbShape.items.map((item) => transformNavigationItemForDb(item, apis)),
             };
     }
 }
@@ -327,5 +347,58 @@ export function getColorsV3(docsDbConfig: DocsV1Db.DocsDbConfig): DocsV1Read.Col
     } else {
         // fallback to dark and light
         return { type: "darkAndLight", dark, light };
+    }
+}
+function migrateApiNavigationV1ToV2(
+    navigation: DocsV1Read.ApiNavigationConfigRootV1 | undefined,
+    api: APIV1Read.ApiDefinition | undefined,
+): DocsV1Read.ApiNavigationConfigRootV2 | undefined {
+    if (navigation == null) {
+        return undefined;
+    }
+
+    if (api == null) {
+        throw new Error("API definition not found");
+    }
+
+    return {
+        summaryPageId: navigation.summaryPageId,
+        items: navigation.items.map((item) => migrateApiNavigationItemV1ToV2(item, api, [])),
+    };
+}
+
+function migrateApiNavigationItemV1ToV2(
+    item: DocsV1Read.ApiNavigationConfigItemV1,
+    api: APIV1Read.ApiDefinition,
+    parentSubpackageIds: string[],
+): DocsV1Read.ApiNavigationConfigItemV2 {
+    switch (item.type) {
+        case "page":
+            return item;
+        case "subpackage":
+            return {
+                ...item,
+                items: item.items.map((innerItem) =>
+                    migrateApiNavigationItemV1ToV2(innerItem, api, [...parentSubpackageIds, item.subpackageId]),
+                ),
+            };
+        case "endpointId":
+            return {
+                type: "endpoint",
+                subpackageLocator: parentSubpackageIds,
+                endpointId: item.value,
+            };
+        case "webhookId":
+            return {
+                type: "webhook",
+                subpackageLocator: parentSubpackageIds,
+                webhookId: item.value,
+            };
+        case "websocketId":
+            return {
+                type: "websocket",
+                subpackageLocator: parentSubpackageIds,
+                webSocketId: item.value,
+            };
     }
 }

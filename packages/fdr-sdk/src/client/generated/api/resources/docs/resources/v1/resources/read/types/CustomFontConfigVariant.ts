@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../../../../..";
 
 export interface CustomFontConfigVariant {
-    fontFile: FernRegistry.docs.v1.read.FileId;
+    fontFile: FernRegistry.docs.v1.commons.FileId;
     weight?: string[];
     style?: FernRegistry.docs.v1.read.FontStyle[];
 }

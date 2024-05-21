@@ -4,8 +4,8 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface ApiNavigationConfigSubpackage {
-    summaryPageId?: FernRegistry.docs.v1.write.PageId;
+export interface ApiNavigationConfigSubpackageV2 {
+    summaryPageId?: FernRegistry.docs.v1.commons.PageId;
     subpackageId: FernRegistry.docs.v1.commons.SubpackageId;
-    items: FernRegistry.docs.v1.write.ApiNavigationConfigItem[];
+    items: FernRegistry.docs.v1.read.ApiNavigationConfigItemV2[];
 }

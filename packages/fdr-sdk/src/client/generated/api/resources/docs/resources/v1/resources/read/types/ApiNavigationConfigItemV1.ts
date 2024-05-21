@@ -4,15 +4,15 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export type ApiNavigationConfigItem =
-    | FernRegistry.docs.v1.read.ApiNavigationConfigItem.Subpackage
-    | FernRegistry.docs.v1.read.ApiNavigationConfigItem.EndpointId
-    | FernRegistry.docs.v1.read.ApiNavigationConfigItem.WebsocketId
-    | FernRegistry.docs.v1.read.ApiNavigationConfigItem.WebhookId
-    | FernRegistry.docs.v1.read.ApiNavigationConfigItem.Page;
+export type ApiNavigationConfigItemV1 =
+    | FernRegistry.docs.v1.read.ApiNavigationConfigItemV1.Subpackage
+    | FernRegistry.docs.v1.read.ApiNavigationConfigItemV1.EndpointId
+    | FernRegistry.docs.v1.read.ApiNavigationConfigItemV1.WebsocketId
+    | FernRegistry.docs.v1.read.ApiNavigationConfigItemV1.WebhookId
+    | FernRegistry.docs.v1.read.ApiNavigationConfigItemV1.Page;
 
-export declare namespace ApiNavigationConfigItem {
-    interface Subpackage extends FernRegistry.docs.v1.read.ApiNavigationConfigSubpackage {
+export declare namespace ApiNavigationConfigItemV1 {
+    interface Subpackage extends FernRegistry.docs.v1.read.ApiNavigationConfigSubpackageV1 {
         type: "subpackage";
     }
 

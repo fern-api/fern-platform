@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../..";
 export interface ChangelogItem {
     date: string;
-    pageId: FernRegistry.docs.v1.read.PageId;
+    pageId: FernRegistry.docs.v1.commons.PageId;
 }

@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface JsFileConfig {
-    fileId: FernRegistry.docs.v1.read.FileId;
+    fileId: FernRegistry.docs.v1.commons.FileId;
     strategy?: FernRegistry.docs.v1.read.JsScriptStrategy;
 }

@@ -3,9 +3,9 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface DocsDefinitionDbV2 {
-    pages: Record<FernRegistry.docs.v1.read.PageId, FernRegistry.docs.v1.read.PageContent>;
+    pages: Record<FernRegistry.docs.v1.commons.PageId, FernRegistry.docs.v1.read.PageContent>;
     referencedApis: FernRegistry.ApiDefinitionId[];
-    files: Record<FernRegistry.docs.v1.read.FileId, FernRegistry.docs.v1.db.DbFileInfo>;
+    files: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.db.DbFileInfo>;
     config: FernRegistry.docs.v1.db.DocsDbConfig;
     colors?: FernRegistry.docs.v1.read.ColorsConfig;
     typography?: FernRegistry.docs.v1.read.DocsTypographyConfig;

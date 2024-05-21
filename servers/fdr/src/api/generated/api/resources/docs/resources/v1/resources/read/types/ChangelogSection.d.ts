@@ -8,7 +8,7 @@ export interface ChangelogSection {
     icon?: string;
     hidden?: boolean;
     description?: string;
-    pageId?: FernRegistry.docs.v1.read.PageId;
+    pageId?: FernRegistry.docs.v1.commons.PageId;
     items: FernRegistry.docs.v1.read.ChangelogItem[];
     urlSlug: string;
     fullSlug?: string[];

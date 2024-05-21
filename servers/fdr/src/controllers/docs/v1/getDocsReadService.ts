@@ -103,16 +103,17 @@ export async function getDocsDefinition({
     ]);
 
     const filesV2 = await getFilesV2(docsDbDefinition, app);
+    const apis = Object.fromEntries(
+        apiDefinitions.map((apiDefinition) => {
+            const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
+            return [apiDefinition.apiDefinitionId, parsedApiDefinition];
+        }),
+    );
 
     return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
-        config: convertDbDocsConfigToRead({ dbShape: docsDbDefinition.config }),
-        apis: Object.fromEntries(
-            apiDefinitions.map((apiDefinition) => {
-                const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
-                return [apiDefinition.apiDefinitionId, parsedApiDefinition];
-            }),
-        ),
+        config: convertDbDocsConfigToRead({ dbShape: docsDbDefinition.config, apis }),
+        apis,
         files: mapValues(filesV2, (fileV2) => fileV2.url),
         filesV2,
         pages: docsDbDefinition.pages,

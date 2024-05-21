@@ -5,8 +5,8 @@
 import * as FernRegistry from "../../../../../../..";
 
 export interface ThemeConfig {
-    logo?: FernRegistry.docs.v1.read.FileId;
-    backgroundImage?: FernRegistry.docs.v1.read.FileId;
+    logo?: FernRegistry.docs.v1.commons.FileId;
+    backgroundImage?: FernRegistry.docs.v1.commons.FileId;
     accentPrimary: FernRegistry.docs.v1.read.RgbaColor;
     background: FernRegistry.docs.v1.read.Background;
     border?: FernRegistry.docs.v1.read.RgbaColor;

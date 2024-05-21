@@ -8,8 +8,8 @@ export interface DocsConfig {
     navbarLinks?: FernRegistry.docs.v1.read.NavbarLink[];
     footerLinks?: FernRegistry.docs.v1.read.FooterLink[];
     logoHeight?: FernRegistry.docs.v1.read.Height;
-    logoHref?: FernRegistry.docs.v1.read.Url;
-    favicon?: FernRegistry.docs.v1.read.FileId;
+    logoHref?: FernRegistry.docs.v1.commons.Url;
+    favicon?: FernRegistry.docs.v1.commons.FileId;
     metadata?: FernRegistry.docs.v1.read.MetadataConfig;
     redirects?: FernRegistry.docs.v1.read.RedirectConfig[];
     colorsV3?: FernRegistry.docs.v1.read.ColorsConfigV3;
@@ -18,9 +18,9 @@ export interface DocsConfig {
     integrations?: FernRegistry.docs.v1.read.IntegrationsConfig;
     css?: FernRegistry.docs.v1.read.CssConfig;
     js?: FernRegistry.docs.v1.read.JsConfig;
-    backgroundImage?: FernRegistry.docs.v1.read.FileId;
+    backgroundImage?: FernRegistry.docs.v1.commons.FileId;
     logoV2?: FernRegistry.docs.v1.read.LogoV2;
-    logo?: FernRegistry.docs.v1.read.FileId;
+    logo?: FernRegistry.docs.v1.commons.FileId;
     colors?: FernRegistry.docs.v1.read.ColorsConfig;
     colorsV2?: FernRegistry.docs.v1.read.ColorsConfigV2;
     typography?: FernRegistry.docs.v1.read.DocsTypographyConfig;

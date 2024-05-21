@@ -13,7 +13,8 @@ export interface ApiSection {
     showErrors: boolean;
     changelog?: FernRegistry.docs.v1.read.ChangelogSection;
     fullSlug?: string[];
-    navigation?: FernRegistry.docs.v1.read.ApiNavigationConfigRoot;
+    navigation?: FernRegistry.docs.v1.read.ApiNavigationConfigRootV1;
+    navigationV2?: FernRegistry.docs.v1.read.ApiNavigationConfigRootV2;
     longScrolling?: boolean;
     flattened?: boolean;
 }
