@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fern-ui/components": "workspace:*",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@tanstack/react-query": "^4.29.7",
     "@tanstack/react-router": "^1.32.13",
