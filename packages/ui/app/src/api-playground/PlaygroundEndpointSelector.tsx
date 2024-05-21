@@ -1,8 +1,7 @@
-import { FernButton } from "@fern-ui/components";
+import { FernButton, FernTooltipProvider } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 import cn from "clsx";
 import { FC, Fragment, useCallback, useRef } from "react";
 import { usePlaygroundContext } from "./PlaygroundContext";
@@ -55,7 +54,7 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
     }, []);
 
     return (
-        <TooltipProvider>
+        <FernTooltipProvider>
             <DropdownMenu.Root
                 onOpenChange={(open) => {
                     handleOpenChange(open);
@@ -106,6 +105,6 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
                     </DropdownMenu.Content>
                 </DropdownMenu.Portal>
             </DropdownMenu.Root>
-        </TooltipProvider>
+        </FernTooltipProvider>
     );
 };

@@ -3,7 +3,6 @@ import { FernButton, FernButtonGroup, FernTooltip, FernTooltipProvider } from "@
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Portal, Transition } from "@headlessui/react";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 import clsx from "clsx";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
@@ -393,14 +392,14 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                                 types={types}
                             />
                         ) : (
-                            <TooltipProvider>
+                            <FernTooltipProvider>
                                 <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
                                     <PlaygroundEndpointSelectorContent
                                         apiGroups={apiGroups}
                                         className="fern-card mb-6 min-h-0 shrink p-px"
                                     />
                                 </div>
-                            </TooltipProvider>
+                            </FernTooltipProvider>
                         )}
                     </FernErrorBoundary>
                 </div>

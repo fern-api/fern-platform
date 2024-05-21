@@ -1,5 +1,5 @@
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { createStore, Provider as JotaiProvider } from "jotai";
+import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import { Provider as JotaiProvider, createStore } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
@@ -7,7 +7,6 @@ import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { Toaster } from "../components/FernToast";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
@@ -32,7 +31,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     return (
-        <TooltipProvider>
+        <FernTooltipProvider>
             <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
                 <ThemeProvider colors={pageProps?.colors}>
                     <IsReadyProvider>
@@ -49,7 +48,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                     <Toaster />
                 </ThemeProvider>
             </FernErrorBoundary>
-        </TooltipProvider>
+        </FernTooltipProvider>
     );
 }
 

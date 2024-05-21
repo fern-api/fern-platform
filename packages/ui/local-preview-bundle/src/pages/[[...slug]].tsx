@@ -1,5 +1,6 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk";
-import { DocsPage, LocalPreviewContextProvider, NextApp, toast } from "@fern-ui/ui";
+import { toast } from "@fern-ui/components";
+import { DocsPage, LocalPreviewContextProvider, NextApp } from "@fern-ui/ui";
 import { Router, useRouter } from "next/router";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
