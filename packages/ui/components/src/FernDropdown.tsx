@@ -4,7 +4,6 @@ import cn from "clsx";
 import { PropsWithChildren, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
-import "./index.scss";
 
 export declare namespace FernDropdown {
     export interface ValueOption {

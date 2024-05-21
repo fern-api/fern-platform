@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import cn from "clsx";
 import { FC, Fragment, PropsWithChildren, ReactElement } from "react";
-import "./index.scss";
 
 interface FernModalProps {
     isOpen: boolean;

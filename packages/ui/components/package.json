@@ -20,7 +20,9 @@
   ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc && vite build",
+    "compile": "tsc --build && pnpm --filter=@fern-ui/components copy-files",
+    "compile:sass": "sass src/index.scss src/index.css --style compressed",
+    "copy-files": "copyfiles -u 1 src/**/*.scss dist/ && copyfiles -u 1 src/**/*.scss ./",
     "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",

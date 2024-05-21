@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { PropsWithChildren, forwardRef } from "react";
-import "./index.scss";
+
 import { ColorScheme, Size } from "./shared-component-types";
 
 export type FernChipSize = Extract<Size, "sm" | "lg">;

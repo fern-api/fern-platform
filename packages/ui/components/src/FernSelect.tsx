@@ -2,7 +2,6 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons
 import * as Select from "@radix-ui/react-select";
 import classnames from "clsx";
 import { FC, forwardRef } from "react";
-import "./index.scss";
 
 export const FernSelect: FC<Select.SelectProps> = () => (
     <Select.Root>

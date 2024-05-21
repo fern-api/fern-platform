@@ -24,7 +24,15 @@
 @import "@radix-ui/colors/red-dark-alpha.css";
 @import "@radix-ui/colors/amber-dark-alpha.css";
 @import "@radix-ui/colors/blue-dark-alpha.css";
-@import "@fern-ui/components/index.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --body-font-fallback: -apple-system, blinkmacsystemfont, segoe ui, roboto, oxygen, ubuntu, cantarell, open sans,
+        helvetica neue, sans-serif;
+    --code-font-fallback: ui-monospace, sfmono-regular, menlo, monaco, consolas, liberation mono, courier new, monospace;
+}
 
 @layer base {
     html {
