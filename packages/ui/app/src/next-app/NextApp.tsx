@@ -7,6 +7,7 @@ import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { Toaster } from "../components/FernToast";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
@@ -17,7 +18,7 @@ import "./globals.scss";
 
 const store = createStore();
 
-export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
+export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
     }, []);
@@ -26,14 +27,14 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
     useInterceptNextDataHref({
         router,
-        basePath: pageProps.baseUrl?.basePath,
-        host: pageProps.baseUrl?.domain,
+        basePath: pageProps?.baseUrl?.basePath,
+        host: pageProps?.baseUrl?.domain,
     });
 
     return (
         <TooltipProvider>
             <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                <ThemeProvider colors={pageProps.colors}>
+                <ThemeProvider colors={pageProps?.colors}>
                     <IsReadyProvider>
                         <RouteListenerContextProvider>
                             <DatadogInit />
@@ -45,6 +46,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                             </JotaiProvider>
                         </RouteListenerContextProvider>
                     </IsReadyProvider>
+                    <Toaster />
                 </ThemeProvider>
             </FernErrorBoundary>
         </TooltipProvider>
@@ -62,14 +64,19 @@ const useInterceptNextDataHref = ({
     host: string | undefined;
 }) => {
     useEffect(() => {
-        if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
-            const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
+        try {
+            if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
+                const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
 
-            const originalGetDataHref = router.pageLoader.getDataHref;
-            router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
-                const r = originalGetDataHref.call(router.pageLoader, ...args);
-                return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
-            };
+                const originalGetDataHref = router.pageLoader.getDataHref;
+                router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
+                    const r = originalGetDataHref.call(router.pageLoader, ...args);
+                    return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
+                };
+            }
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to intercept next data href", e);
         }
     }, [router, basePath, host]);
 };
