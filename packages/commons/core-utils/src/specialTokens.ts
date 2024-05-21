@@ -328,12 +328,12 @@ export const SPECIAL_TOKENS = [
     "WebM",
 
     // Cloud Computing
-    "GCP",        // Google Cloud Platform
-    "AWS",        // Amazon Web Services
-    "VM",         // Virtual Machines
-    "VPC",        // Virtual Private Cloud
-    "S3",         // AWS Simple Storage Service
-    "EC2",        // AWS Elastic Compute Cloud
+    "GCP", // Google Cloud Platform
+    "AWS", // Amazon Web Services
+    "VM", // Virtual Machines
+    "VPC", // Virtual Private Cloud
+    "S3", // AWS Simple Storage Service
+    "EC2", // AWS Elastic Compute Cloud
 
     // Data Storage and Databases
     "DynamoDB",
@@ -342,17 +342,17 @@ export const SPECIAL_TOKENS = [
     "CI/CD",
 
     // Security and Compliance
-    "SOC1",       // Service Organization Control 1
-    "SOC2",       // Service Organization Control 2
-    "SOC3",       // Service Organization Control 3
-    "PCI DSS",    // Payment Card Industry Data Security Standard
-    "WAF",        // Web Application Firewall
-    "IAM",        // Identity and Access Management
+    "SOC1", // Service Organization Control 1
+    "SOC2", // Service Organization Control 2
+    "SOC3", // Service Organization Control 3
+    "PCI DSS", // Payment Card Industry Data Security Standard
+    "WAF", // Web Application Firewall
+    "IAM", // Identity and Access Management
 
     // Networking
-    "SDN",        // Software-Defined Networking
-    "MPLS",       // Multi-Protocol Label Switching
-    "BGP",        // Border Gateway Protocol
+    "SDN", // Software-Defined Networking
+    "MPLS", // Multi-Protocol Label Switching
+    "BGP", // Border Gateway Protocol
 
     // Frameworks and Libraries
     "Vue.js",
