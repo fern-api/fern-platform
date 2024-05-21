@@ -2,6 +2,7 @@ import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
 import { captureSentryError } from "../analytics/sentry";
+import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { REGISTRY_SERVICE } from "./registry";
@@ -59,8 +60,13 @@ export function useSearchService(): SearchService {
 export function useCreateSearchService(currentVersionIndex: number | undefined): void {
     const { searchInfo, versions } = useDocsContext();
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
+    const { isLocalPreview } = useLocalPreviewContext();
 
     const searchService = useMemo<SearchService>(() => {
+        if (isLocalPreview) {
+            return { isAvailable: false };
+        }
+
         try {
             const envConfig = getEnvConfig();
             if (typeof searchInfo !== "object" || searchInfo.type === "legacyMultiAlgoliaIndex") {
@@ -110,7 +116,7 @@ export function useCreateSearchService(currentVersionIndex: number | undefined):
 
             return { isAvailable: false };
         }
-    }, [currentVersionIndex, searchInfo, versions]);
+    }, [currentVersionIndex, isLocalPreview, searchInfo, versions]);
 
     useEffect(() => {
         setSearchService(searchService);

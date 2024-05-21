@@ -1,5 +1,4 @@
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { Toaster } from "@fern-ui/components";
 import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
@@ -56,7 +55,6 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     <Docs logoHeight={logoHeight} logoHref={logoHref} />
                 </NavigationContextProvider>
             </DocsContextProvider>
-            <Toaster />
         </FeatureFlagContext.Provider>
     );
 }
