@@ -2,9 +2,11 @@
 const nextConfig = {
     transpilePackages: ["@fern-ui/ui"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
+    reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
     },
+    reactStrictMode: true,
     images: {
         unoptimized: true,
     },

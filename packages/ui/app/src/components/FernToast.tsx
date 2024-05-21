@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import { FC } from "react";
 import { AlertCircle, CheckCircle, Info, Loader, XCircle } from "react-feather";
 import { Toaster as SonnerToaster } from "sonner";
@@ -6,11 +5,9 @@ export { toast } from "sonner";
 export type { ToastT } from "sonner";
 
 export const Toaster: FC = () => {
-    const { resolvedTheme: theme } = useTheme();
     return (
         <SonnerToaster
             position="bottom-center"
-            theme={theme === "dark" ? "dark" : theme === "light" ? "light" : "system"}
             toastOptions={{
                 unstyled: true,
                 classNames: {
