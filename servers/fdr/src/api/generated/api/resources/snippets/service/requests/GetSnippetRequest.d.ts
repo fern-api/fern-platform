@@ -7,5 +7,6 @@ export interface GetSnippetRequest {
     apiId?: FernRegistry.ApiId;
     sdks?: FernRegistry.SdkRequest[];
     endpoint: FernRegistry.EndpointIdentifier;
+    exampleIdentifier?: string;
     payload?: FernRegistry.CustomSnippetPayload;
 }

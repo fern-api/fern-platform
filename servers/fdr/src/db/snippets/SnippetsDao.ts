@@ -14,6 +14,7 @@ export interface LoadDbSnippetsPage {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     endpointIdentifier: FdrAPI.EndpointIdentifier | undefined;
+    exampleIdentifier: string | undefined;
     sdks: FdrAPI.SdkRequest[] | undefined;
     page: number | undefined;
 }
@@ -162,6 +163,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
                     identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
+                    exampleIdentifier: loadSnippetsInfo.exampleIdentifier,
                 },
                 orderBy: {
                     createdAt: "desc",
@@ -218,6 +220,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
                     identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
+                    exampleIdentifier: loadSnippetsInfo.exampleIdentifier,
                 },
             })
         ).map((row) => row.sdkId);
@@ -272,6 +275,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     endpointPath: snippet.endpoint.path,
                     endpointMethod: snippet.endpoint.method,
                     identifierOverride: snippet.endpoint.identifierOverride,
+                    exampleIdentifier: snippet.exampleIdentifier,
                     sdkId: sdkInfo.id,
                     snippet: writeBuffer(snippet.snippet),
                 });

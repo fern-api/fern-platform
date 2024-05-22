@@ -4,7 +4,6 @@
 
 import * as FernRegistry from "../../..";
 
-export interface SingleTypescriptSnippetCreate {
-    endpoint: FernRegistry.EndpointIdentifier;
+export interface SingleTypescriptSnippetCreate extends FernRegistry.BaseSnippetCreate {
     snippet: FernRegistry.TypeScriptSnippetCode;
 }
