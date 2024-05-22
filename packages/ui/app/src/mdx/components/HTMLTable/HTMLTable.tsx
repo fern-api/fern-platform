@@ -1,0 +1,86 @@
+import * as Dialog from "@radix-ui/react-dialog";
+import { EnterFullScreenIcon } from "@radix-ui/react-icons";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import clsx from "clsx";
+import { MDXRemoteProps } from "next-mdx-remote";
+import { ComponentProps, FC, useState } from "react";
+import { FernButton } from "../../../components/FernButton";
+import { FernScrollArea } from "../../../components/FernScrollArea";
+import "./HTMLTable.scss";
+
+const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
+    const [isFullScreen, setIsFullScreen] = useState(false);
+    return (
+        <>
+            <Tooltip.TooltipProvider>
+                <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                        <div className="fern-table-root not-prose">
+                            <FernScrollArea>
+                                <table {...rest} className={clsx("fern-table", className)} />
+                            </FernScrollArea>
+                        </div>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                        <Tooltip.Content side="right" align="start" sideOffset={6} className="animate-popover">
+                            <FernButton
+                                variant="outlined"
+                                icon={<EnterFullScreenIcon />}
+                                onClick={() => setIsFullScreen(true)}
+                            />
+                        </Tooltip.Content>
+                    </Tooltip.Portal>
+                </Tooltip.Root>
+            </Tooltip.TooltipProvider>
+            <Dialog.Root open={isFullScreen} onOpenChange={setIsFullScreen}>
+                <Dialog.Portal>
+                    <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlay-show" />
+                    <Dialog.Content
+                        className="data-[state=open]:animate-content-show fixed top-1/2 left-1/2 h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] md:h-[calc(100vh-8rem)] md:w-[calc(100vw-8rem)] -translate-x-1/2 -translate-y-1/2 flex flex-col"
+                        asChild
+                    >
+                        <div className="fern-table-root not-prose fullscreen">
+                            <FernScrollArea>
+                                <table {...rest} className={clsx("fern-table", className)} />
+                            </FernScrollArea>
+                        </div>
+                    </Dialog.Content>
+                </Dialog.Portal>
+            </Dialog.Root>
+        </>
+    );
+};
+
+const Thead: FC<ComponentProps<"thead">> = ({ className, ...rest }) => {
+    return <thead {...rest} className={clsx(className)} />;
+};
+
+const Tbody: FC<ComponentProps<"tbody">> = ({ className, ...rest }) => {
+    return <tbody {...rest} className={clsx(className)} />;
+};
+
+const Tr: FC<ComponentProps<"tr">> = ({ className, ...rest }) => {
+    return <tr {...rest} className={clsx("fern-table-row", className)} />;
+};
+
+const Th: FC<ComponentProps<"th">> = ({ className, ...rest }) => {
+    return <th {...rest} className={clsx("fern-table-cell", className)} />;
+};
+
+const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) => {
+    // const childrenAsString = onlyText(children);
+    return (
+        <td {...rest} className={clsx("fern-table-cell", className)}>
+            {children}
+        </td>
+    );
+};
+
+export const HTML_TABLE_COMPONENTS: MDXRemoteProps["components"] = {
+    table: Table,
+    thead: Thead,
+    tbody: Tbody,
+    tr: Tr,
+    th: Th,
+    td: Td,
+};

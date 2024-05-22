@@ -145,7 +145,7 @@ export function PlaygroundEndpointFormAside({
             <FernScrollArea
                 rootRef={scrollAreaRef}
                 rootClassName="min-h-0 shrink"
-                className="mask-grad-top py-6 pr-2"
+                className="mask-grad-top-6 py-6 pr-2"
                 type="scroll"
                 scrollbars="vertical"
             >

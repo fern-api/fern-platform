@@ -1,0 +1,46 @@
+.fern-table-root {
+    @apply border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2 rounded-md;
+    @apply text-sm overflow-hidden backdrop-blur-2xl;
+
+    /* hack to make the table scrollable */
+    display: flex;
+    flex-direction: column;
+}
+
+.fern-table {
+    @apply w-full;
+
+    thead .fern-table-row .fern-table-cell {
+        @apply bg-tag-default-soft;
+    }
+
+    .fern-table-cell {
+        @apply h-9 p-2 text-left;
+        /* box-shadow: inset 0 -1px var(--grayscale-a5); */
+        @apply border-b border-grayscale-a5;
+    }
+
+    tbody > .fern-table-row:last-child > .fern-table-cell {
+        /* box-shadow: none; */
+        @apply border-none;
+    }
+
+    /*
+    tbody > .fern-table-row:nth-child(even) {
+        @apply bg-tag-default-soft;
+        background-clip: content-box;
+    }
+    */
+}
+
+.fern-table-root.fullscreen .fern-table thead .fern-table-cell {
+    @apply sticky top-0 bg-background;
+}
+
+.fern-table-root.fullscreen {
+    @apply text-base;
+
+    .fern-table .fern-table-cell {
+        @apply h-10 p-3;
+    }
+}
