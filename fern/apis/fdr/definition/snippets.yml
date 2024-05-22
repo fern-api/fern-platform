@@ -314,6 +314,8 @@ types:
     type: map<commons.EndpointMethod, list<Snippet>>
 
   Snippet:
+    base-properties:
+      exampleIdentifier: optional<string>
     union:
       typescript: TypeScriptSnippet
       python: PythonSnippet

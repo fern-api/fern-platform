@@ -4,19 +4,22 @@
 import * as FernRegistry from "../../..";
 export declare type Snippet = FernRegistry.Snippet.Typescript | FernRegistry.Snippet.Python | FernRegistry.Snippet.Java | FernRegistry.Snippet.Go | FernRegistry.Snippet.Ruby;
 export declare namespace Snippet {
-    interface Typescript extends FernRegistry.TypeScriptSnippet {
+    interface Typescript extends FernRegistry.TypeScriptSnippet, _Base {
         type: "typescript";
     }
-    interface Python extends FernRegistry.PythonSnippet {
+    interface Python extends FernRegistry.PythonSnippet, _Base {
         type: "python";
     }
-    interface Java extends FernRegistry.JavaSnippet {
+    interface Java extends FernRegistry.JavaSnippet, _Base {
         type: "java";
     }
-    interface Go extends FernRegistry.GoSnippet {
+    interface Go extends FernRegistry.GoSnippet, _Base {
         type: "go";
     }
-    interface Ruby extends FernRegistry.RubySnippet {
+    interface Ruby extends FernRegistry.RubySnippet, _Base {
         type: "ruby";
+    }
+    interface _Base {
+        exampleIdentifier?: string;
     }
 }
