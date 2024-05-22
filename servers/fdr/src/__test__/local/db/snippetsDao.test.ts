@@ -210,6 +210,138 @@ it("snippets dao", async () => {
     });
 });
 
+it("snippets dao with example id", async () => {
+    // create snippets
+    await fdrApplication.dao.snippets().storeSnippets({
+        storeSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            sdk: {
+                type: "python",
+                sdk: {
+                    package: "acme",
+                    version: "0.0.1",
+                },
+                snippets: [
+                    {
+                        endpoint: {
+                            path: "/users/v1",
+                            method: FdrAPI.EndpointMethod.Get,
+                        },
+                        snippet: {
+                            async_client: "invalid",
+                            sync_client: "invalid",
+                        },
+                        exampleIdentifier: "example1",
+                    },
+                ],
+            },
+        },
+    });
+    await fdrApplication.dao.snippets().storeSnippets({
+        storeSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            sdk: {
+                type: "python",
+                sdk: {
+                    package: "acme",
+                    version: "0.0.1",
+                },
+                snippets: [
+                    {
+                        endpoint: {
+                            path: "/users/v1",
+                            method: FdrAPI.EndpointMethod.Get,
+                        },
+                        snippet: {
+                            async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
+                            sync_client: "client = Acme(api_key='YOUR_API_KEY')",
+                        },
+                        exampleIdentifier: "example2",
+                    },
+                ],
+            },
+        },
+    });
+    // get snippets
+    const response = await fdrApplication.dao.snippets().loadSnippetsPage({
+        loadSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            endpointIdentifier: {
+                path: "/users/v1",
+                method: FdrAPI.EndpointMethod.Get,
+            },
+            sdks: undefined,
+            page: undefined,
+            exampleIdentifier: "example1",
+        },
+    });
+    expect(response).not.toEqual(undefined);
+    expect(Object.keys(response?.snippets ?? {}).length).toEqual(1);
+
+    const snippets = response?.snippets["/users/v1"]?.GET;
+    if (snippets === undefined) {
+        throw new Error("snippets were undefined");
+    }
+    expect(snippets).not.toEqual(undefined);
+    expect(snippets.length).toEqual(1);
+
+    const snippet = snippets[0];
+    if (snippet === undefined) {
+        throw new Error("snippet was undefined");
+    }
+    expect(snippet).not.toEqual(undefined);
+    expect(snippet.type).toEqual("python");
+
+    if (snippet.type != "python") {
+        throw new Error("expected a python snippet");
+    }
+    expect(snippet.sdk.package).toEqual("acme");
+    expect(snippet.sdk.version).toEqual("0.0.1");
+    expect(snippet.async_client).toEqual("invalid");
+    expect(snippet.sync_client).toEqual("invalid");
+
+    const response2 = await fdrApplication.dao.snippets().loadSnippetsPage({
+        loadSnippetsInfo: {
+            orgId: "acme",
+            apiId: "api",
+            endpointIdentifier: {
+                path: "/users/v1",
+                method: FdrAPI.EndpointMethod.Get,
+            },
+            sdks: undefined,
+            page: undefined,
+            exampleIdentifier: "example2",
+        },
+    });
+    expect(response2).not.toEqual(undefined);
+    expect(Object.keys(response2?.snippets ?? {}).length).toEqual(1);
+
+    const snippets2 = response2?.snippets["/users/v1"]?.GET;
+    if (snippets2 === undefined) {
+        throw new Error("snippets2 were undefined");
+    }
+    expect(snippets2).not.toEqual(undefined);
+    expect(snippets2.length).toEqual(1);
+
+    const snippet2 = snippets2[0];
+    if (snippet2 === undefined) {
+        throw new Error("snippet2 was undefined");
+    }
+    expect(snippet2).not.toEqual(undefined);
+    expect(snippet2.type).toEqual("python");
+
+    if (snippet2.type != "python") {
+        throw new Error("expected a python snippet2");
+    }
+    expect(snippet2.sdk.package).toEqual("acme");
+    expect(snippet2.sdk.version).toEqual("0.0.1");
+    expect(snippet2.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
+    expect(snippet2.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
+});
+
 it("snippets template", async () => {
     await fdrApplication.dao.snippetTemplates().storeSnippetTemplate({
         storeSnippetsInfo: {

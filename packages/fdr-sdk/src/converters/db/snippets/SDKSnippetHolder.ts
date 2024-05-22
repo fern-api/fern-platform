@@ -79,6 +79,7 @@ export class SDKSnippetHolder {
             install: undefined, // TODO: add install snippet
             async_client: snippetsForEndpoint[0]?.async_client,
             sync_client: snippetsForEndpoint[0]?.sync_client,
+            exampleIdentifier: snippetsForEndpoint[0]?.exampleIdentifier,
         };
     }
 
@@ -115,6 +116,7 @@ export class SDKSnippetHolder {
         return {
             install: undefined, // TODO: add install snippet
             client: snippetsForEndpoint[0]?.client,
+            exampleIdentifier: snippetsForEndpoint[0]?.exampleIdentifier,
         };
     }
 
@@ -151,6 +153,7 @@ export class SDKSnippetHolder {
         return {
             install: undefined, // TODO: add install snippet
             client: snippetsForEndpoint[0]?.client,
+            exampleIdentifier: snippetsForEndpoint[0]?.exampleIdentifier,
         };
     }
 
@@ -187,6 +190,7 @@ export class SDKSnippetHolder {
         return {
             install: undefined, // TODO: add install snippet
             client: snippetsForEndpoint[0]?.client,
+            exampleIdentifier: snippetsForEndpoint[0]?.exampleIdentifier,
         };
     }
 

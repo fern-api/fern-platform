@@ -292,13 +292,19 @@ types:
     union:
       json: unknown
 
+  BaseSnippet:
+    properties:
+      exampleIdentifier: optional<string>
+
   PythonSnippet:
+    extends: BaseSnippet
     properties:
       async_client: string
       sync_client: string
       install: optional<string>
 
   TypescriptSnippet:
+    extends: BaseSnippet
     properties:
       client:
         type: string
@@ -307,6 +313,7 @@ types:
       install: optional<string>
 
   GoSnippet:
+    extends: BaseSnippet
     properties:
       client:
         type: string
@@ -315,6 +322,7 @@ types:
       install: optional<string>
 
   RubySnippet:
+    extends: BaseSnippet
     properties:
       client:
         type: string
