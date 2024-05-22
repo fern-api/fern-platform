@@ -37,7 +37,7 @@ async function updateOpenApiSpecInternal(
 
     const authedCloneUrl = repository.clone_url.replace("https://", `https://x-access-token:${installationToken}@`);
     // Clone the repo to fullRepoPath and update the branch
-    await git.clone(authedCloneUrl, ".", ["--depth", "1"]);
+    await git.clone(authedCloneUrl, ".");
     // Configure git to show the app as the committer
     await git.addConfig("user.name", fernBotLoginName);
     await git.addConfig("user.email", `${fernBotLoginId}+${fernBotLoginName}@users.noreply.github.com`);
