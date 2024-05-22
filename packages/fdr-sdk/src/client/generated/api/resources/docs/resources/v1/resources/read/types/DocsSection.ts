@@ -4,13 +4,9 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface DocsSection {
+export interface DocsSection extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     title: string;
-    icon?: string;
     items: FernRegistry.docs.v1.read.NavigationItem[];
-    urlSlug: string;
     skipUrlSlug: boolean;
     collapsed: boolean;
-    hidden?: boolean;
-    fullSlug?: string[];
 }

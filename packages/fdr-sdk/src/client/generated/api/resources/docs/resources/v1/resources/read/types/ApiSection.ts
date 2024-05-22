@@ -4,17 +4,13 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface ApiSection {
+export interface ApiSection extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     title: string;
-    icon?: string;
-    hidden?: boolean;
     api: FernRegistry.ApiDefinitionId;
-    urlSlug: string;
     skipUrlSlug: boolean;
     artifacts?: FernRegistry.docs.v1.read.ApiArtifacts;
     showErrors: boolean;
     changelog?: FernRegistry.docs.v1.read.ChangelogSection;
-    fullSlug?: string[];
     navigation?: FernRegistry.docs.v1.read.ApiNavigationConfigRootV1;
     navigationV2?: FernRegistry.docs.v1.read.ApiNavigationConfigRootV2;
     longScrolling?: boolean;

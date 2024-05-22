@@ -5,27 +5,18 @@
 import * as FernRegistry from "../../../../../../..";
 
 export type ApiNavigationConfigItemV2 =
-    | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Subpackage
-    | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Endpoint
-    | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Websocket
-    | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Webhook
+    | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Section
+    | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Node
     | FernRegistry.docs.v1.write.ApiNavigationConfigItemV2.Page;
 
 export declare namespace ApiNavigationConfigItemV2 {
-    interface Subpackage extends FernRegistry.docs.v1.write.ApiNavigationConfigSubpackageV2 {
-        type: "subpackage";
+    interface Section extends FernRegistry.docs.v1.write.ApiNavigationConfigSection {
+        type: "section";
     }
 
-    interface Endpoint extends FernRegistry.docs.v1.commons.EndpointLocator {
-        type: "endpoint";
-    }
-
-    interface Websocket extends FernRegistry.docs.v1.commons.WebSocketLocator {
-        type: "websocket";
-    }
-
-    interface Webhook extends FernRegistry.docs.v1.commons.WebhookLocator {
-        type: "webhook";
+    interface Node {
+        type: "node";
+        value: FernRegistry.docs.v1.write.ApiNavigationNodeLocator;
     }
 
     interface Page extends FernRegistry.docs.v1.write.PageMetadata {

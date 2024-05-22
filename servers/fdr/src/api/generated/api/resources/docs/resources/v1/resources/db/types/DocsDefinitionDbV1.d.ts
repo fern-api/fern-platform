@@ -7,5 +7,5 @@ export interface DocsDefinitionDbV1 {
     referencedApis: FernRegistry.ApiDefinitionId[];
     files: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.db.DbFileInfo>;
     config: FernRegistry.docs.v1.db.DocsDbConfig;
-    colors?: FernRegistry.docs.v1.read.ColorsConfig;
+    colors?: FernRegistry.docs.v1.commons.ColorsConfig;
 }

@@ -7,10 +7,10 @@ import * as FernRegistry from "../../../../../../..";
 export interface ThemeConfig {
     logo?: FernRegistry.docs.v1.commons.FileId;
     backgroundImage?: FernRegistry.docs.v1.commons.FileId;
-    accentPrimary: FernRegistry.docs.v1.read.RgbaColor;
+    accentPrimary: FernRegistry.docs.v1.commons.RgbaColor;
     background: FernRegistry.docs.v1.read.Background;
-    border?: FernRegistry.docs.v1.read.RgbaColor;
-    sidebarBackground?: FernRegistry.docs.v1.read.RgbaColor;
-    headerBackground?: FernRegistry.docs.v1.read.RgbaColor;
-    cardBackground?: FernRegistry.docs.v1.read.RgbaColor;
+    border?: FernRegistry.docs.v1.commons.RgbaColor;
+    sidebarBackground?: FernRegistry.docs.v1.commons.RgbaColor;
+    headerBackground?: FernRegistry.docs.v1.commons.RgbaColor;
+    cardBackground?: FernRegistry.docs.v1.commons.RgbaColor;
 }

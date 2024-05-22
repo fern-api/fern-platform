@@ -20,19 +20,19 @@ export function convertDbDocsConfigToRead({
 }): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
         navigation: transformNavigationV1ConfigToRead(dbShape.navigation, apis),
-        logo: dbShape.logo,
-        logoV2: dbShape.logoV2,
+        // logo: dbShape.logo,
+        // logoV2: dbShape.logoV2,
         logoHeight: dbShape.logoHeight,
         logoHref: dbShape.logoHref,
-        colors: dbShape.colors,
-        colorsV2: dbShape.colorsV2,
+        // colors: dbShape.colors,
+        // colorsV2: dbShape.colorsV2,
         colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
         navbarLinks: dbShape.navbarLinks,
         footerLinks: dbShape.footerLinks,
         title: dbShape.title,
         favicon: dbShape.favicon,
-        backgroundImage: dbShape.backgroundImage,
-        typography: dbShape.typography ?? transformTypographyV2ToV1(dbShape.typographyV2),
+        // backgroundImage: dbShape.backgroundImage,
+        // typography: dbShape.typography ?? transformTypographyV2ToV1(dbShape.typographyV2),
         typographyV2: dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
         layout: dbShape.layout,
         css: dbShape.css,
@@ -377,28 +377,47 @@ function migrateApiNavigationItemV1ToV2(
             return item;
         case "subpackage":
             return {
-                ...item,
+                type: "section",
+                summaryPageId: item.summaryPageId,
+                // subpackageId: item.subpackageId,
+                id: {
+                    type: "subpackage",
+                    value: item.subpackageId,
+                },
                 items: item.items.map((innerItem) =>
                     migrateApiNavigationItemV1ToV2(innerItem, api, [...parentSubpackageIds, item.subpackageId]),
                 ),
+                urlSlug: undefined,
             };
         case "endpointId":
             return {
-                type: "endpoint",
-                subpackageLocator: parentSubpackageIds,
-                endpointId: item.value,
+                type: "node",
+                value: {
+                    type: "endpoint",
+                    endpointId: item.value,
+                    subpackageLocator: parentSubpackageIds,
+                    urlSlug: undefined,
+                },
             };
         case "webhookId":
             return {
-                type: "webhook",
-                subpackageLocator: parentSubpackageIds,
-                webhookId: item.value,
+                type: "node",
+                value: {
+                    type: "webhook",
+                    subpackageLocator: parentSubpackageIds,
+                    webhookId: item.value,
+                    urlSlug: undefined,
+                },
             };
         case "websocketId":
             return {
-                type: "websocket",
-                subpackageLocator: parentSubpackageIds,
-                webSocketId: item.value,
+                type: "node",
+                value: {
+                    type: "websocket",
+                    subpackageLocator: parentSubpackageIds,
+                    webSocketId: item.value,
+                    urlSlug: undefined,
+                },
             };
     }
 }

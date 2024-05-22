@@ -4,11 +4,7 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface PageMetadata {
+export interface PageMetadata extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     id: FernRegistry.docs.v1.commons.PageId;
     title: string;
-    icon?: string;
-    hidden?: boolean;
-    urlSlug: string;
-    fullSlug?: string[];
 }

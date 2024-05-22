@@ -34,12 +34,23 @@ export interface DocsDefinitionCache {
 }
 
 /**
- * All modifications to this type must be forward compatible.
- * In other words, only add optional properties.
+ * Every time we add any migration in the docs schema, we must increment the version to "invalidate" the cache record.
+ * Although we never introduce breaking changes to the docs schema, the frontend always assumes that the schema was migrated.
+ *
+ * ExampleDeeplyNestedObject:
+ *   properties:
+ *     foo: FooV1
+ *     fooV2: FooV2
+ *
+ * If fooV2 was just added to the schema, the next version of the frontend will ignore fooV1 in favor of fooV2.
+ * The docs.read() migration should return both fooV1 and fooV2 to prevent version drift between FDR and UI, but eventually fooV1 will be deleted.
+ * If the cache is not invalidated, the UI will not see fooV2 until the docs is regenerated, and will make incorrect assumptions about the schema.
  */
+const VERSION = "v3" as const;
+
 export interface CachedDocsResponse {
-    /** Adding a version to the cached response to allow for breaks in the future. */
-    version: "v2";
+    // version must always exist in the cache
+    version: typeof VERSION;
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2>;
@@ -208,7 +219,10 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | null> {
         if (this.redisDocsCache) {
-            return await this.redisDocsCache.get({ url });
+            const cachedResponse = await this.redisDocsCache.get({ url });
+            if (cachedResponse?.version === VERSION) {
+                return cachedResponse;
+            }
         }
         return this.localDocsCache.get({ url });
     }
@@ -222,7 +236,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 docsV2: dbDocs,
             });
             return {
-                version: "v2",
+                version: VERSION,
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
@@ -245,7 +259,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
-                version: "v2",
+                version: VERSION,
                 updatedTime: new Date(),
                 dbFiles: v1Docs.dbFiles ?? {},
                 response: {

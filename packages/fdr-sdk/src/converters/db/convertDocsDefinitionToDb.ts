@@ -442,16 +442,26 @@ function transformApiSectionNavigationV2ForDb(
 
 function transformItemsV2(items: DocsV1Write.ApiNavigationConfigItemV2[]) {
     return items.map((item): DocsV1Read.ApiNavigationConfigItemV2 => {
-        if (item.type === "subpackage") {
+        if (item.type === "section") {
             return {
-                type: "subpackage",
-                subpackageId: item.subpackageId,
+                type: "section",
+                id: item.id,
                 items: transformItemsV2(item.items),
+                icon: item.icon,
+                hidden: item.hidden,
+                fullSlug: item.fullSlug,
+                urlSlug: item.urlSlugOverride ?? kebabCase(item.title),
             };
         } else if (item.type === "page") {
             return transformPageNavigationItemForDb(item);
+        } else if (item.type === "node") {
+            return {
+                type: "node",
+                value: transformApiNode(item.value),
+            };
+        } else {
+            assertNever(item);
         }
-        return item;
     });
 }
 
@@ -480,4 +490,41 @@ function transformItemsV1(items: DocsV1Write.ApiNavigationConfigItemV1[]) {
         }
         return item;
     });
+}
+
+function transformApiNode(writeShape: DocsV1Write.ApiNavigationNodeLocator): DocsV1Read.ApiNavigationNodeLocator {
+    switch (writeShape.type) {
+        case "endpoint":
+            return {
+                type: "endpoint",
+                endpointId: writeShape.endpointId,
+                subpackageLocator: writeShape.subpackageLocator,
+                icon: writeShape.icon,
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
+            };
+        case "webhook":
+            return {
+                type: "webhook",
+                webhookId: writeShape.webhookId,
+                subpackageLocator: writeShape.subpackageLocator,
+                icon: writeShape.icon,
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
+            };
+        case "websocket":
+            return {
+                type: "websocket",
+                webSocketId: writeShape.webSocketId,
+                subpackageLocator: writeShape.subpackageLocator,
+                icon: writeShape.icon,
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
+            };
+        default:
+            assertNever(writeShape);
+    }
 }
