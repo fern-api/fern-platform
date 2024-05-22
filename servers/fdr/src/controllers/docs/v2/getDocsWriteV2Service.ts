@@ -25,20 +25,7 @@ function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url:
     return baseUrl;
 }
 
-function validateAndParseCustomDomainUrl({ customUrls }: { customUrls: string[] }): ParsedBaseUrl[] {
-    for (let i = 0; i < customUrls.length; ++i) {
-        const one = customUrls[i];
-        for (let j = i + 1; j < customUrls.length; ++j) {
-            const two = customUrls[j];
-            if (one == null || two == null) {
-                continue;
-            }
-            if (one.includes(two) || two.includes(one)) {
-                throw new DocsV2Write.InvalidCustomDomainError();
-            }
-        }
-    }
-
+function parseCustomDomainUrls({ customUrls }: { customUrls: string[] }): ParsedBaseUrl[] {
     const parsedUrls: ParsedBaseUrl[] = [];
     for (const customUrl of customUrls) {
         const baseUrl = ParsedBaseUrl.parse(customUrl);
@@ -56,7 +43,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             });
 
             const fernUrl = validateAndParseFernDomainUrl({ app, url: req.body.domain });
-            const customUrls = validateAndParseCustomDomainUrl({ customUrls: req.body.customDomains });
+            const customUrls = parseCustomDomainUrls({ customUrls: req.body.customDomains });
 
             // ensure that the domains are not already registered by another org
             const hasOwnership = await app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
