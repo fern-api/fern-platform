@@ -6,6 +6,10 @@ provider:
   runtime: nodejs18.x
   deploymentMethod: direct
   region: "us-east-1"
+  # 900 second timeout, e.g. 15 minutes
+  timeout: 900
+  # 10GB memory
+  memorySize: 10240
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
@@ -20,6 +24,8 @@ provider:
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
 functions:
   updateOpenApiSpec:
+    # 10GB storage
+    ephemeralStorageSize: 10240
     handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
     # Adding a layer to have git available in the lambda
     # https://github.com/lambci/git-lambda-layer
