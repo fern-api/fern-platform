@@ -152,6 +152,7 @@ it("snippets dao", async () => {
             },
             sdks: undefined,
             page: undefined,
+            exampleIdentifier: undefined,
         },
     });
     expect(response).not.toEqual(undefined);
