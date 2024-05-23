@@ -332,7 +332,7 @@ module.exports = {
                 "thumb-rock": "thumb-rock 500ms both",
                 "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-                "content-show-from-bottom": "content-show-from-bottom 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-show-from-bottom": "content-show-from-bottom 500ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },
