@@ -283,7 +283,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         group: undefined,
     };
 
-    if (!hasPlayground) {
+    if (!hasPlayground || apiGroups.length === 0) {
         return null;
     }
 

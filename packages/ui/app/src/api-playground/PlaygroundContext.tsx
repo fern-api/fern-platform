@@ -60,19 +60,15 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         if (unfetchedApis.length === 0) {
             return;
         }
-
-        void Promise.all(
-            unfetchedApis.map(async (apiId) => {
-                const r = await fetch(
-                    urljoin(basePath ?? "", "/api/fern-docs/resolve-api?path=" + (basePath ?? "/") + "&api=" + apiId),
-                );
-                const data: Record<string, ResolvedRootPackage> | null = await r.json();
-                if (data == null) {
-                    return;
-                }
-                setApis((currentApis) => ({ ...currentApis, ...data }));
-            }),
-        );
+        const fetchApis = async () => {
+            const r = await fetch(urljoin(basePath ?? "", "/api/fern-docs/resolve-api"));
+            const data: Record<string, ResolvedRootPackage> | null = await r.json();
+            if (data == null) {
+                return;
+            }
+            setApis((currentApis) => ({ ...currentApis, ...data }));
+        };
+        void fetchApis();
     }, [apiIds, apis, basePath, setApis]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);

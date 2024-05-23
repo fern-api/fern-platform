@@ -24,13 +24,14 @@ const resolveApiHandler: NextApiHandler = async (
             return;
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-        const maybePathName = req.query.path;
-        const api = req.query.api;
+        const fullUrl = req.url;
 
-        if (maybePathName == null || typeof maybePathName !== "string" || api == null || typeof api !== "string") {
-            return res.status(400).json(null);
+        if (fullUrl == null) {
+            res.status(400).json(null);
+            return;
         }
 
+        const maybePathName = fullUrl.split("/api/fern-docs/resolve-api")[0] ?? "";
         const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
         const url = `${hostWithoutTrailingSlash}${pathname}`;
         // eslint-disable-next-line no-console
@@ -46,13 +47,7 @@ const resolveApiHandler: NextApiHandler = async (
 
         const docs = docsResponse.body;
         const docsDefinition = docs.definition;
-        const apiDefinition = docsDefinition.apis[api];
         const docsConfig = docsDefinition.config;
-
-        if (apiDefinition == null) {
-            res.status(404).json(null);
-            return;
-        }
 
         const basePathSlug =
             docs.baseUrl.basePath != null ? docs.baseUrl.basePath.split("/").filter((t) => t.length > 0) : [];

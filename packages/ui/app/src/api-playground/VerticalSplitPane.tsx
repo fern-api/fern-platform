@@ -25,7 +25,7 @@ export function VerticalSplitPane({
         }
     }, []);
 
-    const handleVerticalResize = useVerticalSplitPane(setHeight);
+    const { handleVerticalResize } = useVerticalSplitPane(setHeight);
 
     const [above, below] = Children.toArray(children);
 
@@ -74,7 +74,7 @@ export function HorizontalSplitPane({
     children,
     rizeBarHeight,
     mode = "percent",
-    initialLeftWidth = mode === "percent" ? 0.6 : 300,
+    initialLeftWidth = mode === "percent" ? 0.5 : 300,
     ...props
 }: PropsWithChildren<HorizontalSplitPaneProps>): ReactElement | null {
     const [leftWidth, setLeftWidth] = useState(initialLeftWidth);
