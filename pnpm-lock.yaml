@@ -733,6 +733,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.57.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
