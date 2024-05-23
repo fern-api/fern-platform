@@ -68,6 +68,7 @@
     "clsx": "^2.1.0",
     "colorjs.io": "^0.5.0",
     "estree-util-visit": "^2.0.0",
+    "fastdom": "^1.0.12",
     "framer-motion": "^11.2.4",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
