@@ -56,7 +56,7 @@ export class SDKSnippetHolder {
         endpointId: string | undefined;
         exampleId: string | undefined;
     }): APIV1Read.PythonSnippet | undefined {
-        if (this.snippetsConfigWithSdkId.rubySdk == null) {
+        if (this.snippetsConfigWithSdkId.pythonSdk == null) {
             return undefined;
         }
         return this.getCodeSnippetForEndpoint<APIV1Read.PythonSnippet>({
@@ -82,7 +82,7 @@ export class SDKSnippetHolder {
         endpointId: string | undefined;
         exampleId: string | undefined;
     }): APIV1Read.TypescriptSnippet | undefined {
-        if (this.snippetsConfigWithSdkId.rubySdk == null) {
+        if (this.snippetsConfigWithSdkId.typescriptSdk == null) {
             return undefined;
         }
         return this.getCodeSnippetForEndpoint<APIV1Read.TypescriptSnippet>({
@@ -165,6 +165,7 @@ export class SDKSnippetHolder {
         getSnippet: (snippet: FdrAPI.Snippet) => T | undefined;
     }): T | undefined {
         const sdk = getSdk(this.snippetsConfigWithSdkId);
+        process.stderr.write(JSON.stringify(sdk, undefined, 2));
         if (sdk == null) {
             return undefined;
         }
@@ -178,14 +179,16 @@ export class SDKSnippetHolder {
         if (endpointId == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
             snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod] ?? [];
         }
+        console.log("snippetsForEndpoint", JSON.stringify(snippetsForEndpoint, undefined, 2));
 
         let snippets = snippetsForEndpoint.filter((snippet) => {
             return exampleId != null && snippet.exampleIdentifier === exampleId;
         });
         // if no example match, just pick first snippet for backwards-compatibility reasons
-        if (snippetsForEndpoint[0] != null) {
+        if (snippets.length === 0) {
             snippets = [snippetsForEndpoint[0]];
         }
+        console.log("snippets", JSON.stringify(snippets, undefined, 2));
 
         if (snippets[0] != null) {
             return getSnippet(snippets[0]);
