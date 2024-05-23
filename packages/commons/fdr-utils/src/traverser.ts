@@ -36,10 +36,10 @@ function visitPage(
         if (matchCurrentNode(currentNode, page)) {
             traverseState.curr = page;
             traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
-        } else {
+        } else if (!page.hidden) {
             traverseState.prev = page;
         }
-    } else {
+    } else if (!page.hidden) {
         traverseState.next = page;
     }
 
