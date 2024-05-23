@@ -36,10 +36,11 @@
 
 .fern-table-root.fullscreen .fern-table thead .fern-table-cell {
     @apply sticky top-0 relative;
+
     box-shadow: inset 0 -1px var(--grayscale-a5);
     border-bottom: 0;
 
-    &:after {
+    &::after {
         @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
     }
 }
