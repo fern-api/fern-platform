@@ -95,7 +95,7 @@ interface PlaygroundDrawerProps {
 }
 
 export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
-    const { selectionState, hasPlayground } = usePlaygroundContext();
+    const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
     const windowHeight = useWindowHeight();
 
     const { sidebarNodes } = useDocsContext();
@@ -270,6 +270,50 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         return null;
     }
 
+    const renderContent = () =>
+        selectionState?.type === "endpoint" && matchedEndpoint != null ? (
+            <PlaygroundEndpoint
+                endpoint={matchedEndpoint}
+                formState={playgroundFormState?.type === "endpoint" ? playgroundFormState : EMPTY_ENDPOINT_FORM_STATE}
+                setFormState={setPlaygroundEndpointFormState}
+                resetWithExample={resetWithExample}
+                resetWithoutExample={resetWithoutExample}
+                types={types}
+            />
+        ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
+            <PlaygroundWebSocket
+                websocket={matchedWebSocket}
+                formState={playgroundFormState?.type === "websocket" ? playgroundFormState : EMPTY_WEBSOCKET_FORM_STATE}
+                setFormState={setPlaygroundWebSocketFormState}
+                types={types}
+            />
+        ) : (
+            <div className="size-full flex flex-col items-center justify-center">
+                <ArrowLeftIcon className="size-8 mb-2 t-muted" />
+                <h6 className="t-muted">Select an endpoint to get started</h6>
+            </div>
+        );
+
+    const renderMobileHeader = () => (
+        <div className="grid h-10 grid-cols-2 gap-2 px-4">
+            <div className="flex items-center">
+                <span className="inline-flex items-baseline gap-2">
+                    <span className="t-accent text-sm font-semibold">API Playground</span>
+                </span>
+            </div>
+
+            <div className="flex items-center justify-end">
+                <FernButton
+                    variant="minimal"
+                    className="-mr-3"
+                    icon={<Cross1Icon />}
+                    onClick={collapsePlayground}
+                    rounded
+                />
+            </div>
+        </div>
+    );
+
     return (
         <FernErrorBoundary
             component="PlaygroundDrawer"
@@ -281,12 +325,12 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 <Dialog.Portal>
                     <Dialog.Content
                         className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default"
-                        style={{ height: layoutBreakpoint !== "mobile" ? height : undefined }}
+                        style={{ height: layoutBreakpoint !== "mobile" ? height : "100%" }}
                         onInteractOutside={(e) => {
                             e.preventDefault();
                         }}
                     >
-                        {layoutBreakpoint !== "mobile" && (
+                        {layoutBreakpoint !== "mobile" ? (
                             <>
                                 <div
                                     className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
@@ -301,45 +345,26 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                                     <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
                                 </Dialog.Close>
                             </>
+                        ) : (
+                            renderMobileHeader()
                         )}
-                        <HorizontalSplitPane mode="pixel" className="size-full" leftClassName="border-default border-r">
-                            <PlaygroundEndpointSelectorContent
-                                apiGroups={apiGroups}
-                                selectedEndpoint={selectedEndpoint}
-                                className="h-full"
-                            />
+                        {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
+                            renderContent()
+                        ) : (
+                            <HorizontalSplitPane
+                                mode="pixel"
+                                className="size-full"
+                                leftClassName="border-default border-r"
+                            >
+                                <PlaygroundEndpointSelectorContent
+                                    apiGroups={apiGroups}
+                                    selectedEndpoint={selectedEndpoint}
+                                    className="h-full"
+                                />
 
-                            {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
-                                <PlaygroundEndpoint
-                                    endpoint={matchedEndpoint}
-                                    formState={
-                                        playgroundFormState?.type === "endpoint"
-                                            ? playgroundFormState
-                                            : EMPTY_ENDPOINT_FORM_STATE
-                                    }
-                                    setFormState={setPlaygroundEndpointFormState}
-                                    resetWithExample={resetWithExample}
-                                    resetWithoutExample={resetWithoutExample}
-                                    types={types}
-                                />
-                            ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
-                                <PlaygroundWebSocket
-                                    websocket={matchedWebSocket}
-                                    formState={
-                                        playgroundFormState?.type === "websocket"
-                                            ? playgroundFormState
-                                            : EMPTY_WEBSOCKET_FORM_STATE
-                                    }
-                                    setFormState={setPlaygroundWebSocketFormState}
-                                    types={types}
-                                />
-                            ) : (
-                                <div className="size-full flex flex-col items-center justify-center">
-                                    <ArrowLeftIcon className="size-8 mb-2 t-muted" />
-                                    <h6 className="t-muted">Select an endpoint to get started</h6>
-                                </div>
-                            )}
-                        </HorizontalSplitPane>
+                                {renderContent()}
+                            </HorizontalSplitPane>
+                        )}
                     </Dialog.Content>
                 </Dialog.Portal>
             </Dialog.Root>
