@@ -6,7 +6,7 @@ module.exports = {
     ...baseConfig,
     content: [
         "./src/**/*.{ts,tsx}",
-        "../tailwind.config.js",
+        "../tailwind.config.cjs",
         path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}")
     ]
 };
