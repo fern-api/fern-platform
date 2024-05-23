@@ -1,10 +1,10 @@
+import { FernButton } from "@fern-ui/components";
 import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { FernButton } from "../../../components/src/FernButton";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
 
 export declare interface FernErrorBoundaryProps {

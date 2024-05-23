@@ -22,4 +22,4 @@ export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./FontAwesomeIcon";
 export * from "./SearchInput";
-export * from "./shared-component-types";
+export * from "./util/shared-component-types";

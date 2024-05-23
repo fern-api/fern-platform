@@ -1,6 +1,7 @@
-import { FernButton, FernDropdown } from "@fern-ui/components";
-import { getVersionAvailabilityLabel, SidebarVersionInfo } from "@fern-ui/fdr-utils";
+import { FernButton } from "@fern-ui/components";
+import { SidebarVersionInfo, getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 export declare namespace VersionDropdown {
@@ -19,7 +20,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
     const currentVersion = versions[currentVersionIndex ?? 0];
     return (
         <div className="flex w-32">
-            <FernDropdown
+            <FernLinkDropdown
                 value={currentVersion?.id}
                 options={versions.map(({ id: versionName, availability, slug }) => ({
                     type: "value",
@@ -37,7 +38,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
                     rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}
                     disableAutomaticTooltip
                 />
-            </FernDropdown>
+            </FernLinkDropdown>
         </div>
     );
 };

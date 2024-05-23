@@ -1,7 +1,6 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import { FernTag } from "@fern-ui/components";
+import { ColorScheme, FernTag } from "@fern-ui/components";
 import React, { memo } from "react";
-import { ColorScheme } from "../../../../components/src/shared-component-types";
 import { getEndpointAvailabilityLabel } from "../../util/endpoint";
 
 export declare namespace EndpointAvailabilityTag {
