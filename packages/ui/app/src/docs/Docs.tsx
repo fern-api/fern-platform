@@ -58,7 +58,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <PlaygroundContextProvider>
-            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col">
+            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col z-0">
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -102,7 +102,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             docsMainContent
                         )}
                     </main>
-                    <BuiltWithFern />
+                    <BuiltWithFern className="absolute bottom-0 left-1/2 z-50 my-8 flex w-fit -translate-x-1/2 justify-center" />
                 </div>
 
                 {/* Enables footer DOM injection */}

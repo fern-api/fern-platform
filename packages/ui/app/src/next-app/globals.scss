@@ -1,3 +1,9 @@
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/mauve.css";
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/sage.css";
+@import "@radix-ui/colors/olive.css";
+@import "@radix-ui/colors/sand.css";
 @import "@radix-ui/colors/gray-alpha.css";
 @import "@radix-ui/colors/mauve-alpha.css";
 @import "@radix-ui/colors/slate-alpha.css";
@@ -13,6 +19,12 @@
 @import "@radix-ui/colors/amber-alpha.css";
 @import "@radix-ui/colors/blue.css";
 @import "@radix-ui/colors/blue-alpha.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/mauve-dark.css";
+@import "@radix-ui/colors/slate-dark.css";
+@import "@radix-ui/colors/sage-dark.css";
+@import "@radix-ui/colors/olive-dark.css";
+@import "@radix-ui/colors/sand-dark.css";
 @import "@radix-ui/colors/gray-dark-alpha.css";
 @import "@radix-ui/colors/mauve-dark-alpha.css";
 @import "@radix-ui/colors/slate-dark-alpha.css";
@@ -147,39 +159,59 @@
     }
 
     .mask-grad-top-1 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 4px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 4px);
     }
 
     .mask-grad-top-2 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 8px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 8px);
     }
 
     .mask-grad-top-3 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 12px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
     }
 
     .mask-grad-top-4 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 16px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 16px);
     }
 
     .mask-grad-top-5 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 20px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 20px);
     }
 
     .mask-grad-top-6 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+    }
+
+    .mask-grad-y-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
     }
 
     .mask-grad-top-7 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 28px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 28px);
     }
 
     .mask-grad-top-8 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 32px);
     }
 
     .mask-grad-bottom-6 {
-        mask-image: linear-gradient(to top, transparent 0, rgba(0, 0, 0, 100%) 24px);
+        mask-image: linear-gradient(to top, transparent 0, black 24px);
+    }
+
+    .mask-grad-bottom-7 {
+        mask-image: linear-gradient(to top, transparent 0, black 28px);
+    }
+
+    .mask-grad-bottom-8 {
+        mask-image: linear-gradient(to top, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-9 {
+        mask-image: linear-gradient(to top, transparent 0, black 36px);
+    }
+
+    .mask-grad-bottom-10 {
+        mask-image: linear-gradient(to top, transparent 0, black 40px);
     }
 
     .fern-dropdown {
@@ -315,6 +347,38 @@
 
         > .fern-button {
             @apply rounded-lg shrink min-w-0;
+        }
+    }
+
+    .fern-button-group {
+        @apply inline-flex items-stretch;
+
+        > .fern-button {
+            + .fern-button.outlined,
+            + .fern-button.filled {
+                @apply ml-2;
+            }
+        }
+
+        > .fern-button.small {
+            + .fern-button.small.outlined,
+            + .fern-button.small.filled {
+                @apply ml-1;
+            }
+        }
+
+        > .fern-button.large {
+            + .fern-button.large.outlined,
+            + .fern-button.large.filled {
+                @apply ml-3;
+            }
+        }
+
+        > .fern-button.outlined,
+        > .fern-button.filled {
+            + .fern-button.minimal {
+                @apply ml-2;
+            }
         }
     }
 

@@ -18,7 +18,6 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => 
     const hydrated = useIsReady();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const setDefinitions = useSetAtom(APIS);
-    // const definition = apis[initialApi.api];
 
     useEffect(() => {
         setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));

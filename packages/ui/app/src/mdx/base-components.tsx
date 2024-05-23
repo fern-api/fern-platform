@@ -18,49 +18,7 @@ import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { onlyText } from "../util/onlyText";
 import "./base-components.scss";
-
-export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
-    return (
-        <FernCard className="fern-table not-prose">
-            <table {...rest} className={cn(className)} />
-        </FernCard>
-    );
-};
-
-export const Thead: FC<ComponentProps<"thead">> = ({ className, ...rest }) => {
-    return <thead {...rest} className={cn(className)} />;
-};
-
-export const Tbody: FC<ComponentProps<"tbody">> = ({ className, ...rest }) => {
-    return <tbody {...rest} className={cn(className)} />;
-};
-
-export const Tr: FC<ComponentProps<"tr">> = ({ className, ...rest }) => {
-    return <tr {...rest} className={cn(className)} />;
-};
-
-export const Th: FC<ComponentProps<"th">> = ({ className, ...rest }) => {
-    return <th {...rest} className={cn(className, "text-left truncate p-3")} />;
-};
-
-export const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) => {
-    const childrenAsString = onlyText(children);
-    return (
-        <td
-            {...rest}
-            className={cn(className, "p-3", {
-                // if the table has many columns, do not collapse short string content into multi-line:
-                "whitespace-nowrap": childrenAsString.length < 100,
-                // prevent table's auto sizing from collapsing a paragraph into a tall-skinny column of broken sentences:
-                "min-w-sm": childrenAsString.length > 200,
-            })}
-        >
-            {children}
-        </td>
-    );
-};
 
 /**
  * By default, next will use /host/current/slug in SSG.

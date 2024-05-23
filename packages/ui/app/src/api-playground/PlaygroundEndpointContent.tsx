@@ -22,7 +22,7 @@ import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
-import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
+import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
@@ -79,7 +79,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     }, []);
 
     const form = (
-        <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0">
+        <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
             {endpoint.auth != null && (
                 <PlaygroundAuthorizationFormCard
                     auth={endpoint.auth}
@@ -94,23 +94,18 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 />
             )}
 
-            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-2">
-                <PlaygroundEndpointFormAside
-                    className="col-span-1 -mt-6 max-sm:hidden"
-                    endpoint={endpoint}
-                    formState={formState}
-                    scrollAreaHeight={scrollAreaHeight}
-                    resetWithExample={resetWithExample}
-                    resetWithoutExample={resetWithoutExample}
-                    types={types}
-                />
-                <PlaygroundEndpointForm
-                    endpoint={endpoint}
-                    formState={formState}
-                    setFormState={setFormState}
-                    types={types}
-                />
-            </div>
+            <PlaygroundEndpointForm
+                endpoint={endpoint}
+                formState={formState}
+                setFormState={setFormState}
+                types={types}
+            />
+
+            <PlaygroundEndpointFormButtons
+                endpoint={endpoint}
+                resetWithExample={resetWithExample}
+                resetWithoutExample={resetWithoutExample}
+            />
         </div>
     );
 
@@ -297,7 +292,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
         <div className="flex min-h-0 w-full flex-1 shrink items-stretch divide-x">
             <div
                 ref={scrollAreaRef}
-                className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
+                className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
                 {layoutBreakpoint !== "mobile" ? (
                     <HorizontalSplitPane

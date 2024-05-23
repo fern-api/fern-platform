@@ -25,13 +25,13 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
     }
 
     return (
-        <div className="absolute bottom-0 left-1/2 z-50 my-8 flex w-fit -translate-x-1/2 justify-center">
+        <div className={className}>
             <FernTooltipProvider>
                 <FernTooltip content={BUILT_WITH_FERN_TOOLTIP_CONTENT} side="top">
                     <span>
                         <FernLink
                             href={`https://buildwithfern.com/?utm_campaign=buildWith&utm_medium=docs&utm_source=${encodeURIComponent(domain)}`}
-                            className={cn("inline-flex items-center gap-2", className)}
+                            className={"inline-flex items-center gap-2"}
                             {...containerCallbacks}
                         >
                             <span className={cn("text-xs t-muted whitespace-nowrap")}>Built with</span>

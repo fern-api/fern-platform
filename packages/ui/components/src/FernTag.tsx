@@ -56,11 +56,11 @@ export const FernTag: FC<FernTagProps> = ({
 
                     // Green
                     "bg-green-a3 text-green-a11": colorScheme === "green" && variant === "subtle",
-                    "bg-green-a10 text-green-1": colorScheme === "green" && variant === "solid",
+                    "bg-green-a10 text-green-1 dark:text-green-12": colorScheme === "green" && variant === "solid",
 
                     // Blue
                     "bg-blue-a3 text-blue-a11": colorScheme === "blue" && variant === "subtle",
-                    "bg-blue-a10 text-blue-1": colorScheme === "blue" && variant === "solid",
+                    "bg-blue-a10 text-blue-1 dark:text-blue-12": colorScheme === "blue" && variant === "solid",
 
                     // Amber
                     "bg-amber-a3 text-amber-a11": colorScheme === "amber" && variant === "subtle",
@@ -68,7 +68,7 @@ export const FernTag: FC<FernTagProps> = ({
 
                     // Red
                     "bg-red-a3 text-red-a11": colorScheme === "red" && variant === "subtle",
-                    "bg-red-a10 text-red-1": colorScheme === "red" && variant === "solid",
+                    "bg-red-a10 text-red-1 dark:text-red-12": colorScheme === "red" && variant === "solid",
 
                     // Accent
                     "bg-accent/20 text-accent-aaa": colorScheme === "accent" && variant === "subtle",

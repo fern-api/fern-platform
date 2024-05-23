@@ -10,9 +10,9 @@ export declare namespace MdxContent {
     }
 }
 
-const COMPONENTS = { ...HTML_COMPONENTS, ...JSX_COMPONENTS };
-
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
+    const COMPONENTS = { ...HTML_COMPONENTS, ...JSX_COMPONENTS };
+
     if (typeof mdx === "string") {
         return <span className="whitespace-pre-wrap">{mdx}</span>;
     }

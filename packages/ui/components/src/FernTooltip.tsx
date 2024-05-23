@@ -33,6 +33,7 @@ export const FernTooltip: FC<FernTooltipProps> = ({
             <Tooltip.Portal>
                 <Tooltip.Content
                     sideOffset={6}
+                    collisionPadding={6}
                     {...props}
                     className={cn(
                         "animate-popover border-default bg-background-translucent backdrop-blur max-w-xs rounded-lg border p-2 text-xs leading-none will-change-[transform,opacity] shadow-sm",

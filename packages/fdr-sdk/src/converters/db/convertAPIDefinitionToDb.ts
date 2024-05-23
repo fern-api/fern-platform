@@ -222,7 +222,7 @@ function transformEndpoint({
         snippetTemplates: snippets.getSnippetTemplateForEndpoint({
             endpointPath: getEndpointPathAsString(writeShape),
             endpointMethod: writeShape.method,
-            identifierOverride: writeShape.originalEndpointId,
+            endpointId: writeShape.originalEndpointId,
         }),
     };
 }
@@ -473,6 +473,7 @@ export function transformExampleEndpointCall({
         codeExamples: transformCodeExamples({
             endpointDefinition,
             snippets,
+            exampleId: writeShape.name,
         }),
         requestBodyV3:
             writeShape.requestBodyV3 ??
@@ -495,31 +496,37 @@ export function transformExampleEndpointCall({
 }
 
 function transformCodeExamples({
+    exampleId,
     endpointDefinition,
     snippets,
 }: {
     endpointDefinition: APIV1Write.EndpointDefinition;
     snippets: SDKSnippetHolder;
+    exampleId: string | undefined;
 }): FdrAPI.api.v1.read.CodeExamples {
     const maybePythonSnippet = snippets.getPythonCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
-        identifierOverride: endpointDefinition.originalEndpointId,
+        endpointId: endpointDefinition.originalEndpointId,
+        exampleId,
     });
     const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
-        identifierOverride: endpointDefinition.originalEndpointId,
+        endpointId: endpointDefinition.originalEndpointId,
+        exampleId,
     });
     const maybeGoSnippet = snippets.getGoCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
-        identifierOverride: endpointDefinition.originalEndpointId,
+        endpointId: endpointDefinition.originalEndpointId,
+        exampleId,
     });
     const maybeRubySnippet = snippets.getRubyCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
-        identifierOverride: endpointDefinition.originalEndpointId,
+        endpointId: endpointDefinition.originalEndpointId,
+        exampleId,
     });
     return {
         nodeAxios: "",

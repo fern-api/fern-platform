@@ -1,9 +1,10 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { FernButton, FernButtonGroup, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { FernButton, FernTooltipProvider } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { Portal, Transition } from "@headlessui/react";
-import { Cross1Icon } from "@radix-ui/react-icons";
-import clsx from "clsx";
+// import { Portal, Transition } from "@headlessui/react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { useAnimate, useMotionValue } from "framer-motion";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
@@ -23,7 +24,6 @@ import {
 } from "../resolver/types";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
-import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import {
@@ -83,7 +83,9 @@ export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>
     const [playgroundHeight, setHeight] = useAtom(PLAYGROUND_HEIGHT_ATOM);
     const windowHeight = useWindowHeight();
     const height =
-        windowHeight != null ? Math.max(Math.min(windowHeight - headerHeight, playgroundHeight), 40) : playgroundHeight;
+        windowHeight != null
+            ? Math.max(Math.min(windowHeight - headerHeight, playgroundHeight), windowHeight / 3)
+            : playgroundHeight;
 
     return [height, setHeight];
 }
@@ -106,6 +108,9 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const layoutBreakpoint = useLayoutBreakpoint();
     const [height, setHeight] = usePlaygroundHeight();
 
+    const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
+    const [scope, animate] = useAnimate();
+
     const setOffset = useCallback(
         (offset: number) => {
             windowHeight != null && setHeight(windowHeight - offset);
@@ -113,7 +118,20 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         [setHeight, windowHeight],
     );
 
-    const handleVerticalResize = useVerticalSplitPane(setOffset);
+    const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
+
+    useEffect(() => {
+        if (isResizing) {
+            x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+        } else {
+            if (scope.current != null) {
+                // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
+                void animate(scope.current, { height: layoutBreakpoint !== "mobile" ? height : windowHeight });
+            } else {
+                x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+            }
+        }
+    }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -247,112 +265,88 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         };
     }, [togglePlayground]);
 
-    if (!hasPlayground) {
+    const { endpoint: selectedEndpoint } = apiGroups
+        .flatMap((group) => [
+            ...group.items
+                .filter((item) => item.apiType === "endpoint" || item.apiType === "websocket")
+                .map((endpoint) => ({ group, endpoint })),
+        ])
+        .find(({ endpoint }) =>
+            selectionState?.type === "endpoint"
+                ? endpoint.slug.join("/") === selectionState?.endpointId
+                : selectionState?.type === "websocket"
+                  ? endpoint.slug.join("/") === selectionState?.webSocketId
+                  : false,
+        ) ?? {
+        endpoint: undefined,
+        group: undefined,
+    };
+
+    if (!hasPlayground || apiGroups.length === 0) {
         return null;
     }
 
-    const mobileHeader = (
+    const renderContent = () =>
+        selectionState?.type === "endpoint" && matchedEndpoint != null ? (
+            <PlaygroundEndpoint
+                endpoint={matchedEndpoint}
+                formState={playgroundFormState?.type === "endpoint" ? playgroundFormState : EMPTY_ENDPOINT_FORM_STATE}
+                setFormState={setPlaygroundEndpointFormState}
+                resetWithExample={resetWithExample}
+                resetWithoutExample={resetWithoutExample}
+                types={types}
+            />
+        ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
+            <PlaygroundWebSocket
+                websocket={matchedWebSocket}
+                formState={playgroundFormState?.type === "websocket" ? playgroundFormState : EMPTY_WEBSOCKET_FORM_STATE}
+                setFormState={setPlaygroundWebSocketFormState}
+                types={types}
+            />
+        ) : (
+            <div className="size-full flex flex-col items-center justify-center">
+                <ArrowLeftIcon className="size-8 mb-2 t-muted" />
+                <h6 className="t-muted">Select an endpoint to get started</h6>
+            </div>
+        );
+
+    const renderMobileHeader = () => (
         <div className="grid h-10 grid-cols-2 gap-2 px-4">
-            <div className="flex items-center">
-                <div className="-ml-3">
-                    {selectionState != null ? (
-                        <PlaygroundEndpointSelector apiGroups={apiGroups} />
-                    ) : (
-                        <h6 className="t-accent">Select an endpoint to get started</h6>
-                    )}
-                </div>
-            </div>
-
-            <div className="flex items-center justify-end">
-                <FernTooltipProvider>
-                    <FernButtonGroup>
-                        <FernTooltip
-                            content={
-                                <span className="space-x-4">
-                                    <span>Close API Playground</span>
-                                    <span className="font-mono text-faded">CTRL + `</span>
-                                </span>
-                            }
-                        >
-                            <FernButton
-                                variant="minimal"
-                                className="-mr-3"
-                                icon={<Cross1Icon />}
-                                onClick={collapsePlayground}
-                                rounded
-                            />
-                        </FernTooltip>
-                    </FernButtonGroup>
-                </FernTooltipProvider>
-            </div>
-        </div>
-    );
-
-    const desktopHeader = (
-        <div className="grid h-10 grid-cols-3 gap-2 px-4">
             <div className="flex items-center">
                 <span className="inline-flex items-baseline gap-2">
                     <span className="t-accent text-sm font-semibold">API Playground</span>
                 </span>
             </div>
 
-            <div className="flex items-center justify-center">
-                {selectionState != null ? (
-                    <PlaygroundEndpointSelector apiGroups={apiGroups} />
-                ) : (
-                    <h6 className="t-accent">Select an endpoint to get started</h6>
-                )}
-            </div>
-
             <div className="flex items-center justify-end">
-                <FernTooltipProvider>
-                    <FernButtonGroup>
-                        <FernTooltip
-                            content={
-                                <span className="space-x-4">
-                                    <span>Close API Playground</span>
-                                    <span className="font-mono text-faded">CTRL + `</span>
-                                </span>
-                            }
-                        >
-                            <FernButton
-                                variant="minimal"
-                                className="-mr-2"
-                                icon={<Cross1Icon />}
-                                onClick={collapsePlayground}
-                                rounded
-                            />
-                        </FernTooltip>
-                    </FernButtonGroup>
-                </FernTooltipProvider>
+                <FernButton
+                    variant="minimal"
+                    className="-mr-3"
+                    icon={<Cross1Icon />}
+                    onClick={collapsePlayground}
+                    rounded
+                />
             </div>
         </div>
     );
 
     return (
-        <Portal>
-            <Transition
-                show={isPlaygroundOpen}
-                className={clsx(
-                    "bg-background-translucent border-default fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur-xl",
-                    {
-                        "max-h-vh-minus-header": layoutBreakpoint !== "mobile",
-                        "h-screen": layoutBreakpoint === "mobile",
-                    },
-                )}
-                style={{ height: layoutBreakpoint !== "mobile" ? height : undefined }}
-                enter="ease-out transition-transform duration-300 transform"
-                enterFrom="translate-y-full"
-                enterTo="translate-y-0"
-                leave="ease-in transition-transform duration-200 transform"
-                leaveFrom="translate-y-0"
-                leaveTo="translate-y-full"
-            >
-                {layoutBreakpoint !== "mobile" && (
-                    <div
-                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
-                        onMouseDown={handleVerticalResize}
+        <FernErrorBoundary
+            component="PlaygroundDrawer"
+            className="flex h-full items-center justify-center"
+            showError={true}
+            reset={resetWithoutExample}
+        >
+            <Dialog.Root open={isPlaygroundOpen} onOpenChange={setPlaygroundOpen} modal={false}>
+                <Dialog.Portal>
+                    <Dialog.Content
+                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
+                        onInteractOutside={(e) => {
+                            e.preventDefault();
+                        }}
+                        asChild
                     >
+<<<<<<< HEAD
                         <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
                         <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
                             <div className="bg-accent h-1 w-10 rounded-full" />
@@ -394,10 +388,41 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                         ) : (
                             <FernTooltipProvider>
                                 <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
+=======
+                        <motion.div style={{ height: x }} ref={scope}>
+                            {layoutBreakpoint !== "mobile" ? (
+                                <>
+                                    <div
+                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
+                                        onMouseDown={handleVerticalResize}
+                                    >
+                                        <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                                        <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
+                                            <div className="bg-accent h-1 w-10 rounded-full" />
+                                        </div>
+                                    </div>
+                                    <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
+                                        <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
+                                    </Dialog.Close>
+                                </>
+                            ) : (
+                                renderMobileHeader()
+                            )}
+                            {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
+                                renderContent()
+                            ) : (
+                                <HorizontalSplitPane
+                                    mode="pixel"
+                                    className="size-full"
+                                    leftClassName="border-default border-r"
+                                >
+>>>>>>> main
                                     <PlaygroundEndpointSelectorContent
                                         apiGroups={apiGroups}
-                                        className="fern-card mb-6 min-h-0 shrink p-px"
+                                        selectedEndpoint={selectedEndpoint}
+                                        className="h-full"
                                     />
+<<<<<<< HEAD
                                 </div>
                             </FernTooltipProvider>
                         )}
@@ -405,6 +430,17 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 </div>
             </Transition>
         </Portal>
+=======
+
+                                    {renderContent()}
+                                </HorizontalSplitPane>
+                            )}
+                        </motion.div>
+                    </Dialog.Content>
+                </Dialog.Portal>
+            </Dialog.Root>
+        </FernErrorBoundary>
+>>>>>>> main
     );
 };
 

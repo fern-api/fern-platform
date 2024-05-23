@@ -126,6 +126,7 @@ export async function getDocsPageProps(
             sidebarNodes,
         },
         featureFlags,
+        apis: Object.keys(docs.definition.apis),
     };
 
     return {

@@ -4,7 +4,6 @@
 
 import * as FernRegistry from "../../..";
 
-export interface SingleJavaSnippetCreate {
-    endpoint: FernRegistry.EndpointIdentifier;
+export interface SingleJavaSnippetCreate extends FernRegistry.BaseSnippetCreate {
     snippet: FernRegistry.JavaSnippetCode;
 }
