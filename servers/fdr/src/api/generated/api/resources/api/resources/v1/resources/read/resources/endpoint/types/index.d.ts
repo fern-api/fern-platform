@@ -37,7 +37,6 @@ export * from "./ExampleEndpointResponse";
 export * from "./ExampleServerSentEvent";
 export * from "./ErrorExample";
 export * from "./ExampleErrorResponse";
-export * from "./BaseSnippet";
 export * from "./PythonSnippet";
 export * from "./TypescriptSnippet";
 export * from "./GoSnippet";
