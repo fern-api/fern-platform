@@ -53,12 +53,10 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
-    const { basePath, currentVersionIndex, versions } = useDocsContext();
+    const { basePath } = useDocsContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
 
-    // basepath + version slug are the minimal amount of information needed to fetch the API definitions for the current page
-    const currentVersionSlug = currentVersionIndex != null ? versions[currentVersionIndex]?.slug ?? [] : [];
-    const key = urljoin(basePath ?? "", ...currentVersionSlug, "/api/fern-docs/resolve-api");
+    const key = urljoin(basePath ?? "", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key);
     useEffect(() => {
