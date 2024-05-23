@@ -704,6 +704,57 @@ importers:
         specifier: ^1.5.0
         version: 1.6.0(@types/node@18.19.33)
 
+  packages/generator-cli:
+    devDependencies:
+      '@fern-api/fs-utils':
+        specifier: 0.15.0-rc63
+        version: 0.15.0-rc63
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.837
+        version: 0.0.837
+      '@types/jest':
+        specifier: ^29.5.11
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      '@types/yargs':
+        specifier: ^17.0.32
+        version: 17.0.32
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.15
+        version: 3.0.0-rc.15(esbuild@0.20.2)
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      esbuild:
+        specifier: 0.20.2
+        version: 0.20.2
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^3.2.4
+        version: 3.2.5
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.31)(ts-node@10.9.2)(typescript@4.9.5)
+      typescript:
+        specifier: 4.9.5
+        version: 4.9.5
+      vitest:
+        specifier: ^1.5.0
+        version: 1.6.0(@types/node@18.19.33)
+      yargs:
+        specifier: ^17.4.1
+        version: 17.7.2
+
   packages/healthchecks:
     devDependencies:
       '@fern-api/fdr-sdk':
@@ -4411,7 +4462,6 @@ packages:
     dependencies:
       strip-ansi: 7.1.0
       ua-parser-js: 1.0.37
-    dev: false
 
   /@fern-api/fdr-sdk@0.85.1-7990009b5:
     resolution: {integrity: sha512-w1Apy/yztskZROmvxf2mjpqA3sK04f99XVs5UQaBpQMynnyLeOiZlg4Wcztu2SqrwJ8+Tkrkx5FWQg/AvTlLyA==}
@@ -4434,7 +4484,6 @@ packages:
       '@fern-api/core-utils': 0.15.0-rc63
       json-stream-stringify: 3.1.4
       tmp-promise: 3.0.3
-    dev: false
 
   /@fern-api/venus-api-sdk@0.1.1:
     resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
@@ -4473,6 +4522,17 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: false
+
+  /@fern-fern/generator-exec-sdk@0.0.837:
+    resolution: {integrity: sha512-R1nYPQxJWnapaa36bq5H1FU/trT8X8ZGaFzDWG857IJEuJhijb9eOjUEcY7203/cc0fNC/Q4gY0y60h1HrH/Vw==}
+    dependencies:
+      form-data: 4.0.0
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+    dev: true
 
   /@fern-fern/revalidation-sdk@0.0.9:
     resolution: {integrity: sha512-iZhm1odMdgWqlJi8B6lUPkza8YFfPz6iAhLfTkTnG4cpgPLER4sdQ8tlO+sUcGJF07Z3KkCRKmD6k54wNhv6Gg==}
@@ -17678,7 +17738,6 @@ packages:
   /json-stream-stringify@3.1.4:
     resolution: {integrity: sha512-oGoz05ft577LolnXFQHD2CjnXDxXVA5b8lHwfEZgRXQUZeCMo6sObQQRq+NXuHQ3oTeMZHHmmPY2rjVwyqR62A==}
     engines: {node: '>=7.10.1'}
-    dev: false
 
   /json5@1.0.2:
     resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
@@ -24001,7 +24060,6 @@ packages:
     resolution: {integrity: sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==}
     dependencies:
       tmp: 0.2.3
-    dev: false
 
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -24013,7 +24071,6 @@ packages:
   /tmp@0.2.3:
     resolution: {integrity: sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==}
     engines: {node: '>=14.14'}
-    dev: false
 
   /tmpl@1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
@@ -24596,7 +24653,6 @@ packages:
 
   /ua-parser-js@1.0.37:
     resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}
-    dev: false
 
   /ufo@1.5.3:
     resolution: {integrity: sha512-Y7HYmWaFwPUmkoQCUIAYpKqkOf+SbVj/2fJJZ4RJMCfZp0rTGwRbzQD+HghfnhKOjL9E01okqz+ncJskGYfBNw==}
