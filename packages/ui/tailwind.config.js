@@ -313,7 +313,7 @@ module.exports = {
                     to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
                 },
                 "content-show-from-bottom": {
-                    from: { opacity: "0", transform: "translate(0, 50%)" },
+                    from: { opacity: "0", transform: "translate(0, 48%)" },
                     to: { opacity: "1", transform: "translate(0, 0)" },
                 },
             },
@@ -332,7 +332,7 @@ module.exports = {
                 "thumb-rock": "thumb-rock 500ms both",
                 "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-                "content-show-from-bottom": "content-show-from-bottom 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-show-from-bottom": "content-show-from-bottom 300ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

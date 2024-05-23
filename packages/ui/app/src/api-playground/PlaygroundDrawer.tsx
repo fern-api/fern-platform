@@ -3,6 +3,7 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 // import { Portal, Transition } from "@headlessui/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
@@ -108,6 +109,9 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const layoutBreakpoint = useLayoutBreakpoint();
     const [height, setHeight] = usePlaygroundHeight();
 
+    const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
+    const [scope, animate] = useAnimate();
+
     const setOffset = useCallback(
         (offset: number) => {
             windowHeight != null && setHeight(windowHeight - offset);
@@ -115,7 +119,20 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         [setHeight, windowHeight],
     );
 
-    const handleVerticalResize = useVerticalSplitPane(setOffset);
+    const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
+
+    useEffect(() => {
+        if (isResizing) {
+            x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+        } else {
+            if (scope.current != null) {
+                // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
+                void animate(scope.current, { height: layoutBreakpoint !== "mobile" ? height : windowHeight });
+            } else {
+                x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+            }
+        }
+    }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -324,47 +341,49 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={setPlaygroundOpen} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
-                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default"
-                        style={{ height: layoutBreakpoint !== "mobile" ? height : "100%" }}
+                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
                         onInteractOutside={(e) => {
                             e.preventDefault();
                         }}
+                        asChild
                     >
-                        {layoutBreakpoint !== "mobile" ? (
-                            <>
-                                <div
-                                    className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
-                                    onMouseDown={handleVerticalResize}
-                                >
-                                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                                    <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
-                                        <div className="bg-accent h-1 w-10 rounded-full" />
+                        <motion.div style={{ height: x }} ref={scope}>
+                            {layoutBreakpoint !== "mobile" ? (
+                                <>
+                                    <div
+                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
+                                        onMouseDown={handleVerticalResize}
+                                    >
+                                        <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                                        <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
+                                            <div className="bg-accent h-1 w-10 rounded-full" />
+                                        </div>
                                     </div>
-                                </div>
-                                <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
-                                    <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
-                                </Dialog.Close>
-                            </>
-                        ) : (
-                            renderMobileHeader()
-                        )}
-                        {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
-                            renderContent()
-                        ) : (
-                            <HorizontalSplitPane
-                                mode="pixel"
-                                className="size-full"
-                                leftClassName="border-default border-r"
-                            >
-                                <PlaygroundEndpointSelectorContent
-                                    apiGroups={apiGroups}
-                                    selectedEndpoint={selectedEndpoint}
-                                    className="h-full"
-                                />
+                                    <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
+                                        <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
+                                    </Dialog.Close>
+                                </>
+                            ) : (
+                                renderMobileHeader()
+                            )}
+                            {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
+                                renderContent()
+                            ) : (
+                                <HorizontalSplitPane
+                                    mode="pixel"
+                                    className="size-full"
+                                    leftClassName="border-default border-r"
+                                >
+                                    <PlaygroundEndpointSelectorContent
+                                        apiGroups={apiGroups}
+                                        selectedEndpoint={selectedEndpoint}
+                                        className="h-full"
+                                    />
 
-                                {renderContent()}
-                            </HorizontalSplitPane>
-                        )}
+                                    {renderContent()}
+                                </HorizontalSplitPane>
+                            )}
+                        </motion.div>
                     </Dialog.Content>
                 </Dialog.Portal>
             </Dialog.Root>
