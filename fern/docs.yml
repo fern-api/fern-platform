@@ -3,10 +3,24 @@ instances:
     private: true
 title: Fern Internal Docs
 navigation:
-  - page: Home
+  - page: Welcome
     path: ./docs/pages/welcome.mdx
+  - section: How To Guides
+    contents:
+      - page: Enable API Playground
+        path: ./docs/pages/enable-api-playground.mdx
+      - page: Configure Custom Domain
+        path: ./docs/pages/configure-custom-domain.mdx
+      - page: Configure Segment for a new Customer 
+        path: ./docs/pages/configure-segment.mdx
   - api: FDR API Reference
-    api-name: FDR
+    api-name: fdr
+    display-errors: true
+  - api: Revalidation API Reference
+    api-name: revalidation
+    display-errors: true
+  - api: Proxy API Reference
+    api-name: proxy
     display-errors: true
 
 colors:

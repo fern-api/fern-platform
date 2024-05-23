@@ -6,7 +6,6 @@ import { useNavigationContext } from "../contexts/navigation-context/useNavigati
 
 interface CollapseSidebarContextValue {
     expanded: string[][]; // true = expand all, string[] = expand only these slugs
-    setExpanded: (slugs: string[][]) => void;
     toggleExpanded: (slug: readonly string[]) => void;
     selectedSlug: readonly string[] | undefined;
     checkExpanded: (expandableSlug: readonly string[]) => boolean;
@@ -14,7 +13,6 @@ interface CollapseSidebarContextValue {
 
 const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
     expanded: [],
-    setExpanded: noop,
     toggleExpanded: noop,
     selectedSlug: undefined,
     checkExpanded: () => false,
@@ -32,12 +30,7 @@ export function checkSlugStartsWith(slug: readonly string[], startsWith: readonl
     return true;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const useCollapseSidebar = () => useContext(CollapseSidebarContext);
-
-function expandArray(arr: string[]): string[][] {
-    return arr.map((_, idx) => arr.slice(0, idx + 1));
-}
+export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(CollapseSidebarContext);
 
 export const CollapseSidebarProvider: FC<
     PropsWithChildren<{
@@ -84,8 +77,12 @@ export const CollapseSidebarProvider: FC<
     ]);
 
     useEffect(() => {
-        setExpanded(expandArray(selectedSlug));
-    }, [selectedSlug]);
+        const newExpanded = [
+            selectedSlug,
+            ...(parentSlugMap.get(selectedSlug.join("/"))?.map((slug) => slug.split("/")) ?? []),
+        ];
+        setExpanded(newExpanded);
+    }, [parentSlugMap, selectedSlug]);
 
     const checkExpanded = useCallback(
         (expandableSlug: readonly string[]) =>
@@ -112,6 +109,11 @@ export const CollapseSidebarProvider: FC<
         [parentToChildrenMap],
     );
 
+    const value = useMemo(
+        () => ({ expanded, toggleExpanded, selectedSlug, checkExpanded }),
+        [expanded, toggleExpanded, selectedSlug, checkExpanded],
+    );
+
     // If there is only one pageGroup with only one page, hide the sidebar content
     // this is useful for tabs that only have one page
     if (
@@ -122,9 +124,5 @@ export const CollapseSidebarProvider: FC<
         return null;
     }
 
-    return (
-        <CollapseSidebarContext.Provider value={{ expanded, selectedSlug, setExpanded, checkExpanded, toggleExpanded }}>
-            {children}
-        </CollapseSidebarContext.Provider>
-    );
+    return <CollapseSidebarContext.Provider value={value}>{children}</CollapseSidebarContext.Provider>;
 };

@@ -16,7 +16,7 @@ async function main() {
         switch (environmentType) {
             case EnvironmentType.Dev2:
             case EnvironmentType.Prod:
-                new DocsFeStack(app, `local-preview-bundle-${environmentType.toLowerCase()}`, environmentType, {
+                new DocsFeStack(app, `local-preview-bundle2-${environmentType.toLowerCase()}`, environmentType, {
                     env: { account: "985111089818", region: "us-east-1" },
                 });
                 break;

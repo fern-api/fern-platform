@@ -5,7 +5,6 @@ import { visit } from "unist-util-visit";
 import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { unknownToString } from "../../util/unknownToString";
 import type { CodeGroup } from "../components/CodeGroup";
-import { valueToEstree } from "./to-estree";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
 declare module "hast" {
@@ -29,16 +28,10 @@ export function rehypeFernCode(): (tree: Root) => void {
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "CodeBlocks",
-                    attributes: [toAttribute("items", JSON.stringify(codeBlockItems), valueToEstree(codeBlockItems))],
+                    attributes: [toAttribute("items", codeBlockItems)],
                     children: [],
                 });
-            }
-        });
-
-        // match only CodeBlock
-        visit(tree, (node, index, parent) => {
-            if (index == null) {
-                return;
+                return "skip";
             }
 
             if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
@@ -53,35 +46,23 @@ export function rehypeFernCode(): (tree: Root) => void {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "CodeBlock",
-                        attributes: Object.entries(codeBlockItems[0]).map(([key, value]) =>
-                            toAttribute(key, JSON.stringify(value), valueToEstree(value)),
-                        ),
+                        attributes: Object.entries(codeBlockItems[0]).map(([key, value]) => toAttribute(key, value)),
                         children: [],
                     });
                 } else {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "CodeBlocks",
-                        attributes: [
-                            toAttribute("items", JSON.stringify(codeBlockItems), valueToEstree(codeBlockItems)),
-                        ],
+                        attributes: [toAttribute("items", codeBlockItems)],
                         children: [],
                     });
                 }
-            }
-        });
-
-        // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
-        visit(tree, "element", (node, index, parent) => {
-            if (index == null) {
-                return;
+                return "skip";
             }
 
-            if (isBlockCode(node) && node.data?.visited !== true) {
-                if (node.data == null) {
-                    node.data = {};
-                }
-                node.data.visited = true;
+            // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
+            if (isElement(node) && isBlockCode(node) && node.data?.visited !== true) {
+                node.data = { visited: true, ...node.data };
                 const head = node.children.filter(isElement).find((child) => child.tagName === "code");
                 if (head != null) {
                     const code = getCode(head);
@@ -104,9 +85,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                             type: "mdxJsxFlowElement",
                             name: "CodeBlock",
                             // attributes: [toAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
-                            attributes: Object.entries(props).map(([key, value]) =>
-                                toAttribute(key, JSON.stringify(value), valueToEstree(value)),
-                            ),
+                            attributes: Object.entries(props).map(([key, value]) => toAttribute(key, value)),
                             children: [],
                         });
                     } else {
@@ -114,12 +93,14 @@ export function rehypeFernCode(): (tree: Root) => void {
                         parent?.children.splice(index, 1, {
                             type: "mdxJsxFlowElement",
                             name: "CodeBlocks",
-                            attributes: [toAttribute("items", JSON.stringify(itemsProps), valueToEstree(itemsProps))],
+                            attributes: [toAttribute("items", itemsProps)],
                             children: [],
                         });
                     }
                 }
             }
+
+            return true;
         });
     };
 }
@@ -134,10 +115,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
             const title = jsxAttributes.find((attr) => attr.name === "title");
             visit(node, "element", (child) => {
                 if (child.tagName === "code" && child.data?.visited !== true) {
-                    if (child.data == null) {
-                        child.data = {};
-                    }
-                    child.data.visited = true;
+                    node.data = { visited: true, ...node.data };
                     const code = getCode(child);
                     const meta = parseBlockMetaString(child, "plaintext");
                     if (code != null) {
@@ -158,17 +136,13 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                     }
                 }
             });
+            return "skip";
         }
-    });
 
-    visit(nodeToVisit, "element", (child) => {
-        if (child.tagName === "code" && child.data?.visited !== true) {
-            if (child.data == null) {
-                child.data = {};
-            }
-            child.data.visited = true;
-            const code = getCode(child);
-            const meta = parseBlockMetaString(child, "plaintext");
+        if (isElement(node) && node.tagName === "code" && node.data?.visited !== true) {
+            node.data = { visited: true, ...node.data };
+            const code = getCode(node);
+            const meta = parseBlockMetaString(node, "plaintext");
             if (code != null) {
                 codeBlockItems.push({
                     code,
@@ -180,6 +154,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                 });
             }
         }
+        return true;
     });
     return codeBlockItems;
 }
@@ -219,12 +194,21 @@ function maybeParseInt(str: string | null | undefined): number | undefined {
     return isNaN(num) ? undefined : num;
 }
 
-export function parseBlockMetaString(element: Element, defaultFallback: string): FernCodeMeta {
-    let meta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "");
+export function parseBlockMetaString(element: Element, defaultFallback: string = "plaintext"): FernCodeMeta {
+    const originalMeta: string = unknownToString(element.data?.meta ?? element.properties?.metastring ?? "").trim();
+    let meta = originalMeta;
 
-    const titleMatch = meta.match(/title="([^"]*)"/);
-    const title = titleMatch?.[1];
+    const titleMatch = meta.match(/title=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/);
+    let title = titleMatch?.[1] ?? titleMatch?.[2];
     meta = meta.replace(titleMatch?.[0] ?? "", "");
+
+    const fileName = meta.match(/fileName=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/);
+    title = title ?? fileName?.[1] ?? fileName?.[2];
+    meta = meta.replace(fileName?.[0] ?? "", "");
+
+    const filename = meta.match(/filename=(?:"((?:[^"\\]|\\.)*?)"|'((?:[^'\\]|\\.)*?)')/);
+    title = title ?? filename?.[1] ?? filename?.[2];
+    meta = meta.replace(filename?.[0] ?? "", "");
 
     // i.e. maxLines=20 (default is 20)
     const maxLinesMatch = meta.match(/maxLines=(\d+)/);
@@ -242,6 +226,16 @@ export function parseBlockMetaString(element: Element, defaultFallback: string):
         meta = meta.replace(focused[0], "");
     }
 
+    const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
+    meta = strippedMeta;
+
+    if (originalMeta === meta && meta.length > 0 && title == null) {
+        title = meta;
+    }
+
+    // unescape quotes
+    title = title?.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\`/g, "`");
+
     let lang = defaultFallback;
     if (
         element.properties &&
@@ -257,18 +251,19 @@ export function parseBlockMetaString(element: Element, defaultFallback: string):
         maxLines,
         lang,
         focused: focused != null,
-        highlights: parseHighlightedLineNumbers(meta),
+        highlights,
     };
 }
 
-function parseHighlightedLineNumbers(meta: string): number[] {
+function parseHighlightedLineNumbers(meta: string): [number[], string] {
     const lineNumbers: number[] = [];
     const matches = meta.matchAll(/\{(.*?)\}/g);
     for (const match of matches) {
         if (match[1]) {
             lineNumbers.push(...rangeParser(match[1]));
         }
+        meta = meta.replace(match[0], "");
     }
 
-    return lineNumbers;
+    return [lineNumbers, meta];
 }

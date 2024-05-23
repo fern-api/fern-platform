@@ -34,13 +34,7 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
     if (resolvedPath.type === "custom-markdown-page") {
         return <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />;
     } else if (resolvedPath.type === "api-page") {
-        return (
-            <ApiPage
-                initialApi={resolvedPath.apiDefinition}
-                artifacts={resolvedPath.artifacts}
-                showErrors={resolvedPath.showErrors}
-            />
-        );
+        return <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />;
     } else if (resolvedPath.type === "changelog-page") {
         return <ChangelogPage resolvedPath={resolvedPath} />;
     } else {

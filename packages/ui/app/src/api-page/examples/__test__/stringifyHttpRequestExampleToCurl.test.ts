@@ -1,4 +1,4 @@
-import { ResolvedEndpointDefinition } from "../../../util/resolver";
+import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { convertEndpointExampleToHttpRequestExample } from "../HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../stringifyHttpRequestExampleToCurl";
 
@@ -18,24 +18,25 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     apiSectionId: "",
     environments: [MOCK_ENV],
     method: "GET",
-    name: undefined,
     title: "",
     path: [{ type: "literal", value: "/api" }],
     pathParameters: [],
     queryParameters: [],
     headers: [],
-    requestBody: [],
+    requestBody: undefined,
     responseBody: undefined,
     errors: [],
     examples: [],
     description: undefined,
+    snippetTemplates: undefined,
+    stream: undefined,
 };
 
 const EMPTY_EXAMPLE = {
     pathParameters: {},
     queryParameters: {},
     headers: {},
-    path: "",
+    path: "/api",
     responseStatusCode: 0,
     codeExamples: {},
     codeSamples: [],

@@ -2,7 +2,7 @@
 
 imports:
   commons: commons.yml
-  snippets: __package__.yml
+  snippets: snippets.yml
 
 service:
   auth: true
@@ -41,6 +41,7 @@ types:
       python: PythonSDKSnippetCreate
       go: GoSDKSnippetsCreate
       java: JavaSDKSnippetsCreate
+      ruby: RubySDKSnippetsCreate
 
   TypescriptSDKSnippetsCreate:
     properties:
@@ -57,6 +58,11 @@ types:
       sdk: snippets.GoSDK
       snippets: list<SingleGoSnippetCreate>
 
+  RubySDKSnippetsCreate:
+    properties:
+      sdk: snippets.RubySDK
+      snippets: list<SingleRubySnippetCreate>
+
   JavaSDKSnippetsCreate:
     properties:
       sdk: snippets.JavaSDK
@@ -66,22 +72,27 @@ types:
 
   SingleTypescriptSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: TypeScriptSnippetCode
 
   SinglePythonSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: PythonSnippetCode
 
   SingleGoSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: GoSnippetCode
+
+  SingleRubySnippetCreate:
+    properties:
+      endpoint: commons.EndpointIdentifier
+      snippet: RubySnippetCode
 
   SingleJavaSnippetCreate:
     properties:
-      endpoint: snippets.EndpointIdentifier
+      endpoint: commons.EndpointIdentifier
       snippet: JavaSnippetCode
 
   # Snippet Code
@@ -96,6 +107,10 @@ types:
       sync_client: string
 
   GoSnippetCode:
+    properties:
+      client: string
+
+  RubySnippetCode:
     properties:
       client: string
 

@@ -40,19 +40,29 @@ types:
   DocsDbConfig:
     properties:
       title: optional<string>
+
+      # navigation
       navigation: NavigationConfig
+      navbarLinks: optional<list<docsReadV1.NavbarLink>>
+      footerLinks: optional<list<docsReadV1.FooterLink>>
 
       # logo
       logoHeight: optional<docsReadV1.Height>
       logoHref: optional<docsReadV1.Url>
       favicon: optional<docsReadV1.FileId>
 
+      # seo
+      metadata: optional<docsReadV1.MetadataConfig>
+      redirects: optional<list<docsReadV1.RedirectConfig>>
+
       # styles
       backgroundImage: optional<docsReadV1.FileId>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
-      navbarLinks: optional<list<docsReadV1.NavbarLink>>
       layout: optional<docsReadV1.DocsLayoutConfig>
       typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
+
+      # integrations
+      integrations: optional<docsReadV1.IntegrationsConfig>
 
       # css and js
       css: optional<docsReadV1.CssConfig>
@@ -109,6 +119,12 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
+    union:
+      - NavigationTabGroup
+      - docsReadV1.NavigationTabLink
+
+  NavigationTabGroup:
     properties:
       title: string
       icon: optional<string>
@@ -149,6 +165,9 @@ types:
       changelog: optional<docsReadV1.ChangelogSection>
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
+      navigation: optional<docsReadV1.ApiNavigationConfigRoot>
+      longScrolling: optional<boolean>
+      flattened: optional<boolean>
 
   DocsSection:
     properties:

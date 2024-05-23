@@ -1,12 +1,11 @@
+import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import {
     ResolvedDiscriminatedUnionShapeVariant,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
-} from "../../../util/resolver";
+} from "../../../resolver/types";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
@@ -44,8 +43,11 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 {
                     key: discriminant,
                     valueShape: {
-                        type: "stringLiteral",
-                        value: unionVariant.discriminantValue,
+                        type: "literal",
+                        value: {
+                            type: "stringLiteral",
+                            value: unionVariant.discriminantValue,
+                        },
                         description: undefined,
                         availability: undefined,
                     },
@@ -84,7 +86,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 "px-3": !isRootTypeDefinition,
             })}
         >
-            <MonospaceText className="t-default text-sm">{startCase(unionVariant.discriminantValue)}</MonospaceText>
+            <span className="fern-api-property-key">{titleCase(unionVariant.discriminantValue)}</span>
             {unionVariant.availability != null && (
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}

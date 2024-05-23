@@ -8,15 +8,28 @@ services:
       VENUS_URL: dummy
       AWS_ACCESS_KEY_ID: dummy
       AWS_SECRET_ACCESS_KEY: dummy
-      S3_BUCKET_NAME: dummy
-      S3_BUCKET_REGION: dummy
+      PUBLIC_S3_BUCKET_NAME: dummy
+      PUBLIC_S3_BUCKET_REGION: dummy
+      PRIVATE_S3_BUCKET_NAME: dummy
+      PRIVATE_S3_BUCKET_REGION: dummy
       DOMAIN_SUFFIX: dummy
       ALGOLIA_APP_ID: dummy
       ALGOLIA_ADMIN_API_KEY: dummy
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
+      DOCS_CACHE_ENDPOINT: redis_0:6379
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
+      REDIS_ENABLED: "true"
+      REDIS_CLUSTERING_ENABLED: "true"
+      APPLICATION_ENVIRONMENT: ete
+    depends_on:
+      - redis_0
+      - redis_1
+      - redis_2
+      - redis_3
+      - redis_4
+      - redis_5
   postgres:
     image: postgres:10.3
     restart: always
@@ -32,3 +45,55 @@ services:
       - 9191:9191
     environment:
       initialBuckets: fdr
+
+  redis_0:
+    image: bitnami/redis-cluster:latest
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_CLUSTER_CREATOR: "yes"
+      REDIS_CLUSTER_REPLICAS: 1
+      REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
+    depends_on:
+      - redis_1
+      - redis_2
+      - redis_3
+      - redis_4
+      - redis_5
+
+  redis_1:
+    image: bitnami/redis-cluster:latest
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
+
+  redis_2:
+    image: bitnami/redis-cluster:latest
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
+
+  redis_3:
+    image: bitnami/redis-cluster:latest
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
+
+  redis_4:
+    image: bitnami/redis-cluster:latest
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5
+
+  redis_5:
+    image: bitnami/redis-cluster:latest
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_NODES: redis_0 redis_1 redis_2 redis_3 redis_4 redis_5

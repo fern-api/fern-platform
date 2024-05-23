@@ -42,6 +42,12 @@ export function visitSidebarNodeRaw(
                     return false;
                 }
             }
+            if (apiSection.summaryPage != null) {
+                const flag = visitSidebarNodeRaw(apiSection.summaryPage, visit, [...parentNodes, apiSection]);
+                if (flag === false) {
+                    return false;
+                }
+            }
             return true;
         },
         section: (section) => {
@@ -55,6 +61,9 @@ export function visitSidebarNodeRaw(
         },
         versionGroup: (versionGroup) => {
             for (const item of versionGroup.items) {
+                if (item.type === "tabLink") {
+                    continue;
+                }
                 const flag = visitSidebarNodeRaw(item, visit, [...parentNodes, versionGroup]);
                 if (flag === false) {
                     return false;
@@ -71,9 +80,20 @@ export function visitSidebarNodeRaw(
             }
             return true;
         },
-        page: () => true,
+        page: (page) => {
+            if (SidebarNodeRaw.isEndpointPage(page) && page.stream != null) {
+                const flag = visitSidebarNodeRaw(page.stream, visit, parentNodes);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
+        },
         root: (root) => {
             for (const item of root.items) {
+                if (item.type === "tabLink") {
+                    continue;
+                }
                 const flag = visitSidebarNodeRaw(item, visit, [root, ...parentNodes]);
                 if (flag === false) {
                     return false;

@@ -2,10 +2,11 @@ import { Language, Prisma, PrismaClient, Sdk, Snippet } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { FdrAPI } from "../../api";
 import { readBuffer, writeBuffer } from "../../util";
+import { SdkDaoImpl } from "../sdk/SdkDao";
 import { PrismaTransaction, SdkId } from "../types";
 import { EndpointSnippetCollector } from "./EndpointSnippetCollectors";
-import { getPackageNameFromSdkSnippetsCreate } from "./getPackageNameFromSdkSnippetsCreate";
 import { SdkIdFactory } from "./SdkIdFactory";
+import { getPackageNameFromSdkSnippetsCreate, getSdkFromSdkRequest } from "./getPackageNameFromSdkSnippetsCreate";
 
 export const DEFAULT_SNIPPETS_PAGE_SIZE = 100;
 
@@ -13,12 +14,13 @@ export interface LoadDbSnippetsPage {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     endpointIdentifier: FdrAPI.EndpointIdentifier | undefined;
-    sdks: FdrAPI.Sdk[] | undefined;
+    sdks: FdrAPI.SdkRequest[] | undefined;
     page: number | undefined;
 }
 
 export interface DbSnippetsPage {
     snippets: Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>;
+    snippetsByEndpointId: Record<string, FdrAPI.Snippet[]>;
     nextPage: number | undefined;
 }
 
@@ -38,11 +40,17 @@ export interface SdkInfo {
 }
 
 export interface SnippetsDao {
+    // TODO(armando): whenever we call this, we should call this other endpoint too
     loadAllSnippetsForSdkIds(
         sdkIds: string[],
     ): Promise<Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>>;
 
+    loadAllSnippetsForSdkIdsByEndpointId(sdkIds: string[]): Promise<Record<string, Record<string, FdrAPI.Snippet[]>>>;
+
+    // TODO(armando): same here
     loadAllSnippetsBySdkId(sdkId: string): Promise<Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
+
+    loadAllSnippetsBySdkIdByEndpointId(sdkId: string): Promise<Record<string, FdrAPI.Snippet[]>>;
 
     loadSnippetsPage({ loadSnippetsInfo }: { loadSnippetsInfo: LoadDbSnippetsPage }): Promise<DbSnippetsPage>;
 
@@ -51,19 +59,7 @@ export interface SnippetsDao {
 
 export class SnippetsDaoImpl implements SnippetsDao {
     constructor(private readonly prisma: PrismaClient) {}
-
-    public async loadAllSnippetsForSdkIds(
-        sdkIds: string[],
-    ): Promise<Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>>> {
-        const result: Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>> = {};
-        for (const sdkId of sdkIds) {
-            const snippets = await this.loadAllSnippetsBySdkId(sdkId);
-            result[sdkId] = snippets;
-        }
-        return result;
-    }
-
-    public async loadAllSnippetsBySdkId(sdkId: string): Promise<Record<string, FdrAPI.SnippetsByEndpointMethod>> {
+    private async loadAllSnippetsToCollector(sdkId: string): Promise<EndpointSnippetCollector> {
         const dbSdkRow = await this.prisma.sdk.findFirst({
             where: {
                 id: {
@@ -88,9 +84,43 @@ export class SnippetsDaoImpl implements SnippetsDao {
             snippetCollector.collect({
                 endpointPath: dbSnippetRow.endpointPath,
                 endpointMethod: dbSnippetRow.endpointMethod,
+                identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
                 snippet,
             });
         }
+
+        return snippetCollector;
+    }
+
+    public async loadAllSnippetsBySdkIdByEndpointId(sdkId: string): Promise<Record<string, FdrAPI.Snippet[]>> {
+        const snippetCollector = await this.loadAllSnippetsToCollector(sdkId);
+        return snippetCollector.getByIdentifierOverride();
+    }
+
+    public async loadAllSnippetsForSdkIdsByEndpointId(
+        sdkIds: string[],
+    ): Promise<Record<string, Record<string, FdrAPI.Snippet[]>>> {
+        const result: Record<string, Record<string, FdrAPI.Snippet[]>> = {};
+        for (const sdkId of sdkIds) {
+            const snippets = await this.loadAllSnippetsBySdkIdByEndpointId(sdkId);
+            result[sdkId] = snippets;
+        }
+        return result;
+    }
+
+    public async loadAllSnippetsForSdkIds(
+        sdkIds: string[],
+    ): Promise<Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>>> {
+        const result: Record<string, Record<SdkId, FdrAPI.SnippetsByEndpointMethod>> = {};
+        for (const sdkId of sdkIds) {
+            const snippets = await this.loadAllSnippetsBySdkId(sdkId);
+            result[sdkId] = snippets;
+        }
+        return result;
+    }
+
+    public async loadAllSnippetsBySdkId(sdkId: string): Promise<Record<string, FdrAPI.SnippetsByEndpointMethod>> {
+        const snippetCollector = await this.loadAllSnippetsToCollector(sdkId);
         return snippetCollector.get();
     }
 
@@ -100,11 +130,16 @@ export class SnippetsDaoImpl implements SnippetsDao {
         loadSnippetsInfo: LoadDbSnippetsPage;
     }): Promise<DbSnippetsPage> {
         return await this.prisma.$transaction(async (tx) => {
-            const sdkIds: string[] | undefined = loadSnippetsInfo.sdks?.map((sdk: FdrAPI.Sdk) => {
-                return sdkInfoFromSdk({
-                    sdk,
-                }).id;
-            });
+            const sdkIds: string[] | undefined =
+                loadSnippetsInfo.sdks != null
+                    ? await Promise.all(
+                          loadSnippetsInfo.sdks.map(async (sdk: FdrAPI.SdkRequest) => {
+                              return sdkInfoFromSdk({
+                                  sdk: await getSdkFromSdkRequest(this.prisma, sdk),
+                              }).id;
+                          }),
+                      )
+                    : undefined;
 
             const sdkIdsForSnippets =
                 sdkIds != null ? sdkIds : await this.getSdkIdsReferencedBySnippetRows({ loadSnippetsInfo, tx });
@@ -126,6 +161,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     },
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
+                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
                 },
                 orderBy: {
                     createdAt: "desc",
@@ -153,6 +189,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 snippetCollector.collect({
                     endpointPath: dbSnippetRow.endpointPath,
                     endpointMethod: dbSnippetRow.endpointMethod,
+                    identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
                     snippet,
                 });
             }
@@ -160,6 +197,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 nextPage:
                     snippetDbRows.length === DEFAULT_SNIPPETS_PAGE_SIZE ? (loadSnippetsInfo.page ?? 1) + 1 : undefined,
                 snippets: snippetCollector.get(),
+                snippetsByEndpointId: snippetCollector.getByIdentifierOverride(),
             };
         });
     }
@@ -179,6 +217,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     apiName: loadSnippetsInfo.apiId,
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
+                    identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
                 },
             })
         ).map((row) => row.sdkId);
@@ -189,6 +228,8 @@ export class SnippetsDaoImpl implements SnippetsDao {
     }: {
         storeSnippetsInfo: StoreSnippetsInfo;
     }): Promise<StoreSnippetsResponse> {
+        const sdkDao = new SdkDaoImpl(this.prisma);
+
         return await this.prisma.$transaction(async (tx) => {
             const dbApi = await tx.snippetApi.findUnique({
                 where: {
@@ -209,27 +250,19 @@ export class SnippetsDaoImpl implements SnippetsDao {
             const sdkInfo = sdkInfoFromSnippetsCreate({
                 sdkSnippetsCreate: storeSnippetsInfo.sdk,
             });
-            const dbSdk = await tx.sdk.findUnique({
-                where: {
+
+            await sdkDao.createSdkIfNotExists(
+                {
                     id: sdkInfo.id,
-                },
-            });
-            if (dbSdk !== null) {
-                // Overwrite the SDK and all of its snippets that already exist.
-                await tx.sdk.delete({
-                    where: {
-                        id: sdkInfo.id,
-                    },
-                });
-            }
-            await tx.sdk.create({
-                data: {
-                    id: sdkInfo.id,
-                    package: getPackageNameFromSdkSnippetsCreate(storeSnippetsInfo.sdk),
+                    sdkPackage: getPackageNameFromSdkSnippetsCreate(storeSnippetsInfo.sdk),
+                    version: storeSnippetsInfo.sdk.sdk.version,
                     language: sdkInfo.language,
                     sdk: writeBuffer(storeSnippetsInfo.sdk.sdk),
                 },
-            });
+                tx,
+                true,
+            );
+
             const snippets: Prisma.Enumerable<Prisma.SnippetCreateManyInput> = [];
             storeSnippetsInfo.sdk.snippets.map((snippet) => {
                 snippets.push({
@@ -238,6 +271,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     apiName: storeSnippetsInfo.apiId,
                     endpointPath: snippet.endpoint.path,
                     endpointMethod: snippet.endpoint.method,
+                    identifierOverride: snippet.endpoint.identifierOverride,
                     sdkId: sdkInfo.id,
                     snippet: writeBuffer(snippet.snippet),
                 });
@@ -269,6 +303,11 @@ function sdkInfoFromSnippetsCreate({ sdkSnippetsCreate }: { sdkSnippetsCreate: F
                 language: Language.GO,
                 id: SdkIdFactory.fromGo(sdkSnippetsCreate.sdk),
             };
+        case "ruby":
+            return {
+                language: Language.RUBY,
+                id: SdkIdFactory.fromRuby(sdkSnippetsCreate.sdk),
+            };
         case "java":
             return {
                 language: Language.JAVA,
@@ -293,6 +332,11 @@ function sdkInfoFromSdk({ sdk }: { sdk: FdrAPI.Sdk }): SdkInfo {
             return {
                 language: Language.GO,
                 id: SdkIdFactory.fromGo(sdk),
+            };
+        case "ruby":
+            return {
+                language: Language.RUBY,
+                id: SdkIdFactory.fromRuby(sdk),
             };
         case "java":
             return {
@@ -327,6 +371,12 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 type: "go",
                 sdk: sdk as FdrAPI.GoSdk,
                 client: (readBuffer(dbSnippet.snippet) as FdrAPI.GoSnippetCode).client,
+            };
+        case Language.RUBY:
+            return {
+                type: "ruby",
+                sdk: sdk as FdrAPI.RubySdk,
+                client: (readBuffer(dbSnippet.snippet) as FdrAPI.RubySnippetCode).client,
             };
         case Language.JAVA: {
             const javaSnippetCode: FdrAPI.JavaSnippetCode = readBuffer(dbSnippet.snippet) as FdrAPI.JavaSnippetCode;

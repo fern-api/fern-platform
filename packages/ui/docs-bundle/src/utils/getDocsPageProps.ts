@@ -1,6 +1,6 @@
 import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, getNavigationRoot } from "@fern-ui/fdr-utils";
+import { buildUrl, getNavigationRoot, isVersionedNavigationConfig } from "@fern-ui/fdr-utils";
 import {
     DocsPage,
     DocsPageResult,
@@ -48,7 +48,13 @@ export async function getDocsPageProps(
 
     const pathname = decodeURI(slug != null ? slug.join("/") : "");
     const url = buildUrl({ host: xFernHost, pathname });
+    // eslint-disable-next-line no-console
+    console.log("[getDocsPageProps] Loading docs for", url);
+    const start = Date.now();
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+    const end = Date.now();
+    // eslint-disable-next-line no-console
+    console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
             return {
@@ -58,14 +64,17 @@ export async function getDocsPageProps(
         }
 
         // eslint-disable-next-line no-console
-        console.error(`Failed to fetch docs for ${url}`, docs.error);
-        return {
-            type: "notFound",
-            notFound: true,
-        };
+        console.error(`[getDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
+        throw new Error("Failed to fetch docs");
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const start2 = Date.now();
+    const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const end2 = Date.now();
+
+    // eslint-disable-next-line no-console
+    console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
+    return toRet;
 }
 
 export async function getPrivateDocsPageProps(
@@ -91,7 +100,13 @@ export async function getPrivateDocsPageProps(
     const registryService = getRegistryServiceWithToken(`workos_${token}`);
 
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
+    // eslint-disable-next-line no-console
+    console.log("[getPrivateDocsPageProps] Loading docs for", url);
+    const start = Date.now();
     const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
+    const end = Date.now();
+    // eslint-disable-next-line no-console
+    console.log(`[getPrivateDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
 
     if (!docs.ok) {
         res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
@@ -104,11 +119,8 @@ export async function getPrivateDocsPageProps(
         }
 
         // eslint-disable-next-line no-console
-        console.error(`Failed to fetch docs for ${xFernHost}/${slug.join("/")}`, docs.error);
-        return {
-            type: "notFound",
-            notFound: true,
-        };
+        console.error(`[getPrivateDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
+        throw new Error("Failed to fetch private docs");
     }
 
     return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
@@ -145,8 +157,8 @@ async function convertDocsToDocsPageProps({
     xFernHost: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
-    const basePath = docs.baseUrl.basePath;
     const docsConfig = docsDefinition.config;
+    const pages = docs.definition.pages;
 
     const redirect = getRedirectForPath(xFernHost, `/${slug.join("/")}`);
 
@@ -160,12 +172,19 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis);
+    const navigation = getNavigationRoot(
+        slug,
+        docs.baseUrl.domain,
+        docs.baseUrl.basePath,
+        docsConfig.navigation,
+        docs.definition.apis,
+        pages,
+    );
 
     if (navigation == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
-        return { type: "notFound", notFound: true };
+        return handleNotFound(docs, slug);
     }
 
     if (navigation.type === "redirect") {
@@ -182,20 +201,22 @@ async function convertDocsToDocsPageProps({
         navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
     );
 
+    const featureFlags = await getFeatureFlags(xFernHost);
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         currentNode: navigation.found.currentNode,
+        rawSidebarNodes: navigation.found.sidebarNodes,
         sidebarNodes,
         apis: docsDefinition.apis,
         pages: docsDefinition.pages,
+        domain: docs.baseUrl.domain,
+        featureFlags,
     });
 
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
-        return {
-            type: "notFound",
-            notFound: true,
-        };
+        return handleNotFound(docs, slug);
     }
 
     if (resolvedPath.type === "redirect") {
@@ -207,8 +228,6 @@ async function convertDocsToDocsPageProps({
             },
         };
     }
-
-    const featureFlags = await getFeatureFlags(xFernHost);
 
     const props: DocsPage.Props = {
         baseUrl: docs.baseUrl,
@@ -236,7 +255,6 @@ async function convertDocsToDocsPageProps({
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
         search: docs.definition.search,
-        algoliaSearchIndex: docs.definition.algoliaSearchIndex,
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {
@@ -273,4 +291,37 @@ async function maybeGetWorkosOrganization(host: string): Promise<string | undefi
         return undefined;
     }
     return maybeOrg.body.workosOrganizationId;
+}
+
+function handleNotFound(docs: DocsV2Read.LoadDocsForUrlResponse, slug: string[]): DocsPageResult<DocsPage.Props> {
+    if (isVersionedNavigationConfig(docs.definition.config.navigation)) {
+        // if the navigation config is versioned, determine which version's basepath to redirect to
+
+        for (const version of docs.definition.config.navigation.versions) {
+            const versionSlug = version.urlSlug.split("/");
+
+            if (slug.length >= versionSlug.length) {
+                const isVersionMatch = versionSlug.every((part, index) => part === slug[index]);
+
+                if (isVersionMatch) {
+                    return {
+                        type: "redirect",
+                        redirect: {
+                            destination: `${docs.baseUrl.basePath ?? ""}/${version.urlSlug}`,
+                            permanent: false,
+                        },
+                    };
+                }
+            }
+        }
+    }
+
+    // essentially a 404, but redirect user to the root path
+    return {
+        type: "redirect",
+        redirect: {
+            destination: docs.baseUrl.basePath ?? "/",
+            permanent: false,
+        },
+    };
 }

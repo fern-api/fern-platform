@@ -1,3 +1,5 @@
+import { CustomSnippetPayload } from "@fern-api/fdr-sdk/dist/client/generated/api";
+import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
@@ -12,9 +14,10 @@ import {
     ResolvedTypeShape,
     ResolvedWebSocketChannel,
     dereferenceObjectProperties,
+    stringifyResolvedEndpointPathPartsTemplate,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/types";
 import { unknownToString } from "../util/unknownToString";
 import {
     PlaygroundEndpointRequestFormState,
@@ -47,7 +50,7 @@ function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<st
         .map((part) => {
             if (part.type === "pathParameter") {
                 const stateValue = unknownToString(pathParameters?.[part.key]);
-                return stateValue.length > 0 ? encodeURI(stateValue) : ":" + part.key;
+                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.key;
             }
             return part.value;
         })
@@ -87,11 +90,17 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
         .join("\n");
 }
 
-export function stringifyFetch(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyFetch({
+    endpoint,
+    formState,
+    redacted,
+    isSnippetTemplatesEnabled,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    isSnippetTemplatesEnabled: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -102,11 +111,36 @@ export function stringifyFetch(
         delete headers["Content-Type"]; // fetch will set this automatically
     }
 
+    const snippetTemplate = endpoint.snippetTemplates?.typescript;
+
+    if (snippetTemplate != null && isSnippetTemplatesEnabled) {
+        const resolver = new SnippetTemplateResolver({
+            payload: convertToCustomSnippetPayload(formState),
+            endpointSnippetTemplate: {
+                sdk: {
+                    type: "typescript",
+                    package: "",
+                    version: "",
+                },
+                endpointId: {
+                    path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
+                    method: endpoint.method,
+                },
+                snippetTemplate,
+            },
+        });
+        const resolvedTemplate = resolver.resolve();
+
+        if (resolvedTemplate.type === "typescript") {
+            return resolvedTemplate.client;
+        }
+    }
+
     function buildFetch(body: string | undefined) {
         if (endpoint == null) {
             return "";
         }
-        return `// ${endpoint.name} (${endpoint.method} ${endpoint.path
+        return `// ${endpoint.title} (${endpoint.method} ${endpoint.path
             .map((part) => (part.type === "literal" ? part.value : `:${part.key}`))
             .join("")})
 const response = await fetch("${buildEndpointUrl(endpoint, formState)}", {
@@ -165,11 +199,17 @@ ${buildFetch("formData")}`;
     });
 }
 
-export function stringifyPythonRequests(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyPythonRequests({
+    endpoint,
+    formState,
+    redacted,
+    isSnippetTemplatesEnabled,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    isSnippetTemplatesEnabled: boolean;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -184,11 +224,37 @@ export function stringifyPythonRequests(
         files?: string;
     }
 
+    const snippetTemplate = endpoint.snippetTemplates?.python;
+
+    if (snippetTemplate != null && isSnippetTemplatesEnabled) {
+        const resolver = new SnippetTemplateResolver({
+            payload: convertToCustomSnippetPayload(formState),
+            endpointSnippetTemplate: {
+                sdk: {
+                    type: "python",
+                    package: "",
+                    version: "",
+                },
+                endpointId: {
+                    path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
+                    method: endpoint.method,
+                },
+                snippetTemplate,
+            },
+        });
+
+        const resolvedTemplate = resolver.resolve();
+
+        if (resolvedTemplate.type === "python") {
+            return resolvedTemplate.sync_client;
+        }
+    }
+
     function buildRequests({ json, data, files }: PythonRequestParams) {
         if (endpoint == null) {
             return "";
         }
-        return `# ${endpoint.name} (${endpoint.method} ${buildPath(endpoint.path)})
+        return `# ${endpoint.title} (${endpoint.method} ${buildPath(endpoint.path)})
 response = requests.${endpoint.method.toLowerCase()}(
   "${buildEndpointUrl(endpoint, formState)}",
   headers=${indentAfter(JSON.stringify(headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
@@ -268,6 +334,17 @@ ${buildRequests({})}`,
     });
 }
 
+export function convertToCustomSnippetPayload(formState: PlaygroundEndpointRequestFormState): CustomSnippetPayload {
+    return {
+        pathParameters: Object.entries(formState.pathParameters).map(([name, value]) => ({ name, value })),
+        queryParameters: Object.entries(formState.queryParameters).map(([name, value]) => ({ name, value })),
+
+        // should headers use obfuscateSecret?
+        headers: Object.entries(formState.headers).map(([name, value]) => ({ name, value })),
+        requestBody: formState.body?.value,
+    };
+}
+
 export function obfuscateSecret(secret: string): string {
     if (secret.trimEnd().length === 0) {
         return secret;
@@ -314,7 +391,7 @@ function buildRedactedHeaders(
         });
     }
 
-    const requestBody = endpoint.requestBody[0];
+    const requestBody = endpoint.requestBody;
     if (endpoint.method !== "GET" && requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
     }
@@ -387,7 +464,7 @@ export function buildUnredactedHeaders(
         });
     }
 
-    const requestBody = endpoint.requestBody[0];
+    const requestBody = endpoint.requestBody;
     if (endpoint.method !== "GET" && requestBody?.contentType != null) {
         headers["Content-Type"] = requestBody.contentType;
     }
@@ -395,11 +472,17 @@ export function buildUnredactedHeaders(
     return headers;
 }
 
-export function stringifyCurl(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundEndpointRequestFormState,
-    redacted = true,
-): string {
+export function stringifyCurl({
+    endpoint,
+    formState,
+    redacted,
+    domain,
+}: {
+    endpoint: ResolvedEndpointDefinition | undefined;
+    formState: PlaygroundEndpointRequestFormState;
+    redacted: boolean;
+    domain: string;
+}): string {
     if (endpoint == null) {
         return "";
     }
@@ -416,9 +499,18 @@ export function stringifyCurl(
                 : visitDiscriminatedUnion(formState.body, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
                       json: ({ value }) => ({ type: "json", value }),
                       "form-data": ({ value }): ResolvedExampleEndpointRequest.Form | undefined => {
+                          const properties =
+                              endpoint.requestBody?.shape.type === "formData"
+                                  ? endpoint.requestBody.shape.properties
+                                  : [];
                           const newValue: Record<string, ResolvedFormValue> = {};
                           for (const [key, v] of Object.entries(value)) {
-                              const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(v);
+                              const property = properties.find((property) => property.key === key);
+                              const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
+                                  v,
+                                  property,
+                                  domain,
+                              );
                               if (convertedV != null) {
                                   newValue[key] = convertedV;
                               }
@@ -428,8 +520,8 @@ export function stringifyCurl(
                           }
                           return { type: "form", value: newValue };
                       },
-                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Stream | undefined =>
-                          value != null ? { type: "stream", fileName: value.name } : undefined,
+                      "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Bytes | undefined =>
+                          value != null ? { type: "bytes", fileName: value.name, value: undefined } : undefined,
                       _other: () => undefined,
                   }),
     });
@@ -503,15 +595,20 @@ export function matchesTypeReference(
             }
             return enumType.values.some((enumValue) => enumValue.value === value);
         },
-        string: () => typeof value === "string",
-        boolean: () => typeof value === "boolean",
-        integer: () => typeof value === "number" && Number.isInteger(value),
-        double: () => typeof value === "number",
-        long: () => typeof value === "number" && Number.isInteger(value),
-        datetime: () => value instanceof Date,
-        uuid: () => typeof value === "string",
-        base64: () => typeof value === "string",
-        date: () => value instanceof Date,
+        primitive: (primitive) =>
+            visitDiscriminatedUnion(primitive.value, "type")._visit<boolean>({
+                string: () => typeof value === "string",
+                boolean: () => typeof value === "boolean",
+                integer: () => typeof value === "number" && Number.isInteger(value),
+                double: () => typeof value === "number",
+                long: () => typeof value === "number" && Number.isInteger(value),
+                datetime: () => value instanceof Date,
+                uuid: () => typeof value === "string",
+                base64: () => typeof value === "string",
+                date: () => value instanceof Date,
+                _other: () => value == null,
+            }),
+        literal: (literal) => value === literal.value.value,
         optional: (optionalType) => value == null || matchesTypeReference(optionalType.shape, value, types),
         list: (listType) =>
             Array.isArray(value) && value.every((item) => matchesTypeReference(listType.shape, item, types)),
@@ -522,8 +619,6 @@ export function matchesTypeReference(
             Object.keys(value).every((key) =>
                 matchesTypeReference(MapTypeContextProvider.valueShape, value[key], types),
             ),
-        stringLiteral: (literalType) => value === literalType.value,
-        booleanLiteral: (literalType) => value === literalType.value,
         unknown: () => value == null,
         _other: () => value == null,
         alias: (reference) => matchesTypeReference(reference.shape, value, types),
@@ -538,7 +633,7 @@ export function getDefaultValuesForBody(
         return undefined;
     }
     return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
-        fileUpload: () => ({ type: "form-data", value: {} }),
+        formData: () => ({ type: "form-data", value: {} }),
         bytes: () => ({ type: "octet-stream", value: undefined }),
         typeShape: (typeShape) => ({
             type: "json",
@@ -574,21 +669,24 @@ export function getDefaultValueForType(
         },
         // if enum.length === 1, select it, otherwise, we don't presume to select an incorrect enum.
         enum: (value) => (value.values.length === 1 ? value.values[0]?.value : null),
-        string: () => "",
-        boolean: () => false,
-        integer: () => 0,
-        double: () => 0,
-        long: () => 0,
-        datetime: () => new Date().toISOString(),
-        uuid: () => "",
-        base64: () => "",
-        date: () => new Date().toISOString(),
+        primitive: (primitive) =>
+            visitDiscriminatedUnion(primitive.value, "type")._visit<unknown>({
+                string: () => "",
+                boolean: () => false,
+                integer: () => 0,
+                double: () => 0,
+                long: () => 0,
+                datetime: () => new Date().toISOString(),
+                uuid: () => "",
+                base64: () => "",
+                date: () => new Date().toISOString(),
+                _other: () => undefined,
+            }),
+        literal: (literal) => literal.value.value,
         optional: () => undefined,
         list: () => [],
         set: () => [],
         map: () => ({}),
-        stringLiteral: (literal) => literal.value,
-        booleanLiteral: (literal) => literal.value,
         unknown: () => undefined,
         _other: () => undefined,
         alias: (alias) => getDefaultValueForType(alias.shape, types),
@@ -611,17 +709,8 @@ export function isExpandable(
         map: () => isPlainObject(currentValue) && Object.keys(currentValue).length > 0,
         unknown: () => false,
         _other: () => false,
-        string: () => false,
-        boolean: () => false,
-        integer: () => false,
-        double: () => false,
-        long: () => false,
-        datetime: () => false,
-        uuid: () => false,
-        base64: () => false,
-        date: () => false,
-        booleanLiteral: () => false,
-        stringLiteral: () => false,
+        primitive: () => false,
+        literal: () => false,
         alias: (alias) => isExpandable(alias.shape, currentValue, types),
     });
 }
@@ -631,8 +720,8 @@ export function hasRequiredFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: (fileUpload) =>
-            fileUpload.value?.properties.some((property) =>
+        formData: (formData) =>
+            formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => !file.isOptional,
                     fileArray: (fileArray) => !fileArray.isOptional,
@@ -643,8 +732,8 @@ export function hasRequiredFields(
         bytes: (bytes) => !bytes.isOptional,
         typeShape: (shape) =>
             visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
-                string: () => true,
-                boolean: () => true,
+                primitive: () => true,
+                literal: () => true,
                 object: (object) =>
                     dereferenceObjectProperties(object, types).some((property) =>
                         hasRequiredFields(property.valueShape, types),
@@ -652,19 +741,10 @@ export function hasRequiredFields(
                 undiscriminatedUnion: () => true,
                 discriminatedUnion: () => true,
                 enum: () => true,
-                integer: () => true,
-                double: () => true,
-                long: () => true,
-                datetime: () => true,
-                uuid: () => true,
-                base64: () => true,
-                date: () => true,
                 optional: () => false,
                 list: () => true,
                 set: () => true,
                 map: () => true,
-                booleanLiteral: () => true,
-                stringLiteral: () => true,
                 unknown: () => true,
                 alias: (alias) => hasRequiredFields(alias.shape, types),
                 _other: () => true,
@@ -677,8 +757,8 @@ export function hasOptionalFields(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitResolvedHttpRequestBodyShape(bodyShape, {
-        fileUpload: (fileUpload) =>
-            fileUpload.value?.properties.some((property) =>
+        formData: (formData) =>
+            formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => file.isOptional,
                     fileArray: (fileArray) => fileArray.isOptional,
@@ -689,8 +769,8 @@ export function hasOptionalFields(
         bytes: (bytes) => bytes.isOptional,
         typeShape: (shape) =>
             visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
-                string: () => false,
-                boolean: () => false,
+                primitive: () => false,
+                literal: () => false,
                 object: (object) =>
                     dereferenceObjectProperties(object, types).some((property) =>
                         hasOptionalFields(property.valueShape, types),
@@ -698,19 +778,10 @@ export function hasOptionalFields(
                 undiscriminatedUnion: () => false,
                 discriminatedUnion: () => false,
                 enum: () => false,
-                integer: () => false,
-                double: () => false,
-                long: () => false,
-                datetime: () => false,
-                uuid: () => false,
-                base64: () => false,
-                date: () => false,
                 optional: () => true,
                 list: () => false,
                 set: () => false,
                 map: () => false,
-                booleanLiteral: () => false,
-                stringLiteral: () => false,
                 unknown: () => false,
                 alias: (alias) => hasOptionalFields(alias.shape, types),
                 _other: () => false,
@@ -725,25 +796,16 @@ export function shouldRenderInline(
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitDiscriminatedUnion(unwrapReference(typeReference, types), "type")._visit({
-        string: () => true,
-        boolean: () => true,
+        primitive: () => true,
+        literal: () => true,
         object: () => false,
         map: () => false,
         undiscriminatedUnion: () => false,
         discriminatedUnion: () => false,
         enum: (_enum) => true,
-        integer: () => true,
-        double: () => true,
-        long: () => true,
-        datetime: () => true,
-        uuid: () => true,
-        base64: () => true,
-        date: () => true,
         optional: () => false,
         list: () => false,
         set: () => false,
-        booleanLiteral: () => true,
-        stringLiteral: () => true,
         unknown: () => false,
         alias: (alias) => shouldRenderInline(alias.shape, types),
         _other: () => false,

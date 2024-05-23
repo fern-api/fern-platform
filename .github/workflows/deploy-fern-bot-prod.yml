@@ -1,0 +1,33 @@
+name: Deploy FernBot Prod
+
+on:
+  push:
+    tags: ["*"]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+  GITHUB_APP_LOGIN_NAME: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_LOGIN_NAME }}
+  GITHUB_APP_LOGIN_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_LOGIN_ID }}
+  GITHUB_APP_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_ID }}
+  GITHUB_APP_PRIVATE_KEY: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_PRIVATE_KEY }}
+  GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_CLIENT_ID }}
+  GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_CLIENT_SECRET }}
+  GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_WEBHOOK_SECRET }}
+  CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
+
+jobs:
+  deploy_prod:
+    if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/fern-bot@')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+      - name: 🚀 serverless deploy
+        env: 
+            CI: false
+        run: |
+          pnpm --filter "@fern-platform/fern-bot" install
+          pnpm --filter "@fern-platform/fern-bot" release --stage production

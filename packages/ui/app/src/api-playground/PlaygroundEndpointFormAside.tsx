@@ -19,7 +19,7 @@ import {
     unwrapOptional,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../util/resolver";
+} from "../resolver/types";
 import { PlaygroundEndpointRequestFormState, PlaygroundRequestFormState } from "./types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -145,7 +145,7 @@ export function PlaygroundEndpointFormAside({
             <FernScrollArea
                 rootRef={scrollAreaRef}
                 rootClassName="min-h-0 shrink"
-                className="mask-grad-top py-6 pr-2"
+                className="mask-grad-top-6 py-6 pr-2"
                 type="scroll"
                 scrollbars="vertical"
             >
@@ -196,9 +196,9 @@ export function PlaygroundEndpointFormAside({
                         </div>
                     )}
 
-                    {endpoint.requestBody[0] != null &&
-                        visitResolvedHttpRequestBodyShape(endpoint.requestBody[0].shape, {
-                            fileUpload: () => null,
+                    {endpoint.requestBody != null &&
+                        visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                            formData: () => null,
                             bytes: () => null,
                             typeShape: (shape) => {
                                 shape = unwrapReference(shape, types);
@@ -236,7 +236,7 @@ export function PlaygroundEndpointFormAside({
                                 SidebarNode.isApiPage(activeNavigatable) &&
                                 activeNavigatable.api === endpoint.apiSectionId
                             }
-                            className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
+                            className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                         >
                             <span>View in API Reference</span>
                             <ArrowTopRightIcon className="size-4" />

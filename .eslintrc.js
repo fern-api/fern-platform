@@ -85,6 +85,7 @@ module.exports = {
             },
         ],
         "no-unused-vars": "off",
+        "tailwindcss/classnames-order": "off",
         quotes: [
             "error",
             "double",
@@ -128,7 +129,7 @@ module.exports = {
             },
         },
         {
-            files: ["servers/fdr/**/*"],
+            files: ["servers/fdr/**/*", "servers/fern-bot/**/*"],
             rules: {
                 eqeqeq: "off",
                 "no-console": "off",

@@ -7,6 +7,7 @@ const WEBSOCKET_MESSAGES_ATOM = atom<Record<string, WebSocketMessage[]>>({});
 interface UseWebsocketMessagesReturn {
     messages: WebSocketMessage[];
     pushMessage: (message: WebSocketMessage) => void;
+    clearMessages: () => void;
 }
 export function useWebsocketMessages(websocketId: string): UseWebsocketMessagesReturn {
     const [messagesRecord, setMessagesRecord] = useAtom(WEBSOCKET_MESSAGES_ATOM);
@@ -20,5 +21,11 @@ export function useWebsocketMessages(websocketId: string): UseWebsocketMessagesR
         },
         [setMessagesRecord, websocketId],
     );
-    return { messages, pushMessage };
+    const clearMessages = useCallback(() => {
+        setMessagesRecord((old) => ({
+            ...old,
+            [websocketId]: [],
+        }));
+    }, [setMessagesRecord, websocketId]);
+    return { messages, pushMessage, clearMessages };
 }

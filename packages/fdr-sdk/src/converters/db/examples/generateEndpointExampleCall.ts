@@ -18,14 +18,17 @@ export function generateEndpointErrorExample({
     endpointDefinition: APIV1Write.EndpointDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
     errorDeclaration: APIV1Write.ErrorDeclarationV2;
-}) {
+}): APIV1Write.ExampleEndpointCall {
     const resolveTypeById = getResolveByTypeId(apiDefinition);
     return {
         ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
         responseStatusCode: errorDeclaration.statusCode,
-        responseBody:
+        responseBodyV3:
             errorDeclaration.type != null
-                ? generateExampleFromTypeShape(errorDeclaration.type, resolveTypeById, false, new Set(), 0)
+                ? {
+                      type: "json",
+                      value: generateExampleFromTypeShape(errorDeclaration.type, resolveTypeById, false, new Set(), 0),
+                  }
                 : undefined,
     };
 }
@@ -43,11 +46,7 @@ export function generateEndpointNonStreamResponseExample({
     return {
         ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
         responseStatusCode: 200,
-        responseBody: generateHttpResponseBodyExample(nonStreamResponse.shape, resolveTypeById),
-        responseBodyV3: {
-            type: "json",
-            value: generateHttpResponseBodyExample(nonStreamResponse.shape, resolveTypeById),
-        },
+        responseBodyV3: generateHttpResponseBodyExample(nonStreamResponse.shape, resolveTypeById),
     };
 }
 
@@ -62,15 +61,10 @@ export function generateEndpointStreamResponseExample({
 }): APIV1Write.ExampleEndpointCall {
     const resolveTypeById = getResolveByTypeId(apiDefinition);
 
-    const responseChunkExample = generateHttpResponseBodyExample(streamResponse.shape, resolveTypeById);
     return {
         ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
         responseStatusCode: 200,
-        responseBodyV3: {
-            type: "stream",
-            value: responseChunkExample != null ? [responseChunkExample, responseChunkExample] : [],
-        },
-        responseBody: undefined,
+        responseBodyV3: generateHttpResponseBodyExample(streamResponse.shape, resolveTypeById),
     };
 }
 
@@ -85,16 +79,9 @@ export function generateEndpointSuccessExample({
     return {
         ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
         responseStatusCode: 200,
-        responseBody:
-            endpointDefinition.response != null
-                ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
-                : undefined,
         responseBodyV3:
             endpointDefinition.response != null
-                ? {
-                      type: "json",
-                      value: generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById),
-                  }
+                ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
                 : undefined,
     };
 }
@@ -107,7 +94,7 @@ function generateBaseEndpointExample({
     endpointDefinition: APIV1Write.EndpointDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
     resolveTypeById: ResolveTypeById;
-}): Omit<APIV1Write.ExampleEndpointCall, "responseBody" | "responseStatusCode"> {
+}): Omit<APIV1Write.ExampleEndpointCall, "responseStatusCode"> {
     const pathParameters = generatePathParameterExamples({
         pathParameters: endpointDefinition.path.pathParameters,
         apiDefinition,
@@ -122,7 +109,7 @@ function generateBaseEndpointExample({
         headers: [...(apiDefinition.globalHeaders ?? []), ...endpointDefinition.headers],
         resolveTypeById,
     });
-    const requestBody =
+    const requestBodyV3 =
         endpointDefinition.request != null
             ? generateHttpRequestBodyExample(endpointDefinition.request.type, resolveTypeById)
             : undefined;
@@ -131,10 +118,10 @@ function generateBaseEndpointExample({
         pathParameters,
         queryParameters,
         headers,
-        requestBody,
+        requestBodyV3,
 
         name: undefined,
-        requestBodyV3: undefined,
+        requestBody: undefined,
         responseBodyV3: undefined,
         codeSamples: undefined,
         description: undefined,

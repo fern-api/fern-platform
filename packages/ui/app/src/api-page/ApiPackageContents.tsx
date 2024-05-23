@@ -7,7 +7,8 @@ import {
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
     isResolvedSubpackage,
-} from "../util/resolver";
+} from "../resolver/types";
+import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
 import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 import { WebSocket } from "./web-socket/WebSocket";
@@ -82,6 +83,12 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 isLastInParentPackage={isLastInParentPackage && idx === items.length - 1}
                                 anchorIdParts={anchorIdParts}
                                 breadcrumbs={currentBreadcrumbs}
+                            />
+                        ),
+                        page: (page) => (
+                            <ApiSectionMarkdownPage
+                                page={page}
+                                hideBottomSeparator={isLastInParentPackage && idx === items.length - 1}
                             />
                         ),
                     })}

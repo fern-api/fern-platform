@@ -1,182 +1,159 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk";
-import { getNavigationRoot } from "@fern-ui/fdr-utils";
-import {
-    DocsPage,
-    DocsPageResult,
-    NextApp,
-    convertNavigatableToResolvedPath,
-    serializeSidebarNodeDescriptionMdx,
-} from "@fern-ui/ui";
-import { Router, useRouter } from "next/router";
-import { ReactElement, useEffect, useState } from "react";
+import { useDeepCompareEffect } from "@fern-ui/react-commons";
+import { DocsPage, toast, useSetThemeColors } from "@fern-ui/ui";
+import { useRouter } from "next/router";
+import { ReactElement, useEffect, useRef, useState } from "react";
+import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
+import { getDocsPageProps } from "../utils/getDocsPageProps";
+
+interface LocalPreviewWebsocketMessage {
+    version: 1;
+    type: "startReload" | "finishReload";
+}
 
 export default function LocalPreviewDocs(): ReactElement {
     const router = useRouter();
 
-    const [docs, setDocs] = useState<DocsV2Read.LoadDocsForUrlResponse | null>(null);
+    const [docs, setDocs] = useState<DocsV2Read.LoadDocsForUrlResponse>();
+    const [docsProps, setDocsProps] = useState<DocsPage.Props>();
+    const toastInstance = useRef<string | number>();
 
+    /**
+     * Load the docs for the current URL.
+     */
     useEffect(() => {
+        let isCanceled = false;
+        const url = new URL(window.location.href);
         async function loadData() {
-            const docs = await loadDocsForUrl();
-            setDocs(docs);
+            try {
+                const docs = await loadDocsForUrl(url.origin);
+                if (isCanceled) {
+                    return;
+                }
+                setDocs(docs);
+            } catch (error) {
+                if (isCanceled) {
+                    return;
+                }
+                // eslint-disable-next-line no-console
+                console.error(error);
+                toastInstance.current = toast.error("Failed to load the docs.", {
+                    id: toastInstance.current,
+                    duration: Number.POSITIVE_INFINITY,
+                    dismissible: true,
+                    position: "top-center",
+                });
+            }
         }
         void loadData();
 
-        const websocket = new WebSocket(`ws://localhost:${process.env.PORT ?? 3000}`);
-        websocket.onmessage = () => {
-            void loadData();
+        const websocket = new ReconnectingWebSocket(`ws://${url.host}`);
+        websocket.onmessage = async (e) => {
+            try {
+                const data = JSON.parse(e.data) as LocalPreviewWebsocketMessage;
+                if (data.version == null) {
+                    await loadData();
+                    toast.dismiss(toastInstance.current);
+                } else if (data.version === 1) {
+                    if (data.type === "startReload") {
+                        toastInstance.current = toast.loading("Reloading...", {
+                            id: toastInstance.current,
+                            duration: Number.POSITIVE_INFINITY,
+                            position: "top-center",
+                            dismissible: false,
+                        });
+                    } else if (data.type === "finishReload") {
+                        await loadData();
+                        toast.dismiss(toastInstance.current);
+                    }
+                }
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error(error);
+                await loadData();
+            }
+        };
+        websocket.onconnecting = () => {
+            if (websocket.reconnectAttempts > 0) {
+                toastInstance.current = toast.error("Disconnected from server. Reconnecting...", {
+                    id: toastInstance.current,
+                    duration: Number.POSITIVE_INFINITY,
+                    dismissible: true,
+                    position: "top-center",
+                });
+            }
+        };
+        websocket.onopen = () => {
+            toast.dismiss(toastInstance.current);
+        };
+        return () => {
+            websocket.close();
+            toast.dismiss(toastInstance.current);
+            isCanceled = true;
         };
     }, []);
 
-    const [docsProps, setDocsProps] = useState<DocsPage.Props | null>(null);
-
+    /**
+     * Convert the loaded docs to props for the currently routed page.
+     */
     useEffect(() => {
         if (docs == null) {
             return;
         }
+        let isCanceled = false;
         const slug = router.query.slug == null ? [] : (router.query.slug as string[]);
-        void getDocsPageProps(docs, slug).then((props) => {
-            // eslint-disable-next-line no-console
-            console.debug(props);
-            if (props.type === "props") {
-                setDocsProps(props.props);
-            } else if (props.type === "notFound") {
-                void router.replace("/");
-            } else if (props.type === "redirect") {
-                void router.replace(props.redirect.destination);
-            }
-        });
+        void getDocsPageProps(docs, slug)
+            .then((result) => {
+                if (isCanceled) {
+                    return;
+                }
+                if (result.type === "props") {
+                    setDocsProps(result.props);
+                } else if (result.type === "notFound") {
+                    void router.replace("/");
+                } else if (result.type === "redirect") {
+                    void router.replace(result.redirect.destination);
+                }
+            })
+            .catch((error) => {
+                // eslint-disable-next-line no-console
+                console.error(error);
+                toastInstance.current = toast.error("Failed to load the docs.", {
+                    id: toastInstance.current,
+                    duration: Number.POSITIVE_INFINITY,
+                    dismissible: true,
+                    position: "top-center",
+                });
+            });
+        return () => {
+            isCanceled = true;
+        };
     }, [docs, router]);
+
+    const setThemeColors = useSetThemeColors();
+    useDeepCompareEffect(() => {
+        setThemeColors(docsProps?.colors);
+    }, [docsProps?.colors]);
 
     if (docsProps == null) {
         return <></>;
     }
 
-    return <NextApp router={router as Router} pageProps={docsProps} Component={DocsPage} />;
+    return <DocsPage {...docsProps} />;
 }
 
-async function loadDocsForUrl() {
-    const response = await fetch(`http://localhost:${process.env.PORT ?? 3000}/v2/registry/docs/load-with-url`, {
+async function loadDocsForUrl(origin: string) {
+    const response = await fetch(`${origin}/v2/registry/docs/load-with-url`, {
         method: "POST",
     });
 
     const docs: DocsV2Read.LoadDocsForUrlResponse = await response.json();
 
+    if (docs.baseUrl == null || docs.definition == null) {
+        // eslint-disable-next-line no-console
+        console.debug(docs);
+        throw new Error("Invalid response from the server.");
+    }
+
     return docs;
-}
-
-async function getDocsPageProps(
-    docs: DocsV2Read.LoadDocsForUrlResponse,
-    slug: string[],
-): Promise<DocsPageResult<DocsPage.Props>> {
-    const docsDefinition = docs.definition;
-    const basePath = docs.baseUrl.basePath;
-    const docsConfig = docsDefinition.config;
-
-    const navigation = getNavigationRoot(slug, basePath, docsConfig.navigation, docs.definition.apis);
-
-    if (navigation == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${slug.join("/")}`);
-        return {
-            type: "redirect",
-            redirect: {
-                destination: basePath ?? "/",
-                permanent: false,
-            },
-        };
-    }
-
-    if (navigation.type === "redirect") {
-        return {
-            type: "redirect",
-            redirect: {
-                destination: navigation.redirect,
-                permanent: false,
-            },
-        };
-    }
-
-    const sidebarNodes = await Promise.all(
-        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
-    );
-
-    const resolvedPath = await convertNavigatableToResolvedPath({
-        currentNode: navigation.found.currentNode,
-        sidebarNodes,
-        apis: docsDefinition.apis,
-        pages: docsDefinition.pages,
-    });
-
-    if (resolvedPath == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed to resolve path for ${slug.join("/")}`);
-        return {
-            type: "redirect",
-            redirect: {
-                destination: basePath ?? "/",
-                permanent: false,
-            },
-        };
-    }
-
-    if (resolvedPath.type === "redirect") {
-        return {
-            type: "redirect",
-            redirect: {
-                destination: "/" + encodeURI(resolvedPath.fullSlug),
-                permanent: false,
-            },
-        };
-    }
-
-    const featureFlags = {
-        isApiPlaygroundEnabled: false,
-        isApiScrollingDisabled: false,
-        isWhitelabeled: false,
-    };
-
-    const props: DocsPage.Props = {
-        baseUrl: docs.baseUrl,
-        layout: docs.definition.config.layout,
-        title: docs.definition.config.title,
-        favicon: docs.definition.config.favicon,
-        colors: {
-            light:
-                docs.definition.config.colorsV3?.type === "light"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.light
-                      : undefined,
-            dark:
-                docs.definition.config.colorsV3?.type === "dark"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.dark
-                      : undefined,
-        },
-        typography: docs.definition.config.typographyV2,
-        css: docs.definition.config.css,
-        js: docs.definition.config.js,
-        navbarLinks: docs.definition.config.navbarLinks ?? [],
-        logoHeight: docs.definition.config.logoHeight,
-        logoHref: docs.definition.config.logoHref,
-        search: docs.definition.search,
-        algoliaSearchIndex: docs.definition.algoliaSearchIndex,
-        files: docs.definition.filesV2,
-        resolvedPath,
-        navigation: {
-            currentTabIndex: navigation.found.currentTabIndex,
-            tabs: navigation.found.tabs,
-            currentVersionIndex: navigation.found.currentVersionIndex,
-            versions: navigation.found.versions,
-            sidebarNodes,
-        },
-        featureFlags,
-    };
-
-    return {
-        type: "props",
-        props: JSON.parse(JSON.stringify(props)), // remove all undefineds
-    };
 }

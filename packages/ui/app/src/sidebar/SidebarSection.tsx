@@ -5,7 +5,7 @@ import cn from "clsx";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
 import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
-import { ExpandableSidebarApiSection, SidebarApiSection } from "./SidebarApiSection";
+import { SidebarApiSection } from "./SidebarApiSection";
 import { SidebarHeading } from "./SidebarHeading";
 import { SidebarLink, SidebarSlugLink } from "./SidebarLink";
 
@@ -184,37 +184,14 @@ export const SidebarSection = memo<SidebarSectionProps>(function SidebarSection(
                             );
                         }
                     },
-                    apiSection: (apiSection) =>
-                        depth === 0 ? (
-                            <li key={apiSection.id}>
-                                <SidebarHeading
-                                    className={cn({
-                                        "mt-6": topLevel,
-                                    })}
-                                    depth={depth}
-                                    title={apiSection.title}
-                                    slug={apiSection.slug}
-                                    icon={apiSection.icon}
-                                    hidden={apiSection.hidden}
-                                >
-                                    <SidebarApiSection
-                                        slug={apiSection.slug}
-                                        apiSection={apiSection}
-                                        registerScrolledToPathListener={registerScrolledToPathListener}
-                                        depth={depth + 1}
-                                    />
-                                </SidebarHeading>
-                            </li>
-                        ) : (
-                            <ExpandableSidebarApiSection
-                                slug={apiSection.slug}
-                                apiSection={apiSection}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                depth={depth}
-                                title={apiSection.title}
-                                artifacts={apiSection.artifacts}
-                            />
-                        ),
+                    apiSection: (apiSection) => (
+                        <SidebarApiSection
+                            key={apiSection.id}
+                            apiSection={apiSection}
+                            registerScrolledToPathListener={registerScrolledToPathListener}
+                            depth={depth}
+                        />
+                    ),
                     _other: () => null,
                 }),
             )}

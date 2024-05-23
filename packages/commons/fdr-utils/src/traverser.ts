@@ -42,6 +42,11 @@ function visitPage(
     } else {
         traverseState.next = page;
     }
+
+    if (SidebarNode.isEndpointPage(page) && page.stream != null) {
+        return visitPage(page.stream, currentNode, traverseState, sectionTitleBreadcrumbs);
+    }
+
     return traverseState;
 }
 
@@ -85,6 +90,13 @@ function visitNode(
             return traverseState;
         },
         apiSection: (apiSection) => {
+            if (apiSection.summaryPage != null) {
+                traverseState = visitPage(apiSection.summaryPage, currentNode, traverseState, sectionTitleBreadcrumbs);
+                if (traverseState.next != null) {
+                    return traverseState;
+                }
+            }
+
             const apiSectionBreadcrumbs = [...sectionTitleBreadcrumbs, apiSection.title];
 
             if (apiSection.changelog != null) {
@@ -154,7 +166,10 @@ export function traverseSidebarNodes(
     return traverseState;
 }
 
-export function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
+export function findApiSection(
+    api: string,
+    sidebarNodes: readonly SidebarNodeRaw[],
+): SidebarNodeRaw.ApiSection | undefined {
     for (const node of sidebarNodes) {
         if (node.type === "apiSection") {
             if (node.id === api) {

@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
@@ -6,63 +7,145 @@ import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
-import { emitDatadogError } from "../analytics/datadogRum";
+import type { PluggableList } from "unified";
+import { captureSentryError } from "../analytics/sentry";
 import { stringHasMarkdown } from "./common/util";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
+import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
-export interface FernDocsFrontmatterRaw {
-    title?: string;
-    description?: string;
-    editThisPageUrl?: string;
-    image?: string;
-    excerpt?: string;
-    layout?: "overview" | "guide";
-}
+/**
+ * The layout used for guides. This is the default layout.
+ * Guides are typically long-form content that is meant to be read from start to finish.
+ */
+type GuideLayout = "guide";
 
-export interface FernDocsFrontmatter extends Omit<FernDocsFrontmatterRaw, "excerpt"> {
-    excerpt?: MDXRemoteSerializeResult | string;
+/**
+ * The layout used for overview pages.
+ * Overview pages are typically meant to be a landing page for a section of the documentation.
+ * These pages are 50% wider than guide pages, and is best used with <Column> components.
+ */
+type OverviewLayout = "overview";
+
+/**
+ * The layout used for reference pages.
+ * Reference pages are the widest layout and are best used for tables and other wide content.
+ * Refrence pages are 2x the width of guide pages, and should be paired with <Aside> component.
+ * Aside will generate a sticky right-hand column for the page, which is useful for code snippets.
+ * Table of contents are always hidden on reference pages.
+ */
+type ReferenceLayout = "reference";
+
+export interface FernDocsFrontmatter {
+    /**
+     * The layout of the page. This will determine the width of the content.
+     * Defaults to "guide"
+     */
+    layout?: GuideLayout | OverviewLayout | ReferenceLayout;
+
+    /**
+     * The title of the page. If not set, the title will inherit what's set in the sidebar.
+     * This is also used for the <title> tag in the HTML.
+     */
+    title?: string;
+
+    /**
+     * The description of the page. This is used for the <meta name="description"> tag in the HTML.
+     */
+    description?: string;
+
+    /**
+     * The subtitle of the page. This is a markdown string that is rendered below the title.
+     * If `description` is not set, this will be used for the <meta name="description"> tag in the HTML.
+     */
+    subtitle?: string;
+
+    /**
+     * The URL to the page's image. This is used for the <meta property="og:image"> tag in the HTML.
+     */
+    image?: string;
+
+    /**
+     * Renders an "Edit this page" link at the bottom of the page.
+     */
+    "edit-this-page-url"?: string;
+
+    /**
+     * Hides the table of contents.
+     */
+    "hide-toc"?: boolean;
+
+    /**
+     * Hides the (prev, next) navigation links at the bottom of the page.
+     */
+    "hide-nav-links"?: boolean;
+
+    /**
+     * Hides the feedback form at the bottom of the page.
+     */
+    "hide-feedback"?: boolean;
+
+    // deprecated:
+    editThisPageUrl?: string; // use "edit-this-page-url" instead
+    excerpt?: string; // use subtitle instead
 }
 
 export type SerializedMdxContent = MDXRemoteSerializeResult<Record<string, unknown>, FernDocsFrontmatter> | string;
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
-export type SerializeMdxOptions = SerializeOptions["mdxOptions"];
+type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
-const MDX_OPTIONS: Exclude<SerializeMdxOptions, undefined> = {
-    remarkRehypeOptions: {
-        handlers: {
-            heading: customHeadingHandler,
-        },
-    },
-
-    remarkPlugins: [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji],
-    rehypePlugins: [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents, rehypeSanitizeJSX],
-    format: "mdx",
-    /**
-     * development=true is required to render MdxRemote from the client-side.
-     * https://github.com/hashicorp/next-mdx-remote/issues/350
-     */
-    development: process.env.NODE_ENV !== "production",
+export type FernSerializeMdxOptions = SerializeMdxOptions & {
+    pageHeader?: PageHeaderProps;
+    showError?: boolean;
 };
 
-function withDefaultMdxOptions(options: SerializeMdxOptions = {}): SerializeMdxOptions {
-    return {
-        ...MDX_OPTIONS,
-        ...options,
-        remarkPlugins: [...(MDX_OPTIONS.remarkPlugins ?? []), ...(options.remarkPlugins ?? [])],
-        rehypePlugins: [...(MDX_OPTIONS.rehypePlugins ?? []), ...(options.rehypePlugins ?? [])],
-        remarkRehypeOptions: {
-            ...MDX_OPTIONS.remarkRehypeOptions,
-            ...options.remarkRehypeOptions,
-            handlers: {
-                ...MDX_OPTIONS.remarkRehypeOptions?.handlers,
-                ...options.remarkRehypeOptions?.handlers,
-            },
+function withDefaultMdxOptions({
+    pageHeader,
+    showError,
+    ...options
+}: FernSerializeMdxOptions = {}): SerializeMdxOptions {
+    const remarkRehypeOptions = {
+        ...options.remarkRehypeOptions,
+        handlers: {
+            heading: customHeadingHandler,
+            ...options.remarkRehypeOptions?.handlers,
         },
+    };
+
+    const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
+
+    if (options.remarkPlugins != null) {
+        remarkPlugins.push(...options.remarkPlugins);
+    }
+
+    const rehypePlugins: PluggableList = [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents];
+
+    if (options.rehypePlugins != null) {
+        rehypePlugins.push(...options.rehypePlugins);
+    }
+
+    if (pageHeader != null) {
+        rehypePlugins.push([rehypeFernLayout, pageHeader]);
+    }
+
+    // Always sanitize JSX at the end.
+    rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
+
+    return {
+        /**
+         * development=true is required to render MdxRemote from the client-side.
+         * https://github.com/hashicorp/next-mdx-remote/issues/350
+         */
+        development: process.env.NODE_ENV !== "production",
+        ...options,
+        remarkRehypeOptions,
+        remarkPlugins,
+        rehypePlugins,
+        format: "mdx",
     };
 }
 
@@ -71,15 +154,17 @@ function withDefaultMdxOptions(options: SerializeMdxOptions = {}): SerializeMdxO
  */
 export async function maybeSerializeMdxContent(
     content: string,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<MDXRemoteSerializeResult | string>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<MDXRemoteSerializeResult | string | undefined>;
 export async function maybeSerializeMdxContent(
     content: string | undefined,
-    mdxOptions: SerializeOptions["mdxOptions"] = {},
+    mdxOptions: FernSerializeMdxOptions = {},
 ): Promise<MDXRemoteSerializeResult | string | undefined> {
     if (content == null) {
         return undefined;
@@ -88,6 +173,8 @@ export async function maybeSerializeMdxContent(
     if (!stringHasMarkdown(content)) {
         return content;
     }
+
+    content = replaceBrokenBrTags(content);
 
     try {
         return await serialize(content, {
@@ -99,7 +186,7 @@ export async function maybeSerializeMdxContent(
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "MDX",
             errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",
@@ -114,60 +201,35 @@ export async function maybeSerializeMdxContent(
  */
 export async function serializeMdxWithFrontmatter(
     content: string,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<SerializedMdxContent>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
-    mdxOptions?: SerializeOptions["mdxOptions"],
+    mdxOptions?: FernSerializeMdxOptions,
+    files?: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Promise<SerializedMdxContent | undefined>;
 export async function serializeMdxWithFrontmatter(
     content: string | undefined,
-    mdxOptions: SerializeOptions["mdxOptions"] = {},
+    mdxOptions: FernSerializeMdxOptions = {},
 ): Promise<SerializedMdxContent | undefined> {
     if (content == null) {
         return undefined;
     }
+
+    content = replaceBrokenBrTags(content);
+
     try {
-        const firstPass = await serialize<Record<string, unknown>, FernDocsFrontmatterRaw>(content, {
+        return await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
             scope: {},
             mdxOptions: withDefaultMdxOptions(mdxOptions),
             parseFrontmatter: true,
         });
-
-        let excerpt: MDXRemoteSerializeResult | string | undefined = firstPass.frontmatter?.excerpt;
-
-        if (firstPass.frontmatter?.excerpt) {
-            try {
-                excerpt = await serialize(firstPass.frontmatter.excerpt, {
-                    scope: {},
-                    mdxOptions: withDefaultMdxOptions(mdxOptions),
-                    parseFrontmatter: false,
-                });
-            } catch (e) {
-                // eslint-disable-next-line no-console
-                console.error(e);
-
-                emitDatadogError(e, {
-                    context: "MDX",
-                    errorSource: "maybeSerializeMdxContent",
-                    errorDescription: "Failed to serialize subtitle (excerpt) from frontmatter",
-                });
-            }
-        }
-
-        return {
-            frontmatter: {
-                ...firstPass.frontmatter,
-                excerpt,
-            },
-            compiledSource: firstPass.compiledSource,
-            scope: firstPass.scope,
-        };
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "MDX",
             errorSource: "maybeSerializeMdxContent",
             errorDescription: "Failed to serialize MDX content",
@@ -175,4 +237,8 @@ export async function serializeMdxWithFrontmatter(
 
         return content;
     }
+}
+
+export function replaceBrokenBrTags(content: string): string {
+    return content.replaceAll(/<br\s*\/?>/g, "<br />").replaceAll("</br>", "");
 }

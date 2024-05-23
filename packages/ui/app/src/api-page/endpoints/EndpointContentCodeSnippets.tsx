@@ -1,20 +1,30 @@
 "use client";
-import dynamic from "next/dynamic";
-import { memo } from "react";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
+import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
-import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall } from "../../util/resolver";
+import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { FernScrollArea } from "../../components/FernScrollArea";
+import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedError,
+    ResolvedExampleEndpointCall,
+    ResolvedExampleError,
+} from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
-import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
+import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import { TitledExample } from "../examples/TitledExample";
+import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
+import { getMessageForStatus } from "../utils/getMessageForStatus";
+import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-
-const CodeSnippetExample = dynamic(
-    () => import("../examples/CodeSnippetExample").then(({ CodeSnippetExample }) => CodeSnippetExample),
-    { ssr: true },
-);
+import { ErrorExampleSelect } from "./ErrorExampleSelect";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -25,19 +35,16 @@ export declare namespace EndpointContentCodeSnippets {
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
         requestCodeSnippet: string;
-        // requestHast: Root;
         requestCurlJson: unknown;
-        responseCodeSnippet: string;
-        // responseHast: Root | undefined;
-        responseJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
-        requestHeight: number;
-        responseHeight: number;
+        showErrors: boolean;
+        errors: ResolvedError[];
+        selectedError: ResolvedError | undefined;
+        setSelectedError: (error: ResolvedError | undefined) => void;
+        measureHeight: (height: number) => void;
     }
 }
-
-const TITLED_EXAMPLE_PADDING = 43;
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
     api,
@@ -48,18 +55,88 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     onClickClient,
     requestCodeSnippet,
     requestCurlJson,
-    responseCodeSnippet,
-    // responseHast,
-    responseJson,
     hoveredRequestPropertyPath = [],
     hoveredResponsePropertyPath = [],
-    requestHeight,
-    responseHeight,
+    showErrors,
+    errors,
+    selectedError,
+    setSelectedError,
+    measureHeight,
 }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (ref.current != null) {
+            measureHeight(ref.current.clientHeight);
+            const resizeObserver = new ResizeObserver(([entry]) => {
+                measureHeight(entry.contentRect.height);
+            });
+            resizeObserver.observe(ref.current);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+        return;
+    }, [measureHeight]);
+
+    const [selectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(undefined);
+
+    const handleSelectErrorAndExample = (
+        error: ResolvedError | undefined,
+        example: ResolvedExampleError | undefined,
+    ) => {
+        setSelectedError(error);
+        setSelectedErrorExample(example);
+    };
+
+    // if the selected error is not in the list of errors, reset the selected error
+    useEffect(() => {
+        setSelectedErrorExample((prevSelectedErrorExample) => {
+            if (selectedError == null) {
+                return undefined;
+            } else if (
+                prevSelectedErrorExample != null &&
+                selectedError.examples.findIndex((e) => e === prevSelectedErrorExample) === -1
+            ) {
+                return selectedError.examples[0];
+            }
+            return prevSelectedErrorExample;
+        });
+    }, [selectedError]);
+
+    const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
 
+    const successTitle =
+        exampleWithSchema.responseBody != null
+            ? visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
+                  json: (value) => renderResponseTitle(value.statusCode, endpoint.method),
+                  filename: (value) => renderResponseTitle(value.statusCode, endpoint.method),
+                  stream: () => "Streamed Response",
+                  sse: () => "Server-Sent Events",
+                  _other: () => "Response",
+              })
+            : "Response";
+
+    const errorSelector = showErrors ? (
+        <ErrorExampleSelect
+            selectedError={selectedError}
+            selectedErrorExample={selectedErrorExample}
+            errors={errors}
+            setSelectedErrorAndExample={handleSelectErrorAndExample}
+        >
+            {successTitle}
+        </ErrorExampleSelect>
+    ) : (
+        <span className="text-sm t-muted">{successTitle}</span>
+    );
+
     return (
-        <div className="flex min-h-0 min-w-0 flex-1 shrink flex-col gap-6">
+        <div
+            className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full max-h-fit"
+            ref={ref}
+        >
+            {/* TODO: Replace this with a proper segmented control component */}
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <FernButtonGroup className="min-w-0 shrink">
                     {selectedClientGroup?.examples.map((example) => (
@@ -88,12 +165,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         environment={endpoint.defaultEnvironment?.baseUrl}
                     />
                 }
-                // afterTitle={<span className="t-accent mx-1 px-1 text-xs">{selectedClient.name}</span>}
-                type="primary"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                // copyToClipboardText={() => requestCodeSnippet}
                 actions={
                     <>
                         <PlaygroundButton
@@ -114,33 +188,85 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     </>
                 }
                 code={requestCodeSnippet}
-                language={selectedClient.language === "curl" ? "bash" : selectedClient.language}
+                language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
                 jsonStartLine={
                     selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
-                scrollAreaStyle={{ height: requestHeight - TITLED_EXAMPLE_PADDING }}
             />
-            {example.responseBody != null &&
-                (endpoint.responseBody?.shape.type === "fileDownload" ? (
-                    <AudioExample title="Response" type={"primary"} />
-                ) : (
-                    <CodeSnippetExample
-                        title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
-                        type={example.responseStatusCode >= 400 ? "warning" : "primary"}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
-                        code={responseCodeSnippet}
-                        language="json"
-                        hoveredPropertyPath={hoveredResponsePropertyPath}
-                        json={responseJson}
-                        scrollAreaStyle={{ height: responseHeight - TITLED_EXAMPLE_PADDING }}
-                    />
-                ))}
+            {selectedError != null && (
+                <JsonCodeSnippetExample
+                    title={errorSelector}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                    hoveredPropertyPath={hoveredResponsePropertyPath}
+                    json={selectedErrorExample?.responseBody ?? EMPTY_OBJECT}
+                    intent={statusCodeToIntent(selectedError.statusCode)}
+                />
+            )}
+            {exampleWithSchema.responseBody != null &&
+                selectedError == null &&
+                visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
+                    json: (value) => (
+                        <JsonCodeSnippetExample
+                            title={errorSelector}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            hoveredPropertyPath={hoveredResponsePropertyPath}
+                            json={value.value}
+                        />
+                    ),
+                    // TODO: support other media types
+                    filename: () => <AudioExample title={errorSelector} />,
+                    stream: (value) => (
+                        <TitledExample title={errorSelector}>
+                            <FernScrollArea className="rounded-b-[inherit]">
+                                <WebSocketMessages
+                                    messages={value.value.map((event) => ({
+                                        type: undefined,
+                                        origin: undefined,
+                                        displayName: undefined,
+                                        data: event,
+                                    }))}
+                                />
+                            </FernScrollArea>
+                        </TitledExample>
+                    ),
+                    sse: (value) => (
+                        <TitledExample title={errorSelector}>
+                            <FernScrollArea className="rounded-b-[inherit]">
+                                <WebSocketMessages
+                                    messages={value.value.map(({ event, data }) => ({
+                                        type: event,
+                                        origin: undefined,
+                                        displayName: undefined,
+                                        data,
+                                    }))}
+                                />
+                            </FernScrollArea>
+                        </TitledExample>
+                    ),
+                    _other: () => (
+                        <FernErrorTag
+                            component="EndpointContentCodeSnippets"
+                            error="example.responseBody is an unknown type"
+                        />
+                    ),
+                })}
         </div>
     );
 };
 
 export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSnippets);
+
+function renderResponseTitle(statusCode: number, method?: APIV1Read.HttpMethod) {
+    return (
+        <span className="inline-flex items-center gap-2">
+            <StatusCodeTag statusCode={statusCode} />
+            <span>{getMessageForStatus(statusCode, method)}</span>
+        </span>
+    );
+}

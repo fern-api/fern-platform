@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-ui/core-utils";
-import { ResolvedFormValue } from "../../util/resolver";
+import { compact } from "lodash-es";
+import { ResolvedFormDataRequestProperty, ResolvedFormValue } from "../../resolver/types";
 import { PlaygroundRequestFormAuth } from "./auth";
 import { PlaygroundFormDataEntryValue } from "./formDataEntryValue";
 import { JsonVariant } from "./jsonVariant";
@@ -20,6 +21,8 @@ export declare namespace PlaygroundFormStateBody {
 
 export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
     value: PlaygroundFormDataEntryValue,
+    property: ResolvedFormDataRequestProperty | undefined,
+    domain: string,
 ): ResolvedFormValue | undefined {
     switch (value.type) {
         case "file":
@@ -29,17 +32,29 @@ export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequ
             return {
                 type: "file",
                 fileName: value.value?.name,
+                fileId: undefined,
+                contentType: value.value.type,
             };
         case "fileArray":
             return {
                 type: "fileArray",
-                fileNames: value.value.map((file) => file.name),
+                files: value.value.map((file) => ({
+                    type: "file",
+                    fileName: file.name,
+                    fileId: undefined,
+                    contentType: file.type,
+                })),
             };
-        case "json":
+        case "json": {
+            const contentType = property?.type === "bodyProperty" ? compact(property.contentType)[0] : undefined;
             return {
                 type: "json",
                 value: value.value,
+                // this is a hack to allow the API Playground to send JSON blobs in form data
+                // revert this once we have a better solution
+                contentType: contentType ?? (domain.includes("fileforge") ? "application/json" : undefined),
             };
+        }
         default:
             assertNever(value);
     }

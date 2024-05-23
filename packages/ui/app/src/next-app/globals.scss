@@ -1,13 +1,30 @@
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/mauve.css";
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/sage.css";
+@import "@radix-ui/colors/olive.css";
+@import "@radix-ui/colors/sand.css";
 @import "@radix-ui/colors/gray-alpha.css";
 @import "@radix-ui/colors/mauve-alpha.css";
 @import "@radix-ui/colors/slate-alpha.css";
 @import "@radix-ui/colors/sage-alpha.css";
 @import "@radix-ui/colors/olive-alpha.css";
 @import "@radix-ui/colors/sand-alpha.css";
+@import "@radix-ui/colors/green.css";
 @import "@radix-ui/colors/green-alpha.css";
+@import "@radix-ui/colors/grass-alpha.css";
+@import "@radix-ui/colors/red.css";
 @import "@radix-ui/colors/red-alpha.css";
+@import "@radix-ui/colors/amber.css";
 @import "@radix-ui/colors/amber-alpha.css";
+@import "@radix-ui/colors/blue.css";
 @import "@radix-ui/colors/blue-alpha.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/mauve-dark.css";
+@import "@radix-ui/colors/slate-dark.css";
+@import "@radix-ui/colors/sage-dark.css";
+@import "@radix-ui/colors/olive-dark.css";
+@import "@radix-ui/colors/sand-dark.css";
 @import "@radix-ui/colors/gray-dark-alpha.css";
 @import "@radix-ui/colors/mauve-dark-alpha.css";
 @import "@radix-ui/colors/slate-dark-alpha.css";
@@ -15,6 +32,7 @@
 @import "@radix-ui/colors/olive-dark-alpha.css";
 @import "@radix-ui/colors/sand-dark-alpha.css";
 @import "@radix-ui/colors/green-dark-alpha.css";
+@import "@radix-ui/colors/grass-dark-alpha.css";
 @import "@radix-ui/colors/red-dark-alpha.css";
 @import "@radix-ui/colors/amber-dark-alpha.css";
 @import "@radix-ui/colors/blue-dark-alpha.css";
@@ -34,9 +52,9 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* 
+    /*
     html.dark {
-        background-color: var(--accent-primary);
+        background-color: var(--accent);
     } */
 
     *,
@@ -147,35 +165,59 @@
     }
 
     .mask-grad-top-1 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 4px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 4px);
     }
 
     .mask-grad-top-2 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 8px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 8px);
     }
 
     .mask-grad-top-3 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 12px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
     }
 
     .mask-grad-top-4 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 16px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 16px);
     }
 
     .mask-grad-top-5 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 20px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 20px);
     }
 
     .mask-grad-top-6 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+    }
+
+    .mask-grad-y-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
     }
 
     .mask-grad-top-7 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 28px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 28px);
     }
 
     .mask-grad-top-8 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-6 {
+        mask-image: linear-gradient(to top, transparent 0, black 24px);
+    }
+
+    .mask-grad-bottom-7 {
+        mask-image: linear-gradient(to top, transparent 0, black 28px);
+    }
+
+    .mask-grad-bottom-8 {
+        mask-image: linear-gradient(to top, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-9 {
+        mask-image: linear-gradient(to top, transparent 0, black 36px);
+    }
+
+    .mask-grad-bottom-10 {
+        mask-image: linear-gradient(to top, transparent 0, black 40px);
     }
 
     .fern-dropdown {
@@ -186,7 +228,7 @@
         @apply shadow-xl;
 
         .fern-dropdown-item {
-            @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center;
+            @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center text-left;
             @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
 
             .fern-dropdown-item-indicator {
@@ -200,14 +242,18 @@
         @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;
         @apply bg-tag-default;
         @apply hover:bg-tag-default-hover transition-[background,shadow];
-        @apply ring-inset ring-concealed hover:ring-default ring-1;
+        @apply ring-inset ring-default hover:ring-default ring-1;
 
         .search-placeholder {
-            @apply inline-flex flex-1 items-center space-x-3;
+            @apply inline-flex flex-1 items-center space-x-2.5;
+
+            span {
+                @apply text-faded;
+            }
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted ring-concealed shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
+            @apply t-muted ring-default shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
             @apply dark:shadow-card-dark bg-card;
         }
 
@@ -221,7 +267,7 @@
     }
 
     .fern-sidebar-heading {
-        @apply flex min-h-[32px] lg:min-h-[36px];
+        @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
     }
 
     .fern-sidebar-group {
@@ -240,7 +286,11 @@
     .fern-sidebar-link-container {
         @apply items-stretch relative flex min-h-[36px];
         @apply data-[state=active]:t-accent-aaa;
-        @apply data-[state=inactive]:hover:t-accent-aaa data-[state=inactive]:t-muted;
+        @apply data-[state=inactive]:hover:t-accent-aaa;
+
+        &:not(.top-level) {
+            @apply data-[state=inactive]:t-muted;
+        }
     }
 
     .fern-sidebar-link-indent {
@@ -277,7 +327,7 @@
     }
 
     .fern-sidebar-link-expand {
-        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none transition-transform ease-out;
+        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none ease-out;
         @apply lg:rounded-lg;
 
         &:last-child {
@@ -697,7 +747,7 @@
 
         &.interactive {
             @apply cursor-pointer shadow-card;
-            @apply hover:shadow-card-elevated hover:border-primary transition-all;
+            @apply hover:shadow-card-elevated hover:border-accent transition-all;
             @apply active:shadow-card-elevated active:border-primary;
 
             &.active {
@@ -757,7 +807,7 @@
     }
 
     .fern-numeric-input-group:focus-within .fern-numeric-input-step {
-        @apply ring-accent-primary hover:bg-tag-primary t-accent hover:t-accent border-primary;
+        @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
     }
 
     .fern-numeric-input-group .fern-numeric-input-step:first-child {
@@ -770,7 +820,7 @@
 
     .fern-input,
     .fern-textarea {
-        @apply caret-accent-primary py-2 px-2.5 text-sm;
+        @apply caret-accent py-2 px-2.5 text-sm;
         @apply max-sm:text-base;
     }
 
@@ -785,7 +835,7 @@
     }
 
     .fern-mdx-link {
-        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-primary-aa;
+        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;
         @apply font-semibold;
 
         h1 &,
@@ -806,5 +856,13 @@
                 @apply t-accent;
             }
         }
+    }
+
+    .fern-api-property-key {
+        @apply font-mono t-default font-semibold text-sm;
+    }
+
+    .custom-backdrop [data-rmiz-modal-overlay="visible"] {
+        @apply bg-text-default/20;
     }
 }

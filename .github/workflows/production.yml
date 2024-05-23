@@ -13,7 +13,9 @@ env:
   JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  SEGMENT_API_KEY: ${{ secrets.SEGMENT_API_KEY }}
 on:
   push:
     tags:
@@ -82,3 +84,31 @@ jobs:
           --minified-path-prefix=https://app.buildwithfern.com/_next/static
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+  
+  smoke-test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Smoke Test
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cd smoke-test
+          npm install -g fern-api
+          fern generate --docs --instance https://fern-platform-test.docs.buildwithfern.com
+          VALUE=$(curl https://fern-platform-test.docs.buildwithfern.com/api-reference/imdb/create-movie)
+          length=${#VALUE}
+          # Assert that length is over 1000
+          if [ $length -gt 1000 ]; then
+              echo "Length is greater than 1000"
+          else
+              exit 1
+          fi
+  
+  healthchecks:
+    needs: deploy
+    uses: ./.github/workflows/healthcheck.yml
+    secrets: inherit

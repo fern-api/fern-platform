@@ -42,6 +42,12 @@ export function visitSidebarNode(
                     return false;
                 }
             }
+            if (apiSection.summaryPage != null) {
+                const flag = visitSidebarNode(apiSection.summaryPage, visit, [...parentNodes, apiSection]);
+                if (flag === false) {
+                    return false;
+                }
+            }
             return true;
         },
         section: (section) => {
@@ -53,7 +59,15 @@ export function visitSidebarNode(
             }
             return true;
         },
-        page: () => true,
+        page: (page) => {
+            if (SidebarNode.isEndpointPage(page) && page.stream != null) {
+                const flag = visitSidebarNode(page.stream, visit, parentNodes);
+                if (flag === false) {
+                    return false;
+                }
+            }
+            return true;
+        },
         _other: () => true,
     });
 }

@@ -2,19 +2,21 @@
 
 exports[`getAllUrlsFromDocsConfig > no-version-yes-tabs > gets all urls from docs config 1`] = `
 [
-  "/docs/api",
-  "/docs/api/tab-1",
-  "/docs/api/tab-1/section-1",
-  "/docs/api/tab-1/section-1/page-1",
-  "/docs/api/page-2",
-  "/docs/api/tab-1/section-2",
-  "/docs/api/section-2",
-  "/docs/api/tab-1/section-2/page-4",
-  "/docs/api/tab-1/page-5",
-  "/docs/api/tab-2",
-  "/docs/api/tab-2/page-7",
-  "/docs/api/tab-2/page-8",
-  "/docs/api/tab-2/section-5",
+  "docs/api",
+  "docs/api/tab-1",
+  "docs/api/tab-1/section-1",
+  "docs/api/tab-1/section-1/page-1",
+  "docs/api/page-2",
+  "docs/api/tab-1/section-2",
+  "docs/api/section-2",
+  "docs/api/tab-1/section-2/page-4",
+  "docs/api/tab-1/section-3",
+  "docs/api/tab-1/page-5",
+  "docs/api/tab-2",
+  "docs/api/tab-2/section-4",
+  "docs/api/tab-2/page-7",
+  "docs/api/tab-2/page-8",
+  "docs/api/tab-2/section-5",
 ]
 `;
 

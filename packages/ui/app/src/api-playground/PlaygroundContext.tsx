@@ -3,19 +3,19 @@ import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
-import { resolve } from "url";
+import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { APIS } from "../sidebar/atom";
 import {
     ResolvedApiDefinition,
     ResolvedRootPackage,
     flattenRootPackage,
     isEndpoint,
     isWebSocket,
-} from "../util/resolver";
+} from "../resolver/types";
+import { APIS } from "../sidebar/atom";
 import {
     PlaygroundSelectionState,
     createFormStateKey,
@@ -78,7 +78,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             let matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
                 const r = await fetch(
-                    resolve(
+                    urljoin(
                         basePath ?? "",
                         "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
                     ),
@@ -103,7 +103,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     endpointId: newSelectionState.endpointId,
-                    endpointName: matchedEndpoint?.name,
+                    endpointName: matchedEndpoint?.title,
                 });
                 if (matchedEndpoint != null && globalFormState[createFormStateKey(newSelectionState)] == null) {
                     setGlobalFormState((currentFormState) => {
@@ -127,7 +127,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     webSocketId: newSelectionState.webSocketId,
-                    webSocketName: matchedWebSocket?.name,
+                    webSocketName: matchedWebSocket?.title,
                 });
             }
         },

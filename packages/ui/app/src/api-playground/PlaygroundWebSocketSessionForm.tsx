@@ -5,7 +5,7 @@ import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebS
 import { FernButton } from "../components/FernButton";
 import { FernCard } from "../components/FernCard";
 import { FernScrollArea } from "../components/FernScrollArea";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
@@ -21,6 +21,7 @@ interface PlaygroundWebSocketSessionFormProps {
     scrollAreaHeight: number;
     messages: WebSocketMessage[];
     sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
+    clearMessages: () => void;
     startSession: () => void;
     connected: boolean;
     error: string | null;
@@ -34,6 +35,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
     scrollAreaHeight,
     messages,
     sendMessage,
+    clearMessages,
     connected,
     error,
 }) => {
@@ -56,7 +58,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
             leftClassName="pl-6 pr-1 mt relative"
             rightClassName="pl-1"
         >
-            <div className="mx-auto w-full max-w-5xl space-y-6 pt-6">
+            <div className="mx-auto w-full max-w-5xl space-y-6 py-6">
                 <div className="space-y-8">
                     <PlaygroundWebSocketHandshakeForm
                         websocket={websocket}
@@ -105,25 +107,31 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                 <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
                     <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
                         <span className="t-muted text-xs uppercase">Messages</span>
-                        <span
-                            className={cn("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
-                                "bg-tag-primary text-accent": connected,
-                                "bg-tag-danger text-intent-danger": !connected,
-                            })}
-                        >
-                            <span className="relative inline-flex size-2">
-                                {connected && (
-                                    <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
-                                )}
-                                <span
-                                    className={cn("relative inline-flex size-2 rounded-full", {
-                                        "bg-accent": connected,
-                                        "bg-border-danger": !connected,
-                                    })}
-                                ></span>
+                        <div className="items-center flex gap-2">
+                            {messages.length > 0 && (
+                                <FernButton text="Clear" variant="minimal" size="small" onClick={clearMessages} />
+                            )}
+
+                            <span
+                                className={cn("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
+                                    "bg-tag-primary t-accent": connected,
+                                    "bg-tag-danger text-intent-danger": !connected,
+                                })}
+                            >
+                                <span className="relative inline-flex size-2">
+                                    {connected && (
+                                        <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
+                                    )}
+                                    <span
+                                        className={cn("relative inline-flex size-2 rounded-full", {
+                                            "bg-accent": connected,
+                                            "bg-border-danger": !connected,
+                                        })}
+                                    ></span>
+                                </span>
+                                <span className="font-mono text-sm">{connected ? "Connected" : "Not connected"}</span>
                             </span>
-                            <span className="font-mono text-sm">{connected ? "Connected" : "Not connected"}</span>
-                        </span>
+                        </div>
                     </div>
                     <FernScrollArea rootClassName="flex-1 rounded-b-[inherit]">
                         <WebSocketMessages messages={messages} />

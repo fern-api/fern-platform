@@ -1,9 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { noop } from "lodash-es";
-import { buildRequestUrl } from "../../api-playground/utils";
+import { compact, noop } from "lodash-es";
+import urljoin from "url-join";
+import { ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "../../resolver/types";
 import { getEndpointEnvironmentUrl } from "../../util/endpoint";
-import { ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "../../util/resolver";
 
 export interface HttpRequestExample {
     method: string;
@@ -23,7 +23,7 @@ export function convertEndpointExampleToHttpRequestExample(
     requestBody: ResolvedExampleEndpointRequest | null | undefined,
 ): HttpRequestExample {
     const environmentUrl = getEndpointEnvironmentUrl(endpoint);
-    const url = buildRequestUrl(environmentUrl, endpoint.path, example.pathParameters);
+    const url = urljoin(compact([environmentUrl, example.path]));
 
     const headers: Record<string, unknown> = { ...example.headers };
 
@@ -46,8 +46,8 @@ export function convertEndpointExampleToHttpRequestExample(
 
     const body: ResolvedExampleEndpointRequest | null | undefined = requestBody;
 
-    if (endpoint.requestBody[0]?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody[0]?.contentType;
+    if (endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody?.contentType;
     }
 
     if (body != null && headers["Content-Type"] == null) {

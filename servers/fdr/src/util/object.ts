@@ -1,6 +1,4 @@
-import lodash from "lodash";
-
-const { isPlainObject } = lodash;
+import { isPlainObject } from "lodash-es";
 
 export const isPlainObject2 = isPlainObject as (val: unknown) => val is Record<string, unknown>;
 

@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { createRef, useEffect, useMemo } from "react";
-import { ResolvedExampleWebhookPayload } from "../../../util/resolver";
+import { ResolvedExampleWebhookPayload } from "../../../resolver/types";
 import { getJsonLineNumbers } from "../../examples/getJsonLineNumbers";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
@@ -46,7 +46,6 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
                     <CodeSnippetExample
                         className="max-h-full"
                         title="Payload"
-                        type="primary"
                         onClick={(e) => {
                             e.stopPropagation();
                         }}

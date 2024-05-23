@@ -20,6 +20,26 @@ async function main() {
         switch (environmentType) {
             case EnvironmentType.Dev:
             case EnvironmentType.Dev2:
+                new FdrDeployStack(
+                    app,
+                    `fdr-${environmentType.toLowerCase()}`,
+                    version,
+                    environmentType,
+                    environmentInfo,
+                    {
+                        desiredTaskCount: 2,
+                        maxTaskCount: 4,
+                        redis: true,
+                        redisClusteringModeEnabled: false,
+                        memory: 1024,
+                        cpu: 512,
+                        cacheName: "FernDocsCache",
+                    },
+                    {
+                        env: { account: "985111089818", region: "us-east-1" },
+                    },
+                );
+                break;
             case EnvironmentType.Prod:
                 new FdrDeployStack(
                     app,
@@ -27,6 +47,15 @@ async function main() {
                     version,
                     environmentType,
                     environmentInfo,
+                    {
+                        desiredTaskCount: 6,
+                        maxTaskCount: 16,
+                        redis: true,
+                        memory: 2048,
+                        redisClusteringModeEnabled: false,
+                        cpu: 1024,
+                        cacheName: "FernDocsCacheTwo",
+                    },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
                     },

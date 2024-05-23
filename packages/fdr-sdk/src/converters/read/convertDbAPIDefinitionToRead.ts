@@ -73,6 +73,7 @@ function transformEndpoint({
         migratedFromUrlSlugs: dbShape.migratedFromUrlSlugs,
         method: dbShape.method,
         id: dbShape.id,
+        originalEndpointId: dbShape.originalEndpointId,
         name: dbShape.name,
         path: dbShape.path,
         queryParameters: dbShape.queryParameters,
@@ -86,6 +87,7 @@ function transformEndpoint({
         // htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
         // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
+        snippetTemplates: dbShape.snippetTemplates,
     };
 }
 
@@ -118,28 +120,18 @@ function transformHttpRequest({
 }): WithoutQuestionMarks<APIV1Read.HttpRequest> {
     switch (dbShape.type.type) {
         case "object":
-            return {
-                contentType: dbShape.contentType ?? "application/json",
-                description: dbShape.description,
-                // htmlDescription: dbShape.htmlDescription,
-                type: dbShape.type,
-                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
-            };
         case "reference":
             return {
                 contentType: dbShape.contentType ?? "application/json",
                 description: dbShape.description,
-                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
-        case "fileUpload":
+        case "fileUpload": // deprecated
+        case "formData":
             return {
                 contentType: dbShape.contentType ?? "multipart/form-data",
                 description: dbShape.description,
-                // htmlDescription: dbShape.htmlDescription,
                 type: dbShape.type,
-                // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
             };
         case "bytes":
             return {
@@ -171,19 +163,21 @@ export function convertExampleEndpointCall({
         responseBody: dbShape.responseBody,
         codeExamples: dbShape.codeExamples,
         requestBodyV3:
-            dbShape.requestBodyV3 ?? dbShape.requestBody != null
+            dbShape.requestBodyV3 ??
+            (dbShape.requestBody != null
                 ? {
                       type: "json",
                       value: dbShape.requestBody,
                   }
-                : undefined,
+                : undefined),
         responseBodyV3:
-            dbShape.responseBodyV3 ?? dbShape.responseBody != null
+            dbShape.responseBodyV3 ??
+            (dbShape.responseBody != null
                 ? {
                       type: "json",
                       value: dbShape.responseBody,
                   }
-                : undefined,
+                : undefined),
         codeSamples: dbShape.codeSamples ?? [],
     };
 }

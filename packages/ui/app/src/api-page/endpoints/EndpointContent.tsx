@@ -3,21 +3,22 @@ import cn from "clsx";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { withStream } from "../../commons/withStream";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useViewportSize } from "../../hooks/useViewportSize";
-import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
+import { FERN_LANGUAGE_ATOM, FERN_STREAM_ATOM } from "../../sidebar/atom";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { Breadcrumbs } from "../Breadcrumbs";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
+import { AnimatedTitle } from "./AnimatedTitle";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
+import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -31,7 +32,7 @@ export declare namespace EndpointContent {
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
-        setContainerRef: (ref: HTMLElement | null) => void;
+        containerRef: React.Ref<HTMLDivElement | null>;
         isInViewport: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -67,19 +68,26 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 export const EndpointContent: React.FC<EndpointContent.Props> = ({
     api,
     showErrors,
-    endpoint,
+    endpoint: endpointProp,
     breadcrumbs,
     hideBottomSeparator = false,
-    setContainerRef,
+    containerRef,
     isInViewport: initiallyInViewport,
     types,
 }) => {
+    const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
+    const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
+
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    useImperativeHandle(containerRef, () => ref.current);
+
     const router = useRouter();
     const { layout } = useDocsContext();
     const layoutBreakpoint = useLayoutBreakpoint();
     const viewportSize = useViewportSize();
     const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
-    const { ref: containerRef } = useInView({
+    const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
@@ -123,7 +131,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode);
     }, [endpoint.examples, selectedError]);
 
-    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody[0]?.contentType);
+    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
     const clients = useMemo(() => generateCodeExamples(examples), [examples]);
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
@@ -205,38 +213,68 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     ]);
 
     const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 26;
-    const exampleHeight =
+    const initialExampleHeight =
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
+
+    const [exampleHeight, setExampleHeight] = useState(initialExampleHeight);
+
+    // Reset the example height (not in view) if the viewport height changes
+    useEffect(() => {
+        if (!isInViewport) {
+            setExampleHeight(initialExampleHeight);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialExampleHeight]);
 
     return (
         <div
-            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
+            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
             onClick={() => setSelectedError(undefined)}
-            ref={containerRef}
+            ref={viewportRef}
         >
             <div
                 className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                    "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
-                ref={setContainerRef}
+                ref={ref}
                 data-route={`/${endpoint.slug.join("/")}`}
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    <div>
-                        {endpoint.responseBody?.shape.type === "stream" ? (
-                            withStream(<h1 className="my-0 inline leading-tight">{endpoint.title}</h1>)
-                        ) : (
-                            <h1 className="my-0 inline leading-tight">{endpoint.title}</h1>
-                        )}
-                        {endpoint.availability != null && (
-                            <span className="relative">
-                                <EndpointAvailabilityTag
-                                    className="absolute -top-1.5 left-2.5 inline-block"
-                                    availability={endpoint.availability}
-                                />
-                            </span>
-                        )}
+                    <div className="flex items-center">
+                        <div className="flex-1">
+                            <h1 className="my-0 inline leading-none">
+                                <AnimatedTitle>{endpoint.title}</AnimatedTitle>
+                            </h1>
+
+                            {endpointProp.stream != null && (
+                                <span className="inline-block ml-2 align-text-bottom">
+                                    <StreamingEnabledToggle
+                                        value={isStream}
+                                        setValue={(value) => {
+                                            setIsStream(value);
+                                            const endpoint =
+                                                value && endpointProp.stream != null
+                                                    ? endpointProp.stream
+                                                    : endpointProp;
+                                            void router.replace(`/${endpoint.slug.join("/")}`, undefined, {
+                                                shallow: true,
+                                            });
+                                            setTimeout(() => {
+                                                if (ref.current != null) {
+                                                    ref.current.scrollIntoView({ behavior: "instant" });
+                                                }
+                                            }, 0);
+                                        }}
+                                    />
+                                </span>
+                            )}
+                            {endpoint.availability != null && (
+                                <span className="inline-block ml-2 align-text-bottom">
+                                    <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
+                                </span>
+                            )}
+                        </div>
                     </div>
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
@@ -248,30 +286,29 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                 </div>
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
-                        className="max-w-content-width flex min-w-0 flex-1 flex-col"
+                        className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
                         style={{
+                            // TODO: do we still need to set minHeight here?
                             minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
                         }}
                     >
                         <ApiPageDescription
-                            className="mt-8 text-base leading-6"
+                            className="text-base leading-6 mb-12"
                             description={endpoint.description}
                             isMarkdown={true}
                         />
 
-                        <div className="mt-12 first:mt-8">
-                            <EndpointContentLeft
-                                endpoint={endpoint}
-                                showErrors={showErrors}
-                                onHoverRequestProperty={onHoverRequestProperty}
-                                onHoverResponseProperty={onHoverResponseProperty}
-                                selectedError={selectedError}
-                                setSelectedError={setSelectedError}
-                                contentType={contentType}
-                                setContentType={setContentType}
-                                types={types}
-                            />
-                        </div>
+                        <EndpointContentLeft
+                            endpoint={endpoint}
+                            showErrors={showErrors}
+                            onHoverRequestProperty={onHoverRequestProperty}
+                            onHoverResponseProperty={onHoverResponseProperty}
+                            selectedError={selectedError}
+                            setSelectedError={setSelectedError}
+                            contentType={contentType}
+                            setContentType={setContentType}
+                            types={types}
+                        />
                     </div>
 
                     <div
@@ -283,9 +320,11 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             "max-h-[150vh] md:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "md:pt-8 md:mt-0 md:top-header-height",
+                            "md:py-8 md:mt-0 md:top-header-height",
                         )}
-                        style={{ height: `${exampleHeight}px` }}
+                        style={{
+                            minHeight: `${exampleHeight}px`,
+                        }}
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
@@ -297,12 +336,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
                                 requestCodeSnippet={selectedClient.code}
                                 requestCurlJson={requestJson}
-                                responseCodeSnippet={responseCodeSnippet}
-                                responseJson={responseJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
-                                requestHeight={requestHeight}
-                                responseHeight={responseHeight}
+                                showErrors={showErrors}
+                                selectedError={selectedError}
+                                errors={endpoint.errors}
+                                setSelectedError={setSelectedError}
+                                measureHeight={setExampleHeight}
                             />
                         )}
                     </div>

@@ -1,14 +1,15 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { ReactElement, type ComponentProps } from "react";
+import { ReactElement, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
 }
 
-export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps): ReactElement {
+export function FernLink({ showExternalLinkIcon = false, ...props }: FernLinkProps): ReactElement {
     const url = toUrlObject(props.href);
     const isExternalUrl = checkIsExternalUrl(url);
 
@@ -19,12 +20,11 @@ export function FernLink({ showExternalLinkIcon, ...props }: FernLinkProps): Rea
         return <FernRelativeLink {...props} />;
     }
 
-    return (
-        <Link {...props} target={isExternalUrl ? "_blank" : props.target}>
-            {props.children}
-            {isExternalUrl && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
-        </Link>
-    );
+    if (isExternalUrl) {
+        return <FernExternalLink {...props} showExternalLinkIcon={showExternalLinkIcon} url={url} />;
+    }
+
+    return <Link {...props} />;
 }
 
 function FernRelativeLink(props: ComponentProps<typeof Link>) {
@@ -33,11 +33,56 @@ function FernRelativeLink(props: ComponentProps<typeof Link>) {
     return <Link {...props} href={href} />;
 }
 
+interface FernExternalLinkProps extends Omit<ComponentProps<"a">, "href"> {
+    showExternalLinkIcon: boolean;
+    url: UrlObject;
+}
+
+function FernExternalLink({ showExternalLinkIcon, url, ...props }: FernExternalLinkProps) {
+    const { domain } = useDocsContext();
+    const [host, setHost] = useState<string>(domain);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setHost(window.location.host);
+        }
+    }, []);
+
+    // if the link is to a different domain, always open in a new tab
+    // TODO: if the link is to the same domain, we should check if the page is a fern page, and if so, use the Link component to leverage client-side navigation
+    const isSameSite = host === url.host;
+    return (
+        // eslint-disable-next-line react/jsx-no-target-blank
+        <a
+            {...props}
+            target={isSameSite || props.target != null ? props.target : "_blank"}
+            rel={
+                isSameSite && props.target !== "_blank"
+                    ? props.rel
+                    : props.rel == null
+                      ? "noreferrer"
+                      : props.rel.includes("noreferrer")
+                        ? props.rel
+                        : `${props.rel} noreferrer`
+            }
+            href={formatUrlString(url)}
+        >
+            {props.children}
+            {!isSameSite && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
+        </a>
+    );
+}
+
 export function toUrlObject(url: string | UrlObject): UrlObject {
+    if (url == null) {
+        return {};
+    }
     return typeof url === "string" ? parse(url) : url;
 }
 
 export function formatUrlString(url: string | UrlObject): string {
+    if (url == null) {
+        return "";
+    }
     return typeof url === "string" ? url : format(url);
 }
 
@@ -55,12 +100,12 @@ export function checkIsExternalUrl(url: UrlObject): boolean {
 }
 
 export function checkIsRelativeUrl(url: UrlObject): boolean {
-    if (checkIsExternalUrl(url)) {
-        return false;
-    }
-
     if (url.href == null) {
         return true;
+    }
+
+    if (url.protocol) {
+        return false;
     }
 
     if (url.href.startsWith("/")) {

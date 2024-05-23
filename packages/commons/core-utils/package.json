@@ -11,9 +11,10 @@
     "dist"
   ],
   "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "module": "dist/src/index.js",
   "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -40,7 +41,7 @@
     "@types/ua-parser-js": "^0.7.39",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^1.4.0",
+    "vitest": "^1.5.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "stylelint": "^16.1.0",

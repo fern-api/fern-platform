@@ -20,6 +20,24 @@ export interface AuthService {
     checkUserBelongsToOrg({ authHeader, orgId }: { authHeader: string | undefined; orgId: string }): Promise<void>;
 
     getOrgIdsFromAuthHeader({ authHeader }: { authHeader: string | undefined }): Promise<OrgIdsResponse>;
+    checkOrgHasSnippetsApiAccess({
+        authHeader,
+        orgId,
+        failHard,
+    }: {
+        authHeader: string | undefined;
+        orgId: string;
+        failHard?: boolean;
+    }): Promise<boolean>;
+    checkOrgHasSnippetTemplateAccess({
+        authHeader,
+        orgId,
+        failHard,
+    }: {
+        authHeader: string | undefined;
+        orgId: string;
+        failHard?: boolean;
+    }): Promise<boolean>;
 }
 
 export class AuthServiceImpl implements AuthService {
@@ -80,6 +98,68 @@ export class AuthServiceImpl implements AuthService {
         if (!belongsToOrg) {
             throw new FdrAPI.UserNotInOrgError();
         }
+    }
+
+    async checkOrgHasSnippetsApiAccess({
+        authHeader,
+        orgId,
+        failHard,
+    }: {
+        authHeader: string | undefined;
+        orgId: string;
+        failHard?: boolean;
+    }): Promise<boolean> {
+        if (authHeader == null) {
+            throw new FdrAPI.UnauthorizedError("Authorization header was not specified");
+        }
+        this.checkUserBelongsToOrg({ authHeader, orgId });
+        const token = getTokenFromAuthHeader(authHeader);
+        const venus = getVenusClient({
+            config: this.app.config,
+            token,
+        });
+
+        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(orgId));
+        if (!orgResponse.ok) {
+            this.logger.error("Failed to make request to venus", orgResponse.error);
+            throw new FdrAPI.UnavailableError("Failed to resolve user's organizations");
+        }
+        const org = orgResponse.body;
+        if (failHard && !org.snippetsApiAccessEnabled) {
+            throw new FdrAPI.UnauthorizedError("Organization does not have snippets API access");
+        }
+        return org.snippetsApiAccessEnabled;
+    }
+
+    async checkOrgHasSnippetTemplateAccess({
+        authHeader,
+        orgId,
+        failHard,
+    }: {
+        authHeader: string | undefined;
+        orgId: string;
+        failHard?: boolean;
+    }): Promise<boolean> {
+        if (authHeader == null) {
+            throw new FdrAPI.UnauthorizedError("Authorization header was not specified");
+        }
+        this.checkUserBelongsToOrg({ authHeader, orgId });
+        const token = getTokenFromAuthHeader(authHeader);
+        const venus = getVenusClient({
+            config: this.app.config,
+            token,
+        });
+
+        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(orgId));
+        if (!orgResponse.ok) {
+            this.logger.error("Failed to make request to venus", orgResponse.error);
+            throw new FdrAPI.UnavailableError("Failed to resolve user's organizations");
+        }
+        const org = orgResponse.body;
+        if (failHard && !org.snippetTemplatesAccessEnabled) {
+            throw new FdrAPI.UnauthorizedError("Organization does not have snippets API access");
+        }
+        return org.snippetTemplatesAccessEnabled;
     }
 }
 

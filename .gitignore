@@ -14,6 +14,7 @@ servers/**/lib
 servers/**/dist
 servers/**/tsconfig*tsbuildinfo
 servers/**/out
+clis/**/dist
 docker/build
 
 # next
@@ -39,9 +40,6 @@ lerna-debug.log*
 !.yarn/sdks
 !.yarn/versions
 
-# fern
-packages/**/generated
-
 # environments
 .env*.local
 .vercel
@@ -52,3 +50,9 @@ packages/**/generated
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+*storybook.log
+
+#ide
+.idea/
+*.cookie

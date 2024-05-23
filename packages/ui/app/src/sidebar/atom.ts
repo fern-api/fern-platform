@@ -2,12 +2,13 @@ import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
-import { ResolvedRootPackage } from "../util/resolver";
+import { ResolvedRootPackage } from "../resolver/types";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
 export const APIS = atom<Record<string, ResolvedRootPackage>>({});
 export const FERN_LANGUAGE_ATOM = atomWithStorage<string>("fern-language-id", "curl");
+export const FERN_STREAM_ATOM = atomWithStorage("fern-stream", true);
 
 export function useMessageHandler(): void {
     const openSearchDialog = useOpenSearchDialog();
@@ -26,10 +27,10 @@ export function useMessageHandler(): void {
                 event.source?.postMessage("mobileSidebarOpened", { targetOrigin: event.origin });
             } else if (event.data === "toggleTheme") {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
-                event.data?.postMessage("themeToggled", { targetOrigin: event.origin });
+                event.source?.postMessage("themeToggled", { targetOrigin: event.origin });
             } else if (event.data === "setSystemTheme") {
                 setTheme("system");
-                event.data?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
+                event.source?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
             }
         };
         window.addEventListener("message", handleMessage);

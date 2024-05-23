@@ -1,12 +1,15 @@
-import { convertDbAPIDefinitionToRead, convertDbDocsConfigToRead, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
+import {
+    convertDbAPIDefinitionToRead,
+    convertDbDocsConfigToRead,
+    migrateDocsDbDefinition,
+    visitDbNavigationConfig,
+} from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
-import lodash from "lodash";
+import { mapValues } from "lodash-es";
 import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService, FdrAPI } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { LoadDocsDefinitionByUrlResponse } from "../../../db";
 import { readBuffer } from "../../../util";
-
-const { mapValues } = lodash;
 
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
@@ -27,7 +30,7 @@ export async function getDocsForDomain({
 }: {
     app: FdrApplication;
     domain: string;
-}): Promise<{ response: DocsV1Read.DocsDefinition; dbFiles?: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo> }> {
+}): Promise<{ response: DocsV1Read.DocsDefinition; dbFiles?: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2> }> {
     const [docs, docsV2] = await Promise.all([
         app.services.db.prisma.docs.findFirst({
             where: {
@@ -67,6 +70,7 @@ export async function getDocsForDomain({
                           domain: docsV2.domain,
                           updatedTime: docsV2.updatedTime,
                           authType: docsV2.authType,
+                          hasPublicS3Assets: docsV2.hasPublicS3Assets,
                       }
                     : null,
         }),
@@ -122,7 +126,10 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
     if (docsDbDefinition.type === "v3") {
         promisedFiles = Object.entries(docsDbDefinition.files).map(
             async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
-                const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
+                const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({
+                    key: fileDbInfo.s3Key,
+                    isPrivate: true, // for backcompat
+                });
                 const readFile: DocsV1Read.File_ =
                     fileDbInfo.type === "image"
                         ? {
@@ -140,7 +147,10 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
     } else {
         promisedFiles = Object.entries(docsDbDefinition.files).map(
             async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
-                const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({ key: fileDbInfo.s3Key });
+                const s3DownloadUrl = await app.services.s3.getPresignedDownloadUrl({
+                    key: fileDbInfo.s3Key,
+                    isPrivate: true, // for backcompat
+                });
                 return [fileId, { type: "url", url: s3DownloadUrl }];
             },
         );
@@ -236,14 +246,6 @@ function getSearchInfoFromDocs({
             };
         },
     });
-}
-
-export function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefinitionDb {
-    return {
-        // default to v1, but this will be overwritten if dbValue has "type" defined
-        type: "v1",
-        ...(dbValue as object),
-    } as DocsV1Db.DocsDefinitionDb;
 }
 
 export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {

@@ -50,15 +50,34 @@ types:
 
   PrimitiveType:
     union:
-      integer: {}
-      double: {}
+      integer: IntegerType
+      double: DoubleType
       long: {}
-      string: {}
+      string: StringType
       boolean: {}
       datetime: {}
       uuid: {}
       base64: {}
       date: {}
+
+  IntegerType:
+    properties:
+      minimum: optional<integer>
+      maximum: optional<integer>
+      default: optional<integer>
+
+  DoubleType:
+    properties:
+      minimum: optional<double>
+      maximum: optional<double>
+      default: optional<double>
+
+  StringType:
+    properties:
+      regex: optional<string>
+      minLength: optional<integer>
+      maxLength: optional<integer>
+      default: optional<string>
 
   OptionalType:
     properties:
@@ -117,35 +136,54 @@ types:
       booleanLiteral: boolean
       stringLiteral: string
 
-  FileUploadRequest:
+  FormDataRequest:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       name: string
-      properties: list<FileUploadRequestProperty>
+      properties: list<FormDataProperty>
 
   BytesRequest:
     properties:
       isOptional: boolean
       contentType: optional<string>
 
-  FileUploadRequestProperty:
+  FormDataProperty:
     union:
-      file: FileProperty
-      bodyProperty: ObjectProperty
+      file: FormDataFileProperty
+      bodyProperty: FormDataBodyProperty
 
-  FileProperty:
+  FormDataBodyProperty:
+    extends: ObjectProperty
+    properties:
+      contentType: optional<ContentType>
+
+  FormDataFileProperty:
     union:
       file: FilePropertySingle
       fileArray: FilePropertyArray
 
   FilePropertySingle:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
 
   FilePropertyArray:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       key: PropertyKey
       isOptional: boolean
+      contentType: optional<ContentType>
+
+  ContentType:
+    discriminated: false
+    union:
+      - string
+      - list<string>

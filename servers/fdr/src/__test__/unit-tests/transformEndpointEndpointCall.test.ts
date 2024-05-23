@@ -4,6 +4,9 @@ import { APIV1Write } from "../../api";
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
     snippetsConfigWithSdkId: {},
+    snippetTemplatesByEndpoint: {},
+    snippetsBySdkIdAndEndpointId: {},
+    snippetTemplatesByEndpointId: {},
 });
 
 describe("transformEndpointEndpointCall", () => {

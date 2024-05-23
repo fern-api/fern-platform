@@ -278,4 +278,84 @@ export const SPECIAL_TOKENS = [
     "MLP", // Multi-Layer Perceptron
     "RBM", // Restricted Boltzmann Machine
     "CRF", // Conditional Random Field
+
+    // Media
+    "PDF",
+    "PDFs",
+    "RTF",
+    "TXT",
+    "XLS",
+    "XLSX",
+    "PPT",
+
+    // Image
+    "JPG",
+    "JPEG",
+    "PNG",
+    "GIF",
+    "GIFs",
+    "SVG",
+    "TIFF",
+    "BMP",
+    "ICO",
+    "PSD",
+    "WebP",
+    "AVIF",
+    "HEIF",
+    "HEIC",
+    "EPS",
+
+    // Audio
+    "MP3",
+    "WAV",
+    "AIFF",
+    "FLAC",
+    "WMA",
+    "AAC",
+    "OGG",
+
+    // Video
+    "AVI",
+    "WMV",
+    "MOV",
+    "M4V",
+    "MP4",
+    "MPG",
+    "MPEG",
+    "FLV",
+    "SWF",
+    "MKV",
+    "WebM",
+
+    // Cloud Computing
+    "GCP", // Google Cloud Platform
+    "AWS", // Amazon Web Services
+    "VM", // Virtual Machines
+    "VPC", // Virtual Private Cloud
+    "S3", // AWS Simple Storage Service
+    "EC2", // AWS Elastic Compute Cloud
+
+    // Data Storage and Databases
+    "DynamoDB",
+    "CosmosDB",
+    "BigQuery",
+    "CI/CD",
+
+    // Security and Compliance
+    "SOC1", // Service Organization Control 1
+    "SOC2", // Service Organization Control 2
+    "SOC3", // Service Organization Control 3
+    "PCI DSS", // Payment Card Industry Data Security Standard
+    "WAF", // Web Application Firewall
+    "IAM", // Identity and Access Management
+
+    // Networking
+    "SDN", // Software-Defined Networking
+    "MPLS", // Multi-Protocol Label Switching
+    "BGP", // Border Gateway Protocol
+
+    // Frameworks and Libraries
+    "Vue.js",
+    "Node.js",
+    ".NET",
 ];

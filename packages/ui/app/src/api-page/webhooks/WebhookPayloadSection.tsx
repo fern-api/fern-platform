@@ -1,4 +1,4 @@
-import { ResolvedPayload, ResolvedTypeDefinition } from "../../util/resolver";
+import { ResolvedPayload, ResolvedTypeDefinition } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";

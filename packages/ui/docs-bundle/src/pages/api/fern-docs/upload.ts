@@ -5,8 +5,23 @@ export const runtime = "edge";
 export const maxDuration = 5;
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    if (req.method !== "GET") {
+    if (req.method !== "GET" && req.method !== "OPTIONS") {
         return new NextResponse(null, { status: 405 });
+    }
+
+    const origin = req.headers.get("Origin");
+    if (origin == null) {
+        return new NextResponse(null, { status: 400 });
+    }
+
+    const corsHeaders = new Headers({
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+    });
+
+    if (req.method === "OPTIONS") {
+        return new NextResponse(null, { status: 204, headers: corsHeaders });
     }
 
     const domain = req.nextUrl.hostname;
@@ -23,11 +38,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             await createPutSignedUrl(key, 60), // 1 minute
             await createGetSignedUrl(key, 60 * 5), // 5 minutes
         ]);
-        return NextResponse.json({ put, get }, { headers: { "Cache-Control": "public, max-age=60" } });
+        corsHeaders.set("Cache-Control", "public, max-age=60");
+        return NextResponse.json({ put, get }, { headers: corsHeaders });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error("Failed to create signed URL", err);
-        return new NextResponse(null, { status: 500 });
+        return new NextResponse(null, { status: 500, headers: corsHeaders });
     }
 }
 

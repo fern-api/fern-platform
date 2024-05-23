@@ -10,7 +10,7 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: readonly string[] })
             <span className="inline-flex items-center font-semibold">
                 {breadcrumbs.map((breadcrumb, idx) => (
                     <Fragment key={idx}>
-                        {idx > 0 && <ChevronRightIcon className="text-faded mx-0.5" />}
+                        {idx > 0 && <ChevronRightIcon className="mx-0.5 text-faded" />}
                         <span className="t-accent shrink truncate whitespace-nowrap text-sm">{breadcrumb}</span>
                     </Fragment>
                 ))}

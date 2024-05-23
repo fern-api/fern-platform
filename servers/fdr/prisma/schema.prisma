@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
@@ -18,6 +19,18 @@ model ApiDefinitionsV2 {
   definition      Bytes
 
   @@id([apiDefinitionId])
+}
+
+model DocsRegistrations {
+  registrationID String
+  orgID String
+  fernURL String
+  customURLs String[]
+  isPreview Boolean
+  authType AuthType
+  s3FileInfos Bytes
+
+  @@id([registrationID])
 }
 
 model Docs {
@@ -38,6 +51,7 @@ model DocsV2 {
   indexSegmentIds      Json?
   docsConfigInstanceId String?
   isPreview            Boolean  @default(false)
+  hasPublicS3Assets    Boolean  @default(false)
 
   @@id([domain, path])
 }
@@ -69,16 +83,34 @@ model OverwrittenAlgoliaIndex {
   @@map("overwritten_algolia_indexes")
 }
 
+model SnippetTemplate {
+  id                      String     @id
+  orgId                   String
+  apiName                 String
+  apiDefinitionId         String
+  endpointPath            String
+  endpointMethod          HttpMethod
+  identifierOverride      String?
+  sdkId                   String
+  // sdk                 Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+  version                 SnippetTemplateSemanticVersion
+  
+  // The actual templates themselves held as binary data to save encoding the schema, which may change
+  functionInvocation      Bytes
+  clientInstantiation     Bytes
+}
+
 model Snippet {
-  id             String     @id
-  orgId          String
-  apiName        String
-  endpointPath   String
-  endpointMethod HttpMethod
-  sdkId          String
-  sdk            Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
-  snippet        Bytes
-  createdAt      DateTime   @default(now())
+  id                      String     @id
+  orgId                   String
+  apiName                 String
+  endpointPath            String
+  endpointMethod          HttpMethod
+  identifierOverride      String?
+  sdkId                   String
+  sdk                     Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+  snippet                 Bytes
+  createdAt               DateTime   @default(now())
 }
 
 model Sdk {
@@ -86,10 +118,15 @@ model Sdk {
   // Optional for backcompat
   // Package name used by registry (e.g. @velllum/api or com.vellum.ai:vellum)
   package   String?
+  // Optional for backcompat
+  version   String?
   language  Language
   sdk       Bytes
   createdAt DateTime  @default(now())
   Snippet   Snippet[]
+
+  // Optional for backcompat
+  // templates SnippetTemplate[]
 }
 
 model SnippetApi {
@@ -113,4 +150,9 @@ enum Language {
   PYTHON
   GO
   JAVA
+  RUBY
+}
+
+enum SnippetTemplateSemanticVersion {
+  v1
 }

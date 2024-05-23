@@ -1,38 +1,63 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
-import cn from "clsx";
-import { memo } from "react";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import clsx from "clsx";
+import { ReactNode, memo } from "react";
+import { FernTag, FernTagColorScheme, FernTagProps } from "../components/FernTag";
+import { FernTooltip } from "../components/FernTooltip";
+
 export declare namespace HttpMethodTag {
-    export interface Props {
-        method: FdrAPI.api.v1.read.HttpMethod;
-        small?: boolean;
-        className?: string;
+    export interface Props extends FernTagProps {
+        method: APIV1Read.HttpMethod | "STREAM" | "WSS";
+        active?: boolean;
     }
 }
 
-const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({ method, small = false, className }) => {
+const METHOD_COLOR_SCHEMES: Record<HttpMethodTag.Props["method"], FernTagColorScheme> = {
+    GET: "green",
+    DELETE: "red",
+    POST: "blue",
+    STREAM: "accent",
+    WSS: "accent",
+    PUT: "amber",
+    PATCH: "amber",
+};
+
+const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
+    method,
+    active,
+    size = "lg",
+    className,
+    ...rest
+}) => {
     return (
-        <span
-            className={cn(className, "uppercase font-mono flex items-center leading-none", {
-                ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
-                    method === FdrAPI.api.v1.read.HttpMethod.Get,
-                ["bg-method-post/10 text-method-post dark:bg-method-post-dark/10 dark:text-method-post-dark"]:
-                    method === FdrAPI.api.v1.read.HttpMethod.Post,
-                ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
-                    method === FdrAPI.api.v1.read.HttpMethod.Delete,
-                ["bg-method-put/10 text-method-put dark:bg-method-put-dark/10 dark:text-method-put-dark"]:
-                    method === FdrAPI.api.v1.read.HttpMethod.Put,
-                ["bg-method-patch/10 text-method-patch dark:bg-method-patch-dark/10 dark:text-method-patch-dark"]:
-                    method === FdrAPI.api.v1.read.HttpMethod.Patch,
-                ["py-1 px-1.5 rounded-md h-5 text-[10px]"]: small,
-                ["py-1 px-2 rounded-lg h-6 text-xs"]: !small,
-            })}
-            style={{
-                lineHeight: 1,
-            }}
+        <FernTag
+            colorScheme={METHOD_COLOR_SCHEMES[method]}
+            variant={active ? "solid" : "subtle"}
+            className={clsx("uppercase", { "w-11": size === "sm" }, className)}
+            size={size}
+            {...rest}
         >
             {method === FdrAPI.api.v1.read.HttpMethod.Delete ? "DEL" : method}
-        </span>
+        </FernTag>
     );
 };
+
+export function withStream(text: ReactNode, size: "sm" | "lg" = "sm"): ReactNode {
+    return (
+        <span className="inline-flex items-center gap-2">
+            <span>{text}</span>
+            <UnmemoizedHttpMethodTag size={size} method="STREAM" />
+        </span>
+    );
+}
+export function withWss(text: ReactNode, size: "sm" | "lg" = "sm"): ReactNode {
+    return (
+        <span className="inline-flex items-center gap-2">
+            <span>{text}</span>
+            <FernTooltip content="WebSocket Channel">
+                <UnmemoizedHttpMethodTag size={size} method="WSS" />
+            </FernTooltip>
+        </span>
+    );
+}
 
 export const HttpMethodTag = memo(UnmemoizedHttpMethodTag);

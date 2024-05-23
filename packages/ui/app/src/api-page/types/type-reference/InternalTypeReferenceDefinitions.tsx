@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../util/resolver";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
@@ -33,17 +33,8 @@ export function hasInternalTypeReference(
         set: () => true,
         optional: (optional) => hasInternalTypeReference(optional.shape, types),
         map: (map) => hasInternalTypeReference(map.keyShape, types) || hasInternalTypeReference(map.valueShape, types),
-        string: () => false,
-        boolean: () => false,
-        integer: () => false,
-        double: () => false,
-        long: () => false,
-        datetime: () => false,
-        uuid: () => false,
-        base64: () => false,
-        date: () => false,
-        booleanLiteral: () => false,
-        stringLiteral: () => false,
+        primitive: () => false,
+        literal: () => false,
         unknown: () => false,
         _other: () => false,
         reference: (reference) =>
@@ -176,17 +167,8 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 />
             </MapTypeContextProvider>
         ),
-        string: () => null,
-        boolean: () => null,
-        integer: () => null,
-        double: () => null,
-        long: () => null,
-        datetime: () => null,
-        uuid: () => null,
-        base64: () => null,
-        date: () => null,
-        booleanLiteral: () => null,
-        stringLiteral: () => null,
+        primitive: () => null,
+        literal: () => null,
         unknown: () => null,
         _other: () => null,
         alias: (alias) => (

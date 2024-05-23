@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
@@ -11,6 +11,7 @@ interface PlaygroundWebSocketContentProps {
     messages: WebSocketMessage[];
     types: Record<string, ResolvedTypeDefinition>;
     startSesssion: () => void;
+    clearMessages: () => void;
     sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
     connected: boolean;
     error: string | null;
@@ -24,6 +25,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
     messages,
     sendMessage,
     startSesssion,
+    clearMessages,
     connected,
     error,
 }) => {
@@ -49,7 +51,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
         <div className="flex min-h-0 w-full flex-1 shrink items-stretch divide-x">
             <div
                 ref={scrollAreaRef}
-                className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
+                className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
                 <PlaygroundWebSocketSessionForm
                     websocket={websocket}
@@ -60,6 +62,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                     setFormState={setFormState}
                     sendMessage={sendMessage}
                     startSession={startSesssion}
+                    clearMessages={clearMessages}
                     connected={connected}
                     error={error}
                 />

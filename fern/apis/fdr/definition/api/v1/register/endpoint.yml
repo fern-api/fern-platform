@@ -18,14 +18,24 @@ types:
       defaultEnvironment: optional<EnvironmentId>
       environments: optional<list<Environment>>
       method: HttpMethod
-      id: EndpointId
+      id:
+        type: EndpointId
+        docs: This is the name of the endpoint.
+      originalEndpointId:
+        type: optional<string>
+        docs: |
+          The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas
+          path and method are not (specifically for the fern definition, consider chat and chat stream).
+          This is optional to remain backcompat with old definitions of yore.
       name: optional<string>
       path: EndpointPath
       queryParameters: list<QueryParameter>
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
-      errors: optional<list<ErrorDeclaration>>
+      errors:
+        type: optional<list<ErrorDeclaration>>
+        availability: deprecated
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
 
@@ -85,17 +95,21 @@ types:
 
   HttpRequestBodyShape:
     union:
+      json: JsonRequestBody
+      formData: type.FormDataRequest
+      bytes: type.BytesRequest
+
+      # deprecated
       object:
         # deprecated, the CLI will use json instead
         type: type.ObjectType
       reference:
         # deprecated, the CLI will use json instead
         type: type.TypeReference
-      json: JsonRequestBody
       fileUpload:
-        type: optional<type.FileUploadRequest>
+        # deprecated, the CLI will use formData instead
+        type: optional<type.FormDataRequest>
         docs: "`fileUpload` is optional only to be backwards compatible. It should be required."
-      bytes: type.BytesRequest
 
   JsonRequestBody:
     properties:
@@ -111,6 +125,9 @@ types:
     extends: commons.WithDescription
     properties:
       type: HttpResponseBodyShape
+      statusCode:
+        type: optional<integer>
+        docs: Defaults to 200
 
   ErrorDeclaration:
     extends:
@@ -128,6 +145,7 @@ types:
       type: optional<type.TypeShape>
       statusCode: integer
       name: optional<string>
+      examples: optional<list<ErrorExample>>
 
   HttpResponseBodyShape:
     union:
@@ -213,12 +231,19 @@ types:
     union:
       json: unknown
       form: map<string, FormValue>
+      bytes: BytesValue
 
   FormValue:
     union:
       json: unknown
       filename: string
+      filenames: list<string>
       filenameWithData: FilenameWithData
+      filenamesWithData: list<FilenameWithData>
+
+  BytesValue:
+    union:
+      base64: string
 
   FilenameWithData:
     properties:
@@ -232,3 +257,20 @@ types:
       json: unknown
       filename: string
       stream: list<unknown>
+      sse: list<ExampleServerSentEvent>
+
+  ExampleServerSentEvent:
+    properties:
+      event: string
+      data: unknown
+
+  ErrorExample:
+    extends:
+      - commons.WithDescription
+    properties:
+      name: optional<string>
+      responseBody: ExampleErrorResponse
+
+  ExampleErrorResponse:
+    union:
+      json: unknown

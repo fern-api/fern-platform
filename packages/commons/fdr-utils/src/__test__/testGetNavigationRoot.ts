@@ -15,9 +15,11 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
 
             const urls = getNavigationRoot(
                 slug.split("/"),
+                fixture.baseUrl.domain,
                 fixture.baseUrl.basePath,
                 fixture.definition.config.navigation,
                 fixture.definition.apis,
+                {},
             );
 
             expect(stripForSnapshot(urls)).toMatchSnapshot();

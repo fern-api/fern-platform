@@ -31,14 +31,6 @@ interface ErrorParseResult {
     message: string;
 }
 
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
-
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>): Promise<unknown> => {
     if (req.method !== "POST") {
         return res.status(405).json({
@@ -46,7 +38,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
             message: "Method not allowed.",
         });
     }
-    const host = req.headers["x-fern-host"] ?? getHostFromUrl(req.url);
+    const host = req.headers["x-fern-host"] ?? req.headers["host"];
 
     if (typeof host !== "string") {
         return res.status(400).json({
@@ -72,7 +64,10 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
         const { path } = parseResult.request;
 
         try {
-            await res.revalidate(`/static/${encodeURI(host)}/${encodeURI(path)}`);
+            // eslint-disable-next-line no-console
+            const url = `${host}/${path}`;
+            console.log(`Revalidating ${url}`);
+            await res.revalidate(`/static/${encodeURI(url)}`);
             // return jsonResponse<ResponseBody>(200, {
             //     success: true,
             //     message: "Successfully revalidated path: " + `${host}/${path}`,

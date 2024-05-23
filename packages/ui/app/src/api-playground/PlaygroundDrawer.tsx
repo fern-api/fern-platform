@@ -22,7 +22,7 @@ import {
     ResolvedWebSocketChannel,
     isEndpoint,
     isWebSocket,
-} from "../util/resolver";
+} from "../resolver/types";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelector } from "./PlaygroundEndpointSelector";
@@ -272,7 +272,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                             content={
                                 <span className="space-x-4">
                                     <span>Close API Playground</span>
-                                    <span className="text-faded font-mono">CTRL + `</span>
+                                    <span className="font-mono text-faded">CTRL + `</span>
                                 </span>
                             }
                         >
@@ -295,9 +295,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             <div className="flex items-center">
                 <span className="inline-flex items-baseline gap-2">
                     <span className="t-accent text-sm font-semibold">API Playground</span>
-                    <span className="bg-tag-primary t-accent flex h-5 items-center rounded-md px-1.5 py-1 font-mono text-xs uppercase">
-                        BETA
-                    </span>
                 </span>
             </div>
 
@@ -316,7 +313,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                             content={
                                 <span className="space-x-4">
                                     <span>Close API Playground</span>
-                                    <span className="text-faded font-mono">CTRL + `</span>
+                                    <span className="font-mono text-faded">CTRL + `</span>
                                 </span>
                             }
                         >
@@ -366,7 +363,12 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 )}
                 <div className="flex h-full flex-col rounded-lg">
                     <div>{layoutBreakpoint === "mobile" ? mobileHeader : desktopHeader}</div>
-                    <FernErrorBoundary component="PlaygroundDrawer" className="flex h-full items-center justify-center">
+                    <FernErrorBoundary
+                        component="PlaygroundDrawer"
+                        className="flex h-full items-center justify-center"
+                        showError={true}
+                        reset={resetWithoutExample}
+                    >
                         {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
                             <PlaygroundEndpoint
                                 endpoint={matchedEndpoint}
@@ -419,7 +421,7 @@ function getInitialEndpointRequestFormState(
         headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
-        body: getDefaultValuesForBody(endpoint?.requestBody[0]?.shape, types),
+        body: getDefaultValuesForBody(endpoint?.requestBody?.shape, types),
     };
 }
 
@@ -483,7 +485,7 @@ export function getInitialEndpointRequestFormStateWithExample(
                                     : { type: "json", value: exampleValue.value },
                       ),
                   }
-                : exampleCall.requestBody?.type === "stream"
+                : exampleCall.requestBody?.type === "bytes"
                   ? {
                         type: "octet-stream",
                         value: undefined,

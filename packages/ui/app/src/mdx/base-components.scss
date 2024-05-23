@@ -1,39 +1,8 @@
 code:not(.code-block) {
     @apply font-mono ring-1 ring-inset ring-default rounded bg-card py-0.5 px-1;
-    @apply before:content-none after:content-none;
     @apply text-[0.875em];
 
     font-weight: inherit;
-}
-
-.fern-table {
-    @apply mb-3 overflow-x-auto rounded-lg;
-
-    table {
-        @apply border-separate border-spacing-0 table-auto text-sm w-full break-normal;
-    }
-
-    thead > tr {
-        @apply bg-tag-default;
-
-        > th {
-            @apply border-b border-default;
-        }
-    }
-
-    tbody > tr {
-        &:nth-child(even) {
-            @apply bg-tag-default-soft;
-
-            > td {
-                @apply border-b border-t border-default;
-            }
-        }
-
-        &:last-child > td {
-            border-bottom: none !important;
-        }
-    }
 }
 
 [data-rmiz] {

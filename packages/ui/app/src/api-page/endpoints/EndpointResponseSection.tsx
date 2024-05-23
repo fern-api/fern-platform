@@ -1,6 +1,6 @@
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../util/resolver";
+import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";

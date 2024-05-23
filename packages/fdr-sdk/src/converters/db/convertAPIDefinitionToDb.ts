@@ -1,8 +1,8 @@
-import lodash from "lodash";
+import { isEqual, kebabCase, startCase } from "lodash-es";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { titleCase } from "../utils/titleCase";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
@@ -11,7 +11,6 @@ import {
 } from "./examples/generateEndpointExampleCall";
 import { generateWebhookExample } from "./examples/generateWebhookExample";
 import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
-const { isEqual, kebabCase, startCase } = lodash;
 
 export function convertAPIDefinitionToDb(
     writeShape: APIV1Write.ApiDefinition,
@@ -183,6 +182,7 @@ function transformEndpoint({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
+
     return {
         availability: writeShape.availability,
         environments: writeShape.environments,
@@ -193,6 +193,7 @@ function transformEndpoint({
         migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
         method: writeShape.method,
         id: writeShape.id,
+        originalEndpointId: writeShape.originalEndpointId,
         name: writeShape.name,
         path: writeShape.path,
         queryParameters: writeShape.queryParameters,
@@ -218,6 +219,11 @@ function transformEndpoint({
         // htmlDescription,
         authed: writeShape.auth,
         // descriptionContainsMarkdown: true,
+        snippetTemplates: snippets.getSnippetTemplateForEndpoint({
+            endpointPath: getEndpointPathAsString(writeShape),
+            endpointMethod: writeShape.method,
+            identifierOverride: writeShape.originalEndpointId,
+        }),
     };
 }
 
@@ -390,7 +396,7 @@ function groupExamplesByStatusCode(examples: APIV1Write.ExampleEndpointCall[]) {
     const successExamples: APIV1Write.ExampleEndpointCall[] = [];
     const errorExamples: APIV1Write.ExampleEndpointCall[] = [];
     examples.forEach((example) => {
-        if (example.responseStatusCode >= 200 && example.responseStatusCode < 300) {
+        if (example.responseStatusCode < 400) {
             successExamples.push(example);
         } else {
             errorExamples.push(example);
@@ -407,36 +413,24 @@ function transformHttpRequestToDb({
     // const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
-            return {
-                contentType: "application/json",
-                description: writeShape.description,
-                // htmlDescription,
-                type: writeShape.type,
-                // descriptionContainsMarkdown: true,
-            };
         case "reference":
             return {
                 contentType: "application/json",
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type,
-                // descriptionContainsMarkdown: true,
             };
-        case "fileUpload":
+        case "fileUpload": // deprecated
+        case "formData":
             return {
                 contentType: "multipart/form-data",
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type,
-                // descriptionContainsMarkdown: true,
             };
         case "json":
             return {
                 contentType: writeShape.type.contentType,
                 description: writeShape.description,
-                // htmlDescription,
                 type: writeShape.type.shape,
-                // descriptionContainsMarkdown: true,
             };
         case "bytes":
             return {
@@ -481,19 +475,21 @@ export function transformExampleEndpointCall({
             snippets,
         }),
         requestBodyV3:
-            writeShape.requestBodyV3 ?? writeShape.requestBody != null
+            writeShape.requestBodyV3 ??
+            (writeShape.requestBody != null
                 ? {
                       type: "json",
                       value: writeShape.requestBody,
                   }
-                : undefined,
+                : undefined),
         responseBodyV3:
-            writeShape.responseBodyV3 ?? writeShape.responseBody != null
+            writeShape.responseBodyV3 ??
+            (writeShape.responseBody != null
                 ? {
                       type: "json",
                       value: writeShape.responseBody,
                   }
-                : undefined,
+                : undefined),
         codeSamples: writeShape.codeSamples ?? [],
     };
 }
@@ -508,20 +504,29 @@ function transformCodeExamples({
     const maybePythonSnippet = snippets.getPythonCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     const maybeGoSnippet = snippets.getGoCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
+    });
+    const maybeRubySnippet = snippets.getRubyCodeSnippetForEndpoint({
+        endpointMethod: endpointDefinition.method,
+        endpointPath: getEndpointPathAsString(endpointDefinition),
+        identifierOverride: endpointDefinition.originalEndpointId,
     });
     return {
         nodeAxios: "",
         pythonSdk: maybePythonSnippet,
         typescriptSdk: maybeTypescriptSnippet,
         goSdk: maybeGoSnippet,
+        rubySdk: maybeRubySnippet,
     };
 }
 

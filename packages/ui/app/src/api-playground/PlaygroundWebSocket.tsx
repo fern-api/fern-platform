@@ -1,13 +1,17 @@
 import { usePrevious } from "@fern-ui/react-commons";
+import { merge } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
 import { FernTooltipProvider } from "../components/FernTooltip";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../util/resolver";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundWebSocketRequestFormState } from "./types";
-import { buildRequestUrl, buildUnredactedHeadersWebsocket } from "./utils";
+import { buildRequestUrl, buildUnredactedHeadersWebsocket, getDefaultValueForType } from "./utils";
+
+// TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
+const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
 
 interface PlaygroundWebSocketProps {
     websocket: ResolvedWebSocketChannel;
@@ -23,7 +27,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     types,
 }): ReactElement => {
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
-    const { messages, pushMessage } = useWebsocketMessages(websocket.id);
+    const { messages, pushMessage, clearMessages } = useWebsocketMessages(websocket.id);
     const [error, setError] = useState<string | null>(null);
 
     const socket = useRef<WebSocket | null>(null);
@@ -58,7 +62,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
             setConnectedState("opening");
 
-            socket.current = new WebSocket("wss://fern-websocket-worker.danny-312.workers.dev/ws");
+            socket.current = new WebSocket(WEBSOCKET_PROXY_URI);
 
             socket.current.onopen = () => {
                 socket.current?.send(
@@ -105,6 +109,9 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
         async (message: ResolvedWebSocketMessage, data: unknown) => {
             const isConnected = await startSession();
             if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
+                // TODO: handle validation
+                const defaultValue = getDefaultValueForType(message.body, types);
+                data = merge(defaultValue, data);
                 socket.current.send(JSON.stringify(data));
                 pushMessage({
                     type: message.type,
@@ -114,9 +121,8 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                 });
             }
         },
-        [pushMessage, startSession],
+        [pushMessage, startSession, types],
     );
-
     return (
         <FernTooltipProvider>
             <div className="flex min-h-0 flex-1 shrink flex-col">
@@ -159,6 +165,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
                         types={types}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
+                        clearMessages={clearMessages}
                         connected={connectedState === "opened"}
                         error={error}
                     />

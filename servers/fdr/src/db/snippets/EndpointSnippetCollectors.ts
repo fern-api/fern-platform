@@ -2,16 +2,25 @@ import { FdrAPI } from "../../api";
 
 export class EndpointSnippetCollector {
     private snippetsByEndpoint: Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod> = {};
+    private snippetsByEndpointId: Record<string, FdrAPI.Snippet[]> = {};
 
     public collect({
         endpointPath,
         endpointMethod,
         snippet,
+        identifierOverride,
     }: {
         endpointPath: string;
         endpointMethod: "POST" | "PUT" | "GET" | "PATCH" | "DELETE";
         snippet: FdrAPI.Snippet;
+        identifierOverride: string | undefined;
     }) {
+        if (identifierOverride != null) {
+            if (this.snippetsByEndpointId[identifierOverride] == null) {
+                this.snippetsByEndpointId[identifierOverride] = [];
+            }
+            this.snippetsByEndpointId[identifierOverride].push(snippet);
+        }
         if (this.snippetsByEndpoint[endpointPath] == null) {
             this.snippetsByEndpoint[endpointPath] = {
                 PUT: [],
@@ -26,5 +35,9 @@ export class EndpointSnippetCollector {
 
     public get(): Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod> {
         return this.snippetsByEndpoint;
+    }
+
+    public getByIdentifierOverride(): Record<string, FdrAPI.Snippet[]> {
+        return this.snippetsByEndpointId;
     }
 }

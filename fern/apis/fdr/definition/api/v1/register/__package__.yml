@@ -42,7 +42,10 @@ types:
       auth: optional<ApiAuth>
       globalHeaders: optional<list<endpoint.Header>>
       snippetsConfiguration: optional<SnippetsConfig>
-      navigation: optional<ApiNavigationConfigRoot>
+      navigation:
+        type: optional<ApiNavigationConfigRoot>
+        availability: deprecated
+        docs: Use the docs navigation instead.
 
   ApiNavigationConfigRoot:
     properties:
@@ -66,22 +69,32 @@ types:
       pythonSdk: optional<PythonPackage>
       goSdk: optional<GoModule>
       javaSdk: optional<JavaCoordinate>
+      rubySdk: optional<RubyGem>
 
   TypescriptPackage:
     properties:
       package: string
+      version: optional<string>
 
   PythonPackage:
     properties:
       package: string
+      version: optional<string>
 
   GoModule:
     properties:
       githubRepo: string
+      version: optional<string>
 
   JavaCoordinate:
     properties:
       coordinate: string
+      version: optional<string>
+
+  RubyGem:
+    properties:
+      gem: string
+      version: optional<string>
 
   ApiDefinitionPackage:
     properties:
@@ -126,7 +139,7 @@ types:
     properties:
       nameOverride: optional<string>
       headerWireValue: string
-      prefix: 
+      prefix:
         type: optional<string>
         docs: The prefix that comes before the header
 

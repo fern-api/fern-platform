@@ -4,20 +4,22 @@ import { atom, useAtom } from "jotai";
 import { useCallback, useEffect, useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
-import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
 import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
+import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
 import { useNavigationContext } from "../../contexts/navigation-context";
+import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { findEndpoint } from "../../util/processRequestSnippetComponents";
-import { ResolvedEndpointDefinition } from "../../util/resolver";
 
 export declare namespace RequestSnippet {
     export interface Props {
         endpoint: string;
+        example?: string;
     }
     export interface InternalProps {
         path: string;
         method: APIV1Read.HttpMethod;
+        example: string | undefined;
     }
 }
 
@@ -27,13 +29,15 @@ function useSelectedClient(
     path: string,
     method: string,
     clients: CodeExampleGroup[],
+    exampleName: string | undefined,
 ): [CodeExample | undefined, (nextClient: CodeExample) => void] {
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClientMap, setSelectedClientMap] = useAtom(selectedClientAtom);
     const selectedClient =
         selectedClientMap[`${path}-${method}`] ??
-        clients.find((c) => c.language === selectedLanguage)?.examples[0] ??
-        clients[0]?.examples[0];
+        (clients.find((c) => c.language === selectedLanguage)?.examples ?? clients[0]?.examples)?.find(
+            (example) => exampleName == null || example.name === exampleName,
+        );
 
     const setSelectedClient = useCallback(
         (nextClient: CodeExample | ((prev: CodeExample | undefined) => CodeExample | undefined)) => {
@@ -46,8 +50,13 @@ function useSelectedClient(
     );
 
     useEffect(() => {
-        setSelectedClient((prev) => clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev);
-    }, [clients, selectedLanguage, setSelectedClient]);
+        setSelectedClient(
+            (prev) =>
+                clients
+                    .find((c) => c.language === selectedLanguage)
+                    ?.examples.find((example) => exampleName == null || example.name === exampleName) ?? prev,
+        );
+    }, [clients, exampleName, selectedLanguage, setSelectedClient]);
 
     const handleClickClient = useCallback(
         (nextClient: CodeExample) => {
@@ -80,6 +89,7 @@ function extractEndpointPathAndMethod(endpoint: string): [APIV1Read.HttpMethod |
 
 export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
     endpoint: endpointLocator,
+    example,
 }) => {
     const [method, path] = extractEndpointPathAndMethod(endpointLocator);
 
@@ -87,12 +97,13 @@ export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSni
         return null;
     }
 
-    return <EndpointRequestSnippetInternal method={method} path={path} />;
+    return <EndpointRequestSnippetInternal method={method} path={path} example={example} />;
 };
 
 const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
     method,
     path,
+    example,
 }) => {
     const { resolvedPath } = useNavigationContext();
 
@@ -115,7 +126,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     }, [method, path, resolvedPath]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
-    const [selectedClient, setSelectedClient] = useSelectedClient(path, method, clients);
+    const [selectedClient, setSelectedClient] = useSelectedClient(path, method, clients, example);
 
     if (endpoint == null || selectedClient == null) {
         return null;
@@ -131,7 +142,6 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                         environment={endpoint.defaultEnvironment?.baseUrl}
                     />
                 }
-                type="primary"
                 actions={
                     clients.length > 1 ? (
                         <CodeExampleClientDropdown
@@ -152,6 +162,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
 
 export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
     endpoint: endpointLocator,
+    example,
 }) => {
     const [method, path] = extractEndpointPathAndMethod(endpointLocator);
 
@@ -159,12 +170,13 @@ export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSn
         return null;
     }
 
-    return <EndpointResponseSnippetInternal method={method} path={path} />;
+    return <EndpointResponseSnippetInternal method={method} path={path} example={example} />;
 };
 
 const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
     path,
     method,
+    example,
 }) => {
     const { resolvedPath } = useNavigationContext();
 
@@ -187,7 +199,7 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     }, [method, path, resolvedPath]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
-    const [selectedClient] = useSelectedClient(path, method, clients);
+    const [selectedClient] = useSelectedClient(path, method, clients, example);
 
     if (endpoint == null) {
         return null;
@@ -205,7 +217,6 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
         <div className="mb-5 mt-3">
             <CodeSnippetExample
                 title="Response"
-                type="primary"
                 // actions={undefined}
                 code={responseJsonString}
                 language="json"

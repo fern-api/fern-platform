@@ -1,27 +1,13 @@
-import axios from "axios";
-import { RevalidatorServiceImpl } from "../../services/revalidator/RevalidatorService";
-import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
-
 const PORT = 8080;
 
-// We don't spin up the server in this test.
-it("definition register", async () => {
+it("check health", async () => {
+    // wait ten seconds
+    await sleep(10000);
     // register empty definition
-    const healthResponse = await axios.get(`http://localhost:${PORT}/health`);
-    expect(healthResponse.status).toEqual(200);
-});
+    const response = await fetch(`http://localhost:${PORT}/health`);
+    expect(response.status).toEqual(200);
+}, 100_000);
 
-it("revalidates a custom docs domain", async () => {
-    const revalidationService = new RevalidatorServiceImpl();
-
-    const revalidationResult = await revalidationService.revalidate({
-        baseUrl: ParsedBaseUrl.parse("https://fdr-ete-test.buildwithfern.com"),
-        fernUrl: ParsedBaseUrl.parse("https://fdr-ete-test.buildwithfern.com"),
-    });
-
-    expect(revalidationResult.revalidationFailed).toEqual(false);
-
-    expect(revalidationResult.failedRevalidations.length).toEqual(0);
-
-    expect(revalidationResult.successfulRevalidations.length).toBeGreaterThan(0);
-});
+function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}

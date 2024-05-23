@@ -1,4 +1,4 @@
-import { visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
+import { visitDbNavigationTab, visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
@@ -15,7 +15,7 @@ class NavigationContext {
      */
     public get path() {
         return this.#pathParts
-            .filter((p) => !p.skipUrlSlug)
+            .filter((p) => p.skipUrlSlug == null || !p.skipUrlSlug)
             .map((p) => p.urlSlug)
             .join("/");
     }
@@ -47,6 +47,16 @@ class NavigationContext {
      */
     public withPathParts(pathParts: PathPart[]) {
         return new NavigationContext(this.#indexSegment, [...this.#pathParts, ...pathParts]);
+    }
+
+    /**
+     * @returns A new `NavigationContext` instance.
+     */
+    public withFullSlug(fullSlug: string[]) {
+        return new NavigationContext(
+            this.#indexSegment,
+            fullSlug.map((urlSlug) => ({ name: urlSlug, urlSlug })),
+        );
     }
 }
 
@@ -92,15 +102,20 @@ export class AlgoliaSearchRecordGenerator {
         config: DocsV1Db.UnversionedTabbedNavigationConfig,
         context: NavigationContext,
     ) {
-        const records = config.tabs.map((tab) => {
-            const tabRecords = tab.items.map((item) =>
-                this.generateAlgoliaSearchRecordsForNavigationItem(
-                    item,
-                    context.withPathPart({ name: tab.title, urlSlug: tab.urlSlug }),
-                ),
-            );
-            return tabRecords.flat(1);
-        });
+        const records = config.tabs.map((tab) =>
+            visitDbNavigationTab(tab, {
+                group: (group) => {
+                    const tabRecords = group.items.map((item) =>
+                        this.generateAlgoliaSearchRecordsForNavigationItem(
+                            item,
+                            context.withPathPart({ name: tab.title, urlSlug: group.urlSlug }),
+                        ),
+                    );
+                    return tabRecords.flat(1);
+                },
+                link: () => [],
+            }),
+        );
         return records.flat(1);
     }
 
@@ -225,7 +240,14 @@ export class AlgoliaSearchRecordGenerator {
             if (pageContent == null) {
                 return [];
             }
-            const pageContext = context.withPathPart({ name: page.title, urlSlug: page.urlSlug });
+
+            const pageContext =
+                page.fullSlug != null
+                    ? context.withFullSlug(page.fullSlug)
+                    : context.withPathPart({
+                          name: page.title,
+                          urlSlug: page.urlSlug,
+                      });
             const processedContent = convertMarkdownToText(pageContent.markdown);
             const { indexSegment } = context;
             return [
@@ -292,7 +314,7 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const records: AlgoliaSearchRecord[] = [];
-        if (endpointDef.name || endpointDef.description) {
+        if (endpointDef.name != null || endpointDef.description != null) {
             const endpointContext = context.withPathPart({
                 name: endpointDef.name ?? "",
                 urlSlug: endpointDef.urlSlug,

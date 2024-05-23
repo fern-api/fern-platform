@@ -1,9 +1,9 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
+import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { getEnvConfig, type EnvironmentConfig } from "../env";
 import { REGISTRY_SERVICE } from "./registry";
 
@@ -33,11 +33,15 @@ function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: 
         });
         if (!resp.ok) {
             // eslint-disable-next-line no-console
-            console.error("Failed to fetch index segment api key", resp.error);
-            return {
-                appId: envConfig.algoliaAppId,
-                searchApiKey: envConfig.algoliaApiKey,
-            };
+            console.error(resp.error);
+
+            captureSentryError(resp.error, {
+                context: "SearchService",
+                errorSource: "createSearchApiKeyLoader",
+                errorDescription: "[P0] Failed to fetch index segment api key.",
+            });
+
+            return undefined;
         }
         const { searchApiKey } = resp.body;
         return {
@@ -53,40 +57,20 @@ export function useSearchService(): SearchService {
     return useAtomValue(SEARCH_SERVICE_ATOM);
 }
 
-export function useCreateSearchService(
-    searchInfo: DocsV1Read.SearchInfo,
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined,
-    currentVersionIndex: number | undefined,
-    versions: SidebarVersionInfo[],
-): void {
+export function useCreateSearchService(currentVersionIndex: number | undefined): void {
+    const { searchInfo, versions } = useDocsContext();
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
+    const { isLocalPreview } = useLocalPreviewContext();
 
     const searchService = useMemo<SearchService>(() => {
+        if (isLocalPreview) {
+            return { isAvailable: false };
+        }
+
         try {
             const envConfig = getEnvConfig();
-            if (typeof searchInfo !== "object") {
-                return algoliaSearchIndex != null
-                    ? {
-                          isAvailable: true,
-                          loadCredentials: async () => ({
-                              appId: envConfig.algoliaAppId,
-                              searchApiKey: envConfig.algoliaApiKey,
-                          }),
-                          index: algoliaSearchIndex,
-                      }
-                    : { isAvailable: false };
-            } else if (searchInfo.type === "legacyMultiAlgoliaIndex") {
-                const algoliaIndex = searchInfo.algoliaIndex ?? algoliaSearchIndex;
-                return algoliaIndex != null
-                    ? {
-                          isAvailable: true,
-                          loadCredentials: async () => ({
-                              appId: envConfig.algoliaAppId,
-                              searchApiKey: envConfig.algoliaApiKey,
-                          }),
-                          index: algoliaIndex,
-                      }
-                    : { isAvailable: false };
+            if (typeof searchInfo !== "object" || searchInfo.type === "legacyMultiAlgoliaIndex") {
+                return { isAvailable: false };
             } else if (searchInfo.value.type === "unversioned") {
                 if (envConfig.algoliaSearchIndex == null) {
                     throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
@@ -124,7 +108,7 @@ export function useCreateSearchService(
             // eslint-disable-next-line no-console
             console.error("Failed to initialize search service", e);
 
-            emitDatadogError(e, {
+            captureSentryError(e, {
                 context: "SearchService",
                 errorSource: "useCreateSearchService",
                 errorDescription: "Failed to initialize search service",
@@ -132,9 +116,9 @@ export function useCreateSearchService(
 
             return { isAvailable: false };
         }
-    }, [algoliaSearchIndex, currentVersionIndex, searchInfo, versions]);
+    }, [currentVersionIndex, isLocalPreview, searchInfo, versions]);
 
     useEffect(() => {
         setSearchService(searchService);
-    });
+    }, [searchService, setSearchService]);
 }

@@ -1,7 +1,8 @@
-import { Cross1Icon, FileIcon } from "@radix-ui/react-icons";
+import { Cross1Icon, FileIcon, FilePlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { uniqBy } from "lodash-es";
 import numeral from "numeral";
-import { ChangeEventHandler, DragEventHandler, memo, useCallback, useRef, useState } from "react";
+import { ChangeEvent, DragEventHandler, memo, useEffect, useRef, useState } from "react";
 import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernCard } from "../../components/FernCard";
 import { WithLabelInternal } from "../WithLabel";
@@ -17,6 +18,19 @@ export interface PlaygroundFileUploadFormProps {
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     ({ id, propertyKey, type, isOptional, onValueChange, value }) => {
+        // Remove invalid files
+        // TODO: This is a temporary workaround to remove invalid files from the value.
+        // this should be handled in a better way
+        useEffect(() => {
+            if (value != null) {
+                const hasInvalidFiles = value.some((f) => !(f instanceof File));
+                if (hasInvalidFiles) {
+                    onValueChange(value.filter((f) => f instanceof File));
+                }
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
+
         const [drag, setDrag] = useState(false);
         const dragOver: DragEventHandler<HTMLElement> = (e) => {
             e.preventDefault();
@@ -33,22 +47,44 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
             setDrag(false);
         };
 
+        const handleChangeFiles = (files: FileList | null | undefined) => {
+            const filesArray = files != null ? Array.from(files) : [];
+            if (type === "fileArray") {
+                // append files
+                onValueChange(uniqueFiles([...(value ?? []), ...filesArray]));
+                return;
+            } else {
+                // replace files
+                onValueChange(filesArray.length > 0 ? filesArray : undefined);
+            }
+        };
+
         const fileDrop: DragEventHandler<HTMLElement> = (e) => {
             e.preventDefault();
             setDrag(false);
 
             const files = e.dataTransfer.files;
-            onValueChange(Array.from(files));
+            handleChangeFiles(files);
         };
-        const handleRemove = useCallback(() => {
+
+        const handleRemove = () => {
             onValueChange(undefined);
-        }, [onValueChange]);
-        const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-            (e) => {
-                onValueChange(e.target.files != null ? Array.from(e.target.files) : undefined);
-            },
-            [onValueChange],
-        );
+        };
+
+        const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const files = e.target.files;
+            if (files != null) {
+                handleChangeFiles(files);
+            }
+
+            // NOTE: the input is not controlled, so we need to clear it manually...
+            // every time the user selects a file, we record the change in-state, and then clear the input
+            // so that the input can be used again to select the same file
+            if (ref.current != null) {
+                ref.current.value = "";
+            }
+        };
+
         const ref = useRef<HTMLInputElement>(null);
         return (
             <WithLabelInternal
@@ -60,7 +96,14 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 availability={undefined}
                 description={undefined}
             >
-                <input ref={ref} type="file" id={id} onChange={handleChange} className="hidden" />
+                <input
+                    ref={ref}
+                    type="file"
+                    id={id}
+                    onChange={handleChange}
+                    className="hidden"
+                    multiple={type === "fileArray"}
+                />
                 <FernCard
                     className={cn("w-full rounded-lg", {
                         elevated: drag,
@@ -82,15 +125,15 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                             />
                         </div>
                     ) : (
-                        <div className="divide-default divide-y px-4 py-2">
+                        <div className="divide-default divide-y">
                             {value.map((file) => (
-                                <div key={file.name} className="flex justify-between">
-                                    <div className="flex items-center gap-2">
+                                <div key={file.name} className="flex justify-between py-2 px-4">
+                                    <div className="flex items-center gap-2 shrink min-w-0">
                                         <div>
                                             <FileIcon />
                                         </div>
-                                        <span className="inline-flex items-baseline gap-2">
-                                            <span className="text-sm">{file.name}</span>
+                                        <span className="inline-flex items-baseline gap-2 shrink min-w-0">
+                                            <span className="text-sm truncate">{file.name}</span>
                                             <span className="t-muted text-xs">
                                                 ({numeral(file.size).format("0.0b")})
                                             </span>
@@ -121,9 +164,10 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                 </div>
                             ))}
                             {type === "fileArray" && (
-                                <div className="flex justify-end px-4 py-2">
+                                <div className="flex justify-end p-4">
                                     <FernButton
                                         onClick={() => ref.current?.click()}
+                                        icon={<FilePlusIcon />}
                                         text="Add more files"
                                         rounded
                                         variant="outlined"
@@ -140,3 +184,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
 );
 
 PlaygroundFileUploadForm.displayName = "PlaygroundFileUploadForm";
+
+function uniqueFiles(files: File[]): readonly File[] | undefined {
+    return uniqBy(files, (f) => `${f.webkitRelativePath}/${f.name}/${f.size}`);
+}

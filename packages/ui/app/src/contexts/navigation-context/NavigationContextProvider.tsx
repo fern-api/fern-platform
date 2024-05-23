@@ -1,15 +1,15 @@
-import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
+import { SidebarNode, getUnversionedSlug, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { renderToString } from "react-dom/server";
-import { emitDatadogError } from "../../analytics/datadogRum";
+import { captureSentryError } from "../../analytics/sentry";
 import { MdxContent } from "../../mdx/MdxContent";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { ResolvedPath } from "../../util/ResolvedPath";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -188,6 +188,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             if (!options.shallow) {
                 userIsScrolling = false;
                 userHasScrolled = false;
+                try {
+                    if (window.analytics) {
+                        window.analytics.page({ url: window.location.href, path: route });
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.error("Failed to send page view to Segment:", error);
+                }
             }
             navigateToPath(route);
             closeMobileSidebar();
@@ -241,6 +249,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     resolvedPath,
                     activeVersion: versions[currentVersionIndex ?? 0],
                     selectedSlug,
+                    unversionedSlug: getUnversionedSlug(
+                        selectedSlug.split("/"),
+                        versions[currentVersionIndex ?? 0]?.slug ?? [],
+                        basePath?.split("/").filter((part) => part.length > 0) ?? [],
+                    ),
                 }),
                 [
                     activeNavigatable,
@@ -301,7 +314,7 @@ function convertDescriptionToString(
         // eslint-disable-next-line no-console
         console.error("Error rendering MDX to string", e);
 
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "NavigationContext",
             errorSource: "convertDescriptionToString",
             errorDescription:

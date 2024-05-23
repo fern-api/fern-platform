@@ -52,7 +52,7 @@ export function VerticalSplitPane({
                 className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300"
                 onMouseDown={handleVerticalResize}
             >
-                <div className="bg-border-primary group-active:bg-accent relative z-10 mx-auto h-0.5 w-full rounded-full group-active:transition-[background]" />
+                <div className="bg-border-primary relative z-10 mx-auto h-0.5 w-full rounded-full group-active:bg-accent group-active:transition-[background]" />
             </div>
             <div className={cn(belowClassName, "flex-1 shrink min-h-0")}>{below}</div>
         </div>
@@ -112,7 +112,7 @@ export function HorizontalSplitPane({
                 onMouseDown={handleVerticalResize}
                 style={{ height: rizeBarHeight }}
             >
-                <div className="bg-border-primary group-active:bg-accent relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />
+                <div className="bg-border-primary relative z-10 h-full w-0.5 rounded-full group-active:bg-accent group-active:transition-[background]" />
             </div>
             <div className={cn(rightClassName, "flex-1 shrink min-w-0 relative")}>{right}</div>
         </div>

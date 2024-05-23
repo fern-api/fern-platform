@@ -1,10 +1,11 @@
 import { createElement } from "react";
 import renderer from "react-test-renderer";
 import { MdxContent } from "../MdxContent";
-import { serializeMdxWithFrontmatter } from "../mdx";
+import { replaceBrokenBrTags, serializeMdxWithFrontmatter } from "../mdx";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
     const serializedContent = await serializeMdxWithFrontmatter(content, { development: false });
+    // eslint-disable-next-line deprecation/deprecation
     const result = renderer.create(createElement(MdxContent, { mdx: serializedContent })).toJSON();
 
     assert(result != null);
@@ -67,5 +68,18 @@ describe("maybeSerializeMdxContent", () => {
             expect(result.type).toBe("h3");
             expect(result.props.id).toBe("custom-anchor");
         });
+    });
+});
+
+describe("replaceBrokenBrTags", () => {
+    it("should replace <br> with <br />", () => {
+        expect(replaceBrokenBrTags("<br>")).toBe("<br />");
+        expect(replaceBrokenBrTags("<br/>")).toBe("<br />");
+        expect(replaceBrokenBrTags("<br />")).toBe("<br />");
+        expect(replaceBrokenBrTags("<br></br>")).toBe("<br />");
+        expect(replaceBrokenBrTags("<br \n />")).toBe("<br />");
+        expect(replaceBrokenBrTags("</br>")).toBe("");
+
+        expect(replaceBrokenBrTags("<br></br>\n\n<br></br>")).toBe("<br />\n\n<br />");
     });
 });

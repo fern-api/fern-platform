@@ -8,8 +8,6 @@ import { type S3FileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
-const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
-
 export interface DocsRegistrationInfo {
     fernUrl: ParsedBaseUrl;
     customUrls: ParsedBaseUrl[];
@@ -27,20 +25,7 @@ function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url:
     return baseUrl;
 }
 
-function validateAndParseCustomDomainUrl({ customUrls }: { customUrls: string[] }): ParsedBaseUrl[] {
-    for (let i = 0; i < customUrls.length; ++i) {
-        const one = customUrls[i];
-        for (let j = i + 1; j < customUrls.length; ++j) {
-            const two = customUrls[j];
-            if (one == null || two == null) {
-                continue;
-            }
-            if (one.includes(two) || two.includes(one)) {
-                throw new DocsV2Write.InvalidCustomDomainError();
-            }
-        }
-    }
-
+function parseCustomDomainUrls({ customUrls }: { customUrls: string[] }): ParsedBaseUrl[] {
     const parsedUrls: ParsedBaseUrl[] = [];
     for (const customUrl of customUrls) {
         const baseUrl = ParsedBaseUrl.parse(customUrl);
@@ -58,33 +43,37 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             });
 
             const fernUrl = validateAndParseFernDomainUrl({ app, url: req.body.domain });
-            const customUrls = validateAndParseCustomDomainUrl({ customUrls: req.body.customDomains });
+            const customUrls = parseCustomDomainUrls({ customUrls: req.body.customDomains });
 
             // ensure that the domains are not already registered by another org
-            app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
+            const hasOwnership = await app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
                 [fernUrl, ...customUrls].map((url) => url.getFullUrl()),
                 req.body.orgId,
             );
+            if (!hasOwnership) {
+                throw new FdrAPI.DomainBelongsToAnotherOrgError();
+            }
 
             const docsRegistrationId = uuidv4();
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
+                isPrivate: req.body.authConfig?.type === "private",
             });
 
             await app.services.slack.notifyGeneratedDocs({
                 orgId: req.body.orgId,
                 urls: [fernUrl.toURL().toString(), ...customUrls.map((url) => url.toURL().toString())],
             });
-            DOCS_REGISTRATIONS[docsRegistrationId] = {
+            await app.dao.docsRegistration().storeDocsRegistrationById(docsRegistrationId, {
                 fernUrl,
                 customUrls,
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: false,
                 authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
-            };
+            });
             return res.send({
                 docsRegistrationId,
                 uploadUrls: Object.fromEntries(
@@ -107,15 +96,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 domain: fernUrl.hostname,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
+                isPrivate: req.body.authConfig?.type === "private",
             });
-            DOCS_REGISTRATIONS[docsRegistrationId] = {
+            await app.dao.docsRegistration().storeDocsRegistrationById(docsRegistrationId, {
                 fernUrl,
                 customUrls: [],
                 orgId: req.body.orgId,
                 s3FileInfos,
                 isPreview: true,
                 authType: req.body.authConfig?.type === "private" ? AuthType.WORKOS_SSO : AuthType.PUBLIC,
-            };
+            });
             return res.send({
                 docsRegistrationId,
                 uploadUrls: Object.fromEntries(
@@ -127,7 +117,9 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             });
         },
         finishDocsRegister: async (req, res) => {
-            const docsRegistrationInfo = DOCS_REGISTRATIONS[req.params.docsRegistrationId];
+            const docsRegistrationInfo = await app.dao
+                .docsRegistration()
+                .getDocsRegistrationById(req.params.docsRegistrationId);
             if (docsRegistrationInfo == null) {
                 throw new DocsV1Write.DocsRegistrationIdNotFound();
             }
@@ -166,35 +158,29 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     indexSegments,
                 });
 
-                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-                delete DOCS_REGISTRATIONS[req.params.docsRegistrationId];
-
                 /**
                  * IMPORTANT NOTE:
                  * vercel cache is not shared between custom domains, so we need to revalidate on EACH custom domain individually
-                 * the only exception is for custom domains with subpaths, where we only revalidate the fernUrl
                  */
-
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                if (stagingUrl != null) {
-                    // revalidation needs to occur separately for staging
-                    urls.push(stagingUrl);
-                }
+                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
+                // if (stagingUrl != null) {
+                //     // revalidation needs to occur separately for staging
+                //     urls.push(stagingUrl);
+                // }
 
                 // revalidate all custom urls
                 await Promise.all(
                     urls.map(async (baseUrl) => {
-                        const results = await app.services.revalidator.revalidate({
-                            // treat staging URL as its own fernURL to handle basepath revalidation
-                            fernUrl: baseUrl !== stagingUrl ? docsRegistrationInfo.fernUrl : stagingUrl,
-                            baseUrl,
-                            app,
-                        });
-                        if (results.failedRevalidations.length === 0 && !results.revalidationFailed) {
+                        const results = await app.services.revalidator.revalidate({ baseUrl, app });
+                        if (
+                            results.response != null &&
+                            results.response.failedRevalidations.length === 0 &&
+                            !results.revalidationFailed
+                        ) {
                             app.logger.info(
-                                `Successfully revalidated ${results.successfulRevalidations.length} paths.`,
+                                `Successfully revalidated ${results.response.successfulRevalidations.length} paths.`,
                             );
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({

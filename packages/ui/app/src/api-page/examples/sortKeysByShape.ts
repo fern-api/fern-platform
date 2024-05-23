@@ -6,7 +6,7 @@ import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     dereferenceObjectProperties,
-} from "../../util/resolver";
+} from "../../resolver/types";
 
 function sortKeysBy(obj: Record<string, unknown>, order: string[]) {
     // return keyBy(
@@ -30,8 +30,8 @@ export function sortKeysByShape(
         return obj;
     }
     return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
-        string: () => obj,
-        boolean: () => obj,
+        primitive: () => obj,
+        literal: () => obj,
         object: (object) => {
             const objectProperties = dereferenceObjectProperties(object, types);
             return isPlainObject(obj)
@@ -76,34 +76,25 @@ export function sortKeysByShape(
             });
         },
         enum: () => obj,
-        integer: () => obj,
-        double: () => obj,
-        long: () => obj,
-        datetime: () => obj,
-        uuid: () => obj,
-        base64: () => obj,
-        date: () => obj,
         optional: ({ shape }) => sortKeysByShape(obj, shape, types),
         list: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape, types)) : obj),
         set: ({ shape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, shape, types)) : obj),
         map: ({ valueShape }) =>
             isPlainObject(obj) ? mapValues(obj, (value) => sortKeysByShape(value, valueShape, types)) : obj,
-        booleanLiteral: () => obj,
-        stringLiteral: () => obj,
         unknown: () => obj,
         reference: ({ typeId }) => sortKeysByShape(obj, types[typeId], types),
-        fileUpload: ({ value }) => {
-            if (value == null || !isPlainObject(obj)) {
+        formData: ({ properties }) => {
+            if (!isPlainObject(obj)) {
                 return obj;
             }
 
             return mapValues(
                 sortKeysBy(
                     obj,
-                    value.properties.map((p) => p.key),
+                    properties.map((p) => p.key),
                 ),
                 (v, key) => {
-                    const property = value.properties.find((p) => p.key === key);
+                    const property = properties.find((p) => p.key === key);
 
                     if (property == null) {
                         return v;

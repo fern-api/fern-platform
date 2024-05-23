@@ -1,2 +1,4 @@
-# Generated code
-src/api/generated
+
+
+# Sentry Config File
+.sentryclirc

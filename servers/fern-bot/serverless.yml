@@ -1,0 +1,56 @@
+service: "fern-bot"
+frameworkVersion: "3"
+plugins: ["serverless-esbuild"]
+provider:
+  name: aws
+  runtime: nodejs18.x
+  deploymentMethod: direct
+  region: "us-east-1"
+  # 900 second timeout, e.g. 15 minutes
+  timeout: 900
+  # 10GB memory
+  memorySize: 10240
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+    GITHUB_APP_LOGIN_NAME: ${env:GITHUB_APP_LOGIN_NAME, 'fern-api[bot]'}
+    GITHUB_APP_LOGIN_ID: ${env:GITHUB_APP_LOGIN_ID, 'placeholder'}
+    GITHUB_APP_ID: ${env:GITHUB_APP_ID, 'placeholder'}
+    GITHUB_APP_PRIVATE_KEY: ${env:GITHUB_APP_PRIVATE_KEY, 'placeholder'}
+    GITHUB_APP_CLIENT_ID: ${env:GITHUB_APP_CLIENT_ID, 'placeholder'}
+    GITHUB_APP_CLIENT_SECRET: ${env:GITHUB_APP_CLIENT_SECRET, 'placeholder'}
+    GITHUB_APP_WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
+    CO_API_KEY: ${env:CO_API_KEY, 'placeholder'}
+    REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
+functions:
+  updateOpenApiSpec:
+    # 900 second timeout, e.g. 15 minutes
+    timeout: 900
+    # 10GB memory
+    memorySize: 10240
+    # 10GB storage
+    ephemeralStorageSize: 10240
+    handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
+    # Adding a layer to have git available in the lambda
+    # https://github.com/lambci/git-lambda-layer
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+    events:
+      - schedule:
+          rate: cron(0 0 * * ? *)
+          enabled: true
+custom:
+  esbuild:
+    minify: true
+    bundle: true
+    sourcemap: true
+    target: "node18"
+    platform: "node"
+    concurrency: 10
+    packager: pnpm
+    external:
+      - fern-api
+      - fern
+    packagerOptions:
+      scripts:
+        - npm install -g fern-api

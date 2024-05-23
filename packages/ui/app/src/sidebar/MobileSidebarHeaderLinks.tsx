@@ -12,6 +12,10 @@ interface HeaderSidebarSlugLinkProps {
 }
 
 export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ navbarLink }) => {
+    if (navbarLink.type === "github") {
+        // TODO: Implement GitHub link
+        return null;
+    }
     return (
         <Link
             className={cn(
@@ -31,12 +35,8 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
     );
 };
 
-interface MobileSidebarHeaderLinksProps {
-    navbarLinks: DocsV1Read.NavbarLink[] | undefined;
-}
-
-export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLinksProps): ReactElement | null {
-    const { layout } = useDocsContext();
+export function MobileSidebarHeaderLinks(): ReactElement | null {
+    const { layout, navbarLinks } = useDocsContext();
     const layoutBreakpoint = useLayoutBreakpoint();
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
@@ -47,31 +47,36 @@ export function MobileSidebarHeaderLinks({ navbarLinks }: MobileSidebarHeaderLin
                 "lg:hidden": layout?.disableHeader !== true,
             })}
         >
-            {navbarLinks?.map((navbarLink, idx) => (
-                <FernLinkButton
-                    key={idx}
-                    href={navbarLink.url}
-                    text={navbarLink.text}
-                    rightIcon={
-                        navbarLink.type === "primary" ||
-                        (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                            <ArrowRightIcon className="!size-5" />
-                        ) : undefined
-                    }
-                    className={cn("w-full", {
-                        "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
-                    })}
-                    variant={
-                        navbarLink.type === "primary"
-                            ? "outlined"
-                            : navbarLink.type === "secondary"
-                              ? "minimal"
-                              : navbarLink.type
-                    }
-                    intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
-                    size={["mobile", "sm", "md"].includes(layoutBreakpoint) ? "large" : "normal"}
-                />
-            ))}
+            {navbarLinks?.map((navbarLink, idx) =>
+                // TODO: Implement GitHub link
+                navbarLink.type === "github" ? null : (
+                    <FernLinkButton
+                        key={idx}
+                        icon={navbarLink.icon}
+                        href={navbarLink.url}
+                        text={navbarLink.text}
+                        rightIcon={
+                            navbarLink.rightIcon ??
+                            (navbarLink.type === "primary" ||
+                            (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                                <ArrowRightIcon className="!size-5" />
+                            ) : undefined)
+                        }
+                        className={cn("w-full", {
+                            "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
+                        })}
+                        variant={
+                            navbarLink.type === "primary"
+                                ? "outlined"
+                                : navbarLink.type === "secondary"
+                                  ? "minimal"
+                                  : navbarLink.type
+                        }
+                        intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
+                        size={["mobile", "sm", "md"].includes(layoutBreakpoint) ? "large" : "normal"}
+                    />
+                ),
+            )}
         </div>
     );
 }

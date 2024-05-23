@@ -3,12 +3,10 @@ import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { noop } from "lodash-es";
+import { compact, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { withStream } from "../commons/withStream";
-import { Chip } from "../components/Chip";
 import { FernButton } from "../components/FernButton";
 import { FernInput } from "../components/FernInput";
 import { FernScrollArea } from "../components/FernScrollArea";
@@ -52,7 +50,11 @@ export function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
                     api: apiSection.api,
                     id: apiSection.id,
                     breadcrumbs: [apiSection.title],
-                    items: apiSection.items.filter((item): item is SidebarNode.ApiPage => item.type === "page"),
+                    items: apiSection.items
+                        .filter((item): item is SidebarNode.ApiPage => item.type === "page")
+                        .flatMap((item): SidebarNode.ApiPage[] =>
+                            SidebarNode.isEndpointPage(item) ? compact([item, item.stream]) : [item],
+                        ),
                 });
 
                 result.push(
@@ -120,7 +122,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         <div className="bg-background-translucent sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
-                                    {idx > 0 && <SlashIcon className="text-faded mx-0.5 size-3" />}
+                                    {idx > 0 && <SlashIcon className="mx-0.5 size-3 text-faded" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                                         {breadcrumb}
                                     </span>
@@ -144,17 +146,13 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                             side="right"
                                         >
                                             <FernButton
-                                                text={
-                                                    endpointItem.apiType === "endpoint" && endpointItem.stream
-                                                        ? withStream(text)
-                                                        : text
-                                                }
+                                                text={text}
                                                 className="w-full rounded-none text-left"
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectEndpoint(apiGroup, endpointItem)}
-                                                rightIcon={<HttpMethodTag method={endpointItem.method} small={true} />}
+                                                rightIcon={<HttpMethodTag method={endpointItem.method} size="sm" />}
                                             />
                                         </FernTooltip>
                                     </li>
@@ -177,7 +175,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                                rightIcon={<Chip name="WSS" small />}
+                                                rightIcon={<HttpMethodTag method="WSS" />}
                                             />
                                         </FernTooltip>
                                     </li>
@@ -235,7 +233,7 @@ function renderTextWithHighlight(text: string, highlight: string): ReactElement[
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="bg-accent-highlight t-default" key={idx}>
+            <mark className="t-default bg-accent-highlight" key={idx}>
                 {part}
             </mark>
         ) : (

@@ -15,6 +15,29 @@ types:
     type: string
     docs: The ID of a particular docs config.
 
+  EndpointIdentifier:
+    properties:
+      path: EndpointPath
+      method: EndpointMethod
+      identifierOverride:
+        type: optional<string>
+        docs: |
+          The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas path and
+          method are not (specifically for the fern definition, consider chat and chat stream). This is optional to 
+          remain backcompat with old snippets of yore.
+
+  EndpointPath:
+    type: string
+    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+
+  EndpointMethod:
+    enum:
+      - PUT
+      - POST
+      - GET
+      - PATCH
+      - DELETE
+
 errors:
   BadRequestError:
     status-code: 400

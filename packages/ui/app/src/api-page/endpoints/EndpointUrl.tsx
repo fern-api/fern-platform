@@ -5,9 +5,9 @@ import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, u
 import { parse } from "url";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { ResolvedEndpointPathParts } from "../../resolver/types";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
-import { ResolvedEndpointPathParts } from "../../util/resolver";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -20,6 +20,7 @@ export declare namespace EndpointUrl {
     }>;
 }
 
+// TODO: this component needs a refresh
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
     { path, method, environment, showEnvironment, large, className },
     parentRef,
@@ -41,6 +42,20 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     <span className="t-muted">{url.host}</span>
                 </span>,
             );
+
+            url.pathname?.split("/").forEach((part, i) => {
+                if (part.trim().length === 0) {
+                    return;
+                }
+                elements.push(
+                    <span key={`separator-base-${i}`} className="text-faded">
+                        {"/"}
+                    </span>,
+                    <span key={`part-base-${i}`} className="whitespace-nowrap text-faded">
+                        {part}
+                    </span>,
+                );
+            });
         }
         parts.forEach((p, i) => {
             elements.push(
@@ -56,7 +71,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                         );
                     },
                     pathParameter: (pathParameter) => (
-                        <span key={`part-${i}`} className="bg-accent-highlight t-accent whitespace-nowrap rounded px-1">
+                        <span key={`part-${i}`} className="t-accent bg-accent-highlight whitespace-nowrap rounded px-1">
                             :{pathParameter.name}
                         </span>
                     ),
@@ -73,7 +88,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
             <div className={cn("flex items-center")}>
                 <CopyToClipboardButton content={buildRequestUrl(environment, path)}>
                     {(onClick) => (
-                        <span
+                        <button
                             className={cn(
                                 "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-default",
                             )}
@@ -87,7 +102,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             >
                                 {renderPathParts(endpointPathParts)}
                             </span>
-                        </span>
+                        </button>
                     )}
                 </CopyToClipboardButton>
             </div>

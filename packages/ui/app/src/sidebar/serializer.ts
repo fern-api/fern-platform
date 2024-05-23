@@ -1,17 +1,31 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, SidebarNodeRaw } from "@fern-ui/fdr-utils";
-import { SerializeMdxOptions, maybeSerializeMdxContent } from "../mdx/mdx";
+import { FernSerializeMdxOptions, maybeSerializeMdxContent } from "../mdx/mdx";
 
 export async function serializeSidebarNodeDescriptionMdx(
     node: SidebarNodeRaw,
-    options?: SerializeMdxOptions,
+    options?: FernSerializeMdxOptions,
 ): Promise<SidebarNode> {
     return visitDiscriminatedUnion(node, "type")._visit<Promise<SidebarNode>>({
-        pageGroup: async (pageGroup) => ({
+        pageGroup: async (pageGroup): Promise<SidebarNode.PageGroup> => ({
             ...pageGroup,
             pages: await Promise.all(
-                pageGroup.pages.map(async (page) =>
-                    page.type === "page" ? await serializePageDescriptionMdx(page, options) : page,
+                pageGroup.pages.map((page) =>
+                    visitDiscriminatedUnion(page, "type")._visit<
+                        Promise<SidebarNode.Section | SidebarNode.Page | SidebarNodeRaw.Link>
+                    >({
+                        section: async (section) => ({
+                            ...section,
+                            items: await Promise.all(
+                                section.items.map((item) => serializeSidebarNodeDescriptionMdx(item, options)),
+                            ),
+                        }),
+                        page: (value) => serializePageDescriptionMdx(value, options),
+                        link: async (value) => value,
+                        _other: (): never => {
+                            throw new Error("Unexpected page type");
+                        },
+                    }),
                 ),
             ),
         }),
@@ -25,8 +39,8 @@ export async function serializeSidebarNodeDescriptionMdx(
 }
 
 async function serializeApiSectionDescriptionMdx(
-    apiSection: SidebarNodeRaw.ApiSection,
-    options?: SerializeMdxOptions,
+    { flattenedApiDefinition, ...apiSection }: SidebarNodeRaw.ApiSection,
+    options?: FernSerializeMdxOptions,
 ): Promise<SidebarNode.ApiSection> {
     return {
         ...apiSection,
@@ -40,15 +54,26 @@ async function serializeApiSectionDescriptionMdx(
         changelog: apiSection.changelog
             ? await serializePageDescriptionMdx<SidebarNode.ChangelogPage>(apiSection.changelog, options)
             : undefined,
+        summaryPage: apiSection.summaryPage
+            ? await serializePageDescriptionMdx<SidebarNode.ApiSummaryPage>(apiSection.summaryPage, options)
+            : undefined,
+        isSidebarFlattened: flattenedApiDefinition?.isSidebarFlattened ?? false,
     };
 }
 
 async function serializePageDescriptionMdx<
     R extends SidebarNode.Page,
     P extends SidebarNodeRaw.Page = SidebarNodeRaw.Page,
->({ description, ...page }: P, options?: SerializeMdxOptions): Promise<R> {
+>(page: P, options?: FernSerializeMdxOptions): Promise<R> {
+    if (SidebarNodeRaw.isEndpointPage(page) && page.stream != null) {
+        return {
+            ...page,
+            description: await maybeSerializeMdxContent(page.description, options),
+            stream: await serializePageDescriptionMdx(page.stream, options),
+        } as unknown as R;
+    }
     return {
         ...page,
-        description: await maybeSerializeMdxContent(description, options),
+        description: await maybeSerializeMdxContent(page.description, options),
     } as unknown as R;
 }

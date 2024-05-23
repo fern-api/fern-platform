@@ -13,7 +13,8 @@
     "jsonpath",
     "cssnano",
     "node-fetch",
-    "@types/node-fetch"
+    "@types/node-fetch",
+    "sharp"
   ],
   "ignore-patterns": ["dist"]
 }

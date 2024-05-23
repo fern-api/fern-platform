@@ -1,4 +1,5 @@
 const plugin = require("tailwindcss/plugin");
+const { blackA } = require("@radix-ui/colors");
 
 const round = (num) =>
     num
@@ -6,6 +7,18 @@ const round = (num) =>
         .replace(/(\.[0-9]+?)0+$/, "$1")
         .replace(/\.0$/, "");
 const em = (px, base) => `${round(px / base)}em`;
+
+const generateScale = (name) => {
+    let scale = Array.from({ length: 12 }, (_, i) => {
+        let id = i + 1;
+        return [
+            [id, `var(--${name}-${id})`],
+            [`a${id}`, `var(--${name}-a${id})`],
+        ];
+    }).flat();
+
+    return Object.fromEntries(scale);
+};
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -25,6 +38,7 @@ module.exports = {
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
+                "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
                 icon: "15px",
             },
             flex: {
@@ -40,34 +54,60 @@ module.exports = {
                 "8xl": "88rem",
             },
             boxShadow: {
-                header: "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
-                "header-dark": "0px 4px 24px 0px rgba(var(--accent-primary), 10%)",
+                header: "0px 4px 24px 0px rgba(var(--accent), 10%)",
+                "header-dark": "0px 4px 24px 0px rgba(var(--accent), 10%)",
                 "card-light": "0 1px 2px rgba(17,20,24,.06)",
-                "card-light-elevated": "0 1px 2px rgba(17,20,24,.1), 0 3px 6px rgba(17,20,24,.06)",
+                "card-light-elevated": "0 1px 2px rgba(17,20,24,.2), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
-                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.1), 0 2px 24px rgba(221, 243, 255,.1)",
+                "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.05), 0 2px 24px rgba(221, 243, 255,.05)",
             },
 
             colors: {
-                "accent-primary": withOpacity("--accent-primary"),
-                "accent-primary-aa": withOpacity("--accent-primary-aa"),
-                "accent-primary-aaa": withOpacity("--accent-primary-aaa"),
-                "accent-primary-tinted": withOpacity("--accent-primary-tinted"),
-                "accent-primary-contrast": withOpacity("--accent-primary-contrast"),
-                "accent-highlight": "rgba(var(--accent-primary), 20%)",
-                "accent-highlight-faded": "rgba(var(--accent-primary), 10%)",
+                ...blackA,
+                "fern-green": "#49932B",
+                "fern-green-dark": "#ADFF8C",
+
+                /* Radix palettes */
+                green: generateScale("green"),
+                "green-dark": generateScale("green-dark"),
+                amber: generateScale("amber"),
+                "amber-dark": generateScale("amber-dark"),
+                red: generateScale("red"),
+                "red-dark": generateScale("red-dark"),
+                blue: generateScale("blue"),
+                "blue-dark": generateScale("blue-dark"),
+                /* End of Radix palettes */
+
+                /* Full custom scale */
+                grayscale: generateScale("grayscale"),
+                // "accent": generateScale("accent")},
+
+                /* Tokens */
+                accent: withOpacity("--accent"),
+                "accent-aa": withOpacity("--accent-aa"),
+                "accent-aaa": withOpacity("--accent-aaa"),
+                "accent-tinted": "var(--accent-10)",
+                "accent-contrast": withOpacity("--accent-contrast"),
+                "accent-muted": `var(--accent-6)`,
+                "accent-highlight": "var(--accent-3)",
+                "accent-highlight-faded": "var(--accent-2)",
                 background: withOpacity("--background"),
 
-                "method-get": "#49A68C",
-                "method-post": "#487FAB",
-                "method-delete": "#E75B4D",
-                "method-put": "#E99368",
-                "method-patch": "#E99368",
-                "method-get-dark": "#A7F3D0",
-                "method-post-dark": "#70ABEC",
-                "method-delete-dark": "#F87F71",
-                "method-put-dark": "#FDBA74",
-                "method-patch-dark": "#FDBA74",
+                "method-get": "var(--green-a10)",
+                "method-post": "var(--blue-a10)",
+                "method-delete": "var(--red-a10)",
+                "method-put": "var(--amber-a10)",
+                "method-patch": "var(--amber-a10)",
+                "text-method-get": "var(--green-a11)",
+                "text-method-post": "var(--blue-a11)",
+                "text-method-delete": "var(--red-a11)",
+                "text-method-put": "var(--amber-a11)",
+                "text-method-patch": "var(--amber-a11)",
+                "tag-method-get": "var(--green-a3)",
+                "tag-method-post": "var(--blue-a3)",
+                "tag-method-delete": "var(--red-a3)",
+                "tag-method-put": "var(--amber-a3)",
+                "tag-method-patch": "var(--amber-a3)",
 
                 "intent-default": "var(--grayscale-a11)",
                 "intent-default-lightened": "var(--grayscale-a12)",
@@ -99,32 +139,34 @@ module.exports = {
                 },
 
                 "card-background": "var(--card-background)",
+                "card-solid": "var(--card-background-solid)",
                 "sidebar-background": "var(--sidebar-background)",
                 "header-background": "var(--header-background)",
 
                 // "border-default": "var(--grayscale-a5)",
                 "border-default": "var(--border)",
                 "border-concealed": "var(--border-concealed)",
-                "border-accent-muted": "rgba(var(--accent-primary), 0.50)",
+                "border-accent-muted": "rgba(var(--accent), 0.50)",
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",
                 "border-danger": "var(--red-a8)",
                 "border-info": "var(--blue-a8)",
 
                 "border-default-soft": "var(--grayscale-a6)",
-                "border-primary-soft": "rgba(var(--accent-primary), 30%)",
+                "border-primary-soft": "rgba(var(--accent), 30%)",
                 "border-warning-soft": "var(--amber-a6)",
                 "border-success-soft": "var(--green-a6)",
                 "border-danger-soft": "var(--red-a6)",
                 "border-info-soft": "var(--blue-a6)",
 
                 "text-default": withOpacity("--body-text"),
+                "text-default-inverted": withOpacity("--body-text-inverted"),
                 "text-muted": "var(--grayscale-a11)",
                 "text-disabled": "var(--grayscale-a10)",
                 faded: "var(--grayscale-a9)",
 
                 "tag-default-soft": "var(--grayscale-a2)",
-                "tag-primary-soft": "rgba(var(--accent-primary), 10%)",
+                "tag-primary-soft": "rgba(var(--accent), 10%)",
                 "tag-warning-soft": "var(--amber-a2)",
                 "tag-success-soft": "var(--green-a2)",
                 "tag-danger-soft": "var(--red-a2)",
@@ -133,7 +175,7 @@ module.exports = {
                 "tag-default": "var(--grayscale-a3)",
                 "tag-default-solid": "var(--grayscale-3)",
                 "tag-default-hover": "var(--grayscale-a4)",
-                "tag-primary": "rgba(var(--accent-primary), 15%)",
+                "tag-primary": "rgba(var(--accent), 15%)",
                 "tag-warning": "var(--amber-a3)",
                 "tag-success": "var(--green-a3)",
                 "tag-danger": "var(--red-a3)",
@@ -166,6 +208,22 @@ module.exports = {
                         },
                         ul: {
                             maxWidth: "var(--spacing-content-width)",
+                        },
+
+                        // remove quotes from code blocks
+                        "code::before": {
+                            content: "",
+                        },
+                        "code::after": {
+                            content: "",
+                        },
+
+                        // remove opening and closing quotes
+                        "blockquote p:first-of-type::before": {
+                            content: "",
+                        },
+                        "blockquote p:last-of-type::after": {
+                            content: "",
                         },
                     },
                 },
@@ -232,6 +290,28 @@ module.exports = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: 0 },
                 },
+                "thumb-rock": {
+                    "0%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "30%": {
+                        transform: "rotate(15deg)",
+                    },
+                    "80%": {
+                        transform: "rotate(-10deg)",
+                    },
+                    "100%": {
+                        transform: "rotate(0deg)",
+                    },
+                },
+                "overlay-show": {
+                    from: { opacity: "0", backdropFilter: "blur(0)" },
+                    to: { opacity: "1", backdropFilter: "blur(4px)" },
+                },
+                "content-show": {
+                    from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
+                    to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -245,6 +325,9 @@ module.exports = {
                 shine: "shine 5s ease-in-out infinite",
                 "slide-down": "slide-down 400ms cubic-bezier(0.87, 0, 0.13, 1)",
                 "slide-up": "slide-up 400ms cubic-bezier(0.87, 0, 0.13, 1)",
+                "thumb-rock": "thumb-rock 500ms both",
+                "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },
@@ -263,13 +346,13 @@ module.exports = {
                     "@apply text-text-muted dark:text-text-muted dark:[text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]": {},
                 },
                 ".t-accent": {
-                    "@apply text-accent-primary-aa": {},
+                    "@apply text-accent-aa": {},
                 },
                 ".t-accent-aaa": {
-                    "@apply text-accent-primary-aaa": {},
+                    "@apply text-accent-aaa": {},
                 },
                 ".t-accent-contrast": {
-                    "@apply text-accent-primary-contrast": {},
+                    "@apply text-accent-contrast": {},
                 },
                 ".t-success": {
                     "@apply text-intent-success": {},
@@ -279,6 +362,12 @@ module.exports = {
                 },
                 ".t-danger": {
                     "@apply text-intent-danger": {},
+                },
+                ".text-intent-default": {
+                    "@apply text-text-default": {},
+                },
+                ".text-intent-none": {
+                    "@apply text-text-default": {},
                 },
                 // Background
                 // ".bg-background": {
@@ -296,29 +385,8 @@ module.exports = {
                 ".bg-card": {
                     "@apply bg-card-background": {},
                 },
-                ".bg-accent": {
-                    "@apply bg-accent-primary": {},
-                },
-                ".bg-accent-muted": {
-                    "@apply bg-accent-primary/70": {},
-                },
-                ".bg-accent-aa": {
-                    "@apply bg-accent-primary-aa": {},
-                },
-                ".bg-accent-aaa": {
-                    "@apply bg-accent-primary-aaa": {},
-                },
-                ".bg-accent-contrast": {
-                    "@apply bg-accent-primary-contrast": {},
-                },
-                ".bg-accent-tinted": {
-                    "@apply bg-accent-primary-tinted": {},
-                },
-                ".bg-accent-highlight": {
-                    "@apply bg-accent-primary/20": {},
-                },
-                ".bg-accent-highlight-faded": {
-                    "@apply bg-accent-primary/10": {},
+                ".bg-card-surface": {
+                    "@apply bg-card dark:bg-white/5": {},
                 },
                 ".bg-border-primary": {
                     "@apply bg-border-accent-muted": {},
@@ -412,11 +480,8 @@ module.exports = {
                 ".shadow-border-primary": {
                     "@apply shadow-border-accent-muted": {},
                 },
-                ".shadow-accent": {
-                    "@apply shadow-accent-primary": {},
-                },
                 ".shadow-card": {
-                    "@apply shadow-card-light dark:shadow-card-dark": {},
+                    "@apply shadow-card-light": {},
                 },
                 ".shadow-card-elevated": {
                     "@apply shadow-card-light-elevated dark:shadow-card-dark-elevated": {},

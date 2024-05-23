@@ -30,18 +30,20 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/core-utils": "workspace:*"
+    "@fern-ui/core-utils": "workspace:*",
+    "url-join": "4.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
+    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^1.4.0",
     "next-mdx-remote": "^4.4.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "stylelint": "^16.1.0",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
   }
 }

@@ -1,11 +1,12 @@
 import { flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
 import {
+    ApiDefinitionResolver,
     REGISTRY_SERVICE,
-    resolveApiDefinition,
     serializeSidebarNodeDescriptionMdx,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { getFeatureFlags } from "./feature-flags";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
     try {
@@ -31,9 +32,11 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
         }
 
         const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
-
+        const url = `${hostWithoutTrailingSlash}${pathname}`;
+        // eslint-disable-next-line no-console
+        console.log("[resolve-api] Loading docs for", url);
         const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-            url: `${hostWithoutTrailingSlash}${pathname}`,
+            url,
         });
 
         if (!docs.ok) {
@@ -43,6 +46,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
         const docsDefinition = docs.body.definition;
         const basePath = docs.body.baseUrl.basePath;
+        const pages = docs.body.definition.pages;
 
         const apiDefinition = docsDefinition.apis[api];
 
@@ -53,9 +57,11 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
         const navigation = getNavigationRoot(
             pathname.slice(1).split("/"),
+            docs.body.baseUrl.domain,
             basePath,
             docsDefinition.config.navigation,
             docsDefinition.apis,
+            pages,
         );
 
         if (navigation == null || navigation.type === "redirect") {
@@ -67,9 +73,20 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
         );
 
-        const apiSectionSlug = findApiSection(api, sidebarNodes)?.slug;
+        const apiSection = findApiSection(api, sidebarNodes);
 
-        res.status(200).json(await resolveApiDefinition(flattenApiDefinition(apiDefinition, apiSectionSlug ?? [])));
+        const featureFlags = await getFeatureFlags(docs.body.baseUrl.domain);
+
+        res.status(200).json(
+            await ApiDefinitionResolver.resolve(
+                apiSection?.title ?? "",
+                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined, docs.body.baseUrl.domain),
+                pages,
+                undefined,
+                featureFlags,
+                docs.body.baseUrl.domain,
+            ),
+        );
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
@@ -79,7 +96,7 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
 export default resolveApiHandler;
 
-function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode | undefined {
+function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
     for (const node of sidebarNodes) {
         if (node.type === "apiSection" && node.api === api) {
             return node;

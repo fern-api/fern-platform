@@ -14,4 +14,12 @@ bundle.c?js
 **/fern/**
 out
 pnpm-lock.yaml
-**/generated/**
+**/generated/
+**/.serverless/**
+clis/docs-migrator/src/__test__/fixtures/**
+clis/docs-migrator/src/__test__/fixtures/bland/api-reference/endpoint/call.mdx
+**/__test__/**/*.mdx
+**/__test__/**/*.md
+**/__test__/**/*.snap
+**/__test__/fixtures/
+**/__test__/outputs/

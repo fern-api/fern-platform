@@ -23,11 +23,3 @@
 .playground-endpoint:hover .playground-endpoint-baseurl {
     @apply t-muted;
 }
-
-.mask-grad-top {
-    mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
-}
-
-/* .mask-grad-bottom {
-    mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 1) 24px);
-} */

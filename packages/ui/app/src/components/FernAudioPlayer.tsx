@@ -8,7 +8,7 @@ export interface FernAudioPlayerProps {
     /** The URL of the audio file to play */
     src: string;
     /** The title of the audio file */
-    title: string;
+    title?: string;
     author?: string;
     /** The author of the audio file */
     autoPlay?: boolean;
@@ -41,7 +41,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
             </audio>
             <div className="relative flex flex-1 flex-col justify-center gap-1">
                 <p className="m-0 inline-flex justify-center gap-2 text-center">
-                    <span className="t-accent max-w-[40vw] truncate">{props.title}</span>
+                    {props.title != null && <span className="t-accent max-w-[40vw] truncate">{props.title}</span>}
                     {props.author && (
                         <>
                             <span>&mdash;</span>
@@ -78,7 +78,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             }}
                         />
                         <FernButton
-                            icon={isPlaying ? <Pause /> : <Play className="fill-accent-primary-contrast -mr-0.5" />}
+                            icon={isPlaying ? <Pause /> : <Play className="-mr-0.5 fill-accent-contrast" />}
                             variant="filled"
                             intent="primary"
                             rounded

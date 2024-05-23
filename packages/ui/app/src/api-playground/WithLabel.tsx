@@ -12,7 +12,7 @@ import {
     WithAvailability,
     WithDescription,
     unwrapOptional,
-} from "../util/resolver";
+} from "../resolver/types";
 import { shouldRenderInline } from "./utils";
 
 interface WithLabelProps {
@@ -48,7 +48,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
             renderInline={renderInline}
             isRequired={property.valueShape.type !== "optional"}
             isList={valueShape.type === "list"}
-            isBoolean={valueShape.type === "boolean"}
+            isBoolean={valueShape.type === "primitive" && valueShape.value.type === "boolean"}
             typeShorthand={renderTypeShorthand(valueShape, undefined, types)}
         >
             {children}

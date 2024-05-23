@@ -14,4 +14,18 @@ describe("ParsedBaseUrl", () => {
         expect(parsedUrl.path).toEqual("/docs");
         expect(parsedUrl.getFullUrl()).toEqual("buildwithfern.com/docs");
     });
+
+    it("apidocs.polytomic.com", () => {
+        const parsedUrl = ParsedBaseUrl.parse("apidocs.polytomic.com");
+        expect(parsedUrl.hostname).toEqual("apidocs.polytomic.com");
+        expect(parsedUrl.path).toEqual(undefined);
+        expect(parsedUrl.toURL()).toEqual(new URL("https://apidocs.polytomic.com"));
+    });
+
+    it("polytomic.docs.buildwithfern.com", () => {
+        const parsedUrl = ParsedBaseUrl.parse("polytomic.docs.buildwithfern.com");
+        expect(parsedUrl.hostname).toEqual("polytomic.docs.buildwithfern.com");
+        expect(parsedUrl.path).toEqual(undefined);
+        expect(parsedUrl.toURL()).toEqual(new URL("https://polytomic.docs.buildwithfern.com"));
+    });
 });

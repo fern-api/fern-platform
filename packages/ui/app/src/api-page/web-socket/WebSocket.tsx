@@ -9,23 +9,25 @@ import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAn
 import { FernScrollArea } from "../../components/FernScrollArea";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
-import { getSlugFromChildren } from "../../util/getSlugFromText";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
     ResolvedUndiscriminatedUnionShapeVariant,
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
+    getParameterDescription,
+    stringifyResolvedEndpointPathParts,
     unwrapReference,
-} from "../../util/resolver";
+} from "../../resolver/types";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
+import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
 import { TitledExample } from "../examples/TitledExample";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
@@ -103,7 +105,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
 
     return (
         <div
-            className={"scroll-mt-header-height-padded mx-4 md:mx-6 lg:mx-8"}
+            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
             ref={setTargetRef}
             data-route={route.toLowerCase()}
         >
@@ -137,8 +139,8 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                 title={
                                     <span className="inline-flex items-center gap-2">
                                         {"Handshake"}
-                                        <span className="bg-tag-default inline-block rounded-full p-1">
-                                            <Wifi className="t-muted size-[15px]" strokeWidth={1.5} />
+                                        <span className="inline-block rounded-full bg-tag-default p-1">
+                                            <Wifi className="t-muted size-icon" strokeWidth={1.5} />
                                         </span>
                                     </span>
                                 }
@@ -176,7 +178,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "headers", parameter.key]}
                                                         route={route}
-                                                        description={parameter.description}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -200,7 +202,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
                                                         route={route}
-                                                        description={parameter.description}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -224,7 +226,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "query", parameter.key]}
                                                         route={route}
-                                                        description={parameter.description}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -239,7 +241,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     title={
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
-                                            <span className="bg-tag-success t-success inline-block rounded-full p-1">
+                                            <span className="t-success inline-block rounded-full bg-tag-success p-1">
                                                 <ArrowUpIcon />
                                             </span>
                                         </span>
@@ -274,7 +276,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                     title={
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
-                                            <span className="bg-tag-primary t-accent-aaa inline-block rounded-full p-1">
+                                            <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
                                                 <ArrowDownIcon />
                                             </span>
                                         </span>
@@ -306,11 +308,10 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                         </main>
                     </section>
                     <aside className="max-w-content-width">
-                        {example != null && example.messages.length > 0 && (
-                            <div className="max-h-vh-minus-header scroll-mt-header-height top-header-height sticky flex flex-col gap-6 py-8">
+                        {
+                            <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
-                                    type={"primary"}
                                     actions={
                                         <PlaygroundButton
                                             state={{
@@ -329,7 +330,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example.path ?? ""}`}
+                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -345,13 +346,15 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                         </div>
                                     </FernScrollArea>
                                 </TitledExample>
-                                <TitledExample title={"Messages"} type={"primary"} className="min-h-0 shrink">
-                                    <FernScrollArea className="rounded-b-[inherit]">
-                                        <WebSocketMessages messages={exampleMessages} />
-                                    </FernScrollArea>
-                                </TitledExample>
+                                {exampleMessages.length > 0 && (
+                                    <TitledExample title={"Messages"} className="min-h-0 shrink">
+                                        <FernScrollArea className="rounded-b-[inherit]">
+                                            <WebSocketMessages messages={exampleMessages} />
+                                        </FernScrollArea>
+                                    </TitledExample>
+                                )}
                             </div>
-                        )}
+                        }
                     </aside>
                 </div>
             </article>
@@ -380,7 +383,7 @@ function CardedSection({
             data-route={anchorRoute}
             className="border-default divide-default -mx-4 divide-y rounded-xl border"
         >
-            <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
+            <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />
                     {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">

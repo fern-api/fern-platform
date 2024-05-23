@@ -1,0 +1,82 @@
+imports:
+  commons: commons.yml
+
+types:
+  APIDiff:
+    properties:
+      addedEndpoints: list<AddedEndpoint>
+      removedEndpoints: list<RemovedEndpoint>
+      updatedEndpoints: list<UpdatedEndpoint>
+      markdown: string
+
+  RemovedEndpoint:
+    properties:
+      id: commons.EndpointIdentifier
+
+  AddedEndpoint:
+    properties:
+      id: commons.EndpointIdentifier
+
+  UpdatedEndpoint:
+    properties:
+      id: commons.EndpointIdentifier
+      pathParameterDiff: PathParameterDiff
+      queryParameterDiff: QueryParameterDiff
+      requestBodyDiff: RequestBodyDiff
+      responseBodyDiff: ResponseBodyDiff
+
+  PathParameterDiff:
+    properties:
+      added: list<PathParameter>
+      removed: list<PathParameter>
+
+  PathParameter:
+    properties:
+      wireKey: string
+
+  QueryParameterDiff:
+    properties:
+      added: list<QueryParameter>
+      removed: list<QueryParameter>
+
+  QueryParameter:
+    properties:
+      wireKey: string
+
+  RequestBodyDiff:
+    properties:
+      added: list<RequestBodyParameter>
+      removed: list<RequestBodyParameter>
+
+  RequestBodyParameter:
+    properties:
+      wireKey: string
+
+  ResponseBodyDiff:
+    properties:
+      added: list<ResponseBodyParameter>
+      removed: list<ResponseBodyParameter>
+
+  ResponseBodyParameter:
+    properties:
+      wireKey: string
+
+service:
+  base-path: /registry
+  auth: true
+  endpoints:
+    diff:
+      method: GET
+      path: /diff
+      request:
+        name: APIDiffRequest
+        query-parameters:
+          previousApiDefinitionId:
+            type: commons.ApiDefinitionId
+            docs: The id of the previous version of the api definition
+          currentApiDefinitionId:
+            type: commons.ApiDefinitionId
+            docs: The id of the current version of the api definition
+      response:
+        type: APIDiff
+        docs: The diff between the previous and current api definitions

@@ -4,9 +4,19 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "isolatedModules": false,
+
     "paths": {
-      "@prisma/client": ["../prisma/client"],
+      "@prisma/client": ["../prisma/client"]
     },
+
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // Set `sourceRoot` to  "/" to strip the build path prefix
+    // from generated source code references.
+    // This improves issue grouping in Sentry.
+    "sourceRoot": "/"
   },
   "include": ["./src/**/*"],
+  "references": [{ "path": "../../packages/fdr-sdk" }, { "path": "../../packages/template-resolver" }]
 }

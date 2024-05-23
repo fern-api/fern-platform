@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import { kebabCase } from "lodash-es";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -9,10 +9,10 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
+import { isNavigationTabLink } from "../../client/visitNavigationTab";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
-const { kebabCase } = lodash;
 
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
@@ -94,7 +94,8 @@ export function convertDocsDefinitionToDb({
                 writeShape.config.colorsV3 != null
                     ? transformColorsV3ForDb({ writeShape: writeShape.config.colorsV3, docsConfig: writeShape.config })
                     : undefined,
-            navbarLinks: writeShape.config.navbarLinks ?? [],
+            navbarLinks: writeShape.config.navbarLinks,
+            footerLinks: writeShape.config.footerLinks,
             title: writeShape.config.title,
             favicon: writeShape.config.favicon,
             backgroundImage: writeShape.config.backgroundImage,
@@ -103,6 +104,9 @@ export function convertDocsDefinitionToDb({
             layout: writeShape.config.layout,
             css: writeShape.config.css,
             js: writeShape.config.js,
+            metadata: writeShape.config.metadata,
+            redirects: writeShape.config.redirects,
+            integrations: writeShape.config.integrations,
         },
         pages: writeShape.pages,
     };
@@ -152,6 +156,9 @@ function transformUnversionedNavigationConfigForDb(
 }
 
 export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTab): DocsV1Db.NavigationTab {
+    if (isNavigationTabLink(writeShape)) {
+        return writeShape;
+    }
     return {
         ...writeShape,
         items: writeShape.items.map(transformNavigationItemForDb),
@@ -168,8 +175,10 @@ export function transformNavigationItemForDb(
                 ...writeShape,
                 icon: writeShape.icon,
                 hidden: writeShape.hidden ?? false,
+                longScrolling: writeShape.longScrolling,
+                flattened: writeShape.flattened,
                 fullSlug: writeShape.fullSlug,
-                urlSlug: kebabCase(writeShape.title),
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 artifacts:
                     writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
@@ -190,17 +199,10 @@ export function transformNavigationItemForDb(
                               hidden: writeShape.changelog.hidden ?? false,
                           }
                         : undefined,
+                navigation: transformApiSectionNavigationForDb(writeShape.navigation),
             };
         case "page":
-            return {
-                type: "page",
-                id: writeShape.id,
-                title: writeShape.title,
-                icon: writeShape.icon,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
-                fullSlug: writeShape.fullSlug,
-                hidden: writeShape.hidden ?? false,
-            };
+            return transformPageNavigationItemForDb(writeShape);
         case "section":
             return {
                 type: "section",
@@ -244,7 +246,12 @@ function getReferencedApiDefinitionIdsForUnversionedReadConfig(
             return config.items.flatMap(getReferencedApiDefinitionIdFromItem);
         },
         tabbed: (config) => {
-            return config.tabs.flatMap((tab) => tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+            return config.tabs.flatMap((tab) => {
+                if (isNavigationTabLink(tab)) {
+                    return [];
+                }
+                return tab.items.flatMap(getReferencedApiDefinitionIdFromItem);
+            });
         },
     });
 }
@@ -393,4 +400,54 @@ function transformColorsV3ForDb({
         default:
             assertNever(writeShape);
     }
+}
+
+function transformPageNavigationItemForDb(
+    writeShape: DocsV1Write.PageMetadata,
+): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page>;
+function transformPageNavigationItemForDb(
+    writeShape: DocsV1Write.PageMetadata | undefined,
+): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined;
+function transformPageNavigationItemForDb(
+    writeShape: DocsV1Write.PageMetadata | undefined,
+): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined {
+    if (writeShape == null) {
+        return undefined;
+    }
+    return {
+        type: "page",
+        id: writeShape.id,
+        title: writeShape.title,
+        icon: writeShape.icon,
+        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+        fullSlug: writeShape.fullSlug,
+        hidden: writeShape.hidden ?? false,
+    };
+}
+
+function transformApiSectionNavigationForDb(
+    writeShape: DocsV1Write.ApiNavigationConfigRoot | undefined,
+): DocsV1Db.ApiSection["navigation"] | undefined {
+    if (writeShape == null) {
+        return undefined;
+    }
+    return {
+        items: transformItems(writeShape.items),
+        summaryPageId: writeShape.summaryPageId,
+    };
+}
+
+function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
+    return items.map((item): DocsV1Read.ApiNavigationConfigItem => {
+        if (item.type === "subpackage") {
+            return {
+                type: "subpackage",
+                subpackageId: item.subpackageId,
+                items: transformItems(item.items),
+            };
+        } else if (item.type === "page") {
+            return transformPageNavigationItemForDb(item);
+        }
+        return item;
+    });
 }

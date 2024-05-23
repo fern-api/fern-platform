@@ -1,9 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import * as Tabs from "@radix-ui/react-tabs";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
-import { FernCard } from "../../components/FernCard";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
@@ -11,7 +9,8 @@ import {
     ResolvedHttpResponseBodyShape,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
-} from "../../util/resolver";
+    getParameterDescription,
+} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -54,8 +53,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     onHoverResponseProperty,
     selectedError,
     setSelectedError,
-    contentType,
-    setContentType,
+    // contentType,
+    // setContentType,
     types,
 }) => {
     const requestExpandAll = useBooleanState(false);
@@ -81,7 +80,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_PATH, parameter.key]}
                                     route={"/" + endpoint.slug.join("/")}
-                                    description={parameter.description}
+                                    description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -101,7 +100,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_HEADER, parameter.key]}
                                     route={"/" + endpoint.slug.join("/")}
-                                    description={parameter.description}
+                                    description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -125,7 +124,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_QUERY, parameter.key]}
                                     route={"/" + endpoint.slug.join("/")}
-                                    description={parameter.description}
+                                    description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -134,11 +133,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </div>
                 </EndpointSection>
             )}
-            {endpoint.requestBody.length > 1 ? (
+            {/* {endpoint.requestBody.length > 1 && (
                 <Tabs.Root asChild={true} value={contentType} onValueChange={setContentType}>
                     <FernCard className="-mx-4 rounded-xl shadow-sm">
-                        <div className="bg-tag-default-soft rounded-t-[inherit]">
-                            <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
+                        <div className="rounded-t-[inherit] bg-tag-default-soft">
+                            <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
                                 <Tabs.List className="flex min-h-10 overflow-x-auto px-4 font-mono">
                                     <div className="mr-2 flex items-center">
                                         <span className="t-muted text-xs font-semibold">Content-Type:</span>
@@ -147,9 +146,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         <Tabs.Trigger
                                             key={requestBody.contentType}
                                             value={requestBody.contentType}
-                                            className="data-[state=active]:shadow-accent-primary group flex min-h-10 cursor-default items-center px-0 py-2 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
+                                            className="group flex min-h-10 cursor-default items-center px-0 py-2 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] data-[state=active]:shadow-accent"
                                         >
-                                            <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default rounded px-2 py-1 text-xs group-data-[state=active]:font-semibold">
+                                            <span className="t-muted rounded px-2 py-1 text-xs group-data-[state=active]:t-default group-hover:bg-tag-default group-data-[state=active]:font-semibold">
                                                 {requestBody.contentType}
                                             </span>
                                         </Tabs.Trigger>
@@ -183,18 +182,19 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         </div>
                     </FernCard>
                 </Tabs.Root>
-            ) : endpoint.requestBody[0] != null ? (
+            )} */}
+            {endpoint.requestBody != null && (
                 <EndpointSection
-                    key={endpoint.requestBody[0].contentType}
+                    key={endpoint.requestBody.contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
                     route={"/" + endpoint.slug.join("/")}
                     expandAll={requestExpandAll.setTrue}
                     collapseAll={requestExpandAll.setFalse}
-                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody[0].shape, types)}
+                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody.shape, types)}
                 >
                     <EndpointRequestSection
-                        requestBody={endpoint.requestBody[0]}
+                        requestBody={endpoint.requestBody}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
                         route={"/" + endpoint.slug.join("/")}
@@ -202,7 +202,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         types={types}
                     />
                 </EndpointSection>
-            ) : null}
+            )}
             {endpoint.responseBody != null && (
                 <EndpointSection
                     title="Response"
@@ -289,8 +289,8 @@ function shouldShowExpandCollapse(
     depth = 0,
 ): boolean {
     return visitDiscriminatedUnion(shape, "type")._visit({
-        string: () => false,
-        boolean: () => false,
+        primitive: () => false,
+        literal: () => false,
         object: (object) =>
             depth > 1
                 ? true
@@ -303,19 +303,10 @@ function shouldShowExpandCollapse(
         enum: () => false,
         alias: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         unknown: () => false,
-        fileUpload: () => false,
-        integer: () => false,
-        double: () => false,
-        long: () => false,
-        datetime: () => false,
-        uuid: () => false,
-        base64: () => false,
-        date: () => false,
+        formData: () => false,
         optional: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         list: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
         set: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        booleanLiteral: () => false,
-        stringLiteral: () => false,
         reference: ({ typeId }) => {
             const referenceShape = types[typeId];
             if (referenceShape == null) {

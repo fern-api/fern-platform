@@ -4,7 +4,6 @@ import { ChevronDownIcon, SlashIcon } from "@radix-ui/react-icons";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import cn from "clsx";
 import { FC, Fragment, useCallback, useRef } from "react";
-import { withStream } from "../commons/withStream";
 import { FernButton } from "../components/FernButton";
 import { usePlaygroundContext } from "./PlaygroundContext";
 import { ApiGroup, PlaygroundEndpointSelectorContent } from "./PlaygroundEndpointSelectorContent";
@@ -90,9 +89,7 @@ export const PlaygroundEndpointSelector: FC<PlaygroundEndpointSelectorProps> = (
 
                             <span className="whitespace-nowrap font-semibold">
                                 {selectedEndpoint != null
-                                    ? selectedEndpoint.apiType === "endpoint" && selectedEndpoint.stream
-                                        ? withStream(selectedEndpoint.title)
-                                        : selectedEndpoint.title
+                                    ? selectedEndpoint.title
                                     : placeholderText ?? "Select an endpoint"}
                             </span>
                         </span>

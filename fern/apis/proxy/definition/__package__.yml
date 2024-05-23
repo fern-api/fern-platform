@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /api/fern-docs/proxy
+  endpoints:
+    rest:
+      path: /rest
+      display-name: Proxy REST
+      method: POST
+      request:
+        body: ProxyRequest
+      response: ProxyResponse
+    file:
+      path: /file
+      display-name: Proxy File
+      method: POST
+      request:
+        body: ProxyRequest
+      response: file
+    stream:
+      path: /stream
+      display-name: Proxy Stream
+      method: POST
+      request:
+        body: ProxyRequest
+      response-stream: unknown
+
+types:
+  ProxyRequest:
+    properties:
+      url: string
+      method: string
+      headers: map<string, string>
+      body: RequestSerializableBody
+      stream: optional<boolean>
+      streamTerminator: optional<string>
+
+  ProxyResponse:
+    properties:
+      response: ResponseSerializableBody
+      time: integer
+      size: optional<string>
+
+  RequestSerializableBody:
+    union:
+      json: unknown
+      form-data: map<string, SerializableFormDataEntryValue>
+      octet-stream: SerializableFile
+
+  ResponseSerializableBody:
+    properties:
+      headers: map<string, string>
+      ok: boolean
+      redirected: boolean
+      status: integer
+      statusText: string
+      type: ResponseType
+      url: string
+
+  SerializableFormDataEntryValue:
+    union:
+      file: optional<SerializableFile>
+      fileArray: list<SerializableFileValue>
+      json: FormDataJsonEntry
+
+  FormDataJsonEntry:
+    properties:
+      value: unknown
+      contentType: optional<string>
+
+  SerializableFile:
+    properties:
+      value: SerializableFileValue
+
+  SerializableFileValue:
+    properties:
+      name: string
+      lastModified: integer
+      size: integer
+      type: string
+      dataUrl: base64
+
+  ResponseType:
+    enum:
+      - basic
+      - cors
+      - default
+      - error
+      - opaque
+      - opaqueredirect

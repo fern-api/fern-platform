@@ -6,6 +6,8 @@ import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Se
 import { FdrDao } from "../../db";
 import type { IndexSegment } from "../algolia";
 import { Semaphore } from "../revalidator/Semaphore";
+import LocalDocsDefinitionStore from "./LocalDocsDefinitionStore";
+import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
@@ -23,23 +25,54 @@ export interface DocsDefinitionCache {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<void>;
+
+    initialize(): Promise<void>;
+
+    isInitialized(): boolean;
+
+    invalidateCache(url: URL): Promise<void>;
 }
 
-interface CachedDocsResponse {
+/**
+ * All modifications to this type must be forward compatible.
+ * In other words, only add optional properties.
+ */
+export interface CachedDocsResponse {
+    /** Adding a version to the cached response to allow for breaks in the future. */
+    version: "v2";
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
-    dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfo>;
+    dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2>;
     isPrivate: boolean;
+    usesPublicS3?: boolean;
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
-    private DOCS_CACHE: Record<string, CachedDocsResponse> = {};
+    private localDocsCache: LocalDocsDefinitionStore;
+    private redisDocsCache: RedisDocsDefinitionStore | undefined;
     private DOCS_WRITE_MONITOR: Record<string, Semaphore> = {};
+    private initialized: boolean = false;
 
     constructor(
         private readonly app: FdrApplication,
         private readonly dao: FdrDao,
-    ) {}
+        localDocsCache: LocalDocsDefinitionStore,
+        redisDocsCache: RedisDocsDefinitionStore | undefined,
+    ) {
+        this.localDocsCache = localDocsCache;
+        this.redisDocsCache = redisDocsCache;
+    }
+
+    public isInitialized(): boolean {
+        return this.initialized;
+    }
+
+    public async initialize(): Promise<void> {
+        if (this.redisDocsCache) {
+            await this.redisDocsCache.initializeCache();
+        }
+        this.initialized = true;
+    }
 
     // allows us to block reads from writing to the cache while we are updating it
     private getDocsWriteMonitor(hostname: string): Semaphore {
@@ -51,6 +84,13 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         return monitor;
     }
 
+    public async invalidateCache(url: URL): Promise<void> {
+        if (this.redisDocsCache) {
+            await this.redisDocsCache.delete({ url });
+        }
+        this.localDocsCache.delete({ url });
+    }
+
     public async getDocsForUrl({
         url,
         authorization,
@@ -58,16 +98,30 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         url: URL;
         authorization: string | undefined;
     }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
-        const cachedResponse = this.getDocsForUrlFromCache({ url });
+        const cachedResponse = await this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             this.app.logger.info(`Cache HIT for ${url}`);
             if (cachedResponse.isPrivate) {
                 await this.checkUserBelongsToOrg(url, authorization);
             }
-            const updatedFileEntries = await Promise.all(
-                Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
-                    return [fileId, await this.app.services.s3.getPresignedDownloadUrl({ key: dbFileInfo.s3Key })];
-                }),
+            const filesV2: Record<string, DocsV1Read.File_> = Object.fromEntries(
+                await Promise.all(
+                    Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
+                        const presignedUrl = await this.app.services.s3.getPresignedDownloadUrl({
+                            key: dbFileInfo.s3Key,
+                            isPrivate: cachedResponse.usesPublicS3 === true ? false : true,
+                        });
+
+                        switch (dbFileInfo.type) {
+                            case "image": {
+                                const { s3Key, ...image } = dbFileInfo;
+                                return [fileId, { ...image, url: presignedUrl }];
+                            }
+                            default:
+                                return [fileId, { type: "url", url: presignedUrl }];
+                        }
+                    }),
+                ),
             );
 
             // we always pull updated s3 URLs
@@ -75,7 +129,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 ...cachedResponse.response,
                 definition: {
                     ...cachedResponse.response.definition,
-                    files: Object.fromEntries(updatedFileEntries),
+                    filesV2,
                 },
             };
         }
@@ -85,7 +139,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
         // we don't want to cache from READ if we are currently updating the cache via WRITE
         if (!this.getDocsWriteMonitor(url.hostname).isLocked()) {
-            this.cacheResponse({ url, cachedResponse: dbResponse });
+            await this.cacheResponse({ url, value: dbResponse });
         }
 
         if (dbResponse.isPrivate) {
@@ -139,18 +193,24 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 return await this.getDocsWriteMonitor(docsUrl.hostname).use(async () => {
                     const url = docsUrl.toURL();
                     const dbResponse = await this.getDocsForUrlFromDatabase({ url });
-                    this.cacheResponse({ url, cachedResponse: dbResponse });
+                    await this.cacheResponse({ url, value: dbResponse });
                 });
             }),
         );
     }
 
-    private cacheResponse({ url, cachedResponse }: { url: URL; cachedResponse: CachedDocsResponse }): void {
-        this.DOCS_CACHE[url.hostname] = cachedResponse;
+    private async cacheResponse({ url, value }: { url: URL; value: CachedDocsResponse }): Promise<void> {
+        if (this.redisDocsCache) {
+            await this.redisDocsCache.set({ url, value });
+        }
+        this.localDocsCache.set({ url, value });
     }
 
-    private getDocsForUrlFromCache({ url }: { url: URL }): CachedDocsResponse | undefined {
-        return this.DOCS_CACHE[url.hostname];
+    private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | null> {
+        if (this.redisDocsCache) {
+            return await this.redisDocsCache.get({ url });
+        }
+        return this.localDocsCache.get({ url });
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
@@ -162,6 +222,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 docsV2: dbDocs,
             });
             return {
+                version: "v2",
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
@@ -173,6 +234,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     lightModeEnabled: definition.config.colorsV3?.type !== "dark",
                 },
                 isPrivate: dbDocs.authType !== AuthType.PUBLIC,
+                usesPublicS3: dbDocs.hasPublicS3Assets,
             };
         } else {
             // TODO(dsinghvi): Stop serving the v1 APIs
@@ -183,6 +245,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
+                version: "v2",
                 updatedTime: new Date(),
                 dbFiles: v1Docs.dbFiles ?? {},
                 response: {
@@ -194,6 +257,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                     lightModeEnabled: v1Docs.response.config.colorsV3?.type !== "dark",
                 },
                 isPrivate: false,
+                usesPublicS3: false,
             };
         }
     }

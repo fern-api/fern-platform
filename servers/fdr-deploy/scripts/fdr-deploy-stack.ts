@@ -1,12 +1,13 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
-import { Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
+import { IVpc, Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Cluster, ContainerImage, LogDriver, Volume } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
-import { ApplicationProtocol, HttpCodeTarget } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { CfnReplicationGroup, CfnSubnetGroup } from "aws-cdk-lib/aws-elasticache";
+import { ApplicationProtocol, HttpCodeElb } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
@@ -19,6 +20,28 @@ import { Construct } from "constructs";
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
 
+interface ElastiCacheProps {
+    readonly cacheName: string;
+    readonly IVpc: IVpc;
+    readonly numCacheShards: number;
+    readonly numCacheReplicasPerShard: number | undefined;
+    readonly clusterMode: "enabled" | "disabled";
+    readonly cacheNodeType: string;
+    readonly envType: EnvironmentType;
+    readonly env?: Environment;
+    readonly ingressSecurityGroup?: SecurityGroup;
+}
+
+interface FdrStackOptions {
+    redis: boolean;
+    redisClusteringModeEnabled: boolean;
+    maxTaskCount: number;
+    desiredTaskCount: number;
+    cpu: number;
+    memory: number;
+    cacheName: string;
+}
+
 export class FdrDeployStack extends Stack {
     constructor(
         scope: Construct,
@@ -26,6 +49,7 @@ export class FdrDeployStack extends Stack {
         version: string,
         environmentType: EnvironmentType,
         environmentInfo: EnvironmentInfo,
+        options: FdrStackOptions,
         props?: StackProps,
     ) {
         super(scope, id, props);
@@ -63,7 +87,7 @@ export class FdrDeployStack extends Stack {
         });
         snsTopic.addSubscription(new EmailSubscription("support@buildwithfern.com"));
 
-        const fdrBucket = new Bucket(this, "fdr-docs-files", {
+        const privateBucket = new Bucket(this, "fdr-docs-files", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
             removalPolicy: RemovalPolicy.RETAIN,
             cors: [
@@ -74,6 +98,39 @@ export class FdrDeployStack extends Stack {
                 },
             ],
             versioned: true,
+        });
+
+        const publicBucket = new Bucket(this, "fdr-docs-files-public", {
+            bucketName: `fdr-${environmentType.toLowerCase()}-docs-files-public`,
+            removalPolicy: RemovalPolicy.RETAIN,
+            cors: [
+                {
+                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+                    allowedOrigins: ["*"],
+                    allowedHeaders: ["*"],
+                },
+            ],
+            blockPublicAccess: {
+                blockPublicAcls: false,
+                blockPublicPolicy: false,
+                ignorePublicAcls: false,
+                restrictPublicBuckets: false,
+            },
+            versioned: true,
+        });
+        publicBucket.grantPublicAccess();
+
+        const fernDocsCacheEndpoint = this.constructElastiCacheInstance(this, {
+            cacheName: options.cacheName,
+            IVpc: vpc,
+            numCacheShards: 1,
+            // TODO(dsinghvi): bump this to > 1
+            numCacheReplicasPerShard: undefined,
+            clusterMode: "enabled",
+            cacheNodeType: "cache.r7g.large",
+            envType: environmentType,
+            env: props?.env,
+            ingressSecurityGroup: fdrSg,
         });
 
         const cloudmapNamespaceName = environmentInfo.cloudMapNamespaceInfo.namespaceName;
@@ -89,9 +146,9 @@ export class FdrDeployStack extends Stack {
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
-            cpu: environmentType === "PROD" ? 2048 : 512,
-            memoryLimitMiB: environmentType === "PROD" ? 4096 : 1024,
-            desiredCount: 1, // TODO: make this 2 in prod
+            cpu: options.cpu,
+            memoryLimitMiB: options.memory,
+            desiredCount: options.desiredTaskCount,
             securityGroups: [fdrSg, efsSg],
             taskImageOptions: {
                 image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
@@ -99,8 +156,10 @@ export class FdrDeployStack extends Stack {
                     VENUS_URL: `http://venus.${cloudmapNamespaceName}:8080/`,
                     AWS_ACCESS_KEY_ID: getEnvironmentVariableOrThrow("AWS_ACCESS_KEY_ID"),
                     AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
-                    S3_BUCKET_NAME: fdrBucket.bucketName,
-                    S3_BUCKET_REGION: fdrBucket.stack.region,
+                    PUBLIC_S3_BUCKET_NAME: publicBucket.bucketName,
+                    PUBLIC_S3_BUCKET_REGION: publicBucket.stack.region,
+                    PRIVATE_S3_BUCKET_NAME: privateBucket.bucketName,
+                    PRIVATE_S3_BUCKET_REGION: privateBucket.stack.region,
                     DOMAIN_SUFFIX: getDomainSuffix(environmentType),
                     ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
                     ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
@@ -108,7 +167,11 @@ export class FdrDeployStack extends Stack {
                     ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                     LOG_LEVEL: getLogLevel(environmentType),
+                    DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
                     ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
+                    REDIS_ENABLED: options.redis.toString(),
+                    REDIS_CLUSTERING_MODE_ENABLED: options.redisClusteringModeEnabled.toString(),
+                    APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
@@ -133,6 +196,16 @@ export class FdrDeployStack extends Stack {
                       }
                     : undefined,
         });
+        if (options.redis) {
+            const scalableTaskCount = fargateService.service.autoScaleTaskCount({
+                maxCapacity: options.maxTaskCount,
+                minCapacity: options.desiredTaskCount,
+            });
+            scalableTaskCount.scaleOnRequestCount("RequestCountScaling", {
+                targetGroup: fargateService.targetGroup,
+                requestsPerTarget: 1000,
+            });
+        }
 
         new ARecord(this, "api-domain", {
             zone: hostedZone,
@@ -189,11 +262,66 @@ export class FdrDeployStack extends Stack {
 
         const lb500CountAlarm = new Alarm(this, "fdr-lb-5XX-count", {
             alarmName: `${id} Load Balancer 500 Error Alarm`,
-            metric: fargateService.loadBalancer.metrics.httpCodeTarget(HttpCodeTarget.TARGET_5XX_COUNT),
+            metric: fargateService.loadBalancer.metrics.httpCodeElb(HttpCodeElb.ELB_5XX_COUNT),
             threshold: 2,
             evaluationPeriods: 5,
         });
         lb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
+    }
+
+    private constructElastiCacheInstance(scope: Construct, props: ElastiCacheProps): string {
+        const envPrefix = props.envType + "-";
+
+        const cacheSecurityGroupName = envPrefix + props.cacheName + "SecurityGroup";
+        const cacheSecurityGroup = new SecurityGroup(scope, cacheSecurityGroupName, {
+            vpc: props.IVpc,
+            allowAllOutbound: true,
+            description: `${cacheSecurityGroupName} CDK`,
+        });
+
+        const cacheSubnetGroupName = envPrefix + props.cacheName + "SubnetGroup";
+        const cacheSubnetGroup = new CfnSubnetGroup(this, cacheSubnetGroupName, {
+            description: `${cacheSubnetGroupName} CDK`,
+            cacheSubnetGroupName,
+            subnetIds: props.IVpc.publicSubnets.map(({ subnetId }) => subnetId),
+        });
+
+        const cacheReplicationGroupName = envPrefix + props.cacheName + "ReplicationGroup";
+        const cacheReplicationGroup = new CfnReplicationGroup(this, cacheReplicationGroupName, {
+            replicationGroupId: cacheReplicationGroupName,
+            replicationGroupDescription: `Replication Group for the ${cacheReplicationGroupName} ElastiCache stack`,
+            automaticFailoverEnabled: true,
+            autoMinorVersionUpgrade: true,
+            engine: "redis",
+            engineVersion: "7.0",
+            cacheParameterGroupName: "default.redis7.cluster.on",
+            cacheNodeType: props.cacheNodeType,
+            numNodeGroups: props.numCacheShards,
+            replicasPerNodeGroup: props.numCacheReplicasPerShard,
+            clusterMode: props.clusterMode,
+            cacheSubnetGroupName: cacheSubnetGroup.ref,
+            securityGroupIds: [cacheSecurityGroup.securityGroupId],
+        });
+
+        cacheReplicationGroup.cfnOptions.updatePolicy = {
+            useOnlineResharding: true,
+        };
+
+        cacheReplicationGroup.addDependency(cacheSubnetGroup);
+
+        const cacheEndpointAddress = cacheReplicationGroup.attrConfigurationEndPointAddress;
+        const cacheEndpointPort = cacheReplicationGroup.attrConfigurationEndPointPort;
+
+        cacheSecurityGroup.addIngressRule(
+            props.ingressSecurityGroup || Peer.anyIpv4(),
+            Port.tcp(Token.asNumber(cacheEndpointPort)),
+            "Redis Port Ingress rule",
+        );
+
+        new CfnOutput(this, `${props.cacheName}Host`, { value: cacheEndpointAddress });
+        new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
+
+        return `${cacheEndpointAddress}:${cacheEndpointPort}`;
     }
 }
 

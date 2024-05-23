@@ -9,7 +9,6 @@ import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBrea
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
-import { BuiltWithFern } from "./BuiltWithFern";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -20,9 +19,6 @@ import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 export interface SidebarProps {
     currentSlug: string[];
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
-    searchInfo: DocsV1Read.SearchInfo;
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
-    navbarLinks: DocsV1Read.NavbarLink[] | undefined;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     showSearchBar?: boolean;
@@ -31,9 +27,6 @@ export interface SidebarProps {
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
     currentSlug,
     registerScrolledToPathListener,
-    searchInfo,
-    algoliaSearchIndex,
-    navbarLinks,
     logoHeight,
     logoHref,
     showSearchBar,
@@ -53,8 +46,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             aria-label="secondary"
         >
             <SidebarFixedItemsSection
-                searchInfo={searchInfo}
-                algoliaSearchIndex={algoliaSearchIndex}
                 showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
                 showSearchBar={showSearchBar}
                 logoHeight={logoHeight}
@@ -63,7 +54,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             <SearchSidebar searchService={searchService}>
                 <FernScrollArea
                     rootClassName="flex-1"
-                    className={cn("group/sidebar mask-grad-top-6 px-4 pb-12", {
+                    className={cn("group/sidebar mask-grad-y-6 px-4 pb-12", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}
                     scrollbars="vertical"
@@ -71,7 +62,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                 >
                     {tabs.length > 0 && (
                         <ul
-                            className={cn("mt-4 flex list-none flex-col", {
+                            className={cn("mt-5 mb-6 flex list-none flex-col", {
                                 "lg:hidden": layout?.disableHeader !== true && layout?.tabsPlacement === "HEADER",
                             })}
                         >
@@ -91,8 +82,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             />
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
-                    <MobileSidebarHeaderLinks navbarLinks={navbarLinks} />
-                    <BuiltWithFern />
+                    <MobileSidebarHeaderLinks />
                 </FernScrollArea>
             </SearchSidebar>
         </nav>
@@ -105,17 +95,17 @@ function MobileSidebar(props: SidebarProps) {
 
     return (
         <Transition as={Fragment} show={isMobileSidebarOpen}>
-            <Dialog onClose={closeMobileSidebar} className="top-header-height-real fixed inset-0 z-20">
+            <Dialog onClose={closeMobileSidebar} className="fixed inset-0 top-header-height-real z-20">
                 <Transition.Child
                     as="div"
-                    className="bg-background/50 top-header-height-real fixed inset-0 z-auto"
+                    className="fixed inset-0 top-header-height-real z-auto bg-background/50"
                     enter="transition-opacity ease-linear duration-200"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
                 />
                 <Transition.Child
                     as={Dialog.Panel}
-                    className="border-concealed bg-background-translucent absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
+                    className="bg-background-translucent border-concealed absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
                     enter="transition ease-in-out duration-300 transform"
                     enterFrom="opacity-0 sm:opacity-100 sm:translate-y-0 sm:-translate-x-full"
                     enterTo="opacity-100 translate-x-0 translate-y-0"

@@ -4,10 +4,13 @@ import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { useCreateSearchService } from "../services/useSearchService";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
 import { DocsMainContent } from "./DocsMainContent";
 import { HeaderContainer } from "./HeaderContainer";
@@ -15,33 +18,25 @@ import { HeaderContainer } from "./HeaderContainer";
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 interface DocsProps {
-    navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
-    search: DocsV1Read.SearchInfo;
-    algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
 }
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
     ssr: true,
 });
 
-export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({
-    search,
-    algoliaSearchIndex,
-    navbarLinks,
-    logoHeight,
-    logoHref,
-}) {
-    const { layout, colors, versions, currentVersionIndex } = useDocsContext();
+export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
+    const { layout, colors, currentVersionIndex } = useDocsContext();
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
+    const { isInlineFeedbackEnabled } = useFeatureFlags();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
 
     // set up search service
-    useCreateSearchService(search, algoliaSearchIndex, currentVersionIndex, versions);
+    useCreateSearchService(currentVersionIndex);
 
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({
@@ -59,19 +54,20 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const currentSlug = useMemo(() => selectedSlug?.split("/") ?? [], [selectedSlug]);
     const layoutBreakpoint = useLayoutBreakpoint();
 
+    const docsMainContent = <DocsMainContent />;
+
     return (
         <PlaygroundContextProvider>
-            <div id="docs-content" className="relative flex min-h-0 flex-1 flex-col">
+            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col z-0">
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
-                        navbarLinks={navbarLinks}
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                     />
                 )}
 
-                <div className="max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1">
+                <div className="relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1">
                     <style>
                         {`
                                 .fern-sidebar-container {
@@ -88,23 +84,25 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     <Sidebar
                         className={
                             layout?.disableHeader !== true
-                                ? "fern-sidebar-container w-sidebar-width mt-header-height top-header-height h-vh-minus-header bg-sidebar border-concealed sticky hidden lg:block"
-                                : "fern-sidebar-container w-sidebar-width h-vh-minus-header bg-sidebar border-concealed fixed hidden lg:block"
+                                ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
+                                : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block"
                         }
                         currentSlug={currentSlug}
                         registerScrolledToPathListener={registerScrolledToPathListener}
-                        searchInfo={search}
-                        algoliaSearchIndex={algoliaSearchIndex}
-                        navbarLinks={navbarLinks}
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                         showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
                     />
-                    {layout?.disableHeader && <div className="w-sidebar-width hidden lg:block" />}
+                    {layout?.disableHeader && <div className="hidden w-sidebar-width lg:block" />}
 
                     <main className="fern-main">
-                        <DocsMainContent />
+                        {isInlineFeedbackEnabled ? (
+                            <FeedbackPopover>{docsMainContent}</FeedbackPopover>
+                        ) : (
+                            docsMainContent
+                        )}
                     </main>
+                    <BuiltWithFern />
                 </div>
 
                 {/* Enables footer DOM injection */}

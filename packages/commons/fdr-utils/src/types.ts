@@ -1,5 +1,6 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { FlattenedApiDefinition } from "./flattenApiDefinition";
 
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;
@@ -13,12 +14,23 @@ export interface SidebarVersionInfo {
     availability: DocsV1Read.VersionAvailability | null;
 }
 
-export interface SidebarTab {
+interface SidebarTabGroup {
+    type: "tabGroup";
     title: string;
-    icon?: string;
+    icon: string | undefined;
     index: number;
     slug: readonly string[];
 }
+
+interface SidebarTabLink {
+    type: "tabLink";
+    title: string;
+    icon: string | undefined;
+    index: number;
+    url: string;
+}
+
+export type SidebarTab = SidebarTabGroup | SidebarTabLink;
 
 export interface SidebarNavigationRaw {
     currentTabIndex: number | undefined;
@@ -36,25 +48,37 @@ export interface SidebarNavigation extends Omit<SidebarNavigationRaw, "currentNo
 export type SidebarNodeRaw = SidebarNodeRaw.PageGroup | SidebarNodeRaw.ApiSection | SidebarNodeRaw.Section;
 
 export declare namespace SidebarNodeRaw {
-    export type VisitableNode = SidebarNodeRaw.Root | SidebarNodeRaw.Page | SidebarNodeRaw.Root["items"][0];
-    export type ParentNode = SidebarNodeRaw.Root | SidebarNodeRaw.Root["items"][0];
+    export type VisitableNode =
+        | SidebarNodeRaw.Root
+        | SidebarNodeRaw.Page
+        | SidebarNodeRaw.VersionGroup
+        | SidebarNodeRaw.TabGroup
+        | SidebarNodeRaw;
+    export type ParentNode =
+        | SidebarNodeRaw.Root
+        | SidebarNodeRaw.VersionGroup
+        | SidebarNodeRaw.TabGroup
+        | SidebarNodeRaw;
     export type NavigationNode = SidebarNodeRaw.Root | SidebarNodeRaw.VersionGroup | SidebarNodeRaw.TabGroup;
 
     export interface Root {
         type: "root";
         slug: readonly string[];
-        items: readonly SidebarNodeRaw.VersionGroup[] | readonly SidebarNodeRaw.TabGroup[] | readonly SidebarNodeRaw[];
+        items: readonly SidebarNodeRaw.VersionGroup[] | readonly SidebarNodeRaw.Tab[] | readonly SidebarNodeRaw[];
     }
 
     export interface VersionGroup extends SidebarVersionInfo {
         type: "versionGroup";
-        items: readonly SidebarNodeRaw.TabGroup[] | readonly SidebarNodeRaw[];
+        items: readonly SidebarNodeRaw.Tab[] | readonly SidebarNodeRaw[];
     }
 
-    export interface TabGroup extends SidebarTab {
-        type: "tabGroup";
+    export type Tab = TabLink | TabGroup;
+
+    export interface TabGroup extends SidebarTabGroup {
         items: readonly SidebarNodeRaw[];
     }
+
+    export type TabLink = SidebarTabLink;
 
     export interface PageGroup {
         type: "pageGroup";
@@ -84,6 +108,8 @@ export declare namespace SidebarNodeRaw {
         description: string | undefined;
         icon: string | undefined;
         hidden: boolean;
+        summaryPage: ApiSummaryPage | undefined;
+        flattenedApiDefinition: FlattenedApiDefinition | undefined;
     }
 
     export interface Section {
@@ -98,7 +124,7 @@ export declare namespace SidebarNodeRaw {
     export interface Page {
         type: "page";
         id: string;
-        slug: string[];
+        slug: readonly string[];
         title: string;
         description: string | undefined;
         icon: string | undefined;
@@ -126,16 +152,21 @@ export declare namespace SidebarNodeRaw {
         api: FdrAPI.ApiId;
         apiType: "endpoint";
         method: APIV1Read.HttpMethod;
-        stream?: boolean;
+        stream?: EndpointPage;
+    }
+
+    export interface ApiSummaryPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "summary";
     }
 
     export interface SubpackageSection extends ApiSection {
         apiType: "subpackage";
     }
 
-    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
+    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage | ApiSummaryPage;
 
-    export type ApiPageOrSubpackage = ApiPage | SubpackageSection;
+    export type ApiPageOrSubpackage = ApiPage | SubpackageSection | Page;
 }
 
 export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | SidebarNode.Section;
@@ -144,12 +175,14 @@ export declare namespace SidebarNode {
     export interface Root {
         type: "root";
         slug: readonly string[];
-        items: readonly VersionGroup[] | readonly TabGroup[] | readonly SidebarNode[];
+        items: readonly VersionGroup[] | readonly Tab[] | readonly SidebarNode[];
     }
 
     export interface VersionGroup extends Omit<SidebarNodeRaw.VersionGroup, "items"> {
-        items: readonly TabGroup[] | readonly SidebarNode[];
+        items: readonly Tab[] | readonly SidebarNode[];
     }
+
+    export type Tab = SidebarNodeRaw.TabLink | TabGroup;
 
     export interface TabGroup extends Omit<SidebarNodeRaw.TabGroup, "items"> {
         items: readonly SidebarNode[];
@@ -161,10 +194,16 @@ export declare namespace SidebarNode {
 
     export interface ChangelogPage extends Page, Omit<SidebarNodeRaw.ChangelogPage, keyof Page> {}
 
-    export interface ApiSection extends Omit<SidebarNodeRaw.ApiSection, "items" | "changelog" | "description"> {
+    export interface ApiSection
+        extends Omit<
+            SidebarNodeRaw.ApiSection,
+            "items" | "changelog" | "description" | "flattenedApiDefinition" | "summaryPage"
+        > {
         items: ApiPageOrSubpackage[];
         changelog: ChangelogPage | undefined;
+        summaryPage: ApiSummaryPage | undefined;
         description: MDXRemoteSerializeResult | string | undefined;
+        isSidebarFlattened: boolean;
     }
 
     export interface Section extends Omit<SidebarNodeRaw.Section, "items"> {
@@ -189,16 +228,21 @@ export declare namespace SidebarNode {
         api: FdrAPI.ApiId;
         apiType: "endpoint";
         method: APIV1Read.HttpMethod;
-        stream?: boolean;
+        stream?: EndpointPage;
+    }
+
+    export interface ApiSummaryPage extends Page {
+        api: FdrAPI.ApiId;
+        apiType: "summary";
     }
 
     export interface SubpackageSection extends ApiSection {
         apiType: "subpackage";
     }
 
-    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage;
+    export type ApiPage = WebSocketPage | WebhookPage | EndpointPage | ApiSummaryPage;
 
-    export type ApiPageOrSubpackage = ApiPage | SubpackageSection;
+    export type ApiPageOrSubpackage = ApiPage | SubpackageSection | Page;
 }
 
 export const SidebarNode = {

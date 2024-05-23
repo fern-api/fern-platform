@@ -14,6 +14,7 @@ types:
       environments: optional<list<readEndpoint.Environment>>
       method: readEndpoint.HttpMethod
       id: readEndpoint.EndpointId
+      originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
       name: optional<string>
@@ -25,6 +26,7 @@ types:
       errors: optional<list<readEndpoint.ErrorDeclaration>>
       errorsV2: optional<list<readEndpoint.ErrorDeclarationV2>>
       examples: list<readEndpoint.ExampleEndpointCall>
+      snippetTemplates: optional<readEndpoint.EndpointSnippetTemplates>
 
   DbHttpRequest:
     extends: readCommons.WithDescription

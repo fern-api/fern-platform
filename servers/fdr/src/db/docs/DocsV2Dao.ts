@@ -1,6 +1,7 @@
+import { migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db, FdrAPI } from "../../api";
+import { DocsV1Db } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
@@ -16,11 +17,12 @@ export interface LoadDocsDefinitionByUrlResponse {
     domain: string;
     path: string;
     algoliaIndex: string | undefined;
-    docsDefinition: DocsV1Db.DocsDefinitionDb;
+    docsDefinition: DocsV1Db.DocsDefinitionDb.V3;
     indexSegmentIds: string[];
     docsConfigInstanceId: string | null;
     updatedTime: Date;
     authType: AuthType;
+    hasPublicS3Assets: boolean;
 }
 
 export interface LoadDocsConfigResponse {
@@ -29,7 +31,7 @@ export interface LoadDocsConfigResponse {
 }
 
 export interface DocsV2Dao {
-    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<void>;
+    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean>;
 
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
 
@@ -48,7 +50,7 @@ export interface DocsV2Dao {
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
-    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<void> {
+    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean> {
         const matchedDomains = await this.prisma.docsV2.findMany({
             select: {
                 orgID: true,
@@ -61,11 +63,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             distinct: ["orgID", "domain"],
         });
 
-        matchedDomains.forEach((matchedDomain) => {
-            if (matchedDomain.orgID !== orgId) {
-                throw new FdrAPI.DomainBelongsToAnotherOrgError();
-            }
-        });
+        return matchedDomains.every((matchedDomain) => matchedDomain.orgID === orgId);
     }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
@@ -90,6 +88,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             domain: docsDomain.domain,
             updatedTime: docsDomain.updatedTime,
             authType: docsDomain.authType,
+            hasPublicS3Assets: docsDomain.hasPublicS3Assets,
         };
     }
 
@@ -214,6 +213,7 @@ async function createOrUpdateDocsDefinition({
             algoliaIndex: null,
             isPreview,
             authType,
+            hasPublicS3Assets: authType === "PUBLIC",
         },
         update: {
             docsDefinition: bufferDocsDefinition,
@@ -222,14 +222,7 @@ async function createOrUpdateDocsDefinition({
             indexSegmentIds,
             isPreview,
             authType,
+            hasPublicS3Assets: authType === "PUBLIC",
         },
     });
-}
-
-function migrateDocsDbDefinition(dbValue: unknown): DocsV1Db.DocsDefinitionDb {
-    return {
-        // default to v1, but this will be overwritten if dbValue has "type" defined
-        type: "v1",
-        ...(dbValue as object),
-    } as DocsV1Db.DocsDefinitionDb;
 }

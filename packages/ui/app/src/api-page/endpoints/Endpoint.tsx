@@ -1,6 +1,8 @@
+import { useAtomValue } from "jotai";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../util/resolver";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
+import { FERN_STREAM_ATOM } from "../../sidebar/atom";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
@@ -16,15 +18,18 @@ export declare namespace Endpoint {
 }
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, breadcrumbs, isLastInApi, types }) => {
+    const isStream = useAtomValue(FERN_STREAM_ATOM);
     const { resolvedPath } = useNavigationContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: endpoint.slug.join("/") });
+    const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
+
+    const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug.join("/") });
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
     // - this allows us to render the static page before hydrating, preventing layout-shift caused by the navigation context.
-    if (useShouldHideFromSsg(endpoint.slug.join("/"))) {
+    if (useShouldHideFromSsg(endpointSlug.join("/"))) {
         return null;
     }
 
@@ -34,7 +39,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, 
             showErrors={showErrors}
             endpoint={endpoint}
             breadcrumbs={breadcrumbs}
-            setContainerRef={setTargetRef}
+            containerRef={setTargetRef}
             hideBottomSeparator={isLastInApi || isApiScrollingDisabled}
             isInViewport={resolvedPath.fullSlug === endpoint.slug.join("/")}
             types={types}

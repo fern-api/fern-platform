@@ -15,6 +15,8 @@ export const getServerSideProps: GetServerSideProps = (context) => {
 
 const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ params = {}, req, res }) => {
     const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
+    // eslint-disable-next-line no-console
+    console.log(`[getDocsServerSideProps] host=${xFernHost}`);
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];
 
     const token = req.cookies.fern_token;

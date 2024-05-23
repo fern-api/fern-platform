@@ -10,8 +10,6 @@ import { useOpenSearchDialog } from "./atom";
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
-        searchInfo: DocsV1Read.SearchInfo;
-        algoliaSearchIndex: DocsV1Read.AlgoliaSearchIndex | undefined;
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
         showBorder?: boolean;
@@ -43,7 +41,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     }
 
     const header = layout?.disableHeader && (
-        <div className="h-header-height-real mx-3 hidden border-b border-transparent lg:flex lg:items-center lg:justify-between">
+        <div className="mx-3 hidden h-header-height-real border-b border-transparent lg:flex lg:items-center lg:justify-between">
             <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
             <div className="-mr-3">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
         </div>

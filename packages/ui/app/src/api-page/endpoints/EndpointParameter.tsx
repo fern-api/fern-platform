@@ -3,11 +3,11 @@ import cn from "clsx";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useRouteListener } from "../../contexts/useRouteListener";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../util/resolver";
 import { ApiPageDescription } from "../ApiPageDescription";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
@@ -37,11 +37,22 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
         <EndpointParameterContent
             name={name}
             description={description}
-            typeShorthand={renderTypeShorthandRoot(shape, types)}
+            typeShorthand={renderTypeShorthandRoot(shape, types, false, "t-muted")}
             anchorIdParts={anchorIdParts}
             route={route}
             availability={availability}
-        />
+        >
+            <TypeReferenceDefinitions
+                shape={shape}
+                isCollapsible={true}
+                // onHoverProperty={onHoverProperty}
+                anchorIdParts={anchorIdParts}
+                route={route}
+                // defaultExpandAll={defaultExpandAll}
+                applyErrorStyles={false}
+                types={types}
+            />
+        </EndpointParameterContent>
     ),
     (prev, next) =>
         prev.name === next.name &&
@@ -90,13 +101,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
             <div className="group/anchor-container flex items-center">
                 <AbsolutelyPositionedAnchor href={anchorRoute} />
                 <span className="inline-flex items-baseline gap-2">
-                    <MonospaceText
-                        className={cn("t-default text-sm", {
-                            "t-accent": isActive,
-                        })}
-                    >
-                        {name}
-                    </MonospaceText>
+                    <span className="fern-api-property-key">{name}</span>
                     {typeShorthand}
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>

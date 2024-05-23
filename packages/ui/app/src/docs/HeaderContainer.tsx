@@ -11,18 +11,12 @@ import { useIsScrolled } from "./useIsScrolled";
 
 interface HeaderContainerProps {
     isMobileSidebarOpen: boolean;
-    navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
 }
 
-export const HeaderContainer: FC<HeaderContainerProps> = ({
-    isMobileSidebarOpen,
-    navbarLinks,
-    logoHeight,
-    logoHref,
-}) => {
-    const { colors, layout, tabs } = useDocsContext();
+export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen, logoHeight, logoHref }) => {
+    const { colors, layout, tabs, navbarLinks } = useDocsContext();
     const isScrolled = useIsScrolled();
     const layoutBreakpoint = useLayoutBreakpoint();
     const openMobileSidebar = useOpenMobileSidebar();
@@ -43,7 +37,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({
                     `}
                 </style>
                 <div className={cn(className, "clipped-background")}>
-                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" colors={colors} />
+                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
                 </div>
             </>
         ),
@@ -53,29 +47,31 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({
     return (
         <header id="fern-header">
             <div
-                className="data-[border=show]:dark:shadow-header-dark fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg transition-shadow lg:backdrop-blur"
+                className="fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg transition-shadow data-[border=show]:dark:shadow-header-dark lg:backdrop-blur h-header-height-real lg:h-header-height"
                 data-border={
                     isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         ? "show"
                         : "hide"
                 }
             >
-                <div className="bg-header border-concealed h-header-height-real border-b">
-                    {renderBackground()}
-                    <Header
-                        className="max-w-page-width mx-auto"
-                        logoHeight={logoHeight}
-                        logoHref={logoHref}
-                        navbarLinks={navbarLinks}
-                        isMobileSidebarOpen={isMobileSidebarOpen}
-                        openMobileSidebar={openMobileSidebar}
-                        closeMobileSidebar={closeMobileSidebar}
-                        showSearchBar={layout?.searchbarPlacement === "HEADER"}
-                    />
+                <div className="absolute inset-0 width-before-scroll-bar">
+                    <div className="bg-header border-concealed h-header-height-real border-b">
+                        {renderBackground()}
+                        <Header
+                            className="mx-auto max-w-page-width"
+                            logoHeight={logoHeight}
+                            logoHref={logoHref}
+                            navbarLinks={navbarLinks}
+                            isMobileSidebarOpen={isMobileSidebarOpen}
+                            openMobileSidebar={openMobileSidebar}
+                            closeMobileSidebar={closeMobileSidebar}
+                            showSearchBar={layout?.searchbarPlacement === "HEADER"}
+                        />
+                    </div>
+                    {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
+                        <HeaderTabs />
+                    )}
                 </div>
-                {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
-                    <HeaderTabs />
-                )}
             </div>
         </header>
     );

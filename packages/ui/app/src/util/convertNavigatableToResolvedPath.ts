@@ -7,19 +7,21 @@ import {
     traverseSidebarNodes,
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
-import moment from "moment";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { emitDatadogError } from "../analytics/datadogRum";
+import { captureSentryError } from "../analytics/sentry";
+import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import {
-    FernDocsFrontmatterRaw,
-    SerializeMdxOptions,
+    FernDocsFrontmatter,
+    FernSerializeMdxOptions,
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
-import type { ResolvedPath } from "./ResolvedPath";
-import { resolveApiDefinition } from "./resolver";
+import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import type { ResolvedPath } from "../resolver/ResolvedPath";
+import { ResolvedRootPackage } from "../resolver/types";
+import { Changelog } from "./dateUtils";
 
-function getFrontmatter(content: string): FernDocsFrontmatterRaw {
+function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
     const frontmatter = content.match(frontmatterMatcher)?.[0];
     if (frontmatter == null) {
@@ -47,7 +49,7 @@ async function getSubtitle(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Error occurred while parsing frontmatter", e);
-        emitDatadogError(e, {
+        captureSentryError(e, {
             context: "getStaticProps",
             errorSource: "getSubtitle",
             errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
@@ -62,17 +64,23 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
+    rawSidebarNodes,
     sidebarNodes,
     currentNode,
     apis,
     pages,
-    options,
+    mdxOptions,
+    domain,
+    featureFlags,
 }: {
+    rawSidebarNodes: readonly SidebarNodeRaw[];
     sidebarNodes: SidebarNode[];
     currentNode: SidebarNodeRaw.VisitableNode;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
-    options?: SerializeMdxOptions;
+    mdxOptions?: FernSerializeMdxOptions;
+    domain: string;
+    featureFlags: FeatureFlags;
 }): Promise<ResolvedPath | undefined> {
     const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
 
@@ -91,26 +99,33 @@ export async function convertNavigatableToResolvedPath({
 
     if (SidebarNode.isApiPage(traverseState.curr)) {
         const api = apis[traverseState.curr.api];
-        const apiSection = findApiSection(traverseState.curr.api, sidebarNodes);
+        const apiSection = findApiSection(traverseState.curr.api, rawSidebarNodes);
         if (api == null || apiSection == null) {
             return;
         }
-        const flattenedApiDefinition = flattenApiDefinition(api, apiSection.slug);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await resolveApiDefinition(flattenedApiDefinition);
+        const apiDefinition = await ApiDefinitionResolver.resolve(
+            traverseState.curr.title,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            apiSection.flattenedApiDefinition!,
+            pages,
+            mdxOptions,
+            featureFlags,
+            domain,
+        );
         return {
             type: "api-page",
             fullSlug: traverseState.curr.slug.join("/"),
             api: traverseState.curr.api,
             apiDefinition,
-            artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
+            // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiSection.showErrors,
             neighbors,
         };
     } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
         const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
         const serializedMdxContent =
-            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, options) : null;
+            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
         return {
             type: "changelog-page",
@@ -118,17 +133,16 @@ export async function convertNavigatableToResolvedPath({
             title: frontmatter.title ?? traverseState.curr.title,
             sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             markdown: serializedMdxContent,
-            editThisPageUrl: pageContent?.editThisPageUrl ?? null,
             items: await Promise.all(
                 traverseState.curr.items.map(async (item) => {
                     const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", options);
-                    const frontmatter = typeof markdown === "string" ? {} : markdown.frontmatter;
+                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", {
+                        ...mdxOptions,
+                    });
                     return {
                         date: item.date,
-                        dateString: moment(item.date).format("MMMM D, YYYY"),
+                        dateString: Changelog.toLongDateString(item.date),
                         markdown,
-                        editThisPageUrl: frontmatter.editThisPageUrl ?? itemPageContent?.editThisPageUrl ?? null,
                     };
                 }),
             ),
@@ -139,40 +153,49 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, options);
+        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
+            ...mdxOptions,
+            pageHeader: {
+                title: traverseState.curr.title,
+                breadcrumbs: traverseState.sectionTitleBreadcrumbs,
+                editThisPageUrl: pageContent.editThisPageUrl,
+                isTocDefaultEnabled: featureFlags.isTocDefaultEnabled,
+            },
+        });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
+
+        let resolvedApis: Record<string, ResolvedRootPackage> = {};
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
-            const resolvedApis = Object.fromEntries(
+            const title = traverseState.curr.title;
+            resolvedApis = Object.fromEntries(
                 await Promise.all(
                     Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
-                        return [apiName, await resolveApiDefinition(flattenedApiDefinition)];
+                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, domain);
+                        return [
+                            apiName,
+                            await ApiDefinitionResolver.resolve(
+                                title,
+                                flattenedApiDefinition,
+                                pages,
+                                mdxOptions,
+                                featureFlags,
+                                domain,
+                            ),
+                        ];
                     }),
                 ),
             );
-            return {
-                type: "custom-markdown-page",
-                fullSlug: traverseState.curr.slug.join("/"),
-                title: frontmatter.title ?? traverseState.curr.title,
-                sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
-                serializedMdxContent,
-                editThisPageUrl: frontmatter.editThisPageUrl ?? pageContent.editThisPageUrl ?? null,
-                neighbors,
-                apis: resolvedApis,
-            };
         }
         return {
             type: "custom-markdown-page",
             fullSlug: traverseState.curr.slug.join("/"),
             title: frontmatter.title ?? traverseState.curr.title,
-            sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
             serializedMdxContent,
-            editThisPageUrl: pageContent.editThisPageUrl ?? null,
             neighbors,
-            apis: {},
+            apis: resolvedApis,
         };
     }
 }

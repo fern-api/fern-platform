@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { resolveSidebarNodesRoot } from "./resolver";
-import { SidebarNavigationRaw, SidebarNodeRaw } from "./types";
+import { SidebarNavigationRaw, SidebarNodeRaw, SidebarTab } from "./types";
 import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
 
 interface Redirect {
@@ -13,10 +13,10 @@ interface Found {
     found: SidebarNavigationRaw;
 }
 
-function isSidebarNodeRaw<T extends SidebarNodeRaw.VisitableNode>(
-    n: T,
-): n is Exclude<T, SidebarNodeRaw.NavigationNode> {
-    return n.type !== "root" && n.type !== "tabGroup" && n.type !== "versionGroup";
+function isSidebarNodeRaw(
+    n: SidebarNodeRaw.VisitableNode | SidebarNodeRaw.TabLink | SidebarNodeRaw.Link,
+): n is SidebarNodeRaw {
+    return n.type === "apiSection" || n.type === "pageGroup" || n.type === "section";
 }
 
 function isNavigationNode(n: SidebarNodeRaw.VisitableNode): n is SidebarNodeRaw.NavigationNode {
@@ -36,13 +36,15 @@ const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
 
 export function getNavigationRoot(
     slugArray: string[],
+    domain: string,
     basePath: string | undefined,
     nav: DocsV1Read.NavigationConfig,
     apis: Record<FdrAPI.ApiId, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
 ): Found | Redirect | undefined {
     const basePathSlug = basePath != null ? basePath.split("/").filter((t) => t.length > 0) : [];
 
-    const root = resolveSidebarNodesRoot(nav, apis, basePathSlug);
+    const root = resolveSidebarNodesRoot(nav, apis, pages, basePathSlug, domain);
     const hits: { node: SidebarNodeRaw.VisitableNode; parents: SidebarNodeRaw.ParentNode[] }[] = [];
 
     visitSidebarNodeRaw(root, (node, parents) => {
@@ -73,17 +75,20 @@ export function getNavigationRoot(
 
     const sidebarNodes = findSiblings<SidebarNodeRaw>(parents, isSidebarNodeRaw).items;
 
-    const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.TabGroup>(
+    const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.Tab>(
         parents,
-        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup",
+        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup" || n.type === "tabLink",
     );
 
-    const tabs = tabItems.map((tab) => ({
-        title: tab.title,
-        icon: tab.icon,
-        slug: tab.slug,
-        index: tab.index,
-    }));
+    const tabs = tabItems
+        .filter((n) => n.type === "tabLink" || n.type === "tabGroup")
+        .map((tab): SidebarTab => {
+            if (tab.type === "tabLink") {
+                return tab;
+            }
+            const { items, ...tabGroup } = tab;
+            return tabGroup;
+        });
 
     const { items: versionItems, node: currentVerion } = findSiblings<SidebarNodeRaw.VersionGroup>(
         parents,
@@ -123,7 +128,10 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     }
 
     if (isNavigationNode(node) || node.type === "section") {
-        const firstChild = node.items[0];
+        const firstChild = node.items.filter(
+            (item): item is SidebarNodeRaw.TabGroup | SidebarNodeRaw.VersionGroup | SidebarNodeRaw =>
+                item.type !== "tabLink",
+        )[0];
         return resolveRedirect(firstChild, from);
     }
 
@@ -133,7 +141,7 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     }
 
     if (node.type === "apiSection") {
-        const firstChild = node.items[0] ?? node.changelog;
+        const firstChild = node.summaryPage ?? node.items[0] ?? node.changelog;
         return resolveRedirect(firstChild, from);
     }
 
@@ -143,9 +151,9 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     return { type: "redirect", redirect: "/" + node.slug.join("/") };
 }
 
-function findSiblings<T extends SidebarNodeRaw.ParentNode>(
+function findSiblings<T extends SidebarNodeRaw.ParentNode | SidebarNodeRaw.TabLink>(
     parents: readonly SidebarNodeRaw.ParentNode[],
-    match: (node: SidebarNodeRaw.ParentNode) => node is T,
+    match: (node: SidebarNodeRaw.VisitableNode | SidebarNodeRaw.TabLink | SidebarNodeRaw.Link) => boolean,
 ): { items: readonly T[]; node: T | undefined } {
     const navigationDepth = parents.findIndex(match);
 

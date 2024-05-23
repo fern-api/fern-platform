@@ -1,9 +1,15 @@
 export { Stream } from "./api-playground/Stream";
 export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
+export { toast } from "./components/FernToast";
+export { DEFAULT_FEATURE_FLAGS } from "./contexts/FeatureFlagContext";
 export type { FeatureFlags } from "./contexts/FeatureFlagContext";
+export { LocalPreviewContextProvider } from "./contexts/LocalPreviewContext";
+export { useSetThemeColors } from "./docs/ThemeProvider";
 export * from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";
+export { ApiDefinitionResolver } from "./resolver/ApiDefinitionResolver";
+export * from "./resolver/types";
 export { REGISTRY_SERVICE } from "./services/registry";
 export * from "./sidebar/serializer";
 export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
-export * from "./util/resolver";
+export { unknownToString } from "./util/unknownToString";

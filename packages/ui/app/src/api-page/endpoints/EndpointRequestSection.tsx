@@ -1,8 +1,15 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { Fragment, ReactNode } from "react";
-import { ResolvedRequestBody, ResolvedTypeDefinition, visitResolvedHttpRequestBodyShape } from "../../util/resolver";
+import {
+    ResolvedFormDataRequestProperty,
+    ResolvedRequestBody,
+    ResolvedTypeDefinition,
+    unwrapDescription,
+    visitResolvedHttpRequestBodyShape,
+} from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -34,18 +41,15 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             <ApiPageDescription className="mt-3 text-sm" description={requestBody.description} isMarkdown={true} />
             <div
                 className={cn("t-muted pb-5 text-sm leading-6", {
-                    "border-default border-b": requestBody.shape.type !== "fileUpload",
+                    "border-default border-b": requestBody.shape.type !== "formData",
                 })}
             >
                 {`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
-                    fileUpload: (fileUpload) => {
-                        if (fileUpload.value == null) {
-                            return "a file";
-                        }
-                        const fileArrays = fileUpload.value.properties.filter(
+                    formData: (formData) => {
+                        const fileArrays = formData.properties.filter(
                             (p) => p.type === "fileArray",
                         ) as APIV1Read.FilePropertyArray[];
-                        const files = fileUpload.value.properties.filter(
+                        const files = formData.properties.filter(
                             (p) => p.type === "file",
                         ) as APIV1Read.FilePropertySingle[];
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
@@ -55,15 +59,15 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                 })}.`}
             </div>
             {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
-                fileUpload: (fileUpload) =>
-                    fileUpload.value?.properties.map((p) => (
+                formData: (formData) =>
+                    formData.properties.map((p) => (
                         <Fragment key={p.key}>
                             <TypeComponentSeparator />
                             {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
                                 file: (file) => (
                                     <EndpointParameterContent
                                         name={file.key}
-                                        description={undefined}
+                                        description={file.description}
                                         typeShorthand={
                                             <span className="t-muted inline-flex items-baseline gap-2 text-xs">
                                                 {file.isOptional ? "optional file" : "file"}
@@ -71,13 +75,13 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         }
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         route={route}
-                                        availability={undefined}
+                                        availability={file.availability}
                                     />
                                 ),
                                 fileArray: (fileArray) => (
                                     <EndpointParameterContent
                                         name={fileArray.key}
-                                        description={undefined}
+                                        description={fileArray.description}
                                         typeShorthand={
                                             <span className="t-muted inline-flex items-baseline gap-2 text-xs">
                                                 {fileArray.isOptional ? "optional list of files" : "list of files"}
@@ -85,13 +89,13 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         }
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
                                         route={route}
-                                        availability={undefined}
+                                        availability={fileArray.availability}
                                     />
                                 ),
                                 bodyProperty: (bodyProperty) => (
                                     <EndpointParameter
                                         name={bodyProperty.key}
-                                        description={bodyProperty.description}
+                                        description={getDescription(bodyProperty, types)}
                                         shape={bodyProperty.valueShape}
                                         anchorIdParts={[...anchorIdParts, bodyProperty.key]}
                                         route={route}
@@ -120,3 +124,14 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         </div>
     );
 };
+
+function getDescription(
+    bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
+    types: Record<string, ResolvedTypeDefinition>,
+): string | MDXRemoteSerializeResult | undefined {
+    if (bodyProperty.description != null) {
+        return bodyProperty.description;
+    }
+
+    return unwrapDescription(bodyProperty.valueShape, types);
+}

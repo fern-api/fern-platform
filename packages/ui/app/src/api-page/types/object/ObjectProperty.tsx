@@ -1,11 +1,10 @@
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useRouteListener } from "../../../contexts/useRouteListener";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
-import { ResolvedObjectProperty, ResolvedTypeDefinition } from "../../../util/resolver";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
@@ -97,36 +96,41 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     }, [contextValue, jsonPropertyPath]);
 
     const anchorRoute = `${route}#${anchorId}`;
+
+    const description = useMemo(() => {
+        if (property.description != null) {
+            return property.description;
+        }
+
+        return unwrapDescription(property.valueShape, types);
+    }, [property.description, property.valueShape, types]);
+
     return (
         <div
             ref={ref}
             data-route={anchorRoute.toLowerCase()}
             className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
                 "px-3": !contextValue.isRootTypeDefinition,
-                "outline-accent-primary outline-1 outline outline-offset-4 rounded-sm": isActive,
+                "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
             <div className="flex items-baseline gap-2">
                 <div className="group/anchor-container relative inline-flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
-                    <MonospaceText
-                        className={cn("t-default text-sm", {
-                            "t-accent": isActive,
-                        })}
+                    <span
+                        className="fern-api-property-key"
                         onMouseEnter={onMouseEnterPropertyName}
                         onMouseOut={onMouseOutPropertyName}
                     >
                         {property.key}
-                    </MonospaceText>
+                    </span>
                 </div>
-                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
+                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse, "t-muted")}
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
-            {property.description && (
-                <ApiPageDescription isMarkdown={true} description={property.description} className="text-sm" />
-            )}
+            <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
             {hasInternalTypeReference(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>

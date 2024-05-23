@@ -5,12 +5,15 @@ import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import {
-    forwardRef,
     HTMLAttributeAnchorTarget,
-    memo,
+    JSX,
+    JSXElementConstructor,
     PropsWithChildren,
     ReactElement,
     ReactNode,
+    createElement,
+    forwardRef,
+    memo,
     useEffect,
     useRef,
 } from "react";
@@ -21,7 +24,7 @@ import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
     icon?: ReactElement | string;
-    slug?: string[];
+    slug?: readonly string[];
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
@@ -37,6 +40,7 @@ interface SidebarSlugLinkProps {
     tooltipContent?: ReactNode;
     hidden: boolean;
     scrollOnShallow?: boolean;
+    as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
 
 type SidebarLinkProps = PropsWithChildren<
@@ -72,6 +76,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         rel,
         hidden,
         scrollOnShallow,
+        as = "span",
     } = props;
 
     if (hidden && !expanded && !selected) {
@@ -160,11 +165,18 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                             {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-2">
-                                        {typeof icon === "string" ? <RemoteFontAwesomeIcon icon={icon} /> : icon}
+                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:text-text-default">
+                                        {typeof icon === "string" ? (
+                                            <RemoteFontAwesomeIcon
+                                                icon={icon}
+                                                className="bg-faded group-data-[state=active]:bg-text-default"
+                                            />
+                                        ) : (
+                                            icon
+                                        )}
                                     </span>
                                 )}
-                                <span className="fern-sidebar-link-text">{title}</span>
+                                {createElement(as, { className: "fern-sidebar-link-text" }, title)}
                                 {rightElement}
                             </span>
                             {expandButton}
