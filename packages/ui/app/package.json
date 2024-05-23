@@ -110,6 +110,7 @@
     "shiki": "^1.1.7",
     "sonner": "^1.4.41",
     "style-to-object": "^1.0.5",
+    "swr": "^2.2.5",
     "tinycolor2": "^1.6.0",
     "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0",
