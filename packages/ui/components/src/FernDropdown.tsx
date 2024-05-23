@@ -93,7 +93,7 @@ export function FernDropdown({
     );
 
     return (
-        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={true} defaultOpen={defaultOpen}>
+        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={false} defaultOpen={defaultOpen}>
             <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
             {usePortal ? <DropdownMenu.Portal>{renderDropdownContent()}</DropdownMenu.Portal> : renderDropdownContent()}
         </DropdownMenu.Root>

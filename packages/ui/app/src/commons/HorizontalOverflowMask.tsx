@@ -1,4 +1,6 @@
 import cn from "clsx";
+import fastdom from "fastdom";
+import { noop } from "lodash-es";
 import React, { PropsWithChildren, useEffect, useImperativeHandle, useRef, useState } from "react";
 import "./HorizontalOverflowMask.scss";
 
@@ -13,11 +15,6 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             ref.current != null ? ref.current.scrollLeft === ref.current.scrollWidth - ref.current.clientWidth : false,
         );
 
-        const [nonce, setNonce] = useState(0);
-
-        // force measurement on mount
-        useEffect(() => setNonce((n) => n + 1), []);
-
         // check if overflow is visible
         useEffect(() => {
             const refCurrent = ref.current;
@@ -25,17 +22,20 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             if (refCurrent == null) {
                 return;
             }
+            let stopMeasuring: () => void = noop;
             const measure = () => {
-                // check if scrolled to right > 0px
-                setShowLeftMask(refCurrent.scrollLeft >= 3);
+                stopMeasuring();
+                stopMeasuring = fastdom.measure(() => {
+                    // check if scrolled to right > 0px
+                    setShowLeftMask(refCurrent.scrollLeft >= 3);
 
-                // check if scrolled all the way to the right
-                setHideRightMask(refCurrent.scrollLeft >= refCurrent.scrollWidth - refCurrent.clientWidth - 3);
+                    // check if scrolled all the way to the right
+                    setHideRightMask(refCurrent.scrollLeft >= refCurrent.scrollWidth - refCurrent.clientWidth - 3);
+                });
             };
 
             refCurrent.addEventListener("scroll", measure);
 
-            measure();
             const resizeObserver = new ResizeObserver(measure);
             resizeObserver.observe(refCurrent);
 
@@ -43,7 +43,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
                 refCurrent.removeEventListener("scroll", measure);
                 resizeObserver.disconnect();
             };
-        }, [nonce]);
+        }, []);
 
         return (
             <div
