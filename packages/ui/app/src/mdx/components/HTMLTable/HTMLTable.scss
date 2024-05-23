@@ -16,6 +16,7 @@
 
     .fern-table-cell {
         @apply h-9 p-2 text-left;
+
         /* box-shadow: inset 0 -1px var(--grayscale-a5); */
         @apply border-b border-grayscale-a5;
     }
@@ -34,13 +35,19 @@
 }
 
 .fern-table-root.fullscreen .fern-table thead .fern-table-cell {
-    @apply sticky top-0;
+    @apply sticky top-0 relative;
+    box-shadow: inset 0 -1px var(--grayscale-a5);
+    border-bottom: 0;
+
+    &:after {
+        @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
+    }
 }
 
 .fern-table-root.fullscreen {
-    @apply text-base bg-background-translucent;
+    @apply text-base bg-background-translucent shadow-2xl rounded-lg;
 
     .fern-table .fern-table-cell {
-        @apply h-10 p-3;
+        @apply h-10 p-3 bg-background;
     }
 }

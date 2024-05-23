@@ -305,8 +305,8 @@ module.exports = {
                     },
                 },
                 "overlay-show": {
-                    from: { opacity: "0" },
-                    to: { opacity: "1" },
+                    from: { opacity: "0", backdropFilter: "blur(0)" },
+                    to: { opacity: "1", backdropFilter: "blur(4px)" },
                 },
                 "content-show": {
                     from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
