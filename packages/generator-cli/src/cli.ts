@@ -46,10 +46,10 @@ void yargs(hideBin(process.argv))
                 _absolutePathToConfig: resolve(wd, argv.featureConfig),
             });
             const featuresConfig = await loadFeaturesConfig({
-                absolutePathToConfig: AbsoluteFilePath.of(argv.featureConfig),
+                absolutePathToConfig: resolve(wd, argv.featureConfig),
             });
             const snippets = await loadSnippets({
-                absolutePathToConfig: AbsoluteFilePath.of(argv.featureConfig),
+                absolutePathToConfig: resolve(wd, argv.featureConfig),
             });
             const generator = new ReadmeGenerator(readmeConfig, featuresConfig, snippets);
             await generator.generateReadme(await createWriteStream(argv.output));
