@@ -1,1 +1,682 @@
-@import"@radix-ui/colors/gray.css";@import"@radix-ui/colors/mauve.css";@import"@radix-ui/colors/slate.css";@import"@radix-ui/colors/sage.css";@import"@radix-ui/colors/olive.css";@import"@radix-ui/colors/sand.css";@import"@radix-ui/colors/gray-alpha.css";@import"@radix-ui/colors/mauve-alpha.css";@import"@radix-ui/colors/slate-alpha.css";@import"@radix-ui/colors/sage-alpha.css";@import"@radix-ui/colors/olive-alpha.css";@import"@radix-ui/colors/sand-alpha.css";@import"@radix-ui/colors/green.css";@import"@radix-ui/colors/green-alpha.css";@import"@radix-ui/colors/grass-alpha.css";@import"@radix-ui/colors/red.css";@import"@radix-ui/colors/red-alpha.css";@import"@radix-ui/colors/amber.css";@import"@radix-ui/colors/amber-alpha.css";@import"@radix-ui/colors/blue.css";@import"@radix-ui/colors/blue-alpha.css";@import"@radix-ui/colors/gray-dark.css";@import"@radix-ui/colors/mauve-dark.css";@import"@radix-ui/colors/slate-dark.css";@import"@radix-ui/colors/sage-dark.css";@import"@radix-ui/colors/olive-dark.css";@import"@radix-ui/colors/sand-dark.css";@import"@radix-ui/colors/gray-dark-alpha.css";@import"@radix-ui/colors/mauve-dark-alpha.css";@import"@radix-ui/colors/slate-dark-alpha.css";@import"@radix-ui/colors/sage-dark-alpha.css";@import"@radix-ui/colors/olive-dark-alpha.css";@import"@radix-ui/colors/sand-dark-alpha.css";@import"@radix-ui/colors/green-dark-alpha.css";@import"@radix-ui/colors/grass-dark-alpha.css";@import"@radix-ui/colors/red-dark-alpha.css";@import"@radix-ui/colors/amber-dark-alpha.css";@import"@radix-ui/colors/blue-dark-alpha.css";@tailwind base;@tailwind components;@tailwind utilities;@layer base{html{box-sizing:border-box;-webkit-tap-highlight-color:rgba(0,0,0,0)}*,*::before,*::after{box-sizing:inherit;@apply outline-transparent;@apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted}::selection{@apply bg-accent-highlight}html,body{@apply t-default;font-family:var(--typography-body-font-family, var(--body-font-fallback)) !important;font-size:16px !important}code,pre,.font-mono{font-family:var(--typography-code-font-family, var(--code-font-fallback)) !important}code.inline-code{@apply text-[0.875em]}h1,h2,h3,h4,h5,h6{@apply scroll-mt-header-height-padded;font-family:var(--typography-heading-font-family)}h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child,h6:first-child{@apply mt-0}h1{@apply text-[2.25rem] font-extrabold leading-tight}h2{@apply text-[1.5rem] font-bold leading-tight}h3{@apply text-[1.25rem] font-semibold leading-tight}h4{@apply text-[1.125rem] font-semibold leading-tight}h5{@apply text-[1rem] font-semibold}h6{@apply text-[0.875rem] font-semibold}.clipped-background{@apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;clip-path:inset(0)}.hide-scrollbar::-webkit-scrollbar{display:none}.description-mask{@apply overflow-hidden line-clamp-3;text-overflow:-o-ellipsis-lastline}input[type=search]::-webkit-search-cancel-button{display:none}hr{@apply border-default}.fern-main{@apply relative w-full min-w-0 flex-1 mt-header-height}}@layer components{.fa-icon{@apply size-4 inline-block bg-intent-default;background-color:var(--fa-icon-dark, var(--gray-a11))}.mask-grad-top-1{mask-image:linear-gradient(to bottom, transparent 0, black 4px)}.mask-grad-top-2{mask-image:linear-gradient(to bottom, transparent 0, black 8px)}.mask-grad-top-3{mask-image:linear-gradient(to bottom, transparent 0, black 12px)}.mask-grad-top-4{mask-image:linear-gradient(to bottom, transparent 0, black 16px)}.mask-grad-top-5{mask-image:linear-gradient(to bottom, transparent 0, black 20px)}.mask-grad-top-6{mask-image:linear-gradient(to bottom, transparent 0, black 24px)}.mask-grad-y-6{mask-image:linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)}.mask-grad-top-7{mask-image:linear-gradient(to bottom, transparent 0, black 28px)}.mask-grad-top-8{mask-image:linear-gradient(to bottom, transparent 0, black 32px)}.mask-grad-bottom-6{mask-image:linear-gradient(to top, transparent 0, black 24px)}.mask-grad-bottom-7{mask-image:linear-gradient(to top, transparent 0, black 28px)}.mask-grad-bottom-8{mask-image:linear-gradient(to top, transparent 0, black 32px)}.mask-grad-bottom-9{mask-image:linear-gradient(to top, transparent 0, black 36px)}.mask-grad-bottom-10{mask-image:linear-gradient(to top, transparent 0, black 40px)}.fern-dropdown{@apply relative z-50;@apply animate-popover;@apply min-w-[var(--radix-dropdown-menu-trigger-width)];@apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur will-change-[opacity,transform];@apply shadow-xl}.fern-dropdown .fern-dropdown-item{@apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center text-left;@apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color]}.fern-dropdown .fern-dropdown-item .fern-dropdown-item-indicator{@apply flex-none w-4 h-full flex items-center justify-center mr-1}.fern-search-bar{@apply cursor-pointer;@apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;@apply bg-tag-default;@apply hover:bg-tag-default-hover transition-[background,shadow];@apply ring-inset ring-default hover:ring-default ring-1}.fern-search-bar .search-placeholder{@apply inline-flex flex-1 items-center space-x-2.5}.fern-search-bar .search-placeholder span{@apply text-faded}.fern-search-bar .keyboard-shortcut-hint{@apply t-muted ring-default shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;@apply dark:shadow-card-dark bg-card}.fern-search-bar:hover .keyboard-shortcut-hint{@apply ring-default}.fern-search-bar:disabled{@apply shadow-none bg-tag-default-soft cursor-default}.fern-sidebar-heading{@apply flex min-h-[32px] lg:min-h-[36px] mb-1}.fern-sidebar-group{@apply list-none;@apply max-lg:-mx-4}.fern-sidebar-group .fern-sidebar-group{@apply max-lg:mx-0}.fern-sidebar-item{@apply scroll-my-32}.fern-sidebar-link-container{@apply items-stretch relative flex min-h-[36px];@apply data-[state=active]:t-accent-aaa;@apply data-[state=inactive]:hover:t-accent-aaa}.fern-sidebar-link-container:not(.top-level){@apply data-[state=inactive]:t-muted}.fern-sidebar-link-indent{@apply relative flex-none w-4 lg:w-3 shrink-0 border-l}.fern-sidebar-link-container[data-state=active] .fern-sidebar-link-indent{@apply border-border-concealed md:border-border-accent-muted}.fern-sidebar-link-container[data-state=inactive] .fern-sidebar-link-indent{@apply border-border-concealed md:border-default lg:opacity-60}.fern-sidebar-link{@apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;@apply max-lg:rounded-none lg:rounded-lg}.fern-sidebar-link-container[data-state=active] .fern-sidebar-link{@apply bg-tag-primary}.fern-sidebar-link-container[data-state=inactive] .fern-sidebar-link{@apply hover:bg-tag-default transition-colors}.fern-sidebar-link-content{@apply inline-flex flex-1 items-center py-2.5 sm:py-2}.fern-sidebar-link-text{@apply flex-1 text-base leading-6 lg:text-sm lg:leading-5}.fern-sidebar-link-expand{@apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none ease-out;@apply lg:rounded-lg}.fern-sidebar-link-expand:last-child{@apply flex lg:hidden -mr-3}.fern-sidebar-link-expand:not(:last-child){@apply hidden lg:flex -ml-3}.fern-sidebar-link-indent+.fern-sidebar-link-expand{@apply lg:rounded-l-none}.fern-sidebar-link-expand[data-state=active]{@apply after:content-[""] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none}.fern-segmented-control{@apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;@apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed}.fern-segmented-control>.fern-button{@apply rounded-lg shrink min-w-0}.fern-button{@apply transition-[background];@apply inline-flex items-center justify-center;@apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;@apply cursor-default}.fern-button.multiline,.fern-button.multiline>.fern-button-content{height:auto !important}.fern-button.rounded{@apply rounded-full}.fern-button:not(.square):has(>.fern-button-content>.fa-icon:first-child),.fern-button:not(.square):has(>.fern-button-content>svg:first-child){@apply pl-2}.fern-button:not(.square):has(>.fern-button-content>.fa-icon:last-child),.fern-button:not(.square):has(>.fern-button-content>svg:last-child){@apply pr-2}.fern-button>.fern-button-content{@apply items-center inline-flex shrink min-w-0;@apply gap-1.5 h-6}.fern-button>.fern-button-content>.fa-icon,.fern-button>.fern-button-content>svg{@apply size-4 shrink-0}.fern-button>.fern-button-content .fern-button-text{@apply shrink min-w-0}.fern-button:not(.multiline) .fern-button-text{@apply truncate}.fern-button:not(.text-left,.text-right)>.fern-button-content{@apply text-center justify-center}.fern-button.text-left>.fern-button-content{@apply justify-start flex-1}.fern-button.text-left>.fern-button-content .fern-button-text{@apply flex-1}.fern-button.square{@apply px-1}.fern-button.square>.fern-button-content{@apply w-7 sm:w-6}.fern-button.small{@apply px-2 py-1 text-xs h-7 sm:h-6}.fern-button.small:not(.square):has(>.fern-button-content>.fa-icon:first-child),.fern-button.small:not(.square):has(>.fern-button-content>svg:first-child){@apply pl-1.5}.fern-button.small:not(.square):has(>.fern-button-content>.fa-icon:last-child),.fern-button.small:not(.square):has(>.fern-button-content>svg:last-child){@apply pr-1.5}.fern-button.small>.fern-button-content{@apply gap-1.5 h-4}.fern-button.small>.fern-button-content>.fa-icon,.fern-button.small>.fern-button-content>svg{@apply size-3}.fern-button.small.square{@apply px-1}.fern-button.small.square>.fern-button-content{@apply w-6 sm:w-4}.fern-button.large{@apply px-3 lg:px-4 py-2 text-base h-11 sm:h-10}.fern-button.large:not(.square):has(>.fern-button-content>.fa-icon:first-child),.fern-button.large:not(.square):has(>.fern-button-content>svg:first-child){@apply pl-3}.fern-button.large:not(.square):has(>.fern-button-content>.fa-icon:last-child),.fern-button.large:not(.square):has(>.fern-button-content>svg:last-child){@apply pr-3}.fern-button.large>.fern-button-content{@apply gap-2 h-6}.fern-button.large>.fern-button-content>.fern-button-icon{@apply size-5}.fern-button.large.square{@apply px-2}.fern-button.large.square>.fern-button-content{@apply w-7 sm:w-6}.fern-button.disabled{@apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;@apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50}.fern-button:not(.disabled).minimal{@apply bg-transparent;@apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default}.fern-button:not(.disabled).minimal .fern-button-text{@apply t-muted}.fern-button:not(.disabled).minimal .fern-button-text:hover{@apply t-default}.fern-button:not(.disabled).minimal .fa-icon{@apply bg-text-default/60}.fern-button:not(.disabled).minimal:not(.primary,.success,.warning,.danger) .fa-icon{@apply dark:bg-text-default/70}.fern-button:not(.disabled).minimal.primary{@apply t-accent hover:t-accent;@apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary  data-[selected=true]:bg-tag-primary}.fern-button:not(.disabled).minimal.primary .fa-icon{@apply bg-accent-aa}.fern-button:not(.disabled).minimal.success{@apply t-success hover:t-success;@apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success  data-[selected=true]:bg-tag-success}.fern-button:not(.disabled).minimal.success .fa-icon{@apply bg-intent-success}.fern-button:not(.disabled).minimal.warning{@apply t-warning hover:t-warning;@apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning  data-[selected=true]:bg-tag-warning}.fern-button:not(.disabled).minimal.warning .fa-icon{@apply bg-intent-warning}.fern-button:not(.disabled).minimal.danger{@apply t-danger hover:t-danger;@apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger  data-[selected=true]:bg-tag-danger}.fern-button:not(.disabled).minimal.danger .fa-icon{@apply bg-intent-danger}.fern-button:not(.disabled).filled{@apply bg-text-default/60 t-default}.fern-button:not(.disabled).filled:hover,.fern-button:not(.disabled).filled[data-state=on],.fern-button:not(.disabled).filled[data-state=checked],.fern-button:not(.disabled).filled[data-state=open],.fern-button:not(.disabled).filled[data-state=opening]{@apply bg-text-default/60 t-default}.fern-button:not(.disabled).filled .fa-icon{@apply bg-text-default/60 t-default}.fern-button:not(.disabled).filled.primary{@apply bg-accent hover:bg-accent t-accent-contrast}.fern-button:not(.disabled).filled.primary:hover,.fern-button:not(.disabled).filled.primary[data-state=on],.fern-button:not(.disabled).filled.primary[data-state=checked],.fern-button:not(.disabled).filled.primary[data-state=open],.fern-button:not(.disabled).filled.primary[data-state=opening]{@apply bg-accent-tinted t-accent-contrast}.fern-button:not(.disabled).filled.primary .fa-icon{@apply bg-accent-contrast}.fern-button:not(.disabled).filled.success{@apply bg-intent-success text-white dark:text-black}.fern-button:not(.disabled).filled.success:hover,.fern-button:not(.disabled).filled.success[data-state=on],.fern-button:not(.disabled).filled.success[data-state=checked],.fern-button:not(.disabled).filled.success[data-state=open],.fern-button:not(.disabled).filled.success[data-state=opening]{@apply bg-intent-success-lightened text-white dark:text-black}.fern-button:not(.disabled).filled.success .fa-icon{@apply bg-white;@apply dark:bg-black}.fern-button:not(.disabled).filled.warning{@apply bg-intent-warning text-white dark:text-black}.fern-button:not(.disabled).filled.warning:hover,.fern-button:not(.disabled).filled.warning[data-state=on],.fern-button:not(.disabled).filled.warning[data-state=checked],.fern-button:not(.disabled).filled.warning[data-state=open],.fern-button:not(.disabled).filled.warning[data-state=opening]{@apply bg-intent-warning-lightened text-white dark:text-black}.fern-button:not(.disabled).filled.warning .fa-icon{@apply bg-white;@apply dark:bg-black}.fern-button:not(.disabled).filled.danger{@apply bg-intent-danger text-white dark:text-black}.fern-button:not(.disabled).filled.danger:hover,.fern-button:not(.disabled).filled.danger[data-state=on],.fern-button:not(.disabled).filled.danger[data-state=checked],.fern-button:not(.disabled).filled.danger[data-state=open],.fern-button:not(.disabled).filled.danger[data-state=opening]{@apply bg-intent-danger-lightened text-white dark:text-black}.fern-button:not(.disabled).filled.danger .fa-icon{@apply bg-white;@apply dark:bg-black}.fern-button:not(.disabled).outlined{@apply ring-1 transition-shadow transition-[background] ring-inset;@apply ring-default t-default}.fern-button:not(.disabled).outlined:hover,.fern-button:not(.disabled).outlined[data-state=on],.fern-button:not(.disabled).outlined[data-state=checked],.fern-button:not(.disabled).outlined[data-state=open],.fern-button:not(.disabled).outlined[data-state=opening]{@apply bg-tag-default t-default}.fern-button:not(.disabled).outlined .fa-icon{@apply bg-text-default/60}.fern-button:not(.disabled).outlined.primary{@apply ring-border-primary t-accent}.fern-button:not(.disabled).outlined.primary .fa-icon{@apply bg-accent-aa}.fern-button:not(.disabled).outlined.primary:hover,.fern-button:not(.disabled).outlined.primary[data-state=on],.fern-button:not(.disabled).outlined.primary[data-state=checked],.fern-button:not(.disabled).outlined.primary[data-state=open],.fern-button:not(.disabled).outlined.primary[data-state=opening]{@apply bg-tag-primary t-accent-aaa}.fern-button:not(.disabled).outlined.primary:hover .fa-icon,.fern-button:not(.disabled).outlined.primary[data-state=on] .fa-icon,.fern-button:not(.disabled).outlined.primary[data-state=checked] .fa-icon,.fern-button:not(.disabled).outlined.primary[data-state=open] .fa-icon,.fern-button:not(.disabled).outlined.primary[data-state=opening] .fa-icon{@apply bg-accent-aaa}.fern-button:not(.disabled).outlined.success{@apply ring-border-success text-intent-success}.fern-button:not(.disabled).outlined.success:hover,.fern-button:not(.disabled).outlined.success[data-state=on],.fern-button:not(.disabled).outlined.success[data-state=checked],.fern-button:not(.disabled).outlined.success[data-state=open],.fern-button:not(.disabled).outlined.success[data-state=opening]{@apply bg-tag-success text-intent-success}.fern-button:not(.disabled).outlined.success .fa-icon{@apply bg-intent-success}.fern-button:not(.disabled).outlined.warning{@apply ring-border-warning text-intent-warning}.fern-button:not(.disabled).outlined.warning:hover,.fern-button:not(.disabled).outlined.warning[data-state=on],.fern-button:not(.disabled).outlined.warning[data-state=checked],.fern-button:not(.disabled).outlined.warning[data-state=open],.fern-button:not(.disabled).outlined.warning[data-state=opening]{@apply bg-tag-warning text-intent-warning}.fern-button:not(.disabled).outlined.warning .fa-icon{@apply bg-intent-warning}.fern-button:not(.disabled).outlined.danger{@apply ring-border-danger text-intent-danger}.fern-button:not(.disabled).outlined.danger:hover,.fern-button:not(.disabled).outlined.danger[data-state=on],.fern-button:not(.disabled).outlined.danger[data-state=checked],.fern-button:not(.disabled).outlined.danger[data-state=open],.fern-button:not(.disabled).outlined.danger[data-state=opening]{@apply bg-tag-danger text-intent-danger}.fern-button:not(.disabled).outlined.danger .fa-icon{@apply bg-intent-danger}.fern-button-group{@apply inline-flex items-stretch}.fern-button-group>.fern-button+.fern-button.outlined,.fern-button-group>.fern-button+.fern-button.filled{@apply ml-2}.fern-button-group>.fern-button.small+.fern-button.small.outlined,.fern-button-group>.fern-button.small+.fern-button.small.filled{@apply ml-1}.fern-button-group>.fern-button.large+.fern-button.large.outlined,.fern-button-group>.fern-button.large+.fern-button.large.filled{@apply ml-3}.fern-button-group>.fern-button.outlined+.fern-button.minimal,.fern-button-group>.fern-button.filled+.fern-button.minimal{@apply ml-2}.fern-card{@apply border-default t-default hover:t-default border bg-card}.fern-card.interactive{@apply cursor-pointer shadow-card;@apply hover:shadow-card-elevated hover:border-accent transition-all;@apply active:shadow-card-elevated active:border-primary}.fern-card.interactive.active{@apply shadow-card-elevated border-primary}.fern-card.elevated{@apply shadow-card-elevated border-primary transition-all}.fern-input-focus{@apply ring-border-primary ring-2 outline-none}.fern-input{@apply form-input w-full;@apply border-none bg-transparent !important;@apply outline-none ring-0 !important}.fern-textarea{@apply form-textarea resize-none w-full;@apply outline-none ring-0 bg-transparent border-none !important}.fern-textarea-group,.fern-input-group,.fern-numeric-input-group{@apply flex items-center overflow-hidden;@apply focus-within:fern-input-focus;@apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner}.fern-input-icon{@apply flex items-center justify-center;@apply w-8 h-full shrink-0}.fern-input-icon+.fern-input{@apply pl-8 -ml-8}.fern-input-right-element{@apply flex items-center justify-center;@apply min-w-8 h-full shrink-0 px-0 -ml-2}.fern-input-group,.fern-numeric-input-group{@apply h-10 sm:h-8}.fern-numeric-input-group .fern-numeric-input-step{@apply h-full rounded-none border-default}.fern-numeric-input-group:focus-within .fern-numeric-input-step{@apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary}.fern-numeric-input-group .fern-numeric-input-step:first-child{@apply rounded-l-md border-r}.fern-numeric-input-group .fern-numeric-input-step:last-child{@apply rounded-r-md border-l}.fern-input,.fern-textarea{@apply caret-accent py-2 px-2.5 text-sm;@apply max-sm:text-base}input.fern-input::-webkit-outer-spin-button,input.fern-input::-webkit-inner-spin-button{appearance:none;margin:0}input.fern-input[type=number]{appearance:textfield}.fern-mdx-link{@apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;@apply font-semibold}h1 .fern-mdx-link,h2 .fern-mdx-link,h3 .fern-mdx-link,h4 .fern-mdx-link,h5 .fern-mdx-link,h6 .fern-mdx-link{font-weight:inherit}.fern-mdx-link svg.external-link-icon{@apply ml-0.5 inline-block t-muted}.fern-mdx-link:hover svg.external-link-icon{@apply t-accent}.fern-api-property-key{@apply font-mono t-default font-semibold text-sm}.custom-backdrop [data-rmiz-modal-overlay=visible]{@apply bg-text-default/20}}/*# sourceMappingURL=index.css.map */
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/mauve.css";
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/sage.css";
+@import "@radix-ui/colors/olive.css";
+@import "@radix-ui/colors/sand.css";
+@import "@radix-ui/colors/gray-alpha.css";
+@import "@radix-ui/colors/mauve-alpha.css";
+@import "@radix-ui/colors/slate-alpha.css";
+@import "@radix-ui/colors/sage-alpha.css";
+@import "@radix-ui/colors/olive-alpha.css";
+@import "@radix-ui/colors/sand-alpha.css";
+@import "@radix-ui/colors/green.css";
+@import "@radix-ui/colors/green-alpha.css";
+@import "@radix-ui/colors/grass-alpha.css";
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/red-alpha.css";
+@import "@radix-ui/colors/amber.css";
+@import "@radix-ui/colors/amber-alpha.css";
+@import "@radix-ui/colors/blue.css";
+@import "@radix-ui/colors/blue-alpha.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/mauve-dark.css";
+@import "@radix-ui/colors/slate-dark.css";
+@import "@radix-ui/colors/sage-dark.css";
+@import "@radix-ui/colors/olive-dark.css";
+@import "@radix-ui/colors/sand-dark.css";
+@import "@radix-ui/colors/gray-dark-alpha.css";
+@import "@radix-ui/colors/mauve-dark-alpha.css";
+@import "@radix-ui/colors/slate-dark-alpha.css";
+@import "@radix-ui/colors/sage-dark-alpha.css";
+@import "@radix-ui/colors/olive-dark-alpha.css";
+@import "@radix-ui/colors/sand-dark-alpha.css";
+@import "@radix-ui/colors/green-dark-alpha.css";
+@import "@radix-ui/colors/grass-dark-alpha.css";
+@import "@radix-ui/colors/red-dark-alpha.css";
+@import "@radix-ui/colors/amber-dark-alpha.css";
+@import "@radix-ui/colors/blue-dark-alpha.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    html {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+        @apply outline-transparent;
+        @apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted;
+    }
+    ::selection {
+        @apply bg-accent-highlight;
+    }
+    html,
+    body {
+        @apply t-default;
+        font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
+        font-size: 16px !important;
+    }
+    code,
+    pre,
+    .font-mono {
+        font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
+    }
+    code.inline-code {
+        @apply text-[0.875em];
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply scroll-mt-header-height-padded;
+        font-family: var(--typography-heading-font-family);
+    }
+    h1:first-child,
+    h2:first-child,
+    h3:first-child,
+    h4:first-child,
+    h5:first-child,
+    h6:first-child {
+        @apply mt-0;
+    }
+    h1 {
+        @apply text-[2.25rem] font-extrabold leading-tight;
+    }
+    h2 {
+        @apply text-[1.5rem] font-bold leading-tight;
+    }
+    h3 {
+        @apply text-[1.25rem] font-semibold leading-tight;
+    }
+    h4 {
+        @apply text-[1.125rem] font-semibold leading-tight;
+    }
+    h5 {
+        @apply text-[1rem] font-semibold;
+    }
+    h6 {
+        @apply text-[0.875rem] font-semibold;
+    }
+    .clipped-background {
+        @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
+        clip-path: inset(0);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .description-mask {
+        @apply overflow-hidden line-clamp-3;
+        text-overflow: -o-ellipsis-lastline;
+    }
+    input[type="search"]::-webkit-search-cancel-button {
+        display: none;
+    }
+    hr {
+        @apply border-default;
+    }
+    .fern-main {
+        @apply relative w-full min-w-0 flex-1 mt-header-height;
+    }
+}
+@layer components {
+    .fa-icon {
+        @apply size-4 inline-block bg-intent-default;
+        background-color: var(--fa-icon-dark, var(--gray-a11));
+    }
+    .mask-grad-top-1 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 4px);
+    }
+    .mask-grad-top-2 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 8px);
+    }
+    .mask-grad-top-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+    }
+    .mask-grad-top-4 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 16px);
+    }
+    .mask-grad-top-5 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 20px);
+    }
+    .mask-grad-top-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+    }
+    .mask-grad-y-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+    }
+    .mask-grad-top-7 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 28px);
+    }
+    .mask-grad-top-8 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 32px);
+    }
+    .mask-grad-bottom-6 {
+        mask-image: linear-gradient(to top, transparent 0, black 24px);
+    }
+    .mask-grad-bottom-7 {
+        mask-image: linear-gradient(to top, transparent 0, black 28px);
+    }
+    .mask-grad-bottom-8 {
+        mask-image: linear-gradient(to top, transparent 0, black 32px);
+    }
+    .mask-grad-bottom-9 {
+        mask-image: linear-gradient(to top, transparent 0, black 36px);
+    }
+    .mask-grad-bottom-10 {
+        mask-image: linear-gradient(to top, transparent 0, black 40px);
+    }
+    .fern-dropdown {
+        @apply relative z-50;
+        @apply animate-popover;
+        @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
+        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur will-change-[opacity,transform];
+        @apply shadow-xl;
+    }
+    .fern-dropdown .fern-dropdown-item {
+        @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center text-left;
+        @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
+    }
+    .fern-dropdown .fern-dropdown-item .fern-dropdown-item-indicator {
+        @apply flex-none w-4 h-full flex items-center justify-center mr-1;
+    }
+    .fern-search-bar {
+        @apply cursor-pointer;
+        @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;
+        @apply bg-tag-default;
+        @apply hover:bg-tag-default-hover transition-[background,shadow];
+        @apply ring-inset ring-default hover:ring-default ring-1;
+    }
+    .fern-search-bar .search-placeholder {
+        @apply inline-flex flex-1 items-center space-x-2.5;
+    }
+    .fern-search-bar .search-placeholder span {
+        @apply text-faded;
+    }
+    .fern-search-bar .keyboard-shortcut-hint {
+        @apply t-muted ring-default shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
+        @apply dark:shadow-card-dark bg-card;
+    }
+    .fern-search-bar:hover .keyboard-shortcut-hint {
+        @apply ring-default;
+    }
+    .fern-search-bar:disabled {
+        @apply shadow-none bg-tag-default-soft cursor-default;
+    }
+    .fern-sidebar-heading {
+        @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
+    }
+    .fern-sidebar-group {
+        @apply list-none;
+        @apply max-lg:-mx-4;
+    }
+    .fern-sidebar-group .fern-sidebar-group {
+        @apply max-lg:mx-0;
+    }
+    .fern-sidebar-item {
+        @apply scroll-my-32;
+    }
+    .fern-sidebar-link-container {
+        @apply items-stretch relative flex min-h-[36px];
+        @apply data-[state=active]:t-accent-aaa;
+        @apply data-[state=inactive]:hover:t-accent-aaa;
+    }
+    .fern-sidebar-link-container:not(.top-level) {
+        @apply data-[state=inactive]:t-muted;
+    }
+    .fern-sidebar-link-indent {
+        @apply relative flex-none w-4 lg:w-3 shrink-0 border-l;
+    }
+    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
+        @apply border-border-concealed md:border-border-accent-muted;
+    }
+    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
+        @apply border-border-concealed md:border-default lg:opacity-60;
+    }
+    .fern-sidebar-link {
+        @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
+        @apply max-lg:rounded-none lg:rounded-lg;
+    }
+    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
+        @apply bg-tag-primary;
+    }
+    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
+        @apply hover:bg-tag-default transition-colors;
+    }
+    .fern-sidebar-link-content {
+        @apply inline-flex flex-1 items-center py-2.5 sm:py-2;
+    }
+    .fern-sidebar-link-text {
+        @apply flex-1 text-base leading-6 lg:text-sm lg:leading-5;
+    }
+    .fern-sidebar-link-expand {
+        @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none ease-out;
+        @apply lg:rounded-lg;
+    }
+    .fern-sidebar-link-expand:last-child {
+        @apply flex lg:hidden -mr-3;
+    }
+    .fern-sidebar-link-expand:not(:last-child) {
+        @apply hidden lg:flex -ml-3;
+    }
+    .fern-sidebar-link-indent + .fern-sidebar-link-expand {
+        @apply lg:rounded-l-none;
+    }
+    .fern-sidebar-link-expand[data-state="active"] {
+        @apply after:content-[""] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
+    }
+    .fern-segmented-control {
+        @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
+        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed;
+    }
+    .fern-segmented-control > .fern-button {
+        @apply rounded-lg shrink min-w-0;
+    }
+    .fern-button {
+        @apply transition-[background];
+        @apply inline-flex items-center justify-center;
+        @apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;
+        @apply cursor-default;
+    }
+    .fern-button.multiline,
+    .fern-button.multiline > .fern-button-content {
+        height: auto !important;
+    }
+    .fern-button.rounded {
+        @apply rounded-full;
+    }
+    .fern-button:not(.square):has(> .fern-button-content > .fa-icon:first-child),
+    .fern-button:not(.square):has(> .fern-button-content > svg:first-child) {
+        @apply pl-2;
+    }
+    .fern-button:not(.square):has(> .fern-button-content > .fa-icon:last-child),
+    .fern-button:not(.square):has(> .fern-button-content > svg:last-child) {
+        @apply pr-2;
+    }
+    .fern-button > .fern-button-content {
+        @apply items-center inline-flex shrink min-w-0;
+        @apply gap-1.5 h-6;
+    }
+    .fern-button > .fern-button-content > .fa-icon,
+    .fern-button > .fern-button-content > svg {
+        @apply size-4 shrink-0;
+    }
+    .fern-button > .fern-button-content .fern-button-text {
+        @apply shrink min-w-0;
+    }
+    .fern-button:not(.multiline) .fern-button-text {
+        @apply truncate;
+    }
+    .fern-button:not(.text-left, .text-right) > .fern-button-content {
+        @apply text-center justify-center;
+    }
+    .fern-button.text-left > .fern-button-content {
+        @apply justify-start flex-1;
+    }
+    .fern-button.text-left > .fern-button-content .fern-button-text {
+        @apply flex-1;
+    }
+    .fern-button.square {
+        @apply px-1;
+    }
+    .fern-button.square > .fern-button-content {
+        @apply w-7 sm:w-6;
+    }
+    .fern-button.small {
+        @apply px-2 py-1 text-xs h-7 sm:h-6;
+    }
+    .fern-button.small:not(.square):has(> .fern-button-content > .fa-icon:first-child),
+    .fern-button.small:not(.square):has(> .fern-button-content > svg:first-child) {
+        @apply pl-1.5;
+    }
+    .fern-button.small:not(.square):has(> .fern-button-content > .fa-icon:last-child),
+    .fern-button.small:not(.square):has(> .fern-button-content > svg:last-child) {
+        @apply pr-1.5;
+    }
+    .fern-button.small > .fern-button-content {
+        @apply gap-1.5 h-4;
+    }
+    .fern-button.small > .fern-button-content > .fa-icon,
+    .fern-button.small > .fern-button-content > svg {
+        @apply size-3;
+    }
+    .fern-button.small.square {
+        @apply px-1;
+    }
+    .fern-button.small.square > .fern-button-content {
+        @apply w-6 sm:w-4;
+    }
+    .fern-button.large {
+        @apply px-3 lg:px-4 py-2 text-base h-11 sm:h-10;
+    }
+    .fern-button.large:not(.square):has(> .fern-button-content > .fa-icon:first-child),
+    .fern-button.large:not(.square):has(> .fern-button-content > svg:first-child) {
+        @apply pl-3;
+    }
+    .fern-button.large:not(.square):has(> .fern-button-content > .fa-icon:last-child),
+    .fern-button.large:not(.square):has(> .fern-button-content > svg:last-child) {
+        @apply pr-3;
+    }
+    .fern-button.large > .fern-button-content {
+        @apply gap-2 h-6;
+    }
+    .fern-button.large > .fern-button-content > .fern-button-icon {
+        @apply size-5;
+    }
+    .fern-button.large.square {
+        @apply px-2;
+    }
+    .fern-button.large.square > .fern-button-content {
+        @apply w-7 sm:w-6;
+    }
+    .fern-button.disabled {
+        @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
+        @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
+    }
+    .fern-button:not(.disabled).minimal {
+        @apply bg-transparent;
+        @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
+    }
+    .fern-button:not(.disabled).minimal .fern-button-text {
+        @apply t-muted;
+    }
+    .fern-button:not(.disabled).minimal .fern-button-text:hover {
+        @apply t-default;
+    }
+    .fern-button:not(.disabled).minimal .fa-icon {
+        @apply bg-text-default/60;
+    }
+    .fern-button:not(.disabled).minimal:not(.primary, .success, .warning, .danger) .fa-icon {
+        @apply dark:bg-text-default/70;
+    }
+    .fern-button:not(.disabled).minimal.primary {
+        @apply t-accent hover:t-accent;
+        @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary  data-[selected=true]:bg-tag-primary;
+    }
+    .fern-button:not(.disabled).minimal.primary .fa-icon {
+        @apply bg-accent-aa;
+    }
+    .fern-button:not(.disabled).minimal.success {
+        @apply t-success hover:t-success;
+        @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success  data-[selected=true]:bg-tag-success;
+    }
+    .fern-button:not(.disabled).minimal.success .fa-icon {
+        @apply bg-intent-success;
+    }
+    .fern-button:not(.disabled).minimal.warning {
+        @apply t-warning hover:t-warning;
+        @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning  data-[selected=true]:bg-tag-warning;
+    }
+    .fern-button:not(.disabled).minimal.warning .fa-icon {
+        @apply bg-intent-warning;
+    }
+    .fern-button:not(.disabled).minimal.danger {
+        @apply t-danger hover:t-danger;
+        @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger  data-[selected=true]:bg-tag-danger;
+    }
+    .fern-button:not(.disabled).minimal.danger .fa-icon {
+        @apply bg-intent-danger;
+    }
+    .fern-button:not(.disabled).filled {
+        @apply bg-text-default/60 t-default;
+    }
+    .fern-button:not(.disabled).filled:hover,
+    .fern-button:not(.disabled).filled[data-state="on"],
+    .fern-button:not(.disabled).filled[data-state="checked"],
+    .fern-button:not(.disabled).filled[data-state="open"],
+    .fern-button:not(.disabled).filled[data-state="opening"] {
+        @apply bg-text-default/60 t-default;
+    }
+    .fern-button:not(.disabled).filled .fa-icon {
+        @apply bg-text-default/60 t-default;
+    }
+    .fern-button:not(.disabled).filled.primary {
+        @apply bg-accent hover:bg-accent t-accent-contrast;
+    }
+    .fern-button:not(.disabled).filled.primary:hover,
+    .fern-button:not(.disabled).filled.primary[data-state="on"],
+    .fern-button:not(.disabled).filled.primary[data-state="checked"],
+    .fern-button:not(.disabled).filled.primary[data-state="open"],
+    .fern-button:not(.disabled).filled.primary[data-state="opening"] {
+        @apply bg-accent-tinted t-accent-contrast;
+    }
+    .fern-button:not(.disabled).filled.primary .fa-icon {
+        @apply bg-accent-contrast;
+    }
+    .fern-button:not(.disabled).filled.success {
+        @apply bg-intent-success text-white dark:text-black;
+    }
+    .fern-button:not(.disabled).filled.success:hover,
+    .fern-button:not(.disabled).filled.success[data-state="on"],
+    .fern-button:not(.disabled).filled.success[data-state="checked"],
+    .fern-button:not(.disabled).filled.success[data-state="open"],
+    .fern-button:not(.disabled).filled.success[data-state="opening"] {
+        @apply bg-intent-success-lightened text-white dark:text-black;
+    }
+    .fern-button:not(.disabled).filled.success .fa-icon {
+        @apply bg-white;
+        @apply dark:bg-black;
+    }
+    .fern-button:not(.disabled).filled.warning {
+        @apply bg-intent-warning text-white dark:text-black;
+    }
+    .fern-button:not(.disabled).filled.warning:hover,
+    .fern-button:not(.disabled).filled.warning[data-state="on"],
+    .fern-button:not(.disabled).filled.warning[data-state="checked"],
+    .fern-button:not(.disabled).filled.warning[data-state="open"],
+    .fern-button:not(.disabled).filled.warning[data-state="opening"] {
+        @apply bg-intent-warning-lightened text-white dark:text-black;
+    }
+    .fern-button:not(.disabled).filled.warning .fa-icon {
+        @apply bg-white;
+        @apply dark:bg-black;
+    }
+    .fern-button:not(.disabled).filled.danger {
+        @apply bg-intent-danger text-white dark:text-black;
+    }
+    .fern-button:not(.disabled).filled.danger:hover,
+    .fern-button:not(.disabled).filled.danger[data-state="on"],
+    .fern-button:not(.disabled).filled.danger[data-state="checked"],
+    .fern-button:not(.disabled).filled.danger[data-state="open"],
+    .fern-button:not(.disabled).filled.danger[data-state="opening"] {
+        @apply bg-intent-danger-lightened text-white dark:text-black;
+    }
+    .fern-button:not(.disabled).filled.danger .fa-icon {
+        @apply bg-white;
+        @apply dark:bg-black;
+    }
+    .fern-button:not(.disabled).outlined {
+        @apply ring-1 transition-shadow transition-[background] ring-inset;
+        @apply ring-default t-default;
+    }
+    .fern-button:not(.disabled).outlined:hover,
+    .fern-button:not(.disabled).outlined[data-state="on"],
+    .fern-button:not(.disabled).outlined[data-state="checked"],
+    .fern-button:not(.disabled).outlined[data-state="open"],
+    .fern-button:not(.disabled).outlined[data-state="opening"] {
+        @apply bg-tag-default t-default;
+    }
+    .fern-button:not(.disabled).outlined .fa-icon {
+        @apply bg-text-default/60;
+    }
+    .fern-button:not(.disabled).outlined.primary {
+        @apply ring-border-primary t-accent;
+    }
+    .fern-button:not(.disabled).outlined.primary .fa-icon {
+        @apply bg-accent-aa;
+    }
+    .fern-button:not(.disabled).outlined.primary:hover,
+    .fern-button:not(.disabled).outlined.primary[data-state="on"],
+    .fern-button:not(.disabled).outlined.primary[data-state="checked"],
+    .fern-button:not(.disabled).outlined.primary[data-state="open"],
+    .fern-button:not(.disabled).outlined.primary[data-state="opening"] {
+        @apply bg-tag-primary t-accent-aaa;
+    }
+    .fern-button:not(.disabled).outlined.primary:hover .fa-icon,
+    .fern-button:not(.disabled).outlined.primary[data-state="on"] .fa-icon,
+    .fern-button:not(.disabled).outlined.primary[data-state="checked"] .fa-icon,
+    .fern-button:not(.disabled).outlined.primary[data-state="open"] .fa-icon,
+    .fern-button:not(.disabled).outlined.primary[data-state="opening"] .fa-icon {
+        @apply bg-accent-aaa;
+    }
+    .fern-button:not(.disabled).outlined.success {
+        @apply ring-border-success text-intent-success;
+    }
+    .fern-button:not(.disabled).outlined.success:hover,
+    .fern-button:not(.disabled).outlined.success[data-state="on"],
+    .fern-button:not(.disabled).outlined.success[data-state="checked"],
+    .fern-button:not(.disabled).outlined.success[data-state="open"],
+    .fern-button:not(.disabled).outlined.success[data-state="opening"] {
+        @apply bg-tag-success text-intent-success;
+    }
+    .fern-button:not(.disabled).outlined.success .fa-icon {
+        @apply bg-intent-success;
+    }
+    .fern-button:not(.disabled).outlined.warning {
+        @apply ring-border-warning text-intent-warning;
+    }
+    .fern-button:not(.disabled).outlined.warning:hover,
+    .fern-button:not(.disabled).outlined.warning[data-state="on"],
+    .fern-button:not(.disabled).outlined.warning[data-state="checked"],
+    .fern-button:not(.disabled).outlined.warning[data-state="open"],
+    .fern-button:not(.disabled).outlined.warning[data-state="opening"] {
+        @apply bg-tag-warning text-intent-warning;
+    }
+    .fern-button:not(.disabled).outlined.warning .fa-icon {
+        @apply bg-intent-warning;
+    }
+    .fern-button:not(.disabled).outlined.danger {
+        @apply ring-border-danger text-intent-danger;
+    }
+    .fern-button:not(.disabled).outlined.danger:hover,
+    .fern-button:not(.disabled).outlined.danger[data-state="on"],
+    .fern-button:not(.disabled).outlined.danger[data-state="checked"],
+    .fern-button:not(.disabled).outlined.danger[data-state="open"],
+    .fern-button:not(.disabled).outlined.danger[data-state="opening"] {
+        @apply bg-tag-danger text-intent-danger;
+    }
+    .fern-button:not(.disabled).outlined.danger .fa-icon {
+        @apply bg-intent-danger;
+    }
+    .fern-button-group {
+        @apply inline-flex items-stretch;
+    }
+    .fern-button-group > .fern-button + .fern-button.outlined,
+    .fern-button-group > .fern-button + .fern-button.filled {
+        @apply ml-2;
+    }
+    .fern-button-group > .fern-button.small + .fern-button.small.outlined,
+    .fern-button-group > .fern-button.small + .fern-button.small.filled {
+        @apply ml-1;
+    }
+    .fern-button-group > .fern-button.large + .fern-button.large.outlined,
+    .fern-button-group > .fern-button.large + .fern-button.large.filled {
+        @apply ml-3;
+    }
+    .fern-button-group > .fern-button.outlined + .fern-button.minimal,
+    .fern-button-group > .fern-button.filled + .fern-button.minimal {
+        @apply ml-2;
+    }
+    .fern-card {
+        @apply border-default t-default hover:t-default border bg-card;
+    }
+    .fern-card.interactive {
+        @apply cursor-pointer shadow-card;
+        @apply hover:shadow-card-elevated hover:border-accent transition-all;
+        @apply active:shadow-card-elevated active:border-primary;
+    }
+    .fern-card.interactive.active {
+        @apply shadow-card-elevated border-primary;
+    }
+    .fern-card.elevated {
+        @apply shadow-card-elevated border-primary transition-all;
+    }
+    .fern-input-focus {
+        @apply ring-border-primary ring-2 outline-none;
+    }
+    .fern-input {
+        @apply form-input w-full;
+        @apply border-none bg-transparent !important;
+        @apply outline-none ring-0 !important;
+    }
+    .fern-textarea {
+        @apply form-textarea resize-none w-full;
+        @apply outline-none ring-0 bg-transparent border-none !important;
+    }
+    .fern-textarea-group,
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply flex items-center overflow-hidden;
+        @apply focus-within:fern-input-focus;
+        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
+    }
+    .fern-input-icon {
+        @apply flex items-center justify-center;
+        @apply w-8 h-full shrink-0;
+    }
+    .fern-input-icon + .fern-input {
+        @apply pl-8 -ml-8;
+    }
+    .fern-input-right-element {
+        @apply flex items-center justify-center;
+        @apply min-w-8 h-full shrink-0 px-0 -ml-2;
+    }
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply h-10 sm:h-8;
+    }
+    .fern-numeric-input-group .fern-numeric-input-step {
+        @apply h-full rounded-none border-default;
+    }
+    .fern-numeric-input-group:focus-within .fern-numeric-input-step {
+        @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
+    }
+    .fern-numeric-input-group .fern-numeric-input-step:first-child {
+        @apply rounded-l-md border-r;
+    }
+    .fern-numeric-input-group .fern-numeric-input-step:last-child {
+        @apply rounded-r-md border-l;
+    }
+    .fern-input,
+    .fern-textarea {
+        @apply caret-accent py-2 px-2.5 text-sm;
+        @apply max-sm:text-base;
+    }
+    input.fern-input::-webkit-outer-spin-button,
+    input.fern-input::-webkit-inner-spin-button {
+        appearance: none;
+        margin: 0;
+    }
+    input.fern-input[type="number"] {
+        appearance: textfield;
+    }
+    .fern-mdx-link {
+        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;
+        @apply font-semibold;
+    }
+    h1 .fern-mdx-link,
+    h2 .fern-mdx-link,
+    h3 .fern-mdx-link,
+    h4 .fern-mdx-link,
+    h5 .fern-mdx-link,
+    h6 .fern-mdx-link {
+        font-weight: inherit;
+    }
+    .fern-mdx-link svg.external-link-icon {
+        @apply ml-0.5 inline-block t-muted;
+    }
+    .fern-mdx-link:hover svg.external-link-icon {
+        @apply t-accent;
+    }
+    .fern-api-property-key {
+        @apply font-mono t-default font-semibold text-sm;
+    }
+    .custom-backdrop [data-rmiz-modal-overlay="visible"] {
+        @apply bg-text-default/20;
+    }
+} /*# sourceMappingURL=index.css.map */
