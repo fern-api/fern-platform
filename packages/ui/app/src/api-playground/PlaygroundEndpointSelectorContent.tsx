@@ -187,12 +187,12 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                         >
                                             <FernButton
                                                 text={text}
-                                                className="w-full rounded-none text-left"
+                                                className="w-full text-left"
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                                rightIcon={<HttpMethodTag method="WSS" />}
+                                                rightIcon={<HttpMethodTag method="WSS" size="sm" />}
                                             />
                                         </FernTooltip>
                                     </li>
@@ -236,7 +236,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         asChild
                         ref={ref}
                     >
-                        <ul className="list-none p-3 flex flex-col gap-2 w-full h-fit">{renderedListItems}</ul>
+                        <ul className="list-none p-3 flex flex-col gap-4 w-full h-fit">{renderedListItems}</ul>
                         <div className="!h-6"></div>
                     </FernScrollArea>
                     <BuiltWithFern className="border-t border-default py-4 px-10 bg-background" />
