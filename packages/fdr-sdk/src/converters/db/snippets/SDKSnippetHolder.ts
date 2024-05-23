@@ -165,7 +165,6 @@ export class SDKSnippetHolder {
         getSnippet: (snippet: FdrAPI.Snippet) => T | undefined;
     }): T | undefined {
         const sdk = getSdk(this.snippetsConfigWithSdkId);
-        process.stderr.write(JSON.stringify(sdk, undefined, 2));
         if (sdk == null) {
             return undefined;
         }
@@ -176,7 +175,7 @@ export class SDKSnippetHolder {
             snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[endpointId];
         }
 
-        if (endpointId == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
+        if (endpointId == null || snippetsForEndpoint.length === 0) {
             snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod] ?? [];
         }
 
