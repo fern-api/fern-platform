@@ -1,15 +1,20 @@
 types:
+  FeatureId:
+    docs: |
+      A unique identifier for a feature (e.g. pagination).
+    type: string
+
   FeaturesConfig:
     docs: |
       Specifies the list of features supported by a specific generator.
     properties:
       features: list<Feature>
-  
+
   Feature:
     docs: |
       A single feature supported by a generator (e.g. pagination).
     properties:
-      name: string
+      id: FeatureId
       title: optional<string>
       description: optional<string>
       addendum: optional<string>

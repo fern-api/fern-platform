@@ -1,0 +1,53 @@
+# TODO: This entire file is a work in progress. It's still unclear how the generator will take control
+#       of specific sections like the requirements and installation. This might just need to be part
+#       of what the generator needs to produce, but where should it be written?
+
+imports:
+  features: features.yml
+types:
+  EndpointId:
+    docs: |
+      A unique identifier for an endpoint. This is interchangeable with the
+      identifier defined in the IR, and is now present in the snippets API.
+    type: string
+
+  Name:
+    docs: |
+      A name in various formats.
+    properties:
+      original: string
+      camel: string
+      pascal: string
+      snake: string
+      screamingSnake: string
+
+  ReadmeConfig:
+    properties:
+      organization: Name
+      publishInfo: optional<PublishInfo>
+      bannerLink: optional<string>
+      docsLink: optional<string>
+      endpoints: map<features.FeatureId, list<EndpointId>>
+
+  PublishInfo:
+    union:
+      npm: NpmPublishInfo
+      pypi: PypiPublishInfo
+      go: GoPublishInfo
+      maven: MavenPublishInfo
+
+  NpmPublishInfo:
+    properties:
+      packageName: string
+
+  PypiPublishInfo:
+    properties:
+      packageName: string
+
+  GoPublishInfo:
+    properties:
+      repository: string
+
+  MavenPublishInfo:
+    properties:
+      coordinate: string

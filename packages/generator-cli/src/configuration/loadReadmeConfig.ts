@@ -9,10 +9,13 @@ export async function loadReadmeConfig({
     _absolutePathToConfig: AbsoluteFilePath;
 }): Promise<ReadmeConfig> {
     return {
+        organization: "Placeholder",
+        publishInfo: undefined,
         bannerLink: undefined,
         docsLink: undefined,
         installation: undefined,
         requirements: undefined,
-        features: [],
+        features: {},
+        layout: [],
     };
 }

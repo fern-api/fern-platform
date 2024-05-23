@@ -6,6 +6,7 @@ import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { ReadmeGenerator } from "./ReadmeGenerator";
+import { ReadmeParser } from "./ReadmeParser";
 import { loadFeaturesConfig } from "./configuration/loadFeaturesConfig";
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
 import { loadSnippets } from "./configuration/loadSnippets";
@@ -30,6 +31,10 @@ void yargs(hideBin(process.argv))
                     string: true,
                     requred: true,
                 })
+                .option("original-readme", {
+                    string: true,
+                    requred: false,
+                })
                 .option("output", {
                     string: true,
                     requred: false,
@@ -51,8 +56,16 @@ void yargs(hideBin(process.argv))
             const snippets = await loadSnippets({
                 absolutePathToConfig: resolve(wd, argv.featureConfig),
             });
-            const generator = new ReadmeGenerator(readmeConfig, featuresConfig, snippets);
-            await generator.generateReadme(await createWriteStream(argv.output));
+            const generator = new ReadmeGenerator({
+                readmeParser: new ReadmeParser(),
+                readmeConfig,
+                featuresConfig,
+                snippets,
+                originalReadme: argv.originalReadme,
+            });
+            await generator.generateReadme({
+                output: await createWriteStream(argv.output),
+            });
             process.exit(0);
         },
     )

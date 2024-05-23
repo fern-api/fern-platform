@@ -710,8 +710,8 @@ importers:
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.837
-        version: 0.0.837
+        specifier: ^0.0.857
+        version: 0.0.857
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
@@ -4526,8 +4526,8 @@ packages:
       - debug
     dev: false
 
-  /@fern-fern/generator-exec-sdk@0.0.837:
-    resolution: {integrity: sha512-R1nYPQxJWnapaa36bq5H1FU/trT8X8ZGaFzDWG857IJEuJhijb9eOjUEcY7203/cc0fNC/Q4gY0y60h1HrH/Vw==}
+  /@fern-fern/generator-exec-sdk@0.0.857:
+    resolution: {integrity: sha512-IwgH1Q46F6JM6+sf9CtXcYvuWfssuIJ9jHdCAhQJY4XhG1gFWVorUQP5R+N52qPBZ2bXk4Ypz5AunVVxvUsFmA==}
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0
