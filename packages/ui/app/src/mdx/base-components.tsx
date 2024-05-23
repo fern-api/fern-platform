@@ -1,5 +1,4 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { FernCard } from "@fern-ui/components";
 import cn from "clsx";
 import {
     AnchorHTMLAttributes,
