@@ -1,6 +1,7 @@
 import { FeatureFlags } from "@fern-ui/ui";
 import { getAll } from "@vercel/edge-config";
 import { NextRequest, NextResponse } from "next/server";
+import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 
@@ -22,7 +23,7 @@ type FeatureFlag = (typeof FEATURE_FLAGS)[number];
 type EdgeConfigResponse = Record<FeatureFlag, string[]>;
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
-    const domain = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers.get("x-fern-host") ?? req.nextUrl.host;
+    const domain = getXFernHostEdge(req);
     return NextResponse.json(await getFeatureFlags(domain));
 }
 

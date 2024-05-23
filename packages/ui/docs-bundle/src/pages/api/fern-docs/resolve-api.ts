@@ -1,6 +1,8 @@
-import { resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
+import { buildUrl, resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
 import { ApiDefinitionResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { toValidPathname } from "../../../utils/toValidPathname";
+import { getXFernHostNode } from "../../../utils/xFernHost";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
@@ -15,15 +17,9 @@ const resolveApiHandler: NextApiHandler = async (
             return;
         }
 
-        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"];
-        if (typeof xFernHost === "string") {
-            req.headers.host = xFernHost;
-            res.setHeader("host", xFernHost);
-        } else {
-            res.status(400).json(null);
-            return;
-        }
-        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
+        const xFernHost = getXFernHostNode(req);
+        res.setHeader("host", xFernHost);
+
         const fullUrl = req.url;
 
         if (fullUrl == null) {
@@ -32,8 +28,10 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const maybePathName = fullUrl.split("/api/fern-docs/resolve-api")[0] ?? "";
-        const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
-        const url = `${hostWithoutTrailingSlash}${pathname}`;
+        const url = buildUrl({
+            host: xFernHost,
+            pathname: toValidPathname(maybePathName),
+        });
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
         const docsResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
@@ -89,17 +87,3 @@ const resolveApiHandler: NextApiHandler = async (
 };
 
 export default resolveApiHandler;
-
-// function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
-//     for (const node of sidebarNodes) {
-//         if (node.type === "apiSection" && node.api === api) {
-//             return node;
-//         } else if (node.type === "section") {
-//             const found = findApiSection(api, node.items);
-//             if (found != null) {
-//                 return found;
-//             }
-//         }
-//     }
-//     return undefined;
-// }
