@@ -14,7 +14,7 @@ import {
     unwrapReference,
 } from "../../resolver/types";
 import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
-import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormAside";
+import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormButtons";
 import { WithLabel } from "../WithLabel";
 import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";

@@ -169,7 +169,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     );
 
     return (
-        <div className="col-span-2 space-y-8 sm:pb-20">
+        <div className="col-span-2 space-y-8">
             {endpoint.headers.length > 0 && (
                 <div>
                     <div className="mb-4 px-4">

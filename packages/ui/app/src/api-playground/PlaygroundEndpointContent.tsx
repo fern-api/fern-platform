@@ -18,6 +18,7 @@ import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
+import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
@@ -43,8 +44,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     endpoint,
     formState,
     setFormState,
-    // resetWithExample,
-    // resetWithoutExample,
+    resetWithExample,
+    resetWithoutExample,
     response,
     sendRequest,
     types,
@@ -74,7 +75,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     }, []);
 
     const form = (
-        <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0">
+        <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
             {endpoint.auth != null && (
                 <PlaygroundAuthorizationFormCard
                     auth={endpoint.auth}
@@ -94,6 +95,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 formState={formState}
                 setFormState={setFormState}
                 types={types}
+            />
+
+            <PlaygroundEndpointFormButtons
+                endpoint={endpoint}
+                resetWithExample={resetWithExample}
+                resetWithoutExample={resetWithoutExample}
             />
         </div>
     );
