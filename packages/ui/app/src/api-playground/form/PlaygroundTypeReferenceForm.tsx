@@ -349,12 +349,12 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
             visitDiscriminatedUnion(literal.value, "type")._visit({
                 stringLiteral: (stringLiteral) => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <span>{stringLiteral.value}</span>
+                        <code>{stringLiteral.value}</code>
                     </WithLabel>
                 ),
                 booleanLiteral: (stringLiteral) => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <span>{stringLiteral.value ? "TRUE" : "FALSE"}</span>
+                        <code>{stringLiteral.value ? "true" : "false"}</code>
                     </WithLabel>
                 ),
                 _other: () => null,

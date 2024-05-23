@@ -1,6 +1,6 @@
 .playground-endpoint {
     @apply flex min-w-0 flex-1 shrink items-start gap-2;
-    @apply px-2 w-full;
+    @apply p-3 pb-0 w-full;
 }
 
 .playground-endpoint-url {

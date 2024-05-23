@@ -68,6 +68,11 @@ export function useHorizontalSplitPane(
 ): (e: React.MouseEvent<HTMLDivElement>) => void {
     return useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
+            // disable if the event is not a left click
+            if (e.button !== 0) {
+                return;
+            }
+
             e.preventDefault();
             e.stopPropagation();
             const handleMouseMove = (e: MouseEvent | TouchEvent) => {

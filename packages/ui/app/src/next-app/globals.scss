@@ -490,8 +490,16 @@
         &:not(.disabled) {
             &.minimal {
                 @apply bg-transparent;
-                @apply t-muted hover:t-default;
+                // @apply t-muted hover:t-default;
                 @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
+
+                .fern-button-text {
+                    @apply t-muted;
+
+                    &:hover {
+                        @apply t-default;
+                    }
+                }
 
                 .fa-icon {
                     @apply bg-text-default/60;

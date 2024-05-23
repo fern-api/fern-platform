@@ -18,7 +18,6 @@ import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
-import { PlaygroundEndpointFormAside } from "./PlaygroundEndpointFormAside";
 import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
@@ -44,8 +43,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     endpoint,
     formState,
     setFormState,
-    resetWithExample,
-    resetWithoutExample,
+    // resetWithExample,
+    // resetWithoutExample,
     response,
     sendRequest,
     types,
@@ -90,23 +89,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 />
             )}
 
-            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-2">
-                <PlaygroundEndpointFormAside
-                    className="col-span-1 -mt-6 max-sm:hidden"
-                    endpoint={endpoint}
-                    formState={formState}
-                    scrollAreaHeight={scrollAreaHeight}
-                    resetWithExample={resetWithExample}
-                    resetWithoutExample={resetWithoutExample}
-                    types={types}
-                />
-                <PlaygroundEndpointForm
-                    endpoint={endpoint}
-                    formState={formState}
-                    setFormState={setFormState}
-                    types={types}
-                />
-            </div>
+            <PlaygroundEndpointForm
+                endpoint={endpoint}
+                formState={formState}
+                setFormState={setFormState}
+                types={types}
+            />
         </div>
     );
 

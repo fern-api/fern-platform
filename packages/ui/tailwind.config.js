@@ -312,6 +312,10 @@ module.exports = {
                     from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
                     to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
                 },
+                "content-show-from-bottom": {
+                    from: { opacity: "0", transform: "translate(0, 50%)" },
+                    to: { opacity: "1", transform: "translate(0, 0)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -328,6 +332,7 @@ module.exports = {
                 "thumb-rock": "thumb-rock 500ms both",
                 "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-show-from-bottom": "content-show-from-bottom 150ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

@@ -97,7 +97,9 @@ function visitNode(
                 }
             }
 
-            const apiSectionBreadcrumbs = [...sectionTitleBreadcrumbs, apiSection.title];
+            const apiSectionBreadcrumbs = apiSection.isSidebarFlattened
+                ? sectionTitleBreadcrumbs
+                : [...sectionTitleBreadcrumbs, apiSection.title];
 
             if (apiSection.changelog != null) {
                 traverseState = visitPage(apiSection.changelog, currentNode, traverseState, apiSectionBreadcrumbs);
