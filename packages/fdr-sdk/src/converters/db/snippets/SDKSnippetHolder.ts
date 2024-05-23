@@ -179,7 +179,6 @@ export class SDKSnippetHolder {
         if (endpointId == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
             snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod] ?? [];
         }
-        console.log("snippetsForEndpoint", JSON.stringify(snippetsForEndpoint, undefined, 2));
 
         let snippets = snippetsForEndpoint.filter((snippet) => {
             return exampleId != null && snippet.exampleIdentifier === exampleId;
@@ -188,7 +187,6 @@ export class SDKSnippetHolder {
         if (snippets.length === 0) {
             snippets = [snippetsForEndpoint[0]];
         }
-        console.log("snippets", JSON.stringify(snippets, undefined, 2));
 
         if (snippets[0] != null) {
             return getSnippet(snippets[0]);
