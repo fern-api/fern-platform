@@ -11,17 +11,20 @@ export function createApiDefinition({
     endpointPath,
     endpointMethod,
     snippetsConfig,
+    originalEndpointId,
 }: {
     endpointId: APIV1Write.EndpointId;
     endpointPath: APIV1Write.EndpointPath;
     endpointMethod: APIV1Write.HttpMethod;
     snippetsConfig?: APIV1Write.SnippetsConfig;
+    originalEndpointId?: string;
 }): APIV1Write.ApiDefinition {
     return {
         rootPackage: {
             endpoints: [
                 {
                     id: endpointId,
+                    originalEndpointId,
                     method: endpointMethod,
                     path: endpointPath,
                     headers: [],
