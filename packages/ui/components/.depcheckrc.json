@@ -24,7 +24,8 @@
     "@storybook/blocks",
     "@storybook/test",
     "@emotion/is-prop-valid",
-    "sass"
+    "sass",
+    "copyfiles"
   ],
   "ignore-patterns": ["dist"]
 }
