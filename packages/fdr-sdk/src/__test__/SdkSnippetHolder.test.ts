@@ -48,7 +48,6 @@ describe("SDK Snippet Holder", () => {
             endpointId: "endpoint_connectors.list",
             exampleId: undefined,
         });
-        console.log(snippet);
         expect(snippet?.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     });
 });
