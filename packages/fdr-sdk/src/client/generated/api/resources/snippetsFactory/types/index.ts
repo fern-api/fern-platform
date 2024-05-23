@@ -4,6 +4,7 @@ export * from "./PythonSdkSnippetCreate";
 export * from "./GoSdkSnippetsCreate";
 export * from "./RubySdkSnippetsCreate";
 export * from "./JavaSdkSnippetsCreate";
+export * from "./BaseSnippetCreate";
 export * from "./SingleTypescriptSnippetCreate";
 export * from "./SinglePythonSnippetCreate";
 export * from "./SingleGoSnippetCreate";

@@ -1,4 +1,4 @@
-import { SDKSnippetHolder } from "@fern-api/fdr-sdk";
+import { SDKSnippetHolder } from "../converters";
 
 describe("SDK Snippet Holder", () => {
     it("Test SDK Snippet Retrieval", () => {
@@ -45,8 +45,10 @@ describe("SDK Snippet Holder", () => {
         const snippet = sdkSnippetHolder.getPythonCodeSnippetForEndpoint({
             endpointMethod: "GET",
             endpointPath: "/users/v1",
-            identifierOverride: "endpoint_connectors.list",
+            endpointId: "endpoint_connectors.list",
+            exampleId: undefined,
         });
+        console.log(snippet);
         expect(snippet?.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     });
 });

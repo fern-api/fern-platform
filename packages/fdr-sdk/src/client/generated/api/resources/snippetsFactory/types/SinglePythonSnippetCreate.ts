@@ -4,7 +4,6 @@
 
 import * as FernRegistry from "../../..";
 
-export interface SinglePythonSnippetCreate {
-    endpoint: FernRegistry.EndpointIdentifier;
+export interface SinglePythonSnippetCreate extends FernRegistry.BaseSnippetCreate {
     snippet: FernRegistry.PythonSnippetCode;
 }

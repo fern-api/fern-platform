@@ -35,6 +35,9 @@ service:
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
             endpoint: commons.EndpointIdentifier
+            exampleIdentifier:
+              type: optional<string>
+              docs: The identifier of the example to fetch the snippet for, this is ignored if a payload is passed in.
             # TODO: Nice to have, allow client variable name to be configurable
             # clientName:
             #   type: optional<string>
@@ -311,6 +314,8 @@ types:
     type: map<commons.EndpointMethod, list<Snippet>>
 
   Snippet:
+    base-properties:
+      exampleIdentifier: optional<string>
     union:
       typescript: TypeScriptSnippet
       python: PythonSnippet

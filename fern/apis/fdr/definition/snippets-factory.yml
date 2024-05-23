@@ -69,30 +69,34 @@ types:
       snippets: list<SingleJavaSnippetCreate>
 
   # Single creates
-
-  SingleTypescriptSnippetCreate:
+  BaseSnippetCreate:
     properties:
       endpoint: commons.EndpointIdentifier
+      exampleIdentifier: optional<string>
+
+  SingleTypescriptSnippetCreate:
+    extends: BaseSnippetCreate
+    properties:
       snippet: TypeScriptSnippetCode
 
   SinglePythonSnippetCreate:
+    extends: BaseSnippetCreate
     properties:
-      endpoint: commons.EndpointIdentifier
       snippet: PythonSnippetCode
 
   SingleGoSnippetCreate:
+    extends: BaseSnippetCreate
     properties:
-      endpoint: commons.EndpointIdentifier
       snippet: GoSnippetCode
 
   SingleRubySnippetCreate:
+    extends: BaseSnippetCreate
     properties:
-      endpoint: commons.EndpointIdentifier
       snippet: RubySnippetCode
 
   SingleJavaSnippetCreate:
+    extends: BaseSnippetCreate
     properties:
-      endpoint: commons.EndpointIdentifier
       snippet: JavaSnippetCode
 
   # Snippet Code
