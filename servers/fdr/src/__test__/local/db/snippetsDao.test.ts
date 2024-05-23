@@ -215,7 +215,7 @@ it("snippets dao with example id", async () => {
     await fdrApplication.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
             orgId: "acme",
-            apiId: "api",
+            apiId: "apiId",
             sdk: {
                 type: "python",
                 sdk: {
@@ -234,21 +234,6 @@ it("snippets dao with example id", async () => {
                         },
                         exampleIdentifier: "example1",
                     },
-                ],
-            },
-        },
-    });
-    await fdrApplication.dao.snippets().storeSnippets({
-        storeSnippetsInfo: {
-            orgId: "acme",
-            apiId: "api",
-            sdk: {
-                type: "python",
-                sdk: {
-                    package: "acme",
-                    version: "0.0.1",
-                },
-                snippets: [
                     {
                         endpoint: {
                             path: "/users/v1",
@@ -268,7 +253,7 @@ it("snippets dao with example id", async () => {
     const response = await fdrApplication.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
             orgId: "acme",
-            apiId: "api",
+            apiId: "apiId",
             endpointIdentifier: {
                 path: "/users/v1",
                 method: FdrAPI.EndpointMethod.Get,
@@ -300,13 +285,14 @@ it("snippets dao with example id", async () => {
     }
     expect(snippet.sdk.package).toEqual("acme");
     expect(snippet.sdk.version).toEqual("0.0.1");
+    expect(snippet.exampleIdentifier).toEqual("example1");
     expect(snippet.async_client).toEqual("invalid");
     expect(snippet.sync_client).toEqual("invalid");
 
     const response2 = await fdrApplication.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
             orgId: "acme",
-            apiId: "api",
+            apiId: "apiId",
             endpointIdentifier: {
                 path: "/users/v1",
                 method: FdrAPI.EndpointMethod.Get,
@@ -338,8 +324,29 @@ it("snippets dao with example id", async () => {
     }
     expect(snippet2.sdk.package).toEqual("acme");
     expect(snippet2.sdk.version).toEqual("0.0.1");
+    expect(snippet2.exampleIdentifier).toEqual("example2");
     expect(snippet2.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
     expect(snippet2.sync_client).toEqual("client = Acme(api_key='YOUR_API_KEY')");
+
+    const response3 = await fdrApplication.dao.snippets().loadSnippetsPage({
+        loadSnippetsInfo: {
+            orgId: "acme",
+            apiId: "apiId",
+            endpointIdentifier: {
+                path: "/users/v1",
+                method: FdrAPI.EndpointMethod.Get,
+            },
+            sdks: undefined,
+            page: undefined,
+            exampleIdentifier: undefined,
+        },
+    });
+    const snippets3 = response3?.snippets["/users/v1"]?.GET;
+    if (snippets3 === undefined) {
+        throw new Error("snippets3 were undefined");
+    }
+    expect(snippets3).not.toEqual(undefined);
+    expect(snippets3.length).toEqual(2);
 });
 
 it("snippets template", async () => {
@@ -462,6 +469,15 @@ it("snippets template", async () => {
             POST: {},
             PUT: {},
             GET: {
+                python: {
+                    type: "v1",
+                    functionInvocation: {
+                        type: "generic",
+                        isOptional: false,
+                        templateString: "",
+                    },
+                    clientInstantiation: "",
+                },
                 typescript: {
                     type: "v1",
                     functionInvocation: {
