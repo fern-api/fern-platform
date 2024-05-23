@@ -1,4 +1,5 @@
 const plugin = require("tailwindcss/plugin");
+const { blackA } = require("@radix-ui/colors");
 
 const round = (num) =>
     num
@@ -62,6 +63,7 @@ module.exports = {
             },
 
             colors: {
+                ...blackA,
                 "fern-green": "#49932B",
                 "fern-green-dark": "#ADFF8C",
 
@@ -302,6 +304,14 @@ module.exports = {
                         transform: "rotate(0deg)",
                     },
                 },
+                "overlay-show": {
+                    from: { opacity: "0", backdropFilter: "blur(0)" },
+                    to: { opacity: "1", backdropFilter: "blur(4px)" },
+                },
+                "content-show": {
+                    from: { opacity: "0", transform: "translate(-50%, -48%) scale(0.96)" },
+                    to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -316,6 +326,8 @@ module.exports = {
                 "slide-down": "slide-down 400ms cubic-bezier(0.87, 0, 0.13, 1)",
                 "slide-up": "slide-up 400ms cubic-bezier(0.87, 0, 0.13, 1)",
                 "thumb-rock": "thumb-rock 500ms both",
+                "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

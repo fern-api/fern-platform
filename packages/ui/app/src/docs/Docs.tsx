@@ -58,7 +58,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <PlaygroundContextProvider>
-            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col">
+            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col z-0">
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
