@@ -1,5 +1,7 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ReactElement } from "react";
+import { IntercomIntegration } from "./IntercomIntegration";
 
 interface Analytics {
     ga4?: {
@@ -23,7 +25,12 @@ const CUSTOMER_ANALYTICS: Record<string, Analytics> = {
     },
 };
 
-export function CustomerAnalytics({ domain }: { domain: string }): ReactElement | null {
+interface CustomerIntegrationsProps {
+    domain: string;
+    integrations: DocsV1Read.IntegrationsConfig | undefined;
+}
+
+export function CustomerIntegrations({ domain, integrations }: CustomerIntegrationsProps): ReactElement | null {
     const analytics = Object.entries(CUSTOMER_ANALYTICS).find(([key]) => domain.includes(key))?.[1];
 
     if (analytics == null) {
@@ -42,6 +49,7 @@ export function CustomerAnalytics({ domain }: { domain: string }): ReactElement 
                     preview={analytics.gtm.preview}
                 />
             )}
+            {integrations?.intercom != null && <IntercomIntegration appId={integrations.intercom} />}
         </>
     );
 }

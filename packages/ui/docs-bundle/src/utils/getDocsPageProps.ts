@@ -265,6 +265,9 @@ async function convertDocsToDocsPageProps({
             sidebarNodes,
         },
         featureFlags,
+        metadata: docs.definition.config.metadata,
+        redirects: docs.definition.config.redirects,
+        integrations: docs.definition.config.integrations,
     };
 
     return {

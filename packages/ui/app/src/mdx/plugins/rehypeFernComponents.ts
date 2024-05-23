@@ -1,7 +1,7 @@
 import type { Element, ElementContent, Root } from "hast";
 import { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { visit } from "unist-util-visit";
-import { valueToEstree, wrapChildren } from "./to-estree";
+import { wrapChildren } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeFernComponents(): (tree: Root) => void {
@@ -42,39 +42,6 @@ export function rehypeFernComponents(): (tree: Root) => void {
             }
         });
 
-        visit(tree, (node, index, parent) => {
-            if (index == null || parent == null) {
-                return;
-            }
-
-            if (isMdxJsxFlowElement(node) && node.name === "iframe") {
-                const src = node.attributes.find(
-                    (attr) => attr.type === "mdxJsxAttribute" && attr.name === "src",
-                )?.value;
-
-                // check that iframe is a youtube video
-                if (src != null && typeof src === "string" && src.startsWith("https://www.youtube.com/embed/")) {
-                    // regex to match youtube video id
-                    // https://www.youtube.com/embed/VIDEO_ID?...
-                    // https://www.youtube.com/embed/VIDEO_ID
-
-                    const youtubeEmbedRegex = /https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9_-]+)/;
-                    const match = youtubeEmbedRegex.exec(src)?.[1];
-                    if (match != null) {
-                        parent.children.splice(index, 1, {
-                            type: "mdxJsxFlowElement",
-                            name: "YoutubeVideo",
-                            attributes: [toAttribute("videoId", valueToEstree(match))],
-                            children: [],
-                        });
-                    }
-                }
-
-                return "skip";
-            }
-
-            return;
-        });
         // convert img to Image
         visit(tree, (node, index) => {
             if (index == null) {

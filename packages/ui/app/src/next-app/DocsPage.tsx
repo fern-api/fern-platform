@@ -16,22 +16,33 @@ export declare namespace DocsPage {
         baseUrl: DocsV2Read.BaseUrl;
         navigation: SidebarNavigation;
 
+        // logo
         title: string | undefined;
         favicon: string | undefined;
-        // backgroundImage: string | undefined;
-        colors: ColorsConfig;
-        layout: DocsV1Read.DocsLayoutConfig | undefined;
-        typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
-        css: DocsV1Read.CssConfig | undefined;
-        js: DocsV1Read.JsConfig | undefined;
-        navbarLinks: DocsV1Read.NavbarLink[];
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
 
+        // styles
+        colors: ColorsConfig;
+        layout: DocsV1Read.DocsLayoutConfig | undefined;
+        typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
+
+        // customization
+        css: DocsV1Read.CssConfig | undefined;
+        js: DocsV1Read.JsConfig | undefined;
+
+        // links
+        navbarLinks: DocsV1Read.NavbarLink[];
+
+        // seo, integrations
+        metadata: DocsV1Read.MetadataConfig | undefined;
+        redirects: DocsV1Read.RedirectConfig[] | undefined;
+        integrations: DocsV1Read.IntegrationsConfig | undefined;
+
+        // internal
         search: DocsV1Read.SearchInfo;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
-
         featureFlags: FeatureFlags;
     }
 }

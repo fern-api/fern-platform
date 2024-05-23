@@ -1,4 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import remarkEmbedder from "@remark-embedder/core";
+import oembedTransformer from "@remark-embedder/transformer-oembed";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
@@ -116,7 +118,18 @@ function withDefaultMdxOptions({
         },
     };
 
-    const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
+    const remarkPlugins: PluggableList = [
+        remarkGfm,
+        remarkSmartypants,
+        remarkMath,
+        remarkGemoji,
+        [
+            remarkEmbedder,
+            {
+                transformers: [oembedTransformer],
+            },
+        ],
+    ];
 
     if (options.remarkPlugins != null) {
         remarkPlugins.push(...options.remarkPlugins);

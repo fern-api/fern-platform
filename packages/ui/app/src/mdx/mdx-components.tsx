@@ -31,11 +31,28 @@ import { CodeGroup } from "./components/CodeGroup";
 import { Column, ColumnGroup } from "./components/ColumnGroup";
 import { Frame } from "./components/Frame";
 import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable";
+import { Loom } from "./components/Loom";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
 import { TabGroup } from "./components/Tabs";
 import { Tooltip } from "./components/Tooltip";
-import { YoutubeVideo } from "./components/YoutubeVideo";
+
+import {
+    AirtableBase,
+    AirtableForm,
+    CodePen,
+    CodeSandbox,
+    Figma,
+    Gist,
+    Instagram,
+    Replit,
+    Snack,
+    Tweet,
+    Vimeo,
+    Whimsical,
+    Wistia,
+    YouTube,
+} from "mdx-embed";
 
 export const JSX_COMPONENTS = {
     // fern components
@@ -62,7 +79,23 @@ export const JSX_COMPONENTS = {
     Steps,
     TabGroup,
     Tooltip,
-    YoutubeVideo,
+
+    // embeds
+    AirtableBase,
+    AirtableForm,
+    CodePen,
+    CodeSandbox,
+    Figma,
+    Gist,
+    Instagram,
+    Replit,
+    Snack,
+    Tweet,
+    Vimeo,
+    Whimsical,
+    Wistia,
+    YouTube,
+    Loom,
 
     // deprecated, aliased for backwards compatibility
     Cards: CardGroup,
