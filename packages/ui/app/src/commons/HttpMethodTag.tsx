@@ -32,7 +32,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
         <FernTag
             colorScheme={METHOD_COLOR_SCHEMES[method]}
             variant={active ? "solid" : "subtle"}
-            className={clsx("uppercase", { "w-11": size === "sm" }, className)}
+            className={clsx("uppercase", { "w-11": size === "sm", "font-semibold": active }, className)}
             size={size}
             {...rest}
         >

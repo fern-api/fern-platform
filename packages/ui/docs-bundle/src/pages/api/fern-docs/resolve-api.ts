@@ -1,14 +1,14 @@
-import { flattenApiDefinition, getNavigationRoot, type SidebarNode } from "@fern-ui/fdr-utils";
-import {
-    ApiDefinitionResolver,
-    REGISTRY_SERVICE,
-    serializeSidebarNodeDescriptionMdx,
-    type ResolvedRootPackage,
-} from "@fern-ui/ui";
+import { resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
+import { ApiDefinitionResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "./feature-flags";
 
-const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ResolvedRootPackage | null>) => {
+export const dynamic = "force-dynamic";
+
+const resolveApiHandler: NextApiHandler = async (
+    req,
+    res: NextApiResponse<Record<string, ResolvedRootPackage> | null>,
+) => {
     try {
         if (req.method !== "GET") {
             res.status(400).json(null);
@@ -24,69 +24,63 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
             return;
         }
         const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-        const maybePathName = req.query.path;
-        const api = req.query.api;
+        const fullUrl = req.url;
 
-        if (maybePathName == null || typeof maybePathName !== "string" || api == null || typeof api !== "string") {
-            return res.status(400).json(null);
+        if (fullUrl == null) {
+            res.status(400).json(null);
+            return;
         }
 
+        const maybePathName = fullUrl.split("/api/fern-docs/resolve-api")[0] ?? "";
         const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
         const url = `${hostWithoutTrailingSlash}${pathname}`;
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+        const docsResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
             url,
         });
 
-        if (!docs.ok) {
+        if (!docsResponse.ok) {
             res.status(404).json(null);
             return;
         }
 
-        const docsDefinition = docs.body.definition;
-        const basePath = docs.body.baseUrl.basePath;
-        const pages = docs.body.definition.pages;
+        const docs = docsResponse.body;
+        const docsDefinition = docs.definition;
+        const docsConfig = docsDefinition.config;
 
-        const apiDefinition = docsDefinition.apis[api];
+        const basePathSlug =
+            docs.baseUrl.basePath != null ? docs.baseUrl.basePath.split("/").filter((t) => t.length > 0) : [];
 
-        if (apiDefinition == null) {
-            res.status(404).json(null);
-            return;
-        }
-
-        const navigation = getNavigationRoot(
-            pathname.slice(1).split("/"),
-            docs.body.baseUrl.domain,
-            basePath,
-            docsDefinition.config.navigation,
-            docsDefinition.apis,
-            pages,
+        const root = resolveSidebarNodesRoot(
+            docsConfig.navigation,
+            docs.definition.apis,
+            docs.definition.pages,
+            basePathSlug,
+            docs.baseUrl.domain,
         );
 
-        if (navigation == null || navigation.type === "redirect") {
-            res.status(404).json(null);
-            return;
-        }
+        const entryPromises: Promise<[string, ResolvedRootPackage]>[] = [];
 
-        const sidebarNodes = await Promise.all(
-            navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
-        );
+        const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
-        const apiSection = findApiSection(api, sidebarNodes);
+        visitSidebarNodeRaw(root, (node) => {
+            if (node.type === "apiSection" && node.flattenedApiDefinition != null) {
+                const entry = ApiDefinitionResolver.resolve(
+                    node.title,
+                    node.flattenedApiDefinition,
+                    docsDefinition.pages,
+                    undefined,
+                    featureFlags,
+                    docs.baseUrl.domain,
+                ).then((resolved) => [node.api, resolved] as [string, ResolvedRootPackage]);
+                entryPromises.push(entry);
+                return "skip";
+            }
+            return undefined;
+        });
 
-        const featureFlags = await getFeatureFlags(docs.body.baseUrl.domain);
-
-        res.status(200).json(
-            await ApiDefinitionResolver.resolve(
-                apiSection?.title ?? "",
-                flattenApiDefinition(apiDefinition, apiSection?.slug ?? [], undefined, docs.body.baseUrl.domain),
-                pages,
-                undefined,
-                featureFlags,
-                docs.body.baseUrl.domain,
-            ),
-        );
+        res.status(200).json(Object.fromEntries(await Promise.all(entryPromises)));
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
@@ -96,16 +90,16 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<Resol
 
 export default resolveApiHandler;
 
-function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
-    for (const node of sidebarNodes) {
-        if (node.type === "apiSection" && node.api === api) {
-            return node;
-        } else if (node.type === "section") {
-            const found = findApiSection(api, node.items);
-            if (found != null) {
-                return found;
-            }
-        }
-    }
-    return undefined;
-}
+// function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
+//     for (const node of sidebarNodes) {
+//         if (node.type === "apiSection" && node.api === api) {
+//             return node;
+//         } else if (node.type === "section") {
+//             const found = findApiSection(api, node.items);
+//             if (found != null) {
+//                 return found;
+//             }
+//         }
+//     }
+//     return undefined;
+// }

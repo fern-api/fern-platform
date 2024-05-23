@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import React from "react";
 
@@ -21,6 +21,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
     sidebarNodes: [],
     searchInfo: undefined,
     navbarLinks: [],
+    apis: [],
 });
 
 export interface DocsContextValue extends SidebarNavigation {
@@ -33,6 +34,7 @@ export interface DocsContextValue extends SidebarNavigation {
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
     searchInfo: DocsV1Read.SearchInfo | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
+    apis: FdrAPI.ApiDefinitionId[];
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;
 }
