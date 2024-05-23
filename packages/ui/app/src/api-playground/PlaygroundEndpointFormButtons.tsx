@@ -1,8 +1,8 @@
+import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useSetAtom } from "jotai";
 import { ReactElement } from "react";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
 import { FernLink } from "../components/FernLink";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../resolver/types";

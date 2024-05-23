@@ -1,10 +1,10 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { FernButton, FernTooltipProvider } from "@fern-ui/components";
+import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 // import { Portal, Transition } from "@headlessui/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { useAnimate, useMotionValue } from "framer-motion";
+import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
@@ -26,6 +26,7 @@ import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext 
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
+import { HorizontalSplitPane } from "./VerticalSplitPane";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
@@ -346,49 +347,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                         }}
                         asChild
                     >
-<<<<<<< HEAD
-                        <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                        <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
-                            <div className="bg-accent h-1 w-10 rounded-full" />
-                        </div>
-                    </div>
-                )}
-                <div className="flex h-full flex-col rounded-lg">
-                    <div>{layoutBreakpoint === "mobile" ? mobileHeader : desktopHeader}</div>
-                    <FernErrorBoundary
-                        component="PlaygroundDrawer"
-                        className="flex h-full items-center justify-center"
-                        showError={true}
-                        reset={resetWithoutExample}
-                    >
-                        {selectionState?.type === "endpoint" && matchedEndpoint != null ? (
-                            <PlaygroundEndpoint
-                                endpoint={matchedEndpoint}
-                                formState={
-                                    playgroundFormState?.type === "endpoint"
-                                        ? playgroundFormState
-                                        : EMPTY_ENDPOINT_FORM_STATE
-                                }
-                                setFormState={setPlaygroundEndpointFormState}
-                                resetWithExample={resetWithExample}
-                                resetWithoutExample={resetWithoutExample}
-                                types={types}
-                            />
-                        ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
-                            <PlaygroundWebSocket
-                                websocket={matchedWebSocket}
-                                formState={
-                                    playgroundFormState?.type === "websocket"
-                                        ? playgroundFormState
-                                        : EMPTY_WEBSOCKET_FORM_STATE
-                                }
-                                setFormState={setPlaygroundWebSocketFormState}
-                                types={types}
-                            />
-                        ) : (
-                            <FernTooltipProvider>
-                                <div className="flex min-h-0 flex-1 shrink flex-col items-center justify-start">
-=======
                         <motion.div style={{ height: x }} ref={scope}>
                             {layoutBreakpoint !== "mobile" ? (
                                 <>
@@ -416,21 +374,11 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                                     className="size-full"
                                     leftClassName="border-default border-r"
                                 >
->>>>>>> main
                                     <PlaygroundEndpointSelectorContent
                                         apiGroups={apiGroups}
                                         selectedEndpoint={selectedEndpoint}
                                         className="h-full"
                                     />
-<<<<<<< HEAD
-                                </div>
-                            </FernTooltipProvider>
-                        )}
-                    </FernErrorBoundary>
-                </div>
-            </Transition>
-        </Portal>
-=======
 
                                     {renderContent()}
                                 </HorizontalSplitPane>
@@ -440,7 +388,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 </Dialog.Portal>
             </Dialog.Root>
         </FernErrorBoundary>
->>>>>>> main
     );
 };
 

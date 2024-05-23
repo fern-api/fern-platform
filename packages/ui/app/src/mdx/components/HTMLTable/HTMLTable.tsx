@@ -1,11 +1,10 @@
+import { FernButton, FernScrollArea } from "@fern-ui/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
 import { MDXRemoteProps } from "next-mdx-remote";
 import { ComponentProps, FC, useState } from "react";
-import { FernButton } from "../../../components/FernButton";
-import { FernScrollArea } from "../../../components/FernScrollArea";
 import "./HTMLTable.scss";
 
 const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
