@@ -172,7 +172,7 @@ export class SDKSnippetHolder {
         const sdkId = sdk.sdkId;
         let snippetsForEndpoint: FdrAPI.Snippet[] = [];
         if (endpointId != null) {
-            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[endpointId];
+            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[endpointId] ?? [];
         }
 
         if (endpointId == null || snippetsForEndpoint.length === 0) {
