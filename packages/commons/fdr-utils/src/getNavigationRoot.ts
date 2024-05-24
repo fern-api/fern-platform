@@ -54,6 +54,17 @@ export function getNavigationRoot(
     });
 
     if (hits[0] == null) {
+        // match on top-level versions if the slug starts with a version
+        // ignore the first item, which doesn't contain a version
+        for (const rootItem of root.items.slice(1)) {
+            if (rootItem.type === "versionGroup") {
+                const versionSlug = rootItem.slug.join("/");
+                if (slugArray.join("/").startsWith(rootItem.slug.join("/"))) {
+                    return { type: "redirect", redirect: `/${versionSlug}` };
+                }
+            }
+        }
+
         return undefined;
     }
 
