@@ -5,7 +5,8 @@
 import * as Sentry from "@sentry/nextjs";
 
 const sentryEnv = process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev";
-const assetPrefix = process.env.CDN_URI != null ? new URL("/", process.env.CDN_URI).href : undefined;
+const assetPrefix =
+    process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
 const tunnelPath = "/api/fern-docs/monitoring";
 
 Sentry.init({
