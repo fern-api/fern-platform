@@ -154,7 +154,7 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
 export function flattenApiDefinition(
     apiDefinition: APIV1Read.ApiDefinition,
     parentSlugs: readonly string[],
-    navigation: DocsV1Read.ApiNavigationConfigRoot | undefined,
+    navigation: DocsV1Read.ApiNavigationConfigRootV1 | undefined,
     domain: string,
     isSidebarFlattened = false,
 ): FlattenedApiDefinition {
@@ -180,7 +180,7 @@ function flattenPackage(
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
-    order: DocsV1Read.ApiNavigationConfigRoot | undefined,
+    order: DocsV1Read.ApiNavigationConfigRootV1 | undefined,
     domain: string,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
@@ -286,7 +286,7 @@ function flattenPackage(
     );
 
     const orderedSubpackageItems = order?.items?.filter(
-        (item): item is DocsV1Read.ApiNavigationConfigItem.Subpackage => item.type === "subpackage",
+        (item): item is DocsV1Read.ApiNavigationConfigItemV1.Subpackage => item.type === "subpackage",
     );
 
     let subpackages = currentPackage.subpackages
@@ -311,7 +311,7 @@ function flattenPackage(
 
     const pages =
         order?.items
-            ?.filter((item): item is DocsV1Read.ApiNavigationConfigItem.Page => item.type === "page")
+            ?.filter((item): item is DocsV1Read.ApiNavigationConfigItemV1.Page => item.type === "page")
             .map(
                 (item): FlattenedPageMetadata => ({
                     type: "page",
@@ -392,7 +392,7 @@ function flattenPackage(
 
 function toConfigRoot(
     root: APIV1Read.ApiNavigationConfigRoot | undefined,
-): DocsV1Read.ApiNavigationConfigRoot | undefined {
+): DocsV1Read.ApiNavigationConfigRootV1 | undefined {
     return root;
 }
 
