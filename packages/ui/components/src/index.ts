@@ -5,6 +5,7 @@ export * from "./FernCard";
 export * from "./FernCheckbox";
 export * from "./FernChip";
 export * from "./FernCollapse";
+export * from "./FernComponentsContext";
 export * from "./FernDropdown";
 export * from "./FernInput";
 export * from "./FernModal";
