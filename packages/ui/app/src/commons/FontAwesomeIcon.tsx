@@ -37,6 +37,14 @@ export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAweso
 );
 
 function getIconUrl(icon: string | undefined): string {
+    if (icon == null) {
+        return "";
+    }
+
+    if (icon.startsWith("http")) {
+        return icon;
+    }
+
     const parsed = parseFontAwesomeIcon(icon);
     if (!parsed) {
         return "";
@@ -53,10 +61,7 @@ function getCdnHost() {
     return CDN_HOST;
 }
 
-function parseFontAwesomeIcon(icon: string | undefined): [string, string] | undefined {
-    if (!icon) {
-        return;
-    }
+function parseFontAwesomeIcon(icon: string): [string, string] | undefined {
     const [left, right] = icon.split(" ");
     if (left && right) {
         return [left.replace("fa-", ""), right.replace("fa-", "")];
