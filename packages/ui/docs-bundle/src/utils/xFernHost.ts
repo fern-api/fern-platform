@@ -17,7 +17,7 @@ export function getXFernHostEdge(req: NextRequest, useSearchParams = false): str
         useSearchParams ? req.nextUrl.searchParams.get("host") : undefined,
         process.env.NEXT_PUBLIC_DOCS_DOMAIN,
         req.cookies.get("_fern_docs_preview")?.value,
-        req.headers.get("x-forwarded-host"),
+        // req.headers.get("x-forwarded-host"),
         req.headers.get("x-fern-host"),
         req.nextUrl.host,
     ];
@@ -37,7 +37,7 @@ export function getXFernHostNode(req: NextApiRequest, useSearchParams = false): 
         useSearchParams ? req.query["host"] : undefined,
         process.env.NEXT_PUBLIC_DOCS_DOMAIN,
         req.cookies["_fern_docs_preview"],
-        req.headers["x-forwarded-host"],
+        // req.headers["x-forwarded-host"],
         req.headers["x-fern-host"],
         req.headers.host,
     ];
