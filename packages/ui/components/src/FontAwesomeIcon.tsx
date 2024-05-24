@@ -1,6 +1,5 @@
 import cn from "clsx";
 import { forwardRef } from "react";
-import "./index.scss";
 
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {
@@ -49,8 +48,6 @@ function getIconUrl(icon: string | undefined): string {
 function getCdnHost() {
     const CDN_HOST = process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
     if (CDN_HOST == null) {
-        // eslint-disable-next-line no-console
-        console.error("NEXT_PUBLIC_FONTAWESOME_CDN_HOST is not set");
         return "https://fontawesome-cdn.vercel.app";
     }
     return CDN_HOST;

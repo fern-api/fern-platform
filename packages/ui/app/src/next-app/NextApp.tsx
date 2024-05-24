@@ -1,5 +1,5 @@
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { createStore, Provider as JotaiProvider } from "jotai";
+import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import { Provider as JotaiProvider, createStore } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
@@ -17,7 +17,7 @@ import "./globals.scss";
 
 const store = createStore();
 
-export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props>): ReactElement {
+export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
     }, []);
@@ -26,14 +26,14 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
     useInterceptNextDataHref({
         router,
-        basePath: pageProps.baseUrl?.basePath,
-        host: pageProps.baseUrl?.domain,
+        basePath: pageProps?.baseUrl?.basePath,
+        host: pageProps?.baseUrl?.domain,
     });
 
     return (
-        <TooltipProvider>
+        <FernTooltipProvider>
             <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                <ThemeProvider colors={pageProps.colors}>
+                <ThemeProvider colors={pageProps?.colors}>
                     <IsReadyProvider>
                         <RouteListenerContextProvider>
                             <DatadogInit />
@@ -45,9 +45,10 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                             </JotaiProvider>
                         </RouteListenerContextProvider>
                     </IsReadyProvider>
+                    <Toaster />
                 </ThemeProvider>
             </FernErrorBoundary>
-        </TooltipProvider>
+        </FernTooltipProvider>
     );
 }
 
@@ -62,14 +63,19 @@ const useInterceptNextDataHref = ({
     host: string | undefined;
 }) => {
     useEffect(() => {
-        if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
-            const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
+        try {
+            if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
+                const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
 
-            const originalGetDataHref = router.pageLoader.getDataHref;
-            router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
-                const r = originalGetDataHref.call(router.pageLoader, ...args);
-                return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
-            };
+                const originalGetDataHref = router.pageLoader.getDataHref;
+                router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
+                    const r = originalGetDataHref.call(router.pageLoader, ...args);
+                    return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
+                };
+            }
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to intercept next data href", e);
         }
     }, [router, basePath, host]);
 };

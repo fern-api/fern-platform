@@ -1,6 +1,5 @@
 import cn from "clsx";
 import { ComponentProps, forwardRef } from "react";
-import "./index.scss";
 
 export interface FernInputProps extends ComponentProps<"input"> {
     inputClassName?: string;

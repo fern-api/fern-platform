@@ -51,7 +51,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
         <div className="flex min-h-0 w-full flex-1 shrink items-stretch divide-x">
             <div
                 ref={scrollAreaRef}
-                className="mask-grad-top w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
+                className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
                 <PlaygroundWebSocketSessionForm
                     websocket={websocket}

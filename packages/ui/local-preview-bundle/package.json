@@ -28,13 +28,16 @@
     "depcheck": "depcheck",
     "dev": "next dev",
     "build": "next build",
+    "build:sourcemaps": "ENABLE_SOURCE_MAPS=true next build",
     "start": "node server.js",
     "lint": "next lint"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-ui/components": "workspace:^",
     "@fern-ui/fdr-utils": "workspace:*",
+    "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "cssnano": "^6.0.3",
     "jsonpath": "^1.1.1",

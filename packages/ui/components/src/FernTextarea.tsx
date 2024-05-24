@@ -1,6 +1,5 @@
 import cn from "clsx";
 import { ComponentProps, forwardRef, useEffect, useImperativeHandle, useRef } from "react";
-import "./index.scss";
 
 interface FernTextareaProps extends ComponentProps<"textarea"> {
     onValueChange?: (value: string) => void;

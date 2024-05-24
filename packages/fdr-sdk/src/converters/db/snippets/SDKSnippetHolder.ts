@@ -48,163 +48,166 @@ export class SDKSnippetHolder {
     public getPythonCodeSnippetForEndpoint({
         endpointPath,
         endpointMethod,
-        identifierOverride,
+        endpointId,
+        exampleId,
     }: {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
-        identifierOverride: string | undefined;
+        endpointId: string | undefined;
+        exampleId: string | undefined;
     }): APIV1Read.PythonSnippet | undefined {
         if (this.snippetsConfigWithSdkId.pythonSdk == null) {
             return undefined;
         }
-
-        const sdkId = this.snippetsConfigWithSdkId.pythonSdk.sdkId;
-        let snippetsForEndpoint;
-        if (identifierOverride != null) {
-            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[identifierOverride];
-        }
-
-        if (identifierOverride == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
-            snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
-        }
-
-        // if no snippets for this endpoint or multiple snippets just return undefined
-        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
-            return undefined;
-        }
-        if (snippetsForEndpoint[0]?.type !== "python") {
-            return undefined;
-        }
-        return {
-            install: undefined, // TODO: add install snippet
-            async_client: snippetsForEndpoint[0]?.async_client,
-            sync_client: snippetsForEndpoint[0]?.sync_client,
-        };
+        return this.getCodeSnippetForEndpoint<APIV1Read.PythonSnippet>({
+            endpointPath,
+            endpointMethod,
+            endpointId,
+            exampleId,
+            getSdk: (config) => config.pythonSdk,
+            getSnippet: (snippet) => {
+                return snippet.type === "python" ? snippet : undefined;
+            },
+        });
     }
 
     public getTypeScriptCodeSnippetForEndpoint({
         endpointPath,
         endpointMethod,
-        identifierOverride,
+        endpointId,
+        exampleId,
     }: {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
-        identifierOverride: string | undefined;
+        endpointId: string | undefined;
+        exampleId: string | undefined;
     }): APIV1Read.TypescriptSnippet | undefined {
         if (this.snippetsConfigWithSdkId.typescriptSdk == null) {
             return undefined;
         }
-
-        const sdkId = this.snippetsConfigWithSdkId.typescriptSdk.sdkId;
-        let snippetsForEndpoint;
-        if (identifierOverride != null) {
-            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[identifierOverride];
-        }
-
-        if (identifierOverride == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
-            snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
-        }
-
-        // if no snippets for this endpoint or multiple snippets just return undefined
-        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
-            return undefined;
-        }
-        if (snippetsForEndpoint[0]?.type !== "typescript") {
-            return undefined;
-        }
-        return {
-            install: undefined, // TODO: add install snippet
-            client: snippetsForEndpoint[0]?.client,
-        };
+        return this.getCodeSnippetForEndpoint<APIV1Read.TypescriptSnippet>({
+            endpointPath,
+            endpointMethod,
+            endpointId,
+            exampleId,
+            getSdk: (config) => config.typescriptSdk,
+            getSnippet: (snippet) => {
+                return snippet.type === "typescript" ? snippet : undefined;
+            },
+        });
     }
 
     public getGoCodeSnippetForEndpoint({
         endpointPath,
         endpointMethod,
-        identifierOverride,
+        endpointId,
+        exampleId,
     }: {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
-        identifierOverride: string | undefined;
+        endpointId: string | undefined;
+        exampleId: string | undefined;
     }): APIV1Read.GoSnippet | undefined {
         if (this.snippetsConfigWithSdkId.goSdk == null) {
             return undefined;
         }
-
-        const sdkId = this.snippetsConfigWithSdkId.goSdk.sdkId;
-        let snippetsForEndpoint;
-        if (identifierOverride != null) {
-            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[identifierOverride];
-        }
-
-        if (identifierOverride == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
-            snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
-        }
-
-        // if no snippets for this endpoint or multiple snippets just return undefined
-        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
-            return undefined;
-        }
-        if (snippetsForEndpoint[0]?.type !== "go") {
-            return undefined;
-        }
-        return {
-            install: undefined, // TODO: add install snippet
-            client: snippetsForEndpoint[0]?.client,
-        };
+        return this.getCodeSnippetForEndpoint<APIV1Read.GoSnippet>({
+            endpointPath,
+            endpointMethod,
+            endpointId,
+            exampleId,
+            getSdk: (config) => config.goSdk,
+            getSnippet: (snippet) => {
+                return snippet.type === "go" ? snippet : undefined;
+            },
+        });
     }
 
     public getRubyCodeSnippetForEndpoint({
         endpointPath,
         endpointMethod,
-        identifierOverride,
+        endpointId,
+        exampleId,
     }: {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
-        identifierOverride: string | undefined;
+        endpointId: string | undefined;
+        exampleId: string | undefined;
     }): APIV1Read.RubySnippet | undefined {
         if (this.snippetsConfigWithSdkId.rubySdk == null) {
             return undefined;
         }
+        return this.getCodeSnippetForEndpoint<APIV1Read.RubySnippet>({
+            endpointPath,
+            endpointMethod,
+            endpointId,
+            exampleId,
+            getSdk: (config) => config.rubySdk,
+            getSnippet: (snippet) => {
+                return snippet.type === "ruby" ? snippet : undefined;
+            },
+        });
+    }
 
-        const sdkId = this.snippetsConfigWithSdkId.rubySdk.sdkId;
-        let snippetsForEndpoint;
-        if (identifierOverride != null) {
-            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[identifierOverride];
-        }
-
-        if (identifierOverride == null || this.snippetsBySdkIdAndEndpointId[sdkId] == null) {
-            snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod];
-        }
-
-        // if no snippets for this endpoint or multiple snippets just return undefined
-        if (snippetsForEndpoint == null || snippetsForEndpoint.length > 1) {
+    public getCodeSnippetForEndpoint<T>({
+        endpointPath,
+        endpointMethod,
+        endpointId,
+        exampleId,
+        getSdk,
+        getSnippet,
+    }: {
+        endpointPath: string;
+        endpointMethod: FdrAPI.EndpointMethod;
+        endpointId: string | undefined;
+        exampleId: string | undefined;
+        getSdk: (config: SnippetsConfigWithSdkId) => { sdkId: string } | undefined;
+        getSnippet: (snippet: FdrAPI.Snippet) => T | undefined;
+    }): T | undefined {
+        const sdk = getSdk(this.snippetsConfigWithSdkId);
+        if (sdk == null) {
             return undefined;
         }
-        if (snippetsForEndpoint[0]?.type !== "ruby") {
-            return undefined;
+
+        const sdkId = sdk.sdkId;
+        let snippetsForEndpoint: FdrAPI.Snippet[] = [];
+        if (endpointId != null) {
+            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[endpointId] ?? [];
         }
-        return {
-            install: undefined, // TODO: add install snippet
-            client: snippetsForEndpoint[0]?.client,
-        };
+
+        if (endpointId == null || snippetsForEndpoint.length === 0) {
+            snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod] ?? [];
+        }
+
+        let snippets = snippetsForEndpoint.filter((snippet) => {
+            return exampleId != null && snippet.exampleIdentifier === exampleId;
+        });
+        // if no example match, just pick first snippet for backwards-compatibility reasons
+        if (snippets.length === 0) {
+            snippets = [snippetsForEndpoint[0]];
+        }
+
+        if (snippets[0] != null) {
+            return getSnippet(snippets[0]);
+        }
+        return undefined;
     }
 
     public getSnippetTemplateForEndpoint({
         endpointPath,
         endpointMethod,
-        identifierOverride,
+        endpointId,
     }: {
         endpointPath: string;
         endpointMethod: FdrAPI.EndpointMethod;
-        identifierOverride: string | undefined;
+        endpointId: string | undefined;
     }): APIV1Read.EndpointSnippetTemplates | undefined {
         let snippetsForEndpoint;
-        if (identifierOverride != null) {
-            snippetsForEndpoint = this.snippetTemplatesByEndpointId[identifierOverride];
+        if (endpointId != null) {
+            snippetsForEndpoint = this.snippetTemplatesByEndpointId[endpointId];
         }
 
-        if (identifierOverride == null || this.snippetTemplatesByEndpointId[identifierOverride] == null) {
+        if (endpointId == null || this.snippetTemplatesByEndpointId[endpointId] == null) {
             snippetsForEndpoint = this.snippetTemplatesByEndpoint[endpointPath]?.[endpointMethod];
         }
         return snippetsForEndpoint;

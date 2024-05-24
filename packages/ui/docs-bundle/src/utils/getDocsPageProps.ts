@@ -265,6 +265,7 @@ async function convertDocsToDocsPageProps({
             sidebarNodes,
         },
         featureFlags,
+        apis: Object.keys(docs.definition.apis),
     };
 
     return {

@@ -107,6 +107,7 @@ model Snippet {
   endpointPath            String
   endpointMethod          HttpMethod
   identifierOverride      String?
+  exampleIdentifier       String?
   sdkId                   String
   sdk                     Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
   snippet                 Bytes

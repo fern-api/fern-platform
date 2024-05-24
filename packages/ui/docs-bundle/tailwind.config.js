@@ -1,4 +1,5 @@
 const baseConfig = require("../tailwind.config.js");
+const path = require("path");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -9,5 +10,6 @@ module.exports = {
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
         "../app/src/**/*.{ts,tsx}",
         "../tailwind.config.js",
+        path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
     ],
 };

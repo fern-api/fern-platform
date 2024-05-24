@@ -1,10 +1,18 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { PropsWithChildren, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+    PropsWithChildren,
+    ReactElement,
+    ReactNode,
+    cloneElement,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { FernScrollArea } from "./FernScrollArea";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
-import "./index.scss";
 
 export declare namespace FernDropdown {
     export interface ValueOption {
@@ -35,6 +43,7 @@ export declare namespace FernDropdown {
         side?: "top" | "right" | "bottom" | "left";
         align?: "start" | "center" | "end";
         defaultOpen?: boolean;
+        dropdownMenuElement?: ReactElement;
     }
 }
 
@@ -48,6 +57,7 @@ export function FernDropdown({
     side,
     align,
     defaultOpen = false,
+    dropdownMenuElement,
 }: PropsWithChildren<FernDropdown.Props>): ReactElement {
     const [isOpen, setOpen] = useState(defaultOpen);
     const handleOpenChange = useCallback(
@@ -66,7 +76,12 @@ export function FernDropdown({
                     <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
                         {options.map((option, idx) =>
                             option.type === "value" ? (
-                                <FernDropdownItemValue key={option.value} option={option} value={value} />
+                                <FernDropdownItemValue
+                                    key={option.value}
+                                    option={option}
+                                    value={value}
+                                    dropdownMenuElement={dropdownMenuElement}
+                                />
                             ) : (
                                 <DropdownMenu.Separator key={idx} className="mx-2 my-1 h-px bg-border-default" />
                             ),
@@ -78,14 +93,22 @@ export function FernDropdown({
     );
 
     return (
-        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={true} defaultOpen={defaultOpen}>
+        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={false} defaultOpen={defaultOpen}>
             <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
             {usePortal ? <DropdownMenu.Portal>{renderDropdownContent()}</DropdownMenu.Portal> : renderDropdownContent()}
         </DropdownMenu.Root>
     );
 }
 
-function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOption; value: string | undefined }) {
+function FernDropdownItemValue({
+    option,
+    value,
+    dropdownMenuElement,
+}: {
+    option: FernDropdown.ValueOption;
+    value: string | undefined;
+    dropdownMenuElement: ReactElement | undefined;
+}) {
     const helperTextRef = useRef<HTMLDivElement>(null);
     const activeRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
     useEffect(() => {
@@ -142,6 +165,7 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
         );
     }
 
+    // Note: we ignore href on the option if a custom dropdownMenuElement is not provided
     return (
         <FernTooltip
             content={
@@ -158,20 +182,16 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
             sideOffset={8}
         >
             <DropdownMenu.RadioItem asChild={true} value={option.value}>
-                <button
-                    ref={option.value === value ? activeRef : undefined}
-                    className={cn("fern-dropdown-item", option.className)}
-                >
-                    {renderButtonContent()}
-                </button>
-                {/* {option.href != null ? (
-                    <FernLink
-                        ref={option.value === value ? activeRef : undefined}
-                        href={option.href}
-                        className={cn("fern-dropdown-item", option.className)}
-                    >
-                        {renderButtonContent()}
-                    </FernLink>
+                {dropdownMenuElement != null ? (
+                    cloneElement(
+                        dropdownMenuElement,
+                        {
+                            ref: option.value === value ? activeRef : undefined,
+                            href: option.href,
+                            className: cn("fern-dropdown-item", option.className),
+                        },
+                        renderButtonContent(),
+                    )
                 ) : (
                     <button
                         ref={option.value === value ? activeRef : undefined}
@@ -179,7 +199,7 @@ function FernDropdownItemValue({ option, value }: { option: FernDropdown.ValueOp
                     >
                         {renderButtonContent()}
                     </button>
-                )} */}
+                )}
             </DropdownMenu.RadioItem>
         </FernTooltip>
     );

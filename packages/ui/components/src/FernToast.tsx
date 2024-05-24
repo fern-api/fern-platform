@@ -9,7 +9,6 @@ export const Toaster: FC = () => {
     return (
         <SonnerToaster
             position="bottom-center"
-            theme="system"
             toastOptions={{
                 unstyled: true,
                 classNames: {

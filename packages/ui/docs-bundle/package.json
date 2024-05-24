@@ -43,6 +43,7 @@
     "@aws-sdk/s3-request-presigner": "^3.574.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.1.0",
+    "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",

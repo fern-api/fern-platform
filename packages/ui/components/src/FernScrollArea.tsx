@@ -2,7 +2,6 @@ import * as ScrollArea from "@radix-ui/react-scroll-area";
 import cn from "clsx";
 import { forwardRef, PropsWithChildren, RefObject } from "react";
 import "./FernScrollArea.css";
-import "./index.scss";
 
 export declare namespace FernScrollArea {
     interface FernScrollAreaProps extends ScrollArea.ScrollAreaProps, Omit<ScrollArea.ScrollAreaViewportProps, "dir"> {
