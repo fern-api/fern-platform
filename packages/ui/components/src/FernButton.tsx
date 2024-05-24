@@ -1,13 +1,11 @@
 import cn from "clsx";
-import Link from "next/link";
-import { ComponentProps, forwardRef, PropsWithChildren, ReactNode, useRef } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { FernLink } from "./FernLink";
+import { ComponentProps, forwardRef, PropsWithChildren, ReactElement, ReactNode, useRef } from "react";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
 export type Intent = "none" | "primary" | "success" | "warning" | "danger";
 
-interface FernButtonSharedProps {
+export interface FernButtonSharedProps {
     className?: string;
     icon?: string | ReactNode;
     rightIcon?: string | ReactNode;
@@ -28,8 +26,6 @@ export interface FernButtonProps
     extends Omit<ComponentProps<"button">, "ref">,
         PropsWithChildren<FernButtonSharedProps> {}
 
-interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> {}
-
 function renderIcon(icon: string | ReactNode | undefined) {
     if (typeof icon === "string") {
         return <RemoteFontAwesomeIcon icon={icon} />;
@@ -37,52 +33,6 @@ function renderIcon(icon: string | ReactNode | undefined) {
         return icon;
     }
 }
-
-export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>(function FernAnchorButton(props, ref) {
-    const {
-        icon,
-        disabled = false,
-        rightIcon,
-        className,
-        text,
-        children,
-        variant,
-        size,
-        mono,
-        intent,
-        active,
-        full,
-        rounded,
-        disableAutomaticTooltip,
-        ...linkProps
-    } = props;
-    return (
-        <FernLink
-            ref={ref}
-            tabIndex={0}
-            aria-disabled={disabled}
-            aria-selected={active}
-            data-state={active ? "on" : "off"}
-            data-selected={active}
-            {...linkProps}
-            className={getButtonClassName(props)}
-            onClick={
-                props.onClick != null
-                    ? (e) => {
-                          if (disabled) {
-                              e.preventDefault();
-                              e.stopPropagation();
-                          } else {
-                              props.onClick?.(e);
-                          }
-                      }
-                    : undefined
-            }
-        >
-            {renderButtonContent(props)}
-        </FernLink>
-    );
-});
 
 export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(function FernButton(props, ref) {
     const {
@@ -158,10 +108,10 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
     );
 });
 
-function renderButtonContent(
+export function renderButtonContent(
     { icon: leftIcon, rightIcon, mono = false, text, children }: PropsWithChildren<FernButtonSharedProps>,
     buttonTextRef?: React.RefObject<HTMLSpanElement>,
-) {
+): ReactElement {
     children = children ?? text;
     return (
         <span className="fern-button-content">
@@ -181,7 +131,7 @@ function renderButtonContent(
     );
 }
 
-function getButtonClassName({
+export function getButtonClassName({
     className,
     variant = "filled",
     intent = "none",
@@ -194,7 +144,7 @@ function getButtonClassName({
     rightIcon,
     text,
     children,
-}: PropsWithChildren<FernButtonSharedProps>) {
+}: PropsWithChildren<FernButtonSharedProps>): string {
     children = children ?? text;
     return cn(className, "fern-button", variant, size, {
         [intent]: intent !== "none",

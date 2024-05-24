@@ -1,9 +1,9 @@
+import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { FernButton, FernButtonGroup } from "../../components/FernButton";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { getAnchorId } from "../../util/anchor";
 

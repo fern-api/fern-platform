@@ -1,9 +1,9 @@
+import { FernTooltip } from "@fern-ui/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
-import { FernTooltip } from "./FernTooltip";
 
 type ChipProps = {
     name: string;

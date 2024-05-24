@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { FC, PropsWithChildren } from "react";
-import { ColorScheme, Size } from "../util/shared-component-types";
+
+import { ColorScheme, Size } from "./util/shared-component-types";
 
 export type FernTagSize = Extract<Size, "sm" | "lg">;
 export const FernTagSizes: { [key: string]: FernTagSize } = {
@@ -38,7 +39,7 @@ export const FernTag: FC<FernTagProps> = ({
     className,
 }) => {
     return (
-        <div
+        <span
             className={clsx(
                 "font-mono inline-flex justify-center items-center leading-none",
                 {
@@ -77,6 +78,6 @@ export const FernTag: FC<FernTagProps> = ({
             )}
         >
             {children}
-        </div>
+        </span>
     );
 };

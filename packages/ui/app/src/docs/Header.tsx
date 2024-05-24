@@ -1,9 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import { FernButton, FernButtonGroup, FernLinkButton } from "../components/FernButton";
+import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
 import { useSearchService } from "../services/useSearchService";

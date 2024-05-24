@@ -1,3 +1,12 @@
+import {
+    FernAudioPlayer,
+    FernButton,
+    FernButtonGroup,
+    FernCard,
+    FernTabs,
+    FernTooltip,
+    FernTooltipProvider,
+} from "@fern-ui/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import { DownloadIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
@@ -5,12 +14,7 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { FernAudioPlayer } from "../components/FernAudioPlayer";
-import { FernButton, FernButtonGroup } from "../components/FernButton";
-import { FernCard } from "../components/FernCard";
 import { FernErrorTag } from "../components/FernErrorBoundary";
-import { FernTabs } from "../components/FernTabs";
-import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";

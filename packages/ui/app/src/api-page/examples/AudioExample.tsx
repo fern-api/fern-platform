@@ -1,5 +1,5 @@
+import { FernAudioPlayer } from "@fern-ui/components";
 import { FC } from "react";
-import { FernAudioPlayer } from "../../components/FernAudioPlayer";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { TitledExample } from "./TitledExample";

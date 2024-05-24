@@ -1,9 +1,6 @@
+import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo, ReactElement, useCallback } from "react";
-import { FernInput } from "../../components/FernInput";
-import { FernNumericInput } from "../../components/FernNumericInput";
-import { FernSwitch } from "../../components/FernSwitch";
-import { FernTextarea } from "../../components/FernTextarea";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import {
     dereferenceObjectProperties,

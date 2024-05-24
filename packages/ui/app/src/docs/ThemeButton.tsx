@@ -1,8 +1,8 @@
+import { FernButton, FernButtonProps } from "@fern-ui/components";
 import { useMounted } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useTheme } from "next-themes";
 import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
-import { FernButton, FernButtonProps } from "../components/FernButton";
 
 export declare namespace ThemeButton {
     export interface Props extends FernButtonProps {

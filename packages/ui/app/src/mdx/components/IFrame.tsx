@@ -1,3 +1,4 @@
+import { FernButton } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -11,7 +12,6 @@ import {
     useRef,
     useState,
 } from "react";
-import { FernButton } from "../../components/FernButton";
 
 export declare namespace IFrame {
     export interface Props extends ComponentProps<"iframe"> {

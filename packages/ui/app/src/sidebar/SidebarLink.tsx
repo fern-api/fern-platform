@@ -1,3 +1,4 @@
+import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
@@ -17,8 +18,6 @@ import {
     useEffect,
     useRef,
 } from "react";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
-import { FernTooltip } from "../components/FernTooltip";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useIsMobileSidebarOpen } from "./atom";
 

@@ -1,10 +1,9 @@
+import { FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
 import { Cross1Icon, FileIcon, FilePlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { uniqBy } from "lodash-es";
 import numeral from "numeral";
 import { ChangeEvent, DragEventHandler, memo, useEffect, useRef, useState } from "react";
-import { FernButton, FernButtonGroup } from "../../components/FernButton";
-import { FernCard } from "../../components/FernCard";
 import { WithLabelInternal } from "../WithLabel";
 
 export interface PlaygroundFileUploadFormProps {

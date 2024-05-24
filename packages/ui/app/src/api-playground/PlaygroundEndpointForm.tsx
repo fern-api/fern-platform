@@ -1,6 +1,6 @@
+import { FernCard } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { FernCard } from "../components/FernCard";
 import {
     ResolvedEndpointDefinition,
     ResolvedTypeDefinition,

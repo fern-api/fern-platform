@@ -1,9 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx as cn } from "clsx";
 import { Fragment, memo, useRef } from "react";
-import { FernScrollArea } from "../components/FernScrollArea";
-import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useIsScrolled } from "../docs/useIsScrolled";

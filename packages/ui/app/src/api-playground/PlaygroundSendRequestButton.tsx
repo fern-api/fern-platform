@@ -1,5 +1,5 @@
+import { FernButton } from "@fern-ui/components";
 import { FC, ReactNode } from "react";
-import { FernButton } from "../components/FernButton";
 
 interface PlaygroundSendRequestButtonProps {
     sendRequest: () => void;
