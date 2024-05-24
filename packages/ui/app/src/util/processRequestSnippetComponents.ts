@@ -1,72 +1,6 @@
-import { ResolvedEndpointDefinition, ResolvedWithApiDefinition } from "../resolver/types";
-
-// const REQUEST_SNIPPET = "<RequestSnippet";
-// const ENDPOINT_PARAMETER: RegExp = /endpoint="([^"]+)"/;
-
-// interface Substitution {
-//     index: number;
-//     endIndex: number;
-//     requestSnippetDefinition: string;
-// }
-
-// export async function processRequestSnippetComponents({
-//     content,
-//     apis,
-// }: {
-//     content: string;
-//     apis: Record<string, APIV1Read.ApiDefinition>;
-// }): Promise<string> {
-//     let index = -1;
-
-//     const transformedContent = content;
-
-//     while ((index = content.indexOf(REQUEST_SNIPPET, index + 1)) !== -1) {
-//         const endIndex = content.indexOf("/>", index + 1);
-//         const requestSnippetDefinition = content.substring(index, endIndex + 1);
-
-//         const match: RegExpMatchArray | null = requestSnippetDefinition.match(ENDPOINT_PARAMETER);
-//         if (match == null) {
-//             continue;
-//         }
-
-//         const endpoint = match[1]?.split(" ");
-//         if (endpoint == null || endpoint[0] == null || endpoint[1] == null) {
-//             continue;
-//         }
-
-//         const method = endpoint[0];
-//         const path = endpoint[1];
-
-//         const endpointDefinition = await getEndpointDefinition({ apis, method, path });
-//         if (endpointDefinition == null) {
-//             continue;
-//         }
-
-//         const updatedRequestSnippet = `<RequestSnippet method="${endpointDefinition.method}" path=${JSON.stringify(endpointDefinition.path)}>`;
-//     }
-
-//     return content;
-// }
-
-// async function getEndpointDefinition({
-//     apis,
-//     method,
-//     path,
-// }: {
-//     apis: Record<string, APIV1Read.ApiDefinition>;
-//     method: string;
-//     path: string;
-// }): Promise<ResolvedEndpointDefinition | undefined> {
-//     for (const api of Object.values(apis)) {
-//         const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"]);
-//         const resolvedApi = await resolveApiDefinition(flattenedApiDefinition);
-//         const endpoint = findEndpoint({ api: resolvedApi, method, path });
-//         if (endpoint != null) {
-//             return endpoint;
-//         }
-//     }
-//     return undefined;
-// }
+import { parse } from "url";
+import urljoin from "url-join";
+import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, ResolvedWithApiDefinition } from "../resolver/types";
 
 export function findEndpoint({
     api,
@@ -79,11 +13,10 @@ export function findEndpoint({
 }): ResolvedEndpointDefinition | undefined {
     path = path.startsWith("/") ? path : `/${path}`;
     for (const item of api.items) {
-        if (
-            item.type === "endpoint" &&
-            (getPathFromEndpoint1(item) === path || getPathFromEndpoint2(item) === path) &&
-            item.method === method
-        ) {
+        if (item.type !== "endpoint") {
+            continue;
+        }
+        if (item.method === method && getMatchablePermutationsForEndpoint(item).has(path)) {
             return item;
         }
     }
@@ -100,28 +33,33 @@ export function findEndpoint({
     return undefined;
 }
 
-function getPathFromEndpoint1(endpoint: ResolvedEndpointDefinition): string {
-    const parts: string[] = [];
-    for (const part of endpoint.path) {
-        if (part.type === "literal") {
-            parts.push(part.value);
-        }
-        if (part.type === "pathParameter") {
-            parts.push(`{${part.key}}`);
+export function getMatchablePermutationsForEndpoint(
+    endpoint: Pick<ResolvedEndpointDefinition, "path" | "defaultEnvironment">,
+): Set<string> {
+    const path1 = getPathFromEndpoint1(endpoint.path);
+    const path2 = getPathFromEndpoint2(endpoint.path);
+    const possiblePaths = new Set([path1, path2]);
+    if (endpoint.defaultEnvironment != null) {
+        const fullUrl1 = urljoin(endpoint.defaultEnvironment.baseUrl, path1);
+        const fullUrl2 = urljoin(endpoint.defaultEnvironment.baseUrl, path2);
+        possiblePaths.add(fullUrl1);
+        possiblePaths.add(fullUrl2);
+
+        const basePath = parse(endpoint.defaultEnvironment.baseUrl).path;
+        if (basePath != null) {
+            const urlWithBasePath1 = urljoin(basePath, path1);
+            const urlWithBasePath2 = urljoin(basePath, path2);
+            possiblePaths.add(urlWithBasePath1);
+            possiblePaths.add(urlWithBasePath2);
         }
     }
-    return parts.join("");
+    return possiblePaths;
 }
 
-function getPathFromEndpoint2(endpoint: ResolvedEndpointDefinition): string {
-    const parts: string[] = [];
-    for (const part of endpoint.path) {
-        if (part.type === "literal") {
-            parts.push(part.value);
-        }
-        if (part.type === "pathParameter") {
-            parts.push(`:${part.key}`);
-        }
-    }
-    return parts.join("");
+function getPathFromEndpoint1(path: ResolvedEndpointPathParts[]): string {
+    return urljoin("/", ...path.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)));
+}
+
+function getPathFromEndpoint2(path: ResolvedEndpointPathParts[]): string {
+    return urljoin("/", ...path.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)));
 }
