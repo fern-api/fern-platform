@@ -5,6 +5,7 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
+  docsWriteV1: ../write/__package__.yml
   commons: ../commons/commons.yml
 
 types:
@@ -169,7 +170,9 @@ types:
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
       navigation: optional<docsReadV1.ApiNavigationConfigRootV1>
-      navigationV2: optional<docsReadV1.ApiNavigationConfigRootV2>
+      # cannot convert navigationV2 to read schema in write-step
+      # because it requires accessing the API definition
+      navigationV2: optional<docsWriteV1.ApiNavigationConfigRootV2>
       longScrolling: optional<boolean>
       flattened: optional<boolean>
 

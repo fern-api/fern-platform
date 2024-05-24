@@ -1,14 +1,17 @@
-import { kebabCase } from "lodash-es";
+import { kebabCase, last } from "lodash-es";
 import tinycolor from "tinycolor2";
 import {
     APIV1Read,
     DocsV1Db,
     DocsV1Read,
+    DocsV1Write,
     visitDbNavigationConfig,
     visitUnversionedDbNavigationConfig,
 } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
+import { transformPageNavigationItemForDb } from "../db/convertDocsDefinitionToDb";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export function convertDbDocsConfigToRead({
@@ -174,12 +177,17 @@ export function transformNavigationItemForDb(
     apis: Record<string, APIV1Read.ApiDefinition>,
 ): DocsV1Read.NavigationItem {
     switch (dbShape.type) {
-        case "api":
+        case "api": {
+            const api = apis[dbShape.api];
             return {
                 ...dbShape,
                 showErrors: dbShape.showErrors ?? false,
-                navigationV2: dbShape.navigationV2 ?? migrateApiNavigationV1ToV2(dbShape.navigation, apis[dbShape.api]),
+                navigationV2: transformApiNavigationV2ToRead(
+                    dbShape.navigationV2 ?? migrateApiNavigationV1ToV2(dbShape.navigation, api),
+                    api,
+                ),
             };
+        }
         case "page":
         case "link":
             return dbShape;
@@ -349,10 +357,112 @@ export function getColorsV3(docsDbConfig: DocsV1Db.DocsDbConfig): DocsV1Read.Col
         return { type: "darkAndLight", dark, light };
     }
 }
+
+function transformApiNavigationV2ToRead(
+    navigation: DocsV1Write.ApiNavigationConfigRootV2 | undefined,
+    api: APIV1Read.ApiDefinition | undefined,
+): DocsV1Read.ApiNavigationConfigRootV2 | undefined {
+    if (navigation == null) {
+        return undefined;
+    }
+
+    if (api == null) {
+        throw new Error("API definition not found");
+    }
+
+    return {
+        summaryPageId: navigation.summaryPageId,
+        items: navigation.items.map((item) => transformApiNavigationItemV2ToRead(item, api)),
+    };
+}
+
+function transformApiNavigationItemV2ToRead(
+    item: DocsV1Write.ApiNavigationConfigItemV2,
+    api: APIV1Read.ApiDefinition,
+): DocsV1Read.ApiNavigationConfigItemV2 {
+    if (item.type === "section") {
+        return {
+            type: "section",
+            title: item.title,
+            items: item.items.map((subitem) => transformApiNavigationItemV2ToRead(subitem, api)),
+            icon: item.icon,
+            hidden: item.hidden,
+            fullSlug: item.fullSlug,
+            urlSlug:
+                item.urlSlugOverride ??
+                (item.title.type === "custom"
+                    ? kebabCase(item.title.title)
+                    : item.title.title ?? api.subpackages[item.title.subpackageId]?.urlSlug ?? item.title.subpackageId),
+        };
+    } else if (item.type === "page") {
+        return transformPageNavigationItemForDb(item);
+    } else if (item.type === "node") {
+        return {
+            type: "node",
+            value: transformApiNode(item.value, api),
+        };
+    } else {
+        assertNever(item);
+    }
+}
+
+function transformApiNode(
+    writeShape: DocsV1Write.ApiNavigationNodeLocator,
+    api: APIV1Read.ApiDefinition,
+): DocsV1Read.ApiNavigationNodeLocator {
+    const subpackageId = last(writeShape.subpackageLocator);
+    const subpackage = (subpackageId != null ? api.subpackages[subpackageId] : api.rootPackage) as
+        | APIV1Read.ApiDefinitionPackage
+        | undefined;
+    switch (writeShape.type) {
+        case "endpoint":
+            return {
+                type: "endpoint",
+                endpointId: writeShape.endpointId,
+                subpackageLocator: writeShape.subpackageLocator,
+                icon: writeShape.icon,
+                urlSlug:
+                    writeShape.urlSlugOverride ??
+                    subpackage?.endpoints.find((e) => e.id === writeShape.endpointId)?.urlSlug ??
+                    writeShape.endpointId,
+                fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
+            };
+        case "webhook":
+            return {
+                type: "webhook",
+                webhookId: writeShape.webhookId,
+                subpackageLocator: writeShape.subpackageLocator,
+                icon: writeShape.icon,
+                urlSlug:
+                    writeShape.urlSlugOverride ??
+                    subpackage?.webhooks.find((e) => e.id === writeShape.webhookId)?.urlSlug ??
+                    writeShape.webhookId,
+                fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
+            };
+        case "websocket":
+            return {
+                type: "websocket",
+                webSocketId: writeShape.webSocketId,
+                subpackageLocator: writeShape.subpackageLocator,
+                icon: writeShape.icon,
+                urlSlug:
+                    writeShape.urlSlugOverride ??
+                    subpackage?.websockets.find((e) => e.id === writeShape.webSocketId)?.urlSlug ??
+                    writeShape.webSocketId,
+                fullSlug: writeShape.fullSlug,
+                hidden: writeShape.hidden ?? false,
+            };
+        default:
+            assertNever(writeShape);
+    }
+}
+
 function migrateApiNavigationV1ToV2(
     navigation: DocsV1Read.ApiNavigationConfigRootV1 | undefined,
     api: APIV1Read.ApiDefinition | undefined,
-): DocsV1Read.ApiNavigationConfigRootV2 | undefined {
+): DocsV1Write.ApiNavigationConfigRootV2 | undefined {
     if (navigation == null) {
         return undefined;
     }
@@ -371,23 +481,29 @@ function migrateApiNavigationItemV1ToV2(
     item: DocsV1Read.ApiNavigationConfigItemV1,
     api: APIV1Read.ApiDefinition,
     parentSubpackageIds: string[],
-): DocsV1Read.ApiNavigationConfigItemV2 {
+): DocsV1Write.ApiNavigationConfigItemV2 {
     switch (item.type) {
         case "page":
-            return item;
+            return {
+                type: "page",
+                id: item.id,
+                title: item.title,
+                icon: item.icon,
+                hidden: item.hidden,
+                urlSlugOverride: item.urlSlug,
+                fullSlug: item.fullSlug,
+            };
         case "subpackage":
             return {
                 type: "section",
                 summaryPageId: item.summaryPageId,
-                // subpackageId: item.subpackageId,
-                id: {
+                title: {
                     type: "subpackage",
-                    value: item.subpackageId,
+                    subpackageId: item.subpackageId,
                 },
                 items: item.items.map((innerItem) =>
                     migrateApiNavigationItemV1ToV2(innerItem, api, [...parentSubpackageIds, item.subpackageId]),
                 ),
-                urlSlug: undefined,
             };
         case "endpointId":
             return {
@@ -396,7 +512,6 @@ function migrateApiNavigationItemV1ToV2(
                     type: "endpoint",
                     endpointId: item.value,
                     subpackageLocator: parentSubpackageIds,
-                    urlSlug: undefined,
                 },
             };
         case "webhookId":
@@ -406,7 +521,6 @@ function migrateApiNavigationItemV1ToV2(
                     type: "webhook",
                     subpackageLocator: parentSubpackageIds,
                     webhookId: item.value,
-                    urlSlug: undefined,
                 },
             };
         case "websocketId":
@@ -416,8 +530,9 @@ function migrateApiNavigationItemV1ToV2(
                     type: "websocket",
                     subpackageLocator: parentSubpackageIds,
                     webSocketId: item.value,
-                    urlSlug: undefined,
                 },
             };
+        default:
+            assertNever(item);
     }
 }

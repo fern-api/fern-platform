@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../../../../..";
 
 export interface ApiNavigationConfigSection extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
-    id: FernRegistry.docs.v1.read.ApiNavigationConfigSectionId;
+    title: FernRegistry.docs.v1.commons.ApiNavigationConfigSectionTitle;
     summaryPageId?: FernRegistry.docs.v1.commons.PageId;
     items: FernRegistry.docs.v1.read.ApiNavigationConfigItemV2[];
 }

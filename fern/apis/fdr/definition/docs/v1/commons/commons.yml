@@ -44,6 +44,32 @@ types:
       subpackageLocator: list<SubpackageId>
       webhookId: WebhookId
 
+  ApiNavigationConfigSectionTitle:
+    docs: |
+      The id of the section is used to determine the title of the section, and aid merging custom navigation items with generated navigation.
+    union:
+      subpackage:
+        type: ApiNavigationConfigSectionSubpackage
+        docs: |
+          The title of the section will be the name of the subpackage, and it will merge custom navigation items with generated navigation.
+      custom:
+        type: ApiNavigationConfigSectionCustomTitle
+        docs: |
+          The title of the section will be the provided string, and its items will be organized in the order they are provided.
+
+  ApiNavigationConfigSectionSubpackage:
+    properties:
+      subpackageId: SubpackageId
+      title:
+        type: optional<string>
+        docs: |
+          If provided, this will be the title of the section. If not provided, the title will be the name of the subpackage.
+
+  # this is an object for forward compatibility
+  ApiNavigationConfigSectionCustomTitle:
+    properties:
+      title: string
+
   # SEO Config
 
   MetadataConfig:

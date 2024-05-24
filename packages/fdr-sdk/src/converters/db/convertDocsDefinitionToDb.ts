@@ -202,7 +202,7 @@ export function transformNavigationItemForDb(
                           }
                         : undefined,
                 navigation: transformApiSectionNavigationV1ForDb(writeShape.navigation),
-                navigationV2: transformApiSectionNavigationV2ForDb(writeShape.navigationV2),
+                navigationV2: writeShape.navigationV2, // this is transformed in the read step
             };
         case "page":
             return transformPageNavigationItemForDb(writeShape);
@@ -405,13 +405,13 @@ function transformColorsV3ForDb({
     }
 }
 
-function transformPageNavigationItemForDb(
+export function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata,
 ): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page>;
-function transformPageNavigationItemForDb(
+export function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
 ): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined;
-function transformPageNavigationItemForDb(
+export function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
 ): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined {
     if (writeShape == null) {
@@ -428,42 +428,42 @@ function transformPageNavigationItemForDb(
     };
 }
 
-function transformApiSectionNavigationV2ForDb(
-    writeShape: DocsV1Write.ApiNavigationConfigRootV2 | undefined,
-): DocsV1Db.ApiSection["navigationV2"] | undefined {
-    if (writeShape == null) {
-        return undefined;
-    }
-    return {
-        items: transformItemsV2(writeShape.items),
-        summaryPageId: writeShape.summaryPageId,
-    };
-}
+// function transformApiSectionNavigationV2ForDb(
+//     writeShape: DocsV1Write.ApiNavigationConfigRootV2 | undefined,
+// ): DocsV1Db.ApiSection["navigationV2"] | undefined {
+//     if (writeShape == null) {
+//         return undefined;
+//     }
+//     return {
+//         items: transformItemsV2(writeShape.items),
+//         summaryPageId: writeShape.summaryPageId,
+//     };
+// }
 
-function transformItemsV2(items: DocsV1Write.ApiNavigationConfigItemV2[]) {
-    return items.map((item): DocsV1Read.ApiNavigationConfigItemV2 => {
-        if (item.type === "section") {
-            return {
-                type: "section",
-                id: item.id,
-                items: transformItemsV2(item.items),
-                icon: item.icon,
-                hidden: item.hidden,
-                fullSlug: item.fullSlug,
-                urlSlug: item.urlSlugOverride ?? kebabCase(item.title),
-            };
-        } else if (item.type === "page") {
-            return transformPageNavigationItemForDb(item);
-        } else if (item.type === "node") {
-            return {
-                type: "node",
-                value: transformApiNode(item.value),
-            };
-        } else {
-            assertNever(item);
-        }
-    });
-}
+// function transformItemsV2(items: DocsV1Write.ApiNavigationConfigItemV2[]) {
+//     return items.map((item): DocsV1Read.ApiNavigationConfigItemV2 => {
+//         if (item.type === "section") {
+//             return {
+//                 type: "section",
+//                 id: item.id,
+//                 items: transformItemsV2(item.items),
+//                 icon: item.icon,
+//                 hidden: item.hidden,
+//                 fullSlug: item.fullSlug,
+//                 urlSlug: item.urlSlugOverride ?? (item.id.type === "custom" ? kebabCase(item.id.title) : item.id.value),
+//             };
+//         } else if (item.type === "page") {
+//             return transformPageNavigationItemForDb(item);
+//         } else if (item.type === "node") {
+//             return {
+//                 type: "node",
+//                 value: transformApiNode(item.value),
+//             };
+//         } else {
+//             assertNever(item);
+//         }
+//     });
+// }
 
 function transformApiSectionNavigationV1ForDb(
     writeShape: DocsV1Write.ApiNavigationConfigRootV1 | undefined,
@@ -490,41 +490,4 @@ function transformItemsV1(items: DocsV1Write.ApiNavigationConfigItemV1[]) {
         }
         return item;
     });
-}
-
-function transformApiNode(writeShape: DocsV1Write.ApiNavigationNodeLocator): DocsV1Read.ApiNavigationNodeLocator {
-    switch (writeShape.type) {
-        case "endpoint":
-            return {
-                type: "endpoint",
-                endpointId: writeShape.endpointId,
-                subpackageLocator: writeShape.subpackageLocator,
-                icon: writeShape.icon,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
-                fullSlug: writeShape.fullSlug,
-                hidden: writeShape.hidden ?? false,
-            };
-        case "webhook":
-            return {
-                type: "webhook",
-                webhookId: writeShape.webhookId,
-                subpackageLocator: writeShape.subpackageLocator,
-                icon: writeShape.icon,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
-                fullSlug: writeShape.fullSlug,
-                hidden: writeShape.hidden ?? false,
-            };
-        case "websocket":
-            return {
-                type: "websocket",
-                webSocketId: writeShape.webSocketId,
-                subpackageLocator: writeShape.subpackageLocator,
-                icon: writeShape.icon,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
-                fullSlug: writeShape.fullSlug,
-                hidden: writeShape.hidden ?? false,
-            };
-        default:
-            assertNever(writeShape);
-    }
 }

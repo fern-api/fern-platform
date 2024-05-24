@@ -212,11 +212,10 @@ types:
       link: NavigationTabLink
 
   NavigationTabGroup:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       items: list<NavigationItem>
-      urlSlug: string
 
   NavigationTabLink:
     properties:
@@ -363,7 +362,7 @@ types:
   ApiNavigationConfigSection:
     extends: NavigationNodeMetadata
     properties:
-      id: ApiNavigationConfigSectionId
+      title: commons.ApiNavigationConfigSectionTitle
       summaryPageId: optional<commons.PageId>
       items: list<ApiNavigationConfigItemV2>
 

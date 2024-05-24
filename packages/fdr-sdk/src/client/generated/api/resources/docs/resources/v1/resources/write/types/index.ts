@@ -37,8 +37,6 @@ export * from "./EndpointNode";
 export * from "./WebSocketNode";
 export * from "./WebhookNode";
 export * from "./ApiNavigationConfigSection";
-export * from "./ApiNavigationConfigSectionId";
-export * from "./ApiNavigationConfigSectionCustom";
 export * from "./ApiNavigationConfigRootV1";
 export * from "./ApiNavigationConfigItemV1";
 export * from "./ApiNavigationConfigSubpackageV1";

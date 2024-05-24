@@ -165,11 +165,10 @@ types:
       - NavigationTabLink
 
   NavigationTabGroup:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       items: list<NavigationItem>
-      urlSlugOverride: optional<string>
 
   NavigationTabLink:
     properties:
@@ -332,24 +331,9 @@ types:
   ApiNavigationConfigSection:
     extends: NavigationNodeMetadata
     properties:
-      id: ApiNavigationConfigSectionId
+      title: commons.ApiNavigationConfigSectionTitle
       summaryPageId: optional<commons.PageId>
       items: list<ApiNavigationConfigItemV2>
-
-  ApiNavigationConfigSectionId:
-    union:
-      subpackage:
-        type: commons.SubpackageId
-        docs: |
-          The title of the section will be the name of the subpackage, and it will merge custom navigation items with generated navigation.
-      custom:
-        type: ApiNavigationConfigSectionCustom
-        docs: |
-          The title of the section will be the provided string, and its items will be organized in the order they are provided.
-
-  ApiNavigationConfigSectionCustom:
-    properties:
-      title: string
 
   ApiNavigationConfigRootV1:
     availability: deprecated
