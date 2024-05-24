@@ -42,45 +42,15 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    /*
-    html.dark {
-        background-color: var(--accent);
-    } */
-
-    *,
-    *::before,
-    *::after {
-        box-sizing: inherit;
-
-        @apply outline-transparent;
-        @apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted;
-    }
-
-    ::selection {
-        @apply bg-accent-highlight;
-    }
-
     html,
     body {
-        @apply t-default;
-
         font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
-        font-size: 16px !important;
     }
 
     code,
     pre,
     .font-mono {
         font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
-    }
-
-    code.inline-code {
-        @apply text-[0.875em];
     }
 
     /* provides comfortable padding above anchor links, to avoid intersecting with header */
@@ -99,38 +69,10 @@
         }
     }
 
-    h1 {
-        @apply text-[2.25rem] font-extrabold leading-tight;
-    }
-
-    h2 {
-        @apply text-[1.5rem] font-bold leading-tight;
-    }
-
-    h3 {
-        @apply text-[1.25rem] font-semibold leading-tight;
-    }
-
-    h4 {
-        @apply text-[1.125rem] font-semibold leading-tight;
-    }
-
-    h5 {
-        @apply text-[1rem] font-semibold;
-    }
-
-    h6 {
-        @apply text-[0.875rem] font-semibold;
-    }
-
     .clipped-background {
         @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
 
         clip-path: inset(0);
-    }
-
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
     }
 
     .description-mask {
@@ -139,26 +81,12 @@
         text-overflow: -o-ellipsis-lastline;
     }
 
-    input[type="search"]::-webkit-search-cancel-button {
-        display: none;
-    }
-
-    hr {
-        @apply border-default;
-    }
-
     .fern-main {
         @apply relative w-full min-w-0 flex-1 mt-header-height;
     }
 }
 
 @layer components {
-    .fa-icon {
-        @apply size-4 inline-block bg-intent-default;
-
-        background-color: var(--fa-icon-dark, var(--gray-a11));
-    }
-
     .mask-grad-top-1 {
         mask-image: linear-gradient(to bottom, transparent 0, black 4px);
     }
@@ -323,65 +251,6 @@
 
     .fern-sidebar-link-expand[data-state="active"] {
         @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
-    }
-
-    .fern-segmented-control {
-        @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
-        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed;
-
-        > .fern-button {
-            @apply rounded-lg shrink min-w-0;
-        }
-    }
-
-    .fern-button-group {
-        @apply inline-flex items-stretch;
-
-        > .fern-button {
-            + .fern-button.outlined,
-            + .fern-button.filled {
-                @apply ml-2;
-            }
-        }
-
-        > .fern-button.small {
-            + .fern-button.small.outlined,
-            + .fern-button.small.filled {
-                @apply ml-1;
-            }
-        }
-
-        > .fern-button.large {
-            + .fern-button.large.outlined,
-            + .fern-button.large.filled {
-                @apply ml-3;
-            }
-        }
-
-        > .fern-button.outlined,
-        > .fern-button.filled {
-            + .fern-button.minimal {
-                @apply ml-2;
-            }
-        }
-    }
-
-    .fern-card {
-        @apply border-default t-default hover:t-default border bg-card;
-
-        &.interactive {
-            @apply cursor-pointer shadow-card;
-            @apply hover:shadow-card-elevated hover:border-accent transition-all;
-            @apply active:shadow-card-elevated active:border-primary;
-
-            &.active {
-                @apply shadow-card-elevated border-primary;
-            }
-        }
-
-        &.elevated {
-            @apply shadow-card-elevated border-primary transition-all;
-        }
     }
 
     .fern-mdx-link {

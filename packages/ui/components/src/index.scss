@@ -46,11 +46,6 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /*
-    html.dark {
-        background-color: var(--accent);
-    } */
-
     *,
     *::before,
     *::after {
@@ -67,35 +62,11 @@
     html,
     body {
         @apply t-default;
-
-        font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
         font-size: 16px !important;
-    }
-
-    code,
-    pre,
-    .font-mono {
-        font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
     }
 
     code.inline-code {
         @apply text-[0.875em];
-    }
-
-    /* provides comfortable padding above anchor links, to avoid intersecting with header */
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply scroll-mt-header-height-padded;
-
-        font-family: var(--typography-heading-font-family);
-
-        &:first-child {
-            @apply mt-0;
-        }
     }
 
     h1 {
@@ -122,32 +93,12 @@
         @apply text-[0.875rem] font-semibold;
     }
 
-    .clipped-background {
-        @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
-
-        clip-path: inset(0);
-    }
-
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-
-    .description-mask {
-        @apply overflow-hidden line-clamp-3;
-
-        text-overflow: -o-ellipsis-lastline;
-    }
-
     input[type="search"]::-webkit-search-cancel-button {
         display: none;
     }
 
     hr {
         @apply border-default;
-    }
-
-    .fern-main {
-        @apply relative w-full min-w-0 flex-1 mt-header-height;
     }
 }
 
