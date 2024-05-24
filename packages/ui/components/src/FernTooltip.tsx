@@ -4,7 +4,6 @@ import { FC, ReactNode } from "react";
 
 interface FernTooltipProps extends Tooltip.TooltipProps, Omit<Tooltip.TooltipContentProps, "content"> {
     content: ReactNode | undefined;
-    isReady?: boolean;
 }
 
 export const FernTooltip: FC<FernTooltipProps> = ({
@@ -15,10 +14,9 @@ export const FernTooltip: FC<FernTooltipProps> = ({
     onOpenChange,
     delayDuration,
     disableHoverableContent,
-    isReady,
     ...props
 }) => {
-    if (content == null || content === "" || !isReady) {
+    if (content == null || content === "") {
         return <>{children}</>;
     }
     return (
