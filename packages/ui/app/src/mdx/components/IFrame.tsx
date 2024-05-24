@@ -46,7 +46,7 @@ export const IFrame = forwardRef<HTMLIFrameElement, IFrame.Props>(
             };
         }, [experimental_onReceiveMessage]);
 
-        if (experimental_enableRequestFullscreen && document.fullscreenEnabled) {
+        if (experimental_enableRequestFullscreen && typeof document !== "undefined" && document.fullscreenEnabled) {
             return (
                 <ExperimentalIFrameWithFullscreen
                     iframeRef={iframeRef}
@@ -57,7 +57,8 @@ export const IFrame = forwardRef<HTMLIFrameElement, IFrame.Props>(
             );
         }
 
-        return <iframe ref={ref} {...props} />;
+        // prevent hydration mismatch by setting data-state to closed
+        return <iframe data-state="closed" ref={ref} {...props} />;
     },
 );
 
