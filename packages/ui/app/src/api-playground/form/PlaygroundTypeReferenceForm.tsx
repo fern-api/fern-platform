@@ -1,10 +1,6 @@
+import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useSetAtom } from "jotai";
 import { memo, ReactElement, useCallback } from "react";
-import { FernInput } from "../../components/FernInput";
-import { FernNumericInput } from "../../components/FernNumericInput";
-import { FernSwitch } from "../../components/FernSwitch";
-import { FernTextarea } from "../../components/FernTextarea";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import {
     dereferenceObjectProperties,
@@ -14,7 +10,6 @@ import {
     unwrapReference,
 } from "../../resolver/types";
 import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
-import { FOCUSED_PARAMETER_ATOM } from "../PlaygroundEndpointFormAside";
 import { WithLabel } from "../WithLabel";
 import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
@@ -110,7 +105,6 @@ interface PlaygroundTypeReferenceFormProps {
 export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
     const { domain } = useDocsContext();
     const { id, property, shape, onChange, value, types, disabled } = props;
-    const setFocusedParameter = useSetAtom(FOCUSED_PARAMETER_ATOM);
     const onRemove = useCallback(() => {
         onChange(undefined);
     }, [onChange]);
@@ -130,16 +124,7 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
         ),
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
-                <PlaygroundEnumForm
-                    enumValues={values}
-                    onChange={onChange}
-                    value={value}
-                    id={id}
-                    onFocus={() => {
-                        setFocusedParameter(id);
-                    }}
-                    disabled={disabled}
-                />
+                <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} id={id} disabled={disabled} />
             </WithLabel>
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
@@ -176,9 +161,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                                 className="w-full"
                                 value={typeof value === "string" ? value : ""}
                                 onValueChange={onChange}
-                                onFocus={() => {
-                                    setFocusedParameter(id);
-                                }}
                                 disabled={disabled}
                             />
                         ) : (
@@ -187,9 +169,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                                 className="w-full"
                                 value={typeof value === "string" ? value : ""}
                                 onValueChange={onChange}
-                                onFocus={() => {
-                                    setFocusedParameter(id);
-                                }}
                                 disabled={disabled}
                                 placeholder={string.default}
                             />
@@ -216,9 +195,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             value={typeof value === "number" ? value : undefined}
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disallowFloat={true}
                             disabled={disabled}
                             defaultValue={integer.default}
@@ -234,9 +210,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             value={typeof value === "number" ? value : undefined}
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disabled={disabled}
                             defaultValue={double.default}
                             max={double.maximum}
@@ -251,9 +224,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             value={typeof value === "number" ? value : undefined}
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disallowFloat={true}
                             disabled={disabled}
                         />
@@ -268,9 +238,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             placeholder="MM/DD/YYYY HH:MM"
                             value={typeof value === "string" ? value : undefined}
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disabled={disabled}
                         />
                     </WithLabel>
@@ -283,9 +250,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             value={typeof value === "string" ? value : ""}
                             placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disabled={disabled}
                         />
                     </WithLabel>
@@ -297,9 +261,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             value={typeof value === "string" ? value : ""}
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disabled={disabled}
                         />
                     </WithLabel>
@@ -313,9 +274,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             placeholder="MM/DD/YYYY"
                             value={typeof value === "string" ? value : undefined}
                             onValueChange={onChange}
-                            onFocus={() => {
-                                setFocusedParameter(id);
-                            }}
                             disabled={disabled}
                         />
                     </WithLabel>
@@ -349,12 +307,12 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
             visitDiscriminatedUnion(literal.value, "type")._visit({
                 stringLiteral: (stringLiteral) => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <span>{stringLiteral.value}</span>
+                        <code>{stringLiteral.value}</code>
                     </WithLabel>
                 ),
                 booleanLiteral: (stringLiteral) => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <span>{stringLiteral.value ? "TRUE" : "FALSE"}</span>
+                        <code>{stringLiteral.value ? "true" : "false"}</code>
                     </WithLabel>
                 ),
                 _other: () => null,

@@ -10,6 +10,7 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },
+    { "path": "../components" },
     { "path": "../../commons/react/react-commons" },
     { "path": "../../template-resolver" }
   ]

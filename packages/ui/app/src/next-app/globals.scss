@@ -1,3 +1,9 @@
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/mauve.css";
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/sage.css";
+@import "@radix-ui/colors/olive.css";
+@import "@radix-ui/colors/sand.css";
 @import "@radix-ui/colors/gray-alpha.css";
 @import "@radix-ui/colors/mauve-alpha.css";
 @import "@radix-ui/colors/slate-alpha.css";
@@ -13,6 +19,12 @@
 @import "@radix-ui/colors/amber-alpha.css";
 @import "@radix-ui/colors/blue.css";
 @import "@radix-ui/colors/blue-alpha.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/mauve-dark.css";
+@import "@radix-ui/colors/slate-dark.css";
+@import "@radix-ui/colors/sage-dark.css";
+@import "@radix-ui/colors/olive-dark.css";
+@import "@radix-ui/colors/sand-dark.css";
 @import "@radix-ui/colors/gray-dark-alpha.css";
 @import "@radix-ui/colors/mauve-dark-alpha.css";
 @import "@radix-ui/colors/slate-dark-alpha.css";
@@ -24,56 +36,21 @@
 @import "@radix-ui/colors/red-dark-alpha.css";
 @import "@radix-ui/colors/amber-dark-alpha.css";
 @import "@radix-ui/colors/blue-dark-alpha.css";
+@import "@fern-ui/components/src/index";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --body-font-fallback: -apple-system, blinkmacsystemfont, segoe ui, roboto, oxygen, ubuntu, cantarell, open sans,
-        helvetica neue, sans-serif;
-    --code-font-fallback: ui-monospace, sfmono-regular, menlo, monaco, consolas, liberation mono, courier new, monospace;
-}
-
 @layer base {
-    html {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    /*
-    html.dark {
-        background-color: var(--accent);
-    } */
-
-    *,
-    *::before,
-    *::after {
-        box-sizing: inherit;
-
-        @apply outline-transparent;
-        @apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted;
-    }
-
-    ::selection {
-        @apply bg-accent-highlight;
-    }
-
     html,
     body {
-        @apply t-default;
-
         font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
-        font-size: 16px !important;
     }
 
     code,
     pre,
     .font-mono {
         font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
-    }
-
-    code.inline-code {
-        @apply text-[0.875em];
     }
 
     /* provides comfortable padding above anchor links, to avoid intersecting with header */
@@ -92,38 +69,10 @@
         }
     }
 
-    h1 {
-        @apply text-[2.25rem] font-extrabold leading-tight;
-    }
-
-    h2 {
-        @apply text-[1.5rem] font-bold leading-tight;
-    }
-
-    h3 {
-        @apply text-[1.25rem] font-semibold leading-tight;
-    }
-
-    h4 {
-        @apply text-[1.125rem] font-semibold leading-tight;
-    }
-
-    h5 {
-        @apply text-[1rem] font-semibold;
-    }
-
-    h6 {
-        @apply text-[0.875rem] font-semibold;
-    }
-
     .clipped-background {
         @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
 
         clip-path: inset(0);
-    }
-
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
     }
 
     .description-mask {
@@ -132,77 +81,66 @@
         text-overflow: -o-ellipsis-lastline;
     }
 
-    input[type="search"]::-webkit-search-cancel-button {
-        display: none;
-    }
-
-    hr {
-        @apply border-default;
-    }
-
     .fern-main {
         @apply relative w-full min-w-0 flex-1 mt-header-height;
     }
 }
 
 @layer components {
-    .fa-icon {
-        @apply size-4 inline-block bg-intent-default;
-
-        background-color: var(--fa-icon-dark, var(--gray-a11));
-    }
-
     .mask-grad-top-1 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 4px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 4px);
     }
 
     .mask-grad-top-2 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 8px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 8px);
     }
 
     .mask-grad-top-3 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 12px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
     }
 
     .mask-grad-top-4 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 16px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 16px);
     }
 
     .mask-grad-top-5 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 20px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 20px);
     }
 
     .mask-grad-top-6 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 24px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+    }
+
+    .mask-grad-y-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
     }
 
     .mask-grad-top-7 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 28px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 28px);
     }
 
     .mask-grad-top-8 {
-        mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, 100%) 32px);
+        mask-image: linear-gradient(to bottom, transparent 0, black 32px);
     }
 
     .mask-grad-bottom-6 {
-        mask-image: linear-gradient(to top, transparent 0, rgba(0, 0, 0, 100%) 24px);
+        mask-image: linear-gradient(to top, transparent 0, black 24px);
     }
 
-    .fern-dropdown {
-        @apply relative z-50;
-        @apply animate-popover;
-        @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur will-change-[opacity,transform];
-        @apply shadow-xl;
+    .mask-grad-bottom-7 {
+        mask-image: linear-gradient(to top, transparent 0, black 28px);
+    }
 
-        .fern-dropdown-item {
-            @apply flex justify-start py-1 px-2 rounded text-sm w-full cursor-default items-center text-left;
-            @apply data-[highlighted]:bg-accent data-[highlighted]:t-accent-contrast will-change-[background-color,color];
+    .mask-grad-bottom-8 {
+        mask-image: linear-gradient(to top, transparent 0, black 32px);
+    }
 
-            .fern-dropdown-item-indicator {
-                @apply flex-none w-4 h-full flex items-center justify-center mr-1;
-            }
-        }
+    .mask-grad-bottom-9 {
+        mask-image: linear-gradient(to top, transparent 0, black 36px);
+    }
+
+    .mask-grad-bottom-10 {
+        mask-image: linear-gradient(to top, transparent 0, black 40px);
     }
 
     .fern-search-bar {
@@ -313,493 +251,6 @@
 
     .fern-sidebar-link-expand[data-state="active"] {
         @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
-    }
-
-    .fern-segmented-control {
-        @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
-        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed;
-
-        > .fern-button {
-            @apply rounded-lg shrink min-w-0;
-        }
-    }
-
-    .fern-button {
-        @apply transition-[background];
-        @apply inline-flex items-center justify-center;
-        @apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;
-        @apply cursor-default;
-
-        &.multiline,
-        &.multiline > .fern-button-content {
-            height: auto !important;
-        }
-
-        &.rounded {
-            @apply rounded-full;
-        }
-
-        &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
-        &:not(.square):has(> .fern-button-content > svg:first-child) {
-            @apply pl-2;
-        }
-
-        &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
-        &:not(.square):has(> .fern-button-content > svg:last-child) {
-            @apply pr-2;
-        }
-
-        > .fern-button-content {
-            @apply items-center inline-flex shrink min-w-0;
-            @apply gap-1.5 h-6;
-
-            > .fa-icon,
-            > svg {
-                @apply size-4 shrink-0;
-            }
-
-            .fern-button-text {
-                @apply shrink min-w-0;
-            }
-        }
-
-        &:not(.multiline) {
-            .fern-button-text {
-                @apply truncate;
-            }
-        }
-
-        &:not(.text-left, .text-right) > .fern-button-content {
-            @apply text-center justify-center;
-        }
-
-        &.text-left > .fern-button-content {
-            @apply justify-start flex-1;
-
-            .fern-button-text {
-                @apply flex-1;
-            }
-        }
-
-        &.square {
-            @apply px-1;
-
-            > .fern-button-content {
-                @apply w-7 sm:w-6;
-            }
-        }
-
-        &.small {
-            @apply px-2 py-1 text-xs h-7 sm:h-6;
-
-            &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
-            &:not(.square):has(> .fern-button-content > svg:first-child) {
-                @apply pl-1.5;
-            }
-
-            &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
-            &:not(.square):has(> .fern-button-content > svg:last-child) {
-                @apply pr-1.5;
-            }
-
-            > .fern-button-content {
-                @apply gap-1.5 h-4;
-
-                > .fa-icon,
-                > svg {
-                    @apply size-3;
-                }
-            }
-
-            &.square {
-                @apply px-1;
-
-                > .fern-button-content {
-                    @apply w-6 sm:w-4;
-                }
-            }
-        }
-
-        &.large {
-            @apply px-3 lg:px-4 py-2 text-base h-11 sm:h-10;
-
-            &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
-            &:not(.square):has(> .fern-button-content > svg:first-child) {
-                @apply pl-3;
-            }
-
-            &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
-            &:not(.square):has(> .fern-button-content > svg:last-child) {
-                @apply pr-3;
-            }
-
-            > .fern-button-content {
-                @apply gap-2 h-6;
-
-                > .fern-button-icon {
-                    @apply size-5;
-                }
-            }
-
-            &.square {
-                @apply px-2;
-
-                > .fern-button-content {
-                    @apply w-7 sm:w-6;
-                }
-            }
-        }
-
-        &.disabled {
-            @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
-            @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
-        }
-
-        &:not(.disabled) {
-            &.minimal {
-                @apply bg-transparent;
-                @apply t-muted hover:t-default;
-                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
-
-                .fa-icon {
-                    @apply bg-text-default/60;
-                }
-
-                &:not(.primary, .success, .warning, .danger) {
-                    .fa-icon {
-                        @apply dark:bg-text-default/70;
-                    }
-                }
-
-                &.primary {
-                    @apply t-accent hover:t-accent;
-                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary  data-[selected=true]:bg-tag-primary;
-
-                    .fa-icon {
-                        @apply bg-accent-aa;
-                    }
-                }
-
-                &.success {
-                    @apply t-success hover:t-success;
-                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success  data-[selected=true]:bg-tag-success;
-
-                    .fa-icon {
-                        @apply bg-intent-success;
-                    }
-                }
-
-                &.warning {
-                    @apply t-warning hover:t-warning;
-                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning  data-[selected=true]:bg-tag-warning;
-
-                    .fa-icon {
-                        @apply bg-intent-warning;
-                    }
-                }
-
-                &.danger {
-                    @apply t-danger hover:t-danger;
-                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger  data-[selected=true]:bg-tag-danger;
-
-                    .fa-icon {
-                        @apply bg-intent-danger;
-                    }
-                }
-            }
-
-            &.filled {
-                @apply bg-text-default/60 t-default;
-
-                &:hover,
-                &[data-state="on"],
-                &[data-state="checked"],
-                &[data-state="open"],
-                &[data-state="opening"] {
-                    @apply bg-text-default/60 t-default;
-                }
-
-                .fa-icon {
-                    @apply bg-text-default/60 t-default;
-                }
-
-                &.primary {
-                    @apply bg-accent hover:bg-accent t-accent-contrast;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-accent-tinted t-accent-contrast;
-                    }
-
-                    .fa-icon {
-                        @apply bg-accent-contrast;
-                    }
-                }
-
-                &.success {
-                    @apply bg-intent-success text-white dark:text-black;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-intent-success-lightened text-white dark:text-black;
-                    }
-
-                    .fa-icon {
-                        @apply bg-white;
-                        @apply dark:bg-black;
-                    }
-                }
-
-                &.warning {
-                    @apply bg-intent-warning text-white dark:text-black;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-intent-warning-lightened text-white dark:text-black;
-                    }
-
-                    .fa-icon {
-                        @apply bg-white;
-                        @apply dark:bg-black;
-                    }
-                }
-
-                &.danger {
-                    @apply bg-intent-danger text-white dark:text-black;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-intent-danger-lightened text-white dark:text-black;
-                    }
-
-                    .fa-icon {
-                        @apply bg-white;
-                        @apply dark:bg-black;
-                    }
-                }
-            }
-
-            &.outlined {
-                @apply ring-1 transition-shadow transition-[background] ring-inset;
-                @apply ring-default t-default;
-
-                &:hover,
-                &[data-state="on"],
-                &[data-state="checked"],
-                &[data-state="open"],
-                &[data-state="opening"] {
-                    @apply bg-tag-default t-default;
-                }
-
-                .fa-icon {
-                    @apply bg-text-default/60;
-                }
-
-                &.primary {
-                    @apply ring-border-primary t-accent;
-
-                    .fa-icon {
-                        @apply bg-accent-aa;
-                    }
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-tag-primary t-accent-aaa;
-
-                        .fa-icon {
-                            @apply bg-accent-aaa;
-                        }
-                    }
-                }
-
-                &.success {
-                    @apply ring-border-success text-intent-success;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-tag-success text-intent-success;
-                    }
-
-                    .fa-icon {
-                        @apply bg-intent-success;
-                    }
-                }
-
-                &.warning {
-                    @apply ring-border-warning text-intent-warning;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-tag-warning text-intent-warning;
-                    }
-
-                    .fa-icon {
-                        @apply bg-intent-warning;
-                    }
-                }
-
-                &.danger {
-                    @apply ring-border-danger text-intent-danger;
-
-                    &:hover,
-                    &[data-state="on"],
-                    &[data-state="checked"],
-                    &[data-state="open"],
-                    &[data-state="opening"] {
-                        @apply bg-tag-danger text-intent-danger;
-                    }
-
-                    .fa-icon {
-                        @apply bg-intent-danger;
-                    }
-                }
-            }
-        }
-    }
-
-    .fern-button-group {
-        @apply inline-flex items-stretch;
-
-        > .fern-button {
-            + .fern-button.outlined,
-            + .fern-button.filled {
-                @apply ml-2;
-            }
-        }
-
-        > .fern-button.small {
-            + .fern-button.small.outlined,
-            + .fern-button.small.filled {
-                @apply ml-1;
-            }
-        }
-
-        > .fern-button.large {
-            + .fern-button.large.outlined,
-            + .fern-button.large.filled {
-                @apply ml-3;
-            }
-        }
-
-        > .fern-button.outlined,
-        > .fern-button.filled {
-            + .fern-button.minimal {
-                @apply ml-2;
-            }
-        }
-    }
-
-    .fern-card {
-        @apply border-default t-default hover:t-default border bg-card;
-
-        &.interactive {
-            @apply cursor-pointer shadow-card;
-            @apply hover:shadow-card-elevated hover:border-accent transition-all;
-            @apply active:shadow-card-elevated active:border-primary;
-
-            &.active {
-                @apply shadow-card-elevated border-primary;
-            }
-        }
-
-        &.elevated {
-            @apply shadow-card-elevated border-primary transition-all;
-        }
-    }
-
-    .fern-input-focus {
-        @apply ring-border-primary ring-2 outline-none;
-    }
-
-    .fern-input {
-        @apply form-input w-full;
-        @apply border-none bg-transparent #{!important};
-        @apply outline-none ring-0 #{!important};
-    }
-
-    .fern-textarea {
-        @apply form-textarea resize-none w-full;
-        @apply outline-none ring-0 bg-transparent border-none #{!important};
-    }
-
-    .fern-textarea-group,
-    .fern-input-group,
-    .fern-numeric-input-group {
-        @apply flex items-center overflow-hidden;
-        @apply focus-within:fern-input-focus;
-        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
-    }
-
-    .fern-input-icon {
-        @apply flex items-center justify-center;
-        @apply w-8 h-full shrink-0;
-    }
-
-    .fern-input-icon + .fern-input {
-        @apply pl-8 -ml-8;
-    }
-
-    .fern-input-right-element {
-        @apply flex items-center justify-center;
-        @apply min-w-8 h-full shrink-0 px-0 -ml-2;
-    }
-
-    .fern-input-group,
-    .fern-numeric-input-group {
-        @apply h-10 sm:h-8;
-    }
-
-    .fern-numeric-input-group .fern-numeric-input-step {
-        @apply h-full rounded-none border-default;
-    }
-
-    .fern-numeric-input-group:focus-within .fern-numeric-input-step {
-        @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
-    }
-
-    .fern-numeric-input-group .fern-numeric-input-step:first-child {
-        @apply rounded-l-md border-r;
-    }
-
-    .fern-numeric-input-group .fern-numeric-input-step:last-child {
-        @apply rounded-r-md border-l;
-    }
-
-    .fern-input,
-    .fern-textarea {
-        @apply caret-accent py-2 px-2.5 text-sm;
-        @apply max-sm:text-base;
-    }
-
-    input.fern-input::-webkit-outer-spin-button,
-    input.fern-input::-webkit-inner-spin-button {
-        appearance: none;
-        margin: 0;
-    }
-
-    input.fern-input[type="number"] {
-        appearance: textfield;
     }
 
     .fern-mdx-link {

@@ -1,13 +1,11 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { FernButton, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
 import { Key } from "react-feather";
-import { FernButton } from "../components/FernButton";
-import { FernCollapse } from "../components/FernCollapse";
-import { FernInput } from "../components/FernInput";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";

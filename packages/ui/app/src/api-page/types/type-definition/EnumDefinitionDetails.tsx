@@ -1,5 +1,5 @@
+import { Empty } from "@fern-ui/components";
 import { ReactElement, useEffect, useState } from "react";
-import { Empty } from "../../../components/Empty";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {

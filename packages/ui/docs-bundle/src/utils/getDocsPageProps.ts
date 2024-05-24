@@ -265,6 +265,7 @@ async function convertDocsToDocsPageProps({
             sidebarNodes,
         },
         featureFlags,
+        apis: Object.keys(docs.definition.apis),
     };
 
     return {
@@ -298,7 +299,9 @@ function handleNotFound(docs: DocsV2Read.LoadDocsForUrlResponse, slug: string[])
         // if the navigation config is versioned, determine which version's basepath to redirect to
 
         for (const version of docs.definition.config.navigation.versions) {
-            const versionSlug = version.urlSlug.split("/");
+            const versionSlug = [...(docs.baseUrl.basePath?.split("/") ?? []), ...version.urlSlug.split("/")].filter(
+                (s) => s.trim(),
+            );
 
             if (slug.length >= versionSlug.length) {
                 const isVersionMatch = versionSlug.every((part, index) => part === slug[index]);

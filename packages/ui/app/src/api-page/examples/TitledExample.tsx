@@ -1,6 +1,6 @@
+import { Intent } from "@fern-ui/components";
 import cn from "clsx";
 import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
-import { Intent } from "../../components/FernButton";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 
 export declare namespace TitledExample {

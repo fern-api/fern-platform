@@ -36,10 +36,10 @@ function visitPage(
         if (matchCurrentNode(currentNode, page)) {
             traverseState.curr = page;
             traverseState.sectionTitleBreadcrumbs = sectionTitleBreadcrumbs;
-        } else {
+        } else if (!page.hidden) {
             traverseState.prev = page;
         }
-    } else {
+    } else if (!page.hidden) {
         traverseState.next = page;
     }
 
@@ -97,7 +97,9 @@ function visitNode(
                 }
             }
 
-            const apiSectionBreadcrumbs = [...sectionTitleBreadcrumbs, apiSection.title];
+            const apiSectionBreadcrumbs = apiSection.isSidebarFlattened
+                ? sectionTitleBreadcrumbs
+                : [...sectionTitleBreadcrumbs, apiSection.title];
 
             if (apiSection.changelog != null) {
                 traverseState = visitPage(apiSection.changelog, currentNode, traverseState, apiSectionBreadcrumbs);

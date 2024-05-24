@@ -25,11 +25,11 @@ function isNavigationNode(n: SidebarNodeRaw.VisitableNode): n is SidebarNodeRaw.
 
 // lower number means higher priority
 const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
-    root: 3,
-    tabGroup: 2,
+    root: 6,
+    section: 5,
+    apiSection: 4,
+    tabGroup: 3,
     versionGroup: 2,
-    section: 2,
-    apiSection: 2,
     pageGroup: 1,
     page: 0,
 };
@@ -54,6 +54,17 @@ export function getNavigationRoot(
     });
 
     if (hits[0] == null) {
+        // match on top-level versions if the slug starts with a version
+        // ignore the first item, which doesn't contain a version
+        for (const rootItem of root.items.slice(1)) {
+            if (rootItem.type === "versionGroup") {
+                const versionSlug = rootItem.slug.join("/");
+                if (slugArray.join("/").startsWith(rootItem.slug.join("/"))) {
+                    return { type: "redirect", redirect: `/${versionSlug}` };
+                }
+            }
+        }
+
         return undefined;
     }
 

@@ -4,7 +4,6 @@
 
 import * as FernRegistry from "../../..";
 
-export interface SingleRubySnippetCreate {
-    endpoint: FernRegistry.EndpointIdentifier;
+export interface SingleRubySnippetCreate extends FernRegistry.BaseSnippetCreate {
     snippet: FernRegistry.RubySnippetCode;
 }

@@ -1,8 +1,8 @@
+import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { merge } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
-import { FernTooltipProvider } from "../components/FernTooltip";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
@@ -125,7 +125,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     );
     return (
         <FernTooltipProvider>
-            <div className="flex min-h-0 flex-1 shrink flex-col">
+            <div className="flex min-h-0 flex-1 shrink flex-col h-full">
                 <div className="flex-0">
                     <PlaygroundEndpointPath
                         method={undefined}

@@ -1,13 +1,12 @@
+import { FernScrollArea, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
-import { RemoteFontAwesomeIcon } from "../commons/FontAwesomeIcon";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
-import { FernScrollArea } from "../components/FernScrollArea";
 import { Feedback } from "../custom-docs-page/Feedback";
 import { TableOfContents } from "../custom-docs-page/TableOfContents";
-import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Table, Tbody, Td, Th, Thead, Tr, Ul } from "./base-components";
+import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
 import { Badge } from "./components/Badge";
@@ -30,6 +29,8 @@ import { CodeBlock } from "./components/CodeBlock";
 import { CodeGroup } from "./components/CodeGroup";
 import { Column, ColumnGroup } from "./components/ColumnGroup";
 import { Frame } from "./components/Frame";
+import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable";
+import { IFrame } from "./components/IFrame";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
 import { TabGroup } from "./components/Tabs";
@@ -86,18 +87,11 @@ export const JSX_COMPONENTS = {
     ),
 
     Image,
+    IFrame,
 };
 
 export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
-    // code: ({ className, ...rest }) => {
-    //     return <code {...rest} className={cn(className, "not-prose")} />;
-    // },
-    table: Table,
-    thead: Thead,
-    tbody: Tbody,
-    tr: Tr,
-    th: Th,
-    td: Td,
+    ...HTML_TABLE_COMPONENTS,
     h1: (props) => HeadingRenderer(1, props),
     h2: (props) => HeadingRenderer(2, props),
     h3: (props) => HeadingRenderer(3, props),

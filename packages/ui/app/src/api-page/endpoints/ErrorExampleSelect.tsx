@@ -1,9 +1,9 @@
+import { FernButton, Intent } from "@fern-ui/components";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
-import { FernButton, Intent } from "../../components/FernButton";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
 

@@ -1,15 +1,10 @@
+import { FernButton, FernCheckbox, FernDropdown, FernInput, FernRadioGroup, FernTextarea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
-import { FernButton } from "../components/FernButton";
-import { FernCheckbox } from "../components/FernCheckbox";
-import { FernDropdown } from "../components/FernDropdown";
-import { FernInput } from "../components/FernInput";
-import { FernRadioGroup } from "../components/FernRadioGroup";
-import { FernTextarea } from "../components/FernTextarea";
 
 const MotionFernRadioGroup = motion(FernRadioGroup);
 

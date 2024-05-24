@@ -1,3 +1,4 @@
+import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import {
     BellIcon,
@@ -11,7 +12,6 @@ import {
 } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
-import { RemoteFontAwesomeIcon } from "../../commons/FontAwesomeIcon";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
 

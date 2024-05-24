@@ -2,12 +2,12 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context";
 import {
     ResolvedApiDefinition,
     ResolvedRootPackage,
@@ -54,8 +54,16 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
     const { basePath } = useDocsContext();
-    const { selectedSlug } = useNavigationContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
+
+    const key = urljoin(basePath ?? "", "/api/fern-docs/resolve-api");
+
+    const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key);
+    useEffect(() => {
+        if (data != null) {
+            setApis(data);
+        }
+    }, [data, setApis]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
@@ -75,23 +83,9 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
 
     const setSelectionStateAndOpen = useCallback(
         async (newSelectionState: PlaygroundSelectionState) => {
-            let matchedPackage = flattenedApis[newSelectionState.api];
+            const matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
-                const r = await fetch(
-                    urljoin(
-                        basePath ?? "",
-                        "/api/fern-docs/resolve-api?path=/" + selectedSlug + "&api=" + newSelectionState.api,
-                    ),
-                );
-
-                const data: ResolvedRootPackage | null = await r.json();
-
-                if (data == null) {
-                    return;
-                }
-
-                setApis((currentApis) => ({ ...currentApis, [newSelectionState.api]: data }));
-                matchedPackage = flattenRootPackage(data);
+                return;
             }
 
             if (newSelectionState.type === "endpoint") {
@@ -131,7 +125,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 });
             }
         },
-        [basePath, expandPlayground, flattenedApis, globalFormState, selectedSlug, setApis, setGlobalFormState],
+        [expandPlayground, flattenedApis, globalFormState, setGlobalFormState],
     );
 
     if (!isApiPlaygroundEnabled) {

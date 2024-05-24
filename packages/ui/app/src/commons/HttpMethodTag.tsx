@@ -1,8 +1,7 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernTag, FernTagColorScheme, FernTagProps, FernTooltip } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactNode, memo } from "react";
-import { FernTag, FernTagColorScheme, FernTagProps } from "../components/FernTag";
-import { FernTooltip } from "../components/FernTooltip";
 
 export declare namespace HttpMethodTag {
     export interface Props extends FernTagProps {
@@ -32,7 +31,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
         <FernTag
             colorScheme={METHOD_COLOR_SCHEMES[method]}
             variant={active ? "solid" : "subtle"}
-            className={clsx("uppercase", { "w-11": size === "sm" }, className)}
+            className={clsx("uppercase", { "w-11": size === "sm", "font-semibold": active }, className)}
             size={size}
             {...rest}
         >

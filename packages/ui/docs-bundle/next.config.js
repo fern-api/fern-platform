@@ -21,6 +21,7 @@ const nextConfig = {
     assetPrefix,
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
+        // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
         const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
         const HAS_HOST = { type: "host", value: "(?<host>.*)" };
 
@@ -160,7 +161,7 @@ module.exports = withSentryConfig(
         // This can increase your server load as well as your hosting bill.
         // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
         // side errors will fail.
-        tunnelRoute: "/monitoring",
+        tunnelRoute: "/api/fern-docs/monitoring",
 
         // Hides source maps from generated client bundles
         hideSourceMaps: true,

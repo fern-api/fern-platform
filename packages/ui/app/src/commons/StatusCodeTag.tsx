@@ -1,6 +1,5 @@
+import { FernTag, FernTagProps, Intent } from "@fern-ui/components";
 import { ReactElement } from "react";
-import { Intent } from "../components/FernButton";
-import { FernTag, FernTagProps } from "../components/FernTag";
 
 export declare namespace StatusCodeTag {
     export interface Props extends Omit<FernTagProps, "colorScheme" | "children"> {

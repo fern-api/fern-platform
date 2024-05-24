@@ -1,6 +1,5 @@
+import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { FC } from "react";
-import { FernButton } from "../components/FernButton";
-import { FernTooltip, FernTooltipProvider } from "../components/FernTooltip";
 import { usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundSelectionState } from "./PlaygroundDrawer";
 

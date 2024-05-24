@@ -1,3 +1,4 @@
+import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -7,7 +8,6 @@ import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } fro
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
-import { FernTooltipProvider } from "../components/FernTooltip";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import {
@@ -162,7 +162,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
 
     return (
         <FernTooltipProvider>
-            <div className="flex min-h-0 flex-1 shrink flex-col">
+            <div className="flex min-h-0 flex-1 shrink flex-col size-full">
                 <div className="flex-0">
                     <PlaygroundEndpointPath
                         method={endpoint.method}

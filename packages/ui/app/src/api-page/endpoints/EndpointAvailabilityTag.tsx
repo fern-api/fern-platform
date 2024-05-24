@@ -1,8 +1,7 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import { ColorScheme, FernTag } from "@fern-ui/components";
 import React, { memo } from "react";
-import { FernTag } from "../../components/FernTag";
 import { getEndpointAvailabilityLabel } from "../../util/endpoint";
-import { ColorScheme } from "../../util/shared-component-types";
 
 export declare namespace EndpointAvailabilityTag {
     export type Props = React.PropsWithChildren<{

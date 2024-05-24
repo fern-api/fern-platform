@@ -1,6 +1,7 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk";
+import { toast } from "@fern-ui/components";
 import { useDeepCompareEffect } from "@fern-ui/react-commons";
-import { DocsPage, toast, useSetThemeColors } from "@fern-ui/ui";
+import { DocsPage, useSetThemeColors } from "@fern-ui/ui";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";

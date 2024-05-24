@@ -1,16 +1,14 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode } from "@fern-ui/fdr-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { compact, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { Fragment, ReactElement, forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { FernButton } from "../components/FernButton";
-import { FernInput } from "../components/FernInput";
-import { FernScrollArea } from "../components/FernScrollArea";
-import { FernTooltip } from "../components/FernTooltip";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -49,7 +47,7 @@ export function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
                 result.push({
                     api: apiSection.api,
                     id: apiSection.id,
-                    breadcrumbs: [apiSection.title],
+                    breadcrumbs: apiSection.isSidebarFlattened ? [] : [apiSection.title],
                     items: apiSection.items
                         .filter((item): item is SidebarNode.ApiPage => item.type === "page")
                         .flatMap((item): SidebarNode.ApiPage[] =>
@@ -64,7 +62,9 @@ export function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
                         ),
                     ).map((group) => ({
                         ...group,
-                        breadcrumbs: [apiSection.title, ...group.breadcrumbs],
+                        breadcrumbs: apiSection.isSidebarFlattened
+                            ? group.breadcrumbs
+                            : [apiSection.title, ...group.breadcrumbs],
                     })),
                 );
             },
@@ -84,12 +84,20 @@ function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.A
 }
 
 export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, PlaygroundEndpointSelectorContentProps>(
-    function PlaygroundEndpointSelectorContent({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) {
+    ({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
+        const scrollRef = useRef<HTMLDivElement>(null);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        useImperativeHandle(ref, () => scrollRef.current!);
+
         const { setSelectionStateAndOpen } = usePlaygroundContext();
 
         const [filterValue, setFilterValue] = useState<string>("");
 
         const selectedItemRef = useRef<HTMLLIElement>(null);
+
+        useEffect(() => {
+            selectedItemRef.current?.scrollIntoView({ block: "center" });
+        }, []);
 
         const createSelectEndpoint = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
             setSelectionStateAndOpen({
@@ -117,9 +125,9 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                 return null;
             }
             return (
-                <li key={apiGroup.id} className="gap-2">
+                <li key={apiGroup.id}>
                     {apiGroup.breadcrumbs.length > 0 && (
-                        <div className="bg-background-translucent sticky top-0 z-10 flex h-[30px] items-center px-3 py-1">
+                        <div className="flex h-[30px] items-center px-3 py-1 truncate">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
                                     {idx > 0 && <SlashIcon className="mx-0.5 size-3 text-faded" />}
@@ -147,12 +155,18 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                         >
                                             <FernButton
                                                 text={text}
-                                                className="w-full rounded-none text-left"
+                                                className="w-full text-left"
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectEndpoint(apiGroup, endpointItem)}
-                                                rightIcon={<HttpMethodTag method={endpointItem.method} size="sm" />}
+                                                rightIcon={
+                                                    <HttpMethodTag
+                                                        method={endpointItem.method}
+                                                        size="sm"
+                                                        active={active}
+                                                    />
+                                                }
                                             />
                                         </FernTooltip>
                                     </li>
@@ -170,12 +184,12 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                         >
                                             <FernButton
                                                 text={text}
-                                                className="w-full rounded-none text-left"
+                                                className="w-full text-left"
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                                rightIcon={<HttpMethodTag method="WSS" />}
+                                                rightIcon={<HttpMethodTag method="WSS" size="sm" />}
                                             />
                                         </FernTooltip>
                                     </li>
@@ -190,45 +204,52 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         }
 
         const renderedListItems = apiGroups.map((group) => renderApiDefinitionPackage(group)).filter(isNonNullish);
-        const menuRef = useRef<HTMLDivElement>(null);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        useImperativeHandle(ref, () => menuRef.current!);
-
         return (
-            <div className={cn("min-w-[300px] overflow-hidden rounded-xl flex flex-col", className)} ref={menuRef}>
-                <div
-                    className={cn("relative z-20 px-1 pt-1", {
-                        "pb-1": renderedListItems.length === 0,
-                        "pb-0": renderedListItems.length > 0,
-                    })}
-                >
-                    <FernInput
-                        leftIcon={<MagnifyingGlassIcon />}
-                        data-1p-ignore="true"
-                        autoFocus={true}
-                        value={filterValue}
-                        onValueChange={setFilterValue}
-                        rightElement={
-                            filterValue.length > 0 && (
-                                <FernButton
-                                    icon={<Cross1Icon />}
-                                    variant="minimal"
-                                    onClick={() => setFilterValue("")}
-                                />
-                            )
-                        }
-                    />
+            <FernTooltipProvider>
+                <div className={clsx("flex flex-col size-full relative", className)} ref={scrollRef}>
+                    <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
+                        <FernInput
+                            leftIcon={<MagnifyingGlassIcon />}
+                            data-1p-ignore="true"
+                            autoFocus={true}
+                            value={filterValue}
+                            onValueChange={setFilterValue}
+                            rightElement={
+                                filterValue.length > 0 && (
+                                    <FernButton
+                                        icon={<Cross1Icon />}
+                                        variant="minimal"
+                                        onClick={() => setFilterValue("")}
+                                    />
+                                )
+                            }
+                            placeholder="Search for endpoints..."
+                        />
+                    </div>
+                    <FernScrollArea
+                        rootClassName="min-h-0 flex-1 shrink w-full"
+                        className="mask-grad-y-6 w-full !flex"
+                        scrollbars="vertical"
+                        asChild
+                        ref={ref}
+                    >
+                        <ul className="list-none p-3 flex flex-col gap-4 w-full h-fit">{renderedListItems}</ul>
+                        <div className="!h-6"></div>
+                    </FernScrollArea>
+                    <BuiltWithFern className="border-t border-default py-4 px-6 bg-background" />
                 </div>
-                <FernScrollArea rootClassName="min-h-0 flex-1 shrink">
-                    <ul className="list-none">{renderedListItems}</ul>
-                </FernScrollArea>
-            </div>
+            </FernTooltipProvider>
         );
     },
 );
 
+PlaygroundEndpointSelectorContent.displayName = "PlaygroundEndpointSelectorContent";
+
 function renderTextWithHighlight(text: string, highlight: string): ReactElement[] {
     highlight = highlight.trim();
+    if (highlight === "") {
+        return [<span key={0}>{text}</span>];
+    }
     // Split text on higlight term, include term itself into parts, ignore case
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, idx) =>

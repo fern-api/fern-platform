@@ -1,6 +1,6 @@
+import { FernCard } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { FernCard } from "../components/FernCard";
 import {
     ResolvedEndpointDefinition,
     ResolvedTypeDefinition,
@@ -169,7 +169,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     );
 
     return (
-        <div className="col-span-2 space-y-8 sm:pb-20">
+        <div className="col-span-2 space-y-8">
             {endpoint.headers.length > 0 && (
                 <div>
                     <div className="mb-4 px-4">

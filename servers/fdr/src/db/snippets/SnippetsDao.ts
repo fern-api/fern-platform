@@ -14,6 +14,7 @@ export interface LoadDbSnippetsPage {
     orgId: FdrAPI.OrgId;
     apiId: FdrAPI.ApiId;
     endpointIdentifier: FdrAPI.EndpointIdentifier | undefined;
+    exampleIdentifier: string | undefined;
     sdks: FdrAPI.SdkRequest[] | undefined;
     page: number | undefined;
 }
@@ -162,6 +163,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
                     identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
+                    exampleIdentifier: loadSnippetsInfo.exampleIdentifier,
                 },
                 orderBy: {
                     createdAt: "desc",
@@ -218,6 +220,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     endpointPath: loadSnippetsInfo.endpointIdentifier?.path,
                     endpointMethod: loadSnippetsInfo.endpointIdentifier?.method,
                     identifierOverride: loadSnippetsInfo.endpointIdentifier?.identifierOverride,
+                    exampleIdentifier: loadSnippetsInfo.exampleIdentifier,
                 },
             })
         ).map((row) => row.sdkId);
@@ -272,6 +275,7 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     endpointPath: snippet.endpoint.path,
                     endpointMethod: snippet.endpoint.method,
                     identifierOverride: snippet.endpoint.identifierOverride,
+                    exampleIdentifier: snippet.exampleIdentifier,
                     sdkId: sdkInfo.id,
                     snippet: writeBuffer(snippet.snippet),
                 });
@@ -354,6 +358,7 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 type: "typescript",
                 sdk: sdk as FdrAPI.TypeScriptSdk,
                 client: (readBuffer(dbSnippet.snippet) as FdrAPI.TypeScriptSnippetCode).client,
+                exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
             };
         case Language.PYTHON: {
             const pythonSnippetCode: FdrAPI.PythonSnippetCode = readBuffer(
@@ -364,6 +369,7 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 sdk: sdk as FdrAPI.PythonSdk,
                 async_client: pythonSnippetCode.async_client,
                 sync_client: pythonSnippetCode.sync_client,
+                exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
             };
         }
         case Language.GO:
@@ -371,12 +377,14 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 type: "go",
                 sdk: sdk as FdrAPI.GoSdk,
                 client: (readBuffer(dbSnippet.snippet) as FdrAPI.GoSnippetCode).client,
+                exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
             };
         case Language.RUBY:
             return {
                 type: "ruby",
                 sdk: sdk as FdrAPI.RubySdk,
                 client: (readBuffer(dbSnippet.snippet) as FdrAPI.RubySnippetCode).client,
+                exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
             };
         case Language.JAVA: {
             const javaSnippetCode: FdrAPI.JavaSnippetCode = readBuffer(dbSnippet.snippet) as FdrAPI.JavaSnippetCode;
@@ -385,6 +393,7 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 sdk: sdk as FdrAPI.JavaSdk,
                 async_client: javaSnippetCode.async_client,
                 sync_client: javaSnippetCode.sync_client,
+                exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
             };
         }
     }

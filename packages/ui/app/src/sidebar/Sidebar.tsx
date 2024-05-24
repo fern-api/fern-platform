@@ -1,9 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx as cn } from "clsx";
 import { Fragment, memo, useRef } from "react";
-import { FernScrollArea } from "../components/FernScrollArea";
-import { FernTooltipProvider } from "../components/FernTooltip";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useIsScrolled } from "../docs/useIsScrolled";
@@ -54,7 +53,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
             <SearchSidebar searchService={searchService}>
                 <FernScrollArea
                     rootClassName="flex-1"
-                    className={cn("group/sidebar mask-grad-top-6 mask-grad-bottom-6 px-4 pb-12", {
+                    className={cn("group/sidebar mask-grad-y-6 px-4 pb-12", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}
                     scrollbars="vertical"

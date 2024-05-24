@@ -4,7 +4,6 @@
 
 import * as FernRegistry from "../../..";
 
-export interface SingleGoSnippetCreate {
-    endpoint: FernRegistry.EndpointIdentifier;
+export interface SingleGoSnippetCreate extends FernRegistry.BaseSnippetCreate {
     snippet: FernRegistry.GoSnippetCode;
 }
