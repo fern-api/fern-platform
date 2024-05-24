@@ -11,7 +11,7 @@ const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
     return (
         <>
-            <Tooltip.TooltipProvider>
+            <Tooltip.TooltipProvider delayDuration={300}>
                 <Tooltip.Root>
                     <Tooltip.Trigger asChild>
                         <div className="fern-table-root not-prose">

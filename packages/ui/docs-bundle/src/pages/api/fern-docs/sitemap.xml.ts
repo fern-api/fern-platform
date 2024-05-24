@@ -1,23 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { notFoundResponse } from "../../../utils/serverResponse";
+import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;
 
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
-
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    const xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
-
-    if (xFernHost == null || Array.isArray(xFernHost)) {
-        return notFoundResponse();
-    }
+    const xFernHost = getXFernHostEdge(req);
 
     const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
 

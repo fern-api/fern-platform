@@ -1,10 +1,10 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/pro-solid-svg-icons";
+import { fasl } from "@fortawesome/sharp-light-svg-icons";
 import { NextRequest, NextResponse } from "next/server";
 import { svgResponse } from "../../../svgResponse";
 
-const prefix = "fas";
-library.add(fas);
+const prefix = "fasl";
+library.add(fasl);
 
 export const runtime = "edge";
 

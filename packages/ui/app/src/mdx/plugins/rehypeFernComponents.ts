@@ -50,6 +50,8 @@ export function rehypeFernComponents(): (tree: Root) => void {
             if (isMdxJsxFlowElement(node)) {
                 if (node.name === "img") {
                     node.name = "Image";
+                } else if (node.name === "iframe") {
+                    node.name = "IFrame";
                 }
             }
         });

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
+import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
@@ -34,6 +35,7 @@ export function FernErrorTag({
     reset?: () => void;
     resetErrorBoundary?: () => void;
 }): ReactElement | null {
+    const { isLocalPreview } = useLocalPreviewContext();
     useEffect(() => {
         // eslint-disable-next-line no-console
         console.error(error);
@@ -45,8 +47,11 @@ export function FernErrorTag({
                 "An unknown UI error occurred. This could be a critical user-facing error that should be investigated.",
         });
     }, [component, error, errorDescription]);
-    // TODO: render this error in the UI if in URL-preview, staging, dev, or local-preview model.
-    if (showError) {
+
+    // if local preview, always show the error tag for markdown errors
+    const showMarkdownError = isLocalPreview && component === "MdxErrorBoundary";
+
+    if (showError || showMarkdownError) {
         return (
             <div className={clsx(className ?? "my-4")}>
                 <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
