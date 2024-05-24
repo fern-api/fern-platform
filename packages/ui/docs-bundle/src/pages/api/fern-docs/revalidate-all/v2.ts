@@ -3,6 +3,7 @@ import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
+import { cleanHost, getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,
@@ -44,14 +45,10 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = getHostFromBody(req.body) ?? req.headers["x-fern-host"] ?? req.headers["host"];
-        if (typeof xFernHost !== "string") {
-            return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
-        }
-        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
+        const xFernHost = getHostFromBody(req) ?? getXFernHostNode(req);
 
         const url = buildUrl({
-            host: hostWithoutTrailingSlash,
+            host: xFernHost,
             pathname: toValidPathname(req.query.basePath),
         });
         // eslint-disable-next-line no-console
@@ -118,7 +115,7 @@ function getHostFromBody(body: unknown): string | undefined {
     }
 
     if (typeof body.host === "string") {
-        return body.host;
+        return cleanHost(body.host);
     }
 
     return undefined;

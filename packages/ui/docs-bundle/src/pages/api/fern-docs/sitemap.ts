@@ -3,38 +3,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
 import { toValidPathname } from "../../../utils/toValidPathname";
+import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
-
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
 
-    let xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
-
-    if (xFernHost != null && xFernHost.includes("localhost")) {
-        xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
-    }
-
-    const headers: Record<string, string> = {};
-
-    if (xFernHost != null) {
-        // when we call res.revalidate() nextjs uses
-        // req.headers.host to make the network request
-        xFernHost = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-        headers["x-fern-host"] = xFernHost;
-    } else {
-        return jsonResponse(400, [], headers);
-    }
+    const xFernHost = getXFernHostEdge(req);
+    const headers: Record<string, string> = {
+        "x-fern-host": xFernHost,
+    };
 
     try {
         const url = buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) });
