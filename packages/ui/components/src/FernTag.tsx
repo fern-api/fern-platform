@@ -39,7 +39,7 @@ export const FernTag: FC<FernTagProps> = ({
     className,
 }) => {
     return (
-        <div
+        <span
             className={clsx(
                 "font-mono inline-flex justify-center items-center leading-none",
                 {
@@ -78,6 +78,6 @@ export const FernTag: FC<FernTagProps> = ({
             )}
         >
             {children}
-        </div>
+        </span>
     );
 };

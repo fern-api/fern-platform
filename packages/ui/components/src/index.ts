@@ -1,4 +1,3 @@
-import "./index.scss";
 export * from "./Empty";
 export * from "./FernAudioPlayer";
 export * from "./FernButton";
