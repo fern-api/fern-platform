@@ -1080,6 +1080,9 @@ importers:
       style-to-object:
         specifier: ^1.0.5
         version: 1.0.6
+      swr:
+        specifier: ^2.2.5
+        version: 2.2.5(react@18.3.1)
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
@@ -23737,6 +23740,16 @@ packages:
       css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.0.0
+    dev: false
+
+  /swr@2.2.5(react@18.3.1):
+    resolution: {integrity: sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==}
+    peerDependencies:
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      client-only: 0.0.1
+      react: 18.3.1
+      use-sync-external-store: 1.2.2(react@18.3.1)
     dev: false
 
   /symbol-tree@3.2.4:
