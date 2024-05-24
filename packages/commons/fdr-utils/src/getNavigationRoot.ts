@@ -25,11 +25,11 @@ function isNavigationNode(n: SidebarNodeRaw.VisitableNode): n is SidebarNodeRaw.
 
 // lower number means higher priority
 const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
-    root: 3,
-    tabGroup: 2,
+    root: 6,
+    section: 5,
+    apiSection: 4,
+    tabGroup: 3,
     versionGroup: 2,
-    section: 2,
-    apiSection: 2,
     pageGroup: 1,
     page: 0,
 };
