@@ -50,6 +50,11 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
     {},
 );
 
+const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    return res.json();
+};
+
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
@@ -58,7 +63,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
 
     const key = urljoin(basePath ?? "", "/api/fern-docs/resolve-api");
 
-    const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key);
+    const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher);
     useEffect(() => {
         if (data != null) {
             setApis(data);
