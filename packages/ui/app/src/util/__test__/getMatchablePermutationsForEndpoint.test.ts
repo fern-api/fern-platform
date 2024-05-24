@@ -25,12 +25,9 @@ function pathParameter(key: string) {
 
 describe("getAllMatchablePathsForEndpoint", () => {
     it("should return all permutations for an endpoint", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "defaultEnvironment"> = {
+        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
             path: [literal("api"), pathParameter("id")],
-            defaultEnvironment: {
-                id: "1",
-                baseUrl: "https://api.example.com",
-            },
+            environments: [{ id: "1", baseUrl: "https://api.example.com" }],
         };
         const result = getMatchablePermutationsForEndpoint(endpoint);
         expect(result).toEqual(
@@ -39,12 +36,9 @@ describe("getAllMatchablePathsForEndpoint", () => {
     });
 
     it("should return all permutations for an endpoint with a base path", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "defaultEnvironment"> = {
+        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
             path: [literal("api"), pathParameter("id")],
-            defaultEnvironment: {
-                id: "1",
-                baseUrl: "https://api.example.com/v1",
-            },
+            environments: [{ id: "1", baseUrl: "https://api.example.com/v1" }],
         };
         const result = getMatchablePermutationsForEndpoint(endpoint);
         expect(result).toEqual(
@@ -61,12 +55,9 @@ describe("getAllMatchablePathsForEndpoint", () => {
 
     // tests urljoin works
     it("should return all permutations for an endpoint with a base path 2", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "defaultEnvironment"> = {
+        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
             path: [literal("/api/"), pathParameter("id")],
-            defaultEnvironment: {
-                id: "1",
-                baseUrl: "https://api.example.com/v1/",
-            },
+            environments: [{ id: "1", baseUrl: "https://api.example.com/v1/" }],
         };
         const result = getMatchablePermutationsForEndpoint(endpoint);
         expect(result).toEqual(
