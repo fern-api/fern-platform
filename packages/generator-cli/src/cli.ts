@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import fs from "fs";
-import { mkdir } from "fs/promises";
+import { mkdir, readFile } from "fs/promises";
 import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -61,7 +61,7 @@ void yargs(hideBin(process.argv))
                 readmeConfig,
                 featuresConfig,
                 snippets,
-                originalReadme: argv.originalReadme,
+                originalReadme: argv.originalReadme != null ? await readFile(argv.originalReadme, "utf8") : undefined,
             });
             await generator.generateReadme({
                 output: await createWriteStream(argv.output),

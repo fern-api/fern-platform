@@ -1,9 +1,9 @@
 import { Block } from "./Block";
 
 export class BlockMerger {
-    private original: Block[] = [];
+    private original: Block[];
     private originalByID: Record<string, Block> = {};
-    private updated: Block[] = [];
+    private updated: Block[];
     private updatedByID: Record<string, Block> = {};
 
     constructor({ original, updated }: { original: Block[]; updated: Block[] }) {

@@ -31,6 +31,10 @@ response, err := client.Chat(
 )
 ```
 
+## Custom
+
+This is a custom section that should ideally stay between the usage and timeout section.
+
 ## Timeouts
 
 Setting a timeout for each individual request is as simple as
@@ -82,6 +86,14 @@ if err != nil {
 }
 ```
 
+## One
+
+This is another custom section that should ideally stay between the usage and timeout section.
+
+## Two
+
+This is another custom section that should ideally stay between the usage and timeout section.
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
@@ -91,3 +103,7 @@ a proof of concept, but know that we will not be able to merge it as-is. We sugg
 an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
+## Remove
+
+This section is an h3, so it will be removed from the final output.
+

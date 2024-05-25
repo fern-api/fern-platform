@@ -9,7 +9,7 @@ export class ReadmeParser {
     public parse({ content }: { content: string }): ParseResult {
         let header: string | undefined;
         const blocks: Block[] = [];
-        const sections = content.split(/(^## .+)/m);
+        const sections = content.split("## ");
         sections.forEach((section, index) => {
             if (index === 0 && !section.startsWith("## ")) {
                 // This should only be for the first section (if any).
@@ -24,7 +24,7 @@ export class ReadmeParser {
             blocks.push(
                 new Block({
                     id,
-                    content: section,
+                    content: "## " + section,
                 }),
             );
         });
