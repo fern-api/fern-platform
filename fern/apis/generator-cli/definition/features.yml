@@ -8,6 +8,7 @@ types:
     docs: |
       Specifies the list of features supported by a specific generator.
     properties:
+      language: string
       features: list<Feature>
 
   Feature:
@@ -18,3 +19,8 @@ types:
       title: optional<string>
       description: optional<string>
       addendum: optional<string>
+      snippetIsOptional:
+        docs: |
+          If true, a snippet is not required to generate a section for this feature.
+          Otherwise, if a snippet is not available then an error will be returned.
+        type: optional<boolean>

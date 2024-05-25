@@ -17,7 +17,7 @@ export function testGenerateReadme({
 }): void {
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
-        it("parse open api", async () => {
+        it("generate readme", async () => {
             const absolutePathToFeaturesConfig = getAbsolutePathToFixtureFile({
                 fixtureName,
                 filepath: featuresConfigFilename,

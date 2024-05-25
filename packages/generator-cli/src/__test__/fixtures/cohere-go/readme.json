@@ -1,30 +1,19 @@
 {
+  "organization": {
+    "originalName": "cohere",
+    "camelCase": "cohere",
+    "pascalCase": "Cohere",
+    "snakeCase": "cohere",
+    "screamingSnakeCase": "cohere"
+  },
+  "publishInfo": {
+    "type": "go",
+    "owner": "cohere-ai",
+    "repo": "cohere-go"
+  },
   "bannerLink": "https://raw.githubusercontent.com/cohere-ai/cohere-typescript/5188b11a6e91727fdd4d46f4a690419ad204224d/banner.png",
   "docsLink": "https://docs.cohere.com",
-  "installation": "Run the following command to use the Cohere Go library in your module:\n\\`\\`\\`shgo get github.com/cohere-ai/cohere-go\\`\\`\\`",
-  "requirements": "This module requires Go version >= 1.18.",
-  "features": [
-    {
-      "name": "usage",
-      "endpoints": [
-        {
-          "id": {
-            "method": "POST",
-            "path": "/chat"
-          }
-        }
-      ]
-    },
-    {
-      "name": "timeouts",
-      "endpoints": [
-        {
-          "id": {
-            "method": "POST",
-            "path": "/generate"
-          }
-        }
-      ]
-    }
-  ]
+  "featureEndpoints": {
+    "timeouts": ["endpoint_.generate", "endpoint_.chat"]
+  }
 }

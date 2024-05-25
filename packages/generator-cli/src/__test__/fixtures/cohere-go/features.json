@@ -1,12 +1,26 @@
 {
+  "language": "go",
   "features": [
     {
-      "name": "usage",
-      "description": "Instantiate the client and call endpoints like so:"
+      "id": "usage",
+      "description": "Instantiate the client with the following:\n"
     },
     {
-      "name": "timeouts",
-      "description": "Setting a timeout for each individual request is as simple as using the standard `context` library. Setting a one second timeout for an individual API call looks like the following:"
+      "id": "optionals",
+      "description": "This library models optional primitives and enum types as pointers. This is primarily meant\nto distinguish default zero values from explicit values (e.g. `false` for `bool` and `\"\"`\nfor `string`). A collection of helper functions are provided to easily map a primitive or enum\nto its pointer-equivalent, which are shown below:\n"
+    },
+    {
+      "id": "timeouts",
+      "description": "Setting a timeout for each individual request is as simple as\nusing the standard `context` library. Setting a one second timeout\nfor an individual API call looks like the following:\n"
+    },
+    {
+      "id": "requestoptions",
+      "description": "A variety of request options are included to adapt the behavior of the library,\nwhich includes configuring authorization tokens, or providing your own instrumented\n`*http.Client`. Both of these options are shown below:\n",
+      "addendum": "As you can see, these request options can either be specified on the client so that\nthey're applied on _every_ request or for an individual request.\n"
+    },
+    {
+      "id": "errors",
+      "description": "Structured error types are returned from API calls that return non-success status codes.\nFor example, you can check if the error was of a particular type with the following:\n"
     }
   ]
 }

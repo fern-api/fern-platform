@@ -5,17 +5,17 @@ import { mkdir } from "fs/promises";
 import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { ReadmeGenerator } from "./ReadmeGenerator";
-import { ReadmeParser } from "./ReadmeParser";
 import { loadFeaturesConfig } from "./configuration/loadFeaturesConfig";
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
 import { loadSnippets } from "./configuration/loadSnippets";
+import { ReadmeGenerator } from "./readme/ReadmeGenerator";
+import { ReadmeParser } from "./readme/ReadmeParser";
 
 void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "generator-cli")
     .strict()
     .command(
-        "generate readme",
+        "readme generate",
         "Generate a README.md using the provided configuration files",
         (argv) =>
             argv
@@ -48,13 +48,13 @@ void yargs(hideBin(process.argv))
             }
             const wd = cwd();
             const readmeConfig = await loadReadmeConfig({
-                _absolutePathToConfig: resolve(wd, argv.featureConfig),
+                absolutePathToConfig: resolve(wd, argv.readmeConfig),
             });
             const featuresConfig = await loadFeaturesConfig({
                 absolutePathToConfig: resolve(wd, argv.featureConfig),
             });
             const snippets = await loadSnippets({
-                absolutePathToConfig: resolve(wd, argv.featureConfig),
+                absolutePathToConfig: resolve(wd, argv.snippets),
             });
             const generator = new ReadmeGenerator({
                 readmeParser: new ReadmeParser(),
@@ -69,6 +69,52 @@ void yargs(hideBin(process.argv))
             process.exit(0);
         },
     )
+    // .command(
+    //     "readme merge",
+    //     "Merges two README.md files together, preferring the updated sections over the original",
+    //     (argv) =>
+    //         argv
+    //             .option("original", {
+    //                 string: true,
+    //                 requred: true,
+    //             })
+    //             .option("updated", {
+    //                 string: true,
+    //                 requred: true,
+    //             })
+    //             .option("output", {
+    //                 string: true,
+    //                 requred: false,
+    //             }),
+    //     async (argv) => {
+    //         if (argv.original == null || argv.updated == null) {
+    //             process.stderr.write(
+    //                 "Missing required arguments; please specify the --original, and --updated flags\n",
+    //             );
+    //             process.exit(1);
+    //         }
+    //         const parser = new ReadmeParser();
+    //         const originalReadme = parser.parse({
+    //             content: await readFile(argv.original, "utf8"),
+    //         });
+    //         const updatedReadme = parser.parse({
+    //             content: await readFile(argv.updated, "utf8"),
+    //         });
+    //         const merger = new BlockMerger({
+    //             original: originalReadme.blocks,
+    //             updated: updatedReadme.blocks,
+    //         });
+    //         const blocks = merger.merge();
+
+    //         const writer = new StreamWriter(await createWriteStream(argv.output));
+    //         writer.writeLine(updatedReadme.header);
+    //         for (const block of blocks) {
+    //             block.write(writer);
+    //         }
+
+    //         process.exit(0);
+    //     },
+    // )
     .demandCommand()
     .showHelpOnFail(true)
     .parse();

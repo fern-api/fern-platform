@@ -1,21 +1,12 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { ReadmeConfig } from "./ReadmeConfig";
+import { readFile } from "fs/promises";
+import { FernGeneratorCli } from "./generated";
 
-// TODO: For now, this just encodes the ReadmeConfig statically while we figure out the final shape.
-// This will eventually be defined as a generator-cli fern definition.
 export async function loadReadmeConfig({
-    _absolutePathToConfig,
+    absolutePathToConfig,
 }: {
-    _absolutePathToConfig: AbsoluteFilePath;
-}): Promise<ReadmeConfig> {
-    return {
-        organization: "Placeholder",
-        publishInfo: undefined,
-        bannerLink: undefined,
-        docsLink: undefined,
-        installation: undefined,
-        requirements: undefined,
-        features: {},
-        layout: [],
-    };
+    absolutePathToConfig: AbsoluteFilePath;
+}): Promise<FernGeneratorCli.ReadmeConfig> {
+    const rawContents = await readFile(absolutePathToConfig, "utf8");
+    return JSON.parse(rawContents) as FernGeneratorCli.ReadmeConfig;
 }

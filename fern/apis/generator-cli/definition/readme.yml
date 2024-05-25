@@ -1,6 +1,10 @@
-# TODO: This entire file is a work in progress. It's still unclear how the generator will take control
-#       of specific sections like the requirements and installation. This might just need to be part
-#       of what the generator needs to produce, but where should it be written?
+# TODO: We might want to just add in the necessary information to generator-exec
+# and reuse that. This otherwise might get too complicated.
+#
+# However, it isn't great to include a bunch of information in the generator config
+# that wouldn't be read by any generator.
+#
+# We'll use this for development purposes to keep things separate.
 
 imports:
   features: features.yml
@@ -8,28 +12,39 @@ types:
   EndpointId:
     docs: |
       A unique identifier for an endpoint. This is interchangeable with the
-      identifier defined in the IR, and is now present in the snippets API.
+      identifier used between the IR and the snippets API.
     type: string
 
   Name:
     docs: |
       A name in various formats.
     properties:
-      original: string
-      camel: string
-      pascal: string
-      snake: string
-      screamingSnake: string
+      originalName: string
+      camelCase: string
+      pascalCase: string
+      snakeCase: string
+      screamingSnakeCase: string
 
   ReadmeConfig:
+    docs: |
+      The configuration specified by the user.
     properties:
       organization: Name
       publishInfo: optional<PublishInfo>
       bannerLink: optional<string>
       docsLink: optional<string>
-      endpoints: map<features.FeatureId, list<EndpointId>>
+      featureEndpoints:
+        docs: |
+          The list of endpoints associated with a particular feature.
+          The README.md will include each of the associated snippets
+          written by the generator.
+        type: optional<map<features.FeatureId, list<EndpointId>>>
 
   PublishInfo:
+    docs: |
+      A separate, simpler representation of the publish information
+      found in the generator-exec configuration. This is used to
+      generate README.md badges.
     union:
       npm: NpmPublishInfo
       pypi: PypiPublishInfo
@@ -46,8 +61,10 @@ types:
 
   GoPublishInfo:
     properties:
-      repository: string
+      owner: string
+      repo: string
 
   MavenPublishInfo:
     properties:
-      coordinate: string
+      artifact: string
+      group: string

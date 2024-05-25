@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@fern-api/fs-utils": "0.15.0-rc63",
-    "@fern-fern/generator-exec-sdk": "^0.0.857",
+    "@fern-fern/generator-exec-sdk": "^0.0.867",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
     "@types/yargs": "^17.0.32",

@@ -2,7 +2,6 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { FernGeneratorCli } from "./generated";
 
-// TODO: Add support for reading YAML files.
 export async function loadFeaturesConfig({
     absolutePathToConfig,
 }: {

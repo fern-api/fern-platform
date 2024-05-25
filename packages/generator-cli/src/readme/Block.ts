@@ -1,4 +1,4 @@
-import { Writer } from "./Writer";
+import { Writer } from "../utils/Writer";
 
 export class Block {
     public id: string;

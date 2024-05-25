@@ -1,16 +1,24 @@
 import { Block } from "./Block";
 
+export interface ParseResult {
+    header: string | undefined;
+    blocks: Block[];
+}
+
 export class ReadmeParser {
-    public parse({ content }: { content: string }): Block[] {
+    public parse({ content }: { content: string }): ParseResult {
+        let header: string | undefined;
         const blocks: Block[] = [];
-        for (const section of content.split(/(^## .+)/m)) {
-            if (!section.startsWith("## ")) {
+        const sections = content.split(/(^## .+)/m);
+        sections.forEach((section, index) => {
+            if (index === 0 && !section.startsWith("## ")) {
                 // This should only be for the first section (if any).
-                continue;
+                header = section;
+                return;
             }
             const title = section.split("\n")[0];
             if (title == null) {
-                continue;
+                return;
             }
             const id = sectionNameToID(title.replace(/^## /, ""));
             blocks.push(
@@ -19,8 +27,11 @@ export class ReadmeParser {
                     content: section,
                 }),
             );
-        }
-        return blocks;
+        });
+        return {
+            header,
+            blocks,
+        };
     }
 }
 
