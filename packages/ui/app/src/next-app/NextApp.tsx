@@ -1,12 +1,19 @@
-import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import {
+    DEFAULT_FERN_COMPONENTS_CONTEXT_VALUE,
+    FernComponentsContextProvider,
+    FernTooltipProvider,
+    Toaster,
+} from "@fern-ui/components";
 import { Provider as JotaiProvider, createStore } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useMemo } from "react";
+import urljoin from "url-join";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
@@ -30,25 +37,42 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         host: pageProps?.baseUrl?.domain,
     });
 
+    const { isLocalPreview } = useLocalPreviewContext();
+
+    const basePath = pageProps?.baseUrl.basePath ?? "/";
+    const fernComponentsContextValue = useMemo(() => {
+        if (isLocalPreview) {
+            return DEFAULT_FERN_COMPONENTS_CONTEXT_VALUE;
+        }
+        return {
+            fontAwesomeBaseUrl: urljoin(basePath, "/api/fern-docs/fontawesome"),
+        };
+    }, [isLocalPreview, basePath]);
+
     return (
-        <FernTooltipProvider>
-            <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                <ThemeProvider colors={pageProps?.colors}>
-                    <IsReadyProvider>
-                        <RouteListenerContextProvider>
-                            <DatadogInit />
-                            <JotaiProvider store={store}>
-                                <LayoutBreakpointProvider>
-                                    <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                                    <Component {...pageProps} />
-                                </LayoutBreakpointProvider>
-                            </JotaiProvider>
-                        </RouteListenerContextProvider>
-                    </IsReadyProvider>
-                    <Toaster />
-                </ThemeProvider>
-            </FernErrorBoundary>
-        </FernTooltipProvider>
+        <FernComponentsContextProvider value={fernComponentsContextValue}>
+            <FernTooltipProvider>
+                <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                    <ThemeProvider colors={pageProps?.colors}>
+                        <IsReadyProvider>
+                            <RouteListenerContextProvider>
+                                <DatadogInit />
+                                <JotaiProvider store={store}>
+                                    <LayoutBreakpointProvider>
+                                        <NextNProgress
+                                            options={{ showSpinner: false, speed: 400 }}
+                                            showOnShallow={false}
+                                        />
+                                        <Component {...pageProps} />
+                                    </LayoutBreakpointProvider>
+                                </JotaiProvider>
+                            </RouteListenerContextProvider>
+                        </IsReadyProvider>
+                        <Toaster />
+                    </ThemeProvider>
+                </FernErrorBoundary>
+            </FernTooltipProvider>
+        </FernComponentsContextProvider>
     );
 }
 
