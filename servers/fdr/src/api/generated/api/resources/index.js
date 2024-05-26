@@ -10,6 +10,7 @@ export * as snippets from "./snippets";
 export * from "./snippets/types";
 export * as templates from "./templates";
 export * from "./templates/types";
+export * as generatorCli from "./generatorCli";
 export * as docsCache from "./docsCache";
 export * from "./docsCache/service/requests";
 export * from "./snippetsFactory/service/requests";

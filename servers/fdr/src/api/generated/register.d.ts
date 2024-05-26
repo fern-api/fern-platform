@@ -13,6 +13,7 @@ import { ReadService as docs_v1_read_RootService } from "./api/resources/docs/re
 import { WriteService as docs_v1_write_RootService } from "./api/resources/docs/resources/v1/resources/write/service/WriteService";
 import { ReadService as docs_v2_read_RootService } from "./api/resources/docs/resources/v2/resources/read/service/ReadService";
 import { WriteService as docs_v2_write_RootService } from "./api/resources/docs/resources/v2/resources/write/service/WriteService";
+import { ReadmeService as generatorCli_ReadmeService } from "./api/resources/generatorCli/resources/readme/service/ReadmeService";
 export declare function register(expressApp: express.Express | express.Router, services: {
     diff: DiffService;
     docsCache: DocsCacheService;
@@ -46,5 +47,8 @@ export declare function register(expressApp: express.Express | express.Router, s
                 _root: docs_v2_write_RootService;
             };
         };
+    };
+    generatorCli: {
+        readme: generatorCli_ReadmeService;
     };
 }): void;

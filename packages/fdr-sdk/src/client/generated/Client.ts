@@ -11,6 +11,7 @@ import { DocsCache } from "./api/resources/docsCache/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
+import { GeneratorCli } from "./api/resources/generatorCli/client/Client";
 
 export declare namespace FernRegistryClient {
     interface Options {
@@ -67,5 +68,11 @@ export class FernRegistryClient {
 
     public get templates(): Templates {
         return (this._templates ??= new Templates(this._options));
+    }
+
+    protected _generatorCli: GeneratorCli | undefined;
+
+    public get generatorCli(): GeneratorCli {
+        return (this._generatorCli ??= new GeneratorCli(this._options));
     }
 }
