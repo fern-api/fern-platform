@@ -1,5 +1,6 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import fs from "fs";
+import { camelCase, upperFirst } from "lodash-es";
 import { FernGeneratorCli } from "../configuration/generated";
 import { StreamWriter, StringWriter, Writer } from "../utils/Writer";
 import { Block } from "./Block";
@@ -34,8 +35,8 @@ export class ReadmeGenerator {
         this.featuresConfig = featuresConfig;
         this.snippets = snippets;
         this.originalReadme = originalReadme;
-        this.organization = this.readmeConfig.organization.pascalCase;
-        this.language = titleCase(this.featuresConfig.language);
+        this.organization = pascalCase(this.readmeConfig.organization);
+        this.language = pascalCase(this.readmeConfig.language);
     }
 
     public async generateReadme({ output }: { output: fs.WriteStream }): Promise<void> {
@@ -303,14 +304,11 @@ function featureIDToTitle(featureID: string): string {
     if (title != null) {
         return title;
     }
-    return titleCase(featureID);
+    return pascalCase(featureID);
 }
 
-function titleCase(s: string): string {
-    return s
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
+function pascalCase(s: string): string {
+    return upperFirst(camelCase(s));
 }
 
 // TODO: Import this from elsewhere.

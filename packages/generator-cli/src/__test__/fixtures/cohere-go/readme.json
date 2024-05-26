@@ -1,11 +1,6 @@
 {
-  "organization": {
-    "originalName": "cohere",
-    "camelCase": "cohere",
-    "pascalCase": "Cohere",
-    "snakeCase": "cohere",
-    "screamingSnakeCase": "cohere"
-  },
+  "language": "go",
+  "organization": "cohere",
   "publishInfo": {
     "type": "go",
     "owner": "cohere-ai",
