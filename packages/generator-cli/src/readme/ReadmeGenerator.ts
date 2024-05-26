@@ -42,6 +42,8 @@ export class ReadmeGenerator {
         const blocks: Block[] = [];
 
         // TODO: The installation and requirements sections aren't supported yet.
+        //  * We can handle the installation here (similar to badges).
+        //  * We should expose a requirement section in the snippet.json
         //
         // if (this.readmeConfig.requirements != null) {
         //     blocks.push(this.generateRequirements({ requirements: this.readmeConfig.requirements }));

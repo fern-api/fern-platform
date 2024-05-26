@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern-generator-cli": "./dist/cli.cjs"
+    "generator-cli": "./dist/cli.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",

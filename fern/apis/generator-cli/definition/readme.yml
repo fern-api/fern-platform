@@ -68,3 +68,26 @@ types:
     properties:
       artifact: string
       group: string
+
+service:
+  auth: true
+  base-path: /readme
+  endpoints:
+    generate:
+      path: /generate
+      docs: Generates a README.md using the provided configuration.
+      display-name: Generate README.md
+      method: POST
+      availability: pre-release
+      audiences:
+        - external
+        - fiddle
+      request:
+        name: GenerateReadmeRequest
+        body:
+          properties:
+            readmeConfig: ReadmeConfig
+            featuresConfig: features.FeaturesConfig
+
+            # TODO: We need to reference the generator-exec snippets here.
+            snippets: unknown
