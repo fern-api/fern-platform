@@ -6,6 +6,5 @@ import * as FernRegistry from "../../../../..";
  * Specifies the list of features supported by a specific generator.
  */
 export interface FeaturesConfig {
-    language: string;
     features: FernRegistry.generatorCli.Feature[];
 }

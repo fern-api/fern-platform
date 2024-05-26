@@ -6,4 +6,5 @@ export interface GenerateReadmeRequest {
     readmeConfig: FernRegistry.generatorCli.ReadmeConfig;
     featuresConfig: FernRegistry.generatorCli.FeaturesConfig;
     snippets?: unknown;
+    originalReadme?: string;
 }

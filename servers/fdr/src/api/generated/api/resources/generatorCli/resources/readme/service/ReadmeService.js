@@ -27,8 +27,8 @@ export class ReadmeService {
         this.router.post("/generate", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.generate(req, {
-                    send: () => __awaiter(this, void 0, void 0, function* () {
-                        res.sendStatus(204);
+                    send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
+                        res.json(responseBody);
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,

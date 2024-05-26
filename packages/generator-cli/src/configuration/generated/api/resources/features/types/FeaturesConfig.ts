@@ -8,6 +8,5 @@ import * as FernGeneratorCli from "../../..";
  * Specifies the list of features supported by a specific generator.
  */
 export interface FeaturesConfig {
-    language: string;
     features: FernGeneratorCli.Feature[];
 }

@@ -6,7 +6,8 @@ import * as FernRegistry from "../../../../..";
  * The configuration specified by the user.
  */
 export interface ReadmeConfig {
-    organization: FernRegistry.generatorCli.Name;
+    language: string;
+    organization: string;
     publishInfo?: FernRegistry.generatorCli.PublishInfo;
     bannerLink?: string;
     docsLink?: string;

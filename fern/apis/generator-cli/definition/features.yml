@@ -8,7 +8,6 @@ types:
     docs: |
       Specifies the list of features supported by a specific generator.
     properties:
-      language: string
       features: list<Feature>
 
   Feature:

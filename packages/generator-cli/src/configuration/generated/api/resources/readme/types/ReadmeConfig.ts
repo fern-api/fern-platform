@@ -8,7 +8,8 @@ import * as FernGeneratorCli from "../../..";
  * The configuration specified by the user.
  */
 export interface ReadmeConfig {
-    organization: FernGeneratorCli.Name;
+    language: string;
+    organization: string;
     publishInfo?: FernGeneratorCli.PublishInfo;
     bannerLink?: string;
     docsLink?: string;

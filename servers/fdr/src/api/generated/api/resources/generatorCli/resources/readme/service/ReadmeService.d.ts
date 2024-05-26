@@ -4,8 +4,8 @@
 import * as FernRegistry from "../../../../..";
 import express from "express";
 export interface ReadmeServiceMethods {
-    generate(req: express.Request<never, never, FernRegistry.generatorCli.GenerateReadmeRequest, never>, res: {
-        send: () => Promise<void>;
+    generate(req: express.Request<never, string, FernRegistry.generatorCli.GenerateReadmeRequest, never>, res: {
+        send: (responseBody: string) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
