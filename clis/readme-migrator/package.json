@@ -1,0 +1,24 @@
+{
+  "name": "readme-migrator",
+  "version": "1.0.0",
+  "description": "convert readme docs to fern docs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "ts-node index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "clis/readme-migrator"
+  },
+  "author": "",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "path": "^0.12.7",
+    "readline": "^1.3.0",
+    "ts-node": "10.9.2",
+    "@types/node": "^20.12.12"
+  }
+}
