@@ -103,7 +103,3 @@ a proof of concept, but know that we will not be able to merge it as-is. We sugg
 an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
-## Remove
-
-This section is an h3, so it will be removed from the final output.
-

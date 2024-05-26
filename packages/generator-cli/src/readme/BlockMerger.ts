@@ -18,7 +18,6 @@ export class BlockMerger {
         });
     }
 
-    // TODO: The merge logic could be much better.
     public merge(): Block[] {
         let originalIndex = 0;
         let updatedIndex = 0;
