@@ -1,33 +1,33 @@
 import { Block } from "./Block";
 
 export interface ParseResult {
-    header: string | undefined;
+    header: string;
     blocks: Block[];
 }
 
 export class ReadmeParser {
     public parse({ content }: { content: string }): ParseResult {
-        let header: string | undefined;
+        let header: string = "";
+        let currentBlock: Block | undefined;
         const blocks: Block[] = [];
-        const sections = content.split("## ");
-        sections.forEach((section, index) => {
-            if (index === 0 && !section.startsWith("## ")) {
-                // This should only be for the first section (if any).
-                header = section;
-                return;
+        const lines = content.split("\n");
+        for (const line of lines) {
+            const h2Match = line.match(/^##\s+(.*)/);
+            if (h2Match) {
+                if (currentBlock) {
+                    blocks.push(currentBlock);
+                }
+                currentBlock = new Block({
+                    id: sectionNameToID(h2Match[1] ?? ""),
+                    content: "",
+                });
             }
-            const title = section.split("\n")[0];
-            if (title == null) {
-                return;
+            if (currentBlock == null) {
+                header += line;
+                continue;
             }
-            const id = sectionNameToID(title.replace(/^## /, ""));
-            blocks.push(
-                new Block({
-                    id,
-                    content: "## " + section,
-                }),
-            );
-        });
+            currentBlock.content += line + "\n";
+        }
         return {
             header,
             blocks,
