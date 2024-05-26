@@ -77,10 +77,15 @@ service:
         name: GenerateReadmeRequest
         body:
           properties:
-            readmeConfig: ReadmeConfig
+            # TODO: If we store the features.yml data in the DB, we can
+            # alternatively accept the generator name and version.
             featuresConfig: features.FeaturesConfig
+            readmeConfig: ReadmeConfig
             snippets:
-              # TODO: Can we reference the generator-exec snippets here?
+              # TODO: This is duplicative; FDR already stores snippets, so
+              # we shouldn't need to pass them here. However, FDR doesn't
+              # store the snippets based on their feature, so we'd need
+              # to remodel the FDR API to do so.
               docs: |
                 The snippet.json produced by the generator.
               type: unknown

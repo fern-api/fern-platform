@@ -13,6 +13,7 @@ import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService
 import { getDocsWriteService } from "../../controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
+import { getReadmeService } from "../../controllers/readme/getReadmeService";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
 import { getTemplatesService } from "../../controllers/snippets/getTemplatesService";
@@ -102,6 +103,9 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
         templates: getTemplatesService(fdrApplication),
         diff: getApiDiffService(fdrApplication),
         docsCache: getDocsCacheService(fdrApplication),
+        generatorCli: {
+            readme: getReadmeService(fdrApplication),
+        },
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);

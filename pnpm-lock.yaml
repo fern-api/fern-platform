@@ -1600,6 +1600,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../packages/fdr-sdk
+      '@fern-api/generator-cli':
+        specifier: workspace:*
+        version: link:../../packages/generator-cli
       '@fern-api/template-resolver':
         specifier: workspace:*
         version: link:../../packages/template-resolver
