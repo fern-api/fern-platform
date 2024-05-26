@@ -15,21 +15,12 @@ types:
       identifier used between the IR and the snippets API.
     type: string
 
-  Name:
-    docs: |
-      A name in various formats.
-    properties:
-      originalName: string
-      camelCase: string
-      pascalCase: string
-      snakeCase: string
-      screamingSnakeCase: string
-
   ReadmeConfig:
     docs: |
       The configuration specified by the user.
     properties:
-      organization: Name
+      language: string
+      organization: string
       publishInfo: optional<PublishInfo>
       bannerLink: optional<string>
       docsLink: optional<string>
@@ -88,6 +79,10 @@ service:
           properties:
             readmeConfig: ReadmeConfig
             featuresConfig: features.FeaturesConfig
-
-            # TODO: We need to reference the generator-exec snippets here.
-            snippets: unknown
+            snippets:
+              # TODO: Can we reference the generator-exec snippets here?
+              docs: |
+                The snippet.json produced by the generator.
+              type: unknown
+            originalReadme: optional<string>
+      response: string
