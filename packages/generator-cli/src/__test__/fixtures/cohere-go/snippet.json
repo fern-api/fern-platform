@@ -454,7 +454,7 @@
     }
   ],
   "features": {
-    "errors": [
+    "ERRORS": [
       {
         "id": {
           "path": "/chat",
@@ -907,7 +907,7 @@
         }
       }
     ],
-    "timeouts": [
+    "TIMEOUTS": [
       {
         "id": {
           "path": "/chat",
@@ -1360,7 +1360,7 @@
         }
       }
     ],
-    "usage": [
+    "USAGE": [
       {
         "id": {
           "path": "/chat",
