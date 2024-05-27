@@ -41,6 +41,9 @@ export class ReadmeGenerator {
     public async generateReadme({ output }: { output: fs.WriteStream }): Promise<void> {
         const blocks: Block[] = [];
 
+        if (this.readmeConfig.docsLink != null) {
+            blocks.push(this.generateDocumentation({ docsLink: this.readmeConfig.docsLink }));
+        }
         if (this.snippets.requirements != null) {
             blocks.push(this.generateRequirements({ requirements: this.snippets.requirements }));
         }
@@ -197,6 +200,18 @@ export class ReadmeGenerator {
         writer.writeLine(
             "[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)",
         );
+    }
+
+    private generateDocumentation({ docsLink }: { docsLink: string }): Block {
+        const writer = new StringWriter();
+        writer.writeLine("## Documentation");
+        writer.writeLine();
+        writer.writeLine(`${this.organization} documentation is available [here](${docsLink}).`);
+        writer.writeLine();
+        return new Block({
+            id: "DOCUMENTATION",
+            content: writer.toString(),
+        });
     }
 
     private generateRequirements({ requirements }: { requirements: string[] }): Block {
