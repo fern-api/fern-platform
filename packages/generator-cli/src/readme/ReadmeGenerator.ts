@@ -411,7 +411,10 @@ On the other hand, contributions to the README are always very welcome!
 }
 
 function featureIDToTitle(featureID: string): string {
-    return pascalCase(featureID);
+    return featureID
+        .split("_")
+        .map((s) => pascalCase(s))
+        .join(" ");
 }
 
 function pascalCase(s: string): string {
