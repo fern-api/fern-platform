@@ -209,20 +209,106 @@ export class ReadmeGenerator {
         writer.writeLine();
         writer.writeLine(requirements);
         return new Block({
-            id: "requirements",
+            id: "REQUIREMENTS",
             content: writer.toString(),
         });
     }
 
-    private generateInstallation({ installation }: { installation: string }): Block {
+    private generateInstallation({ publishInfo }: { publishInfo: FernGeneratorCli.PublishInfo }): Block {
         const writer = new StringWriter();
         writer.writeLine("## Installation");
         writer.writeLine();
-        writer.writeLine(installation);
+        switch (publishInfo.type) {
+            case "npm":
+                this.writeInstallationForNPM({
+                    writer,
+                    npm: publishInfo,
+                });
+                break;
+            case "pypi":
+                this.writeInstallationForPyPi({
+                    writer,
+                    pypi: publishInfo,
+                });
+                break;
+            case "maven":
+                this.writeInstallationForMaven({
+                    writer,
+                    maven: publishInfo,
+                });
+                break;
+            case "go":
+                this.writeInstallationForGo({
+                    writer,
+                    go: publishInfo,
+                });
+                break;
+            default:
+                // TODO: Not all the registries are supported by the README.md generator yet.
+                assertNever(publishInfo);
+        }
         return new Block({
-            id: "installation",
+            id: "INSTALLATION",
             content: writer.toString(),
         });
+    }
+
+    private writeInstallationForNPM({ writer, npm }: { writer: Writer; npm: FernGeneratorCli.NpmPublishInfo }): void {
+        writer.writeLine("```sh");
+        writer.writeLine(`npm i -s ${npm.packageName}`);
+        writer.writeLine("```");
+        writer.writeLine();
+    }
+
+    private writeInstallationForPyPi({
+        writer,
+        pypi,
+    }: {
+        writer: Writer;
+        pypi: FernGeneratorCli.PypiPublishInfo;
+    }): void {
+        writer.writeLine("```sh");
+        writer.writeLine(`pip install ${pypi.packageName}`);
+        writer.writeLine("```");
+        writer.writeLine();
+    }
+
+    private writeInstallationForMaven({
+        writer,
+        maven,
+    }: {
+        writer: Writer;
+        maven: FernGeneratorCli.MavenPublishInfo;
+    }): void {
+        writer.writeLine("### Gradle");
+        writer.writeLine();
+        writer.writeLine("Add the dependency in your `build.gradle` file:");
+        writer.writeLine();
+        writer.writeLine("```groovy");
+        writer.writeLine("dependencies {");
+        writer.writeLine(`  implementation '${maven.group}:${maven.artifact}'`);
+        writer.writeLine("}");
+        writer.writeLine("```");
+        writer.writeLine();
+
+        writer.writeLine("### Maven");
+        writer.writeLine();
+        writer.writeLine("Add the dependency in your `pom.xml` file:");
+        writer.writeLine();
+        writer.writeLine("```xml");
+        writer.writeLine("<dependency>");
+        writer.writeLine(`  <groupId>${maven.group}</groupId>`);
+        writer.writeLine(`  <artifactId>${maven.artifact}</artifactId>`);
+        // writer.writeLine(`  <version>${maven.version}</version>`);
+        writer.writeLine("</dependency>");
+        writer.writeLine("```");
+        writer.writeLine();
+    }
+
+    private writeInstallationForGo({ writer, go }: { writer: Writer; go: FernGeneratorCli.GoPublishInfo }): void {
+        writer.write("[![go shield]");
+        writer.write("(https://img.shields.io/badge/go-docs-blue)]");
+        writer.writeLine(`(https://pkg.go.dev/github.com/${go.owner}/${go.repo})`);
     }
 
     private writeShield({ writer, publishInfo }: { writer: Writer; publishInfo: FernGeneratorCli.PublishInfo }): void {
