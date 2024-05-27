@@ -1,4 +1,4 @@
-import { kebabCase, last } from "lodash-es";
+import { kebabCase } from "lodash-es";
 import tinycolor from "tinycolor2";
 import {
     APIV1Read,
@@ -410,16 +410,15 @@ function transformApiNode(
     writeShape: DocsV1Write.ApiNavigationNodeLocator,
     api: APIV1Read.ApiDefinition,
 ): DocsV1Read.ApiNavigationNodeLocator {
-    const subpackageId = last(writeShape.subpackageLocator);
-    const subpackage = (subpackageId != null ? api.subpackages[subpackageId] : api.rootPackage) as
-        | APIV1Read.ApiDefinitionPackage
-        | undefined;
+    const subpackage = (
+        writeShape.subpackageId != null ? api.subpackages[writeShape.subpackageId] : api.rootPackage
+    ) as APIV1Read.ApiDefinitionPackage | undefined;
     switch (writeShape.type) {
         case "endpoint":
             return {
                 type: "endpoint",
                 endpointId: writeShape.endpointId,
-                subpackageLocator: writeShape.subpackageLocator,
+                subpackageId: writeShape.subpackageId,
                 icon: writeShape.icon,
                 urlSlug:
                     writeShape.urlSlugOverride ??
@@ -432,7 +431,7 @@ function transformApiNode(
             return {
                 type: "webhook",
                 webhookId: writeShape.webhookId,
-                subpackageLocator: writeShape.subpackageLocator,
+                subpackageId: writeShape.subpackageId,
                 icon: writeShape.icon,
                 urlSlug:
                     writeShape.urlSlugOverride ??
@@ -445,7 +444,7 @@ function transformApiNode(
             return {
                 type: "websocket",
                 webSocketId: writeShape.webSocketId,
-                subpackageLocator: writeShape.subpackageLocator,
+                subpackageId: writeShape.subpackageId,
                 icon: writeShape.icon,
                 urlSlug:
                     writeShape.urlSlugOverride ??
@@ -473,14 +472,14 @@ function migrateApiNavigationV1ToV2(
 
     return {
         summaryPageId: navigation.summaryPageId,
-        items: navigation.items.map((item) => migrateApiNavigationItemV1ToV2(item, api, [])),
+        items: navigation.items.map((item) => migrateApiNavigationItemV1ToV2(item, api)),
     };
 }
 
 function migrateApiNavigationItemV1ToV2(
     item: DocsV1Read.ApiNavigationConfigItemV1,
     api: APIV1Read.ApiDefinition,
-    parentSubpackageIds: string[],
+    subpackageId?: string,
 ): DocsV1Write.ApiNavigationConfigItemV2 {
     switch (item.type) {
         case "page":
@@ -501,9 +500,7 @@ function migrateApiNavigationItemV1ToV2(
                     type: "subpackage",
                     subpackageId: item.subpackageId,
                 },
-                items: item.items.map((innerItem) =>
-                    migrateApiNavigationItemV1ToV2(innerItem, api, [...parentSubpackageIds, item.subpackageId]),
-                ),
+                items: item.items.map((innerItem) => migrateApiNavigationItemV1ToV2(innerItem, api, item.subpackageId)),
             };
         case "endpointId":
             return {
@@ -511,7 +508,7 @@ function migrateApiNavigationItemV1ToV2(
                 value: {
                     type: "endpoint",
                     endpointId: item.value,
-                    subpackageLocator: parentSubpackageIds,
+                    subpackageId,
                 },
             };
         case "webhookId":
@@ -519,8 +516,8 @@ function migrateApiNavigationItemV1ToV2(
                 type: "node",
                 value: {
                     type: "webhook",
-                    subpackageLocator: parentSubpackageIds,
                     webhookId: item.value,
+                    subpackageId,
                 },
             };
         case "websocketId":
@@ -528,8 +525,8 @@ function migrateApiNavigationItemV1ToV2(
                 type: "node",
                 value: {
                     type: "websocket",
-                    subpackageLocator: parentSubpackageIds,
                     webSocketId: item.value,
+                    subpackageId,
                 },
             };
         default:

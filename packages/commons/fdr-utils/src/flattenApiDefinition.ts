@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNever, noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
 
 /**
@@ -21,10 +21,14 @@ export interface FlattenedParameter {
     availability: APIV1Read.Availability | undefined;
 }
 
-export interface FlattenedEndpointDefinition {
+interface FlattenedNodeMetadata {
+    slug: readonly string[];
+    icon: string | undefined;
+    hidden: boolean;
+}
+export interface FlattenedEndpointDefinition extends FlattenedNodeMetadata {
     type: "endpoint";
     id: string;
-    slug: string[];
     name: string;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
@@ -45,10 +49,9 @@ export interface FlattenedEndpointDefinition {
     stream: FlattenedEndpointDefinition | undefined;
 }
 
-export interface FlattenedWebSocketChannel {
+export interface FlattenedWebSocketChannel extends FlattenedNodeMetadata {
     type: "websocket";
     id: string;
-    slug: string[];
     name: string | undefined;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
@@ -62,10 +65,9 @@ export interface FlattenedWebSocketChannel {
     examples: APIV1Read.ExampleWebSocketSession[];
 }
 
-export interface FlattenedWebhookDefinition {
+export interface FlattenedWebhookDefinition extends FlattenedNodeMetadata {
     type: "webhook";
     id: string;
-    slug: string[];
     name: string | undefined;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
@@ -78,18 +80,12 @@ export interface FlattenedWebhookDefinition {
 
 export interface FlattenedSubpackage extends FlattenedApiDefinitionPackage {
     type: "subpackage";
-    subpackageId: string;
-    name: string;
-    description: string | undefined;
 }
 
-export interface FlattenedPageMetadata {
+export interface FlattenedPageMetadata extends FlattenedNodeMetadata {
     type: "page";
     id: DocsV1Read.PageId;
-    slug: readonly string[];
     title: string;
-    icon: string | undefined;
-    hidden: boolean;
 }
 
 export function isFlattenedSubpackage(package_: FlattenedApiDefinitionPackage): package_ is FlattenedSubpackage {
@@ -125,6 +121,8 @@ export const FlattenedApiDefinitionPackageItem = {
                 return visitor.subpackage(item);
             case "page":
                 return visitor.page(item);
+            default:
+                assertNever(item);
         }
     },
     isSubpackage: (item: FlattenedApiDefinitionPackageItem): item is FlattenedSubpackage => item.type === "subpackage",
@@ -140,7 +138,12 @@ export interface FlattenedApiDefinitionPackage {
     summaryPageId: DocsV1Read.PageId | undefined;
     items: FlattenedApiDefinitionPackageItem[];
     slug: readonly string[];
-    usedTypes: readonly string[];
+    // usedTypes: readonly string[];
+    title: string;
+    description: string | undefined;
+    icon: string | undefined;
+    hidden: boolean;
+    subpackageId: DocsV1Read.SubpackageId | undefined;
 }
 
 export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
@@ -154,15 +157,44 @@ export interface FlattenedApiDefinition extends FlattenedApiDefinitionPackage {
 export function flattenApiDefinition(
     apiDefinition: APIV1Read.ApiDefinition,
     parentSlugs: readonly string[],
-    navigation: DocsV1Read.ApiNavigationConfigRootV1 | undefined,
+    api: DocsV1Read.NavigationItem.Api,
     domain: string,
-    isSidebarFlattened = false,
 ): FlattenedApiDefinition {
+    const apiDefinitions = collectApiDefinitions(apiDefinition.rootPackage, apiDefinition.subpackages);
+
+    const rootNavigationOrder: DocsV1Read.ApiNavigationConfigSection | undefined =
+        api.navigationV2 != null
+            ? {
+                  title: {
+                      type: "custom",
+                      title: api.title,
+                  },
+                  summaryPageId: api.navigationV2.summaryPageId,
+                  items: api.navigationV2.items,
+                  icon: api.icon,
+                  hidden: api.hidden,
+                  urlSlug: api.urlSlug,
+                  fullSlug: api.fullSlug,
+              }
+            : undefined;
+
+    const orderedPackage = constructPackageFromNavigationOrder(
+        rootNavigationOrder,
+        apiDefinitions,
+        parentSlugs,
+        apiDefinition.subpackages,
+    );
+
     const package_ = flattenPackage(
+        orderedPackage.package,
+        orderedPackage.visitedEndpoints,
+        orderedPackage.visitedWebsockets,
+        orderedPackage.visitedWebhooks,
+        orderedPackage.visitedSubpackages,
+        undefined,
         apiDefinition.rootPackage,
         apiDefinition.subpackages,
         parentSlugs,
-        navigation ?? toConfigRoot(apiDefinition.navigation),
         domain,
     );
 
@@ -171,59 +203,321 @@ export function flattenApiDefinition(
         auth: apiDefinition.auth,
         types: apiDefinition.types,
         globalHeaders: apiDefinition.globalHeaders ?? [],
-        isSidebarFlattened,
+        isSidebarFlattened: api.flattened ?? false,
         ...package_,
     };
 }
 
+interface OrderedPackageReturnValue {
+    package: FlattenedApiDefinitionPackage;
+    visitedEndpoints: Set<string>;
+    visitedWebsockets: Set<string>;
+    visitedWebhooks: Set<string>;
+    visitedSubpackages: Set<string>;
+}
+
+function constructPackageFromNavigationOrder(
+    order: DocsV1Read.ApiNavigationConfigSection | undefined,
+    apiDefinitions: GlobalApiDefinitions,
+    parentSlugs: readonly string[],
+    subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+): OrderedPackageReturnValue {
+    const items: FlattenedApiDefinitionPackageItem[] = [];
+    const visitedEndpoints = new Set<string>();
+    const visitedWebsockets = new Set<string>();
+    const visitedWebhooks = new Set<string>();
+    const visitedSubpackages = new Set<string>();
+
+    order?.items.forEach((item) =>
+        visitDiscriminatedUnion(item, "type")._visit({
+            page: (page) => {
+                items.push({
+                    type: "page",
+                    id: page.id,
+                    slug: page.fullSlug ?? [...parentSlugs, page.urlSlug],
+                    title: page.title,
+                    icon: page.icon,
+                    hidden: page.hidden ?? false,
+                });
+            },
+            section: (section) => {
+                const convertedSection = constructPackageFromNavigationOrder(
+                    section,
+                    apiDefinitions,
+                    section.fullSlug ?? [...parentSlugs, section.urlSlug],
+                    subpackages,
+                );
+                items.push({
+                    type: "subpackage",
+                    ...convertedSection.package,
+                });
+                convertedSection.visitedEndpoints.forEach((endpointId) => visitedEndpoints.add(endpointId));
+                convertedSection.visitedWebsockets.forEach((websocketId) => visitedWebsockets.add(websocketId));
+                convertedSection.visitedWebhooks.forEach((webhookId) => visitedWebhooks.add(webhookId));
+                convertedSection.visitedSubpackages.forEach((subpackageId) => visitedSubpackages.add(subpackageId));
+            },
+            node: (node) =>
+                visitDiscriminatedUnion(node.value, "type")._visit({
+                    endpoint: (endpoint) => {
+                        const locator =
+                            endpoint.subpackageId != null
+                                ? `${endpoint.subpackageId}.${endpoint.endpointId}`
+                                : endpoint.endpointId;
+                        const referencedEndpoint = apiDefinitions.endpoints.get(locator);
+                        if (referencedEndpoint == null) {
+                            // eslint-disable-next-line no-console
+                            console.error(`Endpoint ${locator} not found`);
+                            return;
+                        }
+                        items.push(
+                            toFlattenedEndpoint(referencedEndpoint, {
+                                slug: endpoint.fullSlug ?? [...parentSlugs, endpoint.urlSlug],
+                                icon: endpoint.icon,
+                                hidden: endpoint.hidden ?? false,
+                            }),
+                        );
+                        visitedEndpoints.add(locator);
+                    },
+                    websocket: (websocket) => {
+                        const locator =
+                            websocket.subpackageId != null
+                                ? `${websocket.subpackageId}.${websocket.webSocketId}`
+                                : websocket.webSocketId;
+                        const referencedWebSocket = apiDefinitions.websockets.get(locator);
+                        if (referencedWebSocket == null) {
+                            // eslint-disable-next-line no-console
+                            console.error(`WebSocket ${locator} not found`);
+                            return;
+                        }
+                        items.push(
+                            toFlattenedWebSocketChannel(referencedWebSocket, {
+                                slug: websocket.fullSlug ?? [...parentSlugs, websocket.urlSlug],
+                                icon: websocket.icon,
+                                hidden: websocket.hidden ?? false,
+                            }),
+                        );
+                        visitedWebsockets.add(locator);
+                    },
+                    webhook: (webhook) => {
+                        const locator =
+                            webhook.subpackageId != null
+                                ? `${webhook.subpackageId}.${webhook.webhookId}`
+                                : webhook.webhookId;
+                        const referencedWebhook = apiDefinitions.webhooks.get(locator);
+                        if (referencedWebhook == null) {
+                            // eslint-disable-next-line no-console
+                            console.error(`Webhook ${locator} not found`);
+                            return;
+                        }
+                        items.push(
+                            toFlattenedWebhookDefinition(referencedWebhook, {
+                                slug: webhook.fullSlug ?? [...parentSlugs, webhook.urlSlug],
+                                icon: webhook.icon,
+                                hidden: webhook.hidden ?? false,
+                            }),
+                        );
+                        visitedWebhooks.add(locator);
+                    },
+                    _other: noop,
+                }),
+            _other: noop,
+        }),
+    );
+
+    const subpackageId = order?.title.type === "subpackage" ? order.title.subpackageId : undefined;
+    let subpackage = subpackageId != null ? subpackages[subpackageId] : undefined;
+    while (subpackage?.pointsTo != null) {
+        subpackage = subpackages[subpackage.pointsTo];
+    }
+
+    if (subpackageId != null) {
+        visitedSubpackages.add(subpackageId);
+    }
+
+    const package_: FlattenedApiDefinitionPackage = {
+        summaryPageId: order?.summaryPageId,
+        items,
+        slug: parentSlugs,
+        title:
+            order?.title.type === "custom"
+                ? order.title.title
+                : order?.title.title ?? subpackage?.displayName ?? subpackage?.name ?? "API Reference",
+        icon: order?.icon,
+        hidden: order?.hidden ?? false,
+        subpackageId: order?.title.type === "subpackage" ? order.title.subpackageId : order?.title.title,
+        description: subpackage?.description,
+    };
+
+    return {
+        package: package_,
+        visitedEndpoints,
+        visitedWebsockets,
+        visitedWebhooks,
+        visitedSubpackages,
+    };
+}
+
+interface GlobalApiDefinitions {
+    endpoints: Map<string, APIV1Read.EndpointDefinition>;
+    websockets: Map<string, APIV1Read.WebSocketChannel>;
+    webhooks: Map<string, APIV1Read.WebhookDefinition>;
+}
+
+function collectApiDefinitions(
+    rootPackage: APIV1Read.ApiDefinitionPackage,
+    subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+): GlobalApiDefinitions {
+    const endpoints = new Map<string, APIV1Read.EndpointDefinition>();
+    const websockets = new Map<string, APIV1Read.WebSocketChannel>();
+    const webhooks = new Map<string, APIV1Read.WebhookDefinition>();
+
+    rootPackage.endpoints.forEach((endpoint) => endpoints.set(endpoint.id, endpoint));
+    rootPackage.websockets.forEach((websocket) => websockets.set(websocket.id, websocket));
+    rootPackage.webhooks.forEach((webhook) => webhooks.set(webhook.id, webhook));
+
+    Object.entries(subpackages).forEach(([subpackageId, subpackage]) => {
+        subpackage.endpoints.forEach((endpoint) => endpoints.set(`${subpackageId}.${endpoint.id}`, endpoint));
+        subpackage.websockets.forEach((websocket) => websockets.set(`${subpackageId}.${websocket.id}`, websocket));
+        subpackage.webhooks.forEach((webhook) => webhooks.set(`${subpackageId}.${webhook.id}`, webhook));
+    });
+
+    return {
+        endpoints,
+        websockets,
+        webhooks,
+    };
+}
+
+function toFlattenedEndpoint(
+    endpoint: APIV1Read.EndpointDefinition,
+    metadata: FlattenedNodeMetadata,
+): FlattenedEndpointDefinition {
+    return {
+        type: "endpoint",
+        id: endpoint.id,
+        name: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+        description: endpoint.description,
+        availability: endpoint.availability,
+        authed: endpoint.authed,
+        defaultEnvironment: endpoint.environments.find((enironment) => enironment.id === endpoint.defaultEnvironment),
+        environments: endpoint.environments,
+        method: endpoint.method,
+        path: endpoint.path,
+        queryParameters: endpoint.queryParameters,
+        headers: endpoint.headers,
+        request: endpoint.request,
+        response: endpoint.response,
+        errors: endpoint.errorsV2 ?? [],
+        examples: endpoint.examples,
+        snippetTemplates: endpoint.snippetTemplates,
+        stream: undefined,
+        ...metadata,
+    };
+}
+
+function toFlattenedWebSocketChannel(
+    websocket: APIV1Read.WebSocketChannel,
+    metadata: FlattenedNodeMetadata,
+): FlattenedWebSocketChannel {
+    return {
+        type: "websocket",
+        id: websocket.id,
+        name: websocket.name,
+        description: websocket.description,
+        availability: websocket.availability,
+        authed: websocket.auth,
+        defaultEnvironment: websocket.environments.find((enironment) => enironment.id === websocket.defaultEnvironment),
+        environments: websocket.environments,
+        path: websocket.path,
+        headers: websocket.headers,
+        queryParameters: websocket.queryParameters,
+        messages: websocket.messages,
+        examples: websocket.examples,
+        ...metadata,
+    };
+}
+
+function toFlattenedWebhookDefinition(
+    webhook: APIV1Read.WebhookDefinition,
+    metadata: FlattenedNodeMetadata,
+): FlattenedWebhookDefinition {
+    return {
+        type: "webhook",
+        id: webhook.id,
+        name: webhook.name,
+        description: webhook.description,
+        availability: undefined,
+        method: webhook.method,
+        path: webhook.path,
+        headers: webhook.headers,
+        payload: webhook.payload,
+        examples: webhook.examples,
+        ...metadata,
+    };
+}
+
 function flattenPackage(
+    package_: FlattenedApiDefinitionPackage | undefined,
+    visitedEndpoints: ReadonlySet<string>,
+    visitedWebsockets: ReadonlySet<string>,
+    visitedWebhooks: ReadonlySet<string>,
+    visitedSubpackages: ReadonlySet<string>,
+    subpackageId: APIV1Read.SubpackageId | undefined,
     apiDefinitionPackage: APIV1Read.ApiDefinitionPackage,
     subpackagesMap: Record<string, APIV1Read.ApiDefinitionSubpackage>,
     parentSlugs: readonly string[],
-    order: DocsV1Read.ApiNavigationConfigRootV1 | undefined,
     domain: string,
 ): FlattenedApiDefinitionPackage {
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
         currentPackage = subpackagesMap[currentPackage.pointsTo];
+        subpackageId = currentPackage?.pointsTo;
     }
 
     if (currentPackage == null) {
-        return {
-            items: [],
-            slug: parentSlugs,
-            usedTypes: [],
-            summaryPageId: undefined,
-        };
+        throw new Error("Package points to a non-existent subpackage");
     }
 
-    const endpoints: FlattenedEndpointDefinition[] = [];
-    const methodAndPathToEndpoint = new Map<string, FlattenedEndpointDefinition>();
+    let items = [...(package_?.items ?? [])];
 
+    items = items.map((item) => {
+        if (item.type === "subpackage" && item.subpackageId != null && subpackagesMap[item.subpackageId] != null) {
+            const transformedPackage = flattenPackage(
+                item,
+                visitedEndpoints,
+                visitedWebsockets,
+                visitedWebhooks,
+                visitedSubpackages,
+                item.subpackageId,
+                subpackagesMap[item.subpackageId],
+                subpackagesMap,
+                item.slug,
+                domain,
+            );
+            return {
+                type: "subpackage",
+                ...transformedPackage,
+            };
+        }
+        return item;
+    });
+
+    const methodAndPathToEndpoint = new Map<string, FlattenedEndpointDefinition>();
+    items.forEach((item) => {
+        if (item.type === "endpoint") {
+            methodAndPathToEndpoint.set(`${item.method} ${stringifyEndpointPathParts(item.path.parts)}`, item);
+        }
+    });
     currentPackage.endpoints.forEach((endpoint) => {
-        const flattenedEndpoint: FlattenedEndpointDefinition = {
-            type: "endpoint",
-            id: endpoint.id,
+        const endpointLocator = subpackageId != null ? `${subpackageId}.${endpoint.id}` : endpoint.id;
+        if (visitedEndpoints.has(endpointLocator)) {
+            return;
+        }
+        const flattenedEndpoint = toFlattenedEndpoint(endpoint, {
+            icon: undefined,
+            hidden: false,
             slug: [...parentSlugs, endpoint.urlSlug],
-            name: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-            description: endpoint.description,
-            availability: endpoint.availability,
-            authed: endpoint.authed,
-            defaultEnvironment: endpoint.environments.find(
-                (enironment) => enironment.id === endpoint.defaultEnvironment,
-            ),
-            environments: endpoint.environments,
-            method: endpoint.method,
-            path: endpoint.path,
-            queryParameters: endpoint.queryParameters,
-            headers: endpoint.headers,
-            request: endpoint.request,
-            response: endpoint.response,
-            errors: endpoint.errorsV2 ?? [],
-            examples: endpoint.examples,
-            snippetTemplates: endpoint.snippetTemplates,
-            stream: undefined,
-        };
+        });
         const methodAndPath = `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`;
         const existingEndpoint = methodAndPathToEndpoint.get(methodAndPath);
 
@@ -233,189 +527,107 @@ function flattenPackage(
                 flattenedEndpoint.name = nameWithStreamSuffix(existingEndpoint.name);
                 return;
             } else if (isStreamResponse(existingEndpoint.response) && !isStreamResponse(flattenedEndpoint.response)) {
-                const idx = endpoints.indexOf(existingEndpoint);
+                const idx = items.indexOf(existingEndpoint);
                 if (idx !== -1) {
                     flattenedEndpoint.stream = existingEndpoint;
                     existingEndpoint.name = nameWithStreamSuffix(flattenedEndpoint.name);
                     // replace the existing endpoint with the new one
-                    endpoints[idx] = flattenedEndpoint;
+                    items[idx] = flattenedEndpoint;
                     return;
                 }
             }
         }
 
-        endpoints.push(flattenedEndpoint);
+        items.push(flattenedEndpoint);
         methodAndPathToEndpoint.set(methodAndPath, flattenedEndpoint);
     });
 
-    const websockets = currentPackage.websockets.map(
-        (websocket): FlattenedWebSocketChannel => ({
-            type: "websocket",
-            id: websocket.id,
-            slug: [...parentSlugs, websocket.urlSlug],
-            name: websocket.name,
-            description: websocket.description,
-            availability: websocket.availability,
-            authed: websocket.auth,
-            defaultEnvironment: websocket.environments.find(
-                (enironment) => enironment.id === websocket.defaultEnvironment,
-            ),
-            environments: websocket.environments,
-            path: websocket.path,
-            headers: websocket.headers,
-            queryParameters: websocket.queryParameters,
-            messages: websocket.messages,
-            examples: websocket.examples,
-        }),
-    );
+    currentPackage.websockets.forEach((websocket) => {
+        const websocketLocator = subpackageId != null ? `${subpackageId}.${websocket.id}` : websocket.id;
+        if (visitedWebsockets.has(websocketLocator)) {
+            return;
+        }
+        items.push(
+            toFlattenedWebSocketChannel(websocket, {
+                icon: undefined,
+                hidden: false,
+                slug: [...parentSlugs, websocket.urlSlug],
+            }),
+        );
+    });
 
-    const webhooks = currentPackage.webhooks.map(
-        (webhook): FlattenedWebhookDefinition => ({
-            type: "webhook",
-            id: webhook.id,
-            slug: [...parentSlugs, webhook.urlSlug],
-            name: webhook.name,
-            description: webhook.description,
-            availability: undefined,
-            method: webhook.method,
-            path: webhook.path,
-            headers: webhook.headers,
-            payload: webhook.payload,
-            examples: webhook.examples,
-        }),
-    );
+    currentPackage.webhooks.forEach((webhook) => {
+        const webhookLocator = subpackageId != null ? `${subpackageId}.${webhook.id}` : webhook.id;
+        if (visitedWebhooks.has(webhookLocator)) {
+            return;
+        }
+        items.push(
+            toFlattenedWebhookDefinition(webhook, {
+                icon: undefined,
+                hidden: false,
+                slug: [...parentSlugs, webhook.urlSlug],
+            }),
+        );
+    });
 
-    const orderedSubpackageItems = order?.items?.filter(
-        (item): item is DocsV1Read.ApiNavigationConfigItemV1.Subpackage => item.type === "subpackage",
-    );
-
-    let subpackages = currentPackage.subpackages
-        .map((subpackageId): FlattenedSubpackage | undefined => {
-            const subpackage = subpackagesMap[subpackageId];
-            if (subpackage == null) {
-                return;
-            }
-            const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
-            const subpackageOrder = orderedSubpackageItems?.find((item) => item.subpackageId === subpackageId);
-            return {
-                type: "subpackage",
-                subpackageId: subpackage.subpackageId,
-                name: subpackage.displayName ?? titleCase(subpackage.name),
-                description: subpackage.description,
-                ...flattenPackage(subpackage, subpackagesMap, subpackageSlugs, subpackageOrder, domain),
-            };
-        })
-        .filter(isNonNullish);
-
-    subpackages = maybeMergeSubpackages(subpackages, domain);
-
-    const pages =
-        order?.items
-            ?.filter((item): item is DocsV1Read.ApiNavigationConfigItemV1.Page => item.type === "page")
-            .map(
-                (item): FlattenedPageMetadata => ({
-                    type: "page",
-                    id: item.id,
-                    slug: item.fullSlug ?? [...parentSlugs, item.urlSlug],
-                    title: item.title,
-                    icon: item.icon,
-                    hidden: item.hidden ?? false,
-                }),
-            ) ?? [];
-
-    const items: FlattenedApiDefinitionPackageItem[] = [
-        ...endpoints,
-        ...websockets,
-        ...webhooks,
-        ...subpackages,
-        ...pages,
-    ];
-
-    if (order != null && order.items.length > 0) {
-        items.sort((a, b) => {
-            const aIndex = order.items.findIndex((item) => {
-                if (item.type === "subpackage" && a.type === "subpackage") {
-                    return item.subpackageId === a.subpackageId;
-                }
-
-                if (item.type === "page" && a.type === "page") {
-                    return item.id === a.id;
-                }
-
-                if (
-                    item.type !== "subpackage" &&
-                    a.type !== "subpackage" &&
-                    item.type !== "page" &&
-                    a.type !== "page"
-                ) {
-                    return item.value === a.id;
-                }
-                return false;
-            });
-            const bIndex = order.items.findIndex((item) => {
-                if (item.type === "subpackage" && b.type === "subpackage") {
-                    return item.subpackageId === b.subpackageId;
-                }
-
-                if (item.type === "page" && b.type === "page") {
-                    return item.id === b.id;
-                }
-
-                if (
-                    item.type !== "subpackage" &&
-                    b.type !== "subpackage" &&
-                    item.type !== "page" &&
-                    b.type !== "page"
-                ) {
-                    return item.value === b.id;
-                }
-                return false;
-            });
-
-            if (aIndex === -1) {
-                return 1;
-            }
-            if (bIndex === -1) {
-                return -1;
-            }
-            return aIndex - bIndex;
+    currentPackage.subpackages.map((subpackageId) => {
+        const subpackage = subpackagesMap[subpackageId];
+        if (subpackage == null) {
+            return;
+        }
+        const subpackageSlugs = [...parentSlugs, subpackage.urlSlug];
+        const unorderedSubpackage = flattenPackage(
+            undefined,
+            visitedEndpoints,
+            visitedWebsockets,
+            visitedWebhooks,
+            visitedSubpackages,
+            subpackageId,
+            subpackage,
+            subpackagesMap,
+            subpackageSlugs,
+            domain,
+        );
+        items.push({
+            type: "subpackage",
+            ...unorderedSubpackage,
         });
-    }
+    });
 
     return {
-        items,
+        title: "",
+        description: undefined,
+        icon: undefined,
+        hidden: false,
+        subpackageId: undefined,
+        summaryPageId: undefined,
         slug: parentSlugs,
-        usedTypes: currentPackage.types,
-        summaryPageId: order?.summaryPageId,
+        ...package_,
+        items,
     };
 }
 
-function toConfigRoot(
-    root: APIV1Read.ApiNavigationConfigRoot | undefined,
-): DocsV1Read.ApiNavigationConfigRootV1 | undefined {
-    return root;
-}
+// function maybeMergeSubpackages(subpackages: FlattenedSubpackage[], domain: string): FlattenedSubpackage[] {
+//     if (domain.includes("assemblyai")) {
+//         const realtimeIdx = subpackages.findIndex((subpackage) => subpackage.subpackageId === "subpackage_realtime");
+//         const realtime = subpackages[realtimeIdx];
+//         if (realtime != null) {
+//             const subpackageIdx = subpackages.findIndex(
+//                 (subpackage) => subpackage.subpackageId === "subpackage_streaming",
+//             );
+//             if (subpackageIdx !== -1) {
+//                 const subpackage = subpackages[subpackageIdx];
+//                 subpackages.splice(subpackageIdx, 1, {
+//                     ...subpackage,
+//                     items: [...realtime.items, ...subpackage.items],
+//                 });
+//                 subpackages.splice(realtimeIdx, 1);
+//             }
+//         }
+//     }
+//     return subpackages;
+// }
 
-function maybeMergeSubpackages(subpackages: FlattenedSubpackage[], domain: string): FlattenedSubpackage[] {
-    if (domain.includes("assemblyai")) {
-        const realtimeIdx = subpackages.findIndex((subpackage) => subpackage.subpackageId === "subpackage_realtime");
-        const realtime = subpackages[realtimeIdx];
-        if (realtime != null) {
-            const subpackageIdx = subpackages.findIndex(
-                (subpackage) => subpackage.subpackageId === "subpackage_streaming",
-            );
-            if (subpackageIdx !== -1) {
-                const subpackage = subpackages[subpackageIdx];
-                subpackages.splice(subpackageIdx, 1, {
-                    ...subpackage,
-                    items: [...realtime.items, ...subpackage.items],
-                });
-                subpackages.splice(realtimeIdx, 1);
-            }
-        }
-    }
-    return subpackages;
-}
 function isStreamResponse(response: APIV1Read.HttpResponse | undefined) {
     if (response == null) {
         return false;

@@ -25,23 +25,17 @@ types:
 
   EndpointLocator:
     properties:
-      subpackageLocator:
-        type: list<SubpackageId>
-        docs: |
-          The location of the subpackage that contains this endpoint.
-
-          - `[]` means that the endpoint is located at the root level of the API.
-          - `[subpackage1, subpackage2]` means that the endpoint is located at subpackage1.subpackage2 (2 levels deep).
+      subpackageId: optional<SubpackageId>
       endpointId: EndpointId
 
   WebSocketLocator:
     properties:
-      subpackageLocator: list<SubpackageId>
+      subpackageId: optional<SubpackageId>
       webSocketId: WebSocketId
 
   WebhookLocator:
     properties:
-      subpackageLocator: list<SubpackageId>
+      subpackageId: optional<SubpackageId>
       webhookId: WebhookId
 
   ApiNavigationConfigSectionTitle:

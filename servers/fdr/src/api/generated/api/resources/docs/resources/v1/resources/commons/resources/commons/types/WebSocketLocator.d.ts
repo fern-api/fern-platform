@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../..";
 export interface WebSocketLocator {
-    subpackageLocator: FernRegistry.docs.v1.commons.SubpackageId[];
+    subpackageId?: FernRegistry.docs.v1.commons.SubpackageId;
     webSocketId: FernRegistry.docs.v1.commons.WebSocketId;
 }
