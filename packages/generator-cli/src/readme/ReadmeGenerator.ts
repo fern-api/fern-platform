@@ -313,7 +313,7 @@ export class ReadmeGenerator {
         writer.writeLine("```sh");
         writer.write(`go get github.com/${go.owner}/${go.repo}`);
         const majorVersion = getMajorVersion(go.version);
-        if (!majorVersion.startsWith("0") || !majorVersion.startsWith("1")) {
+        if (!majorVersion.startsWith("0") && !majorVersion.startsWith("1")) {
             // For Go, we need to append the major version to the module path for any release greater than v1.X.X.
             writer.write(`/v${majorVersion}`);
         }
