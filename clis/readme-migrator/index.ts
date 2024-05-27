@@ -6,7 +6,12 @@ import * as readline from 'readline';
 const urlPattern = /<[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)>/g;
 const imagePattern = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/=]*)/g;
 
-function downloadImage(line: string): string {
+function downloadImage(line: string, levelIn: number): string {
+    let pathExtend = ''
+    for (let i = 0; i < levelIn; i++) {
+        pathExtend += '../'
+    }
+ 
     if (!fs.existsSync('images')) {
         fs.mkdirSync('images');
     }
@@ -19,12 +24,12 @@ function downloadImage(line: string): string {
                 res.pipe(file);
             });
         }
-        return line.replace('https://files.readme.io', 'images');
+        return line.replace('https://files.readme.io', `${pathExtend}../assets/images`);
     }
     return line;
 }
 
-function convertToMarkdown(content: string[]): string {
+function convertToMarkdown(content: string[], levelIn: number): string {
     let markdown = '';
     let collectingImage = false;
     let collectingCode = false;
@@ -54,7 +59,7 @@ function convertToMarkdown(content: string[]): string {
             if (matches) {
                 newline = `src='${matches[0]}' `;
                 if (newline.includes('files.readme.io')) {
-                    newline = downloadImage(newline);
+                    newline = downloadImage(newline, levelIn);
                 }
                 markdown += newline;
             } else if (line.includes('caption')) {
@@ -66,7 +71,7 @@ function convertToMarkdown(content: string[]): string {
         }
 
         if (line.includes('files.readme.io')) {
-            newline = downloadImage(line);
+            newline = downloadImage(line, levelIn);
         }
 
         if (line.match(/```(\S+)/)) {
@@ -186,7 +191,7 @@ async function promptUser(folderName: string): Promise<boolean> {
     });
 }
 
-async function copyAndConvertToMdx(srcFolder: string, dstFolder: string): Promise<void> {
+async function copyAndConvertToMdx(srcFolder: string, dstFolder: string, levelIn: number): Promise<void> {
     try {
         if (!fs.existsSync(dstFolder)) {
             fs.mkdirSync(dstFolder);
@@ -205,13 +210,13 @@ async function copyAndConvertToMdx(srcFolder: string, dstFolder: string): Promis
                     if (err instanceof Error) message = err.message;
                     console.error(`An error occurred while reading the file: ${message}`);
                 }
-                const markdownContent = convertToMarkdown(content);
+                const markdownContent = convertToMarkdown(content, levelIn);
                 saveMarkdownFile(markdownContent, dstPath);
                 console.log(`Copied '${srcPath}' to '${dstPath}'`);
             } else if (fs.lstatSync(srcPath).isDirectory()) {
                 if (await promptUser(item)) {
                     const nestedDstFolder = path.join(dstFolder, item);
-                    await copyAndConvertToMdx(srcPath, nestedDstFolder);
+                    await copyAndConvertToMdx(srcPath, nestedDstFolder, levelIn + 1);
                 }
             }
         }
@@ -245,7 +250,7 @@ function askQuestion(query: string): Promise<string> {
             const itemPath = path.join(folderPath, item);
             if (fs.lstatSync(itemPath).isDirectory()) {
                 if (await promptUser(item)) {
-                    await copyAndConvertToMdx(itemPath, 'pages');
+                    await copyAndConvertToMdx(itemPath, 'pages', 0);
                 }
             }
         }

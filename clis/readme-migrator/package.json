@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "ts-node index.ts"
+    "migrate": "ts-node index.ts",
+    "clear": "rm -rf ./pages && rm -rf ./images"
   },
   "repository": {
     "type": "git",
