@@ -1,3 +1,4 @@
+import { snakeCase } from "lodash-es";
 import { Block } from "./Block";
 
 export interface ParseResult {
@@ -36,5 +37,15 @@ export class ReadmeParser {
 }
 
 function sectionNameToID(sectionName: string): string {
-    return sectionName.toLowerCase().split(" ").join("");
+    return snakeCase(
+        sectionName
+            .split(" ")
+            .map((word, index) => {
+                if (index === 0) {
+                    return word;
+                }
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            })
+            .join(""),
+    ).toUpperCase();
 }
