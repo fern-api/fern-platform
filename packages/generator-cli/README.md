@@ -53,18 +53,6 @@ response, err := client.Chat(
 )
 ```
 
-```go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
-
-response, err := client.Generate(
-	ctx,
-	&fern.GenerateRequest{
-		Prompt: "Please explain to me how LLMs work",
-	},
-)
-```
-
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes.
