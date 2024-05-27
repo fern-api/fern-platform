@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import fs from "fs";
 import { mkdir, readFile } from "fs/promises";
@@ -69,52 +68,6 @@ void yargs(hideBin(process.argv))
             process.exit(0);
         },
     )
-    // .command(
-    //     "readme merge",
-    //     "Merges two README.md files together, preferring the updated sections over the original",
-    //     (argv) =>
-    //         argv
-    //             .option("original", {
-    //                 string: true,
-    //                 requred: true,
-    //             })
-    //             .option("updated", {
-    //                 string: true,
-    //                 requred: true,
-    //             })
-    //             .option("output", {
-    //                 string: true,
-    //                 requred: false,
-    //             }),
-    //     async (argv) => {
-    //         if (argv.original == null || argv.updated == null) {
-    //             process.stderr.write(
-    //                 "Missing required arguments; please specify the --original, and --updated flags\n",
-    //             );
-    //             process.exit(1);
-    //         }
-    //         const parser = new ReadmeParser();
-    //         const originalReadme = parser.parse({
-    //             content: await readFile(argv.original, "utf8"),
-    //         });
-    //         const updatedReadme = parser.parse({
-    //             content: await readFile(argv.updated, "utf8"),
-    //         });
-    //         const merger = new BlockMerger({
-    //             original: originalReadme.blocks,
-    //             updated: updatedReadme.blocks,
-    //         });
-    //         const blocks = merger.merge();
-
-    //         const writer = new StreamWriter(await createWriteStream(argv.output));
-    //         writer.writeLine(updatedReadme.header);
-    //         for (const block of blocks) {
-    //             block.write(writer);
-    //         }
-
-    //         process.exit(0);
-    //     },
-    // )
     .demandCommand()
     .showHelpOnFail(true)
     .parse();
