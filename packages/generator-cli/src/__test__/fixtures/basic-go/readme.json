@@ -1,0 +1,11 @@
+{
+  "language": "go",
+  "organization": "cohere",
+  "publishInfo": {
+    "type": "go",
+    "owner": "cohere-ai",
+    "repo": "cohere-go"
+  },
+  "bannerLink": "https://raw.githubusercontent.com/cohere-ai/cohere-typescript/5188b11a6e91727fdd4d46f4a690419ad204224d/banner.png",
+  "docsLink": "https://docs.cohere.com"
+}

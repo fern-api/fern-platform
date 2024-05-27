@@ -1,0 +1,1817 @@
+{
+  "types": {},
+  "endpoints": [
+    {
+      "id": {
+        "path": "/chat",
+        "method": "POST",
+        "identifier_override": "endpoint_.chat"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Chat(\n\tctx,\n\t\u0026fern.ChatRequest{\n\t\tMessage: \"Can you give me a global market overview of solar panels?\",\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/chat",
+        "method": "POST",
+        "identifier_override": "endpoint_.chat_stream"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.ChatStream(\n\tctx,\n\t\u0026fern.ChatStreamRequest{\n\t\tMessage: \"string\",\n\t\tModel:   \"string\",\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/check-api-key",
+        "method": "POST",
+        "identifier_override": "endpoint_.checkAPIKey"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.CheckApiKey(\n\tctx,\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/classify",
+        "method": "POST",
+        "identifier_override": "endpoint_.classify"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Classify(\n\tctx,\n\t\u0026fern.ClassifyRequest{\n\t\tInputs: []string{\n\t\t\t\"Confirm your email address\",\n\t\t\t\"hey i need u to send some $\",\n\t\t},\n\t\tExamples: []*fern.ClassifyExample{\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Dermatologists don't like her!\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Hello, open to this?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"I need help please wire me $1000 right now\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Nice to know you ;)\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Please help me?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Your parcel will be delivered today\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Review changes to our Terms and Conditions\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Weekly sync notes\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Re: Follow up from today’s meeting\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Pre-read for tomorrow\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/cluster-jobs",
+        "method": "GET",
+        "identifier_override": "endpoint_.list-cluster-jobs"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.ListClusterJobs(\n\tctx,\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/cluster-jobs",
+        "method": "POST",
+        "identifier_override": "endpoint_.create-cluster-job"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.CreateClusterJob(\n\tctx,\n\t\u0026fern.CreateClusterJobRequest{\n\t\tEmbeddingsUrl: \"embeddings_url\",\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/cluster-jobs/{job-id}",
+        "method": "GET",
+        "identifier_override": "endpoint_.get-cluster-job"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.GetClusterJob(\n\tctx,\n\t\"job-id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/cluster-jobs/{job-id}",
+        "method": "PATCH",
+        "identifier_override": "endpoint_.update-cluster-job"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.UpdateClusterJob(\n\tctx,\n\t\"job-id\",\n\t\u0026fern.UpdateClusterJobRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connector_logs",
+        "method": "GET",
+        "identifier_override": "endpoint_connectors.get-logs"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.GetLogs(\n\tctx,\n\t\u0026fern.ConnectorsGetLogsRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connectors",
+        "method": "GET",
+        "identifier_override": "endpoint_connectors.list"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.List(\n\tctx,\n\t\u0026fern.ConnectorsListRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connectors",
+        "method": "POST",
+        "identifier_override": "endpoint_connectors.create"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Create(\n\tctx,\n\t\u0026fern.CreateConnectorRequest{\n\t\tName: \"name\",\n\t\tUrl:  \"url\",\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connectors/{id}",
+        "method": "DELETE",
+        "identifier_override": "endpoint_connectors.delete"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Delete(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connectors/{id}",
+        "method": "GET",
+        "identifier_override": "endpoint_connectors.get"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Get(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connectors/{id}",
+        "method": "PATCH",
+        "identifier_override": "endpoint_connectors.update"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Update(\n\tctx,\n\t\"id\",\n\t\u0026fern.UpdateConnectorRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/connectors/{id}/oauth/authorize",
+        "method": "POST",
+        "identifier_override": "endpoint_connectors.oAuthAuthorize"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.OAuthAuthorize(\n\tctx,\n\t\"id\",\n\t\u0026fern.ConnectorsOAuthAuthorizeRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/datasets",
+        "method": "GET",
+        "identifier_override": "endpoint_datasets.list"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.List(\n\tctx,\n\t\u0026fern.DatasetsListRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/datasets",
+        "method": "POST",
+        "identifier_override": "endpoint_datasets.create"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.Create(\n\tctx,\n\t\u0026fern.DatasetsCreateRequest{\n\t\tName: \"name\",\n\t\tType: fern.DatasetTypeEmbedInput,\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/datasets/usage",
+        "method": "GET",
+        "identifier_override": "endpoint_datasets.getUsage"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.GetUsage(\n\tctx,\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/datasets/{id}",
+        "method": "DELETE",
+        "identifier_override": "endpoint_datasets.delete"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.Delete(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/datasets/{id}",
+        "method": "GET",
+        "identifier_override": "endpoint_datasets.get"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.Get(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/detokenize",
+        "method": "POST",
+        "identifier_override": "endpoint_.detokenize"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Detokenize(\n\tctx,\n\t\u0026fern.DetokenizeRequest{\n\t\tTokens: []int{\n\t\t\t10104,\n\t\t\t12221,\n\t\t\t1315,\n\t\t\t34,\n\t\t\t1420,\n\t\t\t69,\n\t\t},\n\t\tModel: \"command\",\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/embed-jobs",
+        "method": "GET",
+        "identifier_override": "endpoint_embedJobs.list"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EmbedJobs.List(\n\tctx,\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/embed-jobs",
+        "method": "POST",
+        "identifier_override": "endpoint_embedJobs.create"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EmbedJobs.Create(\n\tctx,\n\t\u0026fern.CreateEmbedJobRequest{\n\t\tModel:     \"model\",\n\t\tDatasetId: \"dataset_id\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/embed-jobs/{id}",
+        "method": "GET",
+        "identifier_override": "endpoint_embedJobs.get"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EmbedJobs.Get(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/embed-jobs/{id}/cancel",
+        "method": "POST",
+        "identifier_override": "endpoint_embedJobs.cancel"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EmbedJobs.Cancel(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/embed",
+        "method": "POST",
+        "identifier_override": "endpoint_.embed"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Embed(\n\tctx,\n\t\u0026fern.EmbedRequest{\n\t\tTexts: []string{\n\t\t\t\"string\",\n\t\t},\n\t\tModel:     \"string\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t\tEmbeddingTypes: []fern.EmbeddingType{\n\t\t\tfern.EmbeddingTypeFloat,\n\t\t},\n\t\tTruncate: fern.EmbedRequestTruncateNone,\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models",
+        "method": "GET",
+        "identifier_override": "endpoint_finetuning.ListFinetunedModels"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.ListFinetunedModels(\n\tctx,\n\t\u0026fern.FinetuningListFinetunedModelsRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models",
+        "method": "POST",
+        "identifier_override": "endpoint_finetuning.CreateFinetunedModel"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\tfinetuning \"github.com/custom/fern/finetuning\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.CreateFinetunedModel(\n\tctx,\n\t\u0026finetuning.FinetunedModel{\n\t\tName: \"api-test\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeGenerative,\n\t\t\t},\n\t\t\tDatasetId: \"my-dataset-id\",\n\t\t},\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models/{finetuned_model_id}/events",
+        "method": "GET",
+        "identifier_override": "endpoint_finetuning.ListEvents"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.ListEvents(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListEventsRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
+        "method": "GET",
+        "identifier_override": "endpoint_finetuning.ListTrainingStepMetrics"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.ListTrainingStepMetrics(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListTrainingStepMetricsRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models/{id}",
+        "method": "DELETE",
+        "identifier_override": "endpoint_finetuning.DeleteFinetunedModel"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.DeleteFinetunedModel(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models/{id}",
+        "method": "GET",
+        "identifier_override": "endpoint_finetuning.GetFinetunedModel"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.GetFinetunedModel(\n\tctx,\n\t\"id\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/finetuning/finetuned-models/{id}",
+        "method": "PATCH",
+        "identifier_override": "endpoint_finetuning.UpdateFinetunedModel"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\tfinetuning \"github.com/custom/fern/finetuning\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.UpdateFinetunedModel(\n\tctx,\n\t\"id\",\n\t\u0026fern.FinetuningUpdateFinetunedModelRequest{\n\t\tName: \"name\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeUnspecified,\n\t\t\t},\n\t\t\tDatasetId: \"dataset_id\",\n\t\t},\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/generate",
+        "method": "POST",
+        "identifier_override": "endpoint_.generate"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Generate(\n\tctx,\n\t\u0026fern.GenerateRequest{\n\t\tPrompt: \"Please explain to me how LLMs work\",\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/generate",
+        "method": "POST",
+        "identifier_override": "endpoint_.generate_stream"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.GenerateStream(\n\tctx,\n\t\u0026fern.GenerateStreamRequest{\n\t\tPrompt:         \"string\",\n\t\tModel:          \"string\",\n\t\tNumGenerations: 1,\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/loglikelihood",
+        "method": "POST",
+        "identifier_override": "endpoint_.loglikelihood"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Loglikelihood(\n\tctx,\n\t\u0026fern.LoglikelihoodRequest{\n\t\tPrompt: fern.String(\n\t\t\t\"Please explain to me how LLMs work\",\n\t\t),\n\t\tCompletion: fern.String(\n\t\t\t\"They work by using a large language model to generate text.\",\n\t\t),\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/models",
+        "method": "GET",
+        "identifier_override": "endpoint_models.list"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Models.List(\n\tctx,\n\t\u0026fern.ModelsListRequest{},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/models/{model}",
+        "method": "GET",
+        "identifier_override": "endpoint_models.get"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Models.Get(\n\tctx,\n\t\"model\",\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/rerank",
+        "method": "POST",
+        "identifier_override": "endpoint_.rerank"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Rerank(\n\tctx,\n\t\u0026fern.RerankRequest{\n\t\tModel: fern.String(\n\t\t\t\"rerank-english-v3.0\",\n\t\t),\n\t\tQuery: \"What is the capital of the United States?\",\n\t\tDocuments: []*fern.RerankRequestDocumentsItem{\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Carson City is the capital city of the American state of Nevada.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/summarize",
+        "method": "POST",
+        "identifier_override": "endpoint_.summarize"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Summarize(\n\tctx,\n\t\u0026fern.SummarizeRequest{\n\t\tText: `Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.`,\n\t},\n)\n"
+      }
+    },
+    {
+      "id": {
+        "path": "/tokenize",
+        "method": "POST",
+        "identifier_override": "endpoint_.tokenize"
+      },
+      "snippet": {
+        "type": "go",
+        "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Tokenize(\n\tctx,\n\t\u0026fern.TokenizeRequest{\n\t\tText:  \"tokenize me! :D\",\n\t\tModel: \"command\",\n\t},\n)\n"
+      }
+    }
+  ],
+  "features": {
+    "errors": [
+      {
+        "id": {
+          "path": "/chat",
+          "method": "POST",
+          "identifier_override": "endpoint_.chat"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Chat(\n\tctx,\n\t\u0026fern.ChatRequest{\n\t\tMessage: \"Can you give me a global market overview of solar panels?\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/chat",
+          "method": "POST",
+          "identifier_override": "endpoint_.chat_stream"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.ChatStream(\n\tctx,\n\t\u0026fern.ChatStreamRequest{\n\t\tMessage: \"string\",\n\t\tModel:   \"string\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/check-api-key",
+          "method": "POST",
+          "identifier_override": "endpoint_.checkAPIKey"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.CheckApiKey(\n\tctx,\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/classify",
+          "method": "POST",
+          "identifier_override": "endpoint_.classify"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Classify(\n\tctx,\n\t\u0026fern.ClassifyRequest{\n\t\tInputs: []string{\n\t\t\t\"Confirm your email address\",\n\t\t\t\"hey i need u to send some $\",\n\t\t},\n\t\tExamples: []*fern.ClassifyExample{\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Dermatologists don't like her!\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Hello, open to this?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"I need help please wire me $1000 right now\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Nice to know you ;)\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Please help me?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Your parcel will be delivered today\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Review changes to our Terms and Conditions\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Weekly sync notes\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Re: Follow up from today’s meeting\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Pre-read for tomorrow\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs",
+          "method": "GET",
+          "identifier_override": "endpoint_.list-cluster-jobs"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.ListClusterJobs(\n\tctx,\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs",
+          "method": "POST",
+          "identifier_override": "endpoint_.create-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.CreateClusterJob(\n\tctx,\n\t\u0026fern.CreateClusterJobRequest{\n\t\tEmbeddingsUrl: \"embeddings_url\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs/{job-id}",
+          "method": "GET",
+          "identifier_override": "endpoint_.get-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.GetClusterJob(\n\tctx,\n\t\"job-id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs/{job-id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_.update-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.UpdateClusterJob(\n\tctx,\n\t\"job-id\",\n\t\u0026fern.UpdateClusterJobRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connector_logs",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.get-logs"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.GetLogs(\n\tctx,\n\t\u0026fern.ConnectorsGetLogsRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.List(\n\tctx,\n\t\u0026fern.ConnectorsListRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors",
+          "method": "POST",
+          "identifier_override": "endpoint_connectors.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.Create(\n\tctx,\n\t\u0026fern.CreateConnectorRequest{\n\t\tName: \"name\",\n\t\tUrl:  \"url\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_connectors.delete"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.Delete(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.Get(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_connectors.update"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.Update(\n\tctx,\n\t\"id\",\n\t\u0026fern.UpdateConnectorRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}/oauth/authorize",
+          "method": "POST",
+          "identifier_override": "endpoint_connectors.oAuthAuthorize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Connectors.OAuthAuthorize(\n\tctx,\n\t\"id\",\n\t\u0026fern.ConnectorsOAuthAuthorizeRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Datasets.List(\n\tctx,\n\t\u0026fern.DatasetsListRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets",
+          "method": "POST",
+          "identifier_override": "endpoint_datasets.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Datasets.Create(\n\tctx,\n\t\u0026fern.DatasetsCreateRequest{\n\t\tName: \"name\",\n\t\tType: fern.DatasetTypeEmbedInput,\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/usage",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.getUsage"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Datasets.GetUsage(\n\tctx,\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_datasets.delete"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Datasets.Delete(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Datasets.Get(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/detokenize",
+          "method": "POST",
+          "identifier_override": "endpoint_.detokenize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Detokenize(\n\tctx,\n\t\u0026fern.DetokenizeRequest{\n\t\tTokens: []int{\n\t\t\t10104,\n\t\t\t12221,\n\t\t\t1315,\n\t\t\t34,\n\t\t\t1420,\n\t\t\t69,\n\t\t},\n\t\tModel: \"command\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs",
+          "method": "GET",
+          "identifier_override": "endpoint_embedJobs.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.EmbedJobs.List(\n\tctx,\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs",
+          "method": "POST",
+          "identifier_override": "endpoint_embedJobs.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.EmbedJobs.Create(\n\tctx,\n\t\u0026fern.CreateEmbedJobRequest{\n\t\tModel:     \"model\",\n\t\tDatasetId: \"dataset_id\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_embedJobs.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.EmbedJobs.Get(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs/{id}/cancel",
+          "method": "POST",
+          "identifier_override": "endpoint_embedJobs.cancel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "err := client.EmbedJobs.Cancel(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed",
+          "method": "POST",
+          "identifier_override": "endpoint_.embed"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Embed(\n\tctx,\n\t\u0026fern.EmbedRequest{\n\t\tTexts: []string{\n\t\t\t\"string\",\n\t\t},\n\t\tModel:     \"string\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t\tEmbeddingTypes: []fern.EmbeddingType{\n\t\t\tfern.EmbeddingTypeFloat,\n\t\t},\n\t\tTruncate: fern.EmbedRequestTruncateNone,\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListFinetunedModels"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.ListFinetunedModels(\n\tctx,\n\t\u0026fern.FinetuningListFinetunedModelsRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models",
+          "method": "POST",
+          "identifier_override": "endpoint_finetuning.CreateFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.CreateFinetunedModel(\n\tctx,\n\t\u0026finetuning.FinetunedModel{\n\t\tName: \"api-test\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeGenerative,\n\t\t\t},\n\t\t\tDatasetId: \"my-dataset-id\",\n\t\t},\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{finetuned_model_id}/events",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListEvents"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.ListEvents(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListEventsRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListTrainingStepMetrics"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.ListTrainingStepMetrics(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListTrainingStepMetricsRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_finetuning.DeleteFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.DeleteFinetunedModel(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.GetFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.GetFinetunedModel(\n\tctx,\n\t\"id\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_finetuning.UpdateFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Finetuning.UpdateFinetunedModel(\n\tctx,\n\t\"id\",\n\t\u0026fern.FinetuningUpdateFinetunedModelRequest{\n\t\tName: \"name\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeUnspecified,\n\t\t\t},\n\t\t\tDatasetId: \"dataset_id\",\n\t\t},\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/generate",
+          "method": "POST",
+          "identifier_override": "endpoint_.generate"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Generate(\n\tctx,\n\t\u0026fern.GenerateRequest{\n\t\tPrompt: \"Please explain to me how LLMs work\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/generate",
+          "method": "POST",
+          "identifier_override": "endpoint_.generate_stream"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.GenerateStream(\n\tctx,\n\t\u0026fern.GenerateStreamRequest{\n\t\tPrompt:         \"string\",\n\t\tModel:          \"string\",\n\t\tNumGenerations: 1,\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/loglikelihood",
+          "method": "POST",
+          "identifier_override": "endpoint_.loglikelihood"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Loglikelihood(\n\tctx,\n\t\u0026fern.LoglikelihoodRequest{\n\t\tPrompt: fern.String(\n\t\t\t\"Please explain to me how LLMs work\",\n\t\t),\n\t\tCompletion: fern.String(\n\t\t\t\"They work by using a large language model to generate text.\",\n\t\t),\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/models",
+          "method": "GET",
+          "identifier_override": "endpoint_models.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Models.List(\n\tctx,\n\t\u0026fern.ModelsListRequest{},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/models/{model}",
+          "method": "GET",
+          "identifier_override": "endpoint_models.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Models.Get(\n\tctx,\n\t\"model\",\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/rerank",
+          "method": "POST",
+          "identifier_override": "endpoint_.rerank"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Rerank(\n\tctx,\n\t\u0026fern.RerankRequest{\n\t\tModel: fern.String(\n\t\t\t\"rerank-english-v3.0\",\n\t\t),\n\t\tQuery: \"What is the capital of the United States?\",\n\t\tDocuments: []*fern.RerankRequestDocumentsItem{\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Carson City is the capital city of the American state of Nevada.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.\",\n\t\t\t),\n\t\t},\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/summarize",
+          "method": "POST",
+          "identifier_override": "endpoint_.summarize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Summarize(\n\tctx,\n\t\u0026fern.SummarizeRequest{\n\t\tText: `Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.`,\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/tokenize",
+          "method": "POST",
+          "identifier_override": "endpoint_.tokenize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "response, err := client.Tokenize(\n\tctx,\n\t\u0026fern.TokenizeRequest{\n\t\tText:  \"tokenize me! :D\",\n\t\tModel: \"command\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+        }
+      }
+    ],
+    "timeouts": [
+      {
+        "id": {
+          "path": "/chat",
+          "method": "POST",
+          "identifier_override": "endpoint_.chat"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Chat(\n\tctx,\n\t\u0026fern.ChatRequest{\n\t\tMessage: \"Can you give me a global market overview of solar panels?\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/chat",
+          "method": "POST",
+          "identifier_override": "endpoint_.chat_stream"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.ChatStream(\n\tctx,\n\t\u0026fern.ChatStreamRequest{\n\t\tMessage: \"string\",\n\t\tModel:   \"string\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/check-api-key",
+          "method": "POST",
+          "identifier_override": "endpoint_.checkAPIKey"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.CheckApiKey(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/classify",
+          "method": "POST",
+          "identifier_override": "endpoint_.classify"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Classify(\n\tctx,\n\t\u0026fern.ClassifyRequest{\n\t\tInputs: []string{\n\t\t\t\"Confirm your email address\",\n\t\t\t\"hey i need u to send some $\",\n\t\t},\n\t\tExamples: []*fern.ClassifyExample{\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Dermatologists don't like her!\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Hello, open to this?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"I need help please wire me $1000 right now\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Nice to know you ;)\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Please help me?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Your parcel will be delivered today\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Review changes to our Terms and Conditions\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Weekly sync notes\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Re: Follow up from today’s meeting\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Pre-read for tomorrow\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs",
+          "method": "GET",
+          "identifier_override": "endpoint_.list-cluster-jobs"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.ListClusterJobs(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs",
+          "method": "POST",
+          "identifier_override": "endpoint_.create-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.CreateClusterJob(\n\tctx,\n\t\u0026fern.CreateClusterJobRequest{\n\t\tEmbeddingsUrl: \"embeddings_url\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs/{job-id}",
+          "method": "GET",
+          "identifier_override": "endpoint_.get-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.GetClusterJob(\n\tctx,\n\t\"job-id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs/{job-id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_.update-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.UpdateClusterJob(\n\tctx,\n\t\"job-id\",\n\t\u0026fern.UpdateClusterJobRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connector_logs",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.get-logs"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.GetLogs(\n\tctx,\n\t\u0026fern.ConnectorsGetLogsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.List(\n\tctx,\n\t\u0026fern.ConnectorsListRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors",
+          "method": "POST",
+          "identifier_override": "endpoint_connectors.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.Create(\n\tctx,\n\t\u0026fern.CreateConnectorRequest{\n\t\tName: \"name\",\n\t\tUrl:  \"url\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_connectors.delete"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.Delete(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.Get(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_connectors.update"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.Update(\n\tctx,\n\t\"id\",\n\t\u0026fern.UpdateConnectorRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}/oauth/authorize",
+          "method": "POST",
+          "identifier_override": "endpoint_connectors.oAuthAuthorize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Connectors.OAuthAuthorize(\n\tctx,\n\t\"id\",\n\t\u0026fern.ConnectorsOAuthAuthorizeRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Datasets.List(\n\tctx,\n\t\u0026fern.DatasetsListRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets",
+          "method": "POST",
+          "identifier_override": "endpoint_datasets.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Datasets.Create(\n\tctx,\n\t\u0026fern.DatasetsCreateRequest{\n\t\tName: \"name\",\n\t\tType: fern.DatasetTypeEmbedInput,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/usage",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.getUsage"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Datasets.GetUsage(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_datasets.delete"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Datasets.Delete(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Datasets.Get(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/detokenize",
+          "method": "POST",
+          "identifier_override": "endpoint_.detokenize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Detokenize(\n\tctx,\n\t\u0026fern.DetokenizeRequest{\n\t\tTokens: []int{\n\t\t\t10104,\n\t\t\t12221,\n\t\t\t1315,\n\t\t\t34,\n\t\t\t1420,\n\t\t\t69,\n\t\t},\n\t\tModel: \"command\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs",
+          "method": "GET",
+          "identifier_override": "endpoint_embedJobs.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.EmbedJobs.List(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs",
+          "method": "POST",
+          "identifier_override": "endpoint_embedJobs.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.EmbedJobs.Create(\n\tctx,\n\t\u0026fern.CreateEmbedJobRequest{\n\t\tModel:     \"model\",\n\t\tDatasetId: \"dataset_id\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_embedJobs.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.EmbedJobs.Get(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs/{id}/cancel",
+          "method": "POST",
+          "identifier_override": "endpoint_embedJobs.cancel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.EmbedJobs.Cancel(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed",
+          "method": "POST",
+          "identifier_override": "endpoint_.embed"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Embed(\n\tctx,\n\t\u0026fern.EmbedRequest{\n\t\tTexts: []string{\n\t\t\t\"string\",\n\t\t},\n\t\tModel:     \"string\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t\tEmbeddingTypes: []fern.EmbeddingType{\n\t\t\tfern.EmbeddingTypeFloat,\n\t\t},\n\t\tTruncate: fern.EmbedRequestTruncateNone,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListFinetunedModels"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.ListFinetunedModels(\n\tctx,\n\t\u0026fern.FinetuningListFinetunedModelsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models",
+          "method": "POST",
+          "identifier_override": "endpoint_finetuning.CreateFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.CreateFinetunedModel(\n\tctx,\n\t\u0026finetuning.FinetunedModel{\n\t\tName: \"api-test\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeGenerative,\n\t\t\t},\n\t\t\tDatasetId: \"my-dataset-id\",\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{finetuned_model_id}/events",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListEvents"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.ListEvents(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListEventsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListTrainingStepMetrics"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.ListTrainingStepMetrics(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListTrainingStepMetricsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_finetuning.DeleteFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.DeleteFinetunedModel(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.GetFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.GetFinetunedModel(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_finetuning.UpdateFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Finetuning.UpdateFinetunedModel(\n\tctx,\n\t\"id\",\n\t\u0026fern.FinetuningUpdateFinetunedModelRequest{\n\t\tName: \"name\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeUnspecified,\n\t\t\t},\n\t\t\tDatasetId: \"dataset_id\",\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/generate",
+          "method": "POST",
+          "identifier_override": "endpoint_.generate"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Generate(\n\tctx,\n\t\u0026fern.GenerateRequest{\n\t\tPrompt: \"Please explain to me how LLMs work\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/generate",
+          "method": "POST",
+          "identifier_override": "endpoint_.generate_stream"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.GenerateStream(\n\tctx,\n\t\u0026fern.GenerateStreamRequest{\n\t\tPrompt:         \"string\",\n\t\tModel:          \"string\",\n\t\tNumGenerations: 1,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/loglikelihood",
+          "method": "POST",
+          "identifier_override": "endpoint_.loglikelihood"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Loglikelihood(\n\tctx,\n\t\u0026fern.LoglikelihoodRequest{\n\t\tPrompt: fern.String(\n\t\t\t\"Please explain to me how LLMs work\",\n\t\t),\n\t\tCompletion: fern.String(\n\t\t\t\"They work by using a large language model to generate text.\",\n\t\t),\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/models",
+          "method": "GET",
+          "identifier_override": "endpoint_models.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Models.List(\n\tctx,\n\t\u0026fern.ModelsListRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/models/{model}",
+          "method": "GET",
+          "identifier_override": "endpoint_models.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Models.Get(\n\tctx,\n\t\"model\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/rerank",
+          "method": "POST",
+          "identifier_override": "endpoint_.rerank"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Rerank(\n\tctx,\n\t\u0026fern.RerankRequest{\n\t\tModel: fern.String(\n\t\t\t\"rerank-english-v3.0\",\n\t\t),\n\t\tQuery: \"What is the capital of the United States?\",\n\t\tDocuments: []*fern.RerankRequestDocumentsItem{\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Carson City is the capital city of the American state of Nevada.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/summarize",
+          "method": "POST",
+          "identifier_override": "endpoint_.summarize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Summarize(\n\tctx,\n\t\u0026fern.SummarizeRequest{\n\t\tText: `Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.`,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/tokenize",
+          "method": "POST",
+          "identifier_override": "endpoint_.tokenize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Tokenize(\n\tctx,\n\t\u0026fern.TokenizeRequest{\n\t\tText:  \"tokenize me! :D\",\n\t\tModel: \"command\",\n\t},\n)\n"
+        }
+      }
+    ],
+    "usage": [
+      {
+        "id": {
+          "path": "/chat",
+          "method": "POST",
+          "identifier_override": "endpoint_.chat"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Chat(\n\tctx,\n\t\u0026fern.ChatRequest{\n\t\tMessage: \"Can you give me a global market overview of solar panels?\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/chat",
+          "method": "POST",
+          "identifier_override": "endpoint_.chat_stream"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.ChatStream(\n\tctx,\n\t\u0026fern.ChatStreamRequest{\n\t\tMessage: \"string\",\n\t\tModel:   \"string\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/check-api-key",
+          "method": "POST",
+          "identifier_override": "endpoint_.checkAPIKey"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.CheckApiKey(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/classify",
+          "method": "POST",
+          "identifier_override": "endpoint_.classify"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Classify(\n\tctx,\n\t\u0026fern.ClassifyRequest{\n\t\tInputs: []string{\n\t\t\t\"Confirm your email address\",\n\t\t\t\"hey i need u to send some $\",\n\t\t},\n\t\tExamples: []*fern.ClassifyExample{\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Dermatologists don't like her!\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Hello, open to this?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"I need help please wire me $1000 right now\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Nice to know you ;)\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Please help me?\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Your parcel will be delivered today\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Review changes to our Terms and Conditions\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Weekly sync notes\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Re: Follow up from today’s meeting\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.ClassifyExample{\n\t\t\t\tText: fern.String(\n\t\t\t\t\t\"Pre-read for tomorrow\",\n\t\t\t\t),\n\t\t\t\tLabel: fern.String(\n\t\t\t\t\t\"Not spam\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs",
+          "method": "GET",
+          "identifier_override": "endpoint_.list-cluster-jobs"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.ListClusterJobs(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs",
+          "method": "POST",
+          "identifier_override": "endpoint_.create-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.CreateClusterJob(\n\tctx,\n\t\u0026fern.CreateClusterJobRequest{\n\t\tEmbeddingsUrl: \"embeddings_url\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs/{job-id}",
+          "method": "GET",
+          "identifier_override": "endpoint_.get-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.GetClusterJob(\n\tctx,\n\t\"job-id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/cluster-jobs/{job-id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_.update-cluster-job"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.UpdateClusterJob(\n\tctx,\n\t\"job-id\",\n\t\u0026fern.UpdateClusterJobRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connector_logs",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.get-logs"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.GetLogs(\n\tctx,\n\t\u0026fern.ConnectorsGetLogsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.List(\n\tctx,\n\t\u0026fern.ConnectorsListRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors",
+          "method": "POST",
+          "identifier_override": "endpoint_connectors.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Create(\n\tctx,\n\t\u0026fern.CreateConnectorRequest{\n\t\tName: \"name\",\n\t\tUrl:  \"url\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_connectors.delete"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Delete(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_connectors.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Get(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_connectors.update"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.Update(\n\tctx,\n\t\"id\",\n\t\u0026fern.UpdateConnectorRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/connectors/{id}/oauth/authorize",
+          "method": "POST",
+          "identifier_override": "endpoint_connectors.oAuthAuthorize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Connectors.OAuthAuthorize(\n\tctx,\n\t\"id\",\n\t\u0026fern.ConnectorsOAuthAuthorizeRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.List(\n\tctx,\n\t\u0026fern.DatasetsListRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets",
+          "method": "POST",
+          "identifier_override": "endpoint_datasets.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.Create(\n\tctx,\n\t\u0026fern.DatasetsCreateRequest{\n\t\tName: \"name\",\n\t\tType: fern.DatasetTypeEmbedInput,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/usage",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.getUsage"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.GetUsage(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_datasets.delete"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.Delete(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/datasets/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_datasets.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Datasets.Get(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/detokenize",
+          "method": "POST",
+          "identifier_override": "endpoint_.detokenize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Detokenize(\n\tctx,\n\t\u0026fern.DetokenizeRequest{\n\t\tTokens: []int{\n\t\t\t10104,\n\t\t\t12221,\n\t\t\t1315,\n\t\t\t34,\n\t\t\t1420,\n\t\t\t69,\n\t\t},\n\t\tModel: \"command\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs",
+          "method": "GET",
+          "identifier_override": "endpoint_embedJobs.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EmbedJobs.List(\n\tctx,\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs",
+          "method": "POST",
+          "identifier_override": "endpoint_embedJobs.create"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EmbedJobs.Create(\n\tctx,\n\t\u0026fern.CreateEmbedJobRequest{\n\t\tModel:     \"model\",\n\t\tDatasetId: \"dataset_id\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_embedJobs.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EmbedJobs.Get(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed-jobs/{id}/cancel",
+          "method": "POST",
+          "identifier_override": "endpoint_embedJobs.cancel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EmbedJobs.Cancel(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/embed",
+          "method": "POST",
+          "identifier_override": "endpoint_.embed"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Embed(\n\tctx,\n\t\u0026fern.EmbedRequest{\n\t\tTexts: []string{\n\t\t\t\"string\",\n\t\t},\n\t\tModel:     \"string\",\n\t\tInputType: fern.EmbedInputTypeSearchDocument,\n\t\tEmbeddingTypes: []fern.EmbeddingType{\n\t\t\tfern.EmbeddingTypeFloat,\n\t\t},\n\t\tTruncate: fern.EmbedRequestTruncateNone,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListFinetunedModels"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.ListFinetunedModels(\n\tctx,\n\t\u0026fern.FinetuningListFinetunedModelsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models",
+          "method": "POST",
+          "identifier_override": "endpoint_finetuning.CreateFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\tfinetuning \"github.com/custom/fern/finetuning\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.CreateFinetunedModel(\n\tctx,\n\t\u0026finetuning.FinetunedModel{\n\t\tName: \"api-test\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeGenerative,\n\t\t\t},\n\t\t\tDatasetId: \"my-dataset-id\",\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{finetuned_model_id}/events",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListEvents"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.ListEvents(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListEventsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.ListTrainingStepMetrics"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.ListTrainingStepMetrics(\n\tctx,\n\t\"finetuned_model_id\",\n\t\u0026fern.FinetuningListTrainingStepMetricsRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "DELETE",
+          "identifier_override": "endpoint_finetuning.DeleteFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.DeleteFinetunedModel(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "GET",
+          "identifier_override": "endpoint_finetuning.GetFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.GetFinetunedModel(\n\tctx,\n\t\"id\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/finetuning/finetuned-models/{id}",
+          "method": "PATCH",
+          "identifier_override": "endpoint_finetuning.UpdateFinetunedModel"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\tfinetuning \"github.com/custom/fern/finetuning\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Finetuning.UpdateFinetunedModel(\n\tctx,\n\t\"id\",\n\t\u0026fern.FinetuningUpdateFinetunedModelRequest{\n\t\tName: \"name\",\n\t\tSettings: \u0026finetuning.Settings{\n\t\t\tBaseModel: \u0026finetuning.BaseModel{\n\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeUnspecified,\n\t\t\t},\n\t\t\tDatasetId: \"dataset_id\",\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/generate",
+          "method": "POST",
+          "identifier_override": "endpoint_.generate"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Generate(\n\tctx,\n\t\u0026fern.GenerateRequest{\n\t\tPrompt: \"Please explain to me how LLMs work\",\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/generate",
+          "method": "POST",
+          "identifier_override": "endpoint_.generate_stream"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.GenerateStream(\n\tctx,\n\t\u0026fern.GenerateStreamRequest{\n\t\tPrompt:         \"string\",\n\t\tModel:          \"string\",\n\t\tNumGenerations: 1,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/loglikelihood",
+          "method": "POST",
+          "identifier_override": "endpoint_.loglikelihood"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Loglikelihood(\n\tctx,\n\t\u0026fern.LoglikelihoodRequest{\n\t\tPrompt: fern.String(\n\t\t\t\"Please explain to me how LLMs work\",\n\t\t),\n\t\tCompletion: fern.String(\n\t\t\t\"They work by using a large language model to generate text.\",\n\t\t),\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/models",
+          "method": "GET",
+          "identifier_override": "endpoint_models.list"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Models.List(\n\tctx,\n\t\u0026fern.ModelsListRequest{},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/models/{model}",
+          "method": "GET",
+          "identifier_override": "endpoint_models.get"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Models.Get(\n\tctx,\n\t\"model\",\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/rerank",
+          "method": "POST",
+          "identifier_override": "endpoint_.rerank"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Rerank(\n\tctx,\n\t\u0026fern.RerankRequest{\n\t\tModel: fern.String(\n\t\t\t\"rerank-english-v3.0\",\n\t\t),\n\t\tQuery: \"What is the capital of the United States?\",\n\t\tDocuments: []*fern.RerankRequestDocumentsItem{\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Carson City is the capital city of the American state of Nevada.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.\",\n\t\t\t),\n\t\t\tfern.NewRerankRequestDocumentsItemFromString(\n\t\t\t\t\"Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/summarize",
+          "method": "POST",
+          "identifier_override": "endpoint_.summarize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Summarize(\n\tctx,\n\t\u0026fern.SummarizeRequest{\n\t\tText: `Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.`,\n\t},\n)\n"
+        }
+      },
+      {
+        "id": {
+          "path": "/tokenize",
+          "method": "POST",
+          "identifier_override": "endpoint_.tokenize"
+        },
+        "snippet": {
+          "type": "go",
+          "client": "import (\n\tfern \"github.com/custom/fern\"\n\tfernclient \"github.com/custom/fern/client\"\n\toption \"github.com/custom/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Tokenize(\n\tctx,\n\t\u0026fern.TokenizeRequest{\n\t\tText:  \"tokenize me! :D\",\n\t\tModel: \"command\",\n\t},\n)\n"
+        }
+      }
+    ]
+  }
+}
