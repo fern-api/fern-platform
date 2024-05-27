@@ -5,4 +5,5 @@
 export interface GoPublishInfo {
     owner: string;
     repo: string;
+    version: string;
 }

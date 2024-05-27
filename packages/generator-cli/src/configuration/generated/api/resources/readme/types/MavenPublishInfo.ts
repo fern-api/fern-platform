@@ -5,4 +5,5 @@
 export interface MavenPublishInfo {
     artifact: string;
     group: string;
+    version: string;
 }

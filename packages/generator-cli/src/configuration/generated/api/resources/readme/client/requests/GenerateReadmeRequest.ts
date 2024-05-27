@@ -5,8 +5,8 @@
 import * as FernGeneratorCli from "../../../..";
 
 export interface GenerateReadmeRequest {
-    readmeConfig: FernGeneratorCli.ReadmeConfig;
     featuresConfig: FernGeneratorCli.FeaturesConfig;
+    readmeConfig: FernGeneratorCli.ReadmeConfig;
     /**
      * The snippet.json produced by the generator.
      *

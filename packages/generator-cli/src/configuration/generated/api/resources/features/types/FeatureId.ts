@@ -3,6 +3,6 @@
  */
 
 /**
- * A unique identifier for a feature (e.g. pagination).
+ * A unique identifier for a feature (e.g. PAGINATION).
  */
 export type FeatureId = string;
