@@ -10,7 +10,8 @@ export async function loadFeaturesConfig({
     absolutePathToConfig: AbsoluteFilePath;
 }): Promise<FernGeneratorCli.FeaturesConfig> {
     const rawContents = await readFile(absolutePathToConfig, "utf8");
-    if (path.extname("yaml") || path.extname("yml")) {
+    const extension = path.extname(absolutePathToConfig);
+    if (extension === ".yaml" || extension === ".yml") {
         return yaml.load(rawContents) as FernGeneratorCli.FeaturesConfig;
     }
     return JSON.parse(rawContents) as FernGeneratorCli.FeaturesConfig;

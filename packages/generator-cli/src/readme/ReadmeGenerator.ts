@@ -6,7 +6,6 @@ import { StreamWriter, StringWriter, Writer } from "../utils/Writer";
 import { Block } from "./Block";
 import { BlockMerger } from "./BlockMerger";
 import { ReadmeParser } from "./ReadmeParser";
-import { FEATURE_TITLES } from "./constants";
 
 export class ReadmeGenerator {
     private readmeParser: ReadmeParser;
@@ -300,10 +299,6 @@ On the other hand, contributions to the README are always very welcome!
 }
 
 function featureIDToTitle(featureID: string): string {
-    const title = FEATURE_TITLES[featureID];
-    if (title != null) {
-        return title;
-    }
     return pascalCase(featureID);
 }
 
