@@ -1,0 +1,34 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate the client with the following:
+
+  # Note that this is an example of a feature that isn't widely used between each generator
+  # (it's likely only relevant for Go). We can easily use the catch-all block to identify
+  # snippets for this feature.
+  - id: OPTIONALS
+    description: |
+      This library models optional primitives and enum types as pointers. This is primarily meant
+      to distinguish default zero values from explicit values (e.g. `false` for `bool` and `""`
+      for `string`). A collection of helper functions are provided to easily map a primitive or enum
+      to its pointer-equivalent, which are shown below:
+
+  - id: TIMEOUTS
+    description: |
+      Setting a timeout for each individual request is as simple as
+      using the standard `context` library. Setting a one second timeout
+      for an individual API call looks like the following:
+
+  - id: REQUEST_OPTIONS
+    description: |
+      A variety of request options are included to adapt the behavior of the library,
+      which includes configuring authorization tokens, or providing your own instrumented
+      `*http.Client`. Both of these options are shown below:
+    addendum: |
+      As you can see, these request options can either be specified on the client so that
+      they're applied on _every_ request or for an individual request.
+
+  - id: ERRORS
+    description: |
+      Structured error types are returned from API calls that return non-success status codes.
+      For example, you can check if the error was of a particular type with the following:
