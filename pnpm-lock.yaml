@@ -710,11 +710,14 @@ importers:
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.867
-        version: 0.0.867
+        specifier: ^0.0.873
+        version: 0.0.873
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.5
+        version: 4.0.9
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -739,6 +742,9 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      js-yaml:
+        specifier: ^4.0.5
+        version: 4.1.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4532,8 +4538,8 @@ packages:
       - debug
     dev: false
 
-  /@fern-fern/generator-exec-sdk@0.0.867:
-    resolution: {integrity: sha512-9wB8rBfGcAl+xCzFfZqdg3vTAj/ckHe7myAzK82R2kSjchGnD1FitgPa2TQzcxl/uSQ1FFXhkHaWrRkAaVE4nQ==}
+  /@fern-fern/generator-exec-sdk@0.0.873:
+    resolution: {integrity: sha512-uFuE3431+DZCqsRGyY/L+zrt9ddryXm+cDQ4BCBZtjntfJPcYKzwmVbrLsLGArr5SotJAhl0ip2M3NecB7nBhA==}
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0
