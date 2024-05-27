@@ -15,7 +15,7 @@ void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "generator-cli")
     .strict()
     .command(
-        "readme generate",
+        "generate readme",
         "Generate a README.md using the provided configuration files",
         (argv) =>
             argv
