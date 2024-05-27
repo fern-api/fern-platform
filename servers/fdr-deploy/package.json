@@ -26,7 +26,7 @@
     "aws-cdk-lib": "^2.122.0",
     "axios": "^1.6.5",
     "constructs": "^10.3.0",
-    "redis": "^4.6.13",
+    "redis": "^4.6.14",
     "source-map-support": "^0.5.21"
   }
 }
