@@ -48,9 +48,10 @@ export class ReadmeGenerator {
         // if (this.readmeConfig.requirements != null) {
         //     blocks.push(this.generateRequirements({ requirements: this.readmeConfig.requirements }));
         // }
-        // if (this.readmeConfig.installation != null) {
-        //     blocks.push(this.generateInstallation({ installation: this.readmeConfig.installation }));
-        // }
+
+        if (this.readmeConfig.publishInfo != null) {
+            blocks.push(this.generateInstallation({ publishInfo: this.readmeConfig.publishInfo }));
+        }
 
         for (const feature of this.featuresConfig.features) {
             const endpoints = this.getEndpointsForFeature({ feature });
@@ -299,16 +300,22 @@ export class ReadmeGenerator {
         writer.writeLine("<dependency>");
         writer.writeLine(`  <groupId>${maven.group}</groupId>`);
         writer.writeLine(`  <artifactId>${maven.artifact}</artifactId>`);
-        // writer.writeLine(`  <version>${maven.version}</version>`);
+        writer.writeLine(`  <version>${maven.version}</version>`);
         writer.writeLine("</dependency>");
         writer.writeLine("```");
         writer.writeLine();
     }
 
     private writeInstallationForGo({ writer, go }: { writer: Writer; go: FernGeneratorCli.GoPublishInfo }): void {
-        writer.write("[![go shield]");
-        writer.write("(https://img.shields.io/badge/go-docs-blue)]");
-        writer.writeLine(`(https://pkg.go.dev/github.com/${go.owner}/${go.repo})`);
+        writer.writeLine("```sh");
+        writer.writeLine(`go get github.com/${go.owner}/${go.repo}`);
+        const majorVersion = getMajorVersion(go.version);
+        if (!majorVersion.startsWith("v0") || !majorVersion.startsWith("v1")) {
+            // For Go, we need to append the major version to the module path for any release greater than v1.X.X.
+            writer.write(`/${majorVersion}`);
+        }
+        writer.writeLine("```");
+        writer.writeLine();
     }
 
     private writeShield({ writer, publishInfo }: { writer: Writer; publishInfo: FernGeneratorCli.PublishInfo }): void {
@@ -390,6 +397,10 @@ function featureIDToTitle(featureID: string): string {
 
 function pascalCase(s: string): string {
     return upperFirst(camelCase(s));
+}
+
+function getMajorVersion(version: string): string {
+    return version.split(".")[0] ?? "v0";
 }
 
 // TODO: Import this from elsewhere.
