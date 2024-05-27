@@ -41,14 +41,9 @@ export class ReadmeGenerator {
     public async generateReadme({ output }: { output: fs.WriteStream }): Promise<void> {
         const blocks: Block[] = [];
 
-        // TODO: The installation and requirements sections aren't supported yet.
-        //  * We can handle the installation here (similar to badges).
-        //  * We should expose a requirement section in the snippet.json
-        //
-        // if (this.readmeConfig.requirements != null) {
-        //     blocks.push(this.generateRequirements({ requirements: this.readmeConfig.requirements }));
-        // }
-
+        if (this.snippets.requirements != null) {
+            blocks.push(this.generateRequirements({ requirements: this.snippets.requirements }));
+        }
         if (this.readmeConfig.publishInfo != null) {
             blocks.push(this.generateInstallation({ publishInfo: this.readmeConfig.publishInfo }));
         }
@@ -204,11 +199,18 @@ export class ReadmeGenerator {
         );
     }
 
-    private generateRequirements({ requirements }: { requirements: string }): Block {
+    private generateRequirements({ requirements }: { requirements: string[] }): Block {
         const writer = new StringWriter();
         writer.writeLine("## Requirements");
         writer.writeLine();
-        writer.writeLine(requirements);
+        if (requirements.length === 1) {
+            writer.writeLine(`This SDK requires ${requirements[0]}`);
+        } else {
+            writer.writeLine("This SDK requires:");
+            for (const requirement of requirements) {
+                writer.writeLine(`- ${requirement}`);
+            }
+        }
         return new Block({
             id: "REQUIREMENTS",
             content: writer.toString(),
@@ -403,7 +405,6 @@ function getMajorVersion(version: string): string {
     return version.split(".")[0] ?? "v0";
 }
 
-// TODO: Import this from elsewhere.
 function assertNever(x: never): never {
     throw new Error("Unexpected value: " + JSON.stringify(x));
 }
