@@ -54,11 +54,13 @@ types:
     properties:
       owner: string
       repo: string
+      version: string
 
   MavenPublishInfo:
     properties:
       artifact: string
       group: string
+      version: string
 
 service:
   auth: true
