@@ -211,6 +211,7 @@ export class ReadmeGenerator {
                 writer.writeLine(`- ${requirement}`);
             }
         }
+        writer.writeLine();
         return new Block({
             id: "REQUIREMENTS",
             content: writer.toString(),
@@ -310,12 +311,13 @@ export class ReadmeGenerator {
 
     private writeInstallationForGo({ writer, go }: { writer: Writer; go: FernGeneratorCli.GoPublishInfo }): void {
         writer.writeLine("```sh");
-        writer.writeLine(`go get github.com/${go.owner}/${go.repo}`);
+        writer.write(`go get github.com/${go.owner}/${go.repo}`);
         const majorVersion = getMajorVersion(go.version);
         if (!majorVersion.startsWith("v0") || !majorVersion.startsWith("v1")) {
             // For Go, we need to append the major version to the module path for any release greater than v1.X.X.
             writer.write(`/${majorVersion}`);
         }
+        writer.writeLine();
         writer.writeLine("```");
         writer.writeLine();
     }
