@@ -204,7 +204,7 @@ export class ReadmeGenerator {
         writer.writeLine("## Requirements");
         writer.writeLine();
         if (requirements.length === 1) {
-            writer.writeLine(`This SDK requires ${requirements[0]}`);
+            writer.writeLine(`This SDK requires ${requirements[0]}.`);
         } else {
             writer.writeLine("This SDK requires:");
             for (const requirement of requirements) {
@@ -313,9 +313,9 @@ export class ReadmeGenerator {
         writer.writeLine("```sh");
         writer.write(`go get github.com/${go.owner}/${go.repo}`);
         const majorVersion = getMajorVersion(go.version);
-        if (!majorVersion.startsWith("v0") || !majorVersion.startsWith("v1")) {
+        if (!majorVersion.startsWith("0") || !majorVersion.startsWith("1")) {
             // For Go, we need to append the major version to the module path for any release greater than v1.X.X.
-            writer.write(`/${majorVersion}`);
+            writer.write(`/v${majorVersion}`);
         }
         writer.writeLine();
         writer.writeLine("```");
@@ -404,7 +404,7 @@ function pascalCase(s: string): string {
 }
 
 function getMajorVersion(version: string): string {
-    return version.split(".")[0] ?? "v0";
+    return version.split(".")[0] ?? "0";
 }
 
 function assertNever(x: never): never {
