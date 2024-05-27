@@ -90,6 +90,7 @@ service:
               # to remodel the FDR API to do so.
               docs: |
                 The snippet.json produced by the generator.
+              # TODO: Typed as unknown because we don't have access to the generator-exec API from here.
               type: unknown
             originalReadme: optional<string>
       response: string
