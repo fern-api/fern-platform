@@ -177,7 +177,7 @@ exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/as
       "description": undefined,
       "hidden": false,
       "icon": undefined,
-      "id": "list",
+      "id": "subpackage_asset-library.list",
       "method": "GET",
       "slug": [
         "api-reference",
@@ -204,7 +204,7 @@ exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/oc
       "description": "Return fields on an account",
       "hidden": false,
       "icon": undefined,
-      "id": "getAccount",
+      "id": "subpackage_account.getAccount",
       "method": "GET",
       "slug": [
         "api-reference",
