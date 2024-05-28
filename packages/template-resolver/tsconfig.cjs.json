@@ -1,0 +1,6 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/library.json",
+  "compilerOptions": { "outDir": "./dist/cjs", "rootDir": ".", "module": "commonjs", "moduleResolution": "node" },
+  "include": ["./src/**/*"],
+  "references": [{ "path": "../commons/core-utils" }]
+}

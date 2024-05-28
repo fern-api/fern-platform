@@ -1,0 +1,6 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/library.json",
+  "compilerOptions": { "outDir": "./dist/types", "declaration": true, "emitDeclarationOnly": true },
+  "include": ["./src/**/*"],
+  "references": [{ "path": "../commons/core-utils" }]
+}

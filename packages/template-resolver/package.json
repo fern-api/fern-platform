@@ -6,11 +6,9 @@
   "files": [
     "dist"
   ],
-  "type": "module",
-  "module": "dist/src/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "compile": "tsc --build",
+    "compile": "tsc --build ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json && node ./scripts/writePackageJson.js ",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
@@ -36,5 +34,13 @@
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "typescript": "5.4.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
   }
 }
