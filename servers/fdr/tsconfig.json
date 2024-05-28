@@ -18,5 +18,5 @@
     "sourceRoot": "/"
   },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../../packages/fdr-sdk" }, { "path": "../../packages/template-resolver" }]
+  "references": [{ "path": "../../packages/fdr-sdk" }, { "path": "../../packages/template-resolver/tsconfig.esm.json" }]
 }

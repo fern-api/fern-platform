@@ -12,6 +12,6 @@
     { "path": "../../commons/loadable" },
     { "path": "../components" },
     { "path": "../../commons/react/react-commons" },
-    { "path": "../../template-resolver" }
+    { "path": "../../template-resolver/tsconfig.esm.json" }
   ]
 }
