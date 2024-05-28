@@ -206,7 +206,7 @@ function flattenPackage(
     currentPackage.endpoints.forEach((endpoint) => {
         const flattenedEndpoint: FlattenedEndpointDefinition = {
             type: "endpoint",
-            id: `${packageId}.${endpoint.id}`,
+            id: endpoint.originalEndpointId ?? `${packageId}.${endpoint.id}`,
             slug: [...parentSlugs, endpoint.urlSlug],
             name: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
             description: endpoint.description,
