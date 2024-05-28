@@ -142,7 +142,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     )}
                     <ul className="relative z-0 list-none">
                         {endpoints.map((endpointItem) => {
-                            const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
+                            const active = endpointItem.id === selectedEndpoint?.id;
                             const text = renderTextWithHighlight(endpointItem.title, filterValue);
                             if (endpointItem.apiType === "endpoint") {
                                 return (
