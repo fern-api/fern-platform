@@ -17,10 +17,14 @@ export function getXFernHostEdge(req: NextRequest, useSearchParams = false): str
         useSearchParams ? req.nextUrl.searchParams.get("host") : undefined,
         process.env.NEXT_PUBLIC_DOCS_DOMAIN,
         req.cookies.get("_fern_docs_preview")?.value,
-        // req.headers.get("x-forwarded-host"),
         req.headers.get("x-fern-host"),
         req.nextUrl.host,
     ];
+
+    // eslint-disable-next-line no-console
+    console.log("hosts", hosts);
+    // eslint-disable-next-line no-console
+    console.log("headers", Array.from(req.headers.entries()));
 
     for (let host of hosts) {
         host = cleanHost(host);
