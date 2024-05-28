@@ -1,6 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
+import { isSubpackage } from "./subpackage";
 
 /**
  * Flattened API Definition lightly transforms the APIV1Read.ApiDefinition into a more usable format:
@@ -200,10 +201,12 @@ function flattenPackage(
     const endpoints: FlattenedEndpointDefinition[] = [];
     const methodAndPathToEndpoint = new Map<string, FlattenedEndpointDefinition>();
 
+    const packageId = isSubpackage(currentPackage) ? currentPackage.subpackageId : "root";
+
     currentPackage.endpoints.forEach((endpoint) => {
         const flattenedEndpoint: FlattenedEndpointDefinition = {
             type: "endpoint",
-            id: endpoint.id,
+            id: `${packageId}.${endpoint.id}`,
             slug: [...parentSlugs, endpoint.urlSlug],
             name: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
             description: endpoint.description,
@@ -251,7 +254,7 @@ function flattenPackage(
     const websockets = currentPackage.websockets.map(
         (websocket): FlattenedWebSocketChannel => ({
             type: "websocket",
-            id: websocket.id,
+            id: `${packageId}.${websocket.id}`,
             slug: [...parentSlugs, websocket.urlSlug],
             name: websocket.name,
             description: websocket.description,
@@ -272,7 +275,7 @@ function flattenPackage(
     const webhooks = currentPackage.webhooks.map(
         (webhook): FlattenedWebhookDefinition => ({
             type: "webhook",
-            id: webhook.id,
+            id: `${packageId}.${webhook.id}`,
             slug: [...parentSlugs, webhook.urlSlug],
             name: webhook.name,
             description: webhook.description,
