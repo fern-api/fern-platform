@@ -8,5 +8,5 @@ export async function loadReadmeConfig({
     absolutePathToConfig: AbsoluteFilePath;
 }): Promise<FernGeneratorCli.ReadmeConfig> {
     const rawContents = await readFile(absolutePathToConfig, "utf8");
-    return JSON.parse(rawContents) as FernGeneratorCli.ReadmeConfig;
+    return JSON.parse(rawContents);
 }

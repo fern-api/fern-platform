@@ -10,8 +10,8 @@ import { ReadmeParser } from "./ReadmeParser";
 export class ReadmeGenerator {
     private readmeParser: ReadmeParser;
     private readmeConfig: FernGeneratorCli.ReadmeConfig;
-    private featuresConfig: FernGeneratorCli.FeaturesConfig;
-    private snippets: FernGeneratorExec.Snippets;
+    private featuresConfig: FernGeneratorCli.FeaturesConfig | undefined;
+    private snippets: FernGeneratorExec.Snippets | undefined;
     private originalReadme: string | undefined;
     private organization: string;
     private language: string;
@@ -25,8 +25,8 @@ export class ReadmeGenerator {
     }: {
         readmeParser: ReadmeParser;
         readmeConfig: FernGeneratorCli.ReadmeConfig;
-        featuresConfig: FernGeneratorCli.FeaturesConfig;
-        snippets: FernGeneratorExec.Snippets;
+        featuresConfig: FernGeneratorCli.FeaturesConfig | undefined;
+        snippets: FernGeneratorExec.Snippets | undefined;
         originalReadme: string | undefined;
     }) {
         this.readmeParser = readmeParser;
@@ -44,14 +44,14 @@ export class ReadmeGenerator {
         if (this.readmeConfig.docsLink != null) {
             blocks.push(this.generateDocumentation({ docsLink: this.readmeConfig.docsLink }));
         }
-        if (this.snippets.requirements != null) {
+        if (this.snippets?.requirements != null) {
             blocks.push(this.generateRequirements({ requirements: this.snippets.requirements }));
         }
         if (this.readmeConfig.publishInfo != null) {
             blocks.push(this.generateInstallation({ publishInfo: this.readmeConfig.publishInfo }));
         }
 
-        for (const feature of this.featuresConfig.features) {
+        for (const feature of this.featuresConfig?.features ?? []) {
             const endpoints = this.getEndpointsForFeature({ feature });
             if (endpoints.length === 0) {
                 // If no snippets were generated, we ignore the feature.
@@ -97,7 +97,7 @@ export class ReadmeGenerator {
     }
 
     private getEndpointsForFeature({ feature }: { feature: FernGeneratorCli.Feature }): FernGeneratorExec.Endpoint[] {
-        const endpoints = this.snippets.features?.[feature.id];
+        const endpoints = this.snippets?.features?.[feature.id];
         if (endpoints == null || endpoints.length === 0 || endpoints[0] == null) {
             return [];
         }

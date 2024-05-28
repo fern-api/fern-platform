@@ -13,8 +13,6 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
           outputEsm: true
-          extraDevDependencies:
-            "@types/mime": "3.0.4"
 
   sdk:
     generators:

@@ -3,9 +3,6 @@ features:
     description: |
       Instantiate the client with the following:
 
-  # Note that this is an example of a feature that isn't widely used between each generator
-  # (it's likely only relevant for Go). We can easily use the catch-all block to identify
-  # snippets for this feature.
   - id: OPTIONALS
     description: |
       This library models optional primitives and enum types as pointers. This is primarily meant

@@ -18,11 +18,11 @@ void yargs(hideBin(process.argv))
         "Generate a README.md using the provided configuration files",
         (argv) =>
             argv
-                .option("feature-config", {
+                .option("readme-config", {
                     string: true,
                     requred: true,
                 })
-                .option("readme-config", {
+                .option("feature-config", {
                     string: true,
                     requred: true,
                 })
@@ -39,7 +39,7 @@ void yargs(hideBin(process.argv))
                     requred: false,
                 }),
         async (argv) => {
-            if (argv.featureConfig == null || argv.readmeConfig == null || argv.snippets == null) {
+            if (argv.readmeConfig == null || argv.featureConfig == null || argv.snippets == null) {
                 process.stderr.write(
                     "Missing required arguments; please specify the --feature-config, --readme-config, and --snippets flags\n",
                 );

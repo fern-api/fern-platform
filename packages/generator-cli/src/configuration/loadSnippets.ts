@@ -7,7 +7,11 @@ export async function loadSnippets({
     absolutePathToConfig,
 }: {
     absolutePathToConfig: AbsoluteFilePath;
-}): Promise<FernGeneratorExec.Snippets> {
+}): Promise<FernGeneratorExec.Snippets | undefined> {
     const rawContents = await readFile(absolutePathToConfig, "utf8");
-    return Snippets.parseOrThrow(JSON.parse(rawContents));
+    if (rawContents.length === 0) {
+        // TODO: Log a warning.
+        return undefined;
+    }
+    return await Snippets.parseOrThrow(JSON.parse(rawContents));
 }

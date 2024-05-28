@@ -1,0 +1,10 @@
+{
+  "language": "go",
+  "organization": "empty",
+  "publishInfo": {
+    "type": "go",
+    "owner": "empty",
+    "repo": "empty-go",
+    "version": "1.0.0"
+  }
+}
