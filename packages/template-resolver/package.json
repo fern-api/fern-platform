@@ -8,7 +8,7 @@
   ],
   "source": "src/index.ts",
   "scripts": {
-    "compile": "tsc --build ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json && node ./scripts/writePackageJson.js ",
+    "compile": "tsc --build ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json && node ./scripts/writePackageJson.js",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",

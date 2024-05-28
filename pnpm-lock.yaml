@@ -850,6 +850,8 @@ importers:
         specifier: 5.4.3
         version: 5.4.3
 
+  packages/template-resolver/dist/esm: {}
+
   packages/ui/app:
     dependencies:
       '@datadog/browser-logs':
