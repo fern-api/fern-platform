@@ -28,7 +28,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
           "errors": [],
           "examples": [],
           "headers": [],
-          "id": "getMerchants",
+          "id": "subpackage_merchants.getMerchants",
           "method": "GET",
           "path": [],
           "pathParameters": [],
