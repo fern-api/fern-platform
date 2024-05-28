@@ -1,8 +1,8 @@
 import { testGenerateReadme } from "./testGenerateReadme";
 
-describe("cohere-go", () => {
+describe("basic-go", () => {
     testGenerateReadme({
-        fixtureName: "cohere-go",
+        fixtureName: "basic-go",
         featuresConfigFilename: "features.yml",
         readmeConfigFilename: "readme.json",
         snippetsFilename: "snippet.json",

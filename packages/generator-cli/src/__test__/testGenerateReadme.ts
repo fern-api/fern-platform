@@ -1,8 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import execa from "execa";
 import path from "path";
 
-const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
 export function testGenerateReadme({
     fixtureName,
@@ -30,33 +29,22 @@ export function testGenerateReadme({
                 fixtureName,
                 filepath: snippetsFilename,
             });
-            const { stdout } = await execa(
-                "node",
-                [
-                    path.join(__dirname, "../../dist/cli.cjs"),
-                    "generate readme",
-                    "--readme-config",
-                    absolutePathToReadmeConfig,
-                    "--feature-config",
-                    absolutePathToFeaturesConfig,
-                    "--snippets",
-                    absolutePathToSnippets,
-                ],
-                {
-                    reject: false,
-                },
-            );
+            const { stdout } = await execa("node", [
+                path.join(__dirname, "../../dist/cli.cjs"),
+                "generate",
+                "readme",
+                "--readme-config",
+                absolutePathToReadmeConfig,
+                "--feature-config",
+                absolutePathToFeaturesConfig,
+                "--snippets",
+                absolutePathToSnippets,
+            ]);
             expect(stdout).toMatchSnapshot();
         });
     });
 }
 
-function getAbsolutePathToFixtureFile({
-    fixtureName,
-    filepath,
-}: {
-    fixtureName: string;
-    filepath: string;
-}): AbsoluteFilePath {
-    return join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(filepath));
+function getAbsolutePathToFixtureFile({ fixtureName, filepath }: { fixtureName: string; filepath: string }): string {
+    return path.join(FIXTURES_PATH, fixtureName, filepath);
 }
