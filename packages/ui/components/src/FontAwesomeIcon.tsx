@@ -1,6 +1,7 @@
 import cn from "clsx";
 import { forwardRef } from "react";
-
+import urljoin from "url-join";
+import { useFernComponentsContext } from "./FernComponentsContext";
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {
         className?: string; // you must specify the bg-color rather than text-color because this is a mask.
@@ -13,16 +14,17 @@ export declare namespace RemoteFontAwesomeIcon {
 }
 export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAwesomeIcon.Props>(
     function RemoteFontAwesomeIcon({ className, icon, color, darkModeColor, lightModeColor, size }, ref) {
+        const { fontAwesomeBaseUrl } = useFernComponentsContext();
         return (
             <span
                 ref={ref}
                 className={cn(className, "fa-icon")}
                 style={
                     {
-                        maskImage: `url("${getIconUrl(icon)}")`,
+                        maskImage: `url("${getIconUrl(icon, fontAwesomeBaseUrl)}")`,
                         maskRepeat: "no-repeat",
                         maskPosition: "center center",
-                        WebkitMaskImage: `url("${getIconUrl(icon)}")`,
+                        WebkitMaskImage: `url("${getIconUrl(icon, fontAwesomeBaseUrl)}")`,
                         WebkitMaskRepeat: "no-repeat",
                         WebkitMaskPosition: "center center",
                         backgroundColor: lightModeColor ?? color,
@@ -36,7 +38,7 @@ export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAweso
     },
 );
 
-function getIconUrl(icon: string | undefined): string {
+function getIconUrl(icon: string | undefined, baseUrl: string): string {
     if (icon == null) {
         return "";
     }
@@ -50,15 +52,7 @@ function getIconUrl(icon: string | undefined): string {
         return "";
     }
     const [style, iconName] = parsed;
-    return `${getCdnHost()}/${style}/${iconName}.svg`;
-}
-
-function getCdnHost() {
-    const CDN_HOST = process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
-    if (CDN_HOST == null) {
-        return "https://fontawesome-cdn.vercel.app";
-    }
-    return CDN_HOST;
+    return urljoin(baseUrl, `/${style}/${iconName}.svg`);
 }
 
 function parseFontAwesomeIcon(icon: string): [string, string] | undefined {
