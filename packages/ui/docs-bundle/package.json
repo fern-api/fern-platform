@@ -58,7 +58,8 @@
     "postcss-import": "^16.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sharp": "^0.33.3"
+    "sharp": "^0.33.3",
+    "url-join": "4.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
@@ -69,6 +70,7 @@
     "@types/node-fetch": "2.6.9",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.2.18",
+    "@types/url-join": "4.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
     "env-cmd": "toddbluhm/env-cmd",
