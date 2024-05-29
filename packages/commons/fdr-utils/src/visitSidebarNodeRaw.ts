@@ -101,6 +101,9 @@ export function visitSidebarNodeRaw(
             }
             return true;
         },
+        tabChangelog: () => {
+            return true;
+        },
         _other: () => true,
     });
 }
