@@ -207,10 +207,26 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
     union:
-      group: NavigationTabGroup
-      link: NavigationTabLink
-      changelog: ChangelogSection
+      - NavigationTabGroupV1
+      - NavigationTabLinkV1
+      - ChangelogSectionV1
+
+  NavigationTabGroupV1:
+    extends: NavigationTabGroup
+    properties:
+      type: optional<literal<"group">>
+
+  NavigationTabLinkV1:
+    extends: NavigationTabLink
+    properties:
+      type: literal<"link">
+
+  ChangelogSectionV1:
+    extends: ChangelogSection
+    properties:
+      type: literal<"changelog">
 
   NavigationTabGroup:
     extends: NavigationNodeMetadata

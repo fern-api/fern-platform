@@ -5,20 +5,6 @@
 import * as FernRegistry from "../../../../../../..";
 
 export type NavigationTab =
-    | FernRegistry.docs.v1.read.NavigationTab.Group
-    | FernRegistry.docs.v1.read.NavigationTab.Link
-    | FernRegistry.docs.v1.read.NavigationTab.Changelog;
-
-export declare namespace NavigationTab {
-    interface Group extends FernRegistry.docs.v1.read.NavigationTabGroup {
-        type: "group";
-    }
-
-    interface Link extends FernRegistry.docs.v1.read.NavigationTabLink {
-        type: "link";
-    }
-
-    interface Changelog extends FernRegistry.docs.v1.read.ChangelogSection {
-        type: "changelog";
-    }
-}
+    | FernRegistry.docs.v1.read.NavigationTabGroupV1
+    | FernRegistry.docs.v1.read.NavigationTabLinkV1
+    | FernRegistry.docs.v1.read.ChangelogSectionV1;
