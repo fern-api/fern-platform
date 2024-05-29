@@ -1,4 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { assertNever, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { resolveSidebarNodesRoot } from "./resolver";
 import { SidebarNavigationRaw, SidebarNodeRaw, SidebarTab } from "./types";
 import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
@@ -31,6 +32,7 @@ const PRIORITY_LIST: Record<SidebarNodeRaw.VisitableNode["type"], number> = {
     tabGroup: 3,
     versionGroup: 2,
     pageGroup: 1,
+    tabChangelog: 0,
     page: 0,
 };
 
@@ -88,18 +90,31 @@ export function getNavigationRoot(
 
     const { items: tabItems, node: currentTab } = findSiblings<SidebarNodeRaw.Tab>(
         parents,
-        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup" || n.type === "tabLink",
+        (n): n is SidebarNodeRaw.TabGroup => n.type === "tabGroup",
     );
 
     const tabs = tabItems
-        .filter((n) => n.type === "tabLink" || n.type === "tabGroup")
-        .map((tab): SidebarTab => {
-            if (tab.type === "tabLink") {
-                return tab;
-            }
-            const { items, ...tabGroup } = tab;
-            return tabGroup;
-        });
+        .filter((n) => n.type === "tabGroup" || n.type === "tabChangelog" || n.type === "tabLink")
+        .map((tab) =>
+            visitDiscriminatedUnion(tab, "type")._visit<SidebarTab>({
+                tabLink: (link) => link,
+                tabGroup: (group) => ({
+                    type: "tabGroup",
+                    title: group.title,
+                    icon: group.icon,
+                    index: group.index,
+                    slug: group.slug,
+                }),
+                tabChangelog: (changelog) => ({
+                    type: "tabChangelog",
+                    title: changelog.title,
+                    icon: changelog.icon,
+                    index: changelog.index,
+                    slug: changelog.slug,
+                }),
+                _other: (other) => assertNever(other as never),
+            }),
+        );
 
     const { items: versionItems, node: currentVerion } = findSiblings<SidebarNodeRaw.VersionGroup>(
         parents,
@@ -140,8 +155,13 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
 
     if (isNavigationNode(node) || node.type === "section") {
         const firstChild = node.items.filter(
-            (item): item is SidebarNodeRaw.TabGroup | SidebarNodeRaw.VersionGroup | SidebarNodeRaw =>
-                item.type !== "tabLink",
+            (
+                item,
+            ): item is
+                | SidebarNodeRaw.TabGroup
+                | SidebarNodeRaw.TabChangelogPage
+                | SidebarNodeRaw.VersionGroup
+                | SidebarNodeRaw => item.type !== "tabLink",
         )[0];
         return resolveRedirect(firstChild, from);
     }
@@ -162,9 +182,15 @@ function resolveRedirect(node: SidebarNodeRaw.VisitableNode | undefined, from: s
     return { type: "redirect", redirect: "/" + node.slug.join("/") };
 }
 
-function findSiblings<T extends SidebarNodeRaw.ParentNode | SidebarNodeRaw.TabLink>(
+function findSiblings<T extends SidebarNodeRaw.ParentNode | SidebarNodeRaw.TabLink | SidebarNodeRaw.TabChangelogPage>(
     parents: readonly SidebarNodeRaw.ParentNode[],
-    match: (node: SidebarNodeRaw.VisitableNode | SidebarNodeRaw.TabLink | SidebarNodeRaw.Link) => boolean,
+    match: (
+        node:
+            | SidebarNodeRaw.VisitableNode
+            | SidebarNodeRaw.TabLink
+            | SidebarNodeRaw.Link
+            | SidebarNodeRaw.TabChangelogPage,
+    ) => boolean,
 ): { items: readonly T[]; node: T | undefined } {
     const navigationDepth = parents.findIndex(match);
 

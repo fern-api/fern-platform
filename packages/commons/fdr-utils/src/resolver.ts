@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "./docs";
 import {
     FlattenedApiDefinitionPackage,
@@ -197,24 +197,42 @@ function resolveSidebarNodesVersionItems(
 ): SidebarNodeRaw.VersionGroup["items"] {
     if (isUnversionedTabbedNavigationConfig(nav)) {
         return nav.tabs.map((tab, index): SidebarNodeRaw.Tab => {
-            if (tab.type === "link") {
-                return {
-                    type: "tabLink",
-                    title: tab.title,
-                    url: tab.url,
-                    icon: tab.icon,
+            return visitDiscriminatedUnion(tab, "type")._visit<SidebarNodeRaw.Tab>({
+                group: (group) => ({
+                    type: "tabGroup",
+                    title: group.title,
+                    icon: group.icon,
+                    slug: [...parentSlugs, ...group.urlSlug.split("/")],
                     index,
-                };
-            }
-            const tabSlug = [...parentSlugs, ...tab.urlSlug.split("/")];
-            return {
-                type: "tabGroup",
-                title: tab.title,
-                icon: tab.icon,
-                slug: tabSlug,
-                index,
-                items: resolveSidebarNodes(tab.items, apis, pages, tabSlug, parentSlugs, domain),
-            };
+                    items: resolveSidebarNodes(group.items, apis, pages, parentSlugs, parentSlugs, domain),
+                }),
+                link: (link) => ({
+                    type: "tabLink",
+                    title: link.title,
+                    url: link.url,
+                    icon: link.icon,
+                    index,
+                }),
+                changelog: (changelog) => ({
+                    type: "tabChangelog",
+                    id: changelog.urlSlug,
+                    title: changelog.title ?? "Changelog",
+                    description: changelog.description,
+                    pageId: changelog.pageId,
+                    slug:
+                        changelog.fullSlug != null
+                            ? [...parentSlugs, ...changelog.fullSlug]
+                            : [...parentSlugs, ...changelog.urlSlug.split("/")],
+                    items: changelog.items.map((item) => ({
+                        date: item.date,
+                        pageId: item.pageId,
+                    })),
+                    icon: changelog.icon,
+                    hidden: changelog.hidden ?? false,
+                    index,
+                }),
+                _other: (tab) => assertNever(tab as never),
+            });
         });
     }
 
@@ -369,6 +387,24 @@ export function resolveSidebarNodes(
             link: (link) => {
                 pushPageGroup({ ...link, icon: link.icon });
             },
+            changelog: (changelog) => ({
+                type: "page",
+                pageType: "changelog",
+                id: changelog.urlSlug,
+                title: changelog.title ?? "Changelog",
+                description: changelog.description,
+                pageId: changelog.pageId,
+                slug:
+                    changelog.fullSlug != null
+                        ? [...fixedSlugs, ...changelog.fullSlug]
+                        : [...parentSlugs, ...changelog.urlSlug.split("/")],
+                items: changelog.items.map((item) => ({
+                    date: item.date,
+                    pageId: item.pageId,
+                })),
+                icon: changelog.icon,
+                hidden: changelog.hidden ?? false,
+            }),
             _other: () => Promise.resolve(),
         });
     }
