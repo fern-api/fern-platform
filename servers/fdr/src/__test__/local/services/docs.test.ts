@@ -82,8 +82,9 @@ it("docs register V2", async () => {
     expect(Object.entries(docs.definition.files)).toHaveLength(3);
     expect(docs.definition.config.typographyV2).toEqual({
         headingsFont: {
+            type: "custom",
             name: "Syne",
-            fontFile: FONT_FILE_ID,
+            variants: [{ fontFile: FONT_FILE_ID }],
         },
     });
     // load docs again
