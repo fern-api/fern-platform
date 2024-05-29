@@ -1,0 +1,251 @@
+{
+  "id": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+  "rootPackage": {
+    "endpoints": [
+      {
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://api.sayari.com"
+          }
+        ],
+        "defaultEnvironment": "Production",
+        "urlSlug": "get-token",
+        "method": "POST",
+        "id": "getToken",
+        "originalEndpointId": "getToken",
+        "name": "Get Token",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/oauth/token"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "contentType": "application/json",
+          "type": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "client_id",
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "client_secret",
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "audience",
+                "valueType": {
+                  "type": "literal",
+                  "value": {
+                    "type": "stringLiteral",
+                    "value": "sayari.com"
+                  }
+                }
+              },
+              {
+                "key": "grant_type",
+                "valueType": {
+                  "type": "literal",
+                  "value": {
+                    "type": "stringLiteral",
+                    "value": "client_credentials"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_auth:AuthResponse"
+            }
+          }
+        },
+        "errors": [],
+        "errorsV2": [],
+        "examples": [],
+        "description": "Hit the auth endpoint to get a bearer token",
+        "authed": false
+      },
+      {
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://api.sayari.com"
+          }
+        ],
+        "defaultEnvironment": "Production",
+        "urlSlug": "test-authed",
+        "method": "POST",
+        "id": "testAuth",
+        "originalEndpointId": "testAuth",
+        "name": "Get Token",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/test/authed"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "contentType": "text/plain",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "errors": [],
+        "errorsV2": [],
+        "examples": [],
+        "authed": true
+      },
+      {
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://api.sayari.com"
+          }
+        ],
+        "defaultEnvironment": "Production",
+        "urlSlug": "test-header-auth",
+        "method": "POST",
+        "id": "testHeaderAuth",
+        "originalEndpointId": "testHeaderAuth",
+        "name": "Get Token",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/test/authed"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [
+          {
+            "key": "test-api-key",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "request": {
+          "contentType": "text/plain",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "errors": [],
+        "errorsV2": [],
+        "examples": [],
+        "authed": false
+      }
+    ],
+    "subpackages": [],
+    "types": [],
+    "webhooks": [],
+    "websockets": []
+  },
+  "types": {
+    "type_auth:AuthResponse": {
+      "name": "AuthResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The bearer token you will pass in to subsequent API calls to authenticate.",
+            "key": "access_token",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Tells you how long (in seconds) until your bearer token expires.",
+            "key": "expires_in",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "description": "Will always be \"Bearer\"",
+            "key": "token_type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
+  "hasMultipleBaseUrls": false,
+  "globalHeaders": []
+}
