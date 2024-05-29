@@ -1,4 +1,4 @@
-import { visitDbNavigationTab, visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
+import { DocsV1Read, visitDbNavigationTab, visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
@@ -101,21 +101,35 @@ export class AlgoliaSearchRecordGenerator {
     private generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
         config: DocsV1Db.UnversionedTabbedNavigationConfig,
         context: NavigationContext,
-    ) {
-        const records = config.tabs.map((tab) =>
-            visitDbNavigationTab(tab, {
-                group: (group) => {
-                    const tabRecords = group.items.map((item) =>
-                        this.generateAlgoliaSearchRecordsForNavigationItem(
-                            item,
-                            context.withPathPart({ name: tab.title, urlSlug: group.urlSlug }),
-                        ),
-                    );
-                    return tabRecords.flat(1);
-                },
-                link: () => [],
-            }),
-        );
+    ): AlgoliaSearchRecord[] {
+        const records =
+            config.tabsV2?.flatMap((tab) => {
+                switch (tab.type) {
+                    case "group":
+                        return tab.items.flatMap((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(item, context),
+                        );
+                    case "changelog":
+                        return this.generateAlgoliaSearchRecordsForChangelogSection(tab, context);
+                    default:
+                        return [];
+                }
+            }) ??
+            config.tabs?.map((tab) =>
+                visitDbNavigationTab(tab, {
+                    group: (group) => {
+                        const tabRecords = group.items.map((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
+                                context.withPathPart({ name: tab.title, urlSlug: group.urlSlug }),
+                            ),
+                        );
+                        return tabRecords.flat(1);
+                    },
+                    link: () => [],
+                }),
+            ) ??
+            [];
         return records.flat(1);
     }
 
@@ -124,6 +138,9 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         if (item.type === "section") {
+            if (item.hidden) {
+                return [];
+            }
             const section = item;
             const records = section.items.map((item) =>
                 this.generateAlgoliaSearchRecordsForNavigationItem(
@@ -139,6 +156,9 @@ export class AlgoliaSearchRecordGenerator {
             );
             return records.flat(1);
         } else if (item.type === "api") {
+            if (item.hidden) {
+                return [];
+            }
             const records: AlgoliaSearchRecord[] = [];
             const api = item;
             const apiId = api.api;
@@ -159,82 +179,21 @@ export class AlgoliaSearchRecordGenerator {
             }
 
             if (item.changelog != null) {
-                if (item.changelog.pageId != null) {
-                    const changelogPageContent = this.config.docsDefinition.pages[item.changelog.pageId];
-                    const urlSlug = item.changelog.urlSlug;
-                    const title = item.changelog.title ?? `${api.title} Changelog`;
-
-                    if (changelogPageContent != null) {
-                        const processedContent = convertMarkdownToText(changelogPageContent.markdown);
-                        const { indexSegment } = context;
-                        const pageContext = context.withPathPart({
-                            // TODO: parse from frontmatter?
-                            name: title,
-                            urlSlug,
-                        });
-                        records.push(
-                            compact({
-                                type: "page-v2",
-                                objectID: uuid(),
-                                title,
-                                // TODO: Set to something more than 10kb on prod
-                                // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                                content: truncateToBytes(processedContent, 10_000 - 1),
-                                path: {
-                                    parts: pageContext.pathParts,
-                                },
-                                version:
-                                    indexSegment.type === "versioned"
-                                        ? {
-                                              id: indexSegment.version.id,
-                                              urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
-                                          }
-                                        : undefined,
-                                indexSegmentId: indexSegment.id,
-                            }),
-                        );
-                    }
-
-                    item.changelog.items.forEach((changelogItem) => {
-                        const changelogItemContext = context.withPathPart({
-                            name: `${title} - ${changelogItem.date}`,
-                            urlSlug, // changelogs are all under the same page
-                        });
-
-                        const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
-                        if (changelogPageContent != null) {
-                            const processedContent = convertMarkdownToText(changelogPageContent.markdown);
-                            const { indexSegment } = context;
-
-                            records.push(
-                                compact({
-                                    type: "page-v2",
-                                    objectID: uuid(),
-                                    title: `${title} - ${changelogItem.date}`,
-                                    // TODO: Set to something more than 10kb on prod
-                                    // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                                    content: truncateToBytes(processedContent, 10_000 - 1),
-                                    path: {
-                                        parts: changelogItemContext.pathParts,
-                                        // TODO: add anchor
-                                    },
-                                    version:
-                                        indexSegment.type === "versioned"
-                                            ? {
-                                                  id: indexSegment.version.id,
-                                                  urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
-                                              }
-                                            : undefined,
-                                    indexSegmentId: indexSegment.id,
-                                }),
-                            );
-                        }
-                    });
-                }
+                records.push(
+                    ...this.generateAlgoliaSearchRecordsForChangelogSection(
+                        item.changelog,
+                        context,
+                        `${api.title} Changelog`,
+                    ),
+                );
             }
 
             return records;
         } else if (item.type === "page") {
+            if (item.hidden) {
+                return [];
+            }
+
             const page = item;
             const pageContent = this.config.docsDefinition.pages[page.id];
             if (pageContent == null) {
@@ -273,8 +232,95 @@ export class AlgoliaSearchRecordGenerator {
             ];
         } else if (item.type === "link") {
             return [];
+        } else if (item.type === "changelog") {
+            return this.generateAlgoliaSearchRecordsForChangelogSection(item, context);
         }
         assertNever(item);
+    }
+
+    private generateAlgoliaSearchRecordsForChangelogSection(
+        changelog: DocsV1Read.ChangelogSection,
+        context: NavigationContext,
+        fallbackTitle: string = "Changelog",
+    ): AlgoliaSearchRecord[] {
+        if (changelog.hidden) {
+            return [];
+        }
+        const records: AlgoliaSearchRecord[] = [];
+        if (changelog.pageId != null) {
+            const changelogPageContent = this.config.docsDefinition.pages[changelog.pageId];
+            const urlSlug = changelog.urlSlug;
+            const title = changelog.title ?? fallbackTitle;
+
+            if (changelogPageContent != null) {
+                const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                const { indexSegment } = context;
+                const pageContext = context.withPathPart({
+                    // TODO: parse from frontmatter?
+                    name: title,
+                    urlSlug,
+                });
+                records.push(
+                    compact({
+                        type: "page-v2",
+                        objectID: uuid(),
+                        title,
+                        // TODO: Set to something more than 10kb on prod
+                        // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
+                        content: truncateToBytes(processedContent, 10_000 - 1),
+                        path: {
+                            parts: pageContext.pathParts,
+                        },
+                        version:
+                            indexSegment.type === "versioned"
+                                ? {
+                                      id: indexSegment.version.id,
+                                      urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                  }
+                                : undefined,
+                        indexSegmentId: indexSegment.id,
+                    }),
+                );
+            }
+
+            changelog.items.forEach((changelogItem) => {
+                const changelogItemContext = context.withPathPart({
+                    name: `${title} - ${changelogItem.date}`,
+                    urlSlug, // changelogs are all under the same page
+                });
+
+                const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
+                if (changelogPageContent != null) {
+                    const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                    const { indexSegment } = context;
+
+                    records.push(
+                        compact({
+                            type: "page-v2",
+                            objectID: uuid(),
+                            title: `${title} - ${changelogItem.date}`,
+                            // TODO: Set to something more than 10kb on prod
+                            // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
+                            content: truncateToBytes(processedContent, 10_000 - 1),
+                            path: {
+                                parts: changelogItemContext.pathParts,
+                                // TODO: add anchor
+                            },
+                            version:
+                                indexSegment.type === "versioned"
+                                    ? {
+                                          id: indexSegment.version.id,
+                                          urlSlug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                      }
+                                    : undefined,
+                            indexSegmentId: indexSegment.id,
+                        }),
+                    );
+                }
+            });
+        }
+
+        return records;
     }
 
     private generateAlgoliaSearchRecordsForApiDefinition(
