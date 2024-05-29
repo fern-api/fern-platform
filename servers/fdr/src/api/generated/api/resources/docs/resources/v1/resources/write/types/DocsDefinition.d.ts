@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface DocsDefinition {
-    pages: Record<FernRegistry.docs.v1.write.PageId, FernRegistry.docs.v1.write.PageContent>;
+    pages: Record<FernRegistry.docs.v1.commons.PageId, FernRegistry.docs.v1.write.PageContent>;
     config: FernRegistry.docs.v1.write.DocsConfig;
 }

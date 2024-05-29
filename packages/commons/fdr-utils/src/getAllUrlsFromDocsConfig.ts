@@ -14,7 +14,7 @@ export function getAllUrlsFromDocsConfig(
     const visitedSlugs: string[] = [];
 
     visitSidebarNodeRaw(root, (node) => {
-        visitedSlugs.push(node.slug.join("/"));
+        visitedSlugs.push(urljoin(...node.slug));
     });
 
     return Array.from(new Set(visitedSlugs.map((slug) => urljoin(host, slug))));

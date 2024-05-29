@@ -5,5 +5,5 @@ import * as FernRegistry from "../../../../../../..";
 export interface NavigationTabLink {
     title: string;
     icon?: string;
-    url: FernRegistry.docs.v1.read.Url;
+    url: FernRegistry.docs.v1.commons.Url;
 }

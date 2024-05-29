@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../../../../..";
 
 export interface ApiNavigationConfigSubpackage {
-    summaryPageId?: FernRegistry.docs.v1.read.PageId;
+    summaryPageId?: FernRegistry.docs.v1.commons.PageId;
     subpackageId: FernRegistry.docs.v1.commons.SubpackageId;
     items: FernRegistry.docs.v1.read.ApiNavigationConfigItem[];
 }

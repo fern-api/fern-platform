@@ -3,6 +3,7 @@ import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export function convertDbDocsConfigToRead({
@@ -12,19 +13,13 @@ export function convertDbDocsConfigToRead({
 }): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
         navigation: transformNavigationConfigToRead(dbShape.navigation),
-        logo: dbShape.logo,
-        logoV2: dbShape.logoV2,
         logoHeight: dbShape.logoHeight,
         logoHref: dbShape.logoHref,
-        colors: dbShape.colors,
-        colorsV2: dbShape.colorsV2,
         colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
         navbarLinks: dbShape.navbarLinks,
         footerLinks: dbShape.footerLinks,
         title: dbShape.title,
         favicon: dbShape.favicon,
-        backgroundImage: dbShape.backgroundImage,
-        typography: dbShape.typography ?? transformTypographyV2ToV1(dbShape.typographyV2),
         typographyV2: dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
         layout: dbShape.layout,
         css: dbShape.css,
@@ -127,7 +122,10 @@ function transformUnversionedNavigationConfigForDb(
     return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(config, {
         tabbed: (config) => {
             return {
-                tabs: config.tabs.map(transformNavigationTabForDb),
+                tabs:
+                    config.tabsV2?.map(transformNavigationTabV2ForDb) ??
+                    config.tabs?.map(transformNavigationTabForDb) ??
+                    [],
             };
         },
         untabbed: (config) => {
@@ -149,6 +147,22 @@ export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): Do
     });
 }
 
+export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2): DocsV1Read.NavigationTab {
+    switch (dbShape.type) {
+        case "link":
+            return dbShape;
+        case "group":
+            return {
+                ...dbShape,
+                items: dbShape.items.map(transformNavigationItemForDb),
+            };
+        case "changelog":
+            return dbShape;
+        default:
+            assertNever(dbShape);
+    }
+}
+
 export function isNavigationTabLink(tab: DocsV1Db.NavigationTab): tab is DocsV1Read.NavigationTabLink {
     return (tab as DocsV1Read.NavigationTabLink).url != null;
 }
@@ -168,6 +182,10 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
                 ...dbShape,
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
             };
+        case "changelog":
+            return dbShape;
+        default:
+            assertNever(dbShape);
     }
 }
 
