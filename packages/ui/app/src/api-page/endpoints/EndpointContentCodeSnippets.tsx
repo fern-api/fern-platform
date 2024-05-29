@@ -173,7 +173,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                             state={{
                                 type: "endpoint",
                                 api,
-                                endpointId: endpoint.slug.join("/"),
+                                endpointId: endpoint.id,
                             }}
                             // example={selectedClient.exampleCall}
                         />

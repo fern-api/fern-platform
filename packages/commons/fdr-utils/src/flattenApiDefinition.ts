@@ -259,10 +259,7 @@ function constructPackageFromNavigationOrder(
             node: (node) =>
                 visitDiscriminatedUnion(node.value, "type")._visit({
                     endpoint: (endpoint) => {
-                        const locator =
-                            endpoint.subpackageId != null
-                                ? `${endpoint.subpackageId}.${endpoint.endpointId}`
-                                : endpoint.endpointId;
+                        const locator = `${endpoint.subpackageId ?? "root"}.${endpoint.endpointId}`;
                         const referencedEndpoint = apiDefinitions.endpoints.get(locator);
                         if (referencedEndpoint == null) {
                             // eslint-disable-next-line no-console
@@ -270,19 +267,20 @@ function constructPackageFromNavigationOrder(
                             return;
                         }
                         items.push(
-                            toFlattenedEndpoint(referencedEndpoint, {
-                                slug: endpoint.fullSlug ?? [...parentSlugs, endpoint.urlSlug],
-                                icon: endpoint.icon,
-                                hidden: endpoint.hidden ?? false,
-                            }),
+                            toFlattenedEndpoint(
+                                referencedEndpoint,
+                                {
+                                    slug: endpoint.fullSlug ?? [...parentSlugs, endpoint.urlSlug],
+                                    icon: endpoint.icon,
+                                    hidden: endpoint.hidden ?? false,
+                                },
+                                endpoint.subpackageId ?? "root",
+                            ),
                         );
                         visitedEndpoints.add(locator);
                     },
                     websocket: (websocket) => {
-                        const locator =
-                            websocket.subpackageId != null
-                                ? `${websocket.subpackageId}.${websocket.webSocketId}`
-                                : websocket.webSocketId;
+                        const locator = `${websocket.subpackageId ?? "root"}.${websocket.webSocketId}`;
                         const referencedWebSocket = apiDefinitions.websockets.get(locator);
                         if (referencedWebSocket == null) {
                             // eslint-disable-next-line no-console
@@ -290,19 +288,20 @@ function constructPackageFromNavigationOrder(
                             return;
                         }
                         items.push(
-                            toFlattenedWebSocketChannel(referencedWebSocket, {
-                                slug: websocket.fullSlug ?? [...parentSlugs, websocket.urlSlug],
-                                icon: websocket.icon,
-                                hidden: websocket.hidden ?? false,
-                            }),
+                            toFlattenedWebSocketChannel(
+                                referencedWebSocket,
+                                {
+                                    slug: websocket.fullSlug ?? [...parentSlugs, websocket.urlSlug],
+                                    icon: websocket.icon,
+                                    hidden: websocket.hidden ?? false,
+                                },
+                                websocket.subpackageId ?? "root",
+                            ),
                         );
                         visitedWebsockets.add(locator);
                     },
                     webhook: (webhook) => {
-                        const locator =
-                            webhook.subpackageId != null
-                                ? `${webhook.subpackageId}.${webhook.webhookId}`
-                                : webhook.webhookId;
+                        const locator = `${webhook.subpackageId ?? ""}.${webhook.webhookId}`;
                         const referencedWebhook = apiDefinitions.webhooks.get(locator);
                         if (referencedWebhook == null) {
                             // eslint-disable-next-line no-console
@@ -310,11 +309,15 @@ function constructPackageFromNavigationOrder(
                             return;
                         }
                         items.push(
-                            toFlattenedWebhookDefinition(referencedWebhook, {
-                                slug: webhook.fullSlug ?? [...parentSlugs, webhook.urlSlug],
-                                icon: webhook.icon,
-                                hidden: webhook.hidden ?? false,
-                            }),
+                            toFlattenedWebhookDefinition(
+                                referencedWebhook,
+                                {
+                                    slug: webhook.fullSlug ?? [...parentSlugs, webhook.urlSlug],
+                                    icon: webhook.icon,
+                                    hidden: webhook.hidden ?? false,
+                                },
+                                webhook.subpackageId ?? "",
+                            ),
                         );
                         visitedWebhooks.add(locator);
                     },
@@ -391,10 +394,11 @@ function collectApiDefinitions(
 function toFlattenedEndpoint(
     endpoint: APIV1Read.EndpointDefinition,
     metadata: FlattenedNodeMetadata,
+    subpackageId: string,
 ): FlattenedEndpointDefinition {
     return {
         type: "endpoint",
-        id: endpoint.id,
+        id: `${subpackageId}.${endpoint.id}`,
         name: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
         description: endpoint.description,
         availability: endpoint.availability,
@@ -418,10 +422,11 @@ function toFlattenedEndpoint(
 function toFlattenedWebSocketChannel(
     websocket: APIV1Read.WebSocketChannel,
     metadata: FlattenedNodeMetadata,
+    subpackageId: string,
 ): FlattenedWebSocketChannel {
     return {
         type: "websocket",
-        id: websocket.id,
+        id: `${subpackageId}.${websocket.id}`,
         name: websocket.name,
         description: websocket.description,
         availability: websocket.availability,
@@ -440,10 +445,11 @@ function toFlattenedWebSocketChannel(
 function toFlattenedWebhookDefinition(
     webhook: APIV1Read.WebhookDefinition,
     metadata: FlattenedNodeMetadata,
+    subpackageId: string,
 ): FlattenedWebhookDefinition {
     return {
         type: "webhook",
-        id: webhook.id,
+        id: `${subpackageId}.${webhook.id}`,
         name: webhook.name,
         description: webhook.description,
         availability: undefined,
@@ -471,7 +477,7 @@ function flattenPackage(
     let currentPackage: APIV1Read.ApiDefinitionPackage | undefined = apiDefinitionPackage;
     while (currentPackage?.pointsTo != null) {
         currentPackage = subpackagesMap[currentPackage.pointsTo];
-        subpackageId = currentPackage?.pointsTo;
+        subpackageId = currentPackage.pointsTo;
     }
 
     if (currentPackage == null) {
@@ -509,15 +515,19 @@ function flattenPackage(
         }
     });
     currentPackage.endpoints.forEach((endpoint) => {
-        const endpointLocator = subpackageId != null ? `${subpackageId}.${endpoint.id}` : endpoint.id;
+        const endpointLocator = `${subpackageId ?? "root"}.${endpoint.id}`;
         if (visitedEndpoints.has(endpointLocator)) {
             return;
         }
-        const flattenedEndpoint = toFlattenedEndpoint(endpoint, {
-            icon: undefined,
-            hidden: false,
-            slug: [...parentSlugs, endpoint.urlSlug],
-        });
+        const flattenedEndpoint = toFlattenedEndpoint(
+            endpoint,
+            {
+                icon: undefined,
+                hidden: false,
+                slug: [...parentSlugs, endpoint.urlSlug],
+            },
+            subpackageId ?? "root",
+        );
         const methodAndPath = `${endpoint.method} ${stringifyEndpointPathParts(endpoint.path.parts)}`;
         const existingEndpoint = methodAndPathToEndpoint.get(methodAndPath);
 
@@ -543,30 +553,38 @@ function flattenPackage(
     });
 
     currentPackage.websockets.forEach((websocket) => {
-        const websocketLocator = subpackageId != null ? `${subpackageId}.${websocket.id}` : websocket.id;
+        const websocketLocator = `${subpackageId ?? "root"}.${websocket.id}`;
         if (visitedWebsockets.has(websocketLocator)) {
             return;
         }
         items.push(
-            toFlattenedWebSocketChannel(websocket, {
-                icon: undefined,
-                hidden: false,
-                slug: [...parentSlugs, websocket.urlSlug],
-            }),
+            toFlattenedWebSocketChannel(
+                websocket,
+                {
+                    icon: undefined,
+                    hidden: false,
+                    slug: [...parentSlugs, websocket.urlSlug],
+                },
+                subpackageId ?? "root",
+            ),
         );
     });
 
     currentPackage.webhooks.forEach((webhook) => {
-        const webhookLocator = subpackageId != null ? `${subpackageId}.${webhook.id}` : webhook.id;
+        const webhookLocator = `${subpackageId ?? "root"}.${webhook.id}`;
         if (visitedWebhooks.has(webhookLocator)) {
             return;
         }
         items.push(
-            toFlattenedWebhookDefinition(webhook, {
-                icon: undefined,
-                hidden: false,
-                slug: [...parentSlugs, webhook.urlSlug],
-            }),
+            toFlattenedWebhookDefinition(
+                webhook,
+                {
+                    icon: undefined,
+                    hidden: false,
+                    slug: [...parentSlugs, webhook.urlSlug],
+                },
+                subpackageId ?? "root",
+            ),
         );
     });
 
