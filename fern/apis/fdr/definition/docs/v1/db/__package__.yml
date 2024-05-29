@@ -120,13 +120,21 @@ types:
 
   UnversionedTabbedNavigationConfig:
     properties:
-      tabs: list<NavigationTab>
+      tabs: optional<list<NavigationTab>>
+      tabsV2: optional<list<NavigationTabV2>>
 
   NavigationTab:
+    availability: deprecated
     discriminated: false
     union:
       - NavigationTabGroup
       - docsReadV1.NavigationTabLink
+
+  NavigationTabV2:
+    union:
+      group: NavigationTabGroup
+      link: docsReadV1.NavigationTabLink
+      changelog: docsReadV1.ChangelogSection
 
   NavigationTabGroup:
     properties:
@@ -156,6 +164,7 @@ types:
       api: ApiSection
       section: DocsSection
       link: docsReadV1.LinkMetadata
+      changelog: docsReadV1.ChangelogSection
 
   ApiSection:
     properties:

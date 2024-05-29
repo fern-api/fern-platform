@@ -143,6 +143,7 @@ types:
       light: ThemeConfig
 
   NavigationConfig:
+    availability: deprecated
     discriminated: false
     union:
       - UnversionedNavigationConfig
@@ -156,13 +157,23 @@ types:
 
   UnversionedTabbedNavigationConfig:
     properties:
-      tabs: list<NavigationTab>
+      tabs:
+        type: optional<list<NavigationTab>>
+        availability: deprecated
+      tabsV2: optional<list<NavigationTabV2>>
 
   NavigationTab:
+    availability: deprecated
     discriminated: false
     union:
       - NavigationTabGroup
       - NavigationTabLink
+
+  NavigationTabV2:
+    union:
+      group: NavigationTabGroup
+      link: NavigationTabLink
+      changelog: ChangelogSectionV2
 
   NavigationTabGroup:
     extends: NavigationNodeMetadata
@@ -242,6 +253,7 @@ types:
       api: ApiSection
       section: DocsSection
       link: LinkMetadata
+      changelog: ChangelogSectionV2
 
   PageMetadata:
     extends: NavigationNodeMetadata
@@ -358,6 +370,7 @@ types:
       items: list<ApiNavigationConfigItemV1>
 
   ChangelogSection:
+    availability: deprecated
     properties:
       title:
         type: optional<string>
@@ -375,6 +388,14 @@ types:
       items: list<ChangelogItem>
       urlSlug: string
       fullSlug: optional<list<string>>
+
+  ChangelogSectionV2:
+    extends: NavigationNodeMetadata
+    properties:
+      title: optional<string>
+      description: optional<string>
+      pageId: optional<string>
+      items: list<ChangelogItem>
 
   ChangelogItem:
     properties:

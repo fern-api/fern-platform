@@ -1,38 +1,40 @@
+import { getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { notFoundResponse } from "../../../utils/serverResponse";
+import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
+import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    const xFernHost = getXFernHostEdge(req);
-
-    const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-
-    const hostnameAndProtocol = req.nextUrl.host.includes("localhost")
-        ? "http://localhost:3000"
-        : `https://${hostWithoutTrailingSlash}`;
-
-    const sitemapResponse = await fetch(`${hostnameAndProtocol}/api/fern-docs/sitemap`, {
-        headers: { "x-fern-host": xFernHost },
-    });
-
-    if (sitemapResponse.status !== 200) {
-        // eslint-disable-next-line no-console
-        console.error("Failed to fetch docs", sitemapResponse.status, sitemapResponse.statusText);
-        return notFoundResponse();
+    if (req.method !== "GET") {
+        return new NextResponse(null, { status: 405 });
     }
 
-    const urls: string[] = await sitemapResponse.json();
+    const xFernHost = getXFernHostEdge(req);
+    const headers = new Headers();
+    headers.set("x-fern-host", xFernHost);
+
+    const url = buildUrlFromApiEdge(xFernHost, req);
+    const docs = await loadWithUrl(url);
+
+    if (docs == null) {
+        return new NextResponse(null, { status: 404 });
+    }
+
+    const urls = getAllUrlsFromDocsConfig(
+        xFernHost,
+        docs.baseUrl.basePath,
+        docs.definition.config.navigation,
+        docs.definition.apis,
+    );
 
     const sitemap = getSitemapXml(urls.map((url) => `https://${url}`));
 
-    return new NextResponse(sitemap, {
-        headers: {
-            "Content-Type": "text/xml",
-        },
-    });
+    headers.set("Content-Type", "text/xml");
+
+    return new NextResponse(sitemap, { headers });
 }
 
 function getSitemapXml(urls: string[]): string {

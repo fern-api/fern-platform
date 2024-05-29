@@ -8,7 +8,8 @@ export type NavigationItem =
     | FernRegistry.docs.v1.read.NavigationItem.Page
     | FernRegistry.docs.v1.read.NavigationItem.Api
     | FernRegistry.docs.v1.read.NavigationItem.Section
-    | FernRegistry.docs.v1.read.NavigationItem.Link;
+    | FernRegistry.docs.v1.read.NavigationItem.Link
+    | FernRegistry.docs.v1.read.NavigationItem.Changelog;
 
 export declare namespace NavigationItem {
     interface Page extends FernRegistry.docs.v1.read.PageMetadata {
@@ -25,5 +26,9 @@ export declare namespace NavigationItem {
 
     interface Link extends FernRegistry.docs.v1.read.LinkMetadata {
         type: "link";
+    }
+
+    interface Changelog extends FernRegistry.docs.v1.read.ChangelogSection {
+        type: "changelog";
     }
 }

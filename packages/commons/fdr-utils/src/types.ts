@@ -30,7 +30,15 @@ interface SidebarTabLink {
     url: string;
 }
 
-export type SidebarTab = SidebarTabGroup | SidebarTabLink;
+interface SidebarTabChangelog {
+    type: "tabChangelog";
+    title: string;
+    icon: string | undefined;
+    index: number;
+    slug: readonly string[];
+}
+
+export type SidebarTab = SidebarTabGroup | SidebarTabLink | SidebarTabChangelog;
 
 export interface SidebarNavigationRaw {
     currentTabIndex: number | undefined;
@@ -53,6 +61,7 @@ export declare namespace SidebarNodeRaw {
         | SidebarNodeRaw.Page
         | SidebarNodeRaw.VersionGroup
         | SidebarNodeRaw.TabGroup
+        | SidebarNodeRaw.TabChangelogPage
         | SidebarNodeRaw;
     export type ParentNode =
         | SidebarNodeRaw.Root
@@ -72,7 +81,7 @@ export declare namespace SidebarNodeRaw {
         items: readonly SidebarNodeRaw.Tab[] | readonly SidebarNodeRaw[];
     }
 
-    export type Tab = TabLink | TabGroup;
+    export type Tab = TabLink | TabGroup | TabChangelogPage;
 
     export interface TabGroup extends SidebarTabGroup {
         items: readonly SidebarNodeRaw[];
@@ -94,6 +103,8 @@ export declare namespace SidebarNodeRaw {
             pageId: string;
         }[];
     }
+
+    export interface TabChangelogPage extends Omit<ChangelogPage, "type" | "pageType">, SidebarTabChangelog {}
 
     export interface ApiSection {
         type: "apiSection";
@@ -182,11 +193,13 @@ export declare namespace SidebarNode {
         items: readonly Tab[] | readonly SidebarNode[];
     }
 
-    export type Tab = SidebarNodeRaw.TabLink | TabGroup;
+    export type Tab = SidebarNodeRaw.TabLink | TabGroup | TabChangelogPage;
 
     export interface TabGroup extends Omit<SidebarNodeRaw.TabGroup, "items"> {
         items: readonly SidebarNode[];
     }
+
+    export interface TabChangelogPage extends Omit<ChangelogPage, "type" | "pageType">, SidebarTabChangelog {}
 
     export interface PageGroup extends Omit<SidebarNodeRaw.PageGroup, "pages"> {
         pages: (Page | SidebarNodeRaw.Link | Section)[];

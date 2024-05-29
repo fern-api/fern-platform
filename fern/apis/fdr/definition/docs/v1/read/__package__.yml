@@ -207,9 +207,26 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
     union:
-      group: NavigationTabGroup
-      link: NavigationTabLink
+      - NavigationTabGroupV1
+      - NavigationTabLinkV1
+      - ChangelogSectionV1
+
+  NavigationTabGroupV1:
+    extends: NavigationTabGroup
+    properties:
+      type: optional<literal<"group">>
+
+  NavigationTabLinkV1:
+    extends: NavigationTabLink
+    properties:
+      type: literal<"link">
+
+  ChangelogSectionV1:
+    extends: ChangelogSection
+    properties:
+      type: literal<"changelog">
 
   NavigationTabGroup:
     extends: NavigationNodeMetadata
@@ -289,6 +306,7 @@ types:
       api: ApiSection
       section: DocsSection
       link: LinkMetadata
+      changelog: ChangelogSection
 
   PageMetadata:
     extends: NavigationNodeMetadata
@@ -398,17 +416,12 @@ types:
       items: list<ApiNavigationConfigItemV1>
 
   ChangelogSection:
+    extends: NavigationNodeMetadata
     properties:
       title: optional<string>
-      icon:
-        type: optional<string>
-        docs: Defaults to ActivityLog icon
-      hidden: optional<boolean>
       description: optional<string>
       pageId: optional<commons.PageId>
       items: list<ChangelogItem>
-      urlSlug: string
-      fullSlug: optional<list<string>>
 
   ChangelogItem:
     properties:

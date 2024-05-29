@@ -45,6 +45,8 @@ const nextConfig = {
                  */
                 { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
                 { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
+                { source: "/:prefix*/robots.txt", destination: "/api/fern-docs/robots.txt" },
+                { source: "/:prefix*/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
                 /**
                  * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
                  * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that

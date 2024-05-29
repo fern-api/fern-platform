@@ -23,19 +23,13 @@ export function convertDbDocsConfigToRead({
 }): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
         navigation: transformNavigationV1ConfigToRead(dbShape.navigation, apis),
-        // logo: dbShape.logo,
-        // logoV2: dbShape.logoV2,
         logoHeight: dbShape.logoHeight,
         logoHref: dbShape.logoHref,
-        // colors: dbShape.colors,
-        // colorsV2: dbShape.colorsV2,
         colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
         navbarLinks: dbShape.navbarLinks,
         footerLinks: dbShape.footerLinks,
         title: dbShape.title,
         favicon: dbShape.favicon,
-        // backgroundImage: dbShape.backgroundImage,
-        // typography: dbShape.typography ?? transformTypographyV2ToV1(dbShape.typographyV2),
         typographyV2: dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
         layout: dbShape.layout,
         css: dbShape.css,
@@ -93,19 +87,6 @@ function transformFontConfigV2ToV1(fontConfig: DocsV1Read.FontConfigV2 | undefin
     };
 }
 
-function transformTypographyV2ToV1(
-    typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-): DocsV1Read.DocsTypographyConfig | undefined {
-    if (typography == null) {
-        return undefined;
-    }
-    return {
-        headingsFont: transformFontConfigV2ToV1(typography.headingsFont),
-        bodyFont: transformFontConfigV2ToV1(typography.bodyFont),
-        codeFont: transformFontConfigV2ToV1(typography.codeFont),
-    };
-}
-
 export function transformNavigationV1ConfigToRead(
     dbShape: DocsV1Db.NavigationConfig,
     apis: Record<string, APIV1Read.ApiDefinition>,
@@ -143,7 +124,10 @@ function transformUnversionedNavigationConfigForDb(
     return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(config, {
         tabbed: (config) => {
             return {
-                tabs: config.tabs.map((item) => transformNavigationTabForDb(item, apis)),
+                tabs:
+                    config.tabsV2?.map((tab) => transformNavigationTabV2ForDb(tab, apis)) ??
+                    config.tabs?.map((tab) => transformNavigationTabForDb(tab, apis)) ??
+                    [],
             };
         },
         untabbed: (config) => {
@@ -166,6 +150,25 @@ export function transformNavigationTabForDb(
             items: group.items.map((item) => transformNavigationItemForDb(item, apis)),
         }),
     });
+}
+
+export function transformNavigationTabV2ForDb(
+    dbShape: DocsV1Db.NavigationTabV2,
+    apis: Record<string, APIV1Read.ApiDefinition>,
+): DocsV1Read.NavigationTab {
+    switch (dbShape.type) {
+        case "link":
+            return dbShape;
+        case "group":
+            return {
+                ...dbShape,
+                items: dbShape.items.map((item) => transformNavigationItemForDb(item, apis)),
+            };
+        case "changelog":
+            return dbShape;
+        default:
+            assertNever(dbShape);
+    }
 }
 
 export function isNavigationTabLink(tab: DocsV1Db.NavigationTab): tab is DocsV1Read.NavigationTabLink {
@@ -196,6 +199,10 @@ export function transformNavigationItemForDb(
                 ...dbShape,
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item, apis)),
             };
+        case "changelog":
+            return dbShape;
+        default:
+            assertNever(dbShape);
     }
 }
 
