@@ -10,6 +10,7 @@ export * from "./NavigationConfig";
 export * from "./UnversionedNavigationConfig";
 export * from "./UnversionedTabbedNavigationConfig";
 export * from "./NavigationTab";
+export * from "./NavigationTabV2";
 export * from "./NavigationTabGroup";
 export * from "./UnversionedUntabbedNavigationConfig";
 export * from "./VersionedNavigationConfig";

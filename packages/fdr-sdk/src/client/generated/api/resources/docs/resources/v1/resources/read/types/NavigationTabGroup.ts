@@ -4,9 +4,7 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface NavigationTabGroup {
+export interface NavigationTabGroup extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     title: string;
-    icon?: string;
     items: FernRegistry.docs.v1.read.NavigationItem[];
-    urlSlug: string;
 }

@@ -5,6 +5,7 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
+  commons: ../commons/commons.yml
 
 types:
   DocsDefinitionDb:
@@ -14,27 +15,29 @@ types:
       v3: DocsDefinitionDbV3
 
   DocsDefinitionDbV1:
+    availability: deprecated
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
-      colors: optional<docsReadV1.ColorsConfig>
+      colors: optional<commons.ColorsConfig>
 
   DocsDefinitionDbV2:
+    availability: deprecated
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfo>
+      files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
-      colors: optional<docsReadV1.ColorsConfig>
-      typography: optional<docsReadV1.DocsTypographyConfig>
+      colors: optional<commons.ColorsConfig>
+      typography: optional<commons.DocsTypographyConfig>
 
   DocsDefinitionDbV3:
     properties:
-      pages: map<docsReadV1.PageId, docsReadV1.PageContent>
+      pages: map<commons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<docsReadV1.FileId, DbFileInfoV2>
+      files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
 
   DocsDbConfig:
@@ -43,46 +46,46 @@ types:
 
       # navigation
       navigation: NavigationConfig
-      navbarLinks: optional<list<docsReadV1.NavbarLink>>
-      footerLinks: optional<list<docsReadV1.FooterLink>>
+      navbarLinks: optional<list<commons.NavbarLink>>
+      footerLinks: optional<list<commons.FooterLink>>
 
       # logo
       logoHeight: optional<docsReadV1.Height>
-      logoHref: optional<docsReadV1.Url>
-      favicon: optional<docsReadV1.FileId>
+      logoHref: optional<commons.Url>
+      favicon: optional<commons.FileId>
 
       # seo
-      metadata: optional<docsReadV1.MetadataConfig>
-      redirects: optional<list<docsReadV1.RedirectConfig>>
+      metadata: optional<commons.MetadataConfig>
+      redirects: optional<list<commons.RedirectConfig>>
 
       # styles
-      backgroundImage: optional<docsReadV1.FileId>
+      backgroundImage: optional<commons.FileId>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
       layout: optional<docsReadV1.DocsLayoutConfig>
-      typographyV2: optional<docsReadV1.DocsTypographyConfigV2>
+      typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
-      integrations: optional<docsReadV1.IntegrationsConfig>
+      integrations: optional<commons.IntegrationsConfig>
 
       # css and js
-      css: optional<docsReadV1.CssConfig>
-      js: optional<docsReadV1.JsConfig>
+      css: optional<commons.CssConfig>
+      js: optional<commons.JsConfig>
 
       # deprecated
       logo:
-        type: optional<docsReadV1.FileId>
+        type: optional<commons.FileId>
         availability: deprecated
       logoV2:
-        type: optional<docsReadV1.LogoV2>
+        type: optional<commons.ThemedFileId>
         availability: deprecated
       colors:
-        type: optional<docsReadV1.ColorsConfig>
+        type: optional<commons.ColorsConfig>
         availability: deprecated
       colorsV2:
-        type: optional<docsReadV1.ColorsConfigV2>
+        type: optional<commons.ColorsConfigV2>
         availability: deprecated
       typography:
-        type: optional<docsReadV1.DocsTypographyConfig>
+        type: optional<commons.DocsTypographyConfig>
         availability: deprecated
 
   DbFileInfoV2:
@@ -116,13 +119,21 @@ types:
 
   UnversionedTabbedNavigationConfig:
     properties:
-      tabs: list<NavigationTab>
+      tabs: optional<list<NavigationTab>>
+      tabsV2: optional<list<NavigationTabV2>>
 
   NavigationTab:
+    availability: deprecated
     discriminated: false
     union:
       - NavigationTabGroup
       - docsReadV1.NavigationTabLink
+
+  NavigationTabV2:
+    union:
+      group: NavigationTabGroup
+      link: docsReadV1.NavigationTabLink
+      changelog: docsReadV1.ChangelogSection
 
   NavigationTabGroup:
     properties:
@@ -152,6 +163,7 @@ types:
       api: ApiSection
       section: DocsSection
       link: docsReadV1.LinkMetadata
+      changelog: docsReadV1.ChangelogSection
 
   ApiSection:
     properties:
