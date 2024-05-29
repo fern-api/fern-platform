@@ -429,24 +429,21 @@ export class ApiDefinitionResolver {
             return { auth, headers };
         }
 
-        const filteredHeaders: ResolvedObjectProperty[] = [];
-
         for (const header of headers) {
             if (
                 header.key.toLowerCase() === "authorization" ||
                 header.key.toLowerCase().includes("api-key") ||
                 header.key.toLowerCase().includes("apikey")
             ) {
-                auth = {
+                const auth: APIV1Read.ApiAuth = {
                     type: "header",
                     headerWireValue: header.key,
                 };
-                continue;
+                return { auth, headers: headers.filter((h) => h.key !== header.key) };
             }
-            filteredHeaders.push(header);
         }
 
-        return { auth, headers: filteredHeaders };
+        return { auth: undefined, headers };
     }
 
     async resolveWebsocketChannel(websocket: FlattenedWebSocketChannel): Promise<ResolvedWebSocketChannel> {
