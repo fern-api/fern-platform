@@ -1,0 +1,114 @@
+imports:
+  feature: feature.yml
+types:
+  ReadmeConfig:
+    docs: |
+      The configuration used to generate a README.md file.
+
+      The information described here is a combination of user-defined information
+      (i.e. specified in the generators.yml), and dynamically generated information
+      that comes from each generator (i.e. features, requirements, and more).
+    properties:
+      language: LanguageInfo
+      organization: string
+      bannerLink: optional<string>
+      docsLink: optional<string>
+      requirements: optional<list<string>>
+      features:
+        docs: |
+          Specifies the list of features supported by a specific generator.
+          The features are rendered in the order they're specified.
+        type: optional<list<ReadmeFeature>>
+
+  ReadmeFeature:
+    docs: |
+      A single feature supported by a generator (e.g. PAGINATION).
+    properties:
+      id: feature.FeatureId
+      description: optional<string>
+      addendum: optional<string>
+      snippets: optional<list<string>>
+      snippetsAreOptional:
+        docs: |
+          If true, the feature block should be rendered even if we don't receive a snippet for it.
+          This is useful for features that are always supported, but might not require a snippet
+          to explain.
+        type: boolean
+
+  LanguageInfo:
+    docs: |
+      The language and its associated publish information (if any).
+
+      This is used to generate badges, the installation guide, and determine what language to
+      use when surrounding the snippets in a code block.
+    union:
+      typescript: TypescriptInfo
+      python: PythonInfo
+      go: GoInfo
+      java: JavaInfo
+      ruby: RubyInfo
+      csharp: CsharpInfo
+
+  TypescriptInfo:
+    properties:
+      title: literal<"TypeScript">
+      format: literal<"ts">
+      publishInfo: optional<NpmPublishInfo>
+
+  PythonInfo:
+    properties:
+      title: literal<"Python">
+      format: literal<"python">
+      publishInfo: optional<PypiPublishInfo>
+
+  GoInfo:
+    properties:
+      title: literal<"Go">
+      format: literal<"go">
+      publishInfo: optional<GoPublishInfo>
+
+  JavaInfo:
+    properties:
+      title: literal<"Java">
+      format: literal<"java">
+      publishInfo: optional<MavenPublishInfo>
+
+  RubyInfo:
+    properties:
+      title: literal<"Ruby">
+      format: literal<"ruby">
+      publishInfo: optional<RubyGemsPublishInfo>
+
+  CsharpInfo:
+    properties:
+      title: literal<"C#">
+      format: literal<"csharp">
+      publishInfo: optional<NugetPublishInfo>
+
+  NpmPublishInfo:
+    properties:
+      packageName: string
+
+  PypiPublishInfo:
+    properties:
+      packageName: string
+
+  GoPublishInfo:
+    properties:
+      owner: string
+      repo: string
+      version: string
+
+  MavenPublishInfo:
+    properties:
+      artifact: string
+      group: string
+      version: string
+
+  RubyGemsPublishInfo:
+    properties:
+      packageName: string
+
+  NugetPublishInfo:
+    properties:
+      packageName: string
