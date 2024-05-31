@@ -9,7 +9,7 @@ To run the ReadMe migrator:
 1. Unzip file
 1. Run migrator using `npm run migrate`
 1. When prompted, enter the path to the unzipped docs file
-1. The migrator will then prompt you to specify which subfolders you would like to migrate to Fern docs. 
+1. The migrator will then prompt you to specify which folders you would like to migrate to Fern docs. 
 
 Successfully converted files will be stored in a *pages* folder, and any corresponding images will be stored in an *images* folder. 
 
