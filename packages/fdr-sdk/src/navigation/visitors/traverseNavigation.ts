@@ -35,8 +35,10 @@ export function traverseNavigation(
             versioned: (versioned) => internalChildrenTraverser(versioned.children, [...parents, versioned]),
             tabbed: (tabbed) => internalChildrenTraverser(tabbed.children, [...parents, tabbed]),
             sidebarRoot: (sidebar) => internalChildrenTraverser(sidebar.children, [...parents, sidebar]),
+            sidebarGroup: (sidebarGroup) =>
+                internalChildrenTraverser(sidebarGroup.children, [...parents, sidebarGroup]),
             version: (version) => internalTraverser(version.child, undefined, [...parents, version]),
-            tab: (tab) => internalChildrenTraverser(tab.children, [...parents, tab]),
+            tab: (tab) => internalTraverser(tab.child, undefined, [...parents, tab]),
             link: noop,
             page: noop,
             section: (section) => internalChildrenTraverser(section.children, [...parents, section]),

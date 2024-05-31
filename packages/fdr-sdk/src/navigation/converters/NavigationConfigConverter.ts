@@ -1,4 +1,5 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { last } from "lodash-es";
 import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
 import { FernNavigation } from "../generated";
 import { convertAvailability } from "../utils/convertAvailability";
@@ -94,7 +95,12 @@ export class NavigationConfigConverter {
                             slug,
                             icon: tab.icon,
                             hidden: false,
-                            children: tab.items.map((item) => this.convertNavigationItem(item, baseSlug, slug)),
+                            child: {
+                                type: "sidebarRoot",
+                                children: this.groupSidebarRootChildren(
+                                    tab.items.map((item) => this.convertNavigationItem(item, baseSlug, slug)),
+                                ),
+                            },
                         };
                     } else if (tab.type === "link") {
                         return {
@@ -112,9 +118,39 @@ export class NavigationConfigConverter {
             }),
             untabbed: (untabbed) => ({
                 type: "sidebarRoot",
-                children: untabbed.items.map((item) => this.convertNavigationItem(item, baseSlug, parentSlug)),
+                children: this.groupSidebarRootChildren(
+                    untabbed.items.map((item) => this.convertNavigationItem(item, baseSlug, parentSlug)),
+                ),
             }),
         });
+    }
+
+    private groupSidebarRootChildren(children: FernNavigation.NavigationChild[]): FernNavigation.SidebarRootChild[] {
+        const grouped: FernNavigation.SidebarRootChild[] = [];
+        children.forEach((child) => {
+            if (child.type === "apiReference") {
+                grouped.push(child);
+            }
+
+            if (child.type === "section" && !child.collapsed) {
+                grouped.push(child);
+            }
+
+            const lastChild = last(grouped);
+            let sidebarGroup: FernNavigation.SidebarGroupNode;
+            if (lastChild?.type === "sidebarGroup") {
+                sidebarGroup = lastChild;
+            } else {
+                sidebarGroup = {
+                    type: "sidebarGroup",
+                    children: [],
+                };
+                grouped.push(sidebarGroup);
+            }
+
+            sidebarGroup.children.push(child);
+        });
+        return grouped;
     }
 
     private convertNavigationItem(

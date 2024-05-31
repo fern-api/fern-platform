@@ -1,15 +1,11 @@
-import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
+import { DocsV2Read, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { buildUrl, getNavigationRoot, isVersionedNavigationConfig } from "@fern-ui/fdr-utils";
-import {
-    DocsPage,
-    DocsPageResult,
-    convertNavigatableToResolvedPath,
-    serializeSidebarNodeDescriptionMdx,
-} from "@fern-ui/ui";
+import { buildUrl, isVersionedNavigationConfig } from "@fern-ui/fdr-utils";
+import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import urljoin from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
@@ -156,10 +152,6 @@ async function convertDocsToDocsPageProps({
     url: string;
     xFernHost: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
-    const docsDefinition = docs.definition;
-    const docsConfig = docsDefinition.config;
-    const pages = docs.definition.pages;
-
     const redirect = getRedirectForPath(xFernHost, `/${slug.join("/")}`);
 
     if (redirect != null) {
@@ -172,43 +164,49 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const navigation = getNavigationRoot(
-        slug,
-        docs.baseUrl.domain,
-        docs.baseUrl.basePath,
-        docsConfig.navigation,
-        docs.definition.apis,
-        pages,
-    );
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const node = FernNavigation.utils.findNode(root, slug);
 
-    if (navigation == null) {
+    // const navigation = getNavigationRoot(
+    //     slug,
+    //     docs.baseUrl.domain,
+    //     docs.baseUrl.basePath,
+    //     docsConfig.navigation,
+    //     docs.definition.apis,
+    //     pages,
+    // );
+
+    if (node.type === "notFound") {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
-        return handleNotFound(docs, slug);
+        if (node.redirect != null) {
+            return {
+                type: "redirect",
+                redirect: {
+                    destination: urljoin("/", ...node.redirect),
+                    permanent: false,
+                },
+            };
+        }
+        return { type: "notFound", notFound: true };
     }
 
-    if (navigation.type === "redirect") {
+    if (node.type === "redirect") {
         return {
             type: "redirect",
             redirect: {
-                destination: navigation.redirect,
+                destination: urljoin("/", ...node.redirect),
                 permanent: false,
             },
         };
     }
 
-    const sidebarNodes = await Promise.all(
-        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
-    );
-
     const featureFlags = await getFeatureFlags(xFernHost);
 
     const resolvedPath = await convertNavigatableToResolvedPath({
-        currentNode: navigation.found.currentNode,
-        rawSidebarNodes: navigation.found.sidebarNodes,
-        sidebarNodes,
-        apis: docsDefinition.apis,
-        pages: docsDefinition.pages,
+        node,
+        apis: docs.definition.apis,
+        pages: docs.definition.pages,
         domain: docs.baseUrl.domain,
         featureFlags,
     });
@@ -258,11 +256,11 @@ async function convertDocsToDocsPageProps({
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {
-            currentTabIndex: navigation.found.currentTabIndex,
+            currentTabIndex: node.currentTabIndex,
             tabs: navigation.found.tabs,
             currentVersionIndex: navigation.found.currentVersionIndex,
             versions: navigation.found.versions,
-            sidebarNodes,
+            sidebar: node.sidebar,
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),

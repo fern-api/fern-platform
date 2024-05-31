@@ -5,18 +5,19 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
+import { SidebarRootChild } from "./SidebarRootChild";
 
 export const SidebarRootNode: core.serialization.ObjectSchema<
     serializers.SidebarRootNode.Raw,
     FernNavigation.SidebarRootNode
 > = core.serialization.objectWithoutOptionalProperties({
     type: core.serialization.stringLiteral("sidebarRoot"),
-    children: core.serialization.list(core.serialization.lazy(async () => (await import("..")).NavigationChild)),
+    children: core.serialization.list(SidebarRootChild),
 });
 
 export declare namespace SidebarRootNode {
     interface Raw {
         type: "sidebarRoot";
-        children: serializers.NavigationChild.Raw[];
+        children: SidebarRootChild.Raw[];
     }
 }

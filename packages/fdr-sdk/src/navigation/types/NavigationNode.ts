@@ -5,6 +5,7 @@ export type NavigationNode =
     | FernNavigation.VersionedNode
     | FernNavigation.TabbedNode
     | FernNavigation.SidebarRootNode
+    | FernNavigation.SidebarGroupNode
     | FernNavigation.VersionNode
     | FernNavigation.TabNode
     | FernNavigation.LinkNode

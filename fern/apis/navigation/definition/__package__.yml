@@ -30,6 +30,13 @@ types:
       - LinkNode
       - ChangelogNode
 
+  SidebarRootChild:
+    discriminated: false
+    union:
+      - SidebarGroupNode
+      - ApiReferenceNode
+      - SectionNode
+
   NavigationChild:
     discriminated: false
     union:
@@ -65,6 +72,11 @@ types:
   SidebarRootNode:
     properties:
       type: literal<"sidebarRoot">
+      children: list<SidebarRootChild>
+
+  SidebarGroupNode:
+    properties:
+      type: literal<"sidebarGroup">
       children: list<NavigationChild>
 
   EndpointPairNode:
@@ -93,7 +105,7 @@ types:
     extends: WithNodeMetadata
     properties:
       type: literal<"tab">
-      children: list<NavigationChild>
+      child: SidebarRootNode
 
   LinkNode:
     properties:

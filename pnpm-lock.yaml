@@ -1454,6 +1454,9 @@ importers:
       sharp:
         specifier: ^0.33.3
         version: 0.33.3
+      url-join:
+        specifier: 4.0.1
+        version: 4.0.1
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -1479,6 +1482,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.3.0
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)

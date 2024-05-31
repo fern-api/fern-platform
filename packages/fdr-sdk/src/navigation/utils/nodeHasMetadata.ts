@@ -11,6 +11,7 @@ export function nodeHasMetadata(node: NavigationNode): node is NavigationNodeWit
         sidebarRoot: RETURN_FALSE,
         link: RETURN_FALSE,
         endpointPair: RETURN_FALSE,
+        sidebarGroup: RETURN_FALSE,
 
         // The following nodes have metadata
         root: RETURN_TRUE,

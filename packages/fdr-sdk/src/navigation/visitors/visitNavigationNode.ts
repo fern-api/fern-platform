@@ -11,6 +11,7 @@ export function visitNavigationNode<T>(node: NavigationNode, visitor: Navigation
         versioned: visitor.versioned,
         tabbed: visitor.tabbed,
         sidebarRoot: visitor.sidebarRoot,
+        sidebarGroup: visitor.sidebarGroup,
         version: visitor.version,
         tab: visitor.tab,
         link: visitor.link,

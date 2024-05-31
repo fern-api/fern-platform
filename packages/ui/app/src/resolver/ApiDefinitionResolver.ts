@@ -1,7 +1,6 @@
-import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import {
-    FlattenedApiDefinition,
     FlattenedApiDefinitionPackage,
     FlattenedApiDefinitionPackageItem,
     FlattenedEndpointDefinition,
@@ -47,31 +46,28 @@ interface MergedAuthAndHeaders {
 
 export class ApiDefinitionResolver {
     public static async resolve(
-        title: string,
-        apiDefinition: FlattenedApiDefinition,
+        root: FernNavigation.ApiReferenceNode,
+        holder: FernNavigation.ApiDefinitionHolder,
+        typeResolver: ApiTypeResolver,
         pages: Record<string, DocsV1Read.PageContent>,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
         domain: string,
     ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(apiDefinition, pages, featureFlags, domain);
-        return resolver.resolveApiDefinition(title, mdxOptions);
+        const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, domain);
+        return resolver.resolveApiDefinition(root.title, mdxOptions);
     }
 
-    private apiTypeResolver;
     private resolvedTypes: Record<string, ResolvedTypeDefinition> = {};
 
     private constructor(
-        private apiDefinition: FlattenedApiDefinition,
+        private root: FernNavigation.ApiReferenceNode,
+        private holder: FernNavigation.ApiDefinitionHolder,
+        private typeResolver: ApiTypeResolver,
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
         private domain: string,
-        // filteredTypes?: string[],
-    ) {
-        this.apiDefinition = apiDefinition;
-        this.pages = pages;
-        this.apiTypeResolver = new ApiTypeResolver(apiDefinition.types);
-    }
+    ) {}
 
     private async resolveApiDefinition(
         title: string,
@@ -87,11 +83,11 @@ export class ApiDefinitionResolver {
         //         ),
         //     ),
         // );
-        this.resolvedTypes = await this.apiTypeResolver.resolve();
+        this.resolvedTypes = await this.typeResolver.resolve();
 
         const withPackage = await this.resolveApiDefinitionPackage(
             title,
-            this.apiDefinition.api,
+            this.root.apiDefinitionId,
             this.apiDefinition,
             mdxOptions,
         );

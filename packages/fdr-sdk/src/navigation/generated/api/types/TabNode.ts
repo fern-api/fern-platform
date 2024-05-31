@@ -6,5 +6,5 @@ import * as FernNavigation from "../index";
 
 export interface TabNode extends FernNavigation.WithNodeMetadata {
     type: "tab";
-    children: FernNavigation.NavigationChild[];
+    child: FernNavigation.SidebarRootNode;
 }

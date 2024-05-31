@@ -1,6 +1,7 @@
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
+import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
 import { convertAvailability } from "../utils/convertAvailability";
 import { createSlug } from "../utils/createSlug";
@@ -18,15 +19,13 @@ export class ApiReferenceNavigationConverter {
         return new ApiReferenceNavigationConverter(apiSection, apis, baseSlug, parentSlug).convert();
     }
 
-    private api: APIV1Read.ApiDefinition;
-    private apiDefinitionId: FernNavigation.ApiDefinitionId;
-    private endpoints = new Map<FernNavigation.EndpointId, APIV1Read.EndpointDefinition>();
-    private webSockets = new Map<FernNavigation.WebSocketId, APIV1Read.WebSocketChannel>();
-    private webhooks = new Map<FernNavigation.WebhookId, APIV1Read.WebhookDefinition>();
-    private visitedEndpoints = new Set<FernNavigation.EndpointId>();
-    private visitedWebSockets = new Set<FernNavigation.WebSocketId>();
-    private visitedWebhooks = new Set<FernNavigation.WebhookId>();
-    private visitedSubpackages = new Set<string>();
+    api: APIV1Read.ApiDefinition;
+    apiDefinitionId: FernNavigation.ApiDefinitionId;
+    #holder: ApiDefinitionHolder;
+    #visitedEndpoints = new Set<FernNavigation.EndpointId>();
+    #visitedWebSockets = new Set<FernNavigation.WebSocketId>();
+    #visitedWebhooks = new Set<FernNavigation.WebhookId>();
+    #visitedSubpackages = new Set<string>();
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
         apis: Record<string, APIV1Read.ApiDefinition>,
@@ -38,18 +37,7 @@ export class ApiReferenceNavigationConverter {
             throw new Error(`API ${apiSection.api} not found}`);
         }
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(this.api.id);
-        [this.api.rootPackage, ...Object.values(this.api.subpackages)].forEach((package_) => {
-            const subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
-            package_.endpoints.forEach((endpoint) => {
-                this.endpoints.set(createEndpointId(endpoint, subpackageId), endpoint);
-            });
-            package_.websockets.forEach((webSocket) => {
-                this.webSockets.set(createWebSocketId(webSocket, subpackageId), webSocket);
-            });
-            package_.webhooks.forEach((webhook) => {
-                this.webhooks.set(createWebhookId(webhook, subpackageId), webhook);
-            });
-        });
+        this.#holder = ApiDefinitionHolder.create(this.api);
     }
 
     private convert(): FernNavigation.ApiReferenceNode {
@@ -155,35 +143,35 @@ export class ApiReferenceNavigationConverter {
             }
         }
 
-        if (this.visitedSubpackages.has(subpackageId)) {
+        if (this.#visitedSubpackages.has(subpackageId)) {
             return children;
         }
 
         package_.endpoints.forEach((endpoint) => {
-            const endpointId = createEndpointId(endpoint, subpackageId);
-            if (this.visitedEndpoints.has(endpointId)) {
+            const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
+            if (this.#visitedEndpoints.has(endpointId)) {
                 return;
             }
             children.push(this.convertEndpointNode(endpointId, endpoint, parentSlug));
-            this.visitedEndpoints.add(endpointId);
+            this.#visitedEndpoints.add(endpointId);
         });
 
         package_.websockets.forEach((webSocket) => {
-            const webSocketId = createWebSocketId(webSocket, subpackageId);
-            if (this.visitedWebSockets.has(webSocketId)) {
+            const webSocketId = ApiDefinitionHolder.createWebSocketId(webSocket, subpackageId);
+            if (this.#visitedWebSockets.has(webSocketId)) {
                 return;
             }
             children.push(this.convertWebSocketNode(webSocketId, webSocket, parentSlug));
-            this.visitedWebSockets.add(webSocketId);
+            this.#visitedWebSockets.add(webSocketId);
         });
 
         package_.webhooks.forEach((webhook) => {
-            const webhookId = createWebhookId(webhook, subpackageId);
-            if (this.visitedWebhooks.has(webhookId)) {
+            const webhookId = ApiDefinitionHolder.createWebhookId(webhook, subpackageId);
+            if (this.#visitedWebhooks.has(webhookId)) {
                 return;
             }
             children.push(this.convertWebhookNode(webhookId, webhook, parentSlug));
-            this.visitedWebhooks.add(webhookId);
+            this.#visitedWebhooks.add(webhookId);
         });
 
         package_.subpackages.forEach((subpackageId) => {
@@ -210,7 +198,7 @@ export class ApiReferenceNavigationConverter {
             });
         });
 
-        this.visitedSubpackages.add(subpackageId);
+        this.#visitedSubpackages.add(subpackageId);
 
         return this.mergeEndpointPairs(children);
     }
@@ -233,13 +221,13 @@ export class ApiReferenceNavigationConverter {
         const webSockets = new Map<string, APIV1Read.WebSocketChannel>();
         const webhooks = new Map<string, APIV1Read.WebhookDefinition>();
         subpackage.endpoints.forEach((endpoint) => {
-            endpoints.set(createEndpointId(endpoint, targetSubpackageId), endpoint);
+            endpoints.set(endpoint.id, endpoint);
         });
         subpackage.websockets.forEach((webSocket) => {
-            webSockets.set(createWebSocketId(webSocket, targetSubpackageId), webSocket);
+            webSockets.set(webSocket.id, webSocket);
         });
         subpackage.webhooks.forEach((webhook) => {
-            webhooks.set(createWebhookId(webhook, targetSubpackageId), webhook);
+            webhooks.set(webhook.id, webhook);
         });
         items.forEach((item) => {
             visitDiscriminatedUnion(item, "type")._visit({
@@ -260,9 +248,9 @@ export class ApiReferenceNavigationConverter {
                         console.error(`Endpoint ${oldEndpointId.value} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const endpointId = createEndpointId(endpoint, targetSubpackageId);
+                    const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, targetSubpackageId);
                     children.push(this.convertEndpointNode(endpointId, endpoint, parentSlug));
-                    this.visitedEndpoints.add(endpointId);
+                    this.#visitedEndpoints.add(endpointId);
                 },
                 websocketId: (oldWebSocketId) => {
                     const webSocket = webSockets.get(oldWebSocketId.value);
@@ -271,9 +259,9 @@ export class ApiReferenceNavigationConverter {
                         console.error(`WebSocket ${oldWebSocketId.value} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const webSocketId = createWebSocketId(webSocket, targetSubpackageId);
+                    const webSocketId = ApiDefinitionHolder.createWebSocketId(webSocket, targetSubpackageId);
                     children.push(this.convertWebSocketNode(webSocketId, webSocket, parentSlug));
-                    this.visitedWebSockets.add(webSocketId);
+                    this.#visitedWebSockets.add(webSocketId);
                 },
                 webhookId: (oldWebhookId) => {
                     const webhook = webhooks.get(oldWebhookId.value);
@@ -282,9 +270,9 @@ export class ApiReferenceNavigationConverter {
                         console.error(`Webhook ${oldWebhookId.value} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const webhookId = createWebhookId(webhook, targetSubpackageId);
+                    const webhookId = ApiDefinitionHolder.createWebhookId(webhook, targetSubpackageId);
                     children.push(this.convertWebhookNode(webhookId, webhook, parentSlug));
-                    this.visitedWebhooks.add(webhookId);
+                    this.#visitedWebhooks.add(webhookId);
                 },
                 subpackage: ({ subpackageId, items }) => {
                     const subpackage = this.api.subpackages[subpackageId];
@@ -309,7 +297,7 @@ export class ApiReferenceNavigationConverter {
                 return;
             }
 
-            const endpoint = this.endpoints.get(child.endpointId);
+            const endpoint = this.#holder.endpoints.get(child.endpointId);
             if (endpoint == null) {
                 throw new Error(`Endpoint ${child.endpointId} not found`);
             }
@@ -340,14 +328,4 @@ export class ApiReferenceNavigationConverter {
 
         return toRet;
     }
-}
-
-function createEndpointId(endpoint: APIV1Read.EndpointDefinition, subpackageId: string): FernNavigation.EndpointId {
-    return FernNavigation.EndpointId(endpoint.originalEndpointId ?? `${subpackageId}.${endpoint.id}`);
-}
-function createWebSocketId(webSocket: APIV1Read.WebSocketChannel, subpackageId: string): FernNavigation.WebSocketId {
-    return FernNavigation.WebSocketId(`${subpackageId}.${webSocket.id}`);
-}
-function createWebhookId(webhook: APIV1Read.WebhookDefinition, subpackageId: string): FernNavigation.WebhookId {
-    return FernNavigation.WebhookId(`${subpackageId}.${webhook.id}`);
 }

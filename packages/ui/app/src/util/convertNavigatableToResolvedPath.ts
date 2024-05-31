@@ -1,13 +1,8 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import {
-    SidebarNode,
-    SidebarNodeRaw,
-    findApiSection,
-    flattenApiDefinition,
-    traverseSidebarNodes,
-} from "@fern-ui/fdr-utils";
+import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { SidebarNode, flattenApiDefinition } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import urljoin from "url-join";
 import { captureSentryError } from "../analytics/sentry";
 import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import {
@@ -17,6 +12,7 @@ import {
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
 import { ResolvedRootPackage } from "../resolver/types";
 import { Changelog } from "./dateUtils";
@@ -32,15 +28,19 @@ function getFrontmatter(content: string): FernDocsFrontmatter {
 }
 
 async function getSubtitle(
-    node: SidebarNode.Page,
+    node: FernNavigation.NavigationNodeWithContent,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<MDXRemoteSerializeResult | string | undefined> {
-    try {
-        const content = pages[node.id]?.markdown;
-        if (content == null) {
-            return;
-        }
+    const pageId = FernNavigation.utils.getPageId(node);
+    if (pageId == null) {
+        return;
+    }
+    const content = pages[pageId]?.markdown;
+    if (content == null) {
+        return;
+    }
 
+    try {
         const frontmatter = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
             return await maybeSerializeMdxContent(frontmatter.excerpt);
@@ -55,8 +55,8 @@ async function getSubtitle(
             errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
             data: {
                 pageTitle: node.title,
-                pageId: node.id,
-                route: `/${node.slug.join("/")}`,
+                pageId,
+                route: urljoin("/", ...node.slug),
             },
         });
         return undefined;
@@ -64,50 +64,35 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
-    rawSidebarNodes,
-    sidebarNodes,
-    currentNode,
+    node,
     apis,
     pages,
     mdxOptions,
     domain,
     featureFlags,
 }: {
-    rawSidebarNodes: readonly SidebarNodeRaw[];
-    sidebarNodes: SidebarNode[];
-    currentNode: SidebarNodeRaw.VisitableNode;
+    node: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     domain: string;
     featureFlags: FeatureFlags;
 }): Promise<ResolvedPath | undefined> {
-    const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
+    const neighbors = await getNeighbors(node, pages);
 
-    if (traverseState.curr == null) {
-        return;
-    }
-
-    const neighbors = await getNeighbors(traverseState, pages);
-
-    if (currentNode.slug.join("/") !== traverseState.curr.slug.join("/")) {
-        return {
-            type: "redirect",
-            fullSlug: traverseState.curr.slug.join("/"),
-        };
-    }
-
-    if (SidebarNode.isApiPage(traverseState.curr)) {
-        const api = apis[traverseState.curr.api];
-        const apiSection = findApiSection(traverseState.curr.api, rawSidebarNodes);
-        if (api == null || apiSection == null) {
+    if (node.apiReference != null) {
+        const api = apis[node.apiReference.apiDefinitionId];
+        if (api == null) {
             return;
         }
+        const holder = FernNavigation.ApiDefinitionHolder.create(api);
+        const typeResolver = new ApiTypeResolver(api.types);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
         const apiDefinition = await ApiDefinitionResolver.resolve(
-            traverseState.curr.title,
+            node.apiReference,
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            apiSection.flattenedApiDefinition!,
+            holder,
+            typeResolver,
             pages,
             mdxOptions,
             featureFlags,
@@ -115,8 +100,8 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "api-page",
-            fullSlug: traverseState.curr.slug.join("/"),
-            api: traverseState.curr.api,
+            fullSlug: node.node.slug.join("/"),
+            api: node.apiReference.apiDefinitionId,
             apiDefinition,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiSection.showErrors,
@@ -201,27 +186,24 @@ export async function convertNavigatableToResolvedPath({
 }
 
 async function getNeighbor(
-    sidebarNode: SidebarNode.Page | undefined,
+    node: FernNavigation.NavigationNodeWithContent | undefined,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedPath.Neighbor | null> {
-    if (sidebarNode == null) {
+    if (node == null) {
         return null;
     }
-    const excerpt = await getSubtitle(sidebarNode, pages);
+    const excerpt = await getSubtitle(node, pages);
     return {
-        fullSlug: sidebarNode.slug.join("/"),
-        title: sidebarNode.title,
+        fullSlug: urljoin(node.slug),
+        title: node.title,
         excerpt,
     };
 }
 
 async function getNeighbors(
-    traverseState: ReturnType<typeof traverseSidebarNodes>,
+    node: FernNavigation.utils.Node.Found,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedPath.Neighbors> {
-    const [prev, next] = await Promise.all([
-        getNeighbor(traverseState.prev, pages),
-        getNeighbor(traverseState.next, pages),
-    ]);
+    const [prev, next] = await Promise.all([getNeighbor(node.prev, pages), getNeighbor(node.next, pages)]);
     return { prev, next };
 }
