@@ -7,16 +7,24 @@
     ],
     "icon": "fa-regular fa-clock",
     "hidden": false,
-    "children": [
-      {
-        "type": "page",
-        "pageId": "docs/changelog/2024.mdx",
-        "title": "Changelog",
-        "slug": [
-          "changelog"
-        ],
-        "hidden": false
-      }
-    ]
+    "child": {
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "type": "sidebarGroup",
+          "children": [
+            {
+              "type": "page",
+              "pageId": "docs/changelog/2024.mdx",
+              "title": "Changelog",
+              "slug": [
+                "changelog"
+              ],
+              "hidden": false
+            }
+          ]
+        }
+      ]
+    }
   }
 ]

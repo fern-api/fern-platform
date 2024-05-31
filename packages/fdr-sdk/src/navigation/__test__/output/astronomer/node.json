@@ -59,6 +59,7 @@
           "platform-api-reference"
         ],
         "hidden": false,
+        "showErrors": false,
         "changelog": {
           "type": "changelog",
           "title": "Changelog",
@@ -217,7 +218,8 @@
               "api",
               "platform-api-reference",
               "organization"
-            ]
+            ],
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7"
           },
           {
             "type": "apiSection",
@@ -259,7 +261,8 @@
               "api",
               "platform-api-reference",
               "options"
-            ]
+            ],
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7"
           },
           {
             "type": "apiSection",
@@ -346,7 +349,8 @@
               "api",
               "platform-api-reference",
               "cluster"
-            ]
+            ],
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7"
           },
           {
             "type": "apiSection",
@@ -463,7 +467,8 @@
               "api",
               "platform-api-reference",
               "deployment"
-            ]
+            ],
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7"
           },
           {
             "type": "apiSection",
@@ -565,7 +570,8 @@
               "api",
               "platform-api-reference",
               "deploy"
-            ]
+            ],
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7"
           },
           {
             "type": "apiSection",
@@ -652,7 +658,8 @@
               "api",
               "platform-api-reference",
               "workspace"
-            ]
+            ],
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7"
           }
         ]
       },
@@ -666,6 +673,7 @@
           "iam-api-reference"
         ],
         "hidden": false,
+        "showErrors": false,
         "changelog": {
           "type": "changelog",
           "title": "Changelog",
@@ -749,7 +757,8 @@
               "api",
               "iam-api-reference",
               "authorization"
-            ]
+            ],
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8"
           },
           {
             "type": "apiSection",
@@ -791,7 +800,8 @@
               "api",
               "iam-api-reference",
               "invite"
-            ]
+            ],
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8"
           },
           {
             "type": "apiSection",
@@ -893,7 +903,8 @@
               "api",
               "iam-api-reference",
               "role"
-            ]
+            ],
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8"
           },
           {
             "type": "apiSection",
@@ -1040,7 +1051,8 @@
               "api",
               "iam-api-reference",
               "team"
-            ]
+            ],
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8"
           },
           {
             "type": "apiSection",
@@ -1157,7 +1169,8 @@
               "api",
               "iam-api-reference",
               "api-token"
-            ]
+            ],
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8"
           },
           {
             "type": "apiSection",
@@ -1214,7 +1227,8 @@
               "api",
               "iam-api-reference",
               "user"
-            ]
+            ],
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8"
           }
         ]
       }

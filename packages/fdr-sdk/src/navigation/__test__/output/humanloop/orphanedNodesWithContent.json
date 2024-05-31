@@ -1,1 +1,4303 @@
-[]
+[
+  {
+    "type": "apiReference",
+    "title": "Humanloop API",
+    "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+    "overviewPageId": "apis/v4/summary.md",
+    "slug": [
+      "docs/api-reference"
+    ],
+    "hidden": false,
+    "hideTitle": false,
+    "showErrors": true,
+    "changelog": {
+      "type": "changelog",
+      "title": "Changelog",
+      "slug": [
+        "docs/api-reference",
+        "changelog"
+      ],
+      "hidden": false,
+      "children": [
+        {
+          "type": "changelogYear",
+          "title": "2024",
+          "year": 2024,
+          "slug": [
+            "docs/api-reference",
+            "changelog",
+            "2024"
+          ],
+          "children": [
+            {
+              "type": "changelogMonth",
+              "title": "3",
+              "month": 3,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "3"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "April 29, 2024",
+                  "date": "2024-04-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-30.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 25, 2024",
+                  "date": "2024-04-26T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-26.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "25"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 22, 2024",
+                  "date": "2024-04-23T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-23.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "22"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 17, 2024",
+                  "date": "2024-04-18T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-18.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "17"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 15, 2024",
+                  "date": "2024-04-16T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-16.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "15"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 12, 2024",
+                  "date": "2024-04-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-13.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "12"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 4, 2024",
+                  "date": "2024-04-05T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-05.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "4"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "2",
+              "month": 2,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "2"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "March 24, 2024",
+                  "date": "2024-03-25T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-25.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "24"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 17, 2024",
+                  "date": "2024-03-18T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-18.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "17"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 6, 2024",
+                  "date": "2024-03-07T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-07.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "6"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 5, 2024",
+                  "date": "2024-03-06T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-06.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "5"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "1",
+              "month": 1,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "1"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "February 25, 2024",
+                  "date": "2024-02-26T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-26.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "25"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 13, 2024",
+                  "date": "2024-02-14T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-14.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "13"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 12, 2024",
+                  "date": "2024-02-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-13.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "12"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 8, 2024",
+                  "date": "2024-02-09T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-09.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "8"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 7, 2024",
+                  "date": "2024-02-08T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-08.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "7"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 1, 2024",
+                  "date": "2024-02-02T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-02.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "1"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "0",
+              "month": 0,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "0"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "January 29, 2024",
+                  "date": "2024-01-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-30.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "January 18, 2024",
+                  "date": "2024-01-19T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-19.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "18"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "January 11, 2024",
+                  "date": "2024-01-12T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-12.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "11"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "January 10, 2024",
+                  "date": "2024-01-11T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-11.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "10"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "changelogYear",
+          "title": "2023",
+          "year": 2023,
+          "slug": [
+            "docs/api-reference",
+            "changelog",
+            "2023"
+          ],
+          "children": [
+            {
+              "type": "changelogMonth",
+              "title": "11",
+              "month": 11,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "11"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "December 21, 2023",
+                  "date": "2023-12-22T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-22.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "21"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 20, 2023",
+                  "date": "2023-12-21T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-21.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "20"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 12, 2023",
+                  "date": "2023-12-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-13.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "12"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 11, 2023",
+                  "date": "2023-12-12T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-12.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "11"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 4, 2023",
+                  "date": "2023-12-05T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-05.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "4"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 3, 2023",
+                  "date": "2023-12-04T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-04.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "3"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "10",
+              "month": 10,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "10"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "November 27, 2023",
+                  "date": "2023-11-28T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-28.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "27"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 21, 2023",
+                  "date": "2023-11-22T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-22.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "21"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 20, 2023",
+                  "date": "2023-11-21T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-21.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "20"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 19, 2023",
+                  "date": "2023-11-20T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-20.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "19"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 16, 2023",
+                  "date": "2023-11-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-17.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "16"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 9, 2023",
+                  "date": "2023-11-10T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-10.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "9"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 8, 2023",
+                  "date": "2023-11-09T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-09.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "8"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 7, 2023",
+                  "date": "2023-11-08T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-08.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "7"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "9",
+              "month": 9,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "9"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "October 31, 2023",
+                  "date": "2023-11-01T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-01.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "31"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 29, 2023",
+                  "date": "2023-10-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-30.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 16, 2023",
+                  "date": "2023-10-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-17.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "16"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 15, 2023",
+                  "date": "2023-10-16T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-16.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "15"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 9, 2023",
+                  "date": "2023-10-10T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-10.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "9"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "8",
+              "month": 8,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "8"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "September 14, 2023",
+                  "date": "2023-09-15T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-09-15.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "8",
+                    "14"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "September 12, 2023",
+                  "date": "2023-09-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-09-13.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "8",
+                    "12"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "7",
+              "month": 7,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "7"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "August 30, 2023",
+                  "date": "2023-08-31T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-31.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "30"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "August 20, 2023",
+                  "date": "2023-08-21T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-21.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "20"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "August 14, 2023",
+                  "date": "2023-08-15T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-15.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "14"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "August 13, 2023",
+                  "date": "2023-08-14T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-14.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "13"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "6",
+              "month": 6,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "6"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "July 29, 2023",
+                  "date": "2023-07-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-30.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 24, 2023",
+                  "date": "2023-07-25T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-25.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "24"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 23, 2023",
+                  "date": "2023-07-24T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-24.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "23"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 16, 2023",
+                  "date": "2023-07-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-17.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "16"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 6, 2023",
+                  "date": "2023-07-07T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-07.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "6"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 4, 2023",
+                  "date": "2023-07-05T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-05.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "4"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 2, 2023",
+                  "date": "2023-07-03T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-03.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "2"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "5",
+              "month": 5,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "5"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "June 26, 2023",
+                  "date": "2023-06-27T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-06-27.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "5",
+                    "26"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "June 19, 2023",
+                  "date": "2023-06-20T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-06-20.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "5",
+                    "19"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "June 12, 2023",
+                  "date": "2023-06-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-06-13.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "5",
+                    "12"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "4",
+              "month": 4,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "4"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "May 22, 2023",
+                  "date": "2023-05-23T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-05-23.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "4",
+                    "22"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "May 16, 2023",
+                  "date": "2023-05-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-05-17.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "4",
+                    "16"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "3",
+              "month": 3,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "3"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "April 2, 2023",
+                  "date": "2023-04-03T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-04-03.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "3",
+                    "2"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "2",
+              "month": 2,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "2"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "March 29, 2023",
+                  "date": "2023-03-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-03-30.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "2",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 1, 2023",
+                  "date": "2023-03-02T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-03-02.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "2",
+                    "1"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "1",
+              "month": 1,
+              "slug": [
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "1"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "February 19, 2023",
+                  "date": "2023-02-20T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-02-20.md",
+                  "slug": [
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "1",
+                    "19"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "children": [
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Chat",
+            "endpointId": "endpoint_chats.create",
+            "slug": [
+              "docs/api-reference",
+              "chats",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Chat Deployed",
+            "endpointId": "endpoint_chats.createdeployed",
+            "slug": [
+              "docs/api-reference",
+              "chats",
+              "createdeployed"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Chat Experiment",
+            "endpointId": "endpoint_chats.createexperiment",
+            "slug": [
+              "docs/api-reference",
+              "chats",
+              "createexperiment"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Chat Model Config",
+            "endpointId": "endpoint_chats.createmodelconfig",
+            "slug": [
+              "docs/api-reference",
+              "chats",
+              "createmodelconfig"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "chats",
+        "slug": [
+          "docs/api-reference",
+          "chats"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_completions.create",
+            "slug": [
+              "docs/api-reference",
+              "completions",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Completion Deployed",
+            "endpointId": "endpoint_completions.createdeployed",
+            "slug": [
+              "docs/api-reference",
+              "completions",
+              "createdeployed"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Completion Experiment",
+            "endpointId": "endpoint_completions.createexperiment",
+            "slug": [
+              "docs/api-reference",
+              "completions",
+              "createexperiment"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Completion Model Config",
+            "endpointId": "endpoint_completions.createmodelconfig",
+            "slug": [
+              "docs/api-reference",
+              "completions",
+              "createmodelconfig"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "completions",
+        "slug": [
+          "docs/api-reference",
+          "completions"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_datapoints.get",
+            "slug": [
+              "docs/api-reference",
+              "datapoints",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_datapoints.update",
+            "slug": [
+              "docs/api-reference",
+              "datapoints",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_datapoints.delete",
+            "slug": [
+              "docs/api-reference",
+              "datapoints",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          }
+        ],
+        "title": "datapoints",
+        "slug": [
+          "docs/api-reference",
+          "datapoints"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List For Project",
+            "endpointId": "endpoint_datasets.listallforproject",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "listallforproject"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_datasets.create",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_datasets.list",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_datasets.get",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_datasets.delete",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_datasets.update",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Datapoints",
+            "endpointId": "endpoint_datasets.listdatapoints",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "listdatapoints"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create Datapoint",
+            "endpointId": "endpoint_datasets.createdatapoint",
+            "slug": [
+              "docs/api-reference",
+              "datasets",
+              "createdatapoint"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "datasets",
+        "slug": [
+          "docs/api-reference",
+          "datasets"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_evaluations.get",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List Datapoints",
+            "endpointId": "endpoint_evaluations.listdatapoints",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "listdatapoints"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List For Project",
+            "endpointId": "endpoint_evaluations.listallforproject",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "listallforproject"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_evaluations.create",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Log",
+            "endpointId": "endpoint_evaluations.log",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "log"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Result",
+            "endpointId": "endpoint_evaluations.result",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "result"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update Status",
+            "endpointId": "endpoint_evaluations.updatestatus",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "updatestatus"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Add Evaluators",
+            "endpointId": "endpoint_evaluations.addevaluators",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "addevaluators"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get Evaluations",
+            "endpointId": "endpoint_evaluations.list",
+            "slug": [
+              "docs/api-reference",
+              "evaluations",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "evaluations",
+        "slug": [
+          "docs/api-reference",
+          "evaluations"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List",
+            "endpointId": "endpoint_evaluators.list",
+            "slug": [
+              "docs/api-reference",
+              "evaluators",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_evaluators.create",
+            "slug": [
+              "docs/api-reference",
+              "evaluators",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_evaluators.get",
+            "slug": [
+              "docs/api-reference",
+              "evaluators",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_evaluators.delete",
+            "slug": [
+              "docs/api-reference",
+              "evaluators",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_evaluators.update",
+            "slug": [
+              "docs/api-reference",
+              "evaluators",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "evaluators",
+        "slug": [
+          "docs/api-reference",
+          "evaluators"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_experiments.list",
+            "slug": [
+              "docs/api-reference",
+              "experiments",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_experiments.create",
+            "slug": [
+              "docs/api-reference",
+              "experiments",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_experiments.delete",
+            "slug": [
+              "docs/api-reference",
+              "experiments",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_experiments.update",
+            "slug": [
+              "docs/api-reference",
+              "experiments",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Sample",
+            "endpointId": "endpoint_experiments.sample",
+            "slug": [
+              "docs/api-reference",
+              "experiments",
+              "sample"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "experiments",
+        "slug": [
+          "docs/api-reference",
+          "experiments"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Feedback",
+            "endpointId": "endpoint_feedback.feedback",
+            "slug": [
+              "docs/api-reference",
+              "feedback",
+              "feedback"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "feedback",
+        "slug": [
+          "docs/api-reference",
+          "feedback"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_logs.list",
+            "slug": [
+              "docs/api-reference",
+              "logs",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Log",
+            "endpointId": "endpoint_logs.log",
+            "slug": [
+              "docs/api-reference",
+              "logs",
+              "log"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_logs.delete",
+            "slug": [
+              "docs/api-reference",
+              "logs",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update By Reference",
+            "endpointId": "endpoint_logs.updatebyref",
+            "slug": [
+              "docs/api-reference",
+              "logs",
+              "updatebyref"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_logs.get",
+            "slug": [
+              "docs/api-reference",
+              "logs",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_logs.update",
+            "slug": [
+              "docs/api-reference",
+              "logs",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "logs",
+        "slug": [
+          "docs/api-reference",
+          "logs"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Register",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_register",
+            "slug": [
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-register"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_get",
+            "slug": [
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Export by ID",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_export",
+            "slug": [
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-export"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Serialize",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_serialize",
+            "slug": [
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-serialize"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deserialize",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_deserialize",
+            "slug": [
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-deserialize"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "modelConfigs",
+        "slug": [
+          "docs/api-reference",
+          "model-configs"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List",
+            "endpointId": "endpoint_projects.list",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_projects.create",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_projects.get",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_projects.delete",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_projects.update",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List Configs",
+            "endpointId": "endpoint_projects.listconfigs",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "listconfigs"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get Active Config",
+            "endpointId": "endpoint_projects.getactiveconfig",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "getactiveconfig"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deactivate Config",
+            "endpointId": "endpoint_projects.deactivateconfig",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "deactivateconfig"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deactivate Experiment",
+            "endpointId": "endpoint_projects.deactivateexperiment",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "deactivateexperiment"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create Feedback Type",
+            "endpointId": "endpoint_projects.createfeedbacktype",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "createfeedbacktype"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update Feedback Types",
+            "endpointId": "endpoint_projects.updatefeedbacktypes",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "updatefeedbacktypes"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Export",
+            "endpointId": "endpoint_projects.export",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "export"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List Deployed Configs",
+            "endpointId": "endpoint_projects.listdeployedconfigs",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "listdeployedconfigs"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deploy Config",
+            "endpointId": "endpoint_projects.deployconfig",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "deployconfig"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete Deployed Config",
+            "endpointId": "endpoint_projects.deletedeployedconfig",
+            "slug": [
+              "docs/api-reference",
+              "projects",
+              "deletedeployedconfig"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "projects",
+        "slug": [
+          "docs/api-reference",
+          "projects"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_sessions.list",
+            "slug": [
+              "docs/api-reference",
+              "sessions",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_sessions.create",
+            "slug": [
+              "docs/api-reference",
+              "sessions",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_sessions.get",
+            "slug": [
+              "docs/api-reference",
+              "sessions",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "sessions",
+        "slug": [
+          "docs/api-reference",
+          "sessions"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      }
+    ]
+  },
+  {
+    "type": "apiReference",
+    "title": "Humanloop API",
+    "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+    "overviewPageId": "apis/v4/summary.md",
+    "slug": [
+      "v4",
+      "docs/api-reference"
+    ],
+    "hidden": false,
+    "hideTitle": false,
+    "showErrors": true,
+    "changelog": {
+      "type": "changelog",
+      "title": "Changelog",
+      "slug": [
+        "v4",
+        "docs/api-reference",
+        "changelog"
+      ],
+      "hidden": false,
+      "children": [
+        {
+          "type": "changelogYear",
+          "title": "2024",
+          "year": 2024,
+          "slug": [
+            "v4",
+            "docs/api-reference",
+            "changelog",
+            "2024"
+          ],
+          "children": [
+            {
+              "type": "changelogMonth",
+              "title": "3",
+              "month": 3,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "3"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "April 29, 2024",
+                  "date": "2024-04-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-30.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 25, 2024",
+                  "date": "2024-04-26T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-26.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "25"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 22, 2024",
+                  "date": "2024-04-23T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-23.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "22"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 17, 2024",
+                  "date": "2024-04-18T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-18.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "17"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 15, 2024",
+                  "date": "2024-04-16T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-16.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "15"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 12, 2024",
+                  "date": "2024-04-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-13.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "12"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "April 4, 2024",
+                  "date": "2024-04-05T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-04-05.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "3",
+                    "4"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "2",
+              "month": 2,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "2"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "March 24, 2024",
+                  "date": "2024-03-25T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-25.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "24"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 17, 2024",
+                  "date": "2024-03-18T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-18.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "17"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 6, 2024",
+                  "date": "2024-03-07T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-07.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "6"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 5, 2024",
+                  "date": "2024-03-06T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-03-06.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "2",
+                    "5"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "1",
+              "month": 1,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "1"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "February 25, 2024",
+                  "date": "2024-02-26T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-26.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "25"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 13, 2024",
+                  "date": "2024-02-14T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-14.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "13"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 12, 2024",
+                  "date": "2024-02-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-13.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "12"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 8, 2024",
+                  "date": "2024-02-09T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-09.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "8"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 7, 2024",
+                  "date": "2024-02-08T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-08.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "7"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "February 1, 2024",
+                  "date": "2024-02-02T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-02-02.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "1",
+                    "1"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "0",
+              "month": 0,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2024",
+                "0"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "January 29, 2024",
+                  "date": "2024-01-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-30.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "January 18, 2024",
+                  "date": "2024-01-19T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-19.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "18"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "January 11, 2024",
+                  "date": "2024-01-12T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-12.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "11"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "January 10, 2024",
+                  "date": "2024-01-11T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2024-01-11.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2024",
+                    "0",
+                    "10"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "changelogYear",
+          "title": "2023",
+          "year": 2023,
+          "slug": [
+            "v4",
+            "docs/api-reference",
+            "changelog",
+            "2023"
+          ],
+          "children": [
+            {
+              "type": "changelogMonth",
+              "title": "11",
+              "month": 11,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "11"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "December 21, 2023",
+                  "date": "2023-12-22T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-22.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "21"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 20, 2023",
+                  "date": "2023-12-21T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-21.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "20"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 12, 2023",
+                  "date": "2023-12-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-13.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "12"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 11, 2023",
+                  "date": "2023-12-12T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-12.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "11"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 4, 2023",
+                  "date": "2023-12-05T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-05.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "4"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "December 3, 2023",
+                  "date": "2023-12-04T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-12-04.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "11",
+                    "3"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "10",
+              "month": 10,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "10"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "November 27, 2023",
+                  "date": "2023-11-28T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-28.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "27"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 21, 2023",
+                  "date": "2023-11-22T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-22.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "21"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 20, 2023",
+                  "date": "2023-11-21T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-21.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "20"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 19, 2023",
+                  "date": "2023-11-20T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-20.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "19"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 16, 2023",
+                  "date": "2023-11-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-17.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "16"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 9, 2023",
+                  "date": "2023-11-10T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-10.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "9"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 8, 2023",
+                  "date": "2023-11-09T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-09.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "8"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "November 7, 2023",
+                  "date": "2023-11-08T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-08.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "10",
+                    "7"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "9",
+              "month": 9,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "9"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "October 31, 2023",
+                  "date": "2023-11-01T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-11-01.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "31"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 29, 2023",
+                  "date": "2023-10-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-30.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 16, 2023",
+                  "date": "2023-10-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-17.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "16"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 15, 2023",
+                  "date": "2023-10-16T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-16.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "15"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "October 9, 2023",
+                  "date": "2023-10-10T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-10-10.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "9",
+                    "9"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "8",
+              "month": 8,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "8"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "September 14, 2023",
+                  "date": "2023-09-15T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-09-15.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "8",
+                    "14"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "September 12, 2023",
+                  "date": "2023-09-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-09-13.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "8",
+                    "12"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "7",
+              "month": 7,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "7"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "August 30, 2023",
+                  "date": "2023-08-31T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-31.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "30"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "August 20, 2023",
+                  "date": "2023-08-21T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-21.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "20"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "August 14, 2023",
+                  "date": "2023-08-15T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-15.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "14"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "August 13, 2023",
+                  "date": "2023-08-14T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-08-14.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "7",
+                    "13"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "6",
+              "month": 6,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "6"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "July 29, 2023",
+                  "date": "2023-07-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-30.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 24, 2023",
+                  "date": "2023-07-25T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-25.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "24"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 23, 2023",
+                  "date": "2023-07-24T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-24.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "23"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 16, 2023",
+                  "date": "2023-07-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-17.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "16"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 6, 2023",
+                  "date": "2023-07-07T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-07.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "6"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 4, 2023",
+                  "date": "2023-07-05T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-05.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "4"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "July 2, 2023",
+                  "date": "2023-07-03T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-07-03.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "6",
+                    "2"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "5",
+              "month": 5,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "5"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "June 26, 2023",
+                  "date": "2023-06-27T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-06-27.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "5",
+                    "26"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "June 19, 2023",
+                  "date": "2023-06-20T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-06-20.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "5",
+                    "19"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "June 12, 2023",
+                  "date": "2023-06-13T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-06-13.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "5",
+                    "12"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "4",
+              "month": 4,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "4"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "May 22, 2023",
+                  "date": "2023-05-23T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-05-23.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "4",
+                    "22"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "May 16, 2023",
+                  "date": "2023-05-17T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-05-17.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "4",
+                    "16"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "3",
+              "month": 3,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "3"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "April 2, 2023",
+                  "date": "2023-04-03T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-04-03.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "3",
+                    "2"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "2",
+              "month": 2,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "2"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "March 29, 2023",
+                  "date": "2023-03-30T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-03-30.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "2",
+                    "29"
+                  ]
+                },
+                {
+                  "type": "changelogEntry",
+                  "title": "March 1, 2023",
+                  "date": "2023-03-02T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-03-02.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "2",
+                    "1"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "changelogMonth",
+              "title": "1",
+              "month": 1,
+              "slug": [
+                "v4",
+                "docs/api-reference",
+                "changelog",
+                "2023",
+                "1"
+              ],
+              "children": [
+                {
+                  "type": "changelogEntry",
+                  "title": "February 19, 2023",
+                  "date": "2023-02-20T00:00:00.000Z",
+                  "pageId": "apis/v4/changelog/2023-02-20.md",
+                  "slug": [
+                    "v4",
+                    "docs/api-reference",
+                    "changelog",
+                    "2023",
+                    "1",
+                    "19"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "children": [
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Chat",
+            "endpointId": "endpoint_chats.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "chats",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Chat Deployed",
+            "endpointId": "endpoint_chats.createdeployed",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "chats",
+              "createdeployed"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Chat Experiment",
+            "endpointId": "endpoint_chats.createexperiment",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "chats",
+              "createexperiment"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Chat Model Config",
+            "endpointId": "endpoint_chats.createmodelconfig",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "chats",
+              "createmodelconfig"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "chats",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "chats"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_completions.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "completions",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Completion Deployed",
+            "endpointId": "endpoint_completions.createdeployed",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "completions",
+              "createdeployed"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Completion Experiment",
+            "endpointId": "endpoint_completions.createexperiment",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "completions",
+              "createexperiment"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Completion Model Config",
+            "endpointId": "endpoint_completions.createmodelconfig",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "completions",
+              "createmodelconfig"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "completions",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "completions"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_datapoints.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datapoints",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_datapoints.update",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datapoints",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_datapoints.delete",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datapoints",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          }
+        ],
+        "title": "datapoints",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "datapoints"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List For Project",
+            "endpointId": "endpoint_datasets.listallforproject",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "listallforproject"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_datasets.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_datasets.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_datasets.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_datasets.delete",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_datasets.update",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Datapoints",
+            "endpointId": "endpoint_datasets.listdatapoints",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "listdatapoints"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create Datapoint",
+            "endpointId": "endpoint_datasets.createdatapoint",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "datasets",
+              "createdatapoint"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "datasets",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "datasets"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_evaluations.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List Datapoints",
+            "endpointId": "endpoint_evaluations.listdatapoints",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "listdatapoints"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List For Project",
+            "endpointId": "endpoint_evaluations.listallforproject",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "listallforproject"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "availability": "deprecated",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_evaluations.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Log",
+            "endpointId": "endpoint_evaluations.log",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "log"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Result",
+            "endpointId": "endpoint_evaluations.result",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "result"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update Status",
+            "endpointId": "endpoint_evaluations.updatestatus",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "updatestatus"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Add Evaluators",
+            "endpointId": "endpoint_evaluations.addevaluators",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "addevaluators"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get Evaluations",
+            "endpointId": "endpoint_evaluations.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluations",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "evaluations",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "evaluations"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List",
+            "endpointId": "endpoint_evaluators.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluators",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_evaluators.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluators",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_evaluators.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluators",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_evaluators.delete",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluators",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_evaluators.update",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "evaluators",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "evaluators",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "evaluators"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_experiments.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "experiments",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_experiments.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "experiments",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_experiments.delete",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "experiments",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_experiments.update",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "experiments",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Sample",
+            "endpointId": "endpoint_experiments.sample",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "experiments",
+              "sample"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "experiments",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "experiments"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Feedback",
+            "endpointId": "endpoint_feedback.feedback",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "feedback",
+              "feedback"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "feedback",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "feedback"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_logs.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "logs",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Log",
+            "endpointId": "endpoint_logs.log",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "logs",
+              "log"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_logs.delete",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "logs",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update By Reference",
+            "endpointId": "endpoint_logs.updatebyref",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "logs",
+              "updatebyref"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_logs.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "logs",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_logs.update",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "logs",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "logs",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "logs"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "Register",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_register",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-register"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Export by ID",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_export",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-export"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Serialize",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_serialize",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-serialize"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deserialize",
+            "endpointId": "endpoint_modelConfigs.ModelConfigs_deserialize",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "model-configs",
+              "model-configs-deserialize"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "modelConfigs",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "model-configs"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List",
+            "endpointId": "endpoint_projects.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_projects.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_projects.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete",
+            "endpointId": "endpoint_projects.delete",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "delete"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update",
+            "endpointId": "endpoint_projects.update",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "update"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List Configs",
+            "endpointId": "endpoint_projects.listconfigs",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "listconfigs"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get Active Config",
+            "endpointId": "endpoint_projects.getactiveconfig",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "getactiveconfig"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deactivate Config",
+            "endpointId": "endpoint_projects.deactivateconfig",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "deactivateconfig"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deactivate Experiment",
+            "endpointId": "endpoint_projects.deactivateexperiment",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "deactivateexperiment"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create Feedback Type",
+            "endpointId": "endpoint_projects.createfeedbacktype",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "createfeedbacktype"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Update Feedback Types",
+            "endpointId": "endpoint_projects.updatefeedbacktypes",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "updatefeedbacktypes"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Export",
+            "endpointId": "endpoint_projects.export",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "export"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "List Deployed Configs",
+            "endpointId": "endpoint_projects.listdeployedconfigs",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "listdeployedconfigs"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Deploy Config",
+            "endpointId": "endpoint_projects.deployconfig",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "deployconfig"
+            ],
+            "method": "PATCH",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Delete Deployed Config",
+            "endpointId": "endpoint_projects.deletedeployedconfig",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "projects",
+              "deletedeployedconfig"
+            ],
+            "method": "DELETE",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "projects",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "projects"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      },
+      {
+        "type": "apiSection",
+        "children": [
+          {
+            "type": "endpoint",
+            "title": "List ",
+            "endpointId": "endpoint_sessions.list",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "sessions",
+              "list"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Create",
+            "endpointId": "endpoint_sessions.create",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "sessions",
+              "create"
+            ],
+            "method": "POST",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          },
+          {
+            "type": "endpoint",
+            "title": "Get",
+            "endpointId": "endpoint_sessions.get",
+            "slug": [
+              "v4",
+              "docs/api-reference",
+              "sessions",
+              "get"
+            ],
+            "method": "GET",
+            "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
+            "isResponseStream": false
+          }
+        ],
+        "title": "sessions",
+        "slug": [
+          "v4",
+          "docs/api-reference",
+          "sessions"
+        ],
+        "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004"
+      }
+    ]
+  }
+]

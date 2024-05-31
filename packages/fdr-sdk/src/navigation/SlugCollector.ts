@@ -40,25 +40,26 @@ export class SlugCollector {
         return new SlugCollector(rootNode);
     }
 
-    constructor(rootNode: NavigationNode) {
-        let last: NavigationNodeWithMetadataAndParents | undefined;
-        let lastNodeWithContent: NavigationNodeWithContent | undefined;
-        function setNode(slug: string, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
-            const toSet = { node, parents, prev: lastNodeWithContent, next: undefined };
-            this.slugToNode[slug] = toSet;
+    #last: NavigationNodeWithMetadataAndParents | undefined;
+    #lastNodeWithContent: NavigationNodeWithContent | undefined;
+    #setNode(slug: string, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
+        const toSet = { node, parents, prev: this.#lastNodeWithContent, next: undefined };
+        this.slugToNode[slug] = toSet;
 
-            if (nodeHasContent(node) && !node.hidden) {
-                lastNodeWithContent = node;
-                if (last != null) {
-                    last.next = node;
-                }
-                last = toSet;
+        if (nodeHasContent(node) && !node.hidden) {
+            this.#lastNodeWithContent = node;
+            if (this.#last != null) {
+                this.#last.next = node;
             }
+            this.#last = toSet;
         }
+    }
+
+    constructor(rootNode: NavigationNode) {
         traverseNavigation(rootNode, (node, _index, parents) => {
             if (node.type === "sidebarRoot") {
-                last = undefined;
-                lastNodeWithContent = undefined;
+                this.#last = undefined;
+                this.#lastNodeWithContent = undefined;
             }
 
             if (!nodeHasMetadata(node)) {
@@ -67,13 +68,13 @@ export class SlugCollector {
             const slug = urljoin(node.slug);
             const existing = this.slugToNode[slug];
             if (existing == null) {
-                setNode(slug, node, parents);
+                this.#setNode(slug, node, parents);
             } else if (PRIORITY_LIST[node.type] < PRIORITY_LIST[existing.node.type] && !node.hidden) {
-                setNode(slug, node, parents);
+                this.#setNode(slug, node, parents);
                 this.orphanedNodes.push(existing.node);
             } else if (PRIORITY_LIST[node.type] === PRIORITY_LIST[existing.node.type]) {
                 if (!node.hidden && existing.node.hidden) {
-                    setNode(slug, node, parents);
+                    this.#setNode(slug, node, parents);
                     this.orphanedNodes.push(existing.node);
                 } else {
                     // eslint-disable-next-line no-console

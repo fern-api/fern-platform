@@ -130,10 +130,12 @@ export class NavigationConfigConverter {
         children.forEach((child) => {
             if (child.type === "apiReference") {
                 grouped.push(child);
+                return;
             }
 
             if (child.type === "section" && !child.collapsed) {
                 grouped.push(child);
+                return;
             }
 
             const lastChild = last(grouped);

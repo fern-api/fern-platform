@@ -4,8 +4,10 @@ export function createSlug(
     {
         fullSlug,
         urlSlug,
+        skipUrlSlug,
     }: {
         fullSlug?: string[];
+        skipUrlSlug?: boolean;
         urlSlug: string;
     },
 ) {
@@ -14,6 +16,10 @@ export function createSlug(
             return fullSlug;
         }
         return [...baseSlug, ...fullSlug];
+    }
+
+    if (skipUrlSlug) {
+        return parentSlug;
     }
 
     return [...parentSlug, urlSlug];
