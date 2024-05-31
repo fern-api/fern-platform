@@ -4,6 +4,7 @@ import { SlugCollector } from "../SlugCollector";
 import { FernNavigation } from "../generated";
 import { NavigationLeafNode, NavigationNode, NavigationNodeWithContent } from "../types/NavigationNode";
 import { visitNavigationNodeWithMetadata } from "../visitors";
+import { followRedirect } from "./followRedirect";
 import { nodeHasContent } from "./nodeHasContent";
 import { nodeHasMetadata } from "./nodeHasMetadata";
 
@@ -51,7 +52,7 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
             }
         }
 
-        const redirect = collector.followRedirect(maybeVersionNode);
+        const redirect = followRedirect(maybeVersionNode);
         return { type: "notFound", redirect };
     }
 
@@ -83,14 +84,14 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
         };
     }
 
-    const redirectSlug = collector.followRedirect(found.node);
+    const redirectSlug = followRedirect(found.node);
 
     if (redirectSlug == null) {
         if (found.node.type === "root") {
             return { type: "notFound", redirect: undefined };
         }
 
-        const redirect = collector.followRedirect(version ?? root);
+        const redirect = followRedirect(version ?? root);
         return { type: "notFound", redirect };
     }
 

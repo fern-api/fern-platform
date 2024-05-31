@@ -4,7 +4,6 @@ import { FernNavigation } from "./generated";
 import { NavigationNode, NavigationNodeWithContent, NavigationNodeWithMetadata } from "./types/NavigationNode";
 import { nodeHasContent } from "./utils/nodeHasContent";
 import { nodeHasMetadata } from "./utils/nodeHasMetadata";
-import { visitNavigationNode } from "./visitors";
 import { traverseNavigation } from "./visitors/traverseNavigation";
 
 // lower number means higher priority
@@ -122,54 +121,4 @@ export class SlugCollector {
             .filter(({ node }) => node.type === "version")
             .map(({ node }) => node as FernNavigation.VersionNode);
     });
-
-    public followRedirect(nodeToFollow: NavigationNode | undefined): FernNavigation.Slug | undefined {
-        if (nodeToFollow == null) {
-            return undefined;
-        }
-        return visitNavigationNode<FernNavigation.Slug | undefined>(nodeToFollow, {
-            link: () => undefined,
-
-            // leaf nodes
-            page: (node) => node.slug,
-            changelog: (node) => node.slug,
-            changelogYear: (node) => node.slug,
-            changelogMonth: (node) => node.slug,
-            changelogEntry: (node) => node.slug,
-            endpoint: (node) => node.slug,
-            webSocket: (node) => node.slug,
-            webhook: (node) => node.slug,
-
-            // nodes with overview
-            apiSection: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
-            section: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
-            apiReference: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
-
-            // version is a special case where it should only consider it's first child (the first version)
-            versioned: (node) => this.followRedirect(node.children[0]),
-            tabbed: (node) => this.followRedirects(node.children),
-            sidebarRoot: (node) => this.followRedirects(node.children),
-            endpointPair: (node) => this.followRedirect(node.nonStream),
-            root: (node) => this.followRedirect(node.child),
-            version: (node) => this.followRedirect(node.child),
-            tab: (node) => this.followRedirect(node.child),
-            sidebarGroup: (node) => this.followRedirects(node.children),
-        });
-    }
-
-    private followRedirects(nodes: NavigationNode[]): FernNavigation.Slug | undefined {
-        let traversedFirst = false;
-        for (const node of nodes) {
-            if (traversedFirst) {
-                // eslint-disable-next-line no-console
-                console.error("First redirect path was not followed, this should not happen.");
-            }
-            const redirect = this.followRedirect(node);
-            if (redirect != null) {
-                return redirect;
-            }
-            traversedFirst = true;
-        }
-        return;
-    }
 }
