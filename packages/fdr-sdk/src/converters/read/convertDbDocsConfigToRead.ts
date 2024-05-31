@@ -143,7 +143,7 @@ export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): Do
             type: "group",
             ...group,
             items: group.items.map(transformNavigationItemForDb),
-            skipUrlSlug: dbShape.skipUrlSlug ?? false,
+            skipUrlSlug: group.skipUrlSlug ?? false,
         }),
     });
 }
