@@ -5,14 +5,15 @@ import * as path from "path";
 import * as readline from "readline";
 
 const urlPattern = /<[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)>/g;
-const imagePattern = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
+const imagePattern =
+    /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
 
 function downloadImage(line: string, levelIn: number): string {
     let pathExtend = "";
     for (let i = 0; i < levelIn; i++) {
         pathExtend += "../";
     }
- 
+
     if (!fs.existsSync("images")) {
         fs.mkdirSync("images");
     }
@@ -65,7 +66,9 @@ function convertToMarkdown(content: string[], levelIn: number): string {
                 markdown += newline;
             } else if (line.includes("caption")) {
                 const caption = line.split(" ").slice(-1)[0];
-                if (caption) {markdown += `alt='${caption.replace('"', "")}' `;}
+                if (caption) {
+                    markdown += `alt='${caption.replace('"', "")}' `;
+                }
             }
             continue;
         }
@@ -221,8 +224,8 @@ async function copyAndConvertToMdx(srcFolder: string, dstFolder: string, levelIn
                 // console.log(`Copied "${srcPath}" to "${dstPath}"`);
             } else if (fs.lstatSync(srcPath).isDirectory()) {
                 // if (await promptUser(item)) {
-                    const nestedDstFolder = path.join(dstFolder, item);
-                    await copyAndConvertToMdx(srcPath, nestedDstFolder, levelIn + 1);
+                const nestedDstFolder = path.join(dstFolder, item);
+                await copyAndConvertToMdx(srcPath, nestedDstFolder, levelIn + 1);
                 // }
             }
         }
