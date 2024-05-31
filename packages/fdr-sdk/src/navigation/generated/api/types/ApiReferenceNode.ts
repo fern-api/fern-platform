@@ -7,7 +7,8 @@ import * as FernNavigation from "../index";
 export interface ApiReferenceNode
     extends FernNavigation.WithNodeMetadata,
         FernNavigation.WithOverviewPage,
-        FernNavigation.WithApiDefinitionId {
+        FernNavigation.WithApiDefinitionId,
+        FernNavigation.WithRedirect {
     type: "apiReference";
     disableLongScrolling: boolean | undefined;
     showErrors: boolean | undefined;

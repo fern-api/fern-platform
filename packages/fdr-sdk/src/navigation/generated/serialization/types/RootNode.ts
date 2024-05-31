@@ -7,6 +7,7 @@ import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { RootChild } from "./RootChild";
 import { WithNodeMetadata } from "./WithNodeMetadata";
+import { WithRedirect } from "./WithRedirect";
 
 export const RootNode: core.serialization.ObjectSchema<serializers.RootNode.Raw, FernNavigation.RootNode> =
     core.serialization
@@ -14,10 +15,11 @@ export const RootNode: core.serialization.ObjectSchema<serializers.RootNode.Raw,
             type: core.serialization.stringLiteral("root"),
             child: RootChild,
         })
-        .extend(WithNodeMetadata);
+        .extend(WithNodeMetadata)
+        .extend(WithRedirect);
 
 export declare namespace RootNode {
-    interface Raw extends WithNodeMetadata.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithRedirect.Raw {
         type: "root";
         child: RootChild.Raw;
     }

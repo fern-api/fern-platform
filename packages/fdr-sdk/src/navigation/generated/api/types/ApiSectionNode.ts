@@ -7,7 +7,8 @@ import * as FernNavigation from "../index";
 export interface ApiSectionNode
     extends FernNavigation.WithNodeMetadata,
         FernNavigation.WithOverviewPage,
-        FernNavigation.WithApiDefinitionId {
+        FernNavigation.WithApiDefinitionId,
+        FernNavigation.WithRedirect {
     type: "apiSection";
     children: FernNavigation.ApiReferenceChild[];
 }

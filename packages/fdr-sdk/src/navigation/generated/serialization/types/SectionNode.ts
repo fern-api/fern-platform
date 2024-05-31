@@ -7,6 +7,7 @@ import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithOverviewPage } from "./WithOverviewPage";
+import { WithRedirect } from "./WithRedirect";
 
 export const SectionNode: core.serialization.ObjectSchema<serializers.SectionNode.Raw, FernNavigation.SectionNode> =
     core.serialization
@@ -18,10 +19,11 @@ export const SectionNode: core.serialization.ObjectSchema<serializers.SectionNod
             ),
         })
         .extend(WithNodeMetadata)
-        .extend(WithOverviewPage);
+        .extend(WithOverviewPage)
+        .extend(WithRedirect);
 
 export declare namespace SectionNode {
-    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithRedirect.Raw {
         type: "section";
         collapsed?: boolean | null;
         children: serializers.NavigationChild.Raw[];

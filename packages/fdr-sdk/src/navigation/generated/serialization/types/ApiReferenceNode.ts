@@ -9,6 +9,7 @@ import { ChangelogNode } from "./ChangelogNode";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithOverviewPage } from "./WithOverviewPage";
 import { WithApiDefinitionId } from "./WithApiDefinitionId";
+import { WithRedirect } from "./WithRedirect";
 
 export const ApiReferenceNode: core.serialization.ObjectSchema<
     serializers.ApiReferenceNode.Raw,
@@ -24,10 +25,11 @@ export const ApiReferenceNode: core.serialization.ObjectSchema<
     })
     .extend(WithNodeMetadata)
     .extend(WithOverviewPage)
-    .extend(WithApiDefinitionId);
+    .extend(WithApiDefinitionId)
+    .extend(WithRedirect);
 
 export declare namespace ApiReferenceNode {
-    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithApiDefinitionId.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithApiDefinitionId.Raw, WithRedirect.Raw {
         type: "apiReference";
         disableLongScrolling?: boolean | null;
         showErrors?: boolean | null;

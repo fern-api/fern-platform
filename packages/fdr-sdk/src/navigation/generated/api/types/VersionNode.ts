@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface VersionNode extends FernNavigation.WithNodeMetadata {
+export interface VersionNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithRedirect {
     type: "version";
     versionId: FernNavigation.VersionId;
     child: FernNavigation.VersionChild;

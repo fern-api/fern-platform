@@ -7,6 +7,7 @@ import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { SidebarRootNode } from "./SidebarRootNode";
 import { WithNodeMetadata } from "./WithNodeMetadata";
+import { WithRedirect } from "./WithRedirect";
 
 export const TabNode: core.serialization.ObjectSchema<serializers.TabNode.Raw, FernNavigation.TabNode> =
     core.serialization
@@ -14,10 +15,11 @@ export const TabNode: core.serialization.ObjectSchema<serializers.TabNode.Raw, F
             type: core.serialization.stringLiteral("tab"),
             child: SidebarRootNode,
         })
-        .extend(WithNodeMetadata);
+        .extend(WithNodeMetadata)
+        .extend(WithRedirect);
 
 export declare namespace TabNode {
-    interface Raw extends WithNodeMetadata.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithRedirect.Raw {
         type: "tab";
         child: SidebarRootNode.Raw;
     }

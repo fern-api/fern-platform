@@ -5,7 +5,7 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { Url } from "../resources/commons/types/Url";
+import { Url } from "./Url";
 
 export const LinkNode: core.serialization.ObjectSchema<serializers.LinkNode.Raw, FernNavigation.LinkNode> =
     core.serialization.objectWithoutOptionalProperties({

@@ -6,7 +6,7 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { HttpMethod } from "./HttpMethod";
-import { EndpointId } from "../resources/apiReference/types/EndpointId";
+import { EndpointId } from "./EndpointId";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithApiDefinitionId } from "./WithApiDefinitionId";
 

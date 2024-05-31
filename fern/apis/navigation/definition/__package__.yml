@@ -1,12 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  commons: ./commons.yml
-  apiRef: ./api-reference.yml
 types:
+  Slug: string
+  Url: string
+
   VersionId: string
   TabId: string
   PageId: string
+  NodeId: string
+
+  ApiDefinitionId: string
+  EndpointId: string
+  WebSocketId: string
+  WebhookId: string
 
   # discriminated unions
 
@@ -85,16 +91,27 @@ types:
       stream: EndpointNode
       nonStream: EndpointNode
 
+  LinkNode:
+    properties:
+      type: literal<"link">
+      title: string
+      icon: optional<string>
+      url: Url
+
   # nodes with metadata
 
   RootNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
     properties:
       type: literal<"root">
       child: RootChild
 
   VersionNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
     properties:
       type: literal<"version">
       versionId: VersionId
@@ -102,17 +119,12 @@ types:
       availability: optional<Availability>
 
   TabNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
     properties:
       type: literal<"tab">
       child: SidebarRootNode
-
-  LinkNode:
-    properties:
-      type: literal<"link">
-      title: string
-      icon: optional<string>
-      url: commons.Url
 
   PageNode:
     extends: WithNodeMetadata
@@ -124,6 +136,7 @@ types:
     extends:
       - WithNodeMetadata
       - WithOverviewPage
+      - WithRedirect
     properties:
       type: literal<"section">
       collapsed: optional<boolean>
@@ -163,6 +176,7 @@ types:
       - WithNodeMetadata
       - WithOverviewPage
       - WithApiDefinitionId
+      - WithRedirect
     properties:
       type: literal<"apiReference">
       disableLongScrolling: optional<boolean>
@@ -178,7 +192,7 @@ types:
     properties:
       type: literal<"endpoint">
       method: HttpMethod
-      endpointId: apiRef.EndpointId
+      endpointId: EndpointId
       isResponseStream: optional<boolean>
 
   WebSocketNode:
@@ -187,7 +201,7 @@ types:
       - WithApiDefinitionId
     properties:
       type: literal<"webSocket">
-      webSocketId: apiRef.WebSocketId
+      webSocketId: WebSocketId
 
   WebhookNode:
     extends:
@@ -196,13 +210,14 @@ types:
     properties:
       type: literal<"webhook">
       method: HttpMethod
-      webhookId: apiRef.WebhookId
+      webhookId: WebhookId
 
   ApiSectionNode:
     extends:
       - WithNodeMetadata
       - WithOverviewPage
       - WithApiDefinitionId
+      - WithRedirect
     properties:
       type: literal<"apiSection">
       children: list<ApiReferenceChild>
@@ -211,8 +226,11 @@ types:
 
   WithNodeMetadata:
     properties:
+      id:
+        type: NodeId
+        docs: A unique, stable identifier for this node.
       title: string
-      slug: commons.Slug
+      slug: Slug
       icon: optional<string>
       hidden: optional<boolean>
 
@@ -222,8 +240,12 @@ types:
 
   WithApiDefinitionId:
     properties:
-      apiDefinitionId: apiRef.ApiDefinitionId
+      apiDefinitionId: ApiDefinitionId
       availability: optional<Availability>
+
+  WithRedirect:
+    properties:
+      pointsTo: optional<Slug>
 
   # enums
 

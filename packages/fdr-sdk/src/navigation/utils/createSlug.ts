@@ -1,6 +1,9 @@
+import urljoin from "url-join";
+import { FernNavigation } from "../generated";
+
 export function createSlug(
-    baseSlug: string[],
-    parentSlug: string[],
+    baseSlug: string,
+    parentSlug: string,
     {
         fullSlug,
         urlSlug,
@@ -10,17 +13,18 @@ export function createSlug(
         skipUrlSlug?: boolean;
         urlSlug: string;
     },
-) {
+): FernNavigation.Slug {
     if (fullSlug != null) {
-        if (baseSlug.every((b, i) => b === fullSlug[i])) {
-            return fullSlug;
+        const slug = urljoin(fullSlug);
+        if (slug.startsWith(baseSlug) && (slug.length === baseSlug.length || slug[baseSlug.length] === "/")) {
+            return FernNavigation.Slug(slug);
         }
-        return [...baseSlug, ...fullSlug];
+        return FernNavigation.Slug(urljoin(baseSlug, slug));
     }
 
     if (skipUrlSlug) {
-        return parentSlug;
+        return FernNavigation.Slug(parentSlug);
     }
 
-    return [...parentSlug, urlSlug];
+    return FernNavigation.Slug(urljoin(parentSlug, urlSlug));
 }

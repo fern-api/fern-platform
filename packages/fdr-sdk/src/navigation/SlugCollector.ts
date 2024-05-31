@@ -76,8 +76,10 @@ export class SlugCollector {
                     this.#setNode(slug, node, parents);
                     this.orphanedNodes.push(existing.node);
                 } else {
-                    // eslint-disable-next-line no-console
-                    console.warn(`Duplicate slug found: ${slug}`);
+                    if (!node.hidden) {
+                        // eslint-disable-next-line no-console
+                        console.warn(`Duplicate slug found: ${slug}`);
+                    }
                     this.orphanedNodes.push(node);
                 }
             } else if (PRIORITY_LIST[node.type] > PRIORITY_LIST[existing.node.type]) {

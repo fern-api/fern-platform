@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface RootNode extends FernNavigation.WithNodeMetadata {
+export interface RootNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithRedirect {
     type: "root";
     child: FernNavigation.RootChild;
 }

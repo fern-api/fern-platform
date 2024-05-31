@@ -9,6 +9,7 @@ import { VersionId } from "./VersionId";
 import { VersionChild } from "./VersionChild";
 import { Availability } from "./Availability";
 import { WithNodeMetadata } from "./WithNodeMetadata";
+import { WithRedirect } from "./WithRedirect";
 
 export const VersionNode: core.serialization.ObjectSchema<serializers.VersionNode.Raw, FernNavigation.VersionNode> =
     core.serialization
@@ -18,10 +19,11 @@ export const VersionNode: core.serialization.ObjectSchema<serializers.VersionNod
             child: VersionChild,
             availability: Availability.optional(),
         })
-        .extend(WithNodeMetadata);
+        .extend(WithNodeMetadata)
+        .extend(WithRedirect);
 
 export declare namespace VersionNode {
-    interface Raw extends WithNodeMetadata.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithRedirect.Raw {
         type: "version";
         versionId: VersionId.Raw;
         child: VersionChild.Raw;

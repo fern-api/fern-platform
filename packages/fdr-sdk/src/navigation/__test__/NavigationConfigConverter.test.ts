@@ -24,7 +24,12 @@ function testNavigationConfigConverter(fixtureName: string): void {
         it("gets all urls from docs config", async () => {
             expect(JSON.stringify(node, undefined, 2)).toMatchFileSnapshot(`output/${fixtureName}/node.json`);
 
-            const orphanedNodes = slugCollector.getOrphanedNodes();
+            const orphanedNodes = slugCollector.getOrphanedNodes().map((node) => ({
+                id: node.id,
+                type: node.type,
+                title: node.title,
+                slug: node.slug,
+            }));
             expect(JSON.stringify(orphanedNodes, undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/orphanedNodes.json`,
             );

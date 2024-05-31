@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface TabNode extends FernNavigation.WithNodeMetadata {
+export interface TabNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithRedirect {
     type: "tab";
     child: FernNavigation.SidebarRootNode;
 }

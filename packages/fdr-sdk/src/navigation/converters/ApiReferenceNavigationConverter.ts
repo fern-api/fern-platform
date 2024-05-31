@@ -3,20 +3,23 @@ import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
+import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
 import { createSlug } from "../utils/createSlug";
 import { isSubpackage } from "../utils/isSubpackage";
 import { stringifyEndpointPathParts } from "../utils/stringifyEndpointPathParts";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
+import { NodeIdGenerator } from "./NodeIdGenerator";
 
 export class ApiReferenceNavigationConverter {
     public static convert(
         apiSection: DocsV1Read.ApiSection,
         apis: Record<string, APIV1Read.ApiDefinition>,
-        baseSlug: string[],
-        parentSlug: string[],
+        baseSlug: string,
+        parentSlug: string,
+        idgen: NodeIdGenerator,
     ) {
-        return new ApiReferenceNavigationConverter(apiSection, apis, baseSlug, parentSlug).convert();
+        return new ApiReferenceNavigationConverter(apiSection, apis, baseSlug, parentSlug, idgen).convert();
     }
 
     api: APIV1Read.ApiDefinition;
@@ -26,11 +29,13 @@ export class ApiReferenceNavigationConverter {
     #visitedWebSockets = new Set<FernNavigation.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.WebhookId>();
     #visitedSubpackages = new Set<string>();
+    #idgen: NodeIdGenerator;
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
         apis: Record<string, APIV1Read.ApiDefinition>,
-        private baseSlug: string[],
-        private apiDefinitionParentSlug: string[],
+        private baseSlug: string,
+        private apiDefinitionParentSlug: string,
+        idgen: NodeIdGenerator,
     ) {
         this.api = apis[apiSection.api];
         if (this.api == null) {
@@ -38,36 +43,44 @@ export class ApiReferenceNavigationConverter {
         }
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(this.api.id);
         this.#holder = ApiDefinitionHolder.create(this.api);
+        this.#idgen = idgen;
     }
 
     private convert(): FernNavigation.ApiReferenceNode {
-        const overviewPageId =
-            this.apiSection.navigation?.summaryPageId != null
-                ? FernNavigation.PageId(this.apiSection.navigation.summaryPageId)
-                : undefined;
+        return this.#idgen.with(this.apiSection.urlSlug, (id) => {
+            const overviewPageId =
+                this.apiSection.navigation?.summaryPageId != null
+                    ? FernNavigation.PageId(this.apiSection.navigation.summaryPageId)
+                    : undefined;
 
-        const slug = createSlug(this.baseSlug, this.apiDefinitionParentSlug, this.apiSection);
-        return {
-            type: "apiReference",
-            title: this.apiSection.title,
-            apiDefinitionId: FernNavigation.ApiDefinitionId(this.apiSection.api),
-            overviewPageId,
-            disableLongScrolling: this.apiSection.longScrolling === false ? true : undefined,
-            slug,
-            icon: this.apiSection.icon,
-            hidden: this.apiSection.hidden,
-            hideTitle: this.apiSection.flattened,
-            showErrors: this.apiSection.showErrors,
-            changelog:
+            const slug = createSlug(this.baseSlug, this.apiDefinitionParentSlug, this.apiSection);
+            const children = this.convertChildren(slug);
+            const changelog =
                 this.apiSection.changelog != null
-                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, this.baseSlug, slug)
-                    : undefined,
-            children: this.convertChildren(slug),
-            availability: undefined,
-        };
+                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, this.baseSlug, slug, this.#idgen)
+                    : undefined;
+            const pointsTo = followRedirects(children) ?? changelog?.slug;
+            return {
+                id,
+                type: "apiReference",
+                title: this.apiSection.title,
+                apiDefinitionId: FernNavigation.ApiDefinitionId(this.apiSection.api),
+                overviewPageId,
+                disableLongScrolling: this.apiSection.longScrolling === false ? true : undefined,
+                slug,
+                icon: this.apiSection.icon,
+                hidden: this.apiSection.hidden,
+                hideTitle: this.apiSection.flattened,
+                showErrors: this.apiSection.showErrors,
+                changelog,
+                children,
+                availability: undefined,
+                pointsTo,
+            };
+        });
     }
 
-    private convertChildren(parentSlug: string[]): FernNavigation.ApiReferenceChild[] {
+    private convertChildren(parentSlug: string): FernNavigation.ApiReferenceChild[] {
         if (this.apiSection.navigation != null) {
             return this.convertApiNavigationItems(this.apiSection.navigation.items, parentSlug, "root");
         }
@@ -78,28 +91,32 @@ export class ApiReferenceNavigationConverter {
     private convertEndpointNode(
         endpointId: FernNavigation.EndpointId,
         endpoint: APIV1Read.EndpointDefinition,
-        parentSlug: string[],
+        parentSlug: string,
     ): FernNavigation.EndpointNode | FernNavigation.EndpointPairNode {
-        return {
-            type: "endpoint",
-            title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-            endpointId,
-            slug: createSlug(this.baseSlug, parentSlug, endpoint),
-            icon: undefined,
-            hidden: undefined,
-            method: endpoint.method,
-            apiDefinitionId: this.apiDefinitionId,
-            availability: convertAvailability(endpoint.availability),
-            isResponseStream: endpoint.response?.type.type === "stream",
-        };
+        return this.#idgen.with(endpointId, (id) => {
+            return {
+                id,
+                type: "endpoint",
+                title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                endpointId,
+                slug: createSlug(this.baseSlug, parentSlug, endpoint),
+                icon: undefined,
+                hidden: undefined,
+                method: endpoint.method,
+                apiDefinitionId: this.apiDefinitionId,
+                availability: convertAvailability(endpoint.availability),
+                isResponseStream: endpoint.response?.type.type === "stream",
+            };
+        });
     }
 
     private convertWebSocketNode(
         webSocketId: FernNavigation.WebSocketId,
         webSocket: APIV1Read.WebSocketChannel,
-        parentSlug: string[],
+        parentSlug: string,
     ): FernNavigation.WebSocketNode {
-        return {
+        return this.#idgen.with(webSocketId, (id) => ({
+            id,
             type: "webSocket",
             title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
             webSocketId,
@@ -108,15 +125,16 @@ export class ApiReferenceNavigationConverter {
             hidden: undefined,
             apiDefinitionId: this.apiDefinitionId,
             availability: convertAvailability(webSocket.availability),
-        };
+        }));
     }
 
     private convertWebhookNode(
         webhookId: FernNavigation.WebhookId,
         webhook: APIV1Read.WebhookDefinition,
-        parentSlug: string[],
+        parentSlug: string,
     ): FernNavigation.WebhookNode {
-        return {
+        return this.#idgen.with(webhookId, (id) => ({
+            id,
             type: "webhook",
             title: webhook.name ?? urljoin("/", ...webhook.path),
             webhookId,
@@ -126,12 +144,12 @@ export class ApiReferenceNavigationConverter {
             method: webhook.method,
             apiDefinitionId: this.apiDefinitionId,
             availability: undefined,
-        };
+        }));
     }
 
     private convertPackageToChildren(
         package_: APIV1Read.ApiDefinitionPackage,
-        parentSlug: string[],
+        parentSlug: string,
     ): FernNavigation.ApiReferenceChild[] {
         const children: FernNavigation.ApiReferenceChild[] = [];
 
@@ -182,22 +200,30 @@ export class ApiReferenceNavigationConverter {
                 console.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
                 return;
             }
-            const slug = createSlug(this.baseSlug, parentSlug, subpackage);
-            const subpackageChildren = this.convertPackageToChildren(subpackage, slug);
-            if (subpackageChildren.length === 0) {
-                return;
-            }
-            children.push({
-                type: "apiSection",
-                children: subpackageChildren,
-                title: subpackage.displayName ?? subpackage.name,
-                slug,
-                icon: undefined,
-                hidden: undefined,
-                overviewPageId: undefined,
-                availability: undefined,
-                apiDefinitionId: this.apiDefinitionId,
+            const child = this.#idgen.with(subpackageId, (id): FernNavigation.ApiSectionNode | undefined => {
+                const slug = createSlug(this.baseSlug, parentSlug, subpackage);
+                const subpackageChildren = this.convertPackageToChildren(subpackage, slug);
+                if (subpackageChildren.length === 0) {
+                    return;
+                }
+                const pointsTo = followRedirects(subpackageChildren);
+                return {
+                    id,
+                    type: "apiSection",
+                    children: subpackageChildren,
+                    title: subpackage.displayName ?? subpackage.name,
+                    slug,
+                    icon: undefined,
+                    hidden: undefined,
+                    overviewPageId: undefined,
+                    availability: undefined,
+                    apiDefinitionId: this.apiDefinitionId,
+                    pointsTo,
+                };
             });
+            if (child != null) {
+                children.push(child);
+            }
         });
 
         this.#visitedSubpackages.add(subpackageId);
@@ -207,7 +233,7 @@ export class ApiReferenceNavigationConverter {
 
     private convertApiNavigationItems(
         items: DocsV1Read.ApiNavigationConfigItem[],
-        parentSlug: string[],
+        parentSlug: string,
         subpackageId: string,
     ): FernNavigation.ApiReferenceChild[] {
         const children: FernNavigation.ApiReferenceChild[] = [];
@@ -234,14 +260,17 @@ export class ApiReferenceNavigationConverter {
         items.forEach((item) => {
             visitDiscriminatedUnion(item, "type")._visit({
                 page: (page) => {
-                    children.push({
-                        type: "page",
-                        title: page.title,
-                        pageId: FernNavigation.PageId(page.id),
-                        slug: createSlug(this.baseSlug, parentSlug, page),
-                        icon: page.icon,
-                        hidden: page.hidden,
-                    });
+                    children.push(
+                        this.#idgen.with(page.urlSlug, (id) => ({
+                            id,
+                            type: "page",
+                            title: page.title,
+                            pageId: FernNavigation.PageId(page.id),
+                            slug: createSlug(this.baseSlug, parentSlug, page),
+                            icon: page.icon,
+                            hidden: page.hidden,
+                        })),
+                    );
                 },
                 endpointId: (oldEndpointId) => {
                     const endpoint = endpoints.get(oldEndpointId.value);

@@ -2,9 +2,13 @@ import { noop } from "lodash-es";
 import urljoin from "url-join";
 import { SlugCollector } from "../SlugCollector";
 import { FernNavigation } from "../generated";
-import { NavigationLeafNode, NavigationNode, NavigationNodeWithContent } from "../types/NavigationNode";
+import {
+    NavigationLeafNode,
+    NavigationNode,
+    NavigationNodeWithContent,
+    NavigationNodeWithMetadata,
+} from "../types/NavigationNode";
 import { visitNavigationNodeWithMetadata } from "../visitors";
-import { followRedirect } from "./followRedirect";
 import { nodeHasContent } from "./nodeHasContent";
 import { nodeHasMetadata } from "./nodeHasMetadata";
 
@@ -52,8 +56,7 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
             }
         }
 
-        const redirect = followRedirect(maybeVersionNode);
-        return { type: "notFound", redirect };
+        return { type: "notFound", redirect: maybeVersionNode.pointsTo };
     }
 
     const sidebar = found.parents.find((node): node is FernNavigation.SidebarRootNode => node.type === "sidebarRoot");
@@ -84,18 +87,19 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
         };
     }
 
-    const redirectSlug = followRedirect(found.node);
+    const redirect = hasPointsTo(found.node) ? found.node.pointsTo : version?.pointsTo ?? root.pointsTo;
 
-    if (redirectSlug == null) {
-        if (found.node.type === "root") {
-            return { type: "notFound", redirect: undefined };
-        }
-
-        const redirect = followRedirect(version ?? root);
-        return { type: "notFound", redirect };
+    if (redirect == null || urljoin(redirect) === slugToFind) {
+        return { type: "notFound", redirect: undefined };
     }
 
-    return { type: "redirect", redirect: redirectSlug };
+    return { type: "redirect", redirect };
+}
+
+function hasPointsTo(
+    node: NavigationNodeWithMetadata,
+): node is NavigationNodeWithMetadata & FernNavigation.WithRedirect {
+    return (node as FernNavigation.WithRedirect).pointsTo != null;
 }
 
 function createBreadcrumb(nodes: NavigationNode[]): string[] {

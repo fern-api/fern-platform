@@ -5,6 +5,8 @@
 import * as FernNavigation from "../index";
 
 export interface WithNodeMetadata {
+    /** A unique, stable identifier for this node. */
+    id: FernNavigation.NodeId;
     title: string;
     slug: FernNavigation.Slug;
     icon: string | undefined;

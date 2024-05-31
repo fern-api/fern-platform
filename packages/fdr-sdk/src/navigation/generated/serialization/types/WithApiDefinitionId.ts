@@ -5,7 +5,7 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { ApiDefinitionId } from "../resources/apiReference/types/ApiDefinitionId";
+import { ApiDefinitionId } from "./ApiDefinitionId";
 import { Availability } from "./Availability";
 
 export const WithApiDefinitionId: core.serialization.ObjectSchema<

@@ -36,13 +36,13 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
     });
 }
 
-function followRedirects(nodes: NavigationNode[]): FernNavigation.Slug | undefined {
+export function followRedirects(nodes: NavigationNode[]): FernNavigation.Slug | undefined {
     let traversedFirst = false;
     for (const node of nodes) {
-        if (traversedFirst) {
-            // eslint-disable-next-line no-console
-            console.error("First redirect path was not followed, this should not happen.");
-        }
+        // if (traversedFirst) {
+        //     // eslint-disable-next-line no-console
+        //     console.error("First redirect path was not followed, this should not happen.");
+        // }
         const redirect = followRedirect(node);
         if (redirect != null) {
             return redirect;

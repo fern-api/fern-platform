@@ -5,12 +5,14 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { Slug } from "../resources/commons/types/Slug";
+import { NodeId } from "./NodeId";
+import { Slug } from "./Slug";
 
 export const WithNodeMetadata: core.serialization.ObjectSchema<
     serializers.WithNodeMetadata.Raw,
     FernNavigation.WithNodeMetadata
 > = core.serialization.objectWithoutOptionalProperties({
+    id: NodeId,
     title: core.serialization.string(),
     slug: Slug,
     icon: core.serialization.string().optional(),
@@ -19,6 +21,7 @@ export const WithNodeMetadata: core.serialization.ObjectSchema<
 
 export declare namespace WithNodeMetadata {
     interface Raw {
+        id: NodeId.Raw;
         title: string;
         slug: Slug.Raw;
         icon?: string | null;

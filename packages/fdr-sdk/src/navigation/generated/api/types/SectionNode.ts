@@ -4,7 +4,10 @@
 
 import * as FernNavigation from "../index";
 
-export interface SectionNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithOverviewPage {
+export interface SectionNode
+    extends FernNavigation.WithNodeMetadata,
+        FernNavigation.WithOverviewPage,
+        FernNavigation.WithRedirect {
     type: "section";
     collapsed: boolean | undefined;
     children: FernNavigation.NavigationChild[];

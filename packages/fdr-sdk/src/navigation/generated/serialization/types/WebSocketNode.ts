@@ -5,7 +5,7 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { WebSocketId } from "../resources/apiReference/types/WebSocketId";
+import { WebSocketId } from "./WebSocketId";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithApiDefinitionId } from "./WithApiDefinitionId";
 

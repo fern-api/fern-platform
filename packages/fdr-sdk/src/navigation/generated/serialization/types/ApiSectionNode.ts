@@ -8,6 +8,7 @@ import * as core from "../../core";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithOverviewPage } from "./WithOverviewPage";
 import { WithApiDefinitionId } from "./WithApiDefinitionId";
+import { WithRedirect } from "./WithRedirect";
 
 export const ApiSectionNode: core.serialization.ObjectSchema<
     serializers.ApiSectionNode.Raw,
@@ -19,10 +20,11 @@ export const ApiSectionNode: core.serialization.ObjectSchema<
     })
     .extend(WithNodeMetadata)
     .extend(WithOverviewPage)
-    .extend(WithApiDefinitionId);
+    .extend(WithApiDefinitionId)
+    .extend(WithRedirect);
 
 export declare namespace ApiSectionNode {
-    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithApiDefinitionId.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithApiDefinitionId.Raw, WithRedirect.Raw {
         type: "apiSection";
         children: serializers.ApiReferenceChild.Raw[];
     }
