@@ -3,6 +3,7 @@ import path from "path";
 import { DocsV2Read } from "../../client";
 import { SlugCollector } from "../SlugCollector";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
+import { collectPageIds } from "../utils/collectPageIds";
 
 const fixturesDir = path.join(__dirname, "fixtures");
 
@@ -39,6 +40,11 @@ function testNavigationConfigConverter(fixtureName: string): void {
             const slugsWithContent = slugCollector.getSlugsWithContent();
             expect(JSON.stringify(slugsWithContent, undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/slugsWithContent.json`,
+            );
+
+            const pageIds = collectPageIds(node);
+            expect(JSON.stringify([...pageIds], undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/pageIds.json`,
             );
         });
     });
