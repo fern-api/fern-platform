@@ -4,9 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface WebSocketNode extends FernNavigation.WithNodeMetadata {
+export interface WebSocketNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithApiDefinitionId {
     type: "webSocket";
-    apiDefinitionId: FernNavigation.ApiDefinitionId;
     webSocketId: FernNavigation.WebSocketId;
-    availability: FernNavigation.Availability | undefined;
 }

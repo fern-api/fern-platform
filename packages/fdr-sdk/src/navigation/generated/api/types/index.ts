@@ -29,5 +29,6 @@ export * from "./WebhookNode";
 export * from "./ApiSectionNode";
 export * from "./WithNodeMetadata";
 export * from "./WithOverviewPage";
+export * from "./WithApiDefinitionId";
 export * from "./HttpMethod";
 export * from "./Availability";

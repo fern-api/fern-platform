@@ -162,50 +162,50 @@ types:
     extends:
       - WithNodeMetadata
       - WithOverviewPage
+      - WithApiDefinitionId
     properties:
       type: literal<"apiReference">
-      apiDefinitionId: apiRef.ApiDefinitionId
       disableLongScrolling: optional<boolean>
+      showErrors: optional<boolean>
       hideTitle: optional<boolean>
       children: list<ApiReferenceChild>
       changelog: optional<ChangelogNode>
-      availability: optional<Availability>
 
   EndpointNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
     properties:
       type: literal<"endpoint">
       method: HttpMethod
-      apiDefinitionId: apiRef.ApiDefinitionId
       endpointId: apiRef.EndpointId
-      availability: optional<Availability>
       isResponseStream: optional<boolean>
 
   WebSocketNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
     properties:
       type: literal<"webSocket">
-      apiDefinitionId: apiRef.ApiDefinitionId
       webSocketId: apiRef.WebSocketId
-      availability: optional<Availability>
 
   WebhookNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
     properties:
       type: literal<"webhook">
       method: HttpMethod
-      apiDefinitionId: apiRef.ApiDefinitionId
       webhookId: apiRef.WebhookId
-      availability: optional<Availability>
 
   ApiSectionNode:
     extends:
       - WithNodeMetadata
       - WithOverviewPage
+      - WithApiDefinitionId
     properties:
       type: literal<"apiSection">
       children: list<ApiReferenceChild>
-      availability: optional<Availability>
 
   # utilities
 
@@ -219,6 +219,11 @@ types:
   WithOverviewPage:
     properties:
       overviewPageId: optional<PageId>
+
+  WithApiDefinitionId:
+    properties:
+      apiDefinitionId: apiRef.ApiDefinitionId
+      availability: optional<Availability>
 
   # enums
 

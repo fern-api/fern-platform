@@ -11,7 +11,7 @@ export class ApiDefinitionHolder {
     #webSockets = new Map<FernNavigation.WebSocketId, APIV1Read.WebSocketChannel>();
     #webhooks = new Map<FernNavigation.WebhookId, APIV1Read.WebhookDefinition>();
 
-    private constructor(api: APIV1Read.ApiDefinition) {
+    private constructor(public readonly api: APIV1Read.ApiDefinition) {
         [api.rootPackage, ...Object.values(api.subpackages)].forEach((package_) => {
             const subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
             package_.endpoints.forEach((endpoint) => {

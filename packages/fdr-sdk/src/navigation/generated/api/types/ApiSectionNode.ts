@@ -4,8 +4,10 @@
 
 import * as FernNavigation from "../index";
 
-export interface ApiSectionNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithOverviewPage {
+export interface ApiSectionNode
+    extends FernNavigation.WithNodeMetadata,
+        FernNavigation.WithOverviewPage,
+        FernNavigation.WithApiDefinitionId {
     type: "apiSection";
     children: FernNavigation.ApiReferenceChild[];
-    availability: FernNavigation.Availability | undefined;
 }

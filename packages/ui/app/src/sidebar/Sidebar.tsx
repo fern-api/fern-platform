@@ -70,10 +70,9 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             ))}
                         </ul>
                     )}
-                    <CollapseSidebarProvider navigationItems={sidebarNodes}>
+                    <CollapseSidebarProvider>
                         <FernTooltipProvider>
                             <SidebarSection
-                                navigationItems={sidebarNodes}
                                 slug={currentSlug}
                                 registerScrolledToPathListener={registerScrolledToPathListener}
                                 depth={0}

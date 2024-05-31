@@ -1,5 +1,6 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { joinUrlSlugs, SidebarNode } from "@fern-ui/fdr-utils";
+import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useSetAtom } from "jotai";
 import { ReactElement } from "react";
@@ -20,6 +21,7 @@ export function PlaygroundEndpointFormButtons({
     resetWithoutExample,
 }: PlaygroundEndpointFormButtonsProps): ReactElement {
     const { activeNavigatable } = useNavigationContext();
+    const apiReferenceId = FernNavigation.utils.getApiReferenceId(activeNavigatable);
     const setPlaygroundOpen = useSetAtom(PLAYGROUND_OPEN_ATOM);
     return (
         <div className="flex justify-between items-center">
@@ -34,11 +36,7 @@ export function PlaygroundEndpointFormButtons({
 
             <FernLink
                 href={`/${joinUrlSlugs(...endpoint.slug)}`}
-                shallow={
-                    activeNavigatable != null &&
-                    SidebarNode.isApiPage(activeNavigatable) &&
-                    activeNavigatable.api === endpoint.apiSectionId
-                }
+                shallow={apiReferenceId === endpoint.apiSectionId}
                 className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                 onClick={() => setPlaygroundOpen(false)}
             >

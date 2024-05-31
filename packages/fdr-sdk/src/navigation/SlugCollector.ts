@@ -36,11 +36,11 @@ export class SlugCollector {
     private slugToNode: Record<string, NavigationNodeWithMetadataAndParents> = {};
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
 
-    public static collect(rootNode: FernNavigation.RootNode): SlugCollector {
+    public static collect(rootNode: NavigationNode): SlugCollector {
         return new SlugCollector(rootNode);
     }
 
-    constructor(rootNode: FernNavigation.RootNode) {
+    constructor(rootNode: NavigationNode) {
         let last: NavigationNodeWithMetadataAndParents | undefined;
         let lastNodeWithContent: NavigationNodeWithContent | undefined;
         function setNode(slug: string, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
@@ -94,9 +94,13 @@ export class SlugCollector {
         return this.orphanedNodes.filter(nodeHasContent);
     });
 
-    public getSlugMap = once((): Map<string, NavigationNodeWithMetadata> => {
+    private getSlugMap = once((): Map<string, NavigationNodeWithMetadata> => {
         return new Map(Object.entries(this.slugToNode).map(([slug, { node }]) => [slug, node]));
     });
+
+    get slugMap(): Map<string, NavigationNodeWithMetadata> {
+        return this.getSlugMap();
+    }
 
     public getSlugMapWithParents = once((): Map<string, NavigationNodeWithMetadataAndParents> => {
         return new Map(Object.entries(this.slugToNode));
@@ -125,25 +129,6 @@ export class SlugCollector {
         return visitNavigationNode<FernNavigation.Slug | undefined>(nodeToFollow, {
             link: () => undefined,
 
-            // version is a special case where it should only consider it's first child (the first version)
-            versioned: (node) => (node.children.length > 0 ? this.followRedirect(node.children[0]) : undefined),
-
-            // nodes with overview
-            apiSection: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
-            section: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
-            apiReference: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
-
-            // nodes without overview
-            tabbed: (node) => (node.children.length > 0 ? this.followRedirects(node.children) : undefined),
-            sidebarRoot: (node) => (node.children.length > 0 ? this.followRedirects(node.children) : undefined),
-
-            // non-leaf nodes
-            endpointPair: (node) => this.followRedirect(node.nonStream),
-            root: (node) => this.followRedirect(node.child),
-            version: (node) => this.followRedirect(node.child),
-            tab: (node) => this.followRedirect(node.child),
-            sidebarGroup: (node) => this.followRedirects(node.children),
-
             // leaf nodes
             page: (node) => node.slug,
             changelog: (node) => node.slug,
@@ -153,6 +138,21 @@ export class SlugCollector {
             endpoint: (node) => node.slug,
             webSocket: (node) => node.slug,
             webhook: (node) => node.slug,
+
+            // nodes with overview
+            apiSection: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
+            section: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
+            apiReference: (node) => (node.overviewPageId != null ? node.slug : this.followRedirects(node.children)),
+
+            // version is a special case where it should only consider it's first child (the first version)
+            versioned: (node) => this.followRedirect(node.children[0]),
+            tabbed: (node) => this.followRedirects(node.children),
+            sidebarRoot: (node) => this.followRedirects(node.children),
+            endpointPair: (node) => this.followRedirect(node.nonStream),
+            root: (node) => this.followRedirect(node.child),
+            version: (node) => this.followRedirect(node.child),
+            tab: (node) => this.followRedirect(node.child),
+            sidebarGroup: (node) => this.followRedirects(node.children),
         });
     }
 

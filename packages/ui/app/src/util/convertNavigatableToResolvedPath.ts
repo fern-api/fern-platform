@@ -1,5 +1,4 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { SidebarNode, flattenApiDefinition } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import urljoin from "url-join";
@@ -14,7 +13,6 @@ import {
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
-import { ResolvedRootPackage } from "../resolver/types";
 import { Changelog } from "./dateUtils";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
@@ -64,24 +62,25 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
-    node,
+    found,
     apis,
     pages,
     mdxOptions,
     domain,
     featureFlags,
 }: {
-    node: FernNavigation.utils.Node.Found;
+    found: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     domain: string;
     featureFlags: FeatureFlags;
 }): Promise<ResolvedPath | undefined> {
-    const neighbors = await getNeighbors(node, pages);
+    const neighbors = await getNeighbors(found, pages);
+    const { node, apiReference } = found;
 
-    if (node.apiReference != null) {
-        const api = apis[node.apiReference.apiDefinitionId];
+    if (apiReference != null) {
+        const api = apis[apiReference.apiDefinitionId];
         if (api == null) {
             return;
         }
@@ -89,8 +88,7 @@ export async function convertNavigatableToResolvedPath({
         const typeResolver = new ApiTypeResolver(api.types);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
         const apiDefinition = await ApiDefinitionResolver.resolve(
-            node.apiReference,
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            apiReference,
             holder,
             typeResolver,
             pages,
@@ -100,89 +98,98 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "api-page",
-            fullSlug: node.node.slug.join("/"),
-            api: node.apiReference.apiDefinitionId,
+            fullSlug: found.node.slug.join("/"),
+            api: apiReference.apiDefinitionId,
             apiDefinition,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
-            showErrors: apiSection.showErrors,
+            showErrors: apiReference.showErrors ?? false,
             neighbors,
         };
-    } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
-        const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
+    } else if (node.type === "changelog") {
+        const pageContent = node.overviewPageId != null ? pages[node.overviewPageId] : undefined;
         const serializedMdxContent =
             pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
+        const itemsPromise: Promise<ResolvedPath.ChangelogPage["items"][0]>[] = [];
+        node.children.forEach((year) => {
+            year.children.forEach((month) => {
+                month.children.forEach((entry) => {
+                    const pageContent = pages[entry.pageId];
+                    if (pageContent == null) {
+                        return;
+                    }
+                    itemsPromise.push(
+                        serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions).then((markdown) => ({
+                            date: entry.date,
+                            dateString: Changelog.toLongDateString(entry.date),
+                            markdown,
+                        })),
+                    );
+                });
+            });
+        });
         return {
             type: "changelog-page",
-            fullSlug: traverseState.curr.slug.join("/"),
-            title: frontmatter.title ?? traverseState.curr.title,
-            sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
+            fullSlug: node.slug.join("/"),
+            title: frontmatter.title ?? node.title,
+            sectionTitleBreadcrumbs: found.breadcrumb,
             markdown: serializedMdxContent,
-            items: await Promise.all(
-                traverseState.curr.items.map(async (item) => {
-                    const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", {
-                        ...mdxOptions,
-                    });
-                    return {
-                        date: item.date,
-                        dateString: Changelog.toLongDateString(item.date),
-                        markdown,
-                    };
-                }),
-            ),
+            items: await Promise.all(itemsPromise),
             neighbors,
         };
-    } else {
-        const pageContent = pages[traverseState.curr.id];
+    } else if (node.type === "page") {
+        const pageContent = pages[node.pageId];
         if (pageContent == null) {
             return;
         }
         const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
             ...mdxOptions,
             pageHeader: {
-                title: traverseState.curr.title,
-                breadcrumbs: traverseState.sectionTitleBreadcrumbs,
+                title: node.title,
+                breadcrumbs: found.breadcrumb,
                 editThisPageUrl: pageContent.editThisPageUrl,
                 isTocDefaultEnabled: featureFlags.isTocDefaultEnabled,
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
 
-        let resolvedApis: Record<string, ResolvedRootPackage> = {};
+        let apiNodes: FernNavigation.ApiReferenceNode[] = [];
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
-            const title = traverseState.curr.title;
-            resolvedApis = Object.fromEntries(
-                await Promise.all(
-                    Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, domain);
-                        return [
-                            apiName,
-                            await ApiDefinitionResolver.resolve(
-                                title,
-                                flattenedApiDefinition,
-                                pages,
-                                mdxOptions,
-                                featureFlags,
-                                domain,
-                            ),
-                        ];
-                    }),
-                ),
-            );
+            apiNodes = FernNavigation.utils.collectApiReferences(found.currentVersion ?? found.root);
         }
+        const resolvedApis = Object.fromEntries(
+            await Promise.all(
+                apiNodes.map(async (apiNode) => {
+                    const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
+                    const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types);
+                    return [
+                        apiNode.title,
+                        await ApiDefinitionResolver.resolve(
+                            apiNode,
+                            holder,
+                            typeResolver,
+                            pages,
+                            mdxOptions,
+                            featureFlags,
+                            domain,
+                        ),
+                    ];
+                }),
+            ),
+        );
         return {
             type: "custom-markdown-page",
-            fullSlug: traverseState.curr.slug.join("/"),
-            title: frontmatter.title ?? traverseState.curr.title,
+            fullSlug: node.slug.join("/"),
+            title: frontmatter.title ?? node.title,
             serializedMdxContent,
             neighbors,
             apis: resolvedApis,
         };
     }
+    return undefined;
 }
 
 async function getNeighbor(

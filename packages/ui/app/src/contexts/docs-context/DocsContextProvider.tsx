@@ -23,7 +23,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const typography = useDeepCompareMemoize(pageProps.typography);
     const css = useDeepCompareMemoize(pageProps.css);
     const js = useDeepCompareMemoize(pageProps.js);
-    const sidebarNodes = useDeepCompareMemoize(pageProps.navigation.sidebarNodes);
+    const sidebar = useDeepCompareMemoize(pageProps.navigation.sidebar);
     const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
     const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const searchInfo = useDeepCompareMemoize(pageProps.search);
@@ -65,7 +65,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             tabs,
             currentVersionIndex,
             versions,
-            sidebarNodes,
+            sidebar,
             searchInfo,
             navbarLinks,
             apis,
@@ -80,7 +80,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             files,
             layout,
             resolveFile,
-            sidebarNodes,
+            sidebar,
             tabs,
             typography,
             versions,

@@ -5,11 +5,10 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { ApiDefinitionId } from "../resources/apiReference/types/ApiDefinitionId";
 import { ChangelogNode } from "./ChangelogNode";
-import { Availability } from "./Availability";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithOverviewPage } from "./WithOverviewPage";
+import { WithApiDefinitionId } from "./WithApiDefinitionId";
 
 export const ApiReferenceNode: core.serialization.ObjectSchema<
     serializers.ApiReferenceNode.Raw,
@@ -17,24 +16,23 @@ export const ApiReferenceNode: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         type: core.serialization.stringLiteral("apiReference"),
-        apiDefinitionId: ApiDefinitionId,
         disableLongScrolling: core.serialization.boolean().optional(),
+        showErrors: core.serialization.boolean().optional(),
         hideTitle: core.serialization.boolean().optional(),
         children: core.serialization.list(core.serialization.lazy(async () => (await import("..")).ApiReferenceChild)),
         changelog: ChangelogNode.optional(),
-        availability: Availability.optional(),
     })
     .extend(WithNodeMetadata)
-    .extend(WithOverviewPage);
+    .extend(WithOverviewPage)
+    .extend(WithApiDefinitionId);
 
 export declare namespace ApiReferenceNode {
-    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithApiDefinitionId.Raw {
         type: "apiReference";
-        apiDefinitionId: ApiDefinitionId.Raw;
         disableLongScrolling?: boolean | null;
+        showErrors?: boolean | null;
         hideTitle?: boolean | null;
         children: serializers.ApiReferenceChild.Raw[];
         changelog?: ChangelogNode.Raw | null;
-        availability?: Availability.Raw | null;
     }
 }

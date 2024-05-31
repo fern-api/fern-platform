@@ -4,11 +4,9 @@
 
 import * as FernNavigation from "../index";
 
-export interface EndpointNode extends FernNavigation.WithNodeMetadata {
+export interface EndpointNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithApiDefinitionId {
     type: "endpoint";
     method: FernNavigation.HttpMethod;
-    apiDefinitionId: FernNavigation.ApiDefinitionId;
     endpointId: FernNavigation.EndpointId;
-    availability: FernNavigation.Availability | undefined;
     isResponseStream: boolean | undefined;
 }

@@ -4,10 +4,8 @@
 
 import * as FernNavigation from "../index";
 
-export interface WebhookNode extends FernNavigation.WithNodeMetadata {
+export interface WebhookNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithApiDefinitionId {
     type: "webhook";
     method: FernNavigation.HttpMethod;
-    apiDefinitionId: FernNavigation.ApiDefinitionId;
     webhookId: FernNavigation.WebhookId;
-    availability: FernNavigation.Availability | undefined;
 }

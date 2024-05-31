@@ -197,9 +197,9 @@ export function isWebSocket(definition: ResolvedApiDefinition): definition is Re
 
 export interface ResolvedSubpackage extends WithMetadata, ResolvedWithApiDefinition {
     type: "subpackage";
-    apiSectionId: FdrAPI.ApiDefinitionId;
-    id: APIV1Read.SubpackageId;
-    name: string;
+    // apiSectionId: FdrAPI.ApiDefinitionId;
+    // id: APIV1Read.SubpackageId;
+    // name: string;
     title: string;
 }
 
@@ -220,7 +220,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     type: "endpoint";
     id: APIV1Read.EndpointId;
     apiSectionId: FdrAPI.ApiDefinitionId;
-    apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
+    // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
     slug: string[];
     auth: APIV1Read.ApiAuth | undefined;
     availability: APIV1Read.Availability | undefined;

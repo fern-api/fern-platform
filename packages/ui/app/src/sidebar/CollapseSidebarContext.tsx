@@ -1,6 +1,7 @@
-import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
-import { noop } from "lodash-es";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { last, noop } from "lodash-es";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import urljoin from "url-join";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
@@ -32,43 +33,42 @@ export function checkSlugStartsWith(slug: readonly string[], startsWith: readonl
 
 export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(CollapseSidebarContext);
 
-export const CollapseSidebarProvider: FC<
-    PropsWithChildren<{
-        navigationItems: SidebarNode[];
-    }>
-> = ({ children, navigationItems }) => {
-    const { sidebarNodes } = useDocsContext();
+export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
+    const { sidebar } = useDocsContext();
     const { selectedSlug: selectedSlugString } = useNavigationContext();
 
     const parentSlugMap = useMemo(() => {
         const map = new Map<string, string[]>();
-        sidebarNodes.forEach((node) => {
-            visitSidebarNode(node, (visitedNode, parents) => {
+        FernNavigation.traverseNavigation(sidebar, (node, _index, parents) => {
+            if (FernNavigation.utils.nodeHasMetadata(node)) {
                 map.set(
-                    visitedNode.slug.join("/"),
-                    parents.map((p) => p.slug.join("/")),
+                    node.slug.join("/"),
+                    parents.filter(FernNavigation.utils.nodeHasMetadata).map((p) => p.slug.join("/")),
                 );
-            });
+            }
         });
         return map;
-    }, [sidebarNodes]);
+    }, [sidebar]);
 
     const parentToChildrenMap = useMemo(() => {
         const map = new Map<string, string[]>();
-        sidebarNodes.forEach((node) => {
-            visitSidebarNode(node, (visitedNode, parents) => {
-                if (parents.length > 0) {
-                    const parentSlug = parents[parents.length - 1].slug.join("/");
-                    if (!map.has(parentSlug)) {
-                        map.set(parentSlug, []);
-                    }
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    map.get(parentSlug)!.push(visitedNode.slug.join("/"));
+        FernNavigation.traverseNavigation(sidebar, (visitedNode, _index, parents) => {
+            if (!FernNavigation.utils.nodeHasMetadata(visitedNode)) {
+                return;
+            }
+            const parent = last(parents.filter(FernNavigation.utils.nodeHasMetadata));
+
+            if (parent != null) {
+                const parentSlug = urljoin(parent.slug);
+                if (!map.has(parentSlug)) {
+                    map.set(parentSlug, []);
                 }
-            });
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                map.get(parentSlug)!.push(urljoin(visitedNode.slug));
+            }
         });
         return map;
-    }, [sidebarNodes]);
+    }, [sidebar]);
 
     const selectedSlug = useMemo(() => selectedSlugString.split("/"), [selectedSlugString]);
     const [expanded, setExpanded] = useState<string[][]>(() => [
@@ -117,9 +117,10 @@ export const CollapseSidebarProvider: FC<
     // If there is only one pageGroup with only one page, hide the sidebar content
     // this is useful for tabs that only have one page
     if (
-        navigationItems.length === 1 &&
-        navigationItems[0].type === "pageGroup" &&
-        navigationItems[0].pages.length === 1
+        sidebar.children.length === 1 &&
+        sidebar.children[0].type === "sidebarGroup" &&
+        sidebar.children[0].children.length === 1 &&
+        sidebar.children[0].children[0].type === "page"
     ) {
         return null;
     }

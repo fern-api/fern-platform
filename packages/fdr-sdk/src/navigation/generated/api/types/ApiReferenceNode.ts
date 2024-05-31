@@ -4,12 +4,14 @@
 
 import * as FernNavigation from "../index";
 
-export interface ApiReferenceNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithOverviewPage {
+export interface ApiReferenceNode
+    extends FernNavigation.WithNodeMetadata,
+        FernNavigation.WithOverviewPage,
+        FernNavigation.WithApiDefinitionId {
     type: "apiReference";
-    apiDefinitionId: FernNavigation.ApiDefinitionId;
     disableLongScrolling: boolean | undefined;
+    showErrors: boolean | undefined;
     hideTitle: boolean | undefined;
     children: FernNavigation.ApiReferenceChild[];
     changelog: FernNavigation.ChangelogNode | undefined;
-    availability: FernNavigation.Availability | undefined;
 }

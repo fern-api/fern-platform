@@ -5,10 +5,9 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { ApiDefinitionId } from "../resources/apiReference/types/ApiDefinitionId";
 import { WebSocketId } from "../resources/apiReference/types/WebSocketId";
-import { Availability } from "./Availability";
 import { WithNodeMetadata } from "./WithNodeMetadata";
+import { WithApiDefinitionId } from "./WithApiDefinitionId";
 
 export const WebSocketNode: core.serialization.ObjectSchema<
     serializers.WebSocketNode.Raw,
@@ -16,17 +15,14 @@ export const WebSocketNode: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         type: core.serialization.stringLiteral("webSocket"),
-        apiDefinitionId: ApiDefinitionId,
         webSocketId: WebSocketId,
-        availability: Availability.optional(),
     })
-    .extend(WithNodeMetadata);
+    .extend(WithNodeMetadata)
+    .extend(WithApiDefinitionId);
 
 export declare namespace WebSocketNode {
-    interface Raw extends WithNodeMetadata.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithApiDefinitionId.Raw {
         type: "webSocket";
-        apiDefinitionId: ApiDefinitionId.Raw;
         webSocketId: WebSocketId.Raw;
-        availability?: Availability.Raw | null;
     }
 }

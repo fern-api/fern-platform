@@ -52,3 +52,9 @@ export type NavigationNodeWithContent =
     | FernNavigation.WebSocketNode
     | FernNavigation.WebhookNode
     | FernNavigation.PageNode;
+
+export type NavigationLeafNode =
+    | NavigationNodeWithContent
+    | FernNavigation.ChangelogNode
+    | FernNavigation.ChangelogYearNode
+    | FernNavigation.ChangelogMonthNode;

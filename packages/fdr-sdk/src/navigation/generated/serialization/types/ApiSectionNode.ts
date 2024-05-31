@@ -5,9 +5,9 @@
 import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
-import { Availability } from "./Availability";
 import { WithNodeMetadata } from "./WithNodeMetadata";
 import { WithOverviewPage } from "./WithOverviewPage";
+import { WithApiDefinitionId } from "./WithApiDefinitionId";
 
 export const ApiSectionNode: core.serialization.ObjectSchema<
     serializers.ApiSectionNode.Raw,
@@ -16,15 +16,14 @@ export const ApiSectionNode: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         type: core.serialization.stringLiteral("apiSection"),
         children: core.serialization.list(core.serialization.lazy(async () => (await import("..")).ApiReferenceChild)),
-        availability: Availability.optional(),
     })
     .extend(WithNodeMetadata)
-    .extend(WithOverviewPage);
+    .extend(WithOverviewPage)
+    .extend(WithApiDefinitionId);
 
 export declare namespace ApiSectionNode {
-    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithOverviewPage.Raw, WithApiDefinitionId.Raw {
         type: "apiSection";
         children: serializers.ApiReferenceChild.Raw[];
-        availability?: Availability.Raw | null;
     }
 }

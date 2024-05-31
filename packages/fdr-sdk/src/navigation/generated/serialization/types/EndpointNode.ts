@@ -6,30 +6,26 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { HttpMethod } from "./HttpMethod";
-import { ApiDefinitionId } from "../resources/apiReference/types/ApiDefinitionId";
 import { EndpointId } from "../resources/apiReference/types/EndpointId";
-import { Availability } from "./Availability";
 import { WithNodeMetadata } from "./WithNodeMetadata";
+import { WithApiDefinitionId } from "./WithApiDefinitionId";
 
 export const EndpointNode: core.serialization.ObjectSchema<serializers.EndpointNode.Raw, FernNavigation.EndpointNode> =
     core.serialization
         .objectWithoutOptionalProperties({
             type: core.serialization.stringLiteral("endpoint"),
             method: HttpMethod,
-            apiDefinitionId: ApiDefinitionId,
             endpointId: EndpointId,
-            availability: Availability.optional(),
             isResponseStream: core.serialization.boolean().optional(),
         })
-        .extend(WithNodeMetadata);
+        .extend(WithNodeMetadata)
+        .extend(WithApiDefinitionId);
 
 export declare namespace EndpointNode {
-    interface Raw extends WithNodeMetadata.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithApiDefinitionId.Raw {
         type: "endpoint";
         method: HttpMethod.Raw;
-        apiDefinitionId: ApiDefinitionId.Raw;
         endpointId: EndpointId.Raw;
-        availability?: Availability.Raw | null;
         isResponseStream?: boolean | null;
     }
 }

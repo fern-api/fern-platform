@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FlattenedApiDefinition } from "./flattenApiDefinition";
 
@@ -11,7 +11,7 @@ export interface SidebarVersionInfo {
     id: string;
     slug: readonly string[];
     index: number;
-    availability: DocsV1Read.VersionAvailability | null;
+    availability: FernNavigation.Availability | undefined;
 }
 
 interface SidebarTabGroup {

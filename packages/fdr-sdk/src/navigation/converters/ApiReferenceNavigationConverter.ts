@@ -57,6 +57,7 @@ export class ApiReferenceNavigationConverter {
             icon: this.apiSection.icon,
             hidden: this.apiSection.hidden,
             hideTitle: this.apiSection.flattened,
+            showErrors: this.apiSection.showErrors,
             changelog:
                 this.apiSection.changelog != null
                     ? ChangelogNavigationConverter.convert(this.apiSection.changelog, this.baseSlug, slug)
@@ -195,6 +196,7 @@ export class ApiReferenceNavigationConverter {
                 hidden: undefined,
                 overviewPageId: undefined,
                 availability: undefined,
+                apiDefinitionId: this.apiDefinitionId,
             });
         });
 

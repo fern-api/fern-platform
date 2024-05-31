@@ -6,28 +6,24 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { HttpMethod } from "./HttpMethod";
-import { ApiDefinitionId } from "../resources/apiReference/types/ApiDefinitionId";
 import { WebhookId } from "../resources/apiReference/types/WebhookId";
-import { Availability } from "./Availability";
 import { WithNodeMetadata } from "./WithNodeMetadata";
+import { WithApiDefinitionId } from "./WithApiDefinitionId";
 
 export const WebhookNode: core.serialization.ObjectSchema<serializers.WebhookNode.Raw, FernNavigation.WebhookNode> =
     core.serialization
         .objectWithoutOptionalProperties({
             type: core.serialization.stringLiteral("webhook"),
             method: HttpMethod,
-            apiDefinitionId: ApiDefinitionId,
             webhookId: WebhookId,
-            availability: Availability.optional(),
         })
-        .extend(WithNodeMetadata);
+        .extend(WithNodeMetadata)
+        .extend(WithApiDefinitionId);
 
 export declare namespace WebhookNode {
-    interface Raw extends WithNodeMetadata.Raw {
+    interface Raw extends WithNodeMetadata.Raw, WithApiDefinitionId.Raw {
         type: "webhook";
         method: HttpMethod.Raw;
-        apiDefinitionId: ApiDefinitionId.Raw;
         webhookId: WebhookId.Raw;
-        availability?: Availability.Raw | null;
     }
 }
