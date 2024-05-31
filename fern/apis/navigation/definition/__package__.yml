@@ -1,0 +1,231 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ./commons.yml
+  apiRef: ./api-reference.yml
+types:
+  VersionId: string
+  TabId: string
+  PageId: string
+
+  # discriminated unions
+
+  RootChild:
+    discriminated: false
+    union:
+      - VersionedNode
+      - TabbedNode
+      - SidebarRootNode
+
+  VersionChild:
+    discriminated: false
+    union:
+      - TabbedNode
+      - SidebarRootNode
+
+  TabChild:
+    discriminated: false
+    union:
+      - TabNode
+      - LinkNode
+      - ChangelogNode
+
+  NavigationChild:
+    discriminated: false
+    union:
+      - ApiReferenceNode
+      - SectionNode
+      - PageNode
+      - LinkNode
+      - ChangelogNode
+
+  ApiReferenceChild:
+    discriminated: false
+    union:
+      - EndpointNode
+      - EndpointPairNode
+      - WebSocketNode
+      - WebhookNode
+      - ApiSectionNode
+      - PageNode
+      - LinkNode
+
+  # nodes without metadata
+
+  VersionedNode:
+    properties:
+      type: literal<"versioned">
+      children: list<VersionNode>
+
+  TabbedNode:
+    properties:
+      type: literal<"tabbed">
+      children: list<TabChild>
+
+  SidebarRootNode:
+    properties:
+      type: literal<"sidebarRoot">
+      children: list<NavigationChild>
+
+  EndpointPairNode:
+    properties:
+      type: literal<"endpointPair">
+      stream: EndpointNode
+      nonStream: EndpointNode
+
+  # nodes with metadata
+
+  RootNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"root">
+      child: RootChild
+
+  VersionNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"version">
+      versionId: VersionId
+      child: VersionChild
+      availability: optional<Availability>
+
+  TabNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"tab">
+      children: list<NavigationChild>
+
+  LinkNode:
+    properties:
+      type: literal<"link">
+      title: string
+      icon: optional<string>
+      url: commons.Url
+
+  PageNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"page">
+      pageId: PageId
+
+  SectionNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+    properties:
+      type: literal<"section">
+      collapsed: optional<boolean>
+      children: list<NavigationChild>
+
+  ChangelogNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+    properties:
+      type: literal<"changelog">
+      children: list<ChangelogYearNode>
+
+  ChangelogYearNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"changelogYear">
+      year: integer
+      children: list<ChangelogMonthNode>
+
+  ChangelogMonthNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"changelogMonth">
+      month: integer
+      children: list<ChangelogEntryNode>
+
+  ChangelogEntryNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"changelogEntry">
+      pageId: PageId
+      date: date
+
+  ApiReferenceNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+    properties:
+      type: literal<"apiReference">
+      apiDefinitionId: apiRef.ApiDefinitionId
+      disableLongScrolling: optional<boolean>
+      hideTitle: optional<boolean>
+      children: list<ApiReferenceChild>
+      changelog: optional<ChangelogNode>
+      availability: optional<Availability>
+
+  EndpointNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"endpoint">
+      method: HttpMethod
+      apiDefinitionId: apiRef.ApiDefinitionId
+      endpointId: apiRef.EndpointId
+      availability: optional<Availability>
+      isResponseStream: optional<boolean>
+
+  WebSocketNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"webSocket">
+      apiDefinitionId: apiRef.ApiDefinitionId
+      webSocketId: apiRef.WebSocketId
+      availability: optional<Availability>
+
+  WebhookNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"webhook">
+      method: HttpMethod
+      apiDefinitionId: apiRef.ApiDefinitionId
+      webhookId: apiRef.WebhookId
+      availability: optional<Availability>
+
+  ApiSectionNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+    properties:
+      type: literal<"apiSection">
+      children: list<ApiReferenceChild>
+      availability: optional<Availability>
+
+  # utilities
+
+  WithNodeMetadata:
+    properties:
+      title: string
+      slug: commons.Slug
+      icon: optional<string>
+      hidden: optional<boolean>
+
+  WithOverviewPage:
+    properties:
+      overviewPageId: optional<PageId>
+
+  # enums
+
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+
+  Availability:
+    enum:
+      - stable
+      - name: GenerallyAvailable
+        value: generally-available
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - beta
+      - deprecated

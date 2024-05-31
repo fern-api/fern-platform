@@ -33,7 +33,8 @@
     "docs-dev:dev": "pnpm --filter=@fern-ui/docs-bundle run dev:fern-dev",
     "docs:build": "pnpm --filter=@fern-ui/docs-bundle run build:fern-prod",
     "docs:start": "pnpm --filter=@fern-ui/docs-bundle run start:fern-prod",
-    "fdr:generate": "pnpm fern generate --api fdr --local && pnpm --filter=@fern-api/fdr-sdk compile"
+    "fdr:generate": "pnpm fern generate --api fdr --local && pnpm --filter=@fern-api/fdr-sdk compile",
+    "navigation:generate": "pnpm fern generate --api navigation --local"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",

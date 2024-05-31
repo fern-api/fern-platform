@@ -1,19 +1,19 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "type": "module",
-  "module": "dist/index.js",
+  "module": "src/index.ts",
   "source": "src/index.ts",
+  "main": "src/index.ts",
   "dependencies": {
+    "@fern-ui/core-utils": "workspace:^",
+    "date-fns": "^2.30.0",
     "form-data": "4.0.0",
     "js-base64": "3.7.7",
     "lodash-es": "^4.17.21",
-    "marked": "^5.1.0",
     "node-fetch": "2.7.0",
     "qs": "6.12.0",
     "tinycolor2": "^1.6.0",
@@ -26,17 +26,16 @@
     "@fern-api/eslint-config": "workspace:*",
     "@fern-platform/configs": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "@types/marked": "^5.0.0",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.14",
     "@types/tinycolor2": "^1.4.6",
     "@types/url-join": "4.0.1",
     "eslint": "^8.56.0",
     "eslint-config-custom": "*",
-    "vitest": "^1.5.0",
     "prettier": "^3.2.4",
     "tsconfig": "*",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
   },
   "scripts": {
     "compile": "tsc --build",

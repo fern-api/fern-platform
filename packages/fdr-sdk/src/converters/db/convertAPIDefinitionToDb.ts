@@ -672,10 +672,6 @@ function transformUnDiscriminatedVariant({
     };
 }
 
-// function getHtmlDescription(description: string | undefined): string | undefined {
-//     return description != null ? marked(description, { mangle: false, headerIds: false }) : undefined;
-// }
-
 function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
     return Object.entries(obj) as [keyof T, T[keyof T]][];
 }

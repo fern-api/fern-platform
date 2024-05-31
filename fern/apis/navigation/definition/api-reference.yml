@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ./commons.yml
+
+types:
+  ApiDefinitionId: string
+  EndpointId: string
+  WebSocketId: string
+  WebhookId: string

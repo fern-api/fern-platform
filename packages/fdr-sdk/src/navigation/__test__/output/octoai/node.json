@@ -1,0 +1,2196 @@
+{
+  "type": "root",
+  "child": {
+    "type": "tabbed",
+    "children": [
+      {
+        "type": "tab",
+        "title": "Documentation",
+        "slug": [
+          "docs",
+          "documentation"
+        ],
+        "hidden": false,
+        "children": [
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Quickstart",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "quickstart"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/getting-started/quickstart.mdx",
+                "title": "Quickstart",
+                "slug": [
+                  "docs",
+                  "getting-started",
+                  "quickstart"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/getting-started/pricing-and-billing.mdx",
+                "title": "Pricing & billing",
+                "slug": [
+                  "docs",
+                  "getting-started",
+                  "pricing-and-billing"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/rest-api.mdx",
+                "title": "Text Gen REST API",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "rest-api"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/migration-from-openai.mdx",
+                "title": "Migrate from OpenAI to OctoAI in 3 lines of code",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "migration-from-openai"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Media Gen REST APIs",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "quickstart",
+                  "media-gen-rest-ap-is"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/rest-apis/image-gen-api.mdx",
+                    "title": "Image Gen",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "rest-apis",
+                      "image-gen-api"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/rest-apis/video-gen.mdx",
+                    "title": "Video Gen",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "rest-apis",
+                      "video-gen"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/rest-apis/background-removal.mdx",
+                    "title": "Background Removal",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "rest-apis",
+                      "background-removal"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/rest-apis/upscaling.mdx",
+                    "title": "Upscaling",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "rest-apis",
+                      "upscaling"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/rest-apis/adetailer.mdx",
+                    "title": "Adetailer",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "rest-apis",
+                      "adetailer"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              },
+              {
+                "type": "page",
+                "pageId": "docs/getting-started/inference-models.mdx",
+                "title": "Inference models",
+                "slug": [
+                  "docs",
+                  "getting-started",
+                  "inference-models"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/getting-started/how-to-create-an-octoai-access-token.mdx",
+                "title": "Create an API token",
+                "slug": [
+                  "docs",
+                  "getting-started",
+                  "how-to-create-an-octoai-access-token"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Text Gen Solution",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "text-gen-solution"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/getting-started.mdx",
+                "title": "Getting started",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "getting-started"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/python-sdk.mdx",
+                "title": "Text Gen Python SDK",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "python-sdk"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/typescript-sdk.mdx",
+                "title": "Text Gen TypeScript SDK",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "typescript-sdk"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/json-mode.mdx",
+                "title": "Using JSON mode with Text Gen endpoints",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "json-mode"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/llama-guard.mdx",
+                "title": "Using Llama Guard to moderate text",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "llama-guard"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/text-gen-solution/using-unstructured-io-for-embedding-documents.mdx",
+                "title": "Using Unstructured.io for embedding documents",
+                "slug": [
+                  "docs",
+                  "text-gen-solution",
+                  "using-unstructured-io-for-embedding-documents"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Media Gen Solution",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "media-gen-solution"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/media-gen-solution/getting-started.mdx",
+                "title": "Getting started",
+                "slug": [
+                  "docs",
+                  "media-gen-solution",
+                  "getting-started"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Customizations",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "media-gen-solution",
+                  "customizations"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/customizations/overview.mdx",
+                    "title": "Overview",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "customizations",
+                      "overview"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/customizations/checkpoints.mdx",
+                    "title": "Checkpoints",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "customizations",
+                      "checkpoints"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/customizations/loras.mdx",
+                    "title": "LoRAs",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "customizations",
+                      "loras"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/customizations/textual-inversions.mdx",
+                    "title": "Textual Inversions",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "customizations",
+                      "textual-inversions"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/customizations/prompt-weighting.mdx",
+                    "title": "Prompt Weighting",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "customizations",
+                      "prompt-weighting"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/customizations/controlnets.mdx",
+                    "title": "ControlNets",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "customizations",
+                      "controlnets"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Optimizations",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "media-gen-solution",
+                  "optimizations"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/optimizations/sdxl-lighting.mdx",
+                    "title": "SDXL Lighting",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "optimizations",
+                      "sdxl-lighting"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/optimizations/ssd.mdx",
+                    "title": "SSD",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "optimizations",
+                      "ssd"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/optimizations/samplers.mdx",
+                    "title": "Samplers",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "optimizations",
+                      "samplers"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              },
+              {
+                "type": "page",
+                "pageId": "docs/python-sdk/image-generator-client.mdx",
+                "title": "Image Generator Python client",
+                "slug": [
+                  "docs",
+                  "python-sdk",
+                  "image-generator-client"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Fine-tuning Stable Diffusion",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "media-gen-solution",
+                  "fine-tuning-stable-diffusion"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/fine-tuning-stable-diffusion/fine-tuning-stable-diffusion.mdx",
+                    "title": "Overview",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "fine-tuning-stable-diffusion",
+                      "fine-tuning-stable-diffusion"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/fine-tuning-stable-diffusion/typescript-sdk-finetuning.mdx",
+                    "title": "TypeScript SDK",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "fine-tuning-stable-diffusion",
+                      "typescript-sdk-finetuning"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Managing custom assets with Asset Library",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "media-gen-solution",
+                  "managing-custom-assets-with-asset-library"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/uploading-a-custom-asset-to-the-octoai-asset-library.mdx",
+                    "title": "Uploading custom assets",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "uploading-a-custom-asset-to-the-octoai-asset-library"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/python-sdk/asset-orchestrator-client.mdx",
+                    "title": "Asset Library Python client",
+                    "slug": [
+                      "docs",
+                      "python-sdk",
+                      "asset-orchestrator-client"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/typescript-sdk/asset-library.mdx",
+                    "title": "Asset Library TypeScript client",
+                    "slug": [
+                      "docs",
+                      "typescript-sdk",
+                      "asset-library"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Supported image utilities",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "media-gen-solution",
+                  "supported-image-utilities"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/image-utilities/inpainting.mdx",
+                    "title": "Inpainting",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "image-utilities",
+                      "inpainting"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/image-utilities/outpainting.mdx",
+                    "title": "Outpainting",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "image-utilities",
+                      "outpainting"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/image-utilities/adetailer.mdx",
+                    "title": "Adetailer",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "image-utilities",
+                      "adetailer"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/image-utilities/photo-merge.mdx",
+                    "title": "Photo Merge",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "image-utilities",
+                      "photo-merge"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/image-utilities/upscaling.mdx",
+                    "title": "Upscaling",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "image-utilities",
+                      "upscaling"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/media-gen-solution/image-utilities/bg-removal.mdx",
+                    "title": "Background Removal",
+                    "slug": [
+                      "docs",
+                      "media-gen-solution",
+                      "image-utilities",
+                      "bg-removal"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Private Deployment",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "private-deployment"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/private-deployment/octostack.mdx",
+                "title": "OctoStack",
+                "slug": [
+                  "docs",
+                  "private-deployment",
+                  "octostack"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/private-deployment/secure-link.mdx",
+                "title": "SecureLink guide",
+                "slug": [
+                  "docs",
+                  "private-deployment",
+                  "secure-link"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": true,
+            "title": "Compute Service",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "compute-service"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/compute-service/compute-getting-started.mdx",
+                "title": "Getting started",
+                "slug": [
+                  "docs",
+                  "compute-service",
+                  "compute-getting-started"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "section",
+                "collapsed": false,
+                "title": "Create an endpoint from an existing container",
+                "hidden": false,
+                "slug": [
+                  "docs",
+                  "documentation",
+                  "compute-service",
+                  "create-an-endpoint-from-an-existing-container"
+                ],
+                "children": [
+                  {
+                    "type": "page",
+                    "pageId": "docs/compute-service/create-endpoint-from-existing-container/create-custom-endpoints-from-a-container.mdx",
+                    "title": "Overview",
+                    "slug": [
+                      "docs",
+                      "compute-service",
+                      "create-endpoint-from-existing-container",
+                      "create-custom-endpoints-from-a-container"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/compute-service/create-endpoint-from-existing-container/pulling-containers-from-a-private-registry.mdx",
+                    "title": "Pulling containers from a private registry",
+                    "slug": [
+                      "docs",
+                      "compute-service",
+                      "create-endpoint-from-existing-container",
+                      "pulling-containers-from-a-private-registry"
+                    ],
+                    "hidden": false
+                  },
+                  {
+                    "type": "page",
+                    "pageId": "docs/compute-service/create-endpoint-from-existing-container/setting-account-wide-secrets-for-custom-endpoints.mdx",
+                    "title": "Setting up account-wide secrets for your custom endpoints",
+                    "slug": [
+                      "docs",
+                      "compute-service",
+                      "create-endpoint-from-existing-container",
+                      "setting-account-wide-secrets-for-custom-endpoints"
+                    ],
+                    "hidden": false
+                  }
+                ]
+              },
+              {
+                "type": "page",
+                "pageId": "docs/compute-service/create-custom-endpoint-using-the-cli.mdx",
+                "title": "Create a container and endpoint using the CLI",
+                "slug": [
+                  "docs",
+                  "compute-service",
+                  "create-custom-endpoint-using-the-cli"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/compute-service/advanced-build-a-container-from-scratch-in-python.mdx",
+                "title": "Advanced: build a container from scratch in Python",
+                "slug": [
+                  "docs",
+                  "compute-service",
+                  "advanced-build-a-container-from-scratch-in-python"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/compute-service/health-check-path-in-custom-containers.mdx",
+                "title": "Healthcheck path in custom containers",
+                "slug": [
+                  "docs",
+                  "compute-service",
+                  "health-check-path-in-custom-containers"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": true,
+            "title": "CLI",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "cli"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/cli/cli-and-sdk-installation.mdx",
+                "title": "CLI installation",
+                "slug": [
+                  "docs",
+                  "cli",
+                  "cli-and-sdk-installation"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/cli/cli-reference-guide.mdx",
+                "title": "CLI reference",
+                "slug": [
+                  "docs",
+                  "cli",
+                  "cli-reference-guide"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": true,
+            "title": "Python SDK",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "python-sdk"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/python-sdk/installation-and-setup.mdx",
+                "title": "Python SDK installation",
+                "slug": [
+                  "docs",
+                  "python-sdk",
+                  "installation-and-setup"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/python-sdk/python-sdk-inferences.mdx",
+                "title": "Python SDK inference",
+                "slug": [
+                  "docs",
+                  "python-sdk",
+                  "python-sdk-inferences"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/python-sdk/upgrading-from-old-sdk.mdx",
+                "title": "Upgrading from octoai-sdk",
+                "slug": [
+                  "docs",
+                  "python-sdk",
+                  "upgrading-from-old-sdk"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": true,
+            "title": "TypeScript SDK",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "type-script-sdk"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/typescript-sdk/installation-and-setup.mdx",
+                "title": "TypeScript SDK installation",
+                "slug": [
+                  "docs",
+                  "typescript-sdk",
+                  "installation-and-setup"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/typescript-sdk/upgrading-from-old-sdk.mdx",
+                "title": "Upgrading from @octoai/client",
+                "slug": [
+                  "docs",
+                  "typescript-sdk",
+                  "upgrading-from-old-sdk"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": true,
+            "title": "FAQs",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "documentation",
+              "fa-qs"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/faqs/rate-limits.mdx",
+                "title": "Rate limits",
+                "slug": [
+                  "docs",
+                  "faqs",
+                  "rate-limits"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/faqs/privacy-and-security.mdx",
+                "title": "Privacy & security",
+                "slug": [
+                  "docs",
+                  "faqs",
+                  "privacy-and-security"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/faqs/rag.mdx",
+                "title": "RAG with OctoAI",
+                "slug": [
+                  "docs",
+                  "faqs",
+                  "rag"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/faqs/service-regions.mdx",
+                "title": "Service regions",
+                "slug": [
+                  "docs",
+                  "faqs",
+                  "service-regions"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/faqs/multi-user-accounts.mdx",
+                "title": "Multi-user accounts",
+                "slug": [
+                  "docs",
+                  "faqs",
+                  "multi-user-accounts"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/faqs/open-source-licenses.mdx",
+                "title": "Open source licenses",
+                "slug": [
+                  "docs",
+                  "faqs",
+                  "open-source-licenses"
+                ],
+                "hidden": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tab",
+        "title": "API Reference",
+        "slug": [
+          "docs",
+          "api-reference"
+        ],
+        "hidden": false,
+        "children": [
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "OctoAI API",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "api-reference",
+              "octoai-api"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/api-reference/octoai-api/authentication.mdx",
+                "title": "Authentication",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octoai-api",
+                  "authentication"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/api-reference/octoai-api/inference.mdx",
+                "title": "Inference",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octoai-api",
+                  "inference"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "apiReference",
+                "title": "OctoAI API",
+                "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octoai-api",
+                  "octo-ai-api"
+                ],
+                "hidden": false,
+                "hideTitle": true,
+                "children": [
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "Get fields on an account",
+                        "endpointId": "endpoint_account.getAccount",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "account",
+                          "get-account"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Update fields on an account",
+                        "endpointId": "endpoint_account.patchAccount",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "account",
+                          "patch-account"
+                        ],
+                        "method": "PATCH",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Account",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "account"
+                    ]
+                  },
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "Create new endpoint",
+                        "endpointId": "endpoint_endpoint.createEndpoint",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "create-endpoint"
+                        ],
+                        "method": "POST",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get description of an endpoint",
+                        "endpointId": "endpoint_endpoint.getEndpoint",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "get-endpoint"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Delete an endpoint",
+                        "endpointId": "endpoint_endpoint.deleteEndpoint",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "delete-endpoint"
+                        ],
+                        "method": "DELETE",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Update an endpoint",
+                        "endpointId": "endpoint_endpoint.patchEndpoint",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "patch-endpoint"
+                        ],
+                        "method": "PATCH",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "List endpoints",
+                        "endpointId": "endpoint_endpoint.getEndpoints",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "get-endpoints"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get container metadata",
+                        "endpointId": "endpoint_endpoint.getContainerMetadata",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "get-container-metadata"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get token for accessing the volume",
+                        "endpointId": "endpoint_endpoint.getEndpointVolumeToken",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "endpoint",
+                          "get-endpoint-volume-token"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Endpoint",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "endpoint"
+                    ]
+                  },
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "Get endpoint logs",
+                        "endpointId": "endpoint_telemetry.getEndpointLogs",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "telemetry",
+                          "get-endpoint-logs"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get endpoint logs as stream",
+                        "endpointId": "endpoint_telemetry.getEndpointLogsStream",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "telemetry",
+                          "get-endpoint-logs-stream"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get endpoint events",
+                        "endpointId": "endpoint_telemetry.getEndpointEvents",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "telemetry",
+                          "get-endpoint-events"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get endpoint events as stream",
+                        "endpointId": "endpoint_telemetry.getEndpointEventsStream",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "telemetry",
+                          "get-endpoint-events-stream"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "telemetry",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "telemetry"
+                    ]
+                  },
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "Create new secret",
+                        "endpointId": "endpoint_secret.createSecret",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "secret",
+                          "create-secret"
+                        ],
+                        "method": "POST",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Retrieve secret by key",
+                        "endpointId": "endpoint_secret.getSecret",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "secret",
+                          "get-secret"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Update secret by key",
+                        "endpointId": "endpoint_secret.updateSecret",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "secret",
+                          "update-secret"
+                        ],
+                        "method": "PUT",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Delete secret by key",
+                        "endpointId": "endpoint_secret.deleteSecret",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "secret",
+                          "delete-secret"
+                        ],
+                        "method": "DELETE",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get secret",
+                        "endpointId": "endpoint_secret.getSecrets",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "secret",
+                          "get-secrets"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Secret",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "secret"
+                    ]
+                  },
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "Create new registry credentials",
+                        "endpointId": "endpoint_registryCredential.createRegistryCredential",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "registry-credential",
+                          "create-registry-credential"
+                        ],
+                        "method": "POST",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Retrieve registry credentials by key",
+                        "endpointId": "endpoint_registryCredential.getRegistryCredential",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "registry-credential",
+                          "get-registry-credential"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Update registry credentials",
+                        "endpointId": "endpoint_registryCredential.updateRegistryCredential",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "registry-credential",
+                          "update-registry-credential"
+                        ],
+                        "method": "PUT",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Delete registry credentials",
+                        "endpointId": "endpoint_registryCredential.deleteRegistryCredential",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "registry-credential",
+                          "delete-registry-credential"
+                        ],
+                        "method": "DELETE",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      },
+                      {
+                        "type": "endpoint",
+                        "title": "Get registry credentials",
+                        "endpointId": "endpoint_registryCredential.getRegistryCredentials",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "registry-credential",
+                          "get-registry-credentials"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "registryCredential",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "registry-credential"
+                    ]
+                  },
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "List public, OctoAI-deployed endpoints",
+                        "endpointId": "endpoint_publicEndpoint.getPublicEndpoints",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "public-endpoint",
+                          "get-public-endpoints"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "publicEndpoint",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "public-endpoint"
+                    ]
+                  },
+                  {
+                    "type": "apiSection",
+                    "children": [
+                      {
+                        "type": "endpoint",
+                        "title": "List hardware instance types",
+                        "endpointId": "endpoint_instanceTypes.getInstanceTypes",
+                        "slug": [
+                          "docs",
+                          "api-reference",
+                          "octoai-api",
+                          "octo-ai-api",
+                          "instance-types",
+                          "get-instance-types"
+                        ],
+                        "method": "GET",
+                        "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "instanceTypes",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octoai-api",
+                      "octo-ai-api",
+                      "instance-types"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "apiReference",
+            "title": "OctoAI API",
+            "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+            "slug": [
+              "docs",
+              "api-reference",
+              "octo-ai-api"
+            ],
+            "hidden": false,
+            "hideTitle": true,
+            "children": [
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List Assets",
+                    "endpointId": "endpoint_asset-library.list",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "asset-library",
+                      "list"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create Asset",
+                    "endpointId": "endpoint_asset-library.create",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "asset-library",
+                      "create"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete Asset",
+                    "endpointId": "endpoint_asset-library.delete",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "asset-library",
+                      "delete"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Complete Asset Upload",
+                    "endpointId": "endpoint_asset-library.completeUpload",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "asset-library",
+                      "complete-upload"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Retrieve Asset",
+                    "endpointId": "endpoint_asset-library.get",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "asset-library",
+                      "get"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "asset-library",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octo-ai-api",
+                  "asset-library"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "Create Tune",
+                    "endpointId": "endpoint_fine-tuning.create",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "fine-tuning",
+                      "create"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get Tune",
+                    "endpointId": "endpoint_fine-tuning.get",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "fine-tuning",
+                      "get"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete Tune",
+                    "endpointId": "endpoint_fine-tuning.delete",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "fine-tuning",
+                      "delete"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Cancel Tune",
+                    "endpointId": "endpoint_fine-tuning.cancel",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "fine-tuning",
+                      "cancel"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List Tunes",
+                    "endpointId": "endpoint_fine-tuning.list",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "fine-tuning",
+                      "list"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "fine-tuning",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octo-ai-api",
+                  "fine-tuning"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "Generate SSD",
+                    "endpointId": "endpoint_image-gen.generateSsd",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "image-gen",
+                      "generate-ssd"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Generate ControlNet SDXL",
+                    "endpointId": "endpoint_image-gen.generateControlnetSdxl",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "image-gen",
+                      "generate-controlnet-sdxl"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Generate ControlNet SD1.5",
+                    "endpointId": "endpoint_image-gen.generateControlnetSd15",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "image-gen",
+                      "generate-controlnet-sd-15"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Generate SDXL",
+                    "endpointId": "endpoint_image-gen.generateSdxl",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "image-gen",
+                      "generate-sdxl"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Generate SD1.5",
+                    "endpointId": "endpoint_image-gen.generateSd",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "image-gen",
+                      "generate-sd"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Generate SVD Animations",
+                    "endpointId": "endpoint_image-gen.generateSvd",
+                    "slug": [
+                      "docs",
+                      "api-reference",
+                      "octo-ai-api",
+                      "image-gen",
+                      "generate-svd"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "image-gen",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octo-ai-api",
+                  "image-gen"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpointPair",
+                    "stream": {
+                      "type": "endpoint",
+                      "title": "Create Chat Completion",
+                      "endpointId": "endpoint_text-gen.createChatCompletion_stream",
+                      "slug": [
+                        "docs",
+                        "api-reference",
+                        "octo-ai-api",
+                        "text-gen",
+                        "create-chat-completion-stream"
+                      ],
+                      "method": "POST",
+                      "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                      "isResponseStream": true
+                    },
+                    "nonStream": {
+                      "type": "endpoint",
+                      "title": "Create Chat Completion",
+                      "endpointId": "endpoint_text-gen.createChatCompletion",
+                      "slug": [
+                        "docs",
+                        "api-reference",
+                        "octo-ai-api",
+                        "text-gen",
+                        "create-chat-completion"
+                      ],
+                      "method": "POST",
+                      "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                      "isResponseStream": false
+                    }
+                  },
+                  {
+                    "type": "endpointPair",
+                    "stream": {
+                      "type": "endpoint",
+                      "title": "Create Completion",
+                      "endpointId": "endpoint_text-gen.createCompletion_stream",
+                      "slug": [
+                        "docs",
+                        "api-reference",
+                        "octo-ai-api",
+                        "text-gen",
+                        "create-completion-stream"
+                      ],
+                      "method": "POST",
+                      "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                      "isResponseStream": true
+                    },
+                    "nonStream": {
+                      "type": "endpoint",
+                      "title": "Create Completion",
+                      "endpointId": "endpoint_text-gen.createCompletion",
+                      "slug": [
+                        "docs",
+                        "api-reference",
+                        "octo-ai-api",
+                        "text-gen",
+                        "create-completion"
+                      ],
+                      "method": "POST",
+                      "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                      "isResponseStream": false
+                    }
+                  }
+                ],
+                "title": "text-gen",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "octo-ai-api",
+                  "text-gen"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "apiReference",
+            "title": "Media Utilities API",
+            "apiDefinitionId": "2eeac53f-90cc-492b-9d29-e3ed711d7704",
+            "slug": [
+              "docs",
+              "api-reference",
+              "media-util"
+            ],
+            "hidden": false,
+            "hideTitle": false,
+            "children": [
+              {
+                "type": "endpoint",
+                "title": "Upscaling",
+                "endpointId": "endpoint_.upscale",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "media-util",
+                  "upscale"
+                ],
+                "method": "POST",
+                "apiDefinitionId": "2eeac53f-90cc-492b-9d29-e3ed711d7704",
+                "isResponseStream": false
+              },
+              {
+                "type": "endpoint",
+                "title": "Remove Background",
+                "endpointId": "endpoint_.remove_background",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "media-util",
+                  "remove-background"
+                ],
+                "method": "POST",
+                "apiDefinitionId": "2eeac53f-90cc-492b-9d29-e3ed711d7704",
+                "isResponseStream": false
+              },
+              {
+                "type": "endpoint",
+                "title": "Adetailer",
+                "endpointId": "endpoint_.generate_images",
+                "slug": [
+                  "docs",
+                  "api-reference",
+                  "media-util",
+                  "generate-images"
+                ],
+                "method": "POST",
+                "apiDefinitionId": "2eeac53f-90cc-492b-9d29-e3ed711d7704",
+                "isResponseStream": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tab",
+        "title": "Integrations",
+        "slug": [
+          "docs",
+          "integrations"
+        ],
+        "hidden": false,
+        "children": [
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Integrations",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "integrations",
+              "integrations"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/integrations/overview.mdx",
+                "title": "All",
+                "slug": [
+                  "docs",
+                  "integrations",
+                  "overview"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/integrations/langchain.mdx",
+                "title": "LangChain",
+                "slug": [
+                  "docs",
+                  "integrations",
+                  "langchain"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/integrations/pinecone.mdx",
+                "title": "Pinecone",
+                "slug": [
+                  "docs",
+                  "integrations",
+                  "pinecone"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/integrations/unstructured.mdx",
+                "title": "Unstructured.io",
+                "slug": [
+                  "docs",
+                  "integrations",
+                  "unstructured"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/integrations/openrouter.mdx",
+                "title": "OpenRouter",
+                "slug": [
+                  "docs",
+                  "integrations",
+                  "openrouter"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/integrations/llamaindex.mdx",
+                "title": "LlamaIndex",
+                "slug": [
+                  "docs",
+                  "integrations",
+                  "llamaindex"
+                ],
+                "hidden": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tab",
+        "title": "Release Notes",
+        "slug": [
+          "docs",
+          "release-notes"
+        ],
+        "hidden": false,
+        "children": [
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "2024",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "release-notes",
+              "2024"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2024/may.mdx",
+                "title": "May",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2024",
+                  "may"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2024/april.mdx",
+                "title": "April",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2024",
+                  "april"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2024/february.mdx",
+                "title": "February",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2024",
+                  "february"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2024/january.mdx",
+                "title": "January",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2024",
+                  "january"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "2023",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "release-notes",
+              "2023"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/december.mdx",
+                "title": "December",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "december"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/november.mdx",
+                "title": "November",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "november"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/october.mdx",
+                "title": "October",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "october"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/september.mdx",
+                "title": "September",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "september"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/august.mdx",
+                "title": "August",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "august"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/july.mdx",
+                "title": "July",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "july"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/june.mdx",
+                "title": "June",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "june"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/release-notes/2023/may.mdx",
+                "title": "May",
+                "slug": [
+                  "docs",
+                  "release-notes",
+                  "2023",
+                  "may"
+                ],
+                "hidden": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "title": "Community",
+        "url": "https://discord.com/invite/rXTPeRBcG7",
+        "icon": "brands discord"
+      },
+      {
+        "type": "link",
+        "title": "Support",
+        "url": "https://discord.com/channels/1085222662504194098/1085613782006509600",
+        "icon": "duotone headset"
+      }
+    ]
+  },
+  "slug": [
+    "docs"
+  ],
+  "title": "Fern Docs",
+  "hidden": false
+}

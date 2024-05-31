@@ -1,0 +1,1444 @@
+{
+  "type": "root",
+  "child": {
+    "type": "tabbed",
+    "children": [
+      {
+        "type": "tab",
+        "title": "Documentation",
+        "slug": [
+          "docs"
+        ],
+        "icon": "fa-solid fa-home",
+        "hidden": false,
+        "children": [
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Introduction",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "introduction"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/introduction/welcome.mdx",
+                "title": "Welcome to Hume AI",
+                "slug": [
+                  "intro"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/introduction/getting-your-api-key.mdx",
+                "title": "Getting your API key",
+                "slug": [
+                  "docs",
+                  "introduction",
+                  "api-key"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/introduction/support.mdx",
+                "title": "Support",
+                "slug": [
+                  "support"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Empathic Voice Interface (EVI)",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "empathic-voice-interface-evi"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/overview.mdx",
+                "title": "Overview",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "overview"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart.mdx",
+                "title": "Quickstart",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "quickstart"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/configuration.mdx",
+                "title": "Configuration",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "configuration"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/tool-use.mdx",
+                "title": "Tool use",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "tool-use"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/phone-calling.mdx",
+                "title": "Phone calling",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "phone-calling"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/prompting.mdx",
+                "title": "Prompting guide",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "prompting"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/custom-language-model.mdx",
+                "title": "Custom language model",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "custom-language-model"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/empathic-voice-interface/faq.mdx",
+                "title": "FAQ",
+                "slug": [
+                  "docs",
+                  "empathic-voice-interface-evi",
+                  "faq"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Expression Measurement API",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "expression-measurement-api"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/expression-measurement-api/overview.mdx",
+                "title": "Overview",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "overview"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/expression-measurement-api/rest.mdx",
+                "title": "Processing batches of media files",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "rest"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/expression-measurement-api/websocket.mdx",
+                "title": "Real-time measurement streaming",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "websocket"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/expression-measurement-api/faq.mdx",
+                "title": "FAQ",
+                "slug": [
+                  "docs",
+                  "expression-measurement-api",
+                  "faq"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Custom Models API",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "custom-models-api"
+            ],
+            "children": [
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/custom-models-api/overview.mdx",
+                "title": "Overview",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "overview"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/custom-models-api/creating-your-dataset.mdx",
+                "title": "Creating your dataset",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "creating-your-dataset"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/custom-models-api/training-your-model.mdx",
+                "title": "Training a custom model",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "training-a-custom-model"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/custom-models-api/evaluating-your-model.mdx",
+                "title": "Evaluating your custom model",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "evaluating-a-custom-model"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/custom-models-api/faq.mdx",
+                "title": "FAQ",
+                "slug": [
+                  "docs",
+                  "custom-models-api",
+                  "faq"
+                ],
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "collapsed": false,
+            "title": "Resources",
+            "hidden": false,
+            "slug": [
+              "docs",
+              "resources"
+            ],
+            "children": [
+              {
+                "type": "link",
+                "title": "Pricing",
+                "url": "https://beta.hume.ai/pricing"
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/resources/billing.mdx",
+                "title": "Billing",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "billing"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/resources/errors.mdx",
+                "title": "Errors",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "errors"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/resources/science-hume-ai.mdx",
+                "title": "About the science",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "science"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/resources/use-case-guidelines.mdx",
+                "title": "Use case guidelines",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "use-case-guidelines"
+                ],
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "pageId": "docs/pages/documentation/resources/privacy.mdx",
+                "title": "Privacy",
+                "slug": [
+                  "docs",
+                  "resources",
+                  "privacy"
+                ],
+                "hidden": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tab",
+        "title": "API Reference",
+        "slug": [
+          "reference"
+        ],
+        "icon": "fa-solid fa-file-contract",
+        "hidden": false,
+        "children": [
+          {
+            "type": "apiReference",
+            "title": "Empathic Voice Interface (EVI)",
+            "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+            "slug": [
+              "reference",
+              "empathic-voice-interface-evi"
+            ],
+            "hidden": false,
+            "hideTitle": false,
+            "children": [
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List tools",
+                    "endpointId": "endpoint_tools.list-tools",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "list-tools"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create tool",
+                    "endpointId": "endpoint_tools.create-tool",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "create-tool"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List tool versions",
+                    "endpointId": "endpoint_tools.list-tool-versions",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "list-tool-versions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create tool version",
+                    "endpointId": "endpoint_tools.create-tool-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "create-tool-version"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete tool",
+                    "endpointId": "endpoint_tools.delete-tool",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "delete-tool"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update tool name",
+                    "endpointId": "endpoint_tools.update-tool-name",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "update-tool-name"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get tool version",
+                    "endpointId": "endpoint_tools.get-tool-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "get-tool-version"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete tool version",
+                    "endpointId": "endpoint_tools.delete-tool-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "delete-tool-version"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update tool description",
+                    "endpointId": "endpoint_tools.update-tool-description",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "tools",
+                      "update-tool-description"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "tools",
+                "slug": [
+                  "reference",
+                  "empathic-voice-interface-evi",
+                  "tools"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List prompts",
+                    "endpointId": "endpoint_prompts.list-prompts",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "list-prompts"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create prompt",
+                    "endpointId": "endpoint_prompts.create-prompt",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "create-prompt"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List prompt versions",
+                    "endpointId": "endpoint_prompts.list-prompt-versions",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "list-prompt-versions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create prompt version",
+                    "endpointId": "endpoint_prompts.create-prompt-verison",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "create-prompt-verison"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete prompt",
+                    "endpointId": "endpoint_prompts.delete-prompt",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "delete-prompt"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update prompt name",
+                    "endpointId": "endpoint_prompts.update-prompt-name",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "update-prompt-name"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get prompt version",
+                    "endpointId": "endpoint_prompts.get-prompt-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "get-prompt-version"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete prompt version",
+                    "endpointId": "endpoint_prompts.delete-prompt-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "delete-prompt-version"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update prompt description",
+                    "endpointId": "endpoint_prompts.update-prompt-description",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "prompts",
+                      "update-prompt-description"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "prompts",
+                "slug": [
+                  "reference",
+                  "empathic-voice-interface-evi",
+                  "prompts"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List configs",
+                    "endpointId": "endpoint_configs.list-configs",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "list-configs"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create config",
+                    "endpointId": "endpoint_configs.create-config",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "create-config"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List config versions",
+                    "endpointId": "endpoint_configs.list-config-versions",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "list-config-versions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create config version",
+                    "endpointId": "endpoint_configs.create-config-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "create-config-version"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete config",
+                    "endpointId": "endpoint_configs.delete-config",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "delete-config"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update config name",
+                    "endpointId": "endpoint_configs.update-config-name",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "update-config-name"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get config version",
+                    "endpointId": "endpoint_configs.get-config-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "get-config-version"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete config version",
+                    "endpointId": "endpoint_configs.delete-config-version",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "delete-config-version"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update config description",
+                    "endpointId": "endpoint_configs.update-config-description",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "configs",
+                      "update-config-description"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "configs",
+                "slug": [
+                  "reference",
+                  "empathic-voice-interface-evi",
+                  "configs"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List chats",
+                    "endpointId": "endpoint_chats.list-chats",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "chats",
+                      "list-chats"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List chat events",
+                    "endpointId": "endpoint_chats.list-chat-events",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "chats",
+                      "list-chat-events"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "chats",
+                "slug": [
+                  "reference",
+                  "empathic-voice-interface-evi",
+                  "chats"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List chat_groups",
+                    "endpointId": "endpoint_chatGroups.list-chat-groups",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "chat-groups",
+                      "list-chat-groups"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List chat events from a specific chat_group",
+                    "endpointId": "endpoint_chatGroups.list-chat-group-events",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "chat-groups",
+                      "list-chat-group-events"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "chatGroups",
+                "slug": [
+                  "reference",
+                  "empathic-voice-interface-evi",
+                  "chat-groups"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "webSocket",
+                    "title": "Chat",
+                    "webSocketId": "subpackage_chat.chat",
+                    "slug": [
+                      "reference",
+                      "empathic-voice-interface-evi",
+                      "chat",
+                      "chat"
+                    ],
+                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb"
+                  }
+                ],
+                "title": "chat",
+                "slug": [
+                  "reference",
+                  "empathic-voice-interface-evi",
+                  "chat"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "apiReference",
+            "title": "Expression Measurement API",
+            "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+            "slug": [
+              "reference",
+              "expression-measurement-api"
+            ],
+            "hidden": false,
+            "hideTitle": false,
+            "children": [
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List jobs",
+                    "endpointId": "endpoint_batch.list-jobs",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "batch",
+                      "list-jobs"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Start inference job",
+                    "endpointId": "endpoint_batch.start-inference-job",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "batch",
+                      "start-inference-job"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get job details",
+                    "endpointId": "endpoint_batch.get-job-details",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "batch",
+                      "get-job-details"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get job predictions",
+                    "endpointId": "endpoint_batch.get-job-predictions",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "batch",
+                      "get-job-predictions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get job artifacts",
+                    "endpointId": "endpoint_batch.get-job-artifacts",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "batch",
+                      "get-job-artifacts"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Start inference job from local file",
+                    "endpointId": "endpoint_batch.start-inference-job-from-local-file",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "batch",
+                      "start-inference-job-from-local-file"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "batch",
+                "slug": [
+                  "reference",
+                  "expression-measurement-api",
+                  "batch"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "webSocket",
+                    "title": "Stream",
+                    "webSocketId": "subpackage_stream.stream",
+                    "slug": [
+                      "reference",
+                      "expression-measurement-api",
+                      "stream",
+                      "stream"
+                    ],
+                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e"
+                  }
+                ],
+                "title": "stream",
+                "slug": [
+                  "reference",
+                  "expression-measurement-api",
+                  "stream"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "apiReference",
+            "title": "Custom Models API",
+            "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+            "slug": [
+              "reference",
+              "custom-models-api"
+            ],
+            "hidden": false,
+            "hideTitle": false,
+            "children": [
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List files",
+                    "endpointId": "endpoint_files.list-files",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "list-files"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create files",
+                    "endpointId": "endpoint_files.create-files",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "create-files"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Upload file",
+                    "endpointId": "endpoint_files.upload-file",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "upload-file"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get file",
+                    "endpointId": "endpoint_files.get-file",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "get-file"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete file",
+                    "endpointId": "endpoint_files.delete-file",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "delete-file"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update file name",
+                    "endpointId": "endpoint_files.update-file-name",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "update-file-name"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get file predictions",
+                    "endpointId": "endpoint_files.get-file-predictions",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "files",
+                      "get-file-predictions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "files",
+                "slug": [
+                  "reference",
+                  "custom-models-api",
+                  "files"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List datasets",
+                    "endpointId": "endpoint_datasets.list-datasets",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "list-datasets"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create dataset",
+                    "endpointId": "endpoint_datasets.create-dataset",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "create-dataset"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get dataset",
+                    "endpointId": "endpoint_datasets.get-dataset",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "get-dataset"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Create dataset version",
+                    "endpointId": "endpoint_datasets.create-dataset-version",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "create-dataset-version"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Delete dataset",
+                    "endpointId": "endpoint_datasets.delete-dataset",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "delete-dataset"
+                    ],
+                    "method": "DELETE",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List dataset versions",
+                    "endpointId": "endpoint_datasets.list-dataset-versions",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "list-dataset-versions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List dataset files",
+                    "endpointId": "endpoint_datasets.list-dataset-files",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "list-dataset-files"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get dataset version",
+                    "endpointId": "endpoint_datasets.get-dataset-version",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "get-dataset-version"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List dataset version files",
+                    "endpointId": "endpoint_datasets.list-dataset-version-files",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "datasets",
+                      "list-dataset-version-files"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "datasets",
+                "slug": [
+                  "reference",
+                  "custom-models-api",
+                  "datasets"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "List models",
+                    "endpointId": "endpoint_models.list-models",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "models",
+                      "list-models"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get model details",
+                    "endpointId": "endpoint_models.get-model-details",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "models",
+                      "get-model-details"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update model name",
+                    "endpointId": "endpoint_models.update-model-name",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "models",
+                      "update-model-name"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "List model versions",
+                    "endpointId": "endpoint_models.list-model-versions",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "models",
+                      "list-model-versions"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Get model version",
+                    "endpointId": "endpoint_models.get-model-version",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "models",
+                      "get-model-version"
+                    ],
+                    "method": "GET",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Update model description",
+                    "endpointId": "endpoint_models.update-model-description",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "models",
+                      "update-model-description"
+                    ],
+                    "method": "PATCH",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "models",
+                "slug": [
+                  "reference",
+                  "custom-models-api",
+                  "models"
+                ]
+              },
+              {
+                "type": "apiSection",
+                "children": [
+                  {
+                    "type": "endpoint",
+                    "title": "Start training job",
+                    "endpointId": "endpoint_jobs.start-training-job",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "jobs",
+                      "start-training-job"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  },
+                  {
+                    "type": "endpoint",
+                    "title": "Start custom models inference job",
+                    "endpointId": "endpoint_jobs.start-custom-models-inference-job",
+                    "slug": [
+                      "reference",
+                      "custom-models-api",
+                      "jobs",
+                      "start-custom-models-inference-job"
+                    ],
+                    "method": "POST",
+                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "isResponseStream": false
+                  }
+                ],
+                "title": "jobs",
+                "slug": [
+                  "reference",
+                  "custom-models-api",
+                  "jobs"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "tab",
+        "title": "Changelog",
+        "slug": [
+          "changelog"
+        ],
+        "icon": "fa-regular fa-clock",
+        "hidden": false,
+        "children": [
+          {
+            "type": "page",
+            "pageId": "docs/changelog/2024.mdx",
+            "title": "Changelog",
+            "slug": [
+              "changelog"
+            ],
+            "hidden": false
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "title": "Discord",
+        "url": "https://discord.gg/WPRSugvAm6",
+        "icon": "fa-brands fa-discord"
+      }
+    ]
+  },
+  "slug": [],
+  "title": "Fern Docs",
+  "hidden": false
+}

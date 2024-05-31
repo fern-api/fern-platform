@@ -1,0 +1,22 @@
+[
+  {
+    "type": "tab",
+    "title": "Changelog",
+    "slug": [
+      "changelog"
+    ],
+    "icon": "fa-regular fa-clock",
+    "hidden": false,
+    "children": [
+      {
+        "type": "page",
+        "pageId": "docs/changelog/2024.mdx",
+        "title": "Changelog",
+        "slug": [
+          "changelog"
+        ],
+        "hidden": false
+      }
+    ]
+  }
+]
