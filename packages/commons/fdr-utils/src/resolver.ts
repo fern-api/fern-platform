@@ -198,7 +198,12 @@ function resolveSidebarNodesVersionItems(
     if (isUnversionedTabbedNavigationConfig(nav)) {
         return nav.tabs.map((tab, index): SidebarNodeRaw.Tab => {
             if (tab.type === "group" || (tab.type == null && tab.items != null)) {
-                const parentSlugs = [...fixedSlugs, ...tab.urlSlug.split("/")];
+                const parentSlugs =
+                    tab.fullSlug != null
+                        ? [...fixedSlugs, ...tab.fullSlug]
+                        : tab.skipUrlSlug
+                          ? fixedSlugs
+                          : [...fixedSlugs, ...tab.urlSlug.split("/")];
                 return {
                     type: "tabGroup",
                     title: tab.title,
