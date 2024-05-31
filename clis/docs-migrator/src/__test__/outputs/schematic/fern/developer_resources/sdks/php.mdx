@@ -1,0 +1,62 @@
+---
+title: PHP
+subtitle: ''
+slug: developer_resources/sdks/php
+---
+
+
+### Installation
+
+The PHP SDK is hosted [here](https://github.com/SchematicHQ/schematic-php). To install the bindings via Composer, add the following to composer.json to list the repository as a source:
+
+```php
+"repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/SchematicHQ/schematic-php.git"
+    }
+  ]
+```
+
+Then, run the following:
+
+```bash
+composer require schematichq/schematic-php
+```
+
+### Initialization
+
+Initialize a client with an [API key secret](/quickstart#create-an-api-key).
+
+```php
+use Schematic;
+
+$schematic_companies = new Schematic\Api\CompaniesApi(Schematic\Configuration::getDefaultConfiguration()
+          ->setApiKey('X-Schematic-Api-Key', "sch_dev_yourapikey"))
+```
+
+That will create an instance of `schematic_companies` that you can use to interact with the initialized resource. Other resources can be initialized in a similar manner.
+
+### Usage example
+
+Once the SDK is initialized, you may submit requests. Below is an example of upserting a Company (creating or updating it).
+
+```php
+try {
+    $schematic_companies->createCompany([
+        "keys" => [
+            "id" => $this->id,
+        ],
+        "name" => $this->name,
+        "traits" => [
+            "uuid" => $this->uuid,
+            "account_id" => $this->account_id,
+            "subscription_tier" => $this->subscription_tier,
+            "subscription_quantity" => $this->subscription_quantity,
+            "trial_end_time" => $this->trial_end_time,
+        ],
+    ]);
+} catch (\Exception $e) {
+    report($e);
+}
+```

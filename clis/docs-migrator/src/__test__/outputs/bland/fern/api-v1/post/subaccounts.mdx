@@ -21,14 +21,15 @@ slug: api-v1/post/subaccounts
     Special per-minute pricing plans carry over automatically to the subaccount, while increased rate limits do not.
 
     Unused credits can be reclaimed later with the subaccount's balance if needed.
+
 </ParamField>
 
 <ParamField body="first_name" type="string" required>
-    The first name of the user who will be using the subaccount.
+  The first name of the user who will be using the subaccount.
 </ParamField>
 
 <ParamField body="last_name" type="string" required>
-    The last name of the user who will be using the subaccount.
+  The last name of the user who will be using the subaccount.
 </ParamField>
 
 <ParamField body="login_enabled" type="boolean" default="true">
@@ -37,15 +38,17 @@ slug: api-v1/post/subaccounts
     This enables you to set up credit card information, view and monitor usage, and further manage the subaccount as needed.
 
     The subaccount user will not be able to log into the Dev Portal unless you explicitly enable it by adding them as an Authorized User.
+
 </ParamField>
 
 ### Response
+
 <ResponseField name="status" type="string">
-    Whether the subaccount creation succeeded.
+  Whether the subaccount creation succeeded.
 </ResponseField>
 
 <ResponseField name="subaccount_id" type="string">
-    The unique identifier for the newly created subaccount.
+  The unique identifier for the newly created subaccount.
 </ResponseField>
 
 <ResponseField name="subaccount_key" type="integer">
@@ -54,6 +57,7 @@ slug: api-v1/post/subaccounts
     This is the only information that the subaccount user will need to start using the API.
 
     Do not use this as an identifier for the subaccount, since it can be rotated.
+
 </ResponseField>
     
 <ResponseExample>

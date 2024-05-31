@@ -1,0 +1,10 @@
+---
+title: Pagination
+subtitle: ''
+slug: api-reference/pagination
+---
+
+
+Some top-level API resources have support for bulk fetches through "list" API methods. These list API methods share a common structure and accept the following parameters: `limit` and `offset`. Depending on the resource, they also accept additional filtering parameters.
+
+Schematic's list API methods use offset pagination through the `limit` and `offset` paramaters. Both parameters accept an integer and return objects in a reverse chronological order. The `limit` parameter describes the number of records to return and defaults to 100. The `offset` parameter describes the page of results to return and defaults to 0. You may define both parameters simultaneously.

@@ -19,6 +19,7 @@ In the following sections, you will learn how to manage Users and their associat
 
 By associating a User with a Session, you can delete all Sessions and session artifacts associated with a User
 with a single API call.
+
 </Note>
 
 ## The User model
@@ -34,6 +35,7 @@ You can associate rich business context with a User:
 ## Adding a User
 
 You can add a new user by providing the user details.
+
 <Tabs group="users">
 
 <Tab title="Python" group-key="python">
@@ -53,32 +55,34 @@ user_request = CreateUserRequest(
 )
 new_user = client.user.add(user_request)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-import { ZepClient, CreateUserRequest, UpdateUserRequest } from '@getzep/zep-js';
+import { ZepClient, CreateUserRequest, UpdateUserRequest } from "@getzep/zep-js";
 
 const client: ZepClient = await ZepClient.init(API_KEY);
 
 const user_request: CreateUserRequest = {
-    userId: user_id,
-    email: "user@example.com",
-    firstName: "Jane",
-    lastName: "Smith",
-    metadata: { foo: "bar" },
+  userId: user_id,
+  email: "user@example.com",
+  firstName: "Jane",
+  lastName: "Smith",
+  metadata: { foo: "bar" },
 };
 const new_user = await client.user.add(user_request);
 ```
+
 </Tab>
 </Tabs>
-
 
 > Learn how to associate [Sessions with Users](chat-history-memory/sessions.mdx)
 
 ## Getting a User
 
 You can retrieve a user by their ID.
+
 <Tabs group="users">
 
 <Tab title="Python" group-key="python">
@@ -86,19 +90,21 @@ You can retrieve a user by their ID.
 ```python
 user = client.user.get("user123")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-const user = await client.user.get("user123")
+const user = await client.user.get("user123");
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Updating a User
 
 You can update a user's details by providing the updated user details.
+
 <Tabs group="users">
 
 <Tab title="Python" group-key="python">
@@ -114,27 +120,29 @@ user_request = UpdateUserRequest(
 
 updated_user = client.user.update(user_request)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 const user_request: UpdateUserRequest = {
-    userId: user_id,
-    email: "updated_user@example.com",
-    firstName: "Jane",
-    lastName: "Smith",
-    metadata: { foo: "updated_bar" },
+  userId: user_id,
+  email: "updated_user@example.com",
+  firstName: "Jane",
+  lastName: "Smith",
+  metadata: { foo: "updated_bar" },
 };
 
 const updated_user = await client.user.update(user_request);
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Deleting a User
 
 You can delete a user by their ID.
+
 <Tabs group="users">
 
 <Tab title="Python" group-key="python">
@@ -142,15 +150,16 @@ You can delete a user by their ID.
 ```python
 client.user.delete("user123")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-await client.user.delete("user123")
+await client.user.delete("user123");
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Getting a User's Sessions
 
@@ -162,19 +171,21 @@ You can retrieve all Sessions for a user by their ID.
 ```python
 sessions = client.user.get_sessions("user123")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-const sessions = await client.user.getSessions("user123")
+const sessions = await client.user.getSessions("user123");
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Listing Users
 
 You can list all users, with optional limit and cursor parameters for pagination.
+
 <Tabs group="users">
 
 <Tab title="Python" group-key="python">
@@ -183,21 +194,23 @@ You can list all users, with optional limit and cursor parameters for pagination
 # List the first 10 users
 users = client.user.list(limit=10, cursor=0)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 // List the first 10 users
-const users = await client.user.list(10, 0)
+const users = await client.user.list(10, 0);
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Listing Users in Chunks
 
 You can retrieve users in chunks of a specified size. This is a generator function that yields each chunk of users as
 they are retrieved.
+
 <Tabs group="users">
 <Tab title="Python" group-key="python">
 
@@ -205,16 +218,16 @@ they are retrieved.
 for users in client.user.list_chunked(chunkSize=100):
     process(users)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 for await (const chunk of client.user.listChunked(100)) {
-    // Process each chunk of users
-    await processChunk(chunk);
+  // Process each chunk of users
+  await processChunk(chunk);
 }
 ```
+
 </Tab>
 </Tabs>
-
-

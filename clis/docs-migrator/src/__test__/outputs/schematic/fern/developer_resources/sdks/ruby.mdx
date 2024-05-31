@@ -1,0 +1,51 @@
+---
+title: Ruby
+subtitle: ''
+slug: developer_resources/sdks/ruby
+---
+
+
+### Installation
+
+Using bundler add the following line to your project’s `Gemfile`:
+
+```ruby
+gem 'schematic', :git => "https://github.com/SchematicHQ/schematic-ruby.git", ref: '11f1b324cf74ac56a4e3acb6cf6c0ad465111557'
+```
+
+### Initialization
+
+You can initialize the gem with your [Schematic Secret Key](/quickstart#create-an-api-key):
+
+```ruby
+require 'schematic-rails'
+
+Schematic.configure do |config|
+  config.api_key['ApiKeyAuth'] = ENV['SCHEMATIC_SECRET_KEY']
+end
+```
+
+That will create an instance of `Schematic` that you can use to interact with Schematic. If you’re using Rails, you can place that initialization logic in `config/initializers/schematic_ruby.rb`.
+
+### Usage example
+
+Once the SDK is initialized, you may submit requests. Below is an example.
+
+```ruby
+schematic_keys = {}
+schematic_keys["account_id"] = @user.account_id.to_s
+
+schematic_request = Schematic::CompaniesApi.new
+schematic_create_company_request = Schematic::UpsertCompanyRequestBody.new(
+        keys: schematic_keys,
+        name: @user.company.to_s,
+        traits: nil)
+
+begin
+  result = schematic_request.create_company(schematic_create_company_request)
+rescue Schematic::ApiError => e
+  puts "Exception when calling CompaniesApi->create_company: #{e}"
+end
+```
+
+The Ruby SDK references companies or users by their Schematic ID using the `id` key or by any key you have defined and passed to Schematic previously.

@@ -1,0 +1,23 @@
+---
+title: Rate limiting
+subtitle: ''
+slug: api-reference/rate_limiting
+---
+
+
+The Schematic API has a number of safeguards against bursts of requests to help maximize its stability. Users who send many requests in a quick succession might see error responses that show up as a `429`. We have a couple of mechanisms in the API, regardless of the environment, including:
+
+1. A defined rate limit that allows up to 20 write operations per second and 20 read operations per second.
+2. A concurrency limit that limits the number of requests that are active at any given time.
+
+Users should treat these limits as maximums and should avoid designing systems that generate uneccessary load. To request an increased rate limit, please contact support so we can understand the use case.
+
+Common causes and mitigations:
+1. **Batched upserts to companies/users within Schematic.** Often, This occurs if a daily cron job is set up to update traits within Schematic. We suggest either spacing out requests to our API or transitioning upserts to using identify calls via our event capture service.
+2. **Concurent flag checks.** Often, this occurs when flag values are retrieved synchronously. We suggest using our bulk flag check endpoint to retrieve flag values asynchronously and caching those results locally.
+
+## Handling limiting gracefully
+
+A basic technique to gracefully handle rate limiting is to build in a retry mechanism. The retry mechanism should follow an exponential backoff schedule to reduce request volume when necessary. 
+
+We also recommend implementing local caching with a TTL (either via our SDK or implemented independently).

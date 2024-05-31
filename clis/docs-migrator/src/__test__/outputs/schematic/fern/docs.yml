@@ -1,0 +1,130 @@
+instances: []
+title: Schematic Documentation
+logo:
+  light: logo/black-text.png
+  dark: logo/white-text.png
+  height: 28
+favicon: favicon.png
+colors:
+  accent-primary:
+    dark: "#1D0000"
+    light: "#DE8284"
+  background:
+    dark: "#140000"
+navbar-links:
+  - type: secondary
+    text: Support
+    url: mailto:hi@schematichq.com
+  - type: primary
+    text: Dashboard
+    url: https://app.schematichq.com
+tabs:
+  API Reference:
+    display-name: API Reference
+    slug: api-reference
+  Documentation:
+    display-name: Documentation
+    slug: /docs
+    icon: book-open-cover
+layout:
+  tabs-placement: sidebar
+  searchbar-placement: header
+navigation:
+  - section: Get Started
+    contents:
+      - page: What is Schematic?
+        path: introduction.mdx
+      - page: How to use Schematic
+        path: howto.mdx
+      - page: Quickstart
+        path: quickstart.mdx
+      - page: Availability
+        path: availability.mdx
+      - page: Observability & Support
+        path: observability.mdx
+      - page: Security
+        path: security.mdx
+  - section: Developer Resources
+    contents:
+      - page: Concepts
+        path: developer_resources/concepts.mdx
+      - page: Environments
+        path: developer_resources/environments.mdx
+      - page: Entity Relationship Diagram
+        path: developer_resources/erd.mdx
+      - section: SDKs
+        contents:
+          - page: Go
+            path: developer_resources/sdks/go.mdx
+            icon: solid golang
+          - page: Node.js
+            path: developer_resources/sdks/nodejs.mdx
+            icon: solid node
+          - page: Python
+            path: developer_resources/sdks/python.mdx
+            icon: solid python
+          - page: Javascript (Client-side)
+            path: developer_resources/sdks/javascript.mdx
+            icon: solid js
+          - page: PHP
+            path: developer_resources/sdks/php.mdx
+            icon: solid php
+          - page: Ruby
+            path: developer_resources/sdks/ruby.mdx
+            icon: solid gem
+  - section: Integrations
+    contents:
+      - page: Stripe Integration
+        path: integrations/stripe.mdx
+        icon: solid stripe
+      - page: Segment Integration
+        path: integrations/segment.mdx
+        icon: solid circle-nodes
+      - page: Salesforce Integration
+        path: integrations/salesforce.mdx
+        icon: solid salesforce
+      - page: Hubspot Integration
+        path: integrations/hubspot.mdx
+        icon: solid hubspot
+  - section: API Documentation
+    contents:
+      - page: Resources
+        path: api-reference/resources.mdx
+      - page: Authentication
+        path: api-reference/authentication.mdx
+      - page: Pagination
+        path: api-reference/pagination.mdx
+      - page: Rate limiting
+        path: api-reference/rate_limiting.mdx
+  - section: API Keys
+    contents: []
+  - section: Environments
+    contents: []
+  - section: Plans
+    contents:
+      - page: The Plan object
+        path: api-reference/plans/plan.mdx
+  - section: Companies
+    contents:
+      - page: The Company object
+        path: api-reference/companies/company.mdx
+  - section: Users
+    contents:
+      - page: The User object
+        path: api-reference/companies/user.mdx
+  - section: Events
+    contents:
+      - page: The Event object
+        path: api-reference/events/event.mdx
+  - section: Features
+    contents:
+      - page: The Feature object
+        path: api-reference/features/feature.mdx
+  - section: Flags
+    contents:
+      - page: The Flag object
+        path: api-reference/features/flag.mdx
+  - section: Entitlements
+    contents: []
+  - section: Feature Usage
+    contents: []

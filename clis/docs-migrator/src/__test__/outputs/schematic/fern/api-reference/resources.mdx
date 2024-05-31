@@ -1,0 +1,121 @@
+---
+title: Resources
+subtitle: null
+slug: api-reference/resources
+---
+
+
+## API Keys
+
+API keys allows you to create and manage API keys across environments.
+- [GET /api-keys](accounts/list-api-keys.mdx)
+- [GET /api-keys/`{api_key_id}`](accounts/get-api-key.mdx)
+- [POST /api-keys](accounts/create-api-key.mdx)
+- [PUT /api-keys/`{api_key_id}`](accounts/update-api-key.mdx)
+- [DEL /api-keys/`{api_key_id}`](accounts/update-api-key.mdx)
+
+## Environments
+
+Environments typically represent the stages of your software development lifecylce (common environments include development, staging, and production). With this resource, you can create and manage environments. [Some objects](../developer_resources/environments.mdx) are shared across environments.
+- [POST /environments](accounts/create-environment.mdx)
+- [PUT /environments/`{environment_id}`](accounts/update-environment.mdx)
+- [DEL /environments/`{environment_id}`](accounts/delete-environment.mdx)
+
+## Plans
+
+Plans allows you to create and manage both plans and plan audiences, making it easier to ensure plan audiences are governed by the right conditions. You can also retrieve plans for one or more companies.
+- [GET /plans](plans/list-plans.mdx)
+- [GET /plans/`{plan_id}`](plans/list-plans.mdx)
+- [POST /plans](plans/create-plan.mdx)
+- [PUT /plans/`{plan_id}`](plans/create-plan.mdx)
+- [DEL /plans/`{plan_id}`](plans/delete-plan.mdx)
+- [PUT /plan-audiences/`{plan_audience_id}`](plans/update-audience.mdx)
+- [DEL /plan-audiences/`{plan_audience_id}`](plans/update-audience.mdx)
+
+## Companies
+
+Companies allows you to upsert and delete companies and their corresponding metadata, as well as create user and company associations. You can also retrieve company plans, users, and metadata with this resource.
+- [GET /companies](companies/list-companies.mdx)
+- [POST /companies](companies/list-companies.mdx)
+- [GET /companies/lookup](companies/lookup-company.mdx)
+- [DEL /companies/`{company_id}`](companies/delete-company.mdx)
+- [POST /companies/delete](companies/delete-company-by-keys.mdx)
+- [GET /company-memberships](companies/list-company-memberships.mdx)
+- [POST /company-memberships](companies/get-or-create-company-membership.mdx)
+- [DEL /company-memberships/`{company_membership_id}`](companies/delete-company-membership.mdx)
+- [GET /company-plans](companies/list-company-plans.mdx)
+- [POST /company-traits](companies/upsert-company-trait.mdx)
+
+## Users
+
+Users allows you to upsert and delete users, as well as lookup a user's company associations.
+- [GET /users](companies/list-users.mdx)
+- [GET /users/lookup](companies/lookup-user.mdx)
+- [POST /users](companies/upsert-user.mdx)
+- [DEL /users/`{user_id}`](companies/delete-user.mdx)
+- [POST /users/delete](companies/delete-user-by-keys.mdx)
+- [POST /user-traits](companies/delete-user-by-keys.mdx)
+
+## Events
+
+Events allows you to create identify and track event calls either indivdually or in a batched fashion, making it easier to update company and user traits as well as emit usage data to Schematic.
+- [GET /events](events/list-events.mdx)
+- [POST /events](events/create-event.mdx)
+- [POST /event-batch](events/create-event-batch.mdx)
+- [GET /events/`{event_id}`](events/get-event.mdx)
+
+## Features
+
+Features allows you to create and manage features, making it easier to build and manage default feature configuration.
+- [GET /features](features/list-features.mdx)
+- [GET /features/`{feature_id}`](features/get-feature.mdx)
+- [POST /features](features/create-feature.mdx)
+- [PUT /features/`{feature_id}`](features/update-feature.mdx)
+- [DEL /features/`{feature_id}`](features/delete-feature.mdx)
+
+## Flags
+
+Flags allows you to create and manage flags, making it easier to programatically build and manage flag conditions. You can also use this resource to retrieve flag evaluations individually or in a batched fashion with or without a context (e.g. company).
+- [GET /flags](features/list-flags.mdx)
+- [GET /flags/`{flag_id}`](features/get-flag.mdx)
+- [POST /flags](features/create-flag.mdx)
+- [PUT /flags/`{flag_id}`](features/create-flag.mdx)
+- [DEL /flags/`{flag_id}`](features/delete-flag.mdx)
+- [PUT /flags/`{flag_id}`/rules](features/update-flag-rules.mdx)
+- [POST /flags/`{key}`/check](features/check-flag.mdx)
+- [POST /flags/check](features/check-flags.mdx)
+- [GET /flag-checks](features/list-flag-checks.mdx)
+- [GET /flag-checks/`{flag_check_id}`](features/get-flag-check.mdx)
+- [GET /flag-checks/latest](features/get-latest-flag-checks.mdx)
+
+## Entitlements
+
+Entitlements allows you to manage default plan entitlements and individual company entitlements (aka overrides). You can also retrieve feature usage data at the feature or company levels from this resource.
+- [GET /company-overrides](entitlements/list-company-overrides.mdx)
+- [GET /company-overrides/`{company_override_id}`](entitlements/get-company-override.mdx)
+- [POST /company-overrides](entitlements/create-company-override.mdx)
+- [POST /company-overrides/`{company_override_id}`](entitlements/update-company-override.mdx)
+- [DEL /company-overrides/`{company_override_id}`](entitlements/delete-company-override.mdx)
+- [GET /plan-entitlements](entitlements/list-plan-entitlements.mdx)
+- [GET /plan-entitlements/`{plan_entitlement_id}`](entitlements/get-plan-entitlement.mdx)
+- [POST /plan-entitlements](entitlements/create-plan-entitlement.mdx)
+- [PUT /plan-entitlements/`{plan_entitlement_id}`](entitlements/update-plan-entitlement.mdx)
+- [DEL /plan-entitlements/`{plan_entitlement_id}`](entitlements/update-plan-entitlement.mdx)
+
+## Feature Usage
+Feature Usage allows you to retrieve usage at the feature and company-feature levels, making it easy to populate components within your application.
+- [GET /feature-usage](entitlements/list-feature-usage.mdx)
+- [GET /usage-by-company](entitlements/get-feature-usage-by-company.mdx)
+
+
+
+
+
+
+
+
+
+
+
+
+

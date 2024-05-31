@@ -3,6 +3,7 @@ title: Document Collections
 slug: document-collections
 ---
 
+
 Zep's document vector store lets you embed and search documents using vector similarity search, Maximum Marginal Relevance Re-Ranking, and metadata filtering.
 
 You can manage collections, ingest documents, and search using _Zep's SDKs_, _LangChain_, or _LlamaIndex_.
@@ -13,17 +14,18 @@ You can manage collections, ingest documents, and search using _Zep's SDKs_, _La
     All methods come in sync and async flavors, with async methods prefixed with `a`.
 
     For instance, `zep-python` offers both `zep_client.memory.add_memory` and `zep_client.memory.aadd_memory`.
+
 </Info>
 
 ## Key Concepts
 
 ### Collections
 
-A `Collection` is a group of documents that use the same embedding strategy and model. *Zep automatically creates embeddings* for the documents you provide.
+A `Collection` is a group of documents that use the same embedding strategy and model. _Zep automatically creates embeddings_ for the documents you provide.
 
 ### Documents
 
-`Documents` are the texts you want to embed and search. You can add documents to collections and optionally assign them a unique ID and metadata. *If you add metadata, it can help filter search results.*
+`Documents` are the texts you want to embed and search. You can add documents to collections and optionally assign them a unique ID and metadata. _If you add metadata, it can help filter search results._
 
 ## Initializing the Zep Client
 
@@ -57,9 +59,9 @@ const client = await ZepClient.init("zep_api_key");
 const collection_name: string = "babbagedocs"; // The name of your collection. Alphanumeric values only
 
 const collection = await client.document.addCollection({
-    name: collection_name,  // Required
-    description: "Babbage's Calculating Engine",  // Optional
-    metadata: { "foo": "bar" }  // Optional metadata to associate with this collection
+  name: collection_name, // Required
+  description: "Babbage's Calculating Engine", // Optional
+  metadata: { foo: "bar" }, // Optional metadata to associate with this collection
 });
 ```
 
@@ -82,13 +84,12 @@ collection = client.document.get_collection(collection_name)
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-const collection = await client.document.getCollection(collection_name)
+const collection = await client.document.getCollection(collection_name);
 ```
 
 </Tab>
 
 </Tabs>
-
 
 ## Adding Documents to a Collection
 
@@ -125,11 +126,11 @@ When you use `collection.add_documents`, it returns a list of Zep UUIDs correspo
 const chunks: string[] = read_chunks_from_file(file, max_chunk_size); // Your custom function to read chunks from a file
 
 const documents: Document[] = chunks.map((chunk, index) => {
-    return new Document({
-        content: chunk,
-        documentId: `${collection_name}-${index}`,  // Optional document ID
-        metadata: { "bar": index },  // Optional metadata
-    });
+  return new Document({
+    content: chunk,
+    documentId: `${collection_name}-${index}`, // Optional document ID
+    metadata: { bar: index }, // Optional metadata
+  });
 });
 
 const uuids: string[] = await client.document.addDocuments(collection_name, documents);
@@ -143,12 +144,12 @@ When you use `collection.addDocuments`, it returns a list of Zep UUIDs correspon
 
 </Tab>
 
-
 <Tab title="Langchain">
 
 <Info>Zep's document vector store has VectorStore support for Langchain.</Info>
 
 **Python Example:**
+
 ```python
 from langchain.docstore.base import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -165,20 +166,22 @@ text_splitter = RecursiveCharacterTextSplitter(
 docs = text_splitter.create_documents([raw_text])
 uuids = vectorstore.add_documents(docs)
 ```
+
 **Typescript Example:**
+
 ```typescript
 import { ZepClient } from "@getzep/zep-js";
 import { ZepVectorStore } from "@getzep/zep-js/langchain";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 const vectorStore = await ZepVectorStore.init({
-    client: zepClient,
-    collectionName: "<name_of_your_collection>",
+  client: zepClient,
+  collectionName: "<name_of_your_collection>",
 });
 const text_splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 400,
-    chunkOverlap: 50,
-    lengthFunction: (text: string) => text.length, // Assuming lengthFunction accepts a function that returns the length of the text
+  chunkSize: 400,
+  chunkOverlap: 50,
+  lengthFunction: (text: string) => text.length, // Assuming lengthFunction accepts a function that returns the length of the text
 });
 
 const docs = await text_splitter.createDocuments([raw_text]);
@@ -188,7 +191,6 @@ const uuids = await vectorstore.addDocuments(docs);
 </Tab>
 
 </Tabs>
-
 
 ### Chunking your documents
 
@@ -224,19 +226,18 @@ while True:
 
 ```typescript
 while (true) {
-    const collection = await client.document.getCollection(collectionName);
-    console.log(`Embedding status: ${c.document_embedded_count}/${c.document_count} documents embedded`);
-    await sleep(1000); // Sleep for 1 second (1000 milliseconds)
-    if (collection.status === "ready") {
-        break;
-    }
+  const collection = await client.document.getCollection(collectionName);
+  console.log(`Embedding status: ${c.document_embedded_count}/${c.document_count} documents embedded`);
+  await sleep(1000); // Sleep for 1 second (1000 milliseconds)
+  if (collection.status === "ready") {
+    break;
+  }
 }
 ```
 
 </Tab>
 
 </Tabs>
-
 
 Once the collection's status changes to `ready`, it means all documents have been successfully embedded and are now searchable.
 
@@ -250,6 +251,7 @@ You can initiate a search using either a text query or an embedding vector, depe
     Zep's Collection and Memory search support semantic search queries, JSONPath-based metadata filters, and a combination of both. Memory search also supports querying by message creation date.
 
     Read more about [constructing search queries](working-with-search.mdx).
+
 </Info>
 
 <Tabs group="collections">
@@ -288,13 +290,13 @@ let results = await collection.search({ text: query, limit: 5 });
 
 // Hybrid search for documents using a query string and metadata filter
 const metadataQuery = {
-    where: { jsonpath: '$[*] ? (@.baz == "qux")' }
+  where: { jsonpath: '$[*] ? (@.baz == "qux")' },
 };
 results = await collection.search({ text: query, metadata: metadataQuery, limit: 5 });
 
 // Search by embedding vector, rather than text query
 // embedding is a list of floats
-results = await collection.search({ embedding: embedding, limit: 5}); 
+results = await collection.search({ embedding: embedding, limit: 5 });
 ```
 
 `metadata` is an optional dictionary of [JSONPath filters](https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html) used to match on metadata associated with your documents.
@@ -302,7 +304,6 @@ results = await collection.search({ embedding: embedding, limit: 5});
 `limit` is an optional integer indicating the maximum number of results to return.
 
 </Tab>
-
 
 <Tab title="Langchain">
 **Python Example:**
@@ -333,7 +334,7 @@ const resultsMMR = await vectorstore.search(query, { searchType: "mmr", k: 5 });
 console.log(resultsMMR);
 ```
 
-*You can also use `ZepVectoreStore` as a retriever with langchain*
+_You can also use `ZepVectoreStore` as a retriever with langchain_
 
 Python example
 
@@ -357,27 +358,21 @@ Typescript example
 const retriever = vectorStore.asRetriever();
 
 const setupAndRetrieval = RunnableMap.from({
-    context: new RunnableLambda({
-        func: (input: string) =>
-            retriever.invoke(input).then(combineDocuments),
-    }),
-    question: new RunnablePassthrough(),
+  context: new RunnableLambda({
+    func: (input: string) => retriever.invoke(input).then(combineDocuments),
+  }),
+  question: new RunnablePassthrough(),
 });
 const outputParser = new StringOutputParser();
 
-const chain = setupAndRetrieval
-    .pipe(prompt)
-    .pipe(model)
-    .pipe(outputParser)
+const chain = setupAndRetrieval.pipe(prompt).pipe(model).pipe(outputParser);
 ```
 
-> *Please check the complete typescript [rag vector store chain example](https://github.com/getzep/zep-js/blob/main/examples/langchain/vector_store_example.ts)*
-
+> _Please check the complete typescript [rag vector store chain example](https://github.com/getzep/zep-js/blob/main/examples/langchain/vector_store_example.ts)_
 
 </Tab>
 
 </Tabs>
-
 
 ## Retrieving Documents by UUID
 
@@ -427,10 +422,10 @@ client.document.update_collection(
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-await client.document.updateCollection(
-    collectionName,
-    { description: "Charles Babbage's Babbage's Calculating Engine 2", metadata: { newfoo: "newbar" } }
-);
+await client.document.updateCollection(collectionName, {
+  description: "Charles Babbage's Babbage's Calculating Engine 2",
+  metadata: { newfoo: "newbar" },
+});
 ```
 
 </Tab>
@@ -456,7 +451,6 @@ await collection.updateDocument(documentUUID, { documentId: "new_id", metadata: 
 
 </Tab>
 
-
 </Tabs>
 
 ### Deleting Documents
@@ -476,14 +470,12 @@ collection.delete_document(document_uuid)
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-await collection.deleteDocument(document_uuid)
+await collection.deleteDocument(document_uuid);
 ```
 
 </Tab>
 
-
 </Tabs>
-
 
 ### Deleting a Collection
 
@@ -502,11 +494,9 @@ client.document.delete_collection(collection_name)
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-await client.document.deleteCollection(collection_name)
+await client.document.deleteCollection(collection_name);
 ```
 
 </Tab>
 
-
 </Tabs>
-

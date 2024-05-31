@@ -2,6 +2,7 @@
 import { DocsConfiguration, NavigationItem } from "@fern-fern/docs-config/api";
 import * as serializer from "@fern-fern/docs-config/serialization";
 import { titleCase } from "@fern-ui/core-utils";
+import axios from "axios";
 import fs from "fs";
 import grayMatter from "gray-matter";
 import jsyaml from "js-yaml";
@@ -132,14 +133,32 @@ export class MigrateFromMintlify {
         if (mint.openapi != null && mint.openapi.length > 0) {
             const openapiDir = path.join(fernDir, "openapi");
             fs.mkdirSync(openapiDir, { recursive: true });
-            if (mint.openapi.length > 1) {
-                console.warn("Multiple OpenAPI files are not supported yet in this migrator.");
-            }
 
-            const openapi = mint.openapi[0];
-            const openapiFilePath = path.join(this.dir, openapi);
-            const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
-            await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
+            if (typeof mint.openapi === "string") {
+                console.log("found a STRING: ", mint.openapi);
+                const openapi = mint.openapi;
+
+                if (isExternalUrl(openapi)) {
+                    // download link
+                    await downloadFile(openapi, path.join(openapiDir, `openapi${path.extname(openapi)}`));
+                } else {
+                    const openapiFilePath = path.join(this.dir, openapi);
+                    const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
+                    await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
+                }
+            
+                
+            } else {
+                console.log("found a LIST: ", mint.openapi);
+                if (mint.openapi.length > 1) {
+                    console.warn("Multiple OpenAPI files are not supported yet in this migrator.");
+                }
+    
+                const openapi = mint.openapi[0];
+                const openapiFilePath = path.join(this.dir, openapi);
+                const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
+                await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
+            }
         }
     }
 
@@ -544,6 +563,30 @@ function getIcon({ icon, iconType }: { icon?: string; iconType?: string }): stri
 function isExternalUrl(url: string): boolean {
     return url.startsWith("http:") || url.startsWith("https:") || url.startsWith("mailto:") || url.startsWith("tel:");
 }
+
+async function downloadFile(url: string, filePath: string): Promise<void> {
+    try {
+      const directory = path.dirname(filePath);
+      fs.mkdirSync(directory, { recursive: true });
+  
+      const response = await axios({
+        url,
+        method: "GET",
+        responseType: "stream"
+      });
+  
+      const writer = fs.createWriteStream(filePath);
+      response.data.pipe(writer);
+  
+      return new Promise((resolve, reject) => {
+        writer.on("finish", resolve);
+        writer.on("error", reject);
+      });
+    } catch (error) {
+      console.error(`Error downloading file from ${url}:`, error);
+      throw error;
+    }
+  }
 
 function parseMintlifyFrontmatter(mdContent: string): { data: MintlifyFrontmatter; content: string } {
     const { data, content } = grayMatter(mdContent);

@@ -1,0 +1,19 @@
+---
+title: Authentication
+subtitle: ''
+slug: api-reference/authentication
+---
+
+
+The Schematic API uses API keys to authenticate requests. You can view and manage all of your API keys within your Settings page.
+
+*Secret Keys* are used only for server-side integrations. These keys are meant to be confidential, so they should not be used on clients.
+
+*Publishable Keys* are used in applications and websites to submit identify and track calls, as well as perform client-side feature evaluations. They can be embedded in your application and website.
+
+API keys are environment scoped and Secret Keys are namespaced accordingly:
+* Production environments will have the prefix sch_prod
+* Staging environments will have the prefix sch_stag
+* Development environments will have the prefix sch_dev
+
+All API requests must be made over HTTPS. API requests without authentication will also fail.

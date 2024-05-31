@@ -1,0 +1,41 @@
+---
+title: Entity Relationship Diagram
+subtitle: ''
+slug: developer_resources/erd
+---
+
+
+This is a non-comprehensive diagram of the relationships between the most important resources within Schematic. This diagram refers to these resources as abstract concepts, rather than as they exist specifically.
+
+Resources in Schematic are predominately environment-scoped within an account, but some are available account-wide (regardless of the selected environment). More detail [here](environments.mdx).
+
+
+```mermaid
+erDiagram
+		ACCOUNT ||--o{ ENVIRONMENT : has-many
+		ACCOUNT ||--o{ PLAN : has-many
+
+		ACCOUNT ||--o{ FLAG : has-many
+		ACCOUNT ||--o{ FEATURE : has-many
+
+		ENVIRONMENT ||--o{ COMPANY : has-many
+		ENVIRONMENT ||--o{ USER : has-many
+    COMPANY ||--o| COMPANY-PLAN : has-many
+    PLAN ||--o| COMPANY-PLAN : has-many
+		COMPANY ||--o{ COMPANY-MEMBERSHIP : has-many
+		USER ||--o{ COMPANY-MEMBERSHIP : has-many
+		FEATURE ||--o| FLAG : has-one
+
+		FLAG ||--o{ RULE : has-many
+		RULE ||--o{ CONDITION : has-many
+		RULE ||--o{ CONDITION-GROUP : has-many
+		CONDITION-GROUP ||--o{ CONDITION : has-many
+    PLAN ||--o| RULE : has-one
+
+    FEATURE ||--o| COMPANY-OVERRIDE : has-many
+    FEATURE ||--o| PLAN-ENTITLEMENT : has-many
+		PLAN ||--o| PLAN-ENTITLEMENT : has-many
+    COMPANY ||--o| COMPANY-OVERRIDE : has-many
+		COMPANY-OVERRIDE ||--o| RULE : has-one
+		PLAN-ENTITLEMENT ||--o| RULE : has-one
+```

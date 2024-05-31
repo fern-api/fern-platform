@@ -1,0 +1,30 @@
+---
+title: Environments
+subtitle: null
+slug: developer_resources/environments
+---
+
+
+Schematic supports multiple environments (e.g. staging and production) to support your development workflow.
+
+Resources in Schematic are predominately environment-scoped, but some are available account-wide (regardless of the selected environment). The table below highlights available resources and how they are scoped.
+
+| Resource type | Account/environment scope | Originates from | Concept exists in | Definition / Notes |
+| --- | --- | --- | --- | --- |
+| Environment | Account | App & API | App & API |  |
+| Plan | Account | App & API| App & API |  |
+| Feature | Account | App & API | App & API |  |
+| Feature flag | Account | App & API | App & API |  |
+| Flag rule | Environment | App & API | App & API |  |
+| Rule condition | Environment | App & API | App & API |  |
+| API key | Account and Environment | App & API | App & API | API keys are always environment-specific, but can be accessed in the Application account-wide. |
+| Companies | Environment | API | App & API |  |
+| Users | Environment | API | App & API |  |
+| Events | Environment | API | App & API |  |
+| Plan entitlement | Environment | App & API | App & API | An association between a feature and a plan |
+| Company override | Environment | App & API | App & API | An association between a feature and a company |
+| Entity key type | Account | API | App & API | A type of key that can be used to look up an entity (user or company). For example, “email” or “id” |
+| Entity key value | Environment | API | App & API | The value for a given entity key, e.g. the value “ben@schematichq.com” in the context of the key “email” as a lookup for a specific user |
+| Entity trait type | Account | API | App & API | Arbitrary data that can be attached to entities (Users/Companies), which can later be used for flag targeting via rule conditions. This model defines a type of trait, e.g. “location” being a string |
+| Entity trait value | Environment | API | API | The value for a given entity trait, e.g. the value “Atlanta, GA” in the context of the “location” trait for a specific  |
+| Metric counts | Environment | API | App & API | This is an aggregated count of events grouped by type/hour/company/user primarily used for rule-based targeting |

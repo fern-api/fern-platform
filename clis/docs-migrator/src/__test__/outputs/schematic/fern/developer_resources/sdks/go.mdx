@@ -1,0 +1,289 @@
+---
+title: Go
+subtitle: ''
+slug: developer_resources/sdks/go
+---
+
+
+## Installation and Setup
+
+1. Install the Go library:
+
+```bash
+go get github.com/SchematicHQ/schematic-go
+```
+
+2. [Issue an API key](https://docs.schematichq.com/quickstart#create-an-api-key) for the appropriate environment using the [Schematic app](https://app.schematichq.com/settings/api-keys). Be sure to capture the secret key when you issue the API key; you'll only see this key once, and this is what you'll use with the Schematic Go library.
+
+3. Using this secret key, initialize a client in your Go application:
+
+```go
+import (
+  "os"
+
+  "github.com/SchematicHQ/schematic-go"
+)
+
+func main() {
+  apiKey := os.Getenv("SCHEMATIC_API_KEY")
+  client, err := schematic.NewClient(apiKey)
+  defer client.Close()
+}
+```
+
+By default, the client will do some local caching for flag checks, if you would like to change this behavior, you can do so using an initialization option to specify the max size of the cache (in bytes) and the max age of the cache (in seconds):
+
+
+```go
+import (
+  "os"
+  "time"
+
+  "github.com/SchematicHQ/schematic-go"
+)
+
+func main() {
+  apiKey := os.Getenv("SCHEMATIC_API_KEY")
+  cacheSizeBytes := 1000000
+  cacheTTL := 1 * time.Second
+  client, err := schematic.NewClient(apiKey, schematic.WithLocalFlagCheckCache(cacheSizeBytes, cacheTTL))
+  defer client.Close()
+}
+```
+
+You can also disable local caching entirely with an initialization option; bear in mind that, in this case, every flag check will result in a network request:
+
+```go
+import (
+  "os"
+
+  "github.com/SchematicHQ/schematic-go"
+)
+
+func main() {
+  apiKey := os.Getenv("SCHEMATIC_API_KEY")
+  client, err := schematic.NewClient(apiKey, schematic.WithDisabledFlagCheckCache())
+  defer client.Close()
+}
+```
+
+You may want to specify default flag values for your application, which will be used if there is a service interruption or if the client is running in offline mode (see below). You can do this using an initialization option:
+
+```go
+import (
+  "os"
+
+  "github.com/SchematicHQ/schematic-go"
+)
+
+func main() {
+  apiKey := os.Getenv("SCHEMATIC_API_KEY")
+  client, err := schematic.NewClient(apiKey, schematic.WithDefaultFlagValues(map[string]bool{
+    "some-flag-key": true,
+  }))
+  defer client.Close()
+}
+```
+
+## Usage examples
+
+### Sending identify events
+
+Create or update users and companies using identify events.
+
+```go
+func main() {
+  client, err := schematic.NewClient(os.Getenv("SCHEMATIC_API_KEY"))
+  defer client.Close()
+
+  eventBody := NewEventBodyIdentify(map[string]any{
+    "email":   "wcoyote@acme.net",
+    "user-id": "your-user-id",
+  })
+  eventBody.SetCompany(map[string]any{
+    "id": "your-company-id",
+  })
+  eventBody.SetName("Wile E. Coyote")
+  eventBody.SetTraits(map[string]any{
+    "city":        "Atlanta",
+    "login_count": 24,
+    "is_staff":    false,
+  })
+
+  client.Identify(context.Background(), eventBody)
+}
+```
+
+This call is non-blocking and there is no response to check.
+
+### Sending track events
+
+Track activity in your application using track events; these events can later be used to produce metrics for targeting.
+
+```go
+func main() {
+  client, err := schematic.NewClient(os.Getenv("SCHEMATIC_API_KEY"))
+  defer client.Close()
+
+  eventBody := NewEventBodyTrack("some-action")
+  eventBody.SetUser(map[string]any{
+    "email":   "wcoyote@acme.net",
+    "user-id": "your-user-id",
+  })
+  eventBody.SetCompany(map[string]any{
+    "id": "your-company-id",
+  })
+
+  client.Track(context.Background(), eventBody)
+}
+```
+
+This call is non-blocking and there is no response to check.
+
+### Creating and updating companies
+
+Although it is faster to create companies and users via identify events, if you need to handle a response, you can use the companies API to upsert companies. Because you use your own identifiers to identify companies, rather than a Schematic company ID, creating and updating companies are both done via the same upsert operation:
+
+```go
+func main() {
+  client, err := schematic.NewClient(os.Getenv("SCHEMATIC_API_KEY"))
+  defer client.Close()
+
+  body := schematic.NewUpsertCompanyRequestBody(map[string]any{
+    "id": "your-company-id",
+  })
+  body.SetName("Acme Widgets, Inc.")
+  body.SetTraits(map[string]any{
+    "city":       "Atlanta",
+    "high_score": 25,
+    "is_active":  true,
+  })
+
+  resp, r, err := client.API().CompaniesAPI.CreateCompany(context.Background()).UpsertCompanyRequestBody(*body).Execute()
+}
+```
+
+You can define any number of company keys; these are used to address the company in the future, for example by updating the company's traits or checking a flag for the company.
+You can also define any number of company traits; these can then be used as targeting parameters.
+
+
+### Creating and updating users
+
+Similarly, you can upsert users using the Schematic API, as an alternative to using identify events. Because you use your own identifiers to identify users, rather than a Schematic user ID, creating and updating users are both done via the same upsert operation:
+
+```go
+func main() {
+  client, err := schematic.NewClient(os.Getenv("SCHEMATIC_API_KEY"))
+  defer client.Close()
+
+  companyKeys := map[string]any{
+    "id": "your-company-id",
+  }
+  userKeys := map[string]any{
+    "email":   "wcoyote@acme.net",
+    "user-id": "your-user-id",
+  }
+  body := schematic.NewUpsertUserRequestBody(companyKeys, userKeys)
+  body.SetName("Wile E. Coyote")
+  body.SetTraits(map[string]any{
+    "city":        "Atlanta",
+    "login_count": 24,
+    "is_staff":    false,
+  })
+
+  resp, r, err := client.API().CompaniesAPI.CreateUser(context.Background()).UpsertUserRequestBody(*body).Execute()
+}
+```
+
+You can define any number of user keys; these are used to address the user in the future, for example by updating the user's traits or checking a flag for the user.
+You can also define any number of user traits; these can then be used as targeting parameters.
+
+### Checking flags
+
+When checking a flag, you'll provide keys for a company and/or keys for a user. You can also provide no keys at all, in which case you'll get the default value for the flag.
+
+```go
+func main() {
+  client, err := schematic.NewClient(os.Getenv("SCHEMATIC_API_KEY"))
+  defer client.Close()
+
+  evaluationCtx := schematic.CheckFlagRequestBody{
+    Company: map[string]any{
+      "id": "your-company-id",
+    },
+    User: map[string]any{
+      "email":   "wcoyote@acme.net",
+      "user-id": "your-user-id",
+    },
+  }
+
+  if client.CheckFlag(context.Background(), "some-flag-key", evaluationCtx) {
+    // Flag is on
+  } else {
+    // Flag is off
+  }
+}
+```
+
+### Other API operations
+
+The Schematic API supports many operations beyond these, accessible via `client.API()`. See the [API submodule readme](https://github.com/SchematicHQ/schematic-go/tree/main/api#readme) for a full list and documentation of supported operations.
+
+## Testing
+
+### Offline Mode
+
+In development or testing environments, you may want to avoid making network requests to the Schematic API. You can run Schematic in offline mode by providing an empty API key to the client:
+
+```go
+func main() {
+  client, err := schematic.NewClient("")
+  defer client.Close()
+}
+```
+
+Offline mode works well with flag defaults:
+
+```go
+func main() {
+  client, err := schematic.NewClient("", schematic.WithDefaultFlagValues(map[string]bool{
+    "some-flag-key": true,
+  }))
+  defer client.Close()
+}
+```
+
+In an automated testing context, you may also want to use offline mode and specify single flag responses for test cases:
+
+```go
+func TestSomeFunctionality(t *testing.T) {
+  client, err := schematic.NewClient("")
+  defer client.Close()
+
+  client.SetFlagDefault("some-flag-key", true)
+
+  // test code that expects the flag to be on
+}
+```
+
+### Mocks
+
+If you prefer, you can also use mocks:
+
+```go
+import (
+  "testing"
+
+  "go.uber.org/mock/gomock"
+  schematicmocks "github.com/SchematicHQ/schematic-go/mocks"
+)
+
+
+func TestSomeFunctionality(t *testing.T) {
+  ctrl := gomock.NewController(t)
+  schematic := schematicmocks.NewMockClient(ctrl)
+  client.EXPECT().CheckFlag(context.Background(), gomock.Any(), "some-flag-key").Return(true)
+
+  // test code that expects the flag to be on
+}
+```

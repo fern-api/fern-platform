@@ -1,0 +1,77 @@
+---
+title: Javascript (Client-side)
+subtitle: ''
+slug: developer_resources/sdks/javascript
+---
+
+
+### Installation
+
+The `schematic-js` SDK is hosted [here](https://www.npmjs.com/package/@schematichq/schematic-js). Use npm or your preferred package manager to install:
+
+```bash
+npm install @schematichq/schematic-js
+```
+
+Once installed, you can submit requests using your [publishable key](/quickstart#create-an-api-key).
+
+If you prefer to install the client-side JavaScript library using a script tag, you can load it from our CDN using the following URL: [https://cdn.schematichq.com/js/schematic.js](https://cdn.schematichq.com/js/schematic.js)
+
+### Initialization
+
+Initialize the SDK in the following way:
+
+```javascript
+var schematic = new Schematic("your-api-key");
+```
+
+### Usage example
+
+Once the SDK is initialized, you may submit requests. Below is an example of identifying a user and submitting a usage event to Schematic.
+
+```javascript
+// Send an identify event
+const userId = "my-user-id";
+const keys = {
+  id: userId,
+};
+const traits = {
+  anykey: "anyval",
+};
+const company = {
+  name: "My Company",
+  keys: {
+    id: "my-company-id",
+  },
+  traits: {
+    location: "Atlanta, GA",
+  }
+};
+schematic.identify({ keys, traits, company });
+
+// Send a track event
+const event = "query";
+const traits = {};
+const company = {};
+const user = {};
+
+schematic.track({
+  event: "query",
+  traits: {
+      feature: "feat_cns2asuKAG2",
+  },
+  company: {
+    id: "my-company-id",
+  },
+  user: {
+    id: "my-user-id",
+  },
+});
+```
+
+The Javasript SDK references companies or users by their Schematic ID using the `id` key or by any key you have defined and passed to Schematic previously.
+
+### React Native
+
+This library uses [uuid](https://www.npmjs.com/package/uuid). In order for this to work in a React native context, you must also provide a [shim](https://github.com/LinusU/react-native-get-random-values#readme) for crypto.getRandomValues as described in the [uuid documentation](https://www.npmjs.com/package/uuid#react-native--expo).
+
