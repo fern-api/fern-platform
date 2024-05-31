@@ -7,4 +7,5 @@ import * as FernRegistry from "../../../../../../..";
 export interface NavigationTabGroup extends FernRegistry.docs.v1.write.NavigationNodeMetadata {
     title: string;
     items: FernRegistry.docs.v1.write.NavigationItem[];
+    skipUrlSlug?: boolean;
 }
