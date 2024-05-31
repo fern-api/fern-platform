@@ -103,7 +103,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             setSelectionStateAndOpen({
                 type: "endpoint",
                 api: group.api,
-                endpointId: endpoint.slug.join("/"),
+                endpointId: endpoint.id,
             });
             closeDropdown?.();
         };
@@ -112,14 +112,16 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             setSelectionStateAndOpen({
                 type: "websocket",
                 api: group.api,
-                webSocketId: websocket.slug.join("/"),
+                webSocketId: websocket.id,
             });
             closeDropdown?.();
         };
 
         function renderApiDefinitionPackage(apiGroup: ApiGroup) {
-            const endpoints = apiGroup.items.filter((endpoint): endpoint is SidebarNode.ApiPage =>
-                matchesEndpoint(filterValue, apiGroup, endpoint),
+            const endpoints = apiGroup.items.filter(
+                (endpoint): endpoint is SidebarNode.ApiPage =>
+                    matchesEndpoint(filterValue, apiGroup, endpoint) &&
+                    (endpoint.apiType === "endpoint" || endpoint.apiType === "websocket"),
             );
             if (endpoints.length === 0) {
                 return null;
@@ -140,7 +142,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     )}
                     <ul className="relative z-0 list-none">
                         {endpoints.map((endpointItem) => {
-                            const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
+                            const active = endpointItem.id === selectedEndpoint?.id;
                             const text = renderTextWithHighlight(endpointItem.title, filterValue);
                             if (endpointItem.apiType === "endpoint") {
                                 return (

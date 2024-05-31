@@ -146,14 +146,12 @@ export class MigrateFromMintlify {
                     const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
                     await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
                 }
-            
-                
             } else {
                 console.log("found a LIST: ", mint.openapi);
                 if (mint.openapi.length > 1) {
                     console.warn("Multiple OpenAPI files are not supported yet in this migrator.");
                 }
-    
+
                 const openapi = mint.openapi[0];
                 const openapiFilePath = path.join(this.dir, openapi);
                 const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
@@ -566,27 +564,27 @@ function isExternalUrl(url: string): boolean {
 
 async function downloadFile(url: string, filePath: string): Promise<void> {
     try {
-      const directory = path.dirname(filePath);
-      fs.mkdirSync(directory, { recursive: true });
-  
-      const response = await axios({
-        url,
-        method: "GET",
-        responseType: "stream"
-      });
-  
-      const writer = fs.createWriteStream(filePath);
-      response.data.pipe(writer);
-  
-      return new Promise((resolve, reject) => {
-        writer.on("finish", resolve);
-        writer.on("error", reject);
-      });
+        const directory = path.dirname(filePath);
+        fs.mkdirSync(directory, { recursive: true });
+
+        const response = await axios({
+            url,
+            method: "GET",
+            responseType: "stream",
+        });
+
+        const writer = fs.createWriteStream(filePath);
+        response.data.pipe(writer);
+
+        return new Promise((resolve, reject) => {
+            writer.on("finish", resolve);
+            writer.on("error", reject);
+        });
     } catch (error) {
-      console.error(`Error downloading file from ${url}:`, error);
-      throw error;
+        console.error(`Error downloading file from ${url}:`, error);
+        throw error;
     }
-  }
+}
 
 function parseMintlifyFrontmatter(mdContent: string): { data: MintlifyFrontmatter; content: string } {
     const { data, content } = grayMatter(mdContent);

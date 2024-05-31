@@ -316,7 +316,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                                         <PlaygroundButton
                                             state={{
                                                 type: "websocket",
-                                                webSocketId: websocket.slug.join("/"),
+                                                webSocketId: websocket.id,
                                                 api,
                                             }}
                                         />

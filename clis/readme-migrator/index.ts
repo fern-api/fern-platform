@@ -58,15 +58,14 @@ function convertToMarkdown(content: string[], levelIn: number): string {
         if (collectingImage) {
             const matches = line.match(imagePattern);
             if (matches) {
-                newline = `src="${matches[0]}" `;
+                newline = `src='${matches[0]}' `;
                 if (newline.includes("files.readme.io")) {
                     newline = downloadImage(newline, levelIn);
                 }
                 markdown += newline;
             } else if (line.includes("caption")) {
                 const caption = line.split(" ").slice(-1)[0];
-                if (caption)
-                    {markdown += `alt="${caption.replace("'", "")}" `;}
+                if (caption) {markdown += `alt='${caption.replace('"', "")}' `;}
             }
             continue;
         }
@@ -123,7 +122,10 @@ function convertToMarkdown(content: string[], levelIn: number): string {
         const calloutMatch = line.match(/> \[!(\S+)\]/);
         if (calloutMatch) {
             collectingCallout = true;
-            newline = line.replace(/> \[!(\S+)\]/, `<${calloutMatch[1]}>\n`).toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+            newline = line
+                .replace(/> \[!(\S+)\]/, `<${calloutMatch[1]}>\n`)
+                .toLowerCase()
+                .replace(/^\w/, (c) => c.toUpperCase());
             calloutCloser = newline.replace("<", "</");
         } else {
             const noteMatch = line.match(/> (📘|ℹ️)/);
@@ -137,7 +139,7 @@ function convertToMarkdown(content: string[], levelIn: number): string {
                 calloutCloser = "</Note>\n";
             } else if (checkMatch) {
                 collectingCallout = true;
-                newline = line.replace(/> (?:.) (\S+.*)/, "<Check title=$1'>\n");
+                newline = line.replace(/> (?:.) (\S+.*)/, "<Check title='$1'>\n");
                 calloutCloser = "</Check>\n";
             } else if (infoMatch) {
                 collectingCallout = true;
@@ -148,7 +150,10 @@ function convertToMarkdown(content: string[], levelIn: number): string {
                 newline = line.replace(/> (?:.) (\S+.*)/, "<Warning title='$1'>\n");
                 calloutCloser = "</Warning>\n";
             } else if (line.match(/> \*\*.\*\*/)) {
-                newline = line.replace(/> \*\*(.)\*\*/, "> $1\n").toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+                newline = line
+                    .replace(/> \*\*(.)\*\*/, "> $1\n")
+                    .toLowerCase()
+                    .replace(/^\w/, (c) => c.toUpperCase());
             }
         }
 
@@ -181,7 +186,7 @@ async function promptUser(folderName: string): Promise<boolean> {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        terminal: false
+        terminal: false,
     });
 
     return new Promise((resolve) => {
@@ -231,10 +236,10 @@ async function copyAndConvertToMdx(srcFolder: string, dstFolder: string, levelIn
 function askQuestion(query: string): Promise<string> {
     const rl = readline.createInterface({
         input: process.stdin,
-        output: process.stdout
+        output: process.stdout,
     });
 
-    return new Promise(resolve => rl.question(query, resolve));
+    return new Promise((resolve) => rl.question(query, resolve));
 }
 
 (async () => {

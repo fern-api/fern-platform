@@ -1,7 +1,216 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
+  FileId: string
+  PageId: string
+  Url: string
   SubpackageId: string
   EndpointId: string
   WebSocketId: string
   WebhookId: string
+
+  FileIdOrUrl:
+    union:
+      fileId: FileId
+      url: Url
+
+  RgbaColor:
+    properties:
+      r: integer
+      g: integer
+      b: integer
+      a: optional<double>
+
+  # SEO Config
+
+  MetadataConfig:
+    properties:
+      "og:site_name": optional<string>
+      "og:title": optional<string>
+      "og:description": optional<string>
+      "og:url": optional<string>
+      "og:image": optional<FileIdOrUrl>
+      "og:image:width": optional<double>
+      "og:image:height": optional<double>
+      "og:locale": optional<string>
+      "og:logo": optional<FileIdOrUrl>
+      "twitter:title": optional<string>
+      "twitter:description": optional<string>
+      "twitter:handle": optional<string>
+      "twitter:image": optional<FileIdOrUrl>
+      "twitter:site": optional<string>
+      "twitter:url": optional<string>
+      "twitter:card": optional<TwitterCardSetting>
+
+  RedirectConfig:
+    properties:
+      source: string
+      destination: string
+
+  TwitterCardSetting:
+    enum:
+      - summary
+      - summary_large_image
+      - app
+      - player
+
+  NavbarLink:
+    union:
+      filled: NavbarLinkMetadata
+      outlined: NavbarLinkMetadata
+      minimal: NavbarLinkMetadata
+      github: NavbarGithubMetadata
+
+      # deprecated
+      primary: NavbarLinkMetadata # -> outlined
+      secondary: NavbarLinkMetadata # -> minimal
+
+  NavbarLinkMetadata:
+    properties:
+      url: Url
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
+  NavbarGithubMetadata:
+    properties:
+      url: Url # github repo url
+
+  FooterLink:
+    union:
+      github: Url
+      twitter: Url
+      x: Url
+      linkedin: Url
+      youtube: Url
+      instagram: Url
+      facebook: Url
+      discord: Url
+      slack: Url
+      hackernews: Url
+      medium: Url
+      website: Url
+
+  # Customization Config
+
+  CssConfig:
+    properties:
+      inline: optional<list<string>>
+
+  JsConfig:
+    properties:
+      remote: optional<list<JsRemoteConfig>>
+      files: list<JsFileConfig>
+      inline: optional<list<string>>
+
+  JsRemoteConfig:
+    properties:
+      url: Url
+      strategy: optional<JsScriptStrategy>
+
+  JsFileConfig:
+    properties:
+      fileId: FileId
+      strategy: optional<JsScriptStrategy>
+
+  JsScriptStrategy:
+    enum:
+      - beforeInteractive
+      - afterInteractive # default
+      - lazyOnload
+
+  IntegrationsConfig:
+    properties:
+      intercom: optional<string>
+
+  # Typography
+
+  DocsTypographyConfigV2:
+    properties:
+      headingsFont: optional<FontConfigV2>
+      bodyFont: optional<FontConfigV2>
+      codeFont: optional<FontConfigV2>
+
+  # TODO: add support for google fonts
+  FontConfigV2:
+    union:
+      custom: CustomFontConfig
+
+  CustomFontConfig:
+    properties:
+      name: string
+      variants: list<CustomFontConfigVariant>
+      display: optional<FontDisplay>
+      fallback: optional<list<string>>
+
+      # declarations
+      fontVariationSettings: optional<string>
+
+  CustomFontConfigVariant:
+    properties:
+      fontFile: FileId
+      weight: optional<list<string>>
+      style: optional<list<FontStyle>>
+
+  FontStyle:
+    enum:
+      - normal
+      - italic
+
+  FontDisplay:
+    enum:
+      - auto
+      - block
+      - swap
+      - fallback
+      - optional
+
+  # Deprecated
+
+  ThemedFileId:
+    availability: deprecated
+    properties:
+      dark: optional<FileId>
+      light: optional<FileId>
+
+  ColorsConfig:
+    availability: deprecated
+    properties:
+      accentPrimary: optional<RgbaColor>
+
+  ColorsConfigV2:
+    availability: deprecated
+    properties:
+      accentPrimary: optional<ColorConfig>
+      background: optional<ColorConfig>
+
+  ColorConfig:
+    availability: deprecated
+    union:
+      unthemed: ColorUnthemedConfig
+      themed: ColorThemedConfig
+
+  ColorUnthemedConfig:
+    availability: deprecated
+    properties:
+      color: optional<RgbaColor>
+
+  ColorThemedConfig:
+    availability: deprecated
+    properties:
+      dark: optional<RgbaColor>
+      light: optional<RgbaColor>
+
+  DocsTypographyConfig:
+    availability: deprecated
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  FontConfig:
+    availability: deprecated
+    properties:
+      name: string
+      fontFile: FileId

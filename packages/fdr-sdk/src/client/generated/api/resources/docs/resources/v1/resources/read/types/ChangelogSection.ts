@@ -4,14 +4,9 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface ChangelogSection {
+export interface ChangelogSection extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     title?: string;
-    /** Defaults to ActivityLog icon */
-    icon?: string;
-    hidden?: boolean;
     description?: string;
-    pageId?: FernRegistry.docs.v1.read.PageId;
+    pageId?: FernRegistry.docs.v1.commons.PageId;
     items: FernRegistry.docs.v1.read.ChangelogItem[];
-    urlSlug: string;
-    fullSlug?: string[];
 }

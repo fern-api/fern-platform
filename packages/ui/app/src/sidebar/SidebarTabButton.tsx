@@ -3,6 +3,7 @@ import { SidebarTab } from "@fern-ui/fdr-utils";
 import cn from "clsx";
 import { memo } from "react";
 import { FernLink } from "../components/FernLink";
+import { getSidebarTabHref } from "../util/getSidebarTabHref";
 
 export declare namespace SidebarTabButton {
     export interface Props {
@@ -20,7 +21,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                     "text-base lg:text-sm flex flex-1 py-2 lg:px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:t-accent",
                     "data-[state=active]:t-accent data-[state=inactive]:t-muted",
                 )}
-                href={tab.type === "tabGroup" ? `/${tab.slug.join("/")}` : tab.url}
+                href={getSidebarTabHref(tab)}
                 data-state={selected ? "active" : "inactive"}
             >
                 <div className="flex min-w-0 items-center justify-start space-x-4">

@@ -34,8 +34,6 @@ const nextConfig = {
         const PATH_STAR = "/:path*";
         return {
             beforeFiles: [
-                { source: "/api/fern-docs/fontawesome/:path*", destination: `${getCdnHost()}/:path*` },
-                { source: "/:prefix*/api/fern-docs/fontawesome/:path*", destination: `${getCdnHost()}/:path*` },
                 /**
                  * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
                  * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
@@ -47,6 +45,8 @@ const nextConfig = {
                  */
                 { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
                 { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
+                { source: "/:prefix*/robots.txt", destination: "/api/fern-docs/robots.txt" },
+                { source: "/:prefix*/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
                 /**
                  * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
                  * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that
@@ -128,14 +128,6 @@ const nextConfig = {
         VERSION: process.env.VERSION,
     },
 };
-
-function getCdnHost() {
-    const CDN_HOST = process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
-    if (CDN_HOST == null) {
-        return "https://fontawesome-cdn.vercel.app";
-    }
-    return CDN_HOST;
-}
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",

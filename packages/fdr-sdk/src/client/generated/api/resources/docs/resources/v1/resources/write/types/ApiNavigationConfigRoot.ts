@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../..";
 
 export interface ApiNavigationConfigRoot {
-    summaryPageId?: FernRegistry.docs.v1.write.PageId;
+    summaryPageId?: FernRegistry.docs.v1.commons.PageId;
     items: FernRegistry.docs.v1.write.ApiNavigationConfigItem[];
 }

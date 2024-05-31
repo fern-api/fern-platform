@@ -1,7 +1,7 @@
-import { buildUrl, resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
+import { resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
 import { ApiDefinitionResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
-import { toValidPathname } from "../../../utils/toValidPathname";
+import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { getXFernHostNode } from "../../../utils/xFernHost";
 import { getFeatureFlags } from "./feature-flags";
 
@@ -20,18 +20,7 @@ const resolveApiHandler: NextApiHandler = async (
         const xFernHost = getXFernHostNode(req);
         res.setHeader("host", xFernHost);
 
-        const fullUrl = req.url;
-
-        if (fullUrl == null) {
-            res.status(400).json(null);
-            return;
-        }
-
-        const maybePathName = fullUrl.split("/api/fern-docs/resolve-api")[0] ?? "";
-        const url = buildUrl({
-            host: xFernHost,
-            pathname: toValidPathname(maybePathName),
-        });
+        const url = buildUrlFromApiNode(xFernHost, req);
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
         const docsResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({

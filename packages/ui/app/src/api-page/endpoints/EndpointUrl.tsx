@@ -33,16 +33,16 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     const renderPathParts = (parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
-        if (showEnvironment && environment != null) {
+        if (environment != null) {
             const url = parse(environment);
-            elements.push(
-                <span key="protocol" className="whitespace-nowrap max-sm:hidden">
-                    <span className="text-faded">{url.protocol}</span>
-                    <span className="text-faded">{"//"}</span>
-                    <span className="t-muted">{url.host}</span>
-                </span>,
-            );
-
+            if (showEnvironment) {
+                elements.push(
+                    <span key="protocol" className="whitespace-nowrap max-sm:hidden">
+                        <span className="text-faded">{`${url.protocol}//`}</span>
+                        <span className="t-muted">{url.host}</span>
+                    </span>,
+                );
+            }
             url.pathname?.split("/").forEach((part, i) => {
                 if (part.trim().length === 0) {
                     return;

@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
@@ -61,7 +62,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const { basePath } = useDocsContext();
     const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
 
-    const key = urljoin(basePath ?? "", "/api/fern-docs/resolve-api");
+    const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher);
     useEffect(() => {
@@ -90,14 +91,17 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         async (newSelectionState: PlaygroundSelectionState) => {
             const matchedPackage = flattenedApis[newSelectionState.api];
             if (matchedPackage == null) {
+                Sentry.captureMessage("Could not find package for API playground selection state", "fatal");
                 return;
             }
 
             if (newSelectionState.type === "endpoint") {
                 const matchedEndpoint = matchedPackage.apiDefinitions.find(
-                    (definition) =>
-                        isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
+                    (definition) => isEndpoint(definition) && definition.id === newSelectionState.endpointId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;
+                if (matchedEndpoint == null) {
+                    Sentry.captureMessage("Could not find endpoint for API playground selection state", "fatal");
+                }
                 setSelectionState(newSelectionState);
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
@@ -119,9 +123,11 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 }
             } else if (newSelectionState.type === "websocket") {
                 const matchedWebSocket = matchedPackage.apiDefinitions.find(
-                    (definition) =>
-                        isWebSocket(definition) && definition.slug.join("/") === newSelectionState.webSocketId,
+                    (definition) => isWebSocket(definition) && definition.id === newSelectionState.webSocketId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;
+                if (matchedWebSocket == null) {
+                    Sentry.captureMessage("Could not find websocket for API playground selection state", "fatal");
+                }
                 setSelectionState(newSelectionState);
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {

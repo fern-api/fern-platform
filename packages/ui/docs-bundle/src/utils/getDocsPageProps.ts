@@ -10,6 +10,7 @@ import {
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import urljoin from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
@@ -160,13 +161,15 @@ async function convertDocsToDocsPageProps({
     const docsConfig = docsDefinition.config;
     const pages = docs.definition.pages;
 
-    const redirect = getRedirectForPath(xFernHost, `/${slug.join("/")}`);
+    const currentPath = urljoin("/", slug.join("/"));
+
+    const redirect = getRedirectForPath(currentPath, docs.baseUrl, docsConfig.redirects);
 
     if (redirect != null) {
         return {
             type: "redirect",
             redirect: {
-                destination: redirect.to,
+                destination: redirect.destination,
                 permanent: false,
             },
         };
