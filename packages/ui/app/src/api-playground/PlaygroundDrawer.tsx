@@ -197,14 +197,14 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const matchedEndpoint =
         selectionState?.type === "endpoint"
             ? (matchedSection?.apiDefinitions.find(
-                  (definition) => isEndpoint(definition) && definition.slug.join("/") === selectionState.endpointId,
+                  (definition) => isEndpoint(definition) && definition.id === selectionState.endpointId,
               ) as ResolvedApiDefinition.Endpoint | undefined)
             : undefined;
 
     const matchedWebSocket =
         selectionState?.type === "websocket"
             ? (matchedSection?.apiDefinitions.find(
-                  (definition) => isWebSocket(definition) && definition.slug.join("/") === selectionState.webSocketId,
+                  (definition) => isWebSocket(definition) && definition.id === selectionState.webSocketId,
               ) as ResolvedApiDefinition.WebSocket | undefined)
             : undefined;
 

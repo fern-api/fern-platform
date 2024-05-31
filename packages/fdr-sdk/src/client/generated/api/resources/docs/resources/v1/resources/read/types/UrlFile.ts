@@ -5,5 +5,5 @@
 import * as FernRegistry from "../../../../../../..";
 
 export interface UrlFile {
-    url: FernRegistry.docs.v1.read.Url;
+    url: FernRegistry.docs.v1.commons.Url;
 }

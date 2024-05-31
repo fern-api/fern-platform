@@ -41,7 +41,7 @@
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.24.1",
     "@next/eslint-plugin-next": "^14.1.0",
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "^1.44.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/is-ci": "^3.0.4",

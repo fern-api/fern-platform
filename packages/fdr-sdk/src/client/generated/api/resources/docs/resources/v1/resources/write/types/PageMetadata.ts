@@ -4,11 +4,8 @@
 
 import * as FernRegistry from "../../../../../../..";
 
-export interface PageMetadata {
+export interface PageMetadata extends FernRegistry.docs.v1.write.NavigationNodeMetadata {
+    /** This is a filepath relative to the fern folder, with a .md/.mdx extension. */
+    id: FernRegistry.docs.v1.commons.PageId;
     title: string;
-    icon?: string;
-    hidden?: boolean;
-    id: FernRegistry.docs.v1.write.PageId;
-    urlSlugOverride?: string;
-    fullSlug?: string[];
 }

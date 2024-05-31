@@ -3,5 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../..";
 export interface UnversionedTabbedNavigationConfig {
-    tabs: FernRegistry.docs.v1.write.NavigationTab[];
+    tabs?: FernRegistry.docs.v1.write.NavigationTab[];
+    tabsV2?: FernRegistry.docs.v1.write.NavigationTabV2[];
 }

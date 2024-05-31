@@ -6,5 +6,5 @@ import * as FernRegistry from "../../../../../../..";
 
 export interface PageContent {
     markdown: string;
-    editThisPageUrl?: FernRegistry.docs.v1.read.Url;
+    editThisPageUrl?: FernRegistry.docs.v1.commons.Url;
 }

@@ -36,10 +36,6 @@ service:
         - DomainNotRegisteredError
 
 types:
-  PageId: string
-
-  Url: string
-
   File:
     union:
       url: UrlFile
@@ -47,22 +43,15 @@ types:
 
   UrlFile:
     properties:
-      url: Url
+      url: commons.Url
 
   ImageFile:
     properties:
-      url: Url
+      url: commons.Url
       width: double
       height: double
       blurDataUrl: optional<string>
       alt: optional<string>
-
-  FileId: string
-
-  FileIdOrUrl:
-    union:
-      fileId: FileId
-      url: Url
 
   Height: double
 
@@ -111,18 +100,18 @@ types:
   DocsDefinition:
     properties:
       algoliaSearchIndex: optional<AlgoliaSearchIndex>
-      pages: map<PageId, PageContent>
+      pages: map<commons.PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
-      files: map<FileId, Url>
-      filesV2: map<FileId, File>
+      files: map<commons.FileId, commons.Url>
+      filesV2: map<commons.FileId, File>
       id: optional<rootCommons.DocsConfigId>
       config: DocsConfig
       search: SearchInfo
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a FileId ?
-      editThisPageUrl: optional<Url>
+      markdown: string # eventually PageContent should just be a commons.FileId ?
+      editThisPageUrl: optional<commons.Url>
 
   DocsConfig:
     properties:
@@ -130,45 +119,49 @@ types:
 
       # navigation
       navigation: NavigationConfig
-      navbarLinks: optional<list<NavbarLink>>
-      footerLinks: optional<list<FooterLink>>
+      navbarLinks: optional<list<commons.NavbarLink>>
+      footerLinks: optional<list<commons.FooterLink>>
 
       # logo
       logoHeight: optional<Height>
-      logoHref: optional<Url>
-      favicon: optional<FileId>
+      logoHref: optional<commons.Url>
+      favicon: optional<commons.FileId>
 
       # seo
-      metadata: optional<MetadataConfig>
-      redirects: optional<list<RedirectConfig>>
+      metadata: optional<commons.MetadataConfig>
+      redirects: optional<list<commons.RedirectConfig>>
 
       # styles
       colorsV3: optional<ColorsConfigV3>
       layout: optional<DocsLayoutConfig>
-      typographyV2: optional<DocsTypographyConfigV2>
+      typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
-      integrations: optional<IntegrationsConfig>
+      integrations: optional<commons.IntegrationsConfig>
 
       # css and js
-      css: optional<CssConfig>
-      js: optional<JsConfig>
+      css: optional<commons.CssConfig>
+      js: optional<commons.JsConfig>
 
       # deprecated
-      backgroundImage: optional<FileId>
-      logoV2: optional<LogoV2>
-      logo:
-        type: optional<FileId>
-        availability: deprecated
-      colors:
-        type: optional<ColorsConfig>
-        availability: deprecated
-      colorsV2:
-        type: optional<ColorsConfigV2>
-        availability: deprecated
-      typography:
-        type: optional<DocsTypographyConfig>
-        availability: deprecated
+      # backgroundImage:
+      #   type: optional<commons.FileId>
+      #   availability: deprecated
+      # logoV2:
+      #   type: optional<commons.ThemedFileId>
+      #   availability: deprecated
+      # logo:
+      #   type: optional<commons.FileId>
+      #   availability: deprecated
+      # colors:
+      #   type: optional<commons.ColorsConfig>
+      #   availability: deprecated
+      # colorsV2:
+      #   type: optional<commons.ColorsConfigV2>
+      #   availability: deprecated
+      # typography:
+      #   type: optional<commons.DocsTypographyConfig>
+      #   availability: deprecated
 
   ColorsConfigV3:
     union:
@@ -178,14 +171,14 @@ types:
 
   ThemeConfig:
     properties:
-      logo: optional<FileId>
-      backgroundImage: optional<FileId>
-      accentPrimary: RgbaColor
+      logo: optional<commons.FileId>
+      backgroundImage: optional<commons.FileId>
+      accentPrimary: commons.RgbaColor
       background: Background
-      border: optional<RgbaColor>
-      sidebarBackground: optional<RgbaColor>
-      headerBackground: optional<RgbaColor>
-      cardBackground: optional<RgbaColor>
+      border: optional<commons.RgbaColor>
+      sidebarBackground: optional<commons.RgbaColor>
+      headerBackground: optional<commons.RgbaColor>
+      cardBackground: optional<commons.RgbaColor>
 
   DarkAndLightModeConfig:
     properties:
@@ -194,64 +187,8 @@ types:
 
   Background:
     union:
-      solid: RgbaColor
+      solid: commons.RgbaColor
       gradient: {}
-
-  LogoV2:
-    properties:
-      dark: optional<FileId>
-      light: optional<FileId>
-
-  DocsTypographyConfig:
-    properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
-
-  DocsTypographyConfigV2:
-    properties:
-      headingsFont: optional<FontConfigV2>
-      bodyFont: optional<FontConfigV2>
-      codeFont: optional<FontConfigV2>
-
-  FontConfig:
-    properties:
-      name: string
-      fontFile: FileId
-
-  # TODO: add support for google fonts
-  FontConfigV2:
-    union:
-      custom: CustomFontConfig
-
-  CustomFontConfig:
-    properties:
-      name: string
-      variants: list<CustomFontConfigVariant>
-      display: optional<FontDisplay>
-      fallback: optional<list<string>>
-
-      # declarations
-      fontVariationSettings: optional<string>
-
-  CustomFontConfigVariant:
-    properties:
-      fontFile: FileId
-      weight: optional<list<string>>
-      style: optional<list<FontStyle>>
-
-  FontStyle:
-    enum:
-      - normal
-      - italic
-
-  FontDisplay:
-    enum:
-      - auto
-      - block
-      - swap
-      - fallback
-      - optional
 
   NavigationConfig:
     discriminated: false
@@ -270,22 +207,39 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
+    discriminated: false
     union:
-      group: NavigationTabGroup
-      link: NavigationTabLink
+      - NavigationTabGroupV1
+      - NavigationTabLinkV1
+      - ChangelogSectionV1
+
+  NavigationTabGroupV1:
+    extends: NavigationTabGroup
+    properties:
+      type: optional<literal<"group">>
+
+  NavigationTabLinkV1:
+    extends: NavigationTabLink
+    properties:
+      type: literal<"link">
+
+  ChangelogSectionV1:
+    extends: ChangelogSection
+    properties:
+      type: literal<"changelog">
 
   NavigationTabGroup:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       items: list<NavigationItem>
-      urlSlug: string
+      skipUrlSlug: boolean
 
   NavigationTabLink:
     properties:
       title: string
       icon: optional<string>
-      url: Url
+      url: commons.Url
 
   UnversionedUntabbedNavigationConfig:
     properties:
@@ -353,11 +307,16 @@ types:
       api: ApiSection
       section: DocsSection
       link: LinkMetadata
+      changelog: ChangelogSection
 
   PageMetadata:
+    extends: NavigationNodeMetadata
     properties:
-      id: PageId
+      id: commons.PageId
       title: string
+
+  NavigationNodeMetadata:
+    properties:
       icon: optional<string>
       hidden: optional<boolean>
       urlSlug: string
@@ -369,51 +328,29 @@ types:
       icon: optional<string>
       url: string
 
-  NavbarLink:
-    union:
-      filled: NavbarLinkMetadata
-      outlined: NavbarLinkMetadata
-      minimal: NavbarLinkMetadata
-      github: NavbarGithubMetadata
-
-      # deprecated
-      primary: NavbarLinkMetadata # -> outlined
-      secondary: NavbarLinkMetadata # -> minimal
-
-  NavbarLinkMetadata:
-    properties:
-      url: string
-      text: optional<string>
-      icon: optional<string>
-      rightIcon: optional<string>
-      rounded: optional<boolean>
-
-  NavbarGithubMetadata:
-    properties:
-      url: string # github repo url
-
   ApiSection:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
-      hidden: optional<boolean>
       api: rootCommons.ApiDefinitionId
-      urlSlug: string
       skipUrlSlug: boolean
-      artifacts: optional<ApiArtifacts>
+      artifacts:
+        type: optional<ApiArtifacts>
+        availability: deprecated
       showErrors: boolean
       changelog: optional<ChangelogSection>
-      fullSlug: optional<list<string>>
       navigation: optional<ApiNavigationConfigRoot>
       longScrolling: optional<boolean>
       flattened: optional<boolean>
 
   ApiNavigationConfigRoot:
+    availability: deprecated
     properties:
-      summaryPageId: optional<PageId>
+      summaryPageId: optional<commons.PageId>
       items: list<ApiNavigationConfigItem>
 
   ApiNavigationConfigItem:
+    availability: deprecated
     union:
       subpackage: ApiNavigationConfigSubpackage
       endpointId: commons.EndpointId
@@ -422,69 +359,32 @@ types:
       page: PageMetadata
 
   ApiNavigationConfigSubpackage:
+    availability: deprecated
     properties:
-      summaryPageId: optional<PageId>
+      summaryPageId: optional<commons.PageId>
       subpackageId: commons.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
+    extends: NavigationNodeMetadata
     properties:
       title: optional<string>
-      icon:
-        type: optional<string>
-        docs: Defaults to ActivityLog icon
-      hidden: optional<boolean>
       description: optional<string>
-      pageId: optional<PageId>
+      pageId: optional<commons.PageId>
       items: list<ChangelogItem>
-      urlSlug: string
-      fullSlug: optional<list<string>>
 
   ChangelogItem:
     properties:
       date: date
-      pageId: PageId
+      pageId: commons.PageId
 
   DocsSection:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       items: list<NavigationItem>
-      urlSlug: string
       skipUrlSlug: boolean
       collapsed: boolean
-      hidden: optional<boolean>
-      fullSlug: optional<list<string>>
-
-  ColorsConfig:
-    properties:
-      accentPrimary: optional<RgbaColor>
-
-  ColorsConfigV2:
-    properties:
-      accentPrimary: optional<ColorConfig>
-      background: optional<ColorConfig>
-
-  ColorConfig:
-    union:
-      unthemed: ColorUnthemedConfig
-      themed: ColorThemedConfig
-
-  ColorUnthemedConfig:
-    properties:
-      color: optional<RgbaColor>
-
-  ColorThemedConfig:
-    properties:
-      dark: optional<RgbaColor>
-      light: optional<RgbaColor>
-
-  RgbaColor:
-    properties:
-      r: integer
-      g: integer
-      b: integer
-      a: optional<double>
 
   ApiArtifacts:
     properties:
@@ -593,82 +493,6 @@ types:
       page: AlgoliaPageRecord
       endpoint-v2: AlgoliaEndpointRecordV2
       page-v2: AlgoliaPageRecordV2
-
-  CssConfig:
-    properties:
-      inline: optional<list<string>>
-
-  JsConfig:
-    properties:
-      remote: optional<list<JsRemoteConfig>>
-      files: list<JsFileConfig>
-      inline: optional<list<string>>
-
-  JsRemoteConfig:
-    properties:
-      url: Url
-      strategy: optional<JsScriptStrategy>
-
-  JsFileConfig:
-    properties:
-      fileId: FileId
-      strategy: optional<JsScriptStrategy>
-
-  JsScriptStrategy:
-    enum:
-      - beforeInteractive
-      - afterInteractive # default
-      - lazyOnload
-
-  IntegrationsConfig:
-    properties:
-      intercom: optional<string>
-
-  MetadataConfig:
-    properties:
-      "og:site_name": optional<string>
-      "og:title": optional<string>
-      "og:description": optional<string>
-      "og:url": optional<string>
-      "og:image": optional<FileIdOrUrl>
-      "og:image:width": optional<double>
-      "og:image:height": optional<double>
-      "og:locale": optional<string>
-      "og:logo": optional<FileIdOrUrl>
-      "twitter:title": optional<string>
-      "twitter:description": optional<string>
-      "twitter:handle": optional<string>
-      "twitter:image": optional<FileIdOrUrl>
-      "twitter:site": optional<string>
-      "twitter:url": optional<string>
-      "twitter:card": optional<TwitterCardSetting>
-
-  RedirectConfig:
-    properties:
-      source: string
-      destination: string
-
-  TwitterCardSetting:
-    enum:
-      - summary
-      - summary_large_image
-      - app
-      - player
-
-  FooterLink:
-    union:
-      github: Url
-      twitter: Url
-      x: Url
-      linkedin: Url
-      youtube: Url
-      instagram: Url
-      facebook: Url
-      discord: Url
-      slack: Url
-      hackernews: Url
-      medium: Url
-      website: Url
 
 errors:
   DomainNotRegisteredError:
