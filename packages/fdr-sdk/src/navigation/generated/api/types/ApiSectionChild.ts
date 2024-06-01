@@ -4,11 +4,11 @@
 
 import * as FernNavigation from "../index";
 
-export type ApiReferenceChild =
+export type ApiSectionChild =
+    | FernNavigation.ApiSectionNode
     | FernNavigation.EndpointNode
     | FernNavigation.EndpointPairNode
     | FernNavigation.WebSocketNode
     | FernNavigation.WebhookNode
-    | FernNavigation.ApiSectionNode
     | FernNavigation.PageNode
     | FernNavigation.LinkNode;

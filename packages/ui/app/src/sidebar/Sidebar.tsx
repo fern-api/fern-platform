@@ -11,9 +11,9 @@ import { useSearchService } from "../services/useSearchService";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
-import { SidebarRootNode } from "./SidebarRootNode";
 import { SidebarTabButton } from "./SidebarTabButton";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
+import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
 export interface SidebarProps {
     currentSlug: string[];

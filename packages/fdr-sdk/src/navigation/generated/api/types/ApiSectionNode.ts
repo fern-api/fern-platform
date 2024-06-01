@@ -10,5 +10,5 @@ export interface ApiSectionNode
         FernNavigation.WithApiDefinitionId,
         FernNavigation.WithRedirect {
     type: "apiSection";
-    children: FernNavigation.ApiReferenceChild[];
+    children: FernNavigation.ApiSectionChild[];
 }

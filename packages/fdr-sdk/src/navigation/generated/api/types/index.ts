@@ -13,7 +13,7 @@ export * from "./VersionChild";
 export * from "./TabChild";
 export * from "./SidebarRootChild";
 export * from "./NavigationChild";
-export * from "./ApiReferenceChild";
+export * from "./ApiSectionChild";
 export * from "./VersionedNode";
 export * from "./TabbedNode";
 export * from "./SidebarRootNode";

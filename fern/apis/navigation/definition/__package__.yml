@@ -52,14 +52,14 @@ types:
       - LinkNode
       - ChangelogNode
 
-  ApiReferenceChild:
+  ApiSectionChild:
     discriminated: false
     union:
+      - ApiSectionNode
       - EndpointNode
       - EndpointPairNode
       - WebSocketNode
       - WebhookNode
-      - ApiSectionNode
       - PageNode
       - LinkNode
 
@@ -188,7 +188,7 @@ types:
       disableLongScrolling: optional<boolean>
       showErrors: optional<boolean>
       hideTitle: optional<boolean>
-      children: list<ApiReferenceChild>
+      children: list<ApiSectionChild>
       changelog: optional<ChangelogNode>
 
   EndpointNode:
@@ -226,7 +226,7 @@ types:
       - WithRedirect
     properties:
       type: literal<"apiSection">
-      children: list<ApiReferenceChild>
+      children: list<ApiSectionChild>
 
   # utilities
 

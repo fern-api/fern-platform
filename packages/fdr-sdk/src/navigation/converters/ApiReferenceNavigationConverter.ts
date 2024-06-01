@@ -81,7 +81,7 @@ export class ApiReferenceNavigationConverter {
         });
     }
 
-    private convertChildren(parentSlug: string): FernNavigation.ApiReferenceChild[] {
+    private convertChildren(parentSlug: string): FernNavigation.ApiSectionChild[] {
         if (this.apiSection.navigation != null) {
             return this.convertApiNavigationItems(this.apiSection.navigation.items, parentSlug, "root");
         }
@@ -151,8 +151,8 @@ export class ApiReferenceNavigationConverter {
     private convertPackageToChildren(
         package_: APIV1Read.ApiDefinitionPackage,
         parentSlug: string,
-    ): FernNavigation.ApiReferenceChild[] {
-        const children: FernNavigation.ApiReferenceChild[] = [];
+    ): FernNavigation.ApiSectionChild[] {
+        const children: FernNavigation.ApiSectionChild[] = [];
 
         let subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
         while (package_.pointsTo != null) {
@@ -236,8 +236,8 @@ export class ApiReferenceNavigationConverter {
         items: DocsV1Read.ApiNavigationConfigItem[],
         parentSlug: string,
         subpackageId: string,
-    ): FernNavigation.ApiReferenceChild[] {
-        const children: FernNavigation.ApiReferenceChild[] = [];
+    ): FernNavigation.ApiSectionChild[] {
+        const children: FernNavigation.ApiSectionChild[] = [];
         let subpackage = subpackageId === "root" ? this.api.rootPackage : this.api.subpackages[subpackageId];
         while (subpackage.pointsTo != null) {
             subpackage = this.api.subpackages[subpackage.pointsTo];
@@ -319,8 +319,8 @@ export class ApiReferenceNavigationConverter {
         return this.mergeEndpointPairs(children);
     }
 
-    private mergeEndpointPairs(children: FernNavigation.ApiReferenceChild[]): FernNavigation.ApiReferenceChild[] {
-        const toRet: FernNavigation.ApiReferenceChild[] = [];
+    private mergeEndpointPairs(children: FernNavigation.ApiSectionChild[]): FernNavigation.ApiSectionChild[] {
+        const toRet: FernNavigation.ApiSectionChild[] = [];
 
         const methodAndPathToEndpointNode = new Map<string, FernNavigation.EndpointNode>();
         children.forEach((child) => {
