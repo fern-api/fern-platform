@@ -1,7 +1,9 @@
 {
-  "extends": "@fern-platform/configs/tsconfig/react-library.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@fern-platform/configs/tsconfig/library.json",
   "compilerOptions": {
     "isolatedModules": false,
+    "lib": ["ESNext", "DOM"],
     "outDir": "./dist",
     "rootDir": "./src"
   },

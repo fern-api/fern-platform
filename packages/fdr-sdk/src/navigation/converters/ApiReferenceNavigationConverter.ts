@@ -348,11 +348,12 @@ export class ApiReferenceNavigationConverter {
             }
 
             const idx = toRet.indexOf(existing);
-            const pairNode: FernNavigation.EndpointPairNode = {
+            const pairNode: FernNavigation.EndpointPairNode = this.#idgen.with("endpoint-pair", (id) => ({
+                id,
                 type: "endpointPair",
                 stream: child.isResponseStream ? child : existing,
                 nonStream: child.isResponseStream ? existing : child,
-            };
+            }));
 
             toRet[idx] = pairNode;
         });

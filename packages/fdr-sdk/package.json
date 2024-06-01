@@ -1,13 +1,14 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "type": "module",
-  "module": "src/index.ts",
+  "module": "dist/index.js",
   "source": "src/index.ts",
-  "main": "src/index.ts",
   "dependencies": {
     "@fern-ui/core-utils": "workspace:^",
     "date-fns": "^2.30.0",

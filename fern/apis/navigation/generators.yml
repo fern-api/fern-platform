@@ -13,3 +13,4 @@ groups:
           outputEsm: true
           outputSourceFiles: true
           useBrandedStringAliases: true
+          noSerdeLayer: true
