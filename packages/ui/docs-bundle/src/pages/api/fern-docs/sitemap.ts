@@ -1,4 +1,4 @@
-import { FernNavigation, SlugCollector } from "@fern-api/fdr-sdk";
+import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
@@ -25,8 +25,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
-    const slugCollector = SlugCollector.collect(node);
-    const urls = slugCollector.getSlugsWithContent().map((slug) => urljoin(xFernHost, slug));
+    const slugCollector = NodeCollector.collect(node);
+    const urls = slugCollector.getPageSlugs().map((slug) => urljoin(xFernHost, slug));
 
     return jsonResponse(200, urls, { headers });
 }

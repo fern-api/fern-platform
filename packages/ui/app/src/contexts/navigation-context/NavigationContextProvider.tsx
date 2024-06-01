@@ -1,4 +1,4 @@
-import { FernNavigation, SlugCollector } from "@fern-api/fdr-sdk";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getUnversionedSlug } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
@@ -98,13 +98,11 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     basePath,
     title,
 }) => {
-    const { sidebar, versions, currentVersionIndex } = useDocsContext();
+    const { nodes, versions, currentVersionIndex } = useDocsContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
-    const collector = useMemo(() => SlugCollector.collect(sidebar), [sidebar]);
-
-    const [activeNavigatable, setActiveNavigatable] = useState(() => collector.slugMap.get(resolvedPath.fullSlug));
+    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(resolvedPath.fullSlug));
 
     const [, anchor] = router.asPath.split("#");
     const selectedSlug = activeNavigatable?.slug ?? "";
@@ -159,7 +157,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
-                setActiveNavigatable(collector.slugMap.get(fullSlug));
+                setActiveNavigatable(nodes.slugMap.get(fullSlug));
                 startScrollTracking(`/${fullSlug}`, true);
             },
             300,
@@ -174,7 +172,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(collector.slugMap.get(fullSlug));
+        setActiveNavigatable(nodes.slugMap.get(fullSlug));
         startScrollTracking(route);
     });
 

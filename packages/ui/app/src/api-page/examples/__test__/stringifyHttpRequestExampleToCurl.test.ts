@@ -10,6 +10,7 @@ const MOCK_ENV = {
 
 const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     type: "endpoint",
+    nodeId: FernNavigation.NodeId(""),
     id: "",
     // apiPackageId: "",
     slug: FernNavigation.Slug(""),

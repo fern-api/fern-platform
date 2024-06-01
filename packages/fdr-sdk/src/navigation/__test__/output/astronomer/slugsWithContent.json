@@ -30,7 +30,11 @@
   "docs/api/platform-api-reference/workspace/get-workspace",
   "docs/api/platform-api-reference/workspace/update-workspace",
   "docs/api/platform-api-reference/workspace/delete-workspace",
+  "docs/api/platform-api-reference/changelog",
+  "docs/api/platform-api-reference/changelog/2024",
+  "docs/api/platform-api-reference/changelog/2024/5",
   "docs/api/platform-api-reference/changelog/2024/5/14",
+  "docs/api/platform-api-reference/changelog/2024/4",
   "docs/api/platform-api-reference/changelog/2024/4/22",
   "docs/api/platform-api-reference/changelog/2024/4/11",
   "docs/api/iam-api-reference/authorization/list-permission-groups",
@@ -61,5 +65,8 @@
   "docs/api/iam-api-reference/user/list-users",
   "docs/api/iam-api-reference/user/get-user",
   "docs/api/iam-api-reference/user/update-user-roles",
+  "docs/api/iam-api-reference/changelog",
+  "docs/api/iam-api-reference/changelog/2024",
+  "docs/api/iam-api-reference/changelog/2024/4",
   "docs/api/iam-api-reference/changelog/2024/4/11"
 ]

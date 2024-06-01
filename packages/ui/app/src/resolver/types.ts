@@ -218,6 +218,7 @@ export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpack
 
 export interface ResolvedEndpointDefinition extends WithMetadata {
     type: "endpoint";
+    nodeId: FernNavigation.NodeId;
     id: APIV1Read.EndpointId;
     apiSectionId: FdrAPI.ApiDefinitionId;
     // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
@@ -393,6 +394,7 @@ export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEn
 
 export interface ResolvedWebSocketChannel {
     type: "websocket";
+    nodeId: FernNavigation.NodeId;
     id: string;
     slug: FernNavigation.Slug;
     name: string | undefined;
@@ -418,6 +420,7 @@ export interface ResolvedWebSocketMessage extends WithMetadata {
 
 export interface ResolvedWebhookDefinition extends WithMetadata {
     type: "webhook";
+    nodeId: FernNavigation.NodeId;
     id: APIV1Read.WebhookId;
     slug: FernNavigation.Slug;
 

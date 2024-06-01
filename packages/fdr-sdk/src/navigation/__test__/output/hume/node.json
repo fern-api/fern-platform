@@ -2,20 +2,22 @@
   "id": "root",
   "type": "root",
   "child": {
+    "id": "root.uv",
     "type": "tabbed",
     "children": [
       {
-        "id": "root.docs",
+        "id": "root.uv.docs",
         "type": "tab",
         "title": "Documentation",
         "slug": "docs",
         "icon": "fa-solid fa-home",
         "hidden": false,
         "child": {
+          "id": "root.uv.docs.docs",
           "type": "sidebarRoot",
           "children": [
             {
-              "id": "root.docs.introduction",
+              "id": "root.uv.docs.docs.introduction",
               "type": "section",
               "collapsed": false,
               "title": "Introduction",
@@ -23,7 +25,7 @@
               "slug": "docs/introduction",
               "children": [
                 {
-                  "id": "root.docs.introduction.welcome-to-hume-ai",
+                  "id": "root.uv.docs.docs.introduction.welcome-to-hume-ai",
                   "type": "page",
                   "pageId": "docs/pages/documentation/introduction/welcome.mdx",
                   "title": "Welcome to Hume AI",
@@ -31,7 +33,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.introduction.api-key",
+                  "id": "root.uv.docs.docs.introduction.api-key",
                   "type": "page",
                   "pageId": "docs/pages/documentation/introduction/getting-your-api-key.mdx",
                   "title": "Getting your API key",
@@ -39,7 +41,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.introduction.support",
+                  "id": "root.uv.docs.docs.introduction.support",
                   "type": "page",
                   "pageId": "docs/pages/documentation/introduction/support.mdx",
                   "title": "Support",
@@ -50,7 +52,7 @@
               "pointsTo": "intro"
             },
             {
-              "id": "root.docs.empathic-voice-interface-evi",
+              "id": "root.uv.docs.docs.empathic-voice-interface-evi",
               "type": "section",
               "collapsed": false,
               "title": "Empathic Voice Interface (EVI)",
@@ -58,7 +60,7 @@
               "slug": "docs/empathic-voice-interface-evi",
               "children": [
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.overview",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.overview",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/overview.mdx",
                   "title": "Overview",
@@ -66,7 +68,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.quickstart",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.quickstart",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart.mdx",
                   "title": "Quickstart",
@@ -74,7 +76,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.configuration",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.configuration",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/configuration.mdx",
                   "title": "Configuration",
@@ -82,7 +84,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.tool-use",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.tool-use",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/tool-use.mdx",
                   "title": "Tool use",
@@ -90,7 +92,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.phone-calling",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.phone-calling",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/phone-calling.mdx",
                   "title": "Phone calling",
@@ -98,7 +100,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.prompting",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.prompting",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/prompting.mdx",
                   "title": "Prompting guide",
@@ -106,7 +108,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.custom-language-model",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/custom-language-model.mdx",
                   "title": "Custom language model",
@@ -114,7 +116,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.empathic-voice-interface-evi.faq",
+                  "id": "root.uv.docs.docs.empathic-voice-interface-evi.faq",
                   "type": "page",
                   "pageId": "docs/pages/documentation/empathic-voice-interface/faq.mdx",
                   "title": "FAQ",
@@ -125,7 +127,7 @@
               "pointsTo": "docs/empathic-voice-interface-evi/overview"
             },
             {
-              "id": "root.docs.expression-measurement-api",
+              "id": "root.uv.docs.docs.expression-measurement-api",
               "type": "section",
               "collapsed": false,
               "title": "Expression Measurement API",
@@ -133,7 +135,7 @@
               "slug": "docs/expression-measurement-api",
               "children": [
                 {
-                  "id": "root.docs.expression-measurement-api.overview",
+                  "id": "root.uv.docs.docs.expression-measurement-api.overview",
                   "type": "page",
                   "pageId": "docs/pages/documentation/expression-measurement-api/overview.mdx",
                   "title": "Overview",
@@ -141,7 +143,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.expression-measurement-api.rest",
+                  "id": "root.uv.docs.docs.expression-measurement-api.rest",
                   "type": "page",
                   "pageId": "docs/pages/documentation/expression-measurement-api/rest.mdx",
                   "title": "Processing batches of media files",
@@ -149,7 +151,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.expression-measurement-api.websocket",
+                  "id": "root.uv.docs.docs.expression-measurement-api.websocket",
                   "type": "page",
                   "pageId": "docs/pages/documentation/expression-measurement-api/websocket.mdx",
                   "title": "Real-time measurement streaming",
@@ -157,7 +159,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.expression-measurement-api.faq",
+                  "id": "root.uv.docs.docs.expression-measurement-api.faq",
                   "type": "page",
                   "pageId": "docs/pages/documentation/expression-measurement-api/faq.mdx",
                   "title": "FAQ",
@@ -168,7 +170,7 @@
               "pointsTo": "docs/expression-measurement-api/overview"
             },
             {
-              "id": "root.docs.custom-models-api",
+              "id": "root.uv.docs.docs.custom-models-api",
               "type": "section",
               "collapsed": false,
               "title": "Custom Models API",
@@ -176,7 +178,7 @@
               "slug": "docs/custom-models-api",
               "children": [
                 {
-                  "id": "root.docs.custom-models-api.overview",
+                  "id": "root.uv.docs.docs.custom-models-api.overview",
                   "type": "page",
                   "pageId": "docs/pages/documentation/custom-models-api/overview.mdx",
                   "title": "Overview",
@@ -184,7 +186,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.custom-models-api.creating-your-dataset",
+                  "id": "root.uv.docs.docs.custom-models-api.creating-your-dataset",
                   "type": "page",
                   "pageId": "docs/pages/documentation/custom-models-api/creating-your-dataset.mdx",
                   "title": "Creating your dataset",
@@ -192,7 +194,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.custom-models-api.training-a-custom-model",
+                  "id": "root.uv.docs.docs.custom-models-api.training-a-custom-model",
                   "type": "page",
                   "pageId": "docs/pages/documentation/custom-models-api/training-your-model.mdx",
                   "title": "Training a custom model",
@@ -200,7 +202,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.custom-models-api.evaluating-a-custom-model",
+                  "id": "root.uv.docs.docs.custom-models-api.evaluating-a-custom-model",
                   "type": "page",
                   "pageId": "docs/pages/documentation/custom-models-api/evaluating-your-model.mdx",
                   "title": "Evaluating your custom model",
@@ -208,7 +210,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.custom-models-api.faq",
+                  "id": "root.uv.docs.docs.custom-models-api.faq",
                   "type": "page",
                   "pageId": "docs/pages/documentation/custom-models-api/faq.mdx",
                   "title": "FAQ",
@@ -219,7 +221,7 @@
               "pointsTo": "docs/custom-models-api/overview"
             },
             {
-              "id": "root.docs.resources",
+              "id": "root.uv.docs.docs.resources",
               "type": "section",
               "collapsed": false,
               "title": "Resources",
@@ -227,12 +229,13 @@
               "slug": "docs/resources",
               "children": [
                 {
+                  "id": "root.uv.docs.docs.resources.pricing",
                   "type": "link",
                   "title": "Pricing",
                   "url": "https://beta.hume.ai/pricing"
                 },
                 {
-                  "id": "root.docs.resources.billing",
+                  "id": "root.uv.docs.docs.resources.billing",
                   "type": "page",
                   "pageId": "docs/pages/documentation/resources/billing.mdx",
                   "title": "Billing",
@@ -240,7 +243,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.resources.errors",
+                  "id": "root.uv.docs.docs.resources.errors",
                   "type": "page",
                   "pageId": "docs/pages/documentation/resources/errors.mdx",
                   "title": "Errors",
@@ -248,7 +251,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.resources.science",
+                  "id": "root.uv.docs.docs.resources.science",
                   "type": "page",
                   "pageId": "docs/pages/documentation/resources/science-hume-ai.mdx",
                   "title": "About the science",
@@ -256,7 +259,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.resources.use-case-guidelines",
+                  "id": "root.uv.docs.docs.resources.use-case-guidelines",
                   "type": "page",
                   "pageId": "docs/pages/documentation/resources/use-case-guidelines.mdx",
                   "title": "Use case guidelines",
@@ -264,7 +267,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.docs.resources.privacy",
+                  "id": "root.uv.docs.docs.resources.privacy",
                   "type": "page",
                   "pageId": "docs/pages/documentation/resources/privacy.mdx",
                   "title": "Privacy",
@@ -279,17 +282,18 @@
         "pointsTo": "intro"
       },
       {
-        "id": "root.reference",
+        "id": "root.uv.reference",
         "type": "tab",
         "title": "API Reference",
         "slug": "reference",
         "icon": "fa-solid fa-file-contract",
         "hidden": false,
         "child": {
+          "id": "root.uv.reference.reference",
           "type": "sidebarRoot",
           "children": [
             {
-              "id": "root.reference.empathic-voice-interface-evi",
+              "id": "root.uv.reference.reference.empathic-voice-interface-evi",
               "type": "apiReference",
               "title": "Empathic Voice Interface (EVI)",
               "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
@@ -299,11 +303,11 @@
               "showErrors": false,
               "children": [
                 {
-                  "id": "root.reference.empathic-voice-interface-evi.subpackage_tools",
+                  "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tools",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tools",
                       "type": "endpoint",
                       "title": "List tools",
                       "endpointId": "endpoint_tools.list-tools",
@@ -313,7 +317,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool",
                       "type": "endpoint",
                       "title": "Create tool",
                       "endpointId": "endpoint_tools.create-tool",
@@ -323,7 +327,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tool-versions",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tool-versions",
                       "type": "endpoint",
                       "title": "List tool versions",
                       "endpointId": "endpoint_tools.list-tool-versions",
@@ -333,7 +337,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool-version",
                       "type": "endpoint",
                       "title": "Create tool version",
                       "endpointId": "endpoint_tools.create-tool-version",
@@ -343,7 +347,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool",
                       "type": "endpoint",
                       "title": "Delete tool",
                       "endpointId": "endpoint_tools.delete-tool",
@@ -353,7 +357,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-name",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-name",
                       "type": "endpoint",
                       "title": "Update tool name",
                       "endpointId": "endpoint_tools.update-tool-name",
@@ -363,7 +367,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.get-tool-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.get-tool-version",
                       "type": "endpoint",
                       "title": "Get tool version",
                       "endpointId": "endpoint_tools.get-tool-version",
@@ -373,7 +377,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool-version",
                       "type": "endpoint",
                       "title": "Delete tool version",
                       "endpointId": "endpoint_tools.delete-tool-version",
@@ -383,7 +387,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-description",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-description",
                       "type": "endpoint",
                       "title": "Update tool description",
                       "endpointId": "endpoint_tools.update-tool-description",
@@ -399,11 +403,11 @@
                   "pointsTo": "reference/empathic-voice-interface-evi/tools/list-tools"
                 },
                 {
-                  "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts",
+                  "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompts",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompts",
                       "type": "endpoint",
                       "title": "List prompts",
                       "endpointId": "endpoint_prompts.list-prompts",
@@ -413,7 +417,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt",
                       "type": "endpoint",
                       "title": "Create prompt",
                       "endpointId": "endpoint_prompts.create-prompt",
@@ -423,7 +427,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompt-versions",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompt-versions",
                       "type": "endpoint",
                       "title": "List prompt versions",
                       "endpointId": "endpoint_prompts.list-prompt-versions",
@@ -433,7 +437,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt-verison",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt-verison",
                       "type": "endpoint",
                       "title": "Create prompt version",
                       "endpointId": "endpoint_prompts.create-prompt-verison",
@@ -443,7 +447,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt",
                       "type": "endpoint",
                       "title": "Delete prompt",
                       "endpointId": "endpoint_prompts.delete-prompt",
@@ -453,7 +457,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-name",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-name",
                       "type": "endpoint",
                       "title": "Update prompt name",
                       "endpointId": "endpoint_prompts.update-prompt-name",
@@ -463,7 +467,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.get-prompt-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.get-prompt-version",
                       "type": "endpoint",
                       "title": "Get prompt version",
                       "endpointId": "endpoint_prompts.get-prompt-version",
@@ -473,7 +477,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt-version",
                       "type": "endpoint",
                       "title": "Delete prompt version",
                       "endpointId": "endpoint_prompts.delete-prompt-version",
@@ -483,7 +487,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-description",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-description",
                       "type": "endpoint",
                       "title": "Update prompt description",
                       "endpointId": "endpoint_prompts.update-prompt-description",
@@ -499,11 +503,11 @@
                   "pointsTo": "reference/empathic-voice-interface-evi/prompts/list-prompts"
                 },
                 {
-                  "id": "root.reference.empathic-voice-interface-evi.subpackage_configs",
+                  "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-configs",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-configs",
                       "type": "endpoint",
                       "title": "List configs",
                       "endpointId": "endpoint_configs.list-configs",
@@ -513,7 +517,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config",
                       "type": "endpoint",
                       "title": "Create config",
                       "endpointId": "endpoint_configs.create-config",
@@ -523,7 +527,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-config-versions",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-config-versions",
                       "type": "endpoint",
                       "title": "List config versions",
                       "endpointId": "endpoint_configs.list-config-versions",
@@ -533,7 +537,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config-version",
                       "type": "endpoint",
                       "title": "Create config version",
                       "endpointId": "endpoint_configs.create-config-version",
@@ -543,7 +547,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config",
                       "type": "endpoint",
                       "title": "Delete config",
                       "endpointId": "endpoint_configs.delete-config",
@@ -553,7 +557,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-name",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-name",
                       "type": "endpoint",
                       "title": "Update config name",
                       "endpointId": "endpoint_configs.update-config-name",
@@ -563,7 +567,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.get-config-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.get-config-version",
                       "type": "endpoint",
                       "title": "Get config version",
                       "endpointId": "endpoint_configs.get-config-version",
@@ -573,7 +577,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config-version",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config-version",
                       "type": "endpoint",
                       "title": "Delete config version",
                       "endpointId": "endpoint_configs.delete-config-version",
@@ -583,7 +587,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-description",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-description",
                       "type": "endpoint",
                       "title": "Update config description",
                       "endpointId": "endpoint_configs.update-config-description",
@@ -599,11 +603,11 @@
                   "pointsTo": "reference/empathic-voice-interface-evi/configs/list-configs"
                 },
                 {
-                  "id": "root.reference.empathic-voice-interface-evi.subpackage_chats",
+                  "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chats",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chats",
                       "type": "endpoint",
                       "title": "List chats",
                       "endpointId": "endpoint_chats.list-chats",
@@ -613,7 +617,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chat-events",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chat-events",
                       "type": "endpoint",
                       "title": "List chat events",
                       "endpointId": "endpoint_chats.list-chat-events",
@@ -629,11 +633,11 @@
                   "pointsTo": "reference/empathic-voice-interface-evi/chats/list-chats"
                 },
                 {
-                  "id": "root.reference.empathic-voice-interface-evi.subpackage_chatGroups",
+                  "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-groups",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-groups",
                       "type": "endpoint",
                       "title": "List chat_groups",
                       "endpointId": "endpoint_chatGroups.list-chat-groups",
@@ -643,7 +647,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-group-events",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-group-events",
                       "type": "endpoint",
                       "title": "List chat events from a specific chat_group",
                       "endpointId": "endpoint_chatGroups.list-chat-group-events",
@@ -659,11 +663,11 @@
                   "pointsTo": "reference/empathic-voice-interface-evi/chat-groups/list-chat-groups"
                 },
                 {
-                  "id": "root.reference.empathic-voice-interface-evi.subpackage_chat",
+                  "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.empathic-voice-interface-evi.subpackage_chat.subpackage_chat.chat",
+                      "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat.subpackage_chat.chat",
                       "type": "webSocket",
                       "title": "Chat",
                       "webSocketId": "subpackage_chat.chat",
@@ -680,7 +684,7 @@
               "pointsTo": "reference/empathic-voice-interface-evi/tools/list-tools"
             },
             {
-              "id": "root.reference.expression-measurement-api",
+              "id": "root.uv.reference.reference.expression-measurement-api",
               "type": "apiReference",
               "title": "Expression Measurement API",
               "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
@@ -690,11 +694,11 @@
               "showErrors": false,
               "children": [
                 {
-                  "id": "root.reference.expression-measurement-api.subpackage_batch",
+                  "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_batch.endpoint_batch.list-jobs",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.list-jobs",
                       "type": "endpoint",
                       "title": "List jobs",
                       "endpointId": "endpoint_batch.list-jobs",
@@ -704,7 +708,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job",
                       "type": "endpoint",
                       "title": "Start inference job",
                       "endpointId": "endpoint_batch.start-inference-job",
@@ -714,7 +718,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-details",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-details",
                       "type": "endpoint",
                       "title": "Get job details",
                       "endpointId": "endpoint_batch.get-job-details",
@@ -724,7 +728,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-predictions",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-predictions",
                       "type": "endpoint",
                       "title": "Get job predictions",
                       "endpointId": "endpoint_batch.get-job-predictions",
@@ -734,7 +738,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-artifacts",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-artifacts",
                       "type": "endpoint",
                       "title": "Get job artifacts",
                       "endpointId": "endpoint_batch.get-job-artifacts",
@@ -744,7 +748,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job-from-local-file",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job-from-local-file",
                       "type": "endpoint",
                       "title": "Start inference job from local file",
                       "endpointId": "endpoint_batch.start-inference-job-from-local-file",
@@ -760,11 +764,11 @@
                   "pointsTo": "reference/expression-measurement-api/batch/list-jobs"
                 },
                 {
-                  "id": "root.reference.expression-measurement-api.subpackage_stream",
+                  "id": "root.uv.reference.reference.expression-measurement-api.subpackage_stream",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.expression-measurement-api.subpackage_stream.subpackage_stream.stream",
+                      "id": "root.uv.reference.reference.expression-measurement-api.subpackage_stream.subpackage_stream.stream",
                       "type": "webSocket",
                       "title": "Stream",
                       "webSocketId": "subpackage_stream.stream",
@@ -781,7 +785,7 @@
               "pointsTo": "reference/expression-measurement-api/batch/list-jobs"
             },
             {
-              "id": "root.reference.custom-models-api",
+              "id": "root.uv.reference.reference.custom-models-api",
               "type": "apiReference",
               "title": "Custom Models API",
               "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
@@ -791,11 +795,11 @@
               "showErrors": false,
               "children": [
                 {
-                  "id": "root.reference.custom-models-api.subpackage_files",
+                  "id": "root.uv.reference.reference.custom-models-api.subpackage_files",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.list-files",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.list-files",
                       "type": "endpoint",
                       "title": "List files",
                       "endpointId": "endpoint_files.list-files",
@@ -805,7 +809,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.create-files",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.create-files",
                       "type": "endpoint",
                       "title": "Create files",
                       "endpointId": "endpoint_files.create-files",
@@ -815,7 +819,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.upload-file",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.upload-file",
                       "type": "endpoint",
                       "title": "Upload file",
                       "endpointId": "endpoint_files.upload-file",
@@ -825,7 +829,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.get-file",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.get-file",
                       "type": "endpoint",
                       "title": "Get file",
                       "endpointId": "endpoint_files.get-file",
@@ -835,7 +839,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.delete-file",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.delete-file",
                       "type": "endpoint",
                       "title": "Delete file",
                       "endpointId": "endpoint_files.delete-file",
@@ -845,7 +849,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.update-file-name",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.update-file-name",
                       "type": "endpoint",
                       "title": "Update file name",
                       "endpointId": "endpoint_files.update-file-name",
@@ -855,7 +859,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_files.endpoint_files.get-file-predictions",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.get-file-predictions",
                       "type": "endpoint",
                       "title": "Get file predictions",
                       "endpointId": "endpoint_files.get-file-predictions",
@@ -871,11 +875,11 @@
                   "pointsTo": "reference/custom-models-api/files/list-files"
                 },
                 {
-                  "id": "root.reference.custom-models-api.subpackage_datasets",
+                  "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-datasets",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-datasets",
                       "type": "endpoint",
                       "title": "List datasets",
                       "endpointId": "endpoint_datasets.list-datasets",
@@ -885,7 +889,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset",
                       "type": "endpoint",
                       "title": "Create dataset",
                       "endpointId": "endpoint_datasets.create-dataset",
@@ -895,7 +899,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset",
                       "type": "endpoint",
                       "title": "Get dataset",
                       "endpointId": "endpoint_datasets.get-dataset",
@@ -905,7 +909,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset-version",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset-version",
                       "type": "endpoint",
                       "title": "Create dataset version",
                       "endpointId": "endpoint_datasets.create-dataset-version",
@@ -915,7 +919,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.delete-dataset",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.delete-dataset",
                       "type": "endpoint",
                       "title": "Delete dataset",
                       "endpointId": "endpoint_datasets.delete-dataset",
@@ -925,7 +929,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-versions",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-versions",
                       "type": "endpoint",
                       "title": "List dataset versions",
                       "endpointId": "endpoint_datasets.list-dataset-versions",
@@ -935,7 +939,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-files",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-files",
                       "type": "endpoint",
                       "title": "List dataset files",
                       "endpointId": "endpoint_datasets.list-dataset-files",
@@ -945,7 +949,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset-version",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset-version",
                       "type": "endpoint",
                       "title": "Get dataset version",
                       "endpointId": "endpoint_datasets.get-dataset-version",
@@ -955,7 +959,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-version-files",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-version-files",
                       "type": "endpoint",
                       "title": "List dataset version files",
                       "endpointId": "endpoint_datasets.list-dataset-version-files",
@@ -971,11 +975,11 @@
                   "pointsTo": "reference/custom-models-api/datasets/list-datasets"
                 },
                 {
-                  "id": "root.reference.custom-models-api.subpackage_models",
+                  "id": "root.uv.reference.reference.custom-models-api.subpackage_models",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.custom-models-api.subpackage_models.endpoint_models.list-models",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-models",
                       "type": "endpoint",
                       "title": "List models",
                       "endpointId": "endpoint_models.list-models",
@@ -985,7 +989,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_models.endpoint_models.get-model-details",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.get-model-details",
                       "type": "endpoint",
                       "title": "Get model details",
                       "endpointId": "endpoint_models.get-model-details",
@@ -995,7 +999,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_models.endpoint_models.update-model-name",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.update-model-name",
                       "type": "endpoint",
                       "title": "Update model name",
                       "endpointId": "endpoint_models.update-model-name",
@@ -1005,7 +1009,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_models.endpoint_models.list-model-versions",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-model-versions",
                       "type": "endpoint",
                       "title": "List model versions",
                       "endpointId": "endpoint_models.list-model-versions",
@@ -1015,7 +1019,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_models.endpoint_models.get-model-version",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.get-model-version",
                       "type": "endpoint",
                       "title": "Get model version",
                       "endpointId": "endpoint_models.get-model-version",
@@ -1025,7 +1029,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_models.endpoint_models.update-model-description",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.update-model-description",
                       "type": "endpoint",
                       "title": "Update model description",
                       "endpointId": "endpoint_models.update-model-description",
@@ -1041,11 +1045,11 @@
                   "pointsTo": "reference/custom-models-api/models/list-models"
                 },
                 {
-                  "id": "root.reference.custom-models-api.subpackage_jobs",
+                  "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-training-job",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-training-job",
                       "type": "endpoint",
                       "title": "Start training job",
                       "endpointId": "endpoint_jobs.start-training-job",
@@ -1055,7 +1059,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-custom-models-inference-job",
+                      "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-custom-models-inference-job",
                       "type": "endpoint",
                       "title": "Start custom models inference job",
                       "endpointId": "endpoint_jobs.start-custom-models-inference-job",
@@ -1078,20 +1082,22 @@
         "pointsTo": "reference/empathic-voice-interface-evi/tools/list-tools"
       },
       {
-        "id": "root.changelog",
+        "id": "root.uv.changelog",
         "type": "tab",
         "title": "Changelog",
         "slug": "changelog",
         "icon": "fa-regular fa-clock",
         "hidden": false,
         "child": {
+          "id": "root.uv.changelog.changelog",
           "type": "sidebarRoot",
           "children": [
             {
+              "id": "root.uv.changelog.changelog.group",
               "type": "sidebarGroup",
               "children": [
                 {
-                  "id": "root.changelog.changelog",
+                  "id": "root.uv.changelog.changelog.changelog",
                   "type": "page",
                   "pageId": "docs/changelog/2024.mdx",
                   "title": "Changelog",
@@ -1105,6 +1111,7 @@
         "pointsTo": "changelog"
       },
       {
+        "id": "root.uv.link",
         "type": "link",
         "title": "Discord",
         "url": "https://discord.gg/WPRSugvAm6",

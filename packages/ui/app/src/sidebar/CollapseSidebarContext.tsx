@@ -44,8 +44,8 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
 
     const parentIdMap = useMemo(() => {
         const map = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
-        FernNavigation.traverseNavigation(sidebar, (node, _index, parents) => {
-            if (FernNavigation.utils.nodeHasMetadata(node)) {
+        FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
+            if (FernNavigation.hasMetadata(node)) {
                 map.set(
                     node.id,
                     parents.map((p) => p.id),

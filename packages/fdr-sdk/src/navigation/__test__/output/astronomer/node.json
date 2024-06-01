@@ -2,10 +2,11 @@
   "id": "root",
   "type": "root",
   "child": {
+    "id": "root.uv",
     "type": "sidebarRoot",
     "children": [
       {
-        "id": "root.astro-api",
+        "id": "root.uv.astro-api",
         "type": "section",
         "collapsed": false,
         "title": "Astro API",
@@ -13,7 +14,7 @@
         "slug": "docs/api/astro-api",
         "children": [
           {
-            "id": "root.astro-api.overview",
+            "id": "root.uv.astro-api.overview",
             "type": "page",
             "pageId": "docs/pages/overview.mdx",
             "title": "Overview",
@@ -21,7 +22,7 @@
             "hidden": false
           },
           {
-            "id": "root.astro-api.get-started",
+            "id": "root.uv.astro-api.get-started",
             "type": "page",
             "pageId": "docs/pages/get-started.mdx",
             "title": "Get started",
@@ -29,7 +30,7 @@
             "hidden": false
           },
           {
-            "id": "root.astro-api.versioning-and-support",
+            "id": "root.uv.astro-api.versioning-and-support",
             "type": "page",
             "pageId": "docs/pages/versioning-and-support.mdx",
             "title": "Versioning and support",
@@ -40,7 +41,7 @@
         "pointsTo": "docs/api/overview"
       },
       {
-        "id": "root.platform-api-reference",
+        "id": "root.uv.platform-api-reference",
         "type": "apiReference",
         "title": "Platform API Reference",
         "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
@@ -48,28 +49,28 @@
         "hidden": false,
         "showErrors": false,
         "changelog": {
-          "id": "root.platform-api-reference.log",
+          "id": "root.uv.platform-api-reference.log",
           "type": "changelog",
           "title": "Changelog",
           "slug": "docs/api/platform-api-reference/changelog",
           "hidden": false,
           "children": [
             {
-              "id": "root.platform-api-reference.log.2024",
+              "id": "root.uv.platform-api-reference.log.2024",
               "type": "changelogYear",
               "title": "2024",
               "year": 2024,
               "slug": "docs/api/platform-api-reference/changelog/2024",
               "children": [
                 {
-                  "id": "root.platform-api-reference.log.2024.5",
+                  "id": "root.uv.platform-api-reference.log.2024.5",
                   "type": "changelogMonth",
                   "title": "May 1900",
                   "month": 5,
                   "slug": "docs/api/platform-api-reference/changelog/2024/5",
                   "children": [
                     {
-                      "id": "root.platform-api-reference.log.2024-5-14",
+                      "id": "root.uv.platform-api-reference.log.2024-5-14",
                       "type": "changelogEntry",
                       "title": "May 14, 2024",
                       "date": "2024-05-15T00:00:00.000Z",
@@ -79,14 +80,14 @@
                   ]
                 },
                 {
-                  "id": "root.platform-api-reference.log.2024.4",
+                  "id": "root.uv.platform-api-reference.log.2024.4",
                   "type": "changelogMonth",
                   "title": "April 1900",
                   "month": 4,
                   "slug": "docs/api/platform-api-reference/changelog/2024/4",
                   "children": [
                     {
-                      "id": "root.platform-api-reference.log.2024-4-22",
+                      "id": "root.uv.platform-api-reference.log.2024-4-22",
                       "type": "changelogEntry",
                       "title": "April 22, 2024",
                       "date": "2024-04-23T00:00:00.000Z",
@@ -94,7 +95,7 @@
                       "slug": "docs/api/platform-api-reference/changelog/2024/4/22"
                     },
                     {
-                      "id": "root.platform-api-reference.log.2024-4-11",
+                      "id": "root.uv.platform-api-reference.log.2024-4-11",
                       "type": "changelogEntry",
                       "title": "April 11, 2024",
                       "date": "2024-04-12T00:00:00.000Z",
@@ -109,11 +110,11 @@
         },
         "children": [
           {
-            "id": "root.platform-api-reference.subpackage_organization",
+            "id": "root.uv.platform-api-reference.subpackage_organization",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.platform-api-reference.subpackage_organization.subpackage_organization.ListOrganizations",
+                "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.ListOrganizations",
                 "type": "endpoint",
                 "title": "List Organizations",
                 "endpointId": "subpackage_organization.ListOrganizations",
@@ -123,7 +124,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_organization.subpackage_organization.GetOrganization",
+                "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.GetOrganization",
                 "type": "endpoint",
                 "title": "Get an Organization",
                 "endpointId": "subpackage_organization.GetOrganization",
@@ -133,7 +134,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_organization.subpackage_organization.UpdateOrganization",
+                "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.UpdateOrganization",
                 "type": "endpoint",
                 "title": "Update an Organization",
                 "endpointId": "subpackage_organization.UpdateOrganization",
@@ -149,11 +150,11 @@
             "pointsTo": "docs/api/platform-api-reference/organization/list-organizations"
           },
           {
-            "id": "root.platform-api-reference.subpackage_options",
+            "id": "root.uv.platform-api-reference.subpackage_options",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.platform-api-reference.subpackage_options.subpackage_options.GetClusterOptions",
+                "id": "root.uv.platform-api-reference.subpackage_options.subpackage_options.GetClusterOptions",
                 "type": "endpoint",
                 "title": "Get cluster options",
                 "endpointId": "subpackage_options.GetClusterOptions",
@@ -163,7 +164,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_options.subpackage_options.GetDeploymentOptions",
+                "id": "root.uv.platform-api-reference.subpackage_options.subpackage_options.GetDeploymentOptions",
                 "type": "endpoint",
                 "title": "Get Deployment options",
                 "endpointId": "subpackage_options.GetDeploymentOptions",
@@ -179,11 +180,11 @@
             "pointsTo": "docs/api/platform-api-reference/options/get-cluster-options"
           },
           {
-            "id": "root.platform-api-reference.subpackage_cluster",
+            "id": "root.uv.platform-api-reference.subpackage_cluster",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.platform-api-reference.subpackage_cluster.subpackage_cluster.ListClusters",
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.ListClusters",
                 "type": "endpoint",
                 "title": "List clusters",
                 "endpointId": "subpackage_cluster.ListClusters",
@@ -193,7 +194,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_cluster.subpackage_cluster.CreateCluster",
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.CreateCluster",
                 "type": "endpoint",
                 "title": "Create a cluster",
                 "endpointId": "subpackage_cluster.CreateCluster",
@@ -203,7 +204,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_cluster.subpackage_cluster.GetCluster",
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.GetCluster",
                 "type": "endpoint",
                 "title": "Get a cluster",
                 "endpointId": "subpackage_cluster.GetCluster",
@@ -213,7 +214,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_cluster.subpackage_cluster.UpdateCluster",
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.UpdateCluster",
                 "type": "endpoint",
                 "title": "Update a cluster",
                 "endpointId": "subpackage_cluster.UpdateCluster",
@@ -223,7 +224,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_cluster.subpackage_cluster.DeleteCluster",
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.DeleteCluster",
                 "type": "endpoint",
                 "title": "Delete a cluster",
                 "endpointId": "subpackage_cluster.DeleteCluster",
@@ -239,11 +240,11 @@
             "pointsTo": "docs/api/platform-api-reference/cluster/list-clusters"
           },
           {
-            "id": "root.platform-api-reference.subpackage_deployment",
+            "id": "root.uv.platform-api-reference.subpackage_deployment",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.ListDeployments",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.ListDeployments",
                 "type": "endpoint",
                 "title": "List Deployments",
                 "endpointId": "subpackage_deployment.ListDeployments",
@@ -253,7 +254,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.CreateDeployment",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.CreateDeployment",
                 "type": "endpoint",
                 "title": "Create a Deployment",
                 "endpointId": "subpackage_deployment.CreateDeployment",
@@ -263,7 +264,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.GetDeployment",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.GetDeployment",
                 "type": "endpoint",
                 "title": "Get a Deployment",
                 "endpointId": "subpackage_deployment.GetDeployment",
@@ -273,7 +274,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeployment",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeployment",
                 "type": "endpoint",
                 "title": "Update a Deployment",
                 "endpointId": "subpackage_deployment.UpdateDeployment",
@@ -283,7 +284,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeployment",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeployment",
                 "type": "endpoint",
                 "title": "Delete a Deployment",
                 "endpointId": "subpackage_deployment.DeleteDeployment",
@@ -293,7 +294,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeploymentHibernationOverride",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeploymentHibernationOverride",
                 "type": "endpoint",
                 "title": "Configure a hibernation override for a deployment",
                 "endpointId": "subpackage_deployment.UpdateDeploymentHibernationOverride",
@@ -303,7 +304,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeploymentHibernationOverride",
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeploymentHibernationOverride",
                 "type": "endpoint",
                 "title": "Delete a hibernation override for a deployment",
                 "endpointId": "subpackage_deployment.DeleteDeploymentHibernationOverride",
@@ -319,11 +320,11 @@
             "pointsTo": "docs/api/platform-api-reference/deployment/list-deployments"
           },
           {
-            "id": "root.platform-api-reference.subpackage_deploy",
+            "id": "root.uv.platform-api-reference.subpackage_deploy",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.platform-api-reference.subpackage_deploy.subpackage_deploy.ListDeploys",
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.ListDeploys",
                 "type": "endpoint",
                 "title": "List deploys for a deployment",
                 "endpointId": "subpackage_deploy.ListDeploys",
@@ -333,7 +334,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deploy.subpackage_deploy.CreateDeploy",
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.CreateDeploy",
                 "type": "endpoint",
                 "title": "Create a Deploy",
                 "endpointId": "subpackage_deploy.CreateDeploy",
@@ -343,7 +344,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deploy.subpackage_deploy.GetDeploy",
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.GetDeploy",
                 "type": "endpoint",
                 "title": "Get a deploy for a deployment",
                 "endpointId": "subpackage_deploy.GetDeploy",
@@ -353,7 +354,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deploy.subpackage_deploy.UpdateDeploy",
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.UpdateDeploy",
                 "type": "endpoint",
                 "title": "Update a Deploy",
                 "endpointId": "subpackage_deploy.UpdateDeploy",
@@ -363,7 +364,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deploy.subpackage_deploy.FinalizeDeploy",
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.FinalizeDeploy",
                 "type": "endpoint",
                 "title": "Finalize deploy of a deployment",
                 "endpointId": "subpackage_deploy.FinalizeDeploy",
@@ -373,7 +374,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_deploy.subpackage_deploy.DeployRollback",
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.DeployRollback",
                 "type": "endpoint",
                 "title": "Deploy rollback of a deployment",
                 "endpointId": "subpackage_deploy.DeployRollback",
@@ -389,11 +390,11 @@
             "pointsTo": "docs/api/platform-api-reference/deploy/list-deploys"
           },
           {
-            "id": "root.platform-api-reference.subpackage_workspace",
+            "id": "root.uv.platform-api-reference.subpackage_workspace",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.platform-api-reference.subpackage_workspace.subpackage_workspace.ListWorkspaces",
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.ListWorkspaces",
                 "type": "endpoint",
                 "title": "List Workspaces",
                 "endpointId": "subpackage_workspace.ListWorkspaces",
@@ -403,7 +404,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_workspace.subpackage_workspace.CreateWorkspace",
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.CreateWorkspace",
                 "type": "endpoint",
                 "title": "Create Workspace",
                 "endpointId": "subpackage_workspace.CreateWorkspace",
@@ -413,7 +414,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_workspace.subpackage_workspace.GetWorkspace",
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.GetWorkspace",
                 "type": "endpoint",
                 "title": "Get Workspace",
                 "endpointId": "subpackage_workspace.GetWorkspace",
@@ -423,7 +424,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_workspace.subpackage_workspace.UpdateWorkspace",
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.UpdateWorkspace",
                 "type": "endpoint",
                 "title": "Update Workspace",
                 "endpointId": "subpackage_workspace.UpdateWorkspace",
@@ -433,7 +434,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.platform-api-reference.subpackage_workspace.subpackage_workspace.DeleteWorkspace",
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.DeleteWorkspace",
                 "type": "endpoint",
                 "title": "Delete Workspace",
                 "endpointId": "subpackage_workspace.DeleteWorkspace",
@@ -452,7 +453,7 @@
         "pointsTo": "docs/api/platform-api-reference/organization/list-organizations"
       },
       {
-        "id": "root.iam-api-reference",
+        "id": "root.uv.iam-api-reference",
         "type": "apiReference",
         "title": "IAM API Reference",
         "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
@@ -460,28 +461,28 @@
         "hidden": false,
         "showErrors": false,
         "changelog": {
-          "id": "root.iam-api-reference.log",
+          "id": "root.uv.iam-api-reference.log",
           "type": "changelog",
           "title": "Changelog",
           "slug": "docs/api/iam-api-reference/changelog",
           "hidden": false,
           "children": [
             {
-              "id": "root.iam-api-reference.log.2024",
+              "id": "root.uv.iam-api-reference.log.2024",
               "type": "changelogYear",
               "title": "2024",
               "year": 2024,
               "slug": "docs/api/iam-api-reference/changelog/2024",
               "children": [
                 {
-                  "id": "root.iam-api-reference.log.2024.4",
+                  "id": "root.uv.iam-api-reference.log.2024.4",
                   "type": "changelogMonth",
                   "title": "April 1900",
                   "month": 4,
                   "slug": "docs/api/iam-api-reference/changelog/2024/4",
                   "children": [
                     {
-                      "id": "root.iam-api-reference.log.2024-4-11",
+                      "id": "root.uv.iam-api-reference.log.2024-4-11",
                       "type": "changelogEntry",
                       "title": "April 11, 2024",
                       "date": "2024-04-12T00:00:00.000Z",
@@ -496,11 +497,11 @@
         },
         "children": [
           {
-            "id": "root.iam-api-reference.subpackage_authorization",
+            "id": "root.uv.iam-api-reference.subpackage_authorization",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.iam-api-reference.subpackage_authorization.subpackage_authorization.ListPermissionGroups",
+                "id": "root.uv.iam-api-reference.subpackage_authorization.subpackage_authorization.ListPermissionGroups",
                 "type": "endpoint",
                 "title": "List authorization permission groups",
                 "endpointId": "subpackage_authorization.ListPermissionGroups",
@@ -516,11 +517,11 @@
             "pointsTo": "docs/api/iam-api-reference/authorization/list-permission-groups"
           },
           {
-            "id": "root.iam-api-reference.subpackage_invite",
+            "id": "root.uv.iam-api-reference.subpackage_invite",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.iam-api-reference.subpackage_invite.subpackage_invite.CreateUserInvite",
+                "id": "root.uv.iam-api-reference.subpackage_invite.subpackage_invite.CreateUserInvite",
                 "type": "endpoint",
                 "title": "Create a user invitation",
                 "endpointId": "subpackage_invite.CreateUserInvite",
@@ -530,7 +531,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_invite.subpackage_invite.DeleteUserInvite",
+                "id": "root.uv.iam-api-reference.subpackage_invite.subpackage_invite.DeleteUserInvite",
                 "type": "endpoint",
                 "title": "Delete a user invite",
                 "endpointId": "subpackage_invite.DeleteUserInvite",
@@ -546,11 +547,11 @@
             "pointsTo": "docs/api/iam-api-reference/invite/create-user-invite"
           },
           {
-            "id": "root.iam-api-reference.subpackage_role",
+            "id": "root.uv.iam-api-reference.subpackage_role",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.iam-api-reference.subpackage_role.subpackage_role.ListRoleTemplates",
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoleTemplates",
                 "type": "endpoint",
                 "title": "Get role templates",
                 "endpointId": "subpackage_role.ListRoleTemplates",
@@ -560,7 +561,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_role.subpackage_role.ListRoles",
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoles",
                 "type": "endpoint",
                 "title": "List roles",
                 "endpointId": "subpackage_role.ListRoles",
@@ -570,7 +571,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_role.subpackage_role.CreateCustomRole",
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.CreateCustomRole",
                 "type": "endpoint",
                 "title": "Create a custom role",
                 "endpointId": "subpackage_role.CreateCustomRole",
@@ -580,7 +581,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_role.subpackage_role.UpdateCustomRole",
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.UpdateCustomRole",
                 "type": "endpoint",
                 "title": "Update custom role",
                 "endpointId": "subpackage_role.UpdateCustomRole",
@@ -590,7 +591,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_role.subpackage_role.DeleteCustomRole",
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.DeleteCustomRole",
                 "type": "endpoint",
                 "title": "Delete a custom role",
                 "endpointId": "subpackage_role.DeleteCustomRole",
@@ -600,7 +601,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_role.subpackage_role.GetCustomRole",
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.GetCustomRole",
                 "type": "endpoint",
                 "title": "Get a custom role",
                 "endpointId": "subpackage_role.GetCustomRole",
@@ -616,11 +617,11 @@
             "pointsTo": "docs/api/iam-api-reference/role/list-role-templates"
           },
           {
-            "id": "root.iam-api-reference.subpackage_team",
+            "id": "root.uv.iam-api-reference.subpackage_team",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.ListTeams",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeams",
                 "type": "endpoint",
                 "title": "List Teams",
                 "endpointId": "subpackage_team.ListTeams",
@@ -630,7 +631,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.CreateTeam",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.CreateTeam",
                 "type": "endpoint",
                 "title": "Create a Team",
                 "endpointId": "subpackage_team.CreateTeam",
@@ -640,7 +641,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.GetTeam",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.GetTeam",
                 "type": "endpoint",
                 "title": "Get a Team",
                 "endpointId": "subpackage_team.GetTeam",
@@ -650,7 +651,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.UpdateTeam",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.UpdateTeam",
                 "type": "endpoint",
                 "title": "Update a Team",
                 "endpointId": "subpackage_team.UpdateTeam",
@@ -660,7 +661,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.DeleteTeam",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.DeleteTeam",
                 "type": "endpoint",
                 "title": "Delete a Team",
                 "endpointId": "subpackage_team.DeleteTeam",
@@ -670,7 +671,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.ListTeamMembers",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeamMembers",
                 "type": "endpoint",
                 "title": "List Team members",
                 "endpointId": "subpackage_team.ListTeamMembers",
@@ -680,7 +681,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.AddTeamMembers",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.AddTeamMembers",
                 "type": "endpoint",
                 "title": "Add members to a team",
                 "endpointId": "subpackage_team.AddTeamMembers",
@@ -690,7 +691,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.RemoveTeamMember",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.RemoveTeamMember",
                 "type": "endpoint",
                 "title": "Remove Team member",
                 "endpointId": "subpackage_team.RemoveTeamMember",
@@ -700,7 +701,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_team.subpackage_team.UpdateTeamRoles",
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.UpdateTeamRoles",
                 "type": "endpoint",
                 "title": "Update Team roles",
                 "endpointId": "subpackage_team.UpdateTeamRoles",
@@ -716,11 +717,11 @@
             "pointsTo": "docs/api/iam-api-reference/team/list-teams"
           },
           {
-            "id": "root.iam-api-reference.subpackage_apiToken",
+            "id": "root.uv.iam-api-reference.subpackage_apiToken",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.ListApiTokens",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.ListApiTokens",
                 "type": "endpoint",
                 "title": "List API tokens",
                 "endpointId": "subpackage_apiToken.ListApiTokens",
@@ -730,7 +731,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.CreateApiToken",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.CreateApiToken",
                 "type": "endpoint",
                 "title": "Create an API token",
                 "endpointId": "subpackage_apiToken.CreateApiToken",
@@ -740,7 +741,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.GetApiToken",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.GetApiToken",
                 "type": "endpoint",
                 "title": "Get an API token",
                 "endpointId": "subpackage_apiToken.GetApiToken",
@@ -750,7 +751,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiToken",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiToken",
                 "type": "endpoint",
                 "title": "Update an API token",
                 "endpointId": "subpackage_apiToken.UpdateApiToken",
@@ -760,7 +761,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.DeleteApiToken",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.DeleteApiToken",
                 "type": "endpoint",
                 "title": "Delete an API token",
                 "endpointId": "subpackage_apiToken.DeleteApiToken",
@@ -770,7 +771,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiTokenRoles",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiTokenRoles",
                 "type": "endpoint",
                 "title": "Update API token roles",
                 "endpointId": "subpackage_apiToken.UpdateApiTokenRoles",
@@ -780,7 +781,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_apiToken.subpackage_apiToken.RotateApiToken",
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.RotateApiToken",
                 "type": "endpoint",
                 "title": "Rotate API token",
                 "endpointId": "subpackage_apiToken.RotateApiToken",
@@ -796,11 +797,11 @@
             "pointsTo": "docs/api/iam-api-reference/api-token/list-api-tokens"
           },
           {
-            "id": "root.iam-api-reference.subpackage_user",
+            "id": "root.uv.iam-api-reference.subpackage_user",
             "type": "apiSection",
             "children": [
               {
-                "id": "root.iam-api-reference.subpackage_user.subpackage_user.ListUsers",
+                "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.ListUsers",
                 "type": "endpoint",
                 "title": "List users in an Organization",
                 "endpointId": "subpackage_user.ListUsers",
@@ -810,7 +811,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_user.subpackage_user.GetUser",
+                "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.GetUser",
                 "type": "endpoint",
                 "title": "Get user information",
                 "endpointId": "subpackage_user.GetUser",
@@ -820,7 +821,7 @@
                 "isResponseStream": false
               },
               {
-                "id": "root.iam-api-reference.subpackage_user.subpackage_user.UpdateUserRoles",
+                "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.UpdateUserRoles",
                 "type": "endpoint",
                 "title": "Update a user's roles",
                 "endpointId": "subpackage_user.UpdateUserRoles",

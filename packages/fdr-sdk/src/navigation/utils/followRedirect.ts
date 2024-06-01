@@ -1,12 +1,12 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { FernNavigation } from "../generated";
 import { NavigationNode } from "../types/NavigationNode";
-import { visitNavigationNode } from "../visitors";
 
 export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNavigation.Slug | undefined {
     if (nodeToFollow == null) {
         return undefined;
     }
-    return visitNavigationNode<FernNavigation.Slug | undefined>(nodeToFollow, {
+    return visitDiscriminatedUnion(nodeToFollow)._visit<FernNavigation.Slug | undefined>({
         link: () => undefined,
 
         // leaf nodes

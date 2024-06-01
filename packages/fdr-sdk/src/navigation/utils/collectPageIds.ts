@@ -1,14 +1,13 @@
 import { FernNavigation } from "../generated";
+import { isPage } from "../types";
 import { NavigationNode } from "../types/NavigationNode";
-import { traverseNavigation } from "../visitors/traverseNavigation";
 import { getPageId } from "./getPageId";
-import { nodeHasContent } from "./nodeHasContent";
-import { nodeHasMetadata } from "./nodeHasMetadata";
+import { traverseNavigation } from "./traverseNavigation";
 
 export function collectPageIds(nav: NavigationNode): Set<FernNavigation.PageId> {
     const pageIds = new Set<FernNavigation.PageId>();
     traverseNavigation(nav, (node) => {
-        if (nodeHasMetadata(node) && nodeHasContent(node)) {
+        if (isPage(node)) {
             const pageId = getPageId(node);
             if (pageId != null) {
                 pageIds.add(pageId);

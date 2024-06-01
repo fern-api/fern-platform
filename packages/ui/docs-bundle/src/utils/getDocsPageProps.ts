@@ -1,5 +1,6 @@
 import { DocsV2Read, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
@@ -174,7 +175,7 @@ async function convertDocsToDocsPageProps({
             return {
                 type: "redirect",
                 redirect: {
-                    destination: encodeURI(urljoin("/", ...node.redirect)),
+                    destination: encodeURI(urljoin("/", node.redirect)),
                     permanent: false,
                 },
             };
@@ -186,7 +187,7 @@ async function convertDocsToDocsPageProps({
         return {
             type: "redirect",
             redirect: {
-                destination: encodeURI(urljoin("/", ...node.redirect)),
+                destination: encodeURI(urljoin("/", node.redirect)),
                 permanent: false,
             },
         };
@@ -206,16 +207,6 @@ async function convertDocsToDocsPageProps({
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
         return { type: "notFound", notFound: true };
-    }
-
-    if (resolvedPath.type === "redirect") {
-        return {
-            type: "redirect",
-            redirect: {
-                destination: encodeURI(urljoin("/", resolvedPath.fullSlug)),
-                permanent: false,
-            },
-        };
     }
 
     const props: DocsPage.Props = {
@@ -249,13 +240,13 @@ async function convertDocsToDocsPageProps({
         navigation: {
             currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
             tabs: node.tabs.map((tab, index) =>
-                FernNavigation.visitTabChild<SidebarTab>(tab, {
+                visitDiscriminatedUnion(tab)._visit<SidebarTab>({
                     tab: (tab) => ({
                         type: "tabGroup",
                         title: tab.title,
                         icon: tab.icon,
                         index,
-                        slug: tab.slug.split("/"),
+                        slug: tab.slug,
                     }),
                     link: (link) => ({
                         type: "tabLink",
@@ -269,14 +260,14 @@ async function convertDocsToDocsPageProps({
                         title: changelog.title,
                         icon: changelog.icon,
                         index,
-                        slug: changelog.slug.split("/"),
+                        slug: changelog.slug,
                     }),
                 }),
             ),
             currentVersionIndex: node.currentVersion == null ? undefined : node.versions.indexOf(node.currentVersion),
             versions: node.versions.map((version, index) => ({
                 id: version.versionId,
-                slug: version.slug.split("/"),
+                slug: version.slug,
                 index,
                 availability: version.availability,
             })),

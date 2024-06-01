@@ -1,23 +1,23 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
 import urljoin from "url-join";
-import { SlugCollector } from "../SlugCollector";
+import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";
 import {
-    NavigationLeafNode,
     NavigationNode,
-    NavigationNodeWithContent,
+    NavigationNodeNeighbor,
+    NavigationNodePage,
     NavigationNodeWithMetadata,
-} from "../types/NavigationNode";
-import { visitNavigationNodeWithMetadata } from "../visitors";
-import { nodeHasContent } from "./nodeHasContent";
-import { nodeHasMetadata } from "./nodeHasMetadata";
+    hasMetadata,
+    isPage,
+} from "../types";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
 export declare namespace Node {
     interface Found {
         type: "found";
-        node: NavigationLeafNode;
+        node: NavigationNodePage;
         breadcrumb: string[];
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
@@ -26,8 +26,8 @@ export declare namespace Node {
         tabs: FernNavigation.TabChild[];
         sidebar: FernNavigation.SidebarRootNode;
         apiReference: FernNavigation.ApiReferenceNode | undefined;
-        next: NavigationNodeWithContent | undefined;
-        prev: NavigationNodeWithContent | undefined;
+        next: NavigationNodeNeighbor | undefined;
+        prev: NavigationNodeNeighbor | undefined;
     }
 
     interface Redirect {
@@ -43,7 +43,7 @@ export declare namespace Node {
 
 export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
     const slugToFind = urljoin(slug);
-    const collector = SlugCollector.collect(root);
+    const collector = NodeCollector.collect(root);
     const map = collector.getSlugMapWithParents();
     const found = map.get(slugToFind);
     if (found == null) {
@@ -61,13 +61,7 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
 
     const sidebar = found.parents.find((node): node is FernNavigation.SidebarRootNode => node.type === "sidebarRoot");
     const version = found.parents.find((node): node is FernNavigation.VersionNode => node.type === "version");
-    if (
-        (nodeHasContent(found.node) ||
-            found.node.type === "changelog" ||
-            found.node.type === "changelogYear" ||
-            found.node.type === "changelogMonth") &&
-        sidebar != null
-    ) {
+    if (isPage(found.node) && sidebar != null) {
         const rootChild = (version ?? root).child;
         return {
             type: "found",
@@ -105,10 +99,10 @@ function hasPointsTo(
 function createBreadcrumb(nodes: NavigationNode[]): string[] {
     const breadcrumb: string[] = [];
     nodes.forEach((node) => {
-        if (!nodeHasMetadata(node)) {
+        if (!hasMetadata(node)) {
             return;
         }
-        visitNavigationNodeWithMetadata(node, {
+        visitDiscriminatedUnion(node)._visit({
             root: noop,
             version: noop,
             tab: noop,

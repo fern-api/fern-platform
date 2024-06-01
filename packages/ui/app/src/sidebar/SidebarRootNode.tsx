@@ -49,7 +49,7 @@ interface NavigationChildProps {
 }
 
 export function NavigationChild({ node, depth }: NavigationChildProps): React.ReactElement {
-    return FernNavigation.visitNavigationChild(node, {
+    return visitDiscriminatedUnion(node)._visit({
         apiReference: (apiRef) => <ApiReferenceNode node={apiRef} depth={depth} />,
         section: (section) => <SectionNode node={section} depth={depth} />,
         page: (page) => <PageNode node={page} depth={depth} />,

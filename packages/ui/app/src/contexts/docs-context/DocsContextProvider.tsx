@@ -1,4 +1,4 @@
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read, NodeCollector } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";
@@ -66,6 +66,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             currentVersionIndex,
             versions,
             sidebar,
+            nodes: NodeCollector.collect(sidebar),
             searchInfo,
             navbarLinks,
             apis,

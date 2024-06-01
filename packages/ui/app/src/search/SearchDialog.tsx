@@ -175,7 +175,7 @@ function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode): strin
 
 function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
     let hasGuides = false;
-    FernNavigation.traverseNavigation(sidebar, (node) => {
+    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
         if (node.type === "page") {
             hasGuides = true;
             return false;
@@ -190,7 +190,7 @@ function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
 
 function checkHasEndpoints(sidebar: FernNavigation.SidebarRootNode): boolean {
     let hasEndpoints = false;
-    FernNavigation.traverseNavigation(sidebar, (node) => {
+    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
         if (node.type === "apiReference") {
             hasEndpoints = true;
             return false;

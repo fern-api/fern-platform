@@ -2,19 +2,21 @@
   "id": "root",
   "type": "root",
   "child": {
+    "id": "root.uv",
     "type": "tabbed",
     "children": [
       {
-        "id": "root.documentation",
+        "id": "root.uv.documentation",
         "type": "tab",
         "title": "Documentation",
         "slug": "docs/documentation",
         "hidden": false,
         "child": {
+          "id": "root.uv.documentation.documentation",
           "type": "sidebarRoot",
           "children": [
             {
-              "id": "root.documentation.quickstart",
+              "id": "root.uv.documentation.documentation.quickstart",
               "type": "section",
               "collapsed": false,
               "title": "Quickstart",
@@ -22,7 +24,7 @@
               "slug": "docs/documentation/quickstart",
               "children": [
                 {
-                  "id": "root.documentation.quickstart.quickstart",
+                  "id": "root.uv.documentation.documentation.quickstart.quickstart",
                   "type": "page",
                   "pageId": "docs/getting-started/quickstart.mdx",
                   "title": "Quickstart",
@@ -30,7 +32,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.quickstart.pricing-billing",
+                  "id": "root.uv.documentation.documentation.quickstart.pricing-billing",
                   "type": "page",
                   "pageId": "docs/getting-started/pricing-and-billing.mdx",
                   "title": "Pricing & billing",
@@ -38,7 +40,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.quickstart.text-gen-rest-api",
+                  "id": "root.uv.documentation.documentation.quickstart.text-gen-rest-api",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/rest-api.mdx",
                   "title": "Text Gen REST API",
@@ -46,7 +48,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.quickstart.migrate-from-open-ai-to-octo-ai-in-3-lines-of-code",
+                  "id": "root.uv.documentation.documentation.quickstart.migrate-from-open-ai-to-octo-ai-in-3-lines-of-code",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/migration-from-openai.mdx",
                   "title": "Migrate from OpenAI to OctoAI in 3 lines of code",
@@ -54,7 +56,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.quickstart.media-gen-rest-ap-is",
+                  "id": "root.uv.documentation.documentation.quickstart.media-gen-rest-ap-is",
                   "type": "section",
                   "collapsed": false,
                   "title": "Media Gen REST APIs",
@@ -62,7 +64,7 @@
                   "slug": "docs/documentation/quickstart/media-gen-rest-ap-is",
                   "children": [
                     {
-                      "id": "root.documentation.quickstart.media-gen-rest-ap-is.image-gen",
+                      "id": "root.uv.documentation.documentation.quickstart.media-gen-rest-ap-is.image-gen",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/rest-apis/image-gen-api.mdx",
                       "title": "Image Gen",
@@ -70,7 +72,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.quickstart.media-gen-rest-ap-is.video-gen",
+                      "id": "root.uv.documentation.documentation.quickstart.media-gen-rest-ap-is.video-gen",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/rest-apis/video-gen.mdx",
                       "title": "Video Gen",
@@ -78,7 +80,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.quickstart.media-gen-rest-ap-is.background-removal",
+                      "id": "root.uv.documentation.documentation.quickstart.media-gen-rest-ap-is.background-removal",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/rest-apis/background-removal.mdx",
                       "title": "Background Removal",
@@ -86,7 +88,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.quickstart.media-gen-rest-ap-is.upscaling",
+                      "id": "root.uv.documentation.documentation.quickstart.media-gen-rest-ap-is.upscaling",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/rest-apis/upscaling.mdx",
                       "title": "Upscaling",
@@ -94,7 +96,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.quickstart.media-gen-rest-ap-is.adetailer",
+                      "id": "root.uv.documentation.documentation.quickstart.media-gen-rest-ap-is.adetailer",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/rest-apis/adetailer.mdx",
                       "title": "Adetailer",
@@ -105,7 +107,7 @@
                   "pointsTo": "docs/media-gen-solution/rest-apis/image-gen-api"
                 },
                 {
-                  "id": "root.documentation.quickstart.inference-models",
+                  "id": "root.uv.documentation.documentation.quickstart.inference-models",
                   "type": "page",
                   "pageId": "docs/getting-started/inference-models.mdx",
                   "title": "Inference models",
@@ -113,7 +115,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.quickstart.create-an-api-token",
+                  "id": "root.uv.documentation.documentation.quickstart.create-an-api-token",
                   "type": "page",
                   "pageId": "docs/getting-started/how-to-create-an-octoai-access-token.mdx",
                   "title": "Create an API token",
@@ -124,7 +126,7 @@
               "pointsTo": "docs/getting-started/quickstart"
             },
             {
-              "id": "root.documentation.text-gen-solution",
+              "id": "root.uv.documentation.documentation.text-gen-solution",
               "type": "section",
               "collapsed": false,
               "title": "Text Gen Solution",
@@ -132,7 +134,7 @@
               "slug": "docs/documentation/text-gen-solution",
               "children": [
                 {
-                  "id": "root.documentation.text-gen-solution.getting-started",
+                  "id": "root.uv.documentation.documentation.text-gen-solution.getting-started",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/getting-started.mdx",
                   "title": "Getting started",
@@ -140,7 +142,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.text-gen-solution.text-gen-python-sdk",
+                  "id": "root.uv.documentation.documentation.text-gen-solution.text-gen-python-sdk",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/python-sdk.mdx",
                   "title": "Text Gen Python SDK",
@@ -148,7 +150,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.text-gen-solution.text-gen-type-script-sdk",
+                  "id": "root.uv.documentation.documentation.text-gen-solution.text-gen-type-script-sdk",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/typescript-sdk.mdx",
                   "title": "Text Gen TypeScript SDK",
@@ -156,7 +158,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.text-gen-solution.using-json-mode-with-text-gen-endpoints",
+                  "id": "root.uv.documentation.documentation.text-gen-solution.using-json-mode-with-text-gen-endpoints",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/json-mode.mdx",
                   "title": "Using JSON mode with Text Gen endpoints",
@@ -164,7 +166,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.text-gen-solution.using-llama-guard-to-moderate-text",
+                  "id": "root.uv.documentation.documentation.text-gen-solution.using-llama-guard-to-moderate-text",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/llama-guard.mdx",
                   "title": "Using Llama Guard to moderate text",
@@ -172,7 +174,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.text-gen-solution.using-unstructured-io-for-embedding-documents",
+                  "id": "root.uv.documentation.documentation.text-gen-solution.using-unstructured-io-for-embedding-documents",
                   "type": "page",
                   "pageId": "docs/text-gen-solution/using-unstructured-io-for-embedding-documents.mdx",
                   "title": "Using Unstructured.io for embedding documents",
@@ -183,7 +185,7 @@
               "pointsTo": "docs/text-gen-solution/getting-started"
             },
             {
-              "id": "root.documentation.media-gen-solution",
+              "id": "root.uv.documentation.documentation.media-gen-solution",
               "type": "section",
               "collapsed": false,
               "title": "Media Gen Solution",
@@ -191,7 +193,7 @@
               "slug": "docs/documentation/media-gen-solution",
               "children": [
                 {
-                  "id": "root.documentation.media-gen-solution.getting-started",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.getting-started",
                   "type": "page",
                   "pageId": "docs/media-gen-solution/getting-started.mdx",
                   "title": "Getting started",
@@ -199,7 +201,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.media-gen-solution.customizations",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.customizations",
                   "type": "section",
                   "collapsed": false,
                   "title": "Customizations",
@@ -207,7 +209,7 @@
                   "slug": "docs/documentation/media-gen-solution/customizations",
                   "children": [
                     {
-                      "id": "root.documentation.media-gen-solution.customizations.overview",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.customizations.overview",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/customizations/overview.mdx",
                       "title": "Overview",
@@ -215,7 +217,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.customizations.checkpoints",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.customizations.checkpoints",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/customizations/checkpoints.mdx",
                       "title": "Checkpoints",
@@ -223,7 +225,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.customizations.lo-r-as",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.customizations.lo-r-as",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/customizations/loras.mdx",
                       "title": "LoRAs",
@@ -231,7 +233,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.customizations.textual-inversions",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.customizations.textual-inversions",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/customizations/textual-inversions.mdx",
                       "title": "Textual Inversions",
@@ -239,7 +241,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.customizations.prompt-weighting",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.customizations.prompt-weighting",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/customizations/prompt-weighting.mdx",
                       "title": "Prompt Weighting",
@@ -247,7 +249,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.customizations.control-nets",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.customizations.control-nets",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/customizations/controlnets.mdx",
                       "title": "ControlNets",
@@ -258,7 +260,7 @@
                   "pointsTo": "docs/media-gen-solution/customizations/overview"
                 },
                 {
-                  "id": "root.documentation.media-gen-solution.optimizations",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.optimizations",
                   "type": "section",
                   "collapsed": false,
                   "title": "Optimizations",
@@ -266,7 +268,7 @@
                   "slug": "docs/documentation/media-gen-solution/optimizations",
                   "children": [
                     {
-                      "id": "root.documentation.media-gen-solution.optimizations.sdxl-lighting",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.optimizations.sdxl-lighting",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/optimizations/sdxl-lighting.mdx",
                       "title": "SDXL Lighting",
@@ -274,7 +276,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.optimizations.ssd",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.optimizations.ssd",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/optimizations/ssd.mdx",
                       "title": "SSD",
@@ -282,7 +284,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.optimizations.samplers",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.optimizations.samplers",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/optimizations/samplers.mdx",
                       "title": "Samplers",
@@ -293,7 +295,7 @@
                   "pointsTo": "docs/media-gen-solution/optimizations/sdxl-lighting"
                 },
                 {
-                  "id": "root.documentation.media-gen-solution.image-generator-python-client",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.image-generator-python-client",
                   "type": "page",
                   "pageId": "docs/python-sdk/image-generator-client.mdx",
                   "title": "Image Generator Python client",
@@ -301,7 +303,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.media-gen-solution.fine-tuning-stable-diffusion",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.fine-tuning-stable-diffusion",
                   "type": "section",
                   "collapsed": false,
                   "title": "Fine-tuning Stable Diffusion",
@@ -309,7 +311,7 @@
                   "slug": "docs/documentation/media-gen-solution/fine-tuning-stable-diffusion",
                   "children": [
                     {
-                      "id": "root.documentation.media-gen-solution.fine-tuning-stable-diffusion.overview",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.fine-tuning-stable-diffusion.overview",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/fine-tuning-stable-diffusion/fine-tuning-stable-diffusion.mdx",
                       "title": "Overview",
@@ -317,7 +319,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.fine-tuning-stable-diffusion.type-script-sdk",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.fine-tuning-stable-diffusion.type-script-sdk",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/fine-tuning-stable-diffusion/typescript-sdk-finetuning.mdx",
                       "title": "TypeScript SDK",
@@ -328,7 +330,7 @@
                   "pointsTo": "docs/media-gen-solution/fine-tuning-stable-diffusion/fine-tuning-stable-diffusion"
                 },
                 {
-                  "id": "root.documentation.media-gen-solution.managing-custom-assets-with-asset-library",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.managing-custom-assets-with-asset-library",
                   "type": "section",
                   "collapsed": false,
                   "title": "Managing custom assets with Asset Library",
@@ -336,7 +338,7 @@
                   "slug": "docs/documentation/media-gen-solution/managing-custom-assets-with-asset-library",
                   "children": [
                     {
-                      "id": "root.documentation.media-gen-solution.managing-custom-assets-with-asset-library.uploading-custom-assets",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.managing-custom-assets-with-asset-library.uploading-custom-assets",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/uploading-a-custom-asset-to-the-octoai-asset-library.mdx",
                       "title": "Uploading custom assets",
@@ -344,7 +346,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.managing-custom-assets-with-asset-library.asset-library-python-client",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.managing-custom-assets-with-asset-library.asset-library-python-client",
                       "type": "page",
                       "pageId": "docs/python-sdk/asset-orchestrator-client.mdx",
                       "title": "Asset Library Python client",
@@ -352,7 +354,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.managing-custom-assets-with-asset-library.asset-library-type-script-client",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.managing-custom-assets-with-asset-library.asset-library-type-script-client",
                       "type": "page",
                       "pageId": "docs/typescript-sdk/asset-library.mdx",
                       "title": "Asset Library TypeScript client",
@@ -363,7 +365,7 @@
                   "pointsTo": "docs/media-gen-solution/uploading-a-custom-asset-to-the-octoai-asset-library"
                 },
                 {
-                  "id": "root.documentation.media-gen-solution.supported-image-utilities",
+                  "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities",
                   "type": "section",
                   "collapsed": false,
                   "title": "Supported image utilities",
@@ -371,7 +373,7 @@
                   "slug": "docs/documentation/media-gen-solution/supported-image-utilities",
                   "children": [
                     {
-                      "id": "root.documentation.media-gen-solution.supported-image-utilities.inpainting",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities.inpainting",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/image-utilities/inpainting.mdx",
                       "title": "Inpainting",
@@ -379,7 +381,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.supported-image-utilities.outpainting",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities.outpainting",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/image-utilities/outpainting.mdx",
                       "title": "Outpainting",
@@ -387,7 +389,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.supported-image-utilities.adetailer",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities.adetailer",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/image-utilities/adetailer.mdx",
                       "title": "Adetailer",
@@ -395,7 +397,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.supported-image-utilities.photo-merge",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities.photo-merge",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/image-utilities/photo-merge.mdx",
                       "title": "Photo Merge",
@@ -403,7 +405,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.supported-image-utilities.upscaling",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities.upscaling",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/image-utilities/upscaling.mdx",
                       "title": "Upscaling",
@@ -411,7 +413,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.media-gen-solution.supported-image-utilities.background-removal",
+                      "id": "root.uv.documentation.documentation.media-gen-solution.supported-image-utilities.background-removal",
                       "type": "page",
                       "pageId": "docs/media-gen-solution/image-utilities/bg-removal.mdx",
                       "title": "Background Removal",
@@ -425,7 +427,7 @@
               "pointsTo": "docs/media-gen-solution/getting-started"
             },
             {
-              "id": "root.documentation.private-deployment",
+              "id": "root.uv.documentation.documentation.private-deployment",
               "type": "section",
               "collapsed": false,
               "title": "Private Deployment",
@@ -433,7 +435,7 @@
               "slug": "docs/documentation/private-deployment",
               "children": [
                 {
-                  "id": "root.documentation.private-deployment.octo-stack",
+                  "id": "root.uv.documentation.documentation.private-deployment.octo-stack",
                   "type": "page",
                   "pageId": "docs/private-deployment/octostack.mdx",
                   "title": "OctoStack",
@@ -441,7 +443,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.documentation.private-deployment.secure-link-guide",
+                  "id": "root.uv.documentation.documentation.private-deployment.secure-link-guide",
                   "type": "page",
                   "pageId": "docs/private-deployment/secure-link.mdx",
                   "title": "SecureLink guide",
@@ -452,10 +454,11 @@
               "pointsTo": "docs/private-deployment/octostack"
             },
             {
+              "id": "root.uv.documentation.documentation.group",
               "type": "sidebarGroup",
               "children": [
                 {
-                  "id": "root.documentation.compute-service",
+                  "id": "root.uv.documentation.documentation.compute-service",
                   "type": "section",
                   "collapsed": true,
                   "title": "Compute Service",
@@ -463,7 +466,7 @@
                   "slug": "docs/documentation/compute-service",
                   "children": [
                     {
-                      "id": "root.documentation.compute-service.getting-started",
+                      "id": "root.uv.documentation.documentation.compute-service.getting-started",
                       "type": "page",
                       "pageId": "docs/compute-service/compute-getting-started.mdx",
                       "title": "Getting started",
@@ -471,7 +474,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.compute-service.create-an-endpoint-from-an-existing-container",
+                      "id": "root.uv.documentation.documentation.compute-service.create-an-endpoint-from-an-existing-container",
                       "type": "section",
                       "collapsed": false,
                       "title": "Create an endpoint from an existing container",
@@ -479,7 +482,7 @@
                       "slug": "docs/documentation/compute-service/create-an-endpoint-from-an-existing-container",
                       "children": [
                         {
-                          "id": "root.documentation.compute-service.create-an-endpoint-from-an-existing-container.overview",
+                          "id": "root.uv.documentation.documentation.compute-service.create-an-endpoint-from-an-existing-container.overview",
                           "type": "page",
                           "pageId": "docs/compute-service/create-endpoint-from-existing-container/create-custom-endpoints-from-a-container.mdx",
                           "title": "Overview",
@@ -487,7 +490,7 @@
                           "hidden": false
                         },
                         {
-                          "id": "root.documentation.compute-service.create-an-endpoint-from-an-existing-container.pulling-containers-from-a-private-registry",
+                          "id": "root.uv.documentation.documentation.compute-service.create-an-endpoint-from-an-existing-container.pulling-containers-from-a-private-registry",
                           "type": "page",
                           "pageId": "docs/compute-service/create-endpoint-from-existing-container/pulling-containers-from-a-private-registry.mdx",
                           "title": "Pulling containers from a private registry",
@@ -495,7 +498,7 @@
                           "hidden": false
                         },
                         {
-                          "id": "root.documentation.compute-service.create-an-endpoint-from-an-existing-container.setting-up-account-wide-secrets-for-your-custom-endpoints",
+                          "id": "root.uv.documentation.documentation.compute-service.create-an-endpoint-from-an-existing-container.setting-up-account-wide-secrets-for-your-custom-endpoints",
                           "type": "page",
                           "pageId": "docs/compute-service/create-endpoint-from-existing-container/setting-account-wide-secrets-for-custom-endpoints.mdx",
                           "title": "Setting up account-wide secrets for your custom endpoints",
@@ -506,7 +509,7 @@
                       "pointsTo": "docs/compute-service/create-endpoint-from-existing-container/create-custom-endpoints-from-a-container"
                     },
                     {
-                      "id": "root.documentation.compute-service.create-a-container-and-endpoint-using-the-cli",
+                      "id": "root.uv.documentation.documentation.compute-service.create-a-container-and-endpoint-using-the-cli",
                       "type": "page",
                       "pageId": "docs/compute-service/create-custom-endpoint-using-the-cli.mdx",
                       "title": "Create a container and endpoint using the CLI",
@@ -514,7 +517,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.compute-service.advanced-build-a-container-from-scratch-in-python",
+                      "id": "root.uv.documentation.documentation.compute-service.advanced-build-a-container-from-scratch-in-python",
                       "type": "page",
                       "pageId": "docs/compute-service/advanced-build-a-container-from-scratch-in-python.mdx",
                       "title": "Advanced: build a container from scratch in Python",
@@ -522,7 +525,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.compute-service.healthcheck-path-in-custom-containers",
+                      "id": "root.uv.documentation.documentation.compute-service.healthcheck-path-in-custom-containers",
                       "type": "page",
                       "pageId": "docs/compute-service/health-check-path-in-custom-containers.mdx",
                       "title": "Healthcheck path in custom containers",
@@ -533,7 +536,7 @@
                   "pointsTo": "docs/compute-service/compute-getting-started"
                 },
                 {
-                  "id": "root.documentation.cli",
+                  "id": "root.uv.documentation.documentation.cli",
                   "type": "section",
                   "collapsed": true,
                   "title": "CLI",
@@ -541,7 +544,7 @@
                   "slug": "docs/documentation/cli",
                   "children": [
                     {
-                      "id": "root.documentation.cli.cli-installation",
+                      "id": "root.uv.documentation.documentation.cli.cli-installation",
                       "type": "page",
                       "pageId": "docs/cli/cli-and-sdk-installation.mdx",
                       "title": "CLI installation",
@@ -549,7 +552,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.cli.cli-reference",
+                      "id": "root.uv.documentation.documentation.cli.cli-reference",
                       "type": "page",
                       "pageId": "docs/cli/cli-reference-guide.mdx",
                       "title": "CLI reference",
@@ -560,7 +563,7 @@
                   "pointsTo": "docs/cli/cli-and-sdk-installation"
                 },
                 {
-                  "id": "root.documentation.python-sdk",
+                  "id": "root.uv.documentation.documentation.python-sdk",
                   "type": "section",
                   "collapsed": true,
                   "title": "Python SDK",
@@ -568,7 +571,7 @@
                   "slug": "docs/documentation/python-sdk",
                   "children": [
                     {
-                      "id": "root.documentation.python-sdk.python-sdk-installation",
+                      "id": "root.uv.documentation.documentation.python-sdk.python-sdk-installation",
                       "type": "page",
                       "pageId": "docs/python-sdk/installation-and-setup.mdx",
                       "title": "Python SDK installation",
@@ -576,7 +579,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.python-sdk.python-sdk-inference",
+                      "id": "root.uv.documentation.documentation.python-sdk.python-sdk-inference",
                       "type": "page",
                       "pageId": "docs/python-sdk/python-sdk-inferences.mdx",
                       "title": "Python SDK inference",
@@ -584,7 +587,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.python-sdk.upgrading-from-octoai-sdk",
+                      "id": "root.uv.documentation.documentation.python-sdk.upgrading-from-octoai-sdk",
                       "type": "page",
                       "pageId": "docs/python-sdk/upgrading-from-old-sdk.mdx",
                       "title": "Upgrading from octoai-sdk",
@@ -595,7 +598,7 @@
                   "pointsTo": "docs/python-sdk/installation-and-setup"
                 },
                 {
-                  "id": "root.documentation.type-script-sdk",
+                  "id": "root.uv.documentation.documentation.type-script-sdk",
                   "type": "section",
                   "collapsed": true,
                   "title": "TypeScript SDK",
@@ -603,7 +606,7 @@
                   "slug": "docs/documentation/type-script-sdk",
                   "children": [
                     {
-                      "id": "root.documentation.type-script-sdk.type-script-sdk-installation",
+                      "id": "root.uv.documentation.documentation.type-script-sdk.type-script-sdk-installation",
                       "type": "page",
                       "pageId": "docs/typescript-sdk/installation-and-setup.mdx",
                       "title": "TypeScript SDK installation",
@@ -611,7 +614,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.type-script-sdk.upgrading-from-octoai-client",
+                      "id": "root.uv.documentation.documentation.type-script-sdk.upgrading-from-octoai-client",
                       "type": "page",
                       "pageId": "docs/typescript-sdk/upgrading-from-old-sdk.mdx",
                       "title": "Upgrading from @octoai/client",
@@ -622,7 +625,7 @@
                   "pointsTo": "docs/typescript-sdk/installation-and-setup"
                 },
                 {
-                  "id": "root.documentation.fa-qs",
+                  "id": "root.uv.documentation.documentation.fa-qs",
                   "type": "section",
                   "collapsed": true,
                   "title": "FAQs",
@@ -630,7 +633,7 @@
                   "slug": "docs/documentation/fa-qs",
                   "children": [
                     {
-                      "id": "root.documentation.fa-qs.rate-limits",
+                      "id": "root.uv.documentation.documentation.fa-qs.rate-limits",
                       "type": "page",
                       "pageId": "docs/faqs/rate-limits.mdx",
                       "title": "Rate limits",
@@ -638,7 +641,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.fa-qs.privacy-security",
+                      "id": "root.uv.documentation.documentation.fa-qs.privacy-security",
                       "type": "page",
                       "pageId": "docs/faqs/privacy-and-security.mdx",
                       "title": "Privacy & security",
@@ -646,7 +649,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.fa-qs.rag-with-octo-ai",
+                      "id": "root.uv.documentation.documentation.fa-qs.rag-with-octo-ai",
                       "type": "page",
                       "pageId": "docs/faqs/rag.mdx",
                       "title": "RAG with OctoAI",
@@ -654,7 +657,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.fa-qs.service-regions",
+                      "id": "root.uv.documentation.documentation.fa-qs.service-regions",
                       "type": "page",
                       "pageId": "docs/faqs/service-regions.mdx",
                       "title": "Service regions",
@@ -662,7 +665,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.fa-qs.multi-user-accounts",
+                      "id": "root.uv.documentation.documentation.fa-qs.multi-user-accounts",
                       "type": "page",
                       "pageId": "docs/faqs/multi-user-accounts.mdx",
                       "title": "Multi-user accounts",
@@ -670,7 +673,7 @@
                       "hidden": false
                     },
                     {
-                      "id": "root.documentation.fa-qs.open-source-licenses",
+                      "id": "root.uv.documentation.documentation.fa-qs.open-source-licenses",
                       "type": "page",
                       "pageId": "docs/faqs/open-source-licenses.mdx",
                       "title": "Open source licenses",
@@ -687,16 +690,17 @@
         "pointsTo": "docs/getting-started/quickstart"
       },
       {
-        "id": "root.api-reference",
+        "id": "root.uv.api-reference",
         "type": "tab",
         "title": "API Reference",
         "slug": "docs/api-reference",
         "hidden": false,
         "child": {
+          "id": "root.uv.api-reference.api-reference",
           "type": "sidebarRoot",
           "children": [
             {
-              "id": "root.api-reference.octoai-api",
+              "id": "root.uv.api-reference.api-reference.octoai-api",
               "type": "section",
               "collapsed": false,
               "title": "OctoAI API",
@@ -704,7 +708,7 @@
               "slug": "docs/api-reference/octoai-api",
               "children": [
                 {
-                  "id": "root.api-reference.octoai-api.authentication",
+                  "id": "root.uv.api-reference.api-reference.octoai-api.authentication",
                   "type": "page",
                   "pageId": "docs/api-reference/octoai-api/authentication.mdx",
                   "title": "Authentication",
@@ -712,7 +716,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.api-reference.octoai-api.inference",
+                  "id": "root.uv.api-reference.api-reference.octoai-api.inference",
                   "type": "page",
                   "pageId": "docs/api-reference/octoai-api/inference.mdx",
                   "title": "Inference",
@@ -720,7 +724,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.api-reference.octoai-api.octo-ai-api",
+                  "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api",
                   "type": "apiReference",
                   "title": "OctoAI API",
                   "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
@@ -730,11 +734,11 @@
                   "showErrors": false,
                   "children": [
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_account",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_account",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_account.endpoint_account.getAccount",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_account.endpoint_account.getAccount",
                           "type": "endpoint",
                           "title": "Get fields on an account",
                           "endpointId": "endpoint_account.getAccount",
@@ -744,7 +748,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_account.endpoint_account.patchAccount",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_account.endpoint_account.patchAccount",
                           "type": "endpoint",
                           "title": "Update fields on an account",
                           "endpointId": "endpoint_account.patchAccount",
@@ -760,11 +764,11 @@
                       "pointsTo": "docs/api-reference/octoai-api/account/get-account"
                     },
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.createEndpoint",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.createEndpoint",
                           "type": "endpoint",
                           "title": "Create new endpoint",
                           "endpointId": "endpoint_endpoint.createEndpoint",
@@ -774,7 +778,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getEndpoint",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getEndpoint",
                           "type": "endpoint",
                           "title": "Get description of an endpoint",
                           "endpointId": "endpoint_endpoint.getEndpoint",
@@ -784,7 +788,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.deleteEndpoint",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.deleteEndpoint",
                           "type": "endpoint",
                           "title": "Delete an endpoint",
                           "endpointId": "endpoint_endpoint.deleteEndpoint",
@@ -794,7 +798,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.patchEndpoint",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.patchEndpoint",
                           "type": "endpoint",
                           "title": "Update an endpoint",
                           "endpointId": "endpoint_endpoint.patchEndpoint",
@@ -804,7 +808,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getEndpoints",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getEndpoints",
                           "type": "endpoint",
                           "title": "List endpoints",
                           "endpointId": "endpoint_endpoint.getEndpoints",
@@ -814,7 +818,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getContainerMetadata",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getContainerMetadata",
                           "type": "endpoint",
                           "title": "Get container metadata",
                           "endpointId": "endpoint_endpoint.getContainerMetadata",
@@ -824,7 +828,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getEndpointVolumeToken",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.getEndpointVolumeToken",
                           "type": "endpoint",
                           "title": "Get token for accessing the volume",
                           "endpointId": "endpoint_endpoint.getEndpointVolumeToken",
@@ -840,11 +844,11 @@
                       "pointsTo": "docs/api-reference/octoai-api/endpoint/create-endpoint"
                     },
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_telemetry",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointLogs",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointLogs",
                           "type": "endpoint",
                           "title": "Get endpoint logs",
                           "endpointId": "endpoint_telemetry.getEndpointLogs",
@@ -854,7 +858,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointLogsStream",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointLogsStream",
                           "type": "endpoint",
                           "title": "Get endpoint logs as stream",
                           "endpointId": "endpoint_telemetry.getEndpointLogsStream",
@@ -864,7 +868,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointEvents",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointEvents",
                           "type": "endpoint",
                           "title": "Get endpoint events",
                           "endpointId": "endpoint_telemetry.getEndpointEvents",
@@ -874,7 +878,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointEventsStream",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointEventsStream",
                           "type": "endpoint",
                           "title": "Get endpoint events as stream",
                           "endpointId": "endpoint_telemetry.getEndpointEventsStream",
@@ -890,11 +894,11 @@
                       "pointsTo": "docs/api-reference/octoai-api/telemetry/get-endpoint-logs"
                     },
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_secret",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.createSecret",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.createSecret",
                           "type": "endpoint",
                           "title": "Create new secret",
                           "endpointId": "endpoint_secret.createSecret",
@@ -904,7 +908,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.getSecret",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.getSecret",
                           "type": "endpoint",
                           "title": "Retrieve secret by key",
                           "endpointId": "endpoint_secret.getSecret",
@@ -914,7 +918,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.updateSecret",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.updateSecret",
                           "type": "endpoint",
                           "title": "Update secret by key",
                           "endpointId": "endpoint_secret.updateSecret",
@@ -924,7 +928,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.deleteSecret",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.deleteSecret",
                           "type": "endpoint",
                           "title": "Delete secret by key",
                           "endpointId": "endpoint_secret.deleteSecret",
@@ -934,7 +938,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.getSecrets",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.getSecrets",
                           "type": "endpoint",
                           "title": "Get secret",
                           "endpointId": "endpoint_secret.getSecrets",
@@ -950,11 +954,11 @@
                       "pointsTo": "docs/api-reference/octoai-api/secret/create-secret"
                     },
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.createRegistryCredential",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.createRegistryCredential",
                           "type": "endpoint",
                           "title": "Create new registry credentials",
                           "endpointId": "endpoint_registryCredential.createRegistryCredential",
@@ -964,7 +968,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.getRegistryCredential",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.getRegistryCredential",
                           "type": "endpoint",
                           "title": "Retrieve registry credentials by key",
                           "endpointId": "endpoint_registryCredential.getRegistryCredential",
@@ -974,7 +978,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.updateRegistryCredential",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.updateRegistryCredential",
                           "type": "endpoint",
                           "title": "Update registry credentials",
                           "endpointId": "endpoint_registryCredential.updateRegistryCredential",
@@ -984,7 +988,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.deleteRegistryCredential",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.deleteRegistryCredential",
                           "type": "endpoint",
                           "title": "Delete registry credentials",
                           "endpointId": "endpoint_registryCredential.deleteRegistryCredential",
@@ -994,7 +998,7 @@
                           "isResponseStream": false
                         },
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.getRegistryCredentials",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.getRegistryCredentials",
                           "type": "endpoint",
                           "title": "Get registry credentials",
                           "endpointId": "endpoint_registryCredential.getRegistryCredentials",
@@ -1010,11 +1014,11 @@
                       "pointsTo": "docs/api-reference/octoai-api/registry-credential/create-registry-credential"
                     },
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_publicEndpoint",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_publicEndpoint",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_publicEndpoint.endpoint_publicEndpoint.getPublicEndpoints",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_publicEndpoint.endpoint_publicEndpoint.getPublicEndpoints",
                           "type": "endpoint",
                           "title": "List public, OctoAI-deployed endpoints",
                           "endpointId": "endpoint_publicEndpoint.getPublicEndpoints",
@@ -1030,11 +1034,11 @@
                       "pointsTo": "docs/api-reference/octoai-api/public-endpoint/get-public-endpoints"
                     },
                     {
-                      "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_instanceTypes",
+                      "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_instanceTypes",
                       "type": "apiSection",
                       "children": [
                         {
-                          "id": "root.api-reference.octoai-api.octo-ai-api.subpackage_instanceTypes.endpoint_instanceTypes.getInstanceTypes",
+                          "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_instanceTypes.endpoint_instanceTypes.getInstanceTypes",
                           "type": "endpoint",
                           "title": "List hardware instance types",
                           "endpointId": "endpoint_instanceTypes.getInstanceTypes",
@@ -1056,7 +1060,7 @@
               "pointsTo": "docs/api-reference/octoai-api/authentication"
             },
             {
-              "id": "root.api-reference.octo-ai-api",
+              "id": "root.uv.api-reference.api-reference.octo-ai-api",
               "type": "apiReference",
               "title": "OctoAI API",
               "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
@@ -1066,11 +1070,11 @@
               "showErrors": false,
               "children": [
                 {
-                  "id": "root.api-reference.octo-ai-api.subpackage_asset-library",
+                  "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.list",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.list",
                       "type": "endpoint",
                       "title": "List Assets",
                       "endpointId": "endpoint_asset-library.list",
@@ -1080,7 +1084,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.create",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.create",
                       "type": "endpoint",
                       "title": "Create Asset",
                       "endpointId": "endpoint_asset-library.create",
@@ -1090,7 +1094,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.delete",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.delete",
                       "type": "endpoint",
                       "title": "Delete Asset",
                       "endpointId": "endpoint_asset-library.delete",
@@ -1100,7 +1104,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.completeUpload",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.completeUpload",
                       "type": "endpoint",
                       "title": "Complete Asset Upload",
                       "endpointId": "endpoint_asset-library.completeUpload",
@@ -1110,7 +1114,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.get",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.get",
                       "type": "endpoint",
                       "title": "Retrieve Asset",
                       "endpointId": "endpoint_asset-library.get",
@@ -1126,11 +1130,11 @@
                   "pointsTo": "docs/api-reference/asset-library/list"
                 },
                 {
-                  "id": "root.api-reference.octo-ai-api.subpackage_fine-tuning",
+                  "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.create",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.create",
                       "type": "endpoint",
                       "title": "Create Tune",
                       "endpointId": "endpoint_fine-tuning.create",
@@ -1140,7 +1144,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.get",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.get",
                       "type": "endpoint",
                       "title": "Get Tune",
                       "endpointId": "endpoint_fine-tuning.get",
@@ -1150,7 +1154,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.delete",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.delete",
                       "type": "endpoint",
                       "title": "Delete Tune",
                       "endpointId": "endpoint_fine-tuning.delete",
@@ -1160,7 +1164,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.cancel",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.cancel",
                       "type": "endpoint",
                       "title": "Cancel Tune",
                       "endpointId": "endpoint_fine-tuning.cancel",
@@ -1170,7 +1174,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.list",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.list",
                       "type": "endpoint",
                       "title": "List Tunes",
                       "endpointId": "endpoint_fine-tuning.list",
@@ -1186,11 +1190,11 @@
                   "pointsTo": "docs/api-reference/fine-tuning/create"
                 },
                 {
-                  "id": "root.api-reference.octo-ai-api.subpackage_image-gen",
+                  "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen",
                   "type": "apiSection",
                   "children": [
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSsd",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSsd",
                       "type": "endpoint",
                       "title": "Generate SSD",
                       "endpointId": "endpoint_image-gen.generateSsd",
@@ -1200,7 +1204,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateControlnetSdxl",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateControlnetSdxl",
                       "type": "endpoint",
                       "title": "Generate ControlNet SDXL",
                       "endpointId": "endpoint_image-gen.generateControlnetSdxl",
@@ -1210,7 +1214,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateControlnetSd15",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateControlnetSd15",
                       "type": "endpoint",
                       "title": "Generate ControlNet SD1.5",
                       "endpointId": "endpoint_image-gen.generateControlnetSd15",
@@ -1220,7 +1224,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSdxl",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSdxl",
                       "type": "endpoint",
                       "title": "Generate SDXL",
                       "endpointId": "endpoint_image-gen.generateSdxl",
@@ -1230,7 +1234,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSd",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSd",
                       "type": "endpoint",
                       "title": "Generate SD1.5",
                       "endpointId": "endpoint_image-gen.generateSd",
@@ -1240,7 +1244,7 @@
                       "isResponseStream": false
                     },
                     {
-                      "id": "root.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSvd",
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSvd",
                       "type": "endpoint",
                       "title": "Generate SVD Animations",
                       "endpointId": "endpoint_image-gen.generateSvd",
@@ -1256,13 +1260,14 @@
                   "pointsTo": "docs/api-reference/image-gen/generate-ssd"
                 },
                 {
-                  "id": "root.api-reference.octo-ai-api.subpackage_text-gen",
+                  "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen",
                   "type": "apiSection",
                   "children": [
                     {
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint-pair",
                       "type": "endpointPair",
                       "stream": {
-                        "id": "root.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createChatCompletion_stream",
+                        "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createChatCompletion_stream",
                         "type": "endpoint",
                         "title": "Create Chat Completion",
                         "endpointId": "endpoint_text-gen.createChatCompletion_stream",
@@ -1272,7 +1277,7 @@
                         "isResponseStream": true
                       },
                       "nonStream": {
-                        "id": "root.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createChatCompletion",
+                        "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createChatCompletion",
                         "type": "endpoint",
                         "title": "Create Chat Completion",
                         "endpointId": "endpoint_text-gen.createChatCompletion",
@@ -1283,9 +1288,10 @@
                       }
                     },
                     {
+                      "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint-pair-0",
                       "type": "endpointPair",
                       "stream": {
-                        "id": "root.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createCompletion_stream",
+                        "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createCompletion_stream",
                         "type": "endpoint",
                         "title": "Create Completion",
                         "endpointId": "endpoint_text-gen.createCompletion_stream",
@@ -1295,7 +1301,7 @@
                         "isResponseStream": true
                       },
                       "nonStream": {
-                        "id": "root.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createCompletion",
+                        "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createCompletion",
                         "type": "endpoint",
                         "title": "Create Completion",
                         "endpointId": "endpoint_text-gen.createCompletion",
@@ -1315,7 +1321,7 @@
               "pointsTo": "docs/api-reference/asset-library/list"
             },
             {
-              "id": "root.api-reference.media-util",
+              "id": "root.uv.api-reference.api-reference.media-util",
               "type": "apiReference",
               "title": "Media Utilities API",
               "apiDefinitionId": "2eeac53f-90cc-492b-9d29-e3ed711d7704",
@@ -1325,7 +1331,7 @@
               "showErrors": false,
               "children": [
                 {
-                  "id": "root.api-reference.media-util.endpoint_.upscale",
+                  "id": "root.uv.api-reference.api-reference.media-util.endpoint_.upscale",
                   "type": "endpoint",
                   "title": "Upscaling",
                   "endpointId": "endpoint_.upscale",
@@ -1335,7 +1341,7 @@
                   "isResponseStream": false
                 },
                 {
-                  "id": "root.api-reference.media-util.endpoint_.remove_background",
+                  "id": "root.uv.api-reference.api-reference.media-util.endpoint_.remove_background",
                   "type": "endpoint",
                   "title": "Remove Background",
                   "endpointId": "endpoint_.remove_background",
@@ -1345,7 +1351,7 @@
                   "isResponseStream": false
                 },
                 {
-                  "id": "root.api-reference.media-util.endpoint_.generate_images",
+                  "id": "root.uv.api-reference.api-reference.media-util.endpoint_.generate_images",
                   "type": "endpoint",
                   "title": "Adetailer",
                   "endpointId": "endpoint_.generate_images",
@@ -1362,16 +1368,17 @@
         "pointsTo": "docs/api-reference/octoai-api/authentication"
       },
       {
-        "id": "root.integrations",
+        "id": "root.uv.integrations",
         "type": "tab",
         "title": "Integrations",
         "slug": "docs/integrations",
         "hidden": false,
         "child": {
+          "id": "root.uv.integrations.integrations",
           "type": "sidebarRoot",
           "children": [
             {
-              "id": "root.integrations.integrations",
+              "id": "root.uv.integrations.integrations.integrations",
               "type": "section",
               "collapsed": false,
               "title": "Integrations",
@@ -1379,7 +1386,7 @@
               "slug": "docs/integrations/integrations",
               "children": [
                 {
-                  "id": "root.integrations.integrations.all",
+                  "id": "root.uv.integrations.integrations.integrations.all",
                   "type": "page",
                   "pageId": "docs/integrations/overview.mdx",
                   "title": "All",
@@ -1387,7 +1394,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.integrations.integrations.lang-chain",
+                  "id": "root.uv.integrations.integrations.integrations.lang-chain",
                   "type": "page",
                   "pageId": "docs/integrations/langchain.mdx",
                   "title": "LangChain",
@@ -1395,7 +1402,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.integrations.integrations.pinecone",
+                  "id": "root.uv.integrations.integrations.integrations.pinecone",
                   "type": "page",
                   "pageId": "docs/integrations/pinecone.mdx",
                   "title": "Pinecone",
@@ -1403,7 +1410,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.integrations.integrations.unstructured-io",
+                  "id": "root.uv.integrations.integrations.integrations.unstructured-io",
                   "type": "page",
                   "pageId": "docs/integrations/unstructured.mdx",
                   "title": "Unstructured.io",
@@ -1411,7 +1418,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.integrations.integrations.open-router",
+                  "id": "root.uv.integrations.integrations.integrations.open-router",
                   "type": "page",
                   "pageId": "docs/integrations/openrouter.mdx",
                   "title": "OpenRouter",
@@ -1419,7 +1426,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.integrations.integrations.llama-index",
+                  "id": "root.uv.integrations.integrations.integrations.llama-index",
                   "type": "page",
                   "pageId": "docs/integrations/llamaindex.mdx",
                   "title": "LlamaIndex",
@@ -1434,16 +1441,17 @@
         "pointsTo": "docs/integrations/overview"
       },
       {
-        "id": "root.release-notes",
+        "id": "root.uv.release-notes",
         "type": "tab",
         "title": "Release Notes",
         "slug": "docs/release-notes",
         "hidden": false,
         "child": {
+          "id": "root.uv.release-notes.release-notes",
           "type": "sidebarRoot",
           "children": [
             {
-              "id": "root.release-notes.2024",
+              "id": "root.uv.release-notes.release-notes.2024",
               "type": "section",
               "collapsed": false,
               "title": "2024",
@@ -1451,7 +1459,7 @@
               "slug": "docs/release-notes/2024",
               "children": [
                 {
-                  "id": "root.release-notes.2024.may",
+                  "id": "root.uv.release-notes.release-notes.2024.may",
                   "type": "page",
                   "pageId": "docs/release-notes/2024/may.mdx",
                   "title": "May",
@@ -1459,7 +1467,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2024.april",
+                  "id": "root.uv.release-notes.release-notes.2024.april",
                   "type": "page",
                   "pageId": "docs/release-notes/2024/april.mdx",
                   "title": "April",
@@ -1467,7 +1475,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2024.february",
+                  "id": "root.uv.release-notes.release-notes.2024.february",
                   "type": "page",
                   "pageId": "docs/release-notes/2024/february.mdx",
                   "title": "February",
@@ -1475,7 +1483,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2024.january",
+                  "id": "root.uv.release-notes.release-notes.2024.january",
                   "type": "page",
                   "pageId": "docs/release-notes/2024/january.mdx",
                   "title": "January",
@@ -1486,7 +1494,7 @@
               "pointsTo": "docs/release-notes/2024/may"
             },
             {
-              "id": "root.release-notes.2023",
+              "id": "root.uv.release-notes.release-notes.2023",
               "type": "section",
               "collapsed": false,
               "title": "2023",
@@ -1494,7 +1502,7 @@
               "slug": "docs/release-notes/2023",
               "children": [
                 {
-                  "id": "root.release-notes.2023.december",
+                  "id": "root.uv.release-notes.release-notes.2023.december",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/december.mdx",
                   "title": "December",
@@ -1502,7 +1510,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.november",
+                  "id": "root.uv.release-notes.release-notes.2023.november",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/november.mdx",
                   "title": "November",
@@ -1510,7 +1518,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.october",
+                  "id": "root.uv.release-notes.release-notes.2023.october",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/october.mdx",
                   "title": "October",
@@ -1518,7 +1526,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.september",
+                  "id": "root.uv.release-notes.release-notes.2023.september",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/september.mdx",
                   "title": "September",
@@ -1526,7 +1534,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.august",
+                  "id": "root.uv.release-notes.release-notes.2023.august",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/august.mdx",
                   "title": "August",
@@ -1534,7 +1542,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.july",
+                  "id": "root.uv.release-notes.release-notes.2023.july",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/july.mdx",
                   "title": "July",
@@ -1542,7 +1550,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.june",
+                  "id": "root.uv.release-notes.release-notes.2023.june",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/june.mdx",
                   "title": "June",
@@ -1550,7 +1558,7 @@
                   "hidden": false
                 },
                 {
-                  "id": "root.release-notes.2023.may",
+                  "id": "root.uv.release-notes.release-notes.2023.may",
                   "type": "page",
                   "pageId": "docs/release-notes/2023/may.mdx",
                   "title": "May",
@@ -1565,12 +1573,14 @@
         "pointsTo": "docs/release-notes/2024/may"
       },
       {
+        "id": "root.uv.link",
         "type": "link",
         "title": "Community",
         "url": "https://discord.com/invite/rXTPeRBcG7",
         "icon": "brands discord"
       },
       {
+        "id": "root.uv.link-0",
         "type": "link",
         "title": "Support",
         "url": "https://discord.com/channels/1085222662504194098/1085613782006509600",

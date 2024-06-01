@@ -6,5 +6,4 @@ export * from "./findNode";
 export * from "./followRedirect";
 export * from "./getApiReferenceId";
 export * from "./getPageId";
-export * from "./nodeHasContent";
-export * from "./nodeHasMetadata";
+export * from "./traverseNavigation";

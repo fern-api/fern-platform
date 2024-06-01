@@ -1,6 +1,6 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { noop } from "lodash-es";
 import { NavigationNode } from "../types/NavigationNode";
-import { visitNavigationNode } from "./visitNavigationNode";
 
 const SKIP = "skip" as const;
 const CONTINUE = true as const;
@@ -30,7 +30,7 @@ export function traverseNavigation(
         } else if (v === STOP || v === CONTINUE) {
             return v;
         }
-        return visitNavigationNode(node, {
+        return visitDiscriminatedUnion(node)._visit({
             root: (root) => internalTraverser(root.child, undefined, [...parents, root]),
             versioned: (versioned) => internalChildrenTraverser(versioned.children, [...parents, versioned]),
             tabbed: (tabbed) => internalChildrenTraverser(tabbed.children, [...parents, tabbed]),

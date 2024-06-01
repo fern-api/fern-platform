@@ -1,6 +1,6 @@
 import { FernNavigation } from "../generated";
 import { NavigationNode } from "../types/NavigationNode";
-import { traverseNavigation } from "../visitors/traverseNavigation";
+import { traverseNavigation } from "./traverseNavigation";
 
 export function collectApiReferences(nav: NavigationNode): FernNavigation.ApiReferenceNode[] {
     const apiReferences: FernNavigation.ApiReferenceNode[] = [];

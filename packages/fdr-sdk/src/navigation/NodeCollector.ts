@@ -1,10 +1,15 @@
 import { once } from "lodash-es";
 import urljoin from "url-join";
 import { FernNavigation } from "./generated";
-import { NavigationNode, NavigationNodeWithContent, NavigationNodeWithMetadata } from "./types/NavigationNode";
-import { nodeHasContent } from "./utils/nodeHasContent";
-import { nodeHasMetadata } from "./utils/nodeHasMetadata";
-import { traverseNavigation } from "./visitors/traverseNavigation";
+import {
+    NavigationNode,
+    NavigationNodeNeighbor,
+    NavigationNodeWithMetadata,
+    hasMetadata,
+    isNeighbor,
+    isPage,
+} from "./types";
+import { traverseNavigation } from "./utils";
 
 // lower number means higher priority
 const PRIORITY_LIST: Record<NavigationNodeWithMetadata["type"], number> = {
@@ -27,26 +32,27 @@ const PRIORITY_LIST: Record<NavigationNodeWithMetadata["type"], number> = {
 interface NavigationNodeWithMetadataAndParents {
     node: NavigationNodeWithMetadata;
     parents: NavigationNode[];
-    next: NavigationNodeWithContent | undefined;
-    prev: NavigationNodeWithContent | undefined;
+    next: NavigationNodeNeighbor | undefined;
+    prev: NavigationNodeNeighbor | undefined;
 }
 
-export class SlugCollector {
-    private slugToNode: Record<string, NavigationNodeWithMetadataAndParents> = {};
+export class NodeCollector {
+    private idToNode = new Map<FernNavigation.NodeId, NavigationNodeWithMetadata>();
+    private slugToNode: Record<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> = {};
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
 
-    public static collect(rootNode: NavigationNode): SlugCollector {
-        return new SlugCollector(rootNode);
+    public static collect(rootNode: NavigationNode): NodeCollector {
+        return new NodeCollector(rootNode);
     }
 
     #last: NavigationNodeWithMetadataAndParents | undefined;
-    #lastNodeWithContent: NavigationNodeWithContent | undefined;
-    #setNode(slug: string, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
-        const toSet = { node, parents, prev: this.#lastNodeWithContent, next: undefined };
+    #lastNeighboringNode: NavigationNodeNeighbor | undefined;
+    #setNode(slug: FernNavigation.Slug, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
+        const toSet = { node, parents, prev: this.#lastNeighboringNode, next: undefined };
         this.slugToNode[slug] = toSet;
 
-        if (nodeHasContent(node) && !node.hidden) {
-            this.#lastNodeWithContent = node;
+        if (isNeighbor(node) && !node.hidden) {
+            this.#lastNeighboringNode = node;
             if (this.#last != null) {
                 this.#last.next = node;
             }
@@ -58,27 +64,27 @@ export class SlugCollector {
         traverseNavigation(rootNode, (node, _index, parents) => {
             if (node.type === "sidebarRoot") {
                 this.#last = undefined;
-                this.#lastNodeWithContent = undefined;
+                this.#lastNeighboringNode = undefined;
             }
 
-            if (!nodeHasMetadata(node)) {
+            if (!hasMetadata(node)) {
                 return;
             }
-            const slug = urljoin(node.slug);
-            const existing = this.slugToNode[slug];
+            this.idToNode.set(node.id, node);
+            const existing = this.slugToNode[node.slug];
             if (existing == null) {
-                this.#setNode(slug, node, parents);
+                this.#setNode(node.slug, node, parents);
             } else if (PRIORITY_LIST[node.type] < PRIORITY_LIST[existing.node.type] && !node.hidden) {
-                this.#setNode(slug, node, parents);
+                this.#setNode(node.slug, node, parents);
                 this.orphanedNodes.push(existing.node);
             } else if (PRIORITY_LIST[node.type] === PRIORITY_LIST[existing.node.type]) {
                 if (!node.hidden && existing.node.hidden) {
-                    this.#setNode(slug, node, parents);
+                    this.#setNode(node.slug, node, parents);
                     this.orphanedNodes.push(existing.node);
                 } else {
                     if (!node.hidden) {
                         // eslint-disable-next-line no-console
-                        console.warn(`Duplicate slug found: ${slug}`);
+                        console.warn(`Duplicate slug found: ${node.slug}`);
                     }
                     this.orphanedNodes.push(node);
                 }
@@ -92,8 +98,8 @@ export class SlugCollector {
         return this.orphanedNodes;
     }
 
-    public getOrphanedNodesWithContent = once((): NavigationNodeWithMetadata[] => {
-        return this.orphanedNodes.filter(nodeHasContent);
+    public getOrphanedPages = once((): NavigationNodeWithMetadata[] => {
+        return this.orphanedNodes.filter(isPage);
     });
 
     private getSlugMap = once((): Map<string, NavigationNodeWithMetadata> => {
@@ -104,6 +110,10 @@ export class SlugCollector {
         return this.getSlugMap();
     }
 
+    public get(id: FernNavigation.NodeId): NavigationNodeWithMetadata | undefined {
+        return this.idToNode.get(id);
+    }
+
     public getSlugMapWithParents = once((): Map<string, NavigationNodeWithMetadataAndParents> => {
         return new Map(Object.entries(this.slugToNode));
     });
@@ -112,9 +122,9 @@ export class SlugCollector {
         return Object.keys(this.slugToNode);
     });
 
-    public getSlugsWithContent = once((): string[] => {
+    public getPageSlugs = once((): string[] => {
         return Object.values(this.slugToNode)
-            .filter(({ node }) => nodeHasContent(node))
+            .filter(({ node }) => isPage(node))
             .map(({ node }) => urljoin(node.slug));
     });
 

@@ -26,7 +26,7 @@ function getFrontmatter(content: string): FernDocsFrontmatter {
 }
 
 async function getSubtitle(
-    node: FernNavigation.NavigationNodeWithContent,
+    node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<MDXRemoteSerializeResult | string | undefined> {
     const pageId = FernNavigation.utils.getPageId(node);
@@ -54,7 +54,7 @@ async function getSubtitle(
             data: {
                 pageTitle: node.title,
                 pageId,
-                route: urljoin("/", ...node.slug),
+                route: urljoin("/", node.slug),
             },
         });
         return undefined;
@@ -193,7 +193,7 @@ export async function convertNavigatableToResolvedPath({
 }
 
 async function getNeighbor(
-    node: FernNavigation.NavigationNodeWithContent | undefined,
+    node: FernNavigation.NavigationNodeNeighbor | undefined,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedPath.Neighbor | null> {
     if (node == null) {

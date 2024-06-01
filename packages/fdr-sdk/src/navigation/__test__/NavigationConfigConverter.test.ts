@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { DocsV2Read } from "../../client";
-import { SlugCollector } from "../SlugCollector";
+import { NodeCollector } from "../NodeCollector";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
 import { collectPageIds } from "../utils/collectPageIds";
 
@@ -19,7 +19,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
             fixture.baseUrl.basePath,
         );
 
-        const slugCollector = new SlugCollector(node);
+        const slugCollector = new NodeCollector(node);
 
         it("gets all urls from docs config", async () => {
             expect(JSON.stringify(node, undefined, 2)).toMatchFileSnapshot(`output/${fixtureName}/node.json`);
@@ -34,7 +34,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 `output/${fixtureName}/orphanedNodes.json`,
             );
 
-            const orphanedNodesWithContent = slugCollector.getOrphanedNodesWithContent();
+            const orphanedNodesWithContent = slugCollector.getOrphanedPages();
             expect(JSON.stringify(orphanedNodesWithContent, undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/orphanedNodesWithContent.json`,
             );
@@ -42,7 +42,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
             const slugs = slugCollector.getSlugs();
             expect(JSON.stringify(slugs, undefined, 2)).toMatchFileSnapshot(`output/${fixtureName}/slugs.json`);
 
-            const slugsWithContent = slugCollector.getSlugsWithContent();
+            const slugsWithContent = slugCollector.getPageSlugs();
             expect(JSON.stringify(slugsWithContent, undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/slugsWithContent.json`,
             );

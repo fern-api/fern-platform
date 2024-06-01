@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
@@ -8,6 +8,7 @@ import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import {
     ResolvedTypeDefinition,
@@ -49,7 +50,11 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
     return <WebhookContent {...props} />;
 };
 
-const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, types }) => {
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
+    const { nodes } = useDocsContext();
+    const maybeNode = nodes.get(websocket.nodeId);
+    const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
+
     const { isApiScrollingDisabled } = useFeatureFlags();
     const fullSlug = joinUrlSlugs(...websocket.slug);
     const route = `/${fullSlug}`;
@@ -312,15 +317,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, api, type
                             <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
-                                    actions={
-                                        <PlaygroundButton
-                                            state={{
-                                                type: "websocket",
-                                                webSocketId: websocket.id,
-                                                api,
-                                            }}
-                                        />
-                                    }
+                                    actions={node != null ? <PlaygroundButton state={node} /> : undefined}
                                     disableClipboard={true}
                                 >
                                     <FernScrollArea>

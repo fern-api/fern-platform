@@ -1,6 +1,6 @@
 [
   {
-    "id": "root.*.docs/api-reference.humanloop-api",
+    "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api",
     "type": "apiReference",
     "title": "Humanloop API",
     "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
@@ -10,28 +10,28 @@
     "hideTitle": false,
     "showErrors": true,
     "changelog": {
-      "id": "root.*.docs/api-reference.humanloop-api.log",
+      "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log",
       "type": "changelog",
       "title": "Changelog",
       "slug": "docs/api-reference/changelog",
       "hidden": false,
       "children": [
         {
-          "id": "root.*.docs/api-reference.humanloop-api.log.2024",
+          "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024",
           "type": "changelogYear",
           "title": "2024",
           "year": 2024,
           "slug": "docs/api-reference/changelog/2024",
           "children": [
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2024.4",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.4",
               "type": "changelogMonth",
               "title": "April 1900",
               "month": 4,
               "slug": "docs/api-reference/changelog/2024/4",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-29",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-29",
                   "type": "changelogEntry",
                   "title": "April 29, 2024",
                   "date": "2024-04-30T00:00:00.000Z",
@@ -39,7 +39,7 @@
                   "slug": "docs/api-reference/changelog/2024/4/29"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-25",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-25",
                   "type": "changelogEntry",
                   "title": "April 25, 2024",
                   "date": "2024-04-26T00:00:00.000Z",
@@ -47,7 +47,7 @@
                   "slug": "docs/api-reference/changelog/2024/4/25"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-22",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-22",
                   "type": "changelogEntry",
                   "title": "April 22, 2024",
                   "date": "2024-04-23T00:00:00.000Z",
@@ -55,7 +55,7 @@
                   "slug": "docs/api-reference/changelog/2024/4/22"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-17",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-17",
                   "type": "changelogEntry",
                   "title": "April 17, 2024",
                   "date": "2024-04-18T00:00:00.000Z",
@@ -63,7 +63,7 @@
                   "slug": "docs/api-reference/changelog/2024/4/17"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-15",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-15",
                   "type": "changelogEntry",
                   "title": "April 15, 2024",
                   "date": "2024-04-16T00:00:00.000Z",
@@ -71,7 +71,7 @@
                   "slug": "docs/api-reference/changelog/2024/4/15"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-12",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-12",
                   "type": "changelogEntry",
                   "title": "April 12, 2024",
                   "date": "2024-04-13T00:00:00.000Z",
@@ -79,7 +79,7 @@
                   "slug": "docs/api-reference/changelog/2024/4/12"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-4-4",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-4",
                   "type": "changelogEntry",
                   "title": "April 4, 2024",
                   "date": "2024-04-05T00:00:00.000Z",
@@ -89,14 +89,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2024.3",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.3",
               "type": "changelogMonth",
               "title": "March 1900",
               "month": 3,
               "slug": "docs/api-reference/changelog/2024/3",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-3-24",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-24",
                   "type": "changelogEntry",
                   "title": "March 24, 2024",
                   "date": "2024-03-25T00:00:00.000Z",
@@ -104,7 +104,7 @@
                   "slug": "docs/api-reference/changelog/2024/3/24"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-3-17",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-17",
                   "type": "changelogEntry",
                   "title": "March 17, 2024",
                   "date": "2024-03-18T00:00:00.000Z",
@@ -112,7 +112,7 @@
                   "slug": "docs/api-reference/changelog/2024/3/17"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-3-6",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-6",
                   "type": "changelogEntry",
                   "title": "March 6, 2024",
                   "date": "2024-03-07T00:00:00.000Z",
@@ -120,7 +120,7 @@
                   "slug": "docs/api-reference/changelog/2024/3/6"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-3-5",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-5",
                   "type": "changelogEntry",
                   "title": "March 5, 2024",
                   "date": "2024-03-06T00:00:00.000Z",
@@ -130,14 +130,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2024.2",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.2",
               "type": "changelogMonth",
               "title": "February 1900",
               "month": 2,
               "slug": "docs/api-reference/changelog/2024/2",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-2-25",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-25",
                   "type": "changelogEntry",
                   "title": "February 25, 2024",
                   "date": "2024-02-26T00:00:00.000Z",
@@ -145,7 +145,7 @@
                   "slug": "docs/api-reference/changelog/2024/2/25"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-2-13",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-13",
                   "type": "changelogEntry",
                   "title": "February 13, 2024",
                   "date": "2024-02-14T00:00:00.000Z",
@@ -153,7 +153,7 @@
                   "slug": "docs/api-reference/changelog/2024/2/13"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-2-12",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-12",
                   "type": "changelogEntry",
                   "title": "February 12, 2024",
                   "date": "2024-02-13T00:00:00.000Z",
@@ -161,7 +161,7 @@
                   "slug": "docs/api-reference/changelog/2024/2/12"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-2-8",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-8",
                   "type": "changelogEntry",
                   "title": "February 8, 2024",
                   "date": "2024-02-09T00:00:00.000Z",
@@ -169,7 +169,7 @@
                   "slug": "docs/api-reference/changelog/2024/2/8"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-2-7",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-7",
                   "type": "changelogEntry",
                   "title": "February 7, 2024",
                   "date": "2024-02-08T00:00:00.000Z",
@@ -177,7 +177,7 @@
                   "slug": "docs/api-reference/changelog/2024/2/7"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-2-1",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-1",
                   "type": "changelogEntry",
                   "title": "February 1, 2024",
                   "date": "2024-02-02T00:00:00.000Z",
@@ -187,14 +187,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2024.1",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.1",
               "type": "changelogMonth",
               "title": "January 1900",
               "month": 1,
               "slug": "docs/api-reference/changelog/2024/1",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-1-29",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-29",
                   "type": "changelogEntry",
                   "title": "January 29, 2024",
                   "date": "2024-01-30T00:00:00.000Z",
@@ -202,7 +202,7 @@
                   "slug": "docs/api-reference/changelog/2024/1/29"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-1-18",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-18",
                   "type": "changelogEntry",
                   "title": "January 18, 2024",
                   "date": "2024-01-19T00:00:00.000Z",
@@ -210,7 +210,7 @@
                   "slug": "docs/api-reference/changelog/2024/1/18"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-1-11",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-11",
                   "type": "changelogEntry",
                   "title": "January 11, 2024",
                   "date": "2024-01-12T00:00:00.000Z",
@@ -218,7 +218,7 @@
                   "slug": "docs/api-reference/changelog/2024/1/11"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2024-1-10",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-10",
                   "type": "changelogEntry",
                   "title": "January 10, 2024",
                   "date": "2024-01-11T00:00:00.000Z",
@@ -230,21 +230,21 @@
           ]
         },
         {
-          "id": "root.*.docs/api-reference.humanloop-api.log.2023",
+          "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023",
           "type": "changelogYear",
           "title": "2023",
           "year": 2023,
           "slug": "docs/api-reference/changelog/2023",
           "children": [
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.12",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.12",
               "type": "changelogMonth",
               "title": "December 1900",
               "month": 12,
               "slug": "docs/api-reference/changelog/2023/12",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-12-21",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-21",
                   "type": "changelogEntry",
                   "title": "December 21, 2023",
                   "date": "2023-12-22T00:00:00.000Z",
@@ -252,7 +252,7 @@
                   "slug": "docs/api-reference/changelog/2023/12/21"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-12-20",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-20",
                   "type": "changelogEntry",
                   "title": "December 20, 2023",
                   "date": "2023-12-21T00:00:00.000Z",
@@ -260,7 +260,7 @@
                   "slug": "docs/api-reference/changelog/2023/12/20"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-12-12",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-12",
                   "type": "changelogEntry",
                   "title": "December 12, 2023",
                   "date": "2023-12-13T00:00:00.000Z",
@@ -268,7 +268,7 @@
                   "slug": "docs/api-reference/changelog/2023/12/12"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-12-11",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-11",
                   "type": "changelogEntry",
                   "title": "December 11, 2023",
                   "date": "2023-12-12T00:00:00.000Z",
@@ -276,7 +276,7 @@
                   "slug": "docs/api-reference/changelog/2023/12/11"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-12-4",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-4",
                   "type": "changelogEntry",
                   "title": "December 4, 2023",
                   "date": "2023-12-05T00:00:00.000Z",
@@ -284,7 +284,7 @@
                   "slug": "docs/api-reference/changelog/2023/12/4"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-12-3",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-3",
                   "type": "changelogEntry",
                   "title": "December 3, 2023",
                   "date": "2023-12-04T00:00:00.000Z",
@@ -294,14 +294,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.11",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.11",
               "type": "changelogMonth",
               "title": "November 1900",
               "month": 11,
               "slug": "docs/api-reference/changelog/2023/11",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-27",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-27",
                   "type": "changelogEntry",
                   "title": "November 27, 2023",
                   "date": "2023-11-28T00:00:00.000Z",
@@ -309,7 +309,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/27"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-21",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-21",
                   "type": "changelogEntry",
                   "title": "November 21, 2023",
                   "date": "2023-11-22T00:00:00.000Z",
@@ -317,7 +317,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/21"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-20",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-20",
                   "type": "changelogEntry",
                   "title": "November 20, 2023",
                   "date": "2023-11-21T00:00:00.000Z",
@@ -325,7 +325,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/20"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-19",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-19",
                   "type": "changelogEntry",
                   "title": "November 19, 2023",
                   "date": "2023-11-20T00:00:00.000Z",
@@ -333,7 +333,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/19"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-16",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-16",
                   "type": "changelogEntry",
                   "title": "November 16, 2023",
                   "date": "2023-11-17T00:00:00.000Z",
@@ -341,7 +341,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/16"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-9",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-9",
                   "type": "changelogEntry",
                   "title": "November 9, 2023",
                   "date": "2023-11-10T00:00:00.000Z",
@@ -349,7 +349,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/9"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-8",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-8",
                   "type": "changelogEntry",
                   "title": "November 8, 2023",
                   "date": "2023-11-09T00:00:00.000Z",
@@ -357,7 +357,7 @@
                   "slug": "docs/api-reference/changelog/2023/11/8"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-11-7",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-7",
                   "type": "changelogEntry",
                   "title": "November 7, 2023",
                   "date": "2023-11-08T00:00:00.000Z",
@@ -367,14 +367,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.10",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.10",
               "type": "changelogMonth",
               "title": "October 1900",
               "month": 10,
               "slug": "docs/api-reference/changelog/2023/10",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-10-31",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-31",
                   "type": "changelogEntry",
                   "title": "October 31, 2023",
                   "date": "2023-11-01T00:00:00.000Z",
@@ -382,7 +382,7 @@
                   "slug": "docs/api-reference/changelog/2023/10/31"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-10-29",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-29",
                   "type": "changelogEntry",
                   "title": "October 29, 2023",
                   "date": "2023-10-30T00:00:00.000Z",
@@ -390,7 +390,7 @@
                   "slug": "docs/api-reference/changelog/2023/10/29"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-10-16",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-16",
                   "type": "changelogEntry",
                   "title": "October 16, 2023",
                   "date": "2023-10-17T00:00:00.000Z",
@@ -398,7 +398,7 @@
                   "slug": "docs/api-reference/changelog/2023/10/16"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-10-15",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-15",
                   "type": "changelogEntry",
                   "title": "October 15, 2023",
                   "date": "2023-10-16T00:00:00.000Z",
@@ -406,7 +406,7 @@
                   "slug": "docs/api-reference/changelog/2023/10/15"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-10-9",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-9",
                   "type": "changelogEntry",
                   "title": "October 9, 2023",
                   "date": "2023-10-10T00:00:00.000Z",
@@ -416,14 +416,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.9",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.9",
               "type": "changelogMonth",
               "title": "September 1900",
               "month": 9,
               "slug": "docs/api-reference/changelog/2023/9",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-9-14",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-9-14",
                   "type": "changelogEntry",
                   "title": "September 14, 2023",
                   "date": "2023-09-15T00:00:00.000Z",
@@ -431,7 +431,7 @@
                   "slug": "docs/api-reference/changelog/2023/9/14"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-9-12",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-9-12",
                   "type": "changelogEntry",
                   "title": "September 12, 2023",
                   "date": "2023-09-13T00:00:00.000Z",
@@ -441,14 +441,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.8",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.8",
               "type": "changelogMonth",
               "title": "August 1900",
               "month": 8,
               "slug": "docs/api-reference/changelog/2023/8",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-8-30",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-30",
                   "type": "changelogEntry",
                   "title": "August 30, 2023",
                   "date": "2023-08-31T00:00:00.000Z",
@@ -456,7 +456,7 @@
                   "slug": "docs/api-reference/changelog/2023/8/30"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-8-20",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-20",
                   "type": "changelogEntry",
                   "title": "August 20, 2023",
                   "date": "2023-08-21T00:00:00.000Z",
@@ -464,7 +464,7 @@
                   "slug": "docs/api-reference/changelog/2023/8/20"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-8-14",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-14",
                   "type": "changelogEntry",
                   "title": "August 14, 2023",
                   "date": "2023-08-15T00:00:00.000Z",
@@ -472,7 +472,7 @@
                   "slug": "docs/api-reference/changelog/2023/8/14"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-8-13",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-13",
                   "type": "changelogEntry",
                   "title": "August 13, 2023",
                   "date": "2023-08-14T00:00:00.000Z",
@@ -482,14 +482,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.7",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.7",
               "type": "changelogMonth",
               "title": "July 1900",
               "month": 7,
               "slug": "docs/api-reference/changelog/2023/7",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-29",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-29",
                   "type": "changelogEntry",
                   "title": "July 29, 2023",
                   "date": "2023-07-30T00:00:00.000Z",
@@ -497,7 +497,7 @@
                   "slug": "docs/api-reference/changelog/2023/7/29"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-24",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-24",
                   "type": "changelogEntry",
                   "title": "July 24, 2023",
                   "date": "2023-07-25T00:00:00.000Z",
@@ -505,7 +505,7 @@
                   "slug": "docs/api-reference/changelog/2023/7/24"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-23",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-23",
                   "type": "changelogEntry",
                   "title": "July 23, 2023",
                   "date": "2023-07-24T00:00:00.000Z",
@@ -513,7 +513,7 @@
                   "slug": "docs/api-reference/changelog/2023/7/23"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-16",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-16",
                   "type": "changelogEntry",
                   "title": "July 16, 2023",
                   "date": "2023-07-17T00:00:00.000Z",
@@ -521,7 +521,7 @@
                   "slug": "docs/api-reference/changelog/2023/7/16"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-6",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-6",
                   "type": "changelogEntry",
                   "title": "July 6, 2023",
                   "date": "2023-07-07T00:00:00.000Z",
@@ -529,7 +529,7 @@
                   "slug": "docs/api-reference/changelog/2023/7/6"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-4",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-4",
                   "type": "changelogEntry",
                   "title": "July 4, 2023",
                   "date": "2023-07-05T00:00:00.000Z",
@@ -537,7 +537,7 @@
                   "slug": "docs/api-reference/changelog/2023/7/4"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-7-2",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-2",
                   "type": "changelogEntry",
                   "title": "July 2, 2023",
                   "date": "2023-07-03T00:00:00.000Z",
@@ -547,14 +547,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.6",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.6",
               "type": "changelogMonth",
               "title": "June 1900",
               "month": 6,
               "slug": "docs/api-reference/changelog/2023/6",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-6-26",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-6-26",
                   "type": "changelogEntry",
                   "title": "June 26, 2023",
                   "date": "2023-06-27T00:00:00.000Z",
@@ -562,7 +562,7 @@
                   "slug": "docs/api-reference/changelog/2023/6/26"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-6-19",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-6-19",
                   "type": "changelogEntry",
                   "title": "June 19, 2023",
                   "date": "2023-06-20T00:00:00.000Z",
@@ -570,7 +570,7 @@
                   "slug": "docs/api-reference/changelog/2023/6/19"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-6-12",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-6-12",
                   "type": "changelogEntry",
                   "title": "June 12, 2023",
                   "date": "2023-06-13T00:00:00.000Z",
@@ -580,14 +580,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.5",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.5",
               "type": "changelogMonth",
               "title": "May 1900",
               "month": 5,
               "slug": "docs/api-reference/changelog/2023/5",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-5-22",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-5-22",
                   "type": "changelogEntry",
                   "title": "May 22, 2023",
                   "date": "2023-05-23T00:00:00.000Z",
@@ -595,7 +595,7 @@
                   "slug": "docs/api-reference/changelog/2023/5/22"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-5-16",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-5-16",
                   "type": "changelogEntry",
                   "title": "May 16, 2023",
                   "date": "2023-05-17T00:00:00.000Z",
@@ -605,14 +605,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.4",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.4",
               "type": "changelogMonth",
               "title": "April 1900",
               "month": 4,
               "slug": "docs/api-reference/changelog/2023/4",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-4-2",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-4-2",
                   "type": "changelogEntry",
                   "title": "April 2, 2023",
                   "date": "2023-04-03T00:00:00.000Z",
@@ -622,14 +622,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.3",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.3",
               "type": "changelogMonth",
               "title": "March 1900",
               "month": 3,
               "slug": "docs/api-reference/changelog/2023/3",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-3-29",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-3-29",
                   "type": "changelogEntry",
                   "title": "March 29, 2023",
                   "date": "2023-03-30T00:00:00.000Z",
@@ -637,7 +637,7 @@
                   "slug": "docs/api-reference/changelog/2023/3/29"
                 },
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-3-1",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-3-1",
                   "type": "changelogEntry",
                   "title": "March 1, 2023",
                   "date": "2023-03-02T00:00:00.000Z",
@@ -647,14 +647,14 @@
               ]
             },
             {
-              "id": "root.*.docs/api-reference.humanloop-api.log.2023.2",
+              "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.2",
               "type": "changelogMonth",
               "title": "February 1900",
               "month": 2,
               "slug": "docs/api-reference/changelog/2023/2",
               "children": [
                 {
-                  "id": "root.*.docs/api-reference.humanloop-api.log.2023-2-19",
+                  "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-2-19",
                   "type": "changelogEntry",
                   "title": "February 19, 2023",
                   "date": "2023-02-20T00:00:00.000Z",
@@ -669,11 +669,11 @@
     },
     "children": [
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_chats",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.create",
             "type": "endpoint",
             "title": "Chat",
             "endpointId": "endpoint_chats.create",
@@ -683,7 +683,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createdeployed",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createdeployed",
             "type": "endpoint",
             "title": "Chat Deployed",
             "endpointId": "endpoint_chats.createdeployed",
@@ -693,7 +693,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createexperiment",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createexperiment",
             "type": "endpoint",
             "title": "Chat Experiment",
             "endpointId": "endpoint_chats.createexperiment",
@@ -703,7 +703,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createmodelconfig",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createmodelconfig",
             "type": "endpoint",
             "title": "Chat Model Config",
             "endpointId": "endpoint_chats.createmodelconfig",
@@ -719,11 +719,11 @@
         "pointsTo": "docs/api-reference/chats/create"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_completions",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_completions.create",
@@ -733,7 +733,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createdeployed",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createdeployed",
             "type": "endpoint",
             "title": "Completion Deployed",
             "endpointId": "endpoint_completions.createdeployed",
@@ -743,7 +743,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createexperiment",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createexperiment",
             "type": "endpoint",
             "title": "Completion Experiment",
             "endpointId": "endpoint_completions.createexperiment",
@@ -753,7 +753,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createmodelconfig",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createmodelconfig",
             "type": "endpoint",
             "title": "Completion Model Config",
             "endpointId": "endpoint_completions.createmodelconfig",
@@ -769,11 +769,11 @@
         "pointsTo": "docs/api-reference/completions/create"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_datapoints",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_datapoints.get",
@@ -783,7 +783,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.update",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_datapoints.update",
@@ -794,7 +794,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.delete",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_datapoints.delete",
@@ -811,11 +811,11 @@
         "pointsTo": "docs/api-reference/datapoints/get"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listallforproject",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listallforproject",
             "type": "endpoint",
             "title": "List For Project",
             "endpointId": "endpoint_datasets.listallforproject",
@@ -826,7 +826,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_datasets.create",
@@ -836,7 +836,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_datasets.list",
@@ -846,7 +846,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_datasets.get",
@@ -856,7 +856,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.delete",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_datasets.delete",
@@ -866,7 +866,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.update",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_datasets.update",
@@ -876,7 +876,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listdatapoints",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listdatapoints",
             "type": "endpoint",
             "title": "Datapoints",
             "endpointId": "endpoint_datasets.listdatapoints",
@@ -886,7 +886,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.createdatapoint",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.createdatapoint",
             "type": "endpoint",
             "title": "Create Datapoint",
             "endpointId": "endpoint_datasets.createdatapoint",
@@ -902,11 +902,11 @@
         "pointsTo": "docs/api-reference/datasets/listallforproject"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_evaluations.get",
@@ -916,7 +916,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listdatapoints",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listdatapoints",
             "type": "endpoint",
             "title": "List Datapoints",
             "endpointId": "endpoint_evaluations.listdatapoints",
@@ -926,7 +926,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listallforproject",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listallforproject",
             "type": "endpoint",
             "title": "List For Project",
             "endpointId": "endpoint_evaluations.listallforproject",
@@ -937,7 +937,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_evaluations.create",
@@ -947,7 +947,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.log",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.log",
             "type": "endpoint",
             "title": "Log",
             "endpointId": "endpoint_evaluations.log",
@@ -957,7 +957,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.result",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.result",
             "type": "endpoint",
             "title": "Result",
             "endpointId": "endpoint_evaluations.result",
@@ -967,7 +967,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.updatestatus",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.updatestatus",
             "type": "endpoint",
             "title": "Update Status",
             "endpointId": "endpoint_evaluations.updatestatus",
@@ -977,7 +977,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.addevaluators",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.addevaluators",
             "type": "endpoint",
             "title": "Add Evaluators",
             "endpointId": "endpoint_evaluations.addevaluators",
@@ -987,7 +987,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.list",
             "type": "endpoint",
             "title": "Get Evaluations",
             "endpointId": "endpoint_evaluations.list",
@@ -1003,11 +1003,11 @@
         "pointsTo": "docs/api-reference/evaluations/get"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluators",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.list",
             "type": "endpoint",
             "title": "List",
             "endpointId": "endpoint_evaluators.list",
@@ -1017,7 +1017,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_evaluators.create",
@@ -1027,7 +1027,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_evaluators.get",
@@ -1037,7 +1037,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.delete",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_evaluators.delete",
@@ -1047,7 +1047,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.update",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_evaluators.update",
@@ -1063,11 +1063,11 @@
         "pointsTo": "docs/api-reference/evaluators/list"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_experiments",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_experiments.list",
@@ -1077,7 +1077,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_experiments.create",
@@ -1087,7 +1087,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.delete",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_experiments.delete",
@@ -1097,7 +1097,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.update",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_experiments.update",
@@ -1107,7 +1107,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.sample",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.sample",
             "type": "endpoint",
             "title": "Sample",
             "endpointId": "endpoint_experiments.sample",
@@ -1123,11 +1123,11 @@
         "pointsTo": "docs/api-reference/experiments/list"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_feedback",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_feedback.endpoint_feedback.feedback",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback.endpoint_feedback.feedback",
             "type": "endpoint",
             "title": "Feedback",
             "endpointId": "endpoint_feedback.feedback",
@@ -1143,11 +1143,11 @@
         "pointsTo": "docs/api-reference/feedback/feedback"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_logs.list",
@@ -1157,7 +1157,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.log",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.log",
             "type": "endpoint",
             "title": "Log",
             "endpointId": "endpoint_logs.log",
@@ -1167,7 +1167,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.delete",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_logs.delete",
@@ -1177,7 +1177,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.updatebyref",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.updatebyref",
             "type": "endpoint",
             "title": "Update By Reference",
             "endpointId": "endpoint_logs.updatebyref",
@@ -1187,7 +1187,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_logs.get",
@@ -1197,7 +1197,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.update",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_logs.update",
@@ -1213,11 +1213,11 @@
         "pointsTo": "docs/api-reference/logs/list"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_modelConfigs",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_register",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_register",
             "type": "endpoint",
             "title": "Register",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_register",
@@ -1227,7 +1227,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_get",
@@ -1237,7 +1237,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_export",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_export",
             "type": "endpoint",
             "title": "Export by ID",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_export",
@@ -1247,7 +1247,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_serialize",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_serialize",
             "type": "endpoint",
             "title": "Serialize",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_serialize",
@@ -1257,7 +1257,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_deserialize",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_deserialize",
             "type": "endpoint",
             "title": "Deserialize",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_deserialize",
@@ -1273,11 +1273,11 @@
         "pointsTo": "docs/api-reference/model-configs/model-configs-register"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.list",
             "type": "endpoint",
             "title": "List",
             "endpointId": "endpoint_projects.list",
@@ -1287,7 +1287,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_projects.create",
@@ -1297,7 +1297,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_projects.get",
@@ -1307,7 +1307,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.delete",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_projects.delete",
@@ -1317,7 +1317,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.update",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_projects.update",
@@ -1327,7 +1327,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listconfigs",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listconfigs",
             "type": "endpoint",
             "title": "List Configs",
             "endpointId": "endpoint_projects.listconfigs",
@@ -1337,7 +1337,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.getactiveconfig",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.getactiveconfig",
             "type": "endpoint",
             "title": "Get Active Config",
             "endpointId": "endpoint_projects.getactiveconfig",
@@ -1347,7 +1347,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateconfig",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateconfig",
             "type": "endpoint",
             "title": "Deactivate Config",
             "endpointId": "endpoint_projects.deactivateconfig",
@@ -1357,7 +1357,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateexperiment",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateexperiment",
             "type": "endpoint",
             "title": "Deactivate Experiment",
             "endpointId": "endpoint_projects.deactivateexperiment",
@@ -1367,7 +1367,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.createfeedbacktype",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.createfeedbacktype",
             "type": "endpoint",
             "title": "Create Feedback Type",
             "endpointId": "endpoint_projects.createfeedbacktype",
@@ -1377,7 +1377,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.updatefeedbacktypes",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.updatefeedbacktypes",
             "type": "endpoint",
             "title": "Update Feedback Types",
             "endpointId": "endpoint_projects.updatefeedbacktypes",
@@ -1387,7 +1387,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.export",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.export",
             "type": "endpoint",
             "title": "Export",
             "endpointId": "endpoint_projects.export",
@@ -1397,7 +1397,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listdeployedconfigs",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listdeployedconfigs",
             "type": "endpoint",
             "title": "List Deployed Configs",
             "endpointId": "endpoint_projects.listdeployedconfigs",
@@ -1407,7 +1407,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deployconfig",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deployconfig",
             "type": "endpoint",
             "title": "Deploy Config",
             "endpointId": "endpoint_projects.deployconfig",
@@ -1417,7 +1417,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deletedeployedconfig",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deletedeployedconfig",
             "type": "endpoint",
             "title": "Delete Deployed Config",
             "endpointId": "endpoint_projects.deletedeployedconfig",
@@ -1433,11 +1433,11 @@
         "pointsTo": "docs/api-reference/projects/list"
       },
       {
-        "id": "root.*.docs/api-reference.humanloop-api.subpackage_sessions",
+        "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.list",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_sessions.list",
@@ -1447,7 +1447,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.create",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_sessions.create",
@@ -1457,7 +1457,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.*.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.get",
+            "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_sessions.get",
@@ -1476,7 +1476,7 @@
     "pointsTo": "docs/api-reference/chats/create"
   },
   {
-    "id": "root.v4.docs/api-reference.humanloop-api",
+    "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api",
     "type": "apiReference",
     "title": "Humanloop API",
     "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
@@ -1486,28 +1486,28 @@
     "hideTitle": false,
     "showErrors": true,
     "changelog": {
-      "id": "root.v4.docs/api-reference.humanloop-api.log",
+      "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log",
       "type": "changelog",
       "title": "Changelog",
       "slug": "v4/docs/api-reference/changelog",
       "hidden": false,
       "children": [
         {
-          "id": "root.v4.docs/api-reference.humanloop-api.log.2024",
+          "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024",
           "type": "changelogYear",
           "title": "2024",
           "year": 2024,
           "slug": "v4/docs/api-reference/changelog/2024",
           "children": [
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2024.4",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.4",
               "type": "changelogMonth",
               "title": "April 1900",
               "month": 4,
               "slug": "v4/docs/api-reference/changelog/2024/4",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-29",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-29",
                   "type": "changelogEntry",
                   "title": "April 29, 2024",
                   "date": "2024-04-30T00:00:00.000Z",
@@ -1515,7 +1515,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/4/29"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-25",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-25",
                   "type": "changelogEntry",
                   "title": "April 25, 2024",
                   "date": "2024-04-26T00:00:00.000Z",
@@ -1523,7 +1523,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/4/25"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-22",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-22",
                   "type": "changelogEntry",
                   "title": "April 22, 2024",
                   "date": "2024-04-23T00:00:00.000Z",
@@ -1531,7 +1531,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/4/22"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-17",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-17",
                   "type": "changelogEntry",
                   "title": "April 17, 2024",
                   "date": "2024-04-18T00:00:00.000Z",
@@ -1539,7 +1539,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/4/17"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-15",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-15",
                   "type": "changelogEntry",
                   "title": "April 15, 2024",
                   "date": "2024-04-16T00:00:00.000Z",
@@ -1547,7 +1547,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/4/15"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-12",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-12",
                   "type": "changelogEntry",
                   "title": "April 12, 2024",
                   "date": "2024-04-13T00:00:00.000Z",
@@ -1555,7 +1555,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/4/12"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-4-4",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-4-4",
                   "type": "changelogEntry",
                   "title": "April 4, 2024",
                   "date": "2024-04-05T00:00:00.000Z",
@@ -1565,14 +1565,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2024.3",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.3",
               "type": "changelogMonth",
               "title": "March 1900",
               "month": 3,
               "slug": "v4/docs/api-reference/changelog/2024/3",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-3-24",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-24",
                   "type": "changelogEntry",
                   "title": "March 24, 2024",
                   "date": "2024-03-25T00:00:00.000Z",
@@ -1580,7 +1580,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/3/24"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-3-17",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-17",
                   "type": "changelogEntry",
                   "title": "March 17, 2024",
                   "date": "2024-03-18T00:00:00.000Z",
@@ -1588,7 +1588,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/3/17"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-3-6",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-6",
                   "type": "changelogEntry",
                   "title": "March 6, 2024",
                   "date": "2024-03-07T00:00:00.000Z",
@@ -1596,7 +1596,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/3/6"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-3-5",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-3-5",
                   "type": "changelogEntry",
                   "title": "March 5, 2024",
                   "date": "2024-03-06T00:00:00.000Z",
@@ -1606,14 +1606,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2024.2",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.2",
               "type": "changelogMonth",
               "title": "February 1900",
               "month": 2,
               "slug": "v4/docs/api-reference/changelog/2024/2",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-2-25",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-25",
                   "type": "changelogEntry",
                   "title": "February 25, 2024",
                   "date": "2024-02-26T00:00:00.000Z",
@@ -1621,7 +1621,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/2/25"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-2-13",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-13",
                   "type": "changelogEntry",
                   "title": "February 13, 2024",
                   "date": "2024-02-14T00:00:00.000Z",
@@ -1629,7 +1629,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/2/13"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-2-12",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-12",
                   "type": "changelogEntry",
                   "title": "February 12, 2024",
                   "date": "2024-02-13T00:00:00.000Z",
@@ -1637,7 +1637,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/2/12"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-2-8",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-8",
                   "type": "changelogEntry",
                   "title": "February 8, 2024",
                   "date": "2024-02-09T00:00:00.000Z",
@@ -1645,7 +1645,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/2/8"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-2-7",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-7",
                   "type": "changelogEntry",
                   "title": "February 7, 2024",
                   "date": "2024-02-08T00:00:00.000Z",
@@ -1653,7 +1653,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/2/7"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-2-1",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-2-1",
                   "type": "changelogEntry",
                   "title": "February 1, 2024",
                   "date": "2024-02-02T00:00:00.000Z",
@@ -1663,14 +1663,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2024.1",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024.1",
               "type": "changelogMonth",
               "title": "January 1900",
               "month": 1,
               "slug": "v4/docs/api-reference/changelog/2024/1",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-1-29",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-29",
                   "type": "changelogEntry",
                   "title": "January 29, 2024",
                   "date": "2024-01-30T00:00:00.000Z",
@@ -1678,7 +1678,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/1/29"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-1-18",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-18",
                   "type": "changelogEntry",
                   "title": "January 18, 2024",
                   "date": "2024-01-19T00:00:00.000Z",
@@ -1686,7 +1686,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/1/18"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-1-11",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-11",
                   "type": "changelogEntry",
                   "title": "January 11, 2024",
                   "date": "2024-01-12T00:00:00.000Z",
@@ -1694,7 +1694,7 @@
                   "slug": "v4/docs/api-reference/changelog/2024/1/11"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2024-1-10",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2024-1-10",
                   "type": "changelogEntry",
                   "title": "January 10, 2024",
                   "date": "2024-01-11T00:00:00.000Z",
@@ -1706,21 +1706,21 @@
           ]
         },
         {
-          "id": "root.v4.docs/api-reference.humanloop-api.log.2023",
+          "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023",
           "type": "changelogYear",
           "title": "2023",
           "year": 2023,
           "slug": "v4/docs/api-reference/changelog/2023",
           "children": [
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.12",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.12",
               "type": "changelogMonth",
               "title": "December 1900",
               "month": 12,
               "slug": "v4/docs/api-reference/changelog/2023/12",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-12-21",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-21",
                   "type": "changelogEntry",
                   "title": "December 21, 2023",
                   "date": "2023-12-22T00:00:00.000Z",
@@ -1728,7 +1728,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/12/21"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-12-20",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-20",
                   "type": "changelogEntry",
                   "title": "December 20, 2023",
                   "date": "2023-12-21T00:00:00.000Z",
@@ -1736,7 +1736,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/12/20"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-12-12",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-12",
                   "type": "changelogEntry",
                   "title": "December 12, 2023",
                   "date": "2023-12-13T00:00:00.000Z",
@@ -1744,7 +1744,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/12/12"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-12-11",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-11",
                   "type": "changelogEntry",
                   "title": "December 11, 2023",
                   "date": "2023-12-12T00:00:00.000Z",
@@ -1752,7 +1752,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/12/11"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-12-4",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-4",
                   "type": "changelogEntry",
                   "title": "December 4, 2023",
                   "date": "2023-12-05T00:00:00.000Z",
@@ -1760,7 +1760,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/12/4"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-12-3",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-12-3",
                   "type": "changelogEntry",
                   "title": "December 3, 2023",
                   "date": "2023-12-04T00:00:00.000Z",
@@ -1770,14 +1770,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.11",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.11",
               "type": "changelogMonth",
               "title": "November 1900",
               "month": 11,
               "slug": "v4/docs/api-reference/changelog/2023/11",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-27",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-27",
                   "type": "changelogEntry",
                   "title": "November 27, 2023",
                   "date": "2023-11-28T00:00:00.000Z",
@@ -1785,7 +1785,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/27"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-21",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-21",
                   "type": "changelogEntry",
                   "title": "November 21, 2023",
                   "date": "2023-11-22T00:00:00.000Z",
@@ -1793,7 +1793,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/21"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-20",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-20",
                   "type": "changelogEntry",
                   "title": "November 20, 2023",
                   "date": "2023-11-21T00:00:00.000Z",
@@ -1801,7 +1801,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/20"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-19",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-19",
                   "type": "changelogEntry",
                   "title": "November 19, 2023",
                   "date": "2023-11-20T00:00:00.000Z",
@@ -1809,7 +1809,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/19"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-16",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-16",
                   "type": "changelogEntry",
                   "title": "November 16, 2023",
                   "date": "2023-11-17T00:00:00.000Z",
@@ -1817,7 +1817,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/16"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-9",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-9",
                   "type": "changelogEntry",
                   "title": "November 9, 2023",
                   "date": "2023-11-10T00:00:00.000Z",
@@ -1825,7 +1825,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/9"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-8",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-8",
                   "type": "changelogEntry",
                   "title": "November 8, 2023",
                   "date": "2023-11-09T00:00:00.000Z",
@@ -1833,7 +1833,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/11/8"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-11-7",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-11-7",
                   "type": "changelogEntry",
                   "title": "November 7, 2023",
                   "date": "2023-11-08T00:00:00.000Z",
@@ -1843,14 +1843,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.10",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.10",
               "type": "changelogMonth",
               "title": "October 1900",
               "month": 10,
               "slug": "v4/docs/api-reference/changelog/2023/10",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-10-31",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-31",
                   "type": "changelogEntry",
                   "title": "October 31, 2023",
                   "date": "2023-11-01T00:00:00.000Z",
@@ -1858,7 +1858,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/10/31"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-10-29",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-29",
                   "type": "changelogEntry",
                   "title": "October 29, 2023",
                   "date": "2023-10-30T00:00:00.000Z",
@@ -1866,7 +1866,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/10/29"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-10-16",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-16",
                   "type": "changelogEntry",
                   "title": "October 16, 2023",
                   "date": "2023-10-17T00:00:00.000Z",
@@ -1874,7 +1874,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/10/16"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-10-15",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-15",
                   "type": "changelogEntry",
                   "title": "October 15, 2023",
                   "date": "2023-10-16T00:00:00.000Z",
@@ -1882,7 +1882,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/10/15"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-10-9",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-10-9",
                   "type": "changelogEntry",
                   "title": "October 9, 2023",
                   "date": "2023-10-10T00:00:00.000Z",
@@ -1892,14 +1892,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.9",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.9",
               "type": "changelogMonth",
               "title": "September 1900",
               "month": 9,
               "slug": "v4/docs/api-reference/changelog/2023/9",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-9-14",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-9-14",
                   "type": "changelogEntry",
                   "title": "September 14, 2023",
                   "date": "2023-09-15T00:00:00.000Z",
@@ -1907,7 +1907,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/9/14"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-9-12",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-9-12",
                   "type": "changelogEntry",
                   "title": "September 12, 2023",
                   "date": "2023-09-13T00:00:00.000Z",
@@ -1917,14 +1917,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.8",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.8",
               "type": "changelogMonth",
               "title": "August 1900",
               "month": 8,
               "slug": "v4/docs/api-reference/changelog/2023/8",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-8-30",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-30",
                   "type": "changelogEntry",
                   "title": "August 30, 2023",
                   "date": "2023-08-31T00:00:00.000Z",
@@ -1932,7 +1932,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/8/30"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-8-20",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-20",
                   "type": "changelogEntry",
                   "title": "August 20, 2023",
                   "date": "2023-08-21T00:00:00.000Z",
@@ -1940,7 +1940,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/8/20"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-8-14",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-14",
                   "type": "changelogEntry",
                   "title": "August 14, 2023",
                   "date": "2023-08-15T00:00:00.000Z",
@@ -1948,7 +1948,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/8/14"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-8-13",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-8-13",
                   "type": "changelogEntry",
                   "title": "August 13, 2023",
                   "date": "2023-08-14T00:00:00.000Z",
@@ -1958,14 +1958,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.7",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.7",
               "type": "changelogMonth",
               "title": "July 1900",
               "month": 7,
               "slug": "v4/docs/api-reference/changelog/2023/7",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-29",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-29",
                   "type": "changelogEntry",
                   "title": "July 29, 2023",
                   "date": "2023-07-30T00:00:00.000Z",
@@ -1973,7 +1973,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/7/29"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-24",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-24",
                   "type": "changelogEntry",
                   "title": "July 24, 2023",
                   "date": "2023-07-25T00:00:00.000Z",
@@ -1981,7 +1981,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/7/24"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-23",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-23",
                   "type": "changelogEntry",
                   "title": "July 23, 2023",
                   "date": "2023-07-24T00:00:00.000Z",
@@ -1989,7 +1989,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/7/23"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-16",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-16",
                   "type": "changelogEntry",
                   "title": "July 16, 2023",
                   "date": "2023-07-17T00:00:00.000Z",
@@ -1997,7 +1997,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/7/16"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-6",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-6",
                   "type": "changelogEntry",
                   "title": "July 6, 2023",
                   "date": "2023-07-07T00:00:00.000Z",
@@ -2005,7 +2005,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/7/6"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-4",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-4",
                   "type": "changelogEntry",
                   "title": "July 4, 2023",
                   "date": "2023-07-05T00:00:00.000Z",
@@ -2013,7 +2013,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/7/4"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-7-2",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-7-2",
                   "type": "changelogEntry",
                   "title": "July 2, 2023",
                   "date": "2023-07-03T00:00:00.000Z",
@@ -2023,14 +2023,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.6",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.6",
               "type": "changelogMonth",
               "title": "June 1900",
               "month": 6,
               "slug": "v4/docs/api-reference/changelog/2023/6",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-6-26",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-6-26",
                   "type": "changelogEntry",
                   "title": "June 26, 2023",
                   "date": "2023-06-27T00:00:00.000Z",
@@ -2038,7 +2038,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/6/26"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-6-19",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-6-19",
                   "type": "changelogEntry",
                   "title": "June 19, 2023",
                   "date": "2023-06-20T00:00:00.000Z",
@@ -2046,7 +2046,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/6/19"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-6-12",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-6-12",
                   "type": "changelogEntry",
                   "title": "June 12, 2023",
                   "date": "2023-06-13T00:00:00.000Z",
@@ -2056,14 +2056,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.5",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.5",
               "type": "changelogMonth",
               "title": "May 1900",
               "month": 5,
               "slug": "v4/docs/api-reference/changelog/2023/5",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-5-22",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-5-22",
                   "type": "changelogEntry",
                   "title": "May 22, 2023",
                   "date": "2023-05-23T00:00:00.000Z",
@@ -2071,7 +2071,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/5/22"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-5-16",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-5-16",
                   "type": "changelogEntry",
                   "title": "May 16, 2023",
                   "date": "2023-05-17T00:00:00.000Z",
@@ -2081,14 +2081,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.4",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.4",
               "type": "changelogMonth",
               "title": "April 1900",
               "month": 4,
               "slug": "v4/docs/api-reference/changelog/2023/4",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-4-2",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-4-2",
                   "type": "changelogEntry",
                   "title": "April 2, 2023",
                   "date": "2023-04-03T00:00:00.000Z",
@@ -2098,14 +2098,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.3",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.3",
               "type": "changelogMonth",
               "title": "March 1900",
               "month": 3,
               "slug": "v4/docs/api-reference/changelog/2023/3",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-3-29",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-3-29",
                   "type": "changelogEntry",
                   "title": "March 29, 2023",
                   "date": "2023-03-30T00:00:00.000Z",
@@ -2113,7 +2113,7 @@
                   "slug": "v4/docs/api-reference/changelog/2023/3/29"
                 },
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-3-1",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-3-1",
                   "type": "changelogEntry",
                   "title": "March 1, 2023",
                   "date": "2023-03-02T00:00:00.000Z",
@@ -2123,14 +2123,14 @@
               ]
             },
             {
-              "id": "root.v4.docs/api-reference.humanloop-api.log.2023.2",
+              "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023.2",
               "type": "changelogMonth",
               "title": "February 1900",
               "month": 2,
               "slug": "v4/docs/api-reference/changelog/2023/2",
               "children": [
                 {
-                  "id": "root.v4.docs/api-reference.humanloop-api.log.2023-2-19",
+                  "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.log.2023-2-19",
                   "type": "changelogEntry",
                   "title": "February 19, 2023",
                   "date": "2023-02-20T00:00:00.000Z",
@@ -2145,11 +2145,11 @@
     },
     "children": [
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_chats",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.create",
             "type": "endpoint",
             "title": "Chat",
             "endpointId": "endpoint_chats.create",
@@ -2159,7 +2159,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createdeployed",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createdeployed",
             "type": "endpoint",
             "title": "Chat Deployed",
             "endpointId": "endpoint_chats.createdeployed",
@@ -2169,7 +2169,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createexperiment",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createexperiment",
             "type": "endpoint",
             "title": "Chat Experiment",
             "endpointId": "endpoint_chats.createexperiment",
@@ -2179,7 +2179,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createmodelconfig",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.createmodelconfig",
             "type": "endpoint",
             "title": "Chat Model Config",
             "endpointId": "endpoint_chats.createmodelconfig",
@@ -2195,11 +2195,11 @@
         "pointsTo": "v4/docs/api-reference/chats/create"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_completions",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_completions.create",
@@ -2209,7 +2209,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createdeployed",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createdeployed",
             "type": "endpoint",
             "title": "Completion Deployed",
             "endpointId": "endpoint_completions.createdeployed",
@@ -2219,7 +2219,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createexperiment",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createexperiment",
             "type": "endpoint",
             "title": "Completion Experiment",
             "endpointId": "endpoint_completions.createexperiment",
@@ -2229,7 +2229,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createmodelconfig",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.createmodelconfig",
             "type": "endpoint",
             "title": "Completion Model Config",
             "endpointId": "endpoint_completions.createmodelconfig",
@@ -2245,11 +2245,11 @@
         "pointsTo": "v4/docs/api-reference/completions/create"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datapoints",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_datapoints.get",
@@ -2259,7 +2259,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.update",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_datapoints.update",
@@ -2270,7 +2270,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.delete",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_datapoints.delete",
@@ -2287,11 +2287,11 @@
         "pointsTo": "v4/docs/api-reference/datapoints/get"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listallforproject",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listallforproject",
             "type": "endpoint",
             "title": "List For Project",
             "endpointId": "endpoint_datasets.listallforproject",
@@ -2302,7 +2302,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_datasets.create",
@@ -2312,7 +2312,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_datasets.list",
@@ -2322,7 +2322,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_datasets.get",
@@ -2332,7 +2332,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.delete",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_datasets.delete",
@@ -2342,7 +2342,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.update",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_datasets.update",
@@ -2352,7 +2352,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listdatapoints",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listdatapoints",
             "type": "endpoint",
             "title": "Datapoints",
             "endpointId": "endpoint_datasets.listdatapoints",
@@ -2362,7 +2362,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.createdatapoint",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.createdatapoint",
             "type": "endpoint",
             "title": "Create Datapoint",
             "endpointId": "endpoint_datasets.createdatapoint",
@@ -2378,11 +2378,11 @@
         "pointsTo": "v4/docs/api-reference/datasets/listallforproject"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_evaluations.get",
@@ -2392,7 +2392,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listdatapoints",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listdatapoints",
             "type": "endpoint",
             "title": "List Datapoints",
             "endpointId": "endpoint_evaluations.listdatapoints",
@@ -2402,7 +2402,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listallforproject",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.listallforproject",
             "type": "endpoint",
             "title": "List For Project",
             "endpointId": "endpoint_evaluations.listallforproject",
@@ -2413,7 +2413,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_evaluations.create",
@@ -2423,7 +2423,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.log",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.log",
             "type": "endpoint",
             "title": "Log",
             "endpointId": "endpoint_evaluations.log",
@@ -2433,7 +2433,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.result",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.result",
             "type": "endpoint",
             "title": "Result",
             "endpointId": "endpoint_evaluations.result",
@@ -2443,7 +2443,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.updatestatus",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.updatestatus",
             "type": "endpoint",
             "title": "Update Status",
             "endpointId": "endpoint_evaluations.updatestatus",
@@ -2453,7 +2453,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.addevaluators",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.addevaluators",
             "type": "endpoint",
             "title": "Add Evaluators",
             "endpointId": "endpoint_evaluations.addevaluators",
@@ -2463,7 +2463,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.list",
             "type": "endpoint",
             "title": "Get Evaluations",
             "endpointId": "endpoint_evaluations.list",
@@ -2479,11 +2479,11 @@
         "pointsTo": "v4/docs/api-reference/evaluations/get"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluators",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.list",
             "type": "endpoint",
             "title": "List",
             "endpointId": "endpoint_evaluators.list",
@@ -2493,7 +2493,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_evaluators.create",
@@ -2503,7 +2503,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_evaluators.get",
@@ -2513,7 +2513,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.delete",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_evaluators.delete",
@@ -2523,7 +2523,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.update",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_evaluators.update",
@@ -2539,11 +2539,11 @@
         "pointsTo": "v4/docs/api-reference/evaluators/list"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_experiments",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_experiments.list",
@@ -2553,7 +2553,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_experiments.create",
@@ -2563,7 +2563,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.delete",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_experiments.delete",
@@ -2573,7 +2573,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.update",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_experiments.update",
@@ -2583,7 +2583,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.sample",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.sample",
             "type": "endpoint",
             "title": "Sample",
             "endpointId": "endpoint_experiments.sample",
@@ -2599,11 +2599,11 @@
         "pointsTo": "v4/docs/api-reference/experiments/list"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_feedback",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_feedback.endpoint_feedback.feedback",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback.endpoint_feedback.feedback",
             "type": "endpoint",
             "title": "Feedback",
             "endpointId": "endpoint_feedback.feedback",
@@ -2619,11 +2619,11 @@
         "pointsTo": "v4/docs/api-reference/feedback/feedback"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_logs.list",
@@ -2633,7 +2633,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.log",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.log",
             "type": "endpoint",
             "title": "Log",
             "endpointId": "endpoint_logs.log",
@@ -2643,7 +2643,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.delete",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_logs.delete",
@@ -2653,7 +2653,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.updatebyref",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.updatebyref",
             "type": "endpoint",
             "title": "Update By Reference",
             "endpointId": "endpoint_logs.updatebyref",
@@ -2663,7 +2663,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_logs.get",
@@ -2673,7 +2673,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.update",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_logs.update",
@@ -2689,11 +2689,11 @@
         "pointsTo": "v4/docs/api-reference/logs/list"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_modelConfigs",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_register",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_register",
             "type": "endpoint",
             "title": "Register",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_register",
@@ -2703,7 +2703,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_get",
@@ -2713,7 +2713,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_export",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_export",
             "type": "endpoint",
             "title": "Export by ID",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_export",
@@ -2723,7 +2723,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_serialize",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_serialize",
             "type": "endpoint",
             "title": "Serialize",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_serialize",
@@ -2733,7 +2733,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_deserialize",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_deserialize",
             "type": "endpoint",
             "title": "Deserialize",
             "endpointId": "endpoint_modelConfigs.ModelConfigs_deserialize",
@@ -2749,11 +2749,11 @@
         "pointsTo": "v4/docs/api-reference/model-configs/model-configs-register"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.list",
             "type": "endpoint",
             "title": "List",
             "endpointId": "endpoint_projects.list",
@@ -2763,7 +2763,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_projects.create",
@@ -2773,7 +2773,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_projects.get",
@@ -2783,7 +2783,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.delete",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.delete",
             "type": "endpoint",
             "title": "Delete",
             "endpointId": "endpoint_projects.delete",
@@ -2793,7 +2793,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.update",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.update",
             "type": "endpoint",
             "title": "Update",
             "endpointId": "endpoint_projects.update",
@@ -2803,7 +2803,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listconfigs",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listconfigs",
             "type": "endpoint",
             "title": "List Configs",
             "endpointId": "endpoint_projects.listconfigs",
@@ -2813,7 +2813,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.getactiveconfig",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.getactiveconfig",
             "type": "endpoint",
             "title": "Get Active Config",
             "endpointId": "endpoint_projects.getactiveconfig",
@@ -2823,7 +2823,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateconfig",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateconfig",
             "type": "endpoint",
             "title": "Deactivate Config",
             "endpointId": "endpoint_projects.deactivateconfig",
@@ -2833,7 +2833,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateexperiment",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deactivateexperiment",
             "type": "endpoint",
             "title": "Deactivate Experiment",
             "endpointId": "endpoint_projects.deactivateexperiment",
@@ -2843,7 +2843,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.createfeedbacktype",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.createfeedbacktype",
             "type": "endpoint",
             "title": "Create Feedback Type",
             "endpointId": "endpoint_projects.createfeedbacktype",
@@ -2853,7 +2853,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.updatefeedbacktypes",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.updatefeedbacktypes",
             "type": "endpoint",
             "title": "Update Feedback Types",
             "endpointId": "endpoint_projects.updatefeedbacktypes",
@@ -2863,7 +2863,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.export",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.export",
             "type": "endpoint",
             "title": "Export",
             "endpointId": "endpoint_projects.export",
@@ -2873,7 +2873,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listdeployedconfigs",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.listdeployedconfigs",
             "type": "endpoint",
             "title": "List Deployed Configs",
             "endpointId": "endpoint_projects.listdeployedconfigs",
@@ -2883,7 +2883,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deployconfig",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deployconfig",
             "type": "endpoint",
             "title": "Deploy Config",
             "endpointId": "endpoint_projects.deployconfig",
@@ -2893,7 +2893,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deletedeployedconfig",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.deletedeployedconfig",
             "type": "endpoint",
             "title": "Delete Deployed Config",
             "endpointId": "endpoint_projects.deletedeployedconfig",
@@ -2909,11 +2909,11 @@
         "pointsTo": "v4/docs/api-reference/projects/list"
       },
       {
-        "id": "root.v4.docs/api-reference.humanloop-api.subpackage_sessions",
+        "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions",
         "type": "apiSection",
         "children": [
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.list",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.list",
             "type": "endpoint",
             "title": "List ",
             "endpointId": "endpoint_sessions.list",
@@ -2923,7 +2923,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.create",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.create",
             "type": "endpoint",
             "title": "Create",
             "endpointId": "endpoint_sessions.create",
@@ -2933,7 +2933,7 @@
             "isResponseStream": false
           },
           {
-            "id": "root.v4.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.get",
+            "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.get",
             "type": "endpoint",
             "title": "Get",
             "endpointId": "endpoint_sessions.get",

@@ -47,7 +47,7 @@ export class ApiDefinitionResolver {
         domain: string,
     ): Promise<ResolvedRootPackage> {
         const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, domain);
-        return resolver.resolveApiDefinition(root.title, mdxOptions);
+        return resolver.resolveApiDefinition(mdxOptions);
     }
 
     private resolvedTypes: Record<string, ResolvedTypeDefinition> = {};
@@ -61,13 +61,11 @@ export class ApiDefinitionResolver {
         private domain: string,
     ) {}
 
-    private async resolveApiDefinition(
-        title: string,
-        mdxOptions: FernSerializeMdxOptions | undefined,
-    ): Promise<ResolvedRootPackage> {
+    private async resolveApiDefinition(mdxOptions: FernSerializeMdxOptions | undefined): Promise<ResolvedRootPackage> {
         this.resolvedTypes = await this.typeResolver.resolve();
 
         const withPackage = await this.resolveApiDefinitionPackage(this.root, mdxOptions);
+
         return {
             type: "rootPackage",
             ...withPackage,
@@ -83,7 +81,7 @@ export class ApiDefinitionResolver {
     ): Promise<ResolvedWithApiDefinition> {
         const maybeItems = await Promise.all(
             node.children.map((item) =>
-                FernNavigation.visitApiReferenceChild<Promise<ResolvedPackageItem | undefined>>(item, {
+                visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
                     endpoint: (endpoint) => this.resolveEndpointDefinition(endpoint),
                     endpointPair: async (endpointPair) => {
                         const [nonStream, stream] = await Promise.all([
@@ -306,7 +304,8 @@ export class ApiDefinitionResolver {
 
         const toRet: ResolvedEndpointDefinition = {
             type: "endpoint",
-            id: endpoint.id,
+            nodeId: node.id,
+            id: node.endpointId,
             slug: node.slug,
             description,
             auth,
@@ -503,7 +502,8 @@ export class ApiDefinitionResolver {
             type: "websocket",
             auth,
             environments: websocket.environments,
-            id: websocket.id,
+            nodeId: node.id,
+            id: node.webSocketId,
             description: websocket.description,
             availability: websocket.availability,
             slug: node.slug,
@@ -563,7 +563,8 @@ export class ApiDefinitionResolver {
             availability: undefined,
             slug: node.slug,
             method: webhook.method,
-            id: webhook.id,
+            nodeId: node.id,
+            id: node.webhookId,
             path: webhook.path,
             headers,
             payload: {

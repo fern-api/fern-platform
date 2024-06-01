@@ -1,6 +1,6 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { FernNavigation } from "../generated";
 import { NavigationNode } from "../types/NavigationNode";
-import { visitNavigationNode } from "../visitors";
 
 const RETURN_UNDEFINED = () => undefined;
 const RETURN_API_DEFINITION_ID = (node: FernNavigation.WithApiDefinitionId) => node.apiDefinitionId;
@@ -9,7 +9,7 @@ export function getApiReferenceId(node: NavigationNode | undefined): FernNavigat
     if (node == null) {
         return undefined;
     }
-    return visitNavigationNode(node, {
+    return visitDiscriminatedUnion(node)._visit({
         root: RETURN_UNDEFINED,
         versioned: RETURN_UNDEFINED,
         tabbed: RETURN_UNDEFINED,
