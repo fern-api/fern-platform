@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface EndpointPairNode {
+export interface EndpointPairNode extends FernNavigation.WithNodeId {
     type: "endpointPair";
     stream: FernNavigation.EndpointNode;
     nonStream: FernNavigation.EndpointNode;

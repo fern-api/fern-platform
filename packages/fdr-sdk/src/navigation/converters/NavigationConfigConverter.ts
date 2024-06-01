@@ -1,5 +1,5 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { last } from "lodash-es";
+import { kebabCase, last } from "lodash-es";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
 import { FernNavigation } from "../generated";
@@ -62,49 +62,51 @@ export class NavigationConfigConverter {
         versioned: DocsV1Read.VersionedNavigationConfig,
         baseSlug: FernNavigation.Slug,
     ): FernNavigation.VersionedNode {
-        const children: FernNavigation.VersionNode[] = [];
-        versioned.versions.forEach((version, idx) => {
-            if (idx === 0) {
+        return this.#idgen.with("", (id) => {
+            const children: FernNavigation.VersionNode[] = [];
+            versioned.versions.forEach((version, idx) => {
+                if (idx === 0) {
+                    children.push(
+                        this.#idgen.with("*", (id) => {
+                            const child = this.convertUnversionedNavigationConfig(version.config, baseSlug, baseSlug);
+                            const pointsTo = followRedirect(child);
+                            return {
+                                id,
+                                type: "version",
+                                title: version.version,
+                                versionId: FernNavigation.VersionId(version.urlSlug),
+                                slug: baseSlug,
+                                icon: undefined,
+                                hidden: undefined,
+                                child,
+                                availability: convertAvailability(version.availability),
+                                pointsTo,
+                            };
+                        }),
+                    );
+                }
+                const slug = createSlug(baseSlug, baseSlug, version);
                 children.push(
-                    this.#idgen.with("*", (id) => {
-                        const child = this.convertUnversionedNavigationConfig(version.config, baseSlug, baseSlug);
+                    this.#idgen.with(version.urlSlug, (id) => {
+                        const child = this.convertUnversionedNavigationConfig(version.config, slug, slug);
                         const pointsTo = followRedirect(child);
                         return {
                             id,
                             type: "version",
                             title: version.version,
                             versionId: FernNavigation.VersionId(version.urlSlug),
-                            slug: baseSlug,
+                            slug,
                             icon: undefined,
-                            hidden: undefined,
+                            hidden: idx === 0, // hidden from the version selector
                             child,
                             availability: convertAvailability(version.availability),
                             pointsTo,
                         };
                     }),
                 );
-            }
-            const slug = createSlug(baseSlug, baseSlug, version);
-            children.push(
-                this.#idgen.with(version.urlSlug, (id) => {
-                    const child = this.convertUnversionedNavigationConfig(version.config, slug, slug);
-                    const pointsTo = followRedirect(child);
-                    return {
-                        id,
-                        type: "version",
-                        title: version.version,
-                        versionId: FernNavigation.VersionId(version.urlSlug),
-                        slug,
-                        icon: undefined,
-                        hidden: idx === 0, // hidden from the version selector
-                        child,
-                        availability: convertAvailability(version.availability),
-                        pointsTo,
-                    };
-                }),
-            );
+            });
+            return { id, type: "versioned", children };
         });
-        return { type: "versioned", children };
     }
 
     private convertUnversionedNavigationConfig(
@@ -112,51 +114,57 @@ export class NavigationConfigConverter {
         baseSlug: string,
         parentSlug: string,
     ): FernNavigation.VersionChild {
-        return visitUnversionedReadNavigationConfig<FernNavigation.VersionChild>(unversioned, {
-            tabbed: (tabbed) => ({
-                type: "tabbed",
-                children: tabbed.tabs.map((tab): FernNavigation.TabChild => {
-                    if (tab.type === "group" || (tab.type == null && Array.isArray(tab.items))) {
-                        return this.#idgen.with(tab.urlSlug, (id) => {
-                            const slug = createSlug(baseSlug, parentSlug, tab);
-                            const child: FernNavigation.SidebarRootNode = {
-                                type: "sidebarRoot",
-                                children: this.groupSidebarRootChildren(
-                                    tab.items.map((item) => this.convertNavigationItem(item, baseSlug, slug)),
-                                ),
-                            };
-                            const pointsTo = followRedirect(child);
-                            return {
+        return this.#idgen.with("uv", (id) => {
+            return visitUnversionedReadNavigationConfig<FernNavigation.VersionChild>(unversioned, {
+                tabbed: (tabbed) => ({
+                    id,
+                    type: "tabbed",
+                    children: tabbed.tabs.map((tab): FernNavigation.TabChild => {
+                        if (tab.type === "group" || (tab.type == null && Array.isArray(tab.items))) {
+                            return this.#idgen.with(tab.urlSlug, (id) => {
+                                const slug = createSlug(baseSlug, parentSlug, tab);
+                                const child: FernNavigation.SidebarRootNode = this.#idgen.with(tab.urlSlug, (id) => ({
+                                    id,
+                                    type: "sidebarRoot",
+                                    children: this.groupSidebarRootChildren(
+                                        tab.items.map((item) => this.convertNavigationItem(item, baseSlug, slug)),
+                                    ),
+                                }));
+                                const pointsTo = followRedirect(child);
+                                return {
+                                    id,
+                                    type: "tab",
+                                    title: tab.title,
+                                    slug,
+                                    icon: tab.icon,
+                                    hidden: false,
+                                    child,
+                                    pointsTo,
+                                };
+                            });
+                        } else if (tab.type === "link") {
+                            return this.#idgen.with("link", (id) => ({
                                 id,
-                                type: "tab",
+                                type: "link",
                                 title: tab.title,
-                                slug,
+                                url: FernNavigation.Url(tab.url),
                                 icon: tab.icon,
-                                hidden: false,
-                                child,
-                                pointsTo,
-                            };
-                        });
-                    } else if (tab.type === "link") {
-                        return {
-                            type: "link",
-                            title: tab.title,
-                            url: FernNavigation.Url(tab.url),
-                            icon: tab.icon,
-                        };
-                    } else if (tab.type === "changelog") {
-                        return ChangelogNavigationConverter.convert(tab, baseSlug, parentSlug, this.#idgen);
-                    } else {
-                        assertNever(tab as never);
-                    }
+                            }));
+                        } else if (tab.type === "changelog") {
+                            return ChangelogNavigationConverter.convert(tab, baseSlug, parentSlug, this.#idgen);
+                        } else {
+                            assertNever(tab as never);
+                        }
+                    }),
                 }),
-            }),
-            untabbed: (untabbed) => ({
-                type: "sidebarRoot",
-                children: this.groupSidebarRootChildren(
-                    untabbed.items.map((item) => this.convertNavigationItem(item, baseSlug, parentSlug)),
-                ),
-            }),
+                untabbed: (untabbed) => ({
+                    id,
+                    type: "sidebarRoot",
+                    children: this.groupSidebarRootChildren(
+                        untabbed.items.map((item) => this.convertNavigationItem(item, baseSlug, parentSlug)),
+                    ),
+                }),
+            });
         });
     }
 
@@ -178,10 +186,11 @@ export class NavigationConfigConverter {
             if (lastChild?.type === "sidebarGroup") {
                 sidebarGroup = lastChild;
             } else {
-                sidebarGroup = {
+                sidebarGroup = this.#idgen.with("group", (id) => ({
+                    id,
                     type: "sidebarGroup",
                     children: [],
-                };
+                }));
                 grouped.push(sidebarGroup);
             }
 
@@ -206,12 +215,14 @@ export class NavigationConfigConverter {
                     icon: page.icon,
                     hidden: page.hidden,
                 })),
-            link: (link) => ({
-                type: "link",
-                title: link.title,
-                url: FernNavigation.Url(link.url),
-                icon: link.icon,
-            }),
+            link: (link) =>
+                this.#idgen.with(kebabCase(link.title), (id) => ({
+                    id,
+                    type: "link",
+                    title: link.title,
+                    url: FernNavigation.Url(link.url),
+                    icon: link.icon,
+                })),
             section: (section) =>
                 this.#idgen.with(section.urlSlug, (id) => {
                     const slug = createSlug(baseSlug, parentSlug, section);

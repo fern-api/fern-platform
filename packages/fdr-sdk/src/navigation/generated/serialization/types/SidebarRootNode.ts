@@ -6,17 +6,20 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { SidebarRootChild } from "./SidebarRootChild";
+import { WithNodeId } from "./WithNodeId";
 
 export const SidebarRootNode: core.serialization.ObjectSchema<
     serializers.SidebarRootNode.Raw,
     FernNavigation.SidebarRootNode
-> = core.serialization.objectWithoutOptionalProperties({
-    type: core.serialization.stringLiteral("sidebarRoot"),
-    children: core.serialization.list(SidebarRootChild),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        type: core.serialization.stringLiteral("sidebarRoot"),
+        children: core.serialization.list(SidebarRootChild),
+    })
+    .extend(WithNodeId);
 
 export declare namespace SidebarRootNode {
-    interface Raw {
+    interface Raw extends WithNodeId.Raw {
         type: "sidebarRoot";
         children: SidebarRootChild.Raw[];
     }

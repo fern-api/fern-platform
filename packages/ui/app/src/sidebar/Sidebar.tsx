@@ -11,7 +11,7 @@ import { useSearchService } from "../services/useSearchService";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
-import { SidebarSection } from "./SidebarSection";
+import { SidebarRootNode } from "./SidebarRootNode";
 import { SidebarTabButton } from "./SidebarTabButton";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
@@ -24,13 +24,13 @@ export interface SidebarProps {
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({
-    currentSlug,
-    registerScrolledToPathListener,
+    // currentSlug,
+    // registerScrolledToPathListener,
     logoHeight,
     logoHref,
     showSearchBar,
 }) {
-    const { layout, tabs, currentTabIndex, sidebarNodes } = useDocsContext();
+    const { layout, tabs, currentTabIndex, sidebar } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
     const layoutBreakpoint = useLayoutBreakpoint();
@@ -72,12 +72,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                     )}
                     <CollapseSidebarProvider>
                         <FernTooltipProvider>
-                            <SidebarSection
-                                slug={currentSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                depth={0}
-                                topLevel={true}
-                            />
+                            <SidebarRootNode node={sidebar} />
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
                     <MobileSidebarHeaderLinks />

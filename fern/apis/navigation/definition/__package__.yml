@@ -66,32 +66,38 @@ types:
   # nodes without metadata
 
   VersionedNode:
+    extends: WithNodeId
     properties:
       type: literal<"versioned">
       children: list<VersionNode>
 
   TabbedNode:
+    extends: WithNodeId
     properties:
       type: literal<"tabbed">
       children: list<TabChild>
 
   SidebarRootNode:
+    extends: WithNodeId
     properties:
       type: literal<"sidebarRoot">
       children: list<SidebarRootChild>
 
   SidebarGroupNode:
+    extends: WithNodeId
     properties:
       type: literal<"sidebarGroup">
       children: list<NavigationChild>
 
   EndpointPairNode:
+    extends: WithNodeId
     properties:
       type: literal<"endpointPair">
       stream: EndpointNode
       nonStream: EndpointNode
 
   LinkNode:
+    extends: WithNodeId
     properties:
       type: literal<"link">
       title: string
@@ -224,11 +230,15 @@ types:
 
   # utilities
 
-  WithNodeMetadata:
+  WithNodeId:
     properties:
       id:
         type: NodeId
         docs: A unique, stable identifier for this node.
+
+  WithNodeMetadata:
+    extends: WithNodeId
+    properties:
       title: string
       slug: Slug
       icon: optional<string>

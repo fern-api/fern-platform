@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface LinkNode {
+export interface LinkNode extends FernNavigation.WithNodeId {
     type: "link";
     title: string;
     icon: string | undefined;

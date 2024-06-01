@@ -6,17 +6,20 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { VersionNode } from "./VersionNode";
+import { WithNodeId } from "./WithNodeId";
 
 export const VersionedNode: core.serialization.ObjectSchema<
     serializers.VersionedNode.Raw,
     FernNavigation.VersionedNode
-> = core.serialization.objectWithoutOptionalProperties({
-    type: core.serialization.stringLiteral("versioned"),
-    children: core.serialization.list(VersionNode),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        type: core.serialization.stringLiteral("versioned"),
+        children: core.serialization.list(VersionNode),
+    })
+    .extend(WithNodeId);
 
 export declare namespace VersionedNode {
-    interface Raw {
+    interface Raw extends WithNodeId.Raw {
         type: "versioned";
         children: VersionNode.Raw[];
     }

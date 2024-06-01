@@ -6,17 +6,20 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { Url } from "./Url";
+import { WithNodeId } from "./WithNodeId";
 
 export const LinkNode: core.serialization.ObjectSchema<serializers.LinkNode.Raw, FernNavigation.LinkNode> =
-    core.serialization.objectWithoutOptionalProperties({
-        type: core.serialization.stringLiteral("link"),
-        title: core.serialization.string(),
-        icon: core.serialization.string().optional(),
-        url: Url,
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            type: core.serialization.stringLiteral("link"),
+            title: core.serialization.string(),
+            icon: core.serialization.string().optional(),
+            url: Url,
+        })
+        .extend(WithNodeId);
 
 export declare namespace LinkNode {
-    interface Raw {
+    interface Raw extends WithNodeId.Raw {
         type: "link";
         title: string;
         icon?: string | null;

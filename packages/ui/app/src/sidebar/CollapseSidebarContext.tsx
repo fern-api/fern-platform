@@ -1,22 +1,25 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { last, noop } from "lodash-es";
+import { noop } from "lodash-es";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import urljoin from "url-join";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 interface CollapseSidebarContextValue {
-    expanded: string[][]; // true = expand all, string[] = expand only these slugs
-    toggleExpanded: (slug: readonly string[]) => void;
-    selectedSlug: readonly string[] | undefined;
-    checkExpanded: (expandableSlug: readonly string[]) => boolean;
+    expanded: FernNavigation.NodeId[];
+    toggleExpanded: (id: FernNavigation.NodeId) => void;
+    selectedNodeId: FernNavigation.NodeId | undefined;
+    checkExpanded: (id: FernNavigation.NodeId) => boolean;
+    checkChildSelected: (id: FernNavigation.NodeId) => boolean;
+    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
 }
 
 const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
     expanded: [],
     toggleExpanded: noop,
-    selectedSlug: undefined,
+    selectedNodeId: undefined,
     checkExpanded: () => false,
+    checkChildSelected: () => false,
+    registerScrolledToPathListener: () => noop,
 });
 
 export function checkSlugStartsWith(slug: readonly string[], startsWith: readonly string[]): boolean {
@@ -35,15 +38,17 @@ export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(
 
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
     const { sidebar } = useDocsContext();
-    const { selectedSlug: selectedSlugString } = useNavigationContext();
+    const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
 
-    const parentSlugMap = useMemo(() => {
-        const map = new Map<string, string[]>();
+    const selectedNodeId = activeNavigatable?.id;
+
+    const parentIdMap = useMemo(() => {
+        const map = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
         FernNavigation.traverseNavigation(sidebar, (node, _index, parents) => {
             if (FernNavigation.utils.nodeHasMetadata(node)) {
                 map.set(
-                    node.slug.join("/"),
-                    parents.filter(FernNavigation.utils.nodeHasMetadata).map((p) => p.slug.join("/")),
+                    node.id,
+                    parents.map((p) => p.id),
                 );
             }
         });
@@ -51,67 +56,60 @@ export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => 
     }, [sidebar]);
 
     const parentToChildrenMap = useMemo(() => {
-        const map = new Map<string, string[]>();
-        FernNavigation.traverseNavigation(sidebar, (visitedNode, _index, parents) => {
-            if (!FernNavigation.utils.nodeHasMetadata(visitedNode)) {
-                return;
-            }
-            const parent = last(parents.filter(FernNavigation.utils.nodeHasMetadata));
-
-            if (parent != null) {
-                const parentSlug = urljoin(parent.slug);
-                if (!map.has(parentSlug)) {
-                    map.set(parentSlug, []);
-                }
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                map.get(parentSlug)!.push(urljoin(visitedNode.slug));
-            }
+        const map = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+        parentIdMap.forEach((parents, id) => {
+            parents.forEach((parentId) => {
+                const children = map.get(parentId) ?? [];
+                children.push(id);
+                map.set(parentId, children);
+            });
         });
         return map;
-    }, [sidebar]);
+    }, [parentIdMap]);
 
-    const selectedSlug = useMemo(() => selectedSlugString.split("/"), [selectedSlugString]);
-    const [expanded, setExpanded] = useState<string[][]>(() => [
-        selectedSlug,
-        ...(parentSlugMap.get(selectedSlug.join("/"))?.map((slug) => slug.split("/")) ?? []),
-    ]);
+    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() =>
+        selectedNodeId == null ? [] : [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])],
+    );
 
     useEffect(() => {
-        const newExpanded = [
-            selectedSlug,
-            ...(parentSlugMap.get(selectedSlug.join("/"))?.map((slug) => slug.split("/")) ?? []),
-        ];
-        setExpanded(newExpanded);
-    }, [parentSlugMap, selectedSlug]);
+        setExpanded(selectedNodeId == null ? [] : [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])]);
+    }, [selectedNodeId, parentIdMap]);
 
     const checkExpanded = useCallback(
-        (expandableSlug: readonly string[]) =>
-            expanded.some(
-                (slug) =>
-                    slug.join("/") === expandableSlug.join("/") ||
-                    parentSlugMap.get(slug.join("/"))?.includes(expandableSlug.join("/")),
-            ),
-        [expanded, parentSlugMap],
+        (expandableId: FernNavigation.NodeId) =>
+            expanded.some((id) => id === expandableId || parentIdMap.get(id)?.includes(expandableId)),
+        [expanded, parentIdMap],
+    );
+
+    const checkChildSelected = useCallback(
+        (parentId: FernNavigation.NodeId) =>
+            (selectedNodeId != null && parentToChildrenMap.get(parentId)?.includes(selectedNodeId)) ?? false,
+        [parentToChildrenMap, selectedNodeId],
     );
 
     const toggleExpanded = useCallback(
-        (slug: readonly string[]) => {
+        (toggleId: FernNavigation.NodeId) => {
             setExpanded((expanded) => {
-                const childenToCollapse = parentToChildrenMap.get(slug.join("/")) ?? [];
-                if (expanded.some((s) => s.join("/") === slug.join("/") || childenToCollapse.includes(s.join("/")))) {
-                    return expanded.filter(
-                        (s) => s.join("/") !== slug.join("/") && !childenToCollapse.includes(s.join("/")),
-                    );
+                const childenToCollapse = parentToChildrenMap.get(toggleId) ?? [];
+                if (expanded.some((s) => s === toggleId || childenToCollapse.includes(s))) {
+                    return expanded.filter((s) => s !== toggleId && !childenToCollapse.includes(s));
                 }
-                return [...expanded, [...slug]];
+                return [...expanded, toggleId];
             });
         },
         [parentToChildrenMap],
     );
 
     const value = useMemo(
-        () => ({ expanded, toggleExpanded, selectedSlug, checkExpanded }),
-        [expanded, toggleExpanded, selectedSlug, checkExpanded],
+        () => ({
+            expanded,
+            toggleExpanded,
+            selectedNodeId,
+            checkExpanded,
+            checkChildSelected,
+            registerScrolledToPathListener,
+        }),
+        [expanded, toggleExpanded, selectedNodeId, checkExpanded, checkChildSelected, registerScrolledToPathListener],
     );
 
     // If there is only one pageGroup with only one page, hide the sidebar content

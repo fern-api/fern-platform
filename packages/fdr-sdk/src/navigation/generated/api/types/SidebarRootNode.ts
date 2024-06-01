@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface SidebarRootNode {
+export interface SidebarRootNode extends FernNavigation.WithNodeId {
     type: "sidebarRoot";
     children: FernNavigation.SidebarRootChild[];
 }

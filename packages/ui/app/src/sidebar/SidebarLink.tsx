@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
@@ -18,12 +19,13 @@ import {
     useEffect,
     useRef,
 } from "react";
+import urljoin from "url-join";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
     icon?: ReactElement | string;
-    slug?: readonly string[];
+    slug?: FernNavigation.Slug;
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
@@ -37,7 +39,7 @@ interface SidebarSlugLinkProps {
     rightElement?: ReactNode;
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     tooltipContent?: ReactNode;
-    hidden: boolean;
+    hidden?: boolean;
     scrollOnShallow?: boolean;
     as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
@@ -49,7 +51,7 @@ type SidebarLinkProps = PropsWithChildren<
         rel?: string | undefined;
         target?: HTMLAttributeAnchorTarget | undefined;
 
-        elementRef?: React.Ref<HTMLLIElement>;
+        elementRef?: React.Ref<HTMLDivElement>;
     }
 >;
 
@@ -144,8 +146,9 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
     );
 
     return (
-        <li ref={elementRef} className="fern-sidebar-item">
+        <>
             <div
+                ref={elementRef}
                 className={cn("fern-sidebar-link-container group", className)}
                 data-state={selected ? "active" : "inactive"}
             >
@@ -184,7 +187,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                 )}
             </div>
             {children}
-        </li>
+        </>
     );
 });
 
@@ -194,7 +197,7 @@ export const SidebarLink = memo(SidebarLinkInternal);
 
 const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>((props, ref) => {
     const { slug, registerScrolledToPathListener, ...innerProps } = props;
-    const elementRef = useRef<HTMLLIElement>(null);
+    const elementRef = useRef<HTMLDivElement>(null);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     useEffect(() => {
@@ -217,7 +220,7 @@ const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<
             {...innerProps}
             ref={ref}
             elementRef={elementRef}
-            href={slug != null ? `/${slug.join("/")}` : undefined}
+            href={slug != null ? urljoin("/", slug) : undefined}
         />
     );
 });

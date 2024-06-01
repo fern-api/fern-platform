@@ -4,7 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface TabbedNode {
+export interface TabbedNode extends FernNavigation.WithNodeId {
     type: "tabbed";
     children: FernNavigation.TabChild[];
 }

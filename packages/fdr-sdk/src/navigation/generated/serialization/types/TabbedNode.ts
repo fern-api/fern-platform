@@ -6,15 +6,18 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { TabChild } from "./TabChild";
+import { WithNodeId } from "./WithNodeId";
 
 export const TabbedNode: core.serialization.ObjectSchema<serializers.TabbedNode.Raw, FernNavigation.TabbedNode> =
-    core.serialization.objectWithoutOptionalProperties({
-        type: core.serialization.stringLiteral("tabbed"),
-        children: core.serialization.list(TabChild),
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            type: core.serialization.stringLiteral("tabbed"),
+            children: core.serialization.list(TabChild),
+        })
+        .extend(WithNodeId);
 
 export declare namespace TabbedNode {
-    interface Raw {
+    interface Raw extends WithNodeId.Raw {
         type: "tabbed";
         children: TabChild.Raw[];
     }

@@ -6,18 +6,21 @@ import * as serializers from "../index";
 import * as FernNavigation from "../../api/index";
 import * as core from "../../core";
 import { EndpointNode } from "./EndpointNode";
+import { WithNodeId } from "./WithNodeId";
 
 export const EndpointPairNode: core.serialization.ObjectSchema<
     serializers.EndpointPairNode.Raw,
     FernNavigation.EndpointPairNode
-> = core.serialization.objectWithoutOptionalProperties({
-    type: core.serialization.stringLiteral("endpointPair"),
-    stream: EndpointNode,
-    nonStream: EndpointNode,
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        type: core.serialization.stringLiteral("endpointPair"),
+        stream: EndpointNode,
+        nonStream: EndpointNode,
+    })
+    .extend(WithNodeId);
 
 export declare namespace EndpointPairNode {
-    interface Raw {
+    interface Raw extends WithNodeId.Raw {
         type: "endpointPair";
         stream: EndpointNode.Raw;
         nonStream: EndpointNode.Raw;

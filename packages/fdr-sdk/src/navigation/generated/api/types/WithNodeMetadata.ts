@@ -4,9 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface WithNodeMetadata {
-    /** A unique, stable identifier for this node. */
-    id: FernNavigation.NodeId;
+export interface WithNodeMetadata extends FernNavigation.WithNodeId {
     title: string;
     slug: FernNavigation.Slug;
     icon: string | undefined;

@@ -34,6 +34,7 @@ export * from "./EndpointNode";
 export * from "./WebSocketNode";
 export * from "./WebhookNode";
 export * from "./ApiSectionNode";
+export * from "./WithNodeId";
 export * from "./WithNodeMetadata";
 export * from "./WithOverviewPage";
 export * from "./WithApiDefinitionId";
