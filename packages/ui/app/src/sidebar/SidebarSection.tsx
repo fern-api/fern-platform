@@ -12,7 +12,7 @@
 // export interface SidebarSectionProps {
 //     className?: string;
 //     navigationItems: SidebarNode[];
-//     slug: readonly string[];
+//     slug: FernNavigation.Slug;
 
 //     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 

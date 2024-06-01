@@ -241,8 +241,13 @@ export class NavigationConfigConverter {
                         pointsTo,
                     };
                 }),
-            api: (apiSection) =>
-                ApiReferenceNavigationConverter.convert(apiSection, this.apis, baseSlug, parentSlug, this.#idgen),
+            api: (apiSection) => {
+                const api = this.apis[apiSection.api];
+                if (api == null) {
+                    throw new Error(`API ${apiSection.api} not found}`);
+                }
+                return ApiReferenceNavigationConverter.convert(apiSection, api, baseSlug, parentSlug, this.#idgen);
+            },
             changelog: (changelog) =>
                 ChangelogNavigationConverter.convert(changelog, baseSlug, parentSlug, this.#idgen),
             _other: (value) => assertNever(value as never),

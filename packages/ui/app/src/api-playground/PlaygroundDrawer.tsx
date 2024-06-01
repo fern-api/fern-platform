@@ -274,9 +274,9 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         ])
         .find(({ endpoint }) =>
             selectionState?.type === "endpoint"
-                ? endpoint.slug.join("/") === selectionState?.endpointId
+                ? endpoint.slug === selectionState?.endpointId
                 : selectionState?.type === "websocket"
-                  ? endpoint.slug.join("/") === selectionState?.webSocketId
+                  ? endpoint.slug === selectionState?.webSocketId
                   : false,
         ) ?? {
         endpoint: undefined,

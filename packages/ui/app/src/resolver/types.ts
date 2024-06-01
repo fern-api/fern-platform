@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
@@ -73,7 +73,7 @@ export function dereferenceObjectProperties(
 
 export interface ResolvedPageMetadata {
     id: DocsV1Read.PageId;
-    slug: readonly string[];
+    slug: FernNavigation.Slug;
     title: string;
     markdown: SerializedMdxContent;
 }
@@ -84,7 +84,7 @@ export interface ResolvedNavigationItemApiSection
     type: "apiSection";
     auth: APIV1Read.ApiAuth | undefined;
     hasMultipleBaseUrls: boolean | undefined;
-    slug: string[];
+    slug: FernNavigation.Slug;
     types: Record<string, ResolvedTypeDefinition>;
     artifacts: DocsV1Read.ApiArtifacts | undefined;
 }
@@ -123,7 +123,7 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
 
 export interface ResolvedWithApiDefinition {
     items: ResolvedPackageItem[];
-    slug: readonly string[];
+    slug: FernNavigation.Slug;
 }
 
 export interface ResolvedApiPageMetadata extends ResolvedPageMetadata {
@@ -221,7 +221,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     id: APIV1Read.EndpointId;
     apiSectionId: FdrAPI.ApiDefinitionId;
     // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
-    slug: string[];
+    slug: FernNavigation.Slug;
     auth: APIV1Read.ApiAuth | undefined;
     availability: APIV1Read.Availability | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
@@ -394,7 +394,7 @@ export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEn
 export interface ResolvedWebSocketChannel {
     type: "websocket";
     id: string;
-    slug: string[];
+    slug: FernNavigation.Slug;
     name: string | undefined;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
@@ -419,7 +419,7 @@ export interface ResolvedWebSocketMessage extends WithMetadata {
 export interface ResolvedWebhookDefinition extends WithMetadata {
     type: "webhook";
     id: APIV1Read.WebhookId;
-    slug: string[];
+    slug: FernNavigation.Slug;
 
     method: APIV1Read.WebhookHttpMethod;
     name: string | undefined;

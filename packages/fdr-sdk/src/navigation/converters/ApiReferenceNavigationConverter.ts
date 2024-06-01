@@ -14,15 +14,20 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 export class ApiReferenceNavigationConverter {
     public static convert(
         apiSection: DocsV1Read.ApiSection,
-        apis: Record<string, APIV1Read.ApiDefinition>,
+        api: APIV1Read.ApiDefinition,
         baseSlug: string,
         parentSlug: string,
-        idgen: NodeIdGenerator,
+        idgen?: NodeIdGenerator,
     ) {
-        return new ApiReferenceNavigationConverter(apiSection, apis, baseSlug, parentSlug, idgen).convert();
+        return new ApiReferenceNavigationConverter(
+            apiSection,
+            api,
+            baseSlug,
+            parentSlug,
+            idgen ?? new NodeIdGenerator(),
+        ).convert();
     }
 
-    api: APIV1Read.ApiDefinition;
     apiDefinitionId: FernNavigation.ApiDefinitionId;
     #holder: ApiDefinitionHolder;
     #visitedEndpoints = new Set<FernNavigation.EndpointId>();
@@ -32,17 +37,13 @@ export class ApiReferenceNavigationConverter {
     #idgen: NodeIdGenerator;
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
-        apis: Record<string, APIV1Read.ApiDefinition>,
+        private api: APIV1Read.ApiDefinition,
         private baseSlug: string,
         private apiDefinitionParentSlug: string,
         idgen: NodeIdGenerator,
     ) {
-        this.api = apis[apiSection.api];
-        if (this.api == null) {
-            throw new Error(`API ${apiSection.api} not found}`);
-        }
-        this.apiDefinitionId = FernNavigation.ApiDefinitionId(this.api.id);
-        this.#holder = ApiDefinitionHolder.create(this.api);
+        this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
+        this.#holder = ApiDefinitionHolder.create(api);
         this.#idgen = idgen;
     }
 

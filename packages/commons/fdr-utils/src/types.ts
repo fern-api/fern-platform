@@ -1,6 +1,6 @@
 import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { FlattenedApiDefinition } from "./flattenApiDefinition";
+// import { FlattenedApiDefinition } from "./flattenApiDefinition";
 
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;
@@ -9,7 +9,7 @@ export interface ColorsConfig {
 
 export interface SidebarVersionInfo {
     id: string;
-    slug: readonly string[];
+    slug: FernNavigation.Slug;
     index: number;
     availability: FernNavigation.Availability | undefined;
 }
@@ -19,7 +19,7 @@ interface SidebarTabGroup {
     title: string;
     icon: string | undefined;
     index: number;
-    slug: readonly string[];
+    slug: FernNavigation.Slug;
 }
 
 interface SidebarTabLink {
@@ -35,7 +35,7 @@ interface SidebarTabChangelog {
     title: string;
     icon: string | undefined;
     index: number;
-    slug: readonly string[];
+    slug: FernNavigation.Slug;
 }
 
 export type SidebarTab = SidebarTabGroup | SidebarTabLink | SidebarTabChangelog;
@@ -72,7 +72,7 @@ export declare namespace SidebarNodeRaw {
 
     export interface Root {
         type: "root";
-        slug: readonly string[];
+        slug: FernNavigation.Slug;
         items: readonly SidebarNodeRaw.VersionGroup[] | readonly SidebarNodeRaw.Tab[] | readonly SidebarNodeRaw[];
     }
 
@@ -91,7 +91,7 @@ export declare namespace SidebarNodeRaw {
 
     export interface PageGroup {
         type: "pageGroup";
-        slug: readonly string[];
+        slug: FernNavigation.Slug;
         pages: (Page | Link | Section)[];
     }
 
@@ -111,7 +111,7 @@ export declare namespace SidebarNodeRaw {
         api: FdrAPI.ApiId;
         id: string;
         title: string;
-        slug: readonly string[];
+        slug: FernNavigation.Slug;
         items: ApiPageOrSubpackage[];
         artifacts: DocsV1Read.ApiArtifacts | undefined;
         showErrors: boolean;
@@ -120,13 +120,13 @@ export declare namespace SidebarNodeRaw {
         icon: string | undefined;
         hidden: boolean;
         summaryPage: ApiSummaryPage | undefined;
-        flattenedApiDefinition: FlattenedApiDefinition | undefined;
+        flattenedApiDefinition: unknown | undefined;
     }
 
     export interface Section {
         type: "section";
         title: string;
-        slug: readonly string[];
+        slug: FernNavigation.Slug;
         items: SidebarNodeRaw[];
         icon: string | undefined;
         hidden: boolean;
@@ -135,7 +135,7 @@ export declare namespace SidebarNodeRaw {
     export interface Page {
         type: "page";
         id: string;
-        slug: readonly string[];
+        slug: FernNavigation.Slug;
         title: string;
         description: string | undefined;
         icon: string | undefined;
@@ -185,7 +185,7 @@ export type SidebarNode = SidebarNode.PageGroup | SidebarNode.ApiSection | Sideb
 export declare namespace SidebarNode {
     export interface Root {
         type: "root";
-        slug: readonly string[];
+        slug: FernNavigation.Slug;
         items: readonly VersionGroup[] | readonly Tab[] | readonly SidebarNode[];
     }
 

@@ -107,7 +107,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const [activeNavigatable, setActiveNavigatable] = useState(() => collector.slugMap.get(resolvedPath.fullSlug));
 
     const [, anchor] = router.asPath.split("#");
-    const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
+    const selectedSlug = activeNavigatable?.slug ?? "";
     const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
     useEffect(() => {
@@ -248,9 +248,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     activeVersion: versions[currentVersionIndex ?? 0],
                     selectedSlug,
                     unversionedSlug: getUnversionedSlug(
-                        selectedSlug.split("/"),
-                        versions[currentVersionIndex ?? 0]?.slug ?? [],
-                        basePath?.split("/").filter((part) => part.length > 0) ?? [],
+                        selectedSlug,
+                        versions[currentVersionIndex ?? 0]?.slug,
+                        basePath,
                     ),
                 }),
                 [

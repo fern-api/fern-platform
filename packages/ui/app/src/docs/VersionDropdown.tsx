@@ -1,6 +1,7 @@
 import { FernButton } from "@fern-ui/components";
 import { SidebarVersionInfo, getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import urljoin from "url-join";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { useNavigationContext } from "../contexts/navigation-context";
 
@@ -28,7 +29,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersio
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: versionName,
                     disabled: availability == null,
-                    href: `${slug.length > 0 ? `/${slug.join("/")}` : ""}${unversionedSlug.length > 0 ? `/${unversionedSlug.join("/")}` : ""}`,
+                    href: urljoin("/", slug, unversionedSlug),
                 }))}
             >
                 <FernButton

@@ -1,4 +1,4 @@
-import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
 import { DocsPage } from "../../next-app/DocsPage";
@@ -20,6 +20,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
     currentVersionIndex: undefined,
     versions: [],
     sidebar: {
+        id: FernNavigation.NodeId("root"),
         type: "sidebarRoot",
         children: [],
     },

@@ -98,7 +98,7 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "api-page",
-            fullSlug: found.node.slug.join("/"),
+            fullSlug: found.node.slug,
             api: apiReference.apiDefinitionId,
             apiDefinition,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
@@ -130,7 +130,7 @@ export async function convertNavigatableToResolvedPath({
         });
         return {
             type: "changelog-page",
-            fullSlug: node.slug.join("/"),
+            fullSlug: node.slug,
             title: frontmatter.title ?? node.title,
             sectionTitleBreadcrumbs: found.breadcrumb,
             markdown: serializedMdxContent,
@@ -182,7 +182,7 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "custom-markdown-page",
-            fullSlug: node.slug.join("/"),
+            fullSlug: node.slug,
             title: frontmatter.title ?? node.title,
             serializedMdxContent,
             neighbors,

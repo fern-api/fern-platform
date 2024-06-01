@@ -23,7 +23,7 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
         },
         apis: {},
     },
-    unversionedSlug: [],
+    unversionedSlug: "",
 });
 
 export interface NavigationContextValue {
@@ -35,5 +35,5 @@ export interface NavigationContextValue {
     onScrollToPath: (slug: string) => void;
     registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
-    unversionedSlug: readonly string[];
+    unversionedSlug: string;
 }
