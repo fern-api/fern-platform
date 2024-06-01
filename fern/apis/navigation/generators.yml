@@ -14,3 +14,4 @@ groups:
           outputSourceFiles: true
           useBrandedStringAliases: true
           noSerdeLayer: true
+          neverThrowErrors: true
