@@ -33,6 +33,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
             toggleExpand={handleToggleExpand}
             showIndicator={showIndicator}
             hidden={node.hidden}
+            slug={node.overviewPageId != null ? node.slug : undefined}
         >
             <ul
                 className={clsx("fern-sidebar-group", {
