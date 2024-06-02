@@ -4,7 +4,7 @@ on:
   workflow_call:
   workflow_dispatch:
   schedule:
-    - cron: 1 */6 * * *
+    - cron: '*/10 * * * *'
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
