@@ -73,9 +73,9 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
             currentVersion: version,
             currentTab: found.parents.findLast((node): node is FernNavigation.TabNode => node.type === "tab"),
             sidebar,
-            apiReference: found.parents.find(
-                (node): node is FernNavigation.ApiReferenceNode => node.type === "apiReference",
-            ),
+            apiReference:
+                found.parents.find((node): node is FernNavigation.ApiReferenceNode => node.type === "apiReference") ??
+                (found.node.type === "apiReference" ? found.node : undefined),
             next: found.next,
             prev: found.prev,
         };

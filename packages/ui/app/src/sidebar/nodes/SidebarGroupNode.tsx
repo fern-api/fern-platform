@@ -10,7 +10,7 @@ export function SidebarGroupNode({ node }: SidebarGroupNodeProps): React.ReactEl
         <ul className="fern-sidebar-group">
             {node.children.map((child) => (
                 <li key={child.id}>
-                    <SidebarNavigationChild node={child} depth={1} />
+                    <SidebarNavigationChild node={child} depth={1} root />
                 </li>
             ))}
         </ul>

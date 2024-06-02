@@ -1,8 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
@@ -19,6 +17,7 @@ import {
     useEffect,
     useRef,
 } from "react";
+import { ChevronDown } from "react-feather";
 import urljoin from "url-join";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useIsMobileSidebarOpen } from "./atom";
@@ -133,11 +132,13 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
 
     const expandButton = (toggleExpand != null || expanded) && (
         <span
-            className="fern-sidebar-link-expand opacity-60 transition-opacity group-hover:opacity-100 lg:group-hover/sidebar:opacity-100"
+            className={clsx("fern-sidebar-link-expand", {
+                "opacity-50 transition-opacity group-hover:opacity-80": !showIndicator,
+            })}
             data-state={showIndicator ? "active" : "inactive"}
         >
-            <ChevronDownIcon
-                className={cn("transition-transform size-5 lg:size-icon", {
+            <ChevronDown
+                className={cn("size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -164,7 +165,6 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                                     )}
                                 />
                             ))}
-                            {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
                                     <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:text-text-default">
@@ -204,14 +204,14 @@ const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<
         if (slug == null) {
             return undefined;
         }
-        return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
-            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
+        return registerScrolledToPathListener(slug, () => {
+            elementRef.current?.scrollIntoView({ block: "center" });
         });
     }, [slug, registerScrolledToPathListener]);
 
     useEffect(() => {
         if (isMobileSidebarOpen && props.selected) {
-            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
+            elementRef.current?.scrollIntoView({ block: "center" });
         }
     }, [isMobileSidebarOpen, props.selected]);
 

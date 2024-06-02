@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 // import { Portal, Transition } from "@headlessui/react";
@@ -90,6 +90,16 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
 
     const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
+
+    const nodeIdToApiDefinition = useMemo(() => {
+        const nodes = new Map<FernNavigation.NodeId, ResolvedApiDefinition>();
+        Object.values(apis).forEach((api) => {
+            api.apiDefinitions.forEach((apiDefinition) => {
+                nodes.set(apiDefinition.nodeId, apiDefinition);
+            });
+        });
+        return nodes;
+    }, [apis]);
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
@@ -354,6 +364,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                                         apiGroups={apiGroups}
                                         selectedEndpoint={selectedEndpoint}
                                         className="h-full"
+                                        nodeIdToApiDefinition={nodeIdToApiDefinition}
                                     />
 
                                     {renderContent()}

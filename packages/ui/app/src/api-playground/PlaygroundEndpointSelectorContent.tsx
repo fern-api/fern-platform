@@ -1,21 +1,24 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { traverseNavigation } from "@fern-api/fdr-sdk/dist/navigation/utils";
-import { FernButton, FernInput, FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
+import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn, { clsx } from "clsx";
+import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { ResolvedApiDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
-// const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
+const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface PlaygroundEndpointSelectorContentProps {
     apiGroups: ApiGroup[];
     closeDropdown?: () => void;
     selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
+    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiDefinition>;
 }
 
 export interface ApiGroup {
@@ -60,7 +63,7 @@ function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigatio
 }
 
 export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, PlaygroundEndpointSelectorContentProps>(
-    ({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
+    ({ apiGroups, closeDropdown, selectedEndpoint, className, nodeIdToApiDefinition }, ref) => {
         const scrollRef = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(ref, () => scrollRef.current!);
@@ -101,54 +104,59 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     )}
                     <ul className="relative z-0 list-none">
                         {endpoints.map((endpointItem) => {
+                            const apiDefinition = nodeIdToApiDefinition.get(endpointItem.id);
                             const active = endpointItem.id === selectedEndpoint?.id;
                             const text = renderTextWithHighlight(endpointItem.title, filterValue);
                             if (endpointItem.type === "endpoint") {
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                        {/* <FernTooltip
+                                        <FernTooltip
                                             content={
-                                                endpointItem.description != null ? (
-                                                    <Markdown className="text-xs" mdx={endpointItem.description} />
+                                                apiDefinition?.description != null ? (
+                                                    <Markdown className="text-xs" mdx={apiDefinition.description} />
                                                 ) : undefined
                                             }
                                             side="right"
-                                        > */}
-                                        <FernButton
-                                            text={text}
-                                            className="w-full text-left"
-                                            variant="minimal"
-                                            intent={active ? "primary" : "none"}
-                                            active={active}
-                                            onClick={createSelectEndpoint(endpointItem)}
-                                            rightIcon={
-                                                <HttpMethodTag method={endpointItem.method} size="sm" active={active} />
-                                            }
-                                        />
-                                        {/* </FernTooltip> */}
+                                        >
+                                            <FernButton
+                                                text={text}
+                                                className="w-full text-left"
+                                                variant="minimal"
+                                                intent={active ? "primary" : "none"}
+                                                active={active}
+                                                onClick={createSelectEndpoint(endpointItem)}
+                                                rightIcon={
+                                                    <HttpMethodTag
+                                                        method={endpointItem.method}
+                                                        size="sm"
+                                                        active={active}
+                                                    />
+                                                }
+                                            />
+                                        </FernTooltip>
                                     </li>
                                 );
                             } else if (endpointItem.type === "webSocket") {
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                        {/* <FernTooltip
+                                        <FernTooltip
                                             content={
-                                                endpointItem.description != null ? (
-                                                    <Markdown className="text-xs" mdx={endpointItem.description} />
+                                                apiDefinition?.description != null ? (
+                                                    <Markdown className="text-xs" mdx={apiDefinition.description} />
                                                 ) : undefined
                                             }
                                             side="right"
-                                        > */}
-                                        <FernButton
-                                            text={text}
-                                            className="w-full text-left"
-                                            variant="minimal"
-                                            intent={active ? "primary" : "none"}
-                                            active={active}
-                                            onClick={createSelectEndpoint(endpointItem)}
-                                            rightIcon={<HttpMethodTag method="WSS" size="sm" />}
-                                        />
-                                        {/* </FernTooltip> */}
+                                        >
+                                            <FernButton
+                                                text={text}
+                                                className="w-full text-left"
+                                                variant="minimal"
+                                                intent={active ? "primary" : "none"}
+                                                active={active}
+                                                onClick={createSelectEndpoint(endpointItem)}
+                                                rightIcon={<HttpMethodTag method="WSS" size="sm" />}
+                                            />
+                                        </FernTooltip>
                                     </li>
                                 );
                             } else {

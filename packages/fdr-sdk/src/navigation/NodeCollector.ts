@@ -23,7 +23,7 @@ const PRIORITY_LIST: Record<NavigationNodeWithMetadata["type"], number> = {
     changelog: 2,
     apiSection: 3,
     section: 3,
-    apiReference: 4,
+    apiReference: 3,
     tab: 5,
     version: 6,
     root: 999,
@@ -78,7 +78,11 @@ export class NodeCollector {
                 this.#setNode(node.slug, node, parents);
                 this.orphanedNodes.push(existing.node);
             } else if (PRIORITY_LIST[node.type] === PRIORITY_LIST[existing.node.type]) {
-                if (!node.hidden && existing.node.hidden) {
+                if (
+                    (!node.hidden && existing.node.hidden) ||
+                    parents.indexOf(existing.node) > -1 ||
+                    !isPage(existing.node)
+                ) {
                     this.#setNode(node.slug, node, parents);
                     this.orphanedNodes.push(existing.node);
                 } else {

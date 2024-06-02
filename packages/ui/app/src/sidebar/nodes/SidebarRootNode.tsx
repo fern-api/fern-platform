@@ -28,7 +28,7 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
                     apiReference: (apiRef) => {
                         if (!apiRef.hideTitle) {
                             return (
-                                <li key={child.id}>
+                                <li key={child.id} className="mt-6">
                                     <SidebarRootApiSectionNode node={apiRef} />
                                 </li>
                             );

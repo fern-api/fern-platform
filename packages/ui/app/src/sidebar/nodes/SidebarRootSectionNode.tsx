@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
+import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 
 interface SidebarRootSectionNodeProps {
@@ -9,7 +10,7 @@ interface SidebarRootSectionNodeProps {
 }
 
 export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNodeProps): React.ReactElement | null {
-    const { checkChildSelected } = useCollapseSidebar();
+    const { checkChildSelected, registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
     const childSelected = checkChildSelected(node.id);
 
     if (node.hidden && !childSelected) {
@@ -18,9 +19,22 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
 
     return (
         <>
-            <div className={clsx("fern-sidebar-heading px-4 lg:px-3 flex items-center", className)}>
-                <h6 className="m-0 text-base leading-6 lg:text-sm lg:leading-5">{node.title}</h6>
-            </div>
+            {node.overviewPageId == null ? (
+                <div className={clsx("fern-sidebar-heading px-4 lg:px-3 flex items-center", className)}>
+                    <h6 className="m-0 text-base leading-6 lg:text-sm lg:leading-5">{node.title}</h6>
+                </div>
+            ) : (
+                <SidebarSlugLink
+                    linkClassName="font-semibold !text-text-default"
+                    icon={node.icon}
+                    className={className}
+                    registerScrolledToPathListener={registerScrolledToPathListener}
+                    title={node.title}
+                    hidden={node.hidden}
+                    slug={node.slug}
+                    selected={node.id === selectedNodeId}
+                />
+            )}
 
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (

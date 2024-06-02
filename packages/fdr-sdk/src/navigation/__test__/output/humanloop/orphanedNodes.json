@@ -12,6 +12,12 @@
     "slug": "docs"
   },
   {
+    "id": "root..*.uv.docs.docs.guides",
+    "type": "section",
+    "title": "Guides",
+    "slug": "docs/guides"
+  },
+  {
     "id": "root..*.uv.docs.docs.guides.generate-and-logging",
     "type": "section",
     "title": "Generate and Logging",
@@ -30,10 +36,10 @@
     "slug": "docs/guides"
   },
   {
-    "id": "root..*.uv.docs.docs.guides.tools",
+    "id": "root..*.uv.docs.docs.getting-started",
     "type": "section",
-    "title": "Tools",
-    "slug": "docs/guides"
+    "title": "Getting Started",
+    "slug": "docs"
   },
   {
     "id": "root..*.uv.docs.docs.core-concepts",
@@ -48,21 +54,15 @@
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs.docs.references",
-    "type": "section",
-    "title": "References",
-    "slug": "docs"
-  },
-  {
     "id": "root..*.uv.docs/api-reference",
     "type": "tab",
     "title": "API Reference",
     "slug": "docs/api-reference"
   },
   {
-    "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api",
-    "type": "apiReference",
-    "title": "Humanloop API",
+    "id": "root..*.uv.docs/api-reference.docs/api-reference.introduction",
+    "type": "section",
+    "title": "Introduction",
     "slug": "docs/api-reference"
   },
   {
@@ -70,6 +70,12 @@
     "type": "tab",
     "title": "Docs",
     "slug": "v4/docs"
+  },
+  {
+    "id": "root..v4.uv.docs.docs.guides",
+    "type": "section",
+    "title": "Guides",
+    "slug": "v4/docs/guides"
   },
   {
     "id": "root..v4.uv.docs.docs.guides.generate-and-logging",
@@ -90,10 +96,10 @@
     "slug": "v4/docs/guides"
   },
   {
-    "id": "root..v4.uv.docs.docs.guides.tools",
+    "id": "root..v4.uv.docs.docs.getting-started",
     "type": "section",
-    "title": "Tools",
-    "slug": "v4/docs/guides"
+    "title": "Getting Started",
+    "slug": "v4/docs"
   },
   {
     "id": "root..v4.uv.docs.docs.core-concepts",
@@ -108,21 +114,15 @@
     "slug": "v4/docs"
   },
   {
-    "id": "root..v4.uv.docs.docs.references",
-    "type": "section",
-    "title": "References",
-    "slug": "v4/docs"
-  },
-  {
     "id": "root..v4.uv.docs/api-reference",
     "type": "tab",
     "title": "API Reference",
     "slug": "v4/docs/api-reference"
   },
   {
-    "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api",
-    "type": "apiReference",
-    "title": "Humanloop API",
+    "id": "root..v4.uv.docs/api-reference.docs/api-reference.introduction",
+    "type": "section",
+    "title": "Introduction",
     "slug": "v4/docs/api-reference"
   }
 ]

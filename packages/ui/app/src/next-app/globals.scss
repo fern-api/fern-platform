@@ -237,16 +237,8 @@
         @apply lg:rounded-lg;
 
         &:last-child {
-            @apply flex lg:hidden -mr-3;
+            @apply flex -mr-3 ml-1;
         }
-
-        &:not(:last-child) {
-            @apply hidden lg:flex -ml-3;
-        }
-    }
-
-    .fern-sidebar-link-indent + .fern-sidebar-link-expand {
-        @apply lg:rounded-l-none;
     }
 
     .fern-sidebar-link-expand[data-state="active"] {

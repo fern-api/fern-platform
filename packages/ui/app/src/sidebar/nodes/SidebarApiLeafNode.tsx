@@ -1,6 +1,6 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { ReactElement } from "react";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { useNavigationContext } from "../../contexts/navigation-context";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -11,6 +11,7 @@ interface SidebarApiLeafNodeProps {
 
 export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): React.ReactElement | null {
     const { registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
+    const { resolvedPath } = useNavigationContext();
     const selected = node.id === selectedNodeId;
 
     if (node.hidden && !selected) {
@@ -25,18 +26,7 @@ export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): Re
                 return <HttpMethodTag method="STREAM" size="sm" active={selected} />;
             }
 
-            const httpMethodTags: Record<FernNavigation.HttpMethod, ReactElement> = {
-                GET: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Get} size="sm" active={selected} />,
-                POST: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Post} size="sm" active={selected} />,
-                PUT: <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Put} size="sm" active={selected} />,
-                PATCH: (
-                    <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Patch} size="sm" active={selected} />
-                ),
-                DELETE: (
-                    <HttpMethodTag className="ml-2" method={APIV1Read.HttpMethod.Delete} size="sm" active={selected} />
-                ),
-            };
-            return httpMethodTags[node.method];
+            return <HttpMethodTag method={node.method} size="sm" active={selected} />;
         }
     };
 
@@ -47,8 +37,9 @@ export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): Re
             depth={Math.max(0, depth - 1)}
             hidden={node.hidden}
             registerScrolledToPathListener={registerScrolledToPathListener}
-            rightElement={renderRightElement()}
+            icon={renderRightElement()}
             selected={selected}
+            shallow={resolvedPath.type === "api-page" && resolvedPath.api === node.apiDefinitionId}
         />
     );
 }

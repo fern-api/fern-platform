@@ -22,18 +22,6 @@ const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
     registerScrolledToPathListener: () => noop,
 });
 
-export function checkSlugStartsWith(slug: FernNavigation.Slug, startsWith: readonly string[]): boolean {
-    if (slug.length < startsWith.length) {
-        return false;
-    }
-    for (let i = 0; i < startsWith.length; i++) {
-        if (slug[i] !== startsWith[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(CollapseSidebarContext);
 
 export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
