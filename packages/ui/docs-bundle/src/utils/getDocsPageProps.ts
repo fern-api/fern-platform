@@ -153,13 +153,18 @@ async function convertDocsToDocsPageProps({
     url: string;
     xFernHost: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
-    const redirect = getRedirectForPath(xFernHost, `/${slug.join("/")}`);
+    const docsDefinition = docs.definition;
+    const docsConfig = docsDefinition.config;
+
+    const currentPath = urljoin("/", slug.join("/"));
+
+    const redirect = getRedirectForPath(currentPath, docs.baseUrl, docsConfig.redirects);
 
     if (redirect != null) {
         return {
             type: "redirect",
             redirect: {
-                destination: redirect.to,
+                destination: redirect.destination,
                 permanent: false,
             },
         };

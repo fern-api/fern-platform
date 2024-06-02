@@ -180,6 +180,7 @@ types:
     properties:
       title: string
       items: list<NavigationItem>
+      skipUrlSlug: optional<boolean>
 
   NavigationTabLink:
     properties:
