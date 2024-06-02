@@ -143,7 +143,7 @@ export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): Do
             type: "group",
             ...group,
             items: group.items.map(transformNavigationItemForDb),
-            skipUrlSlug: group.skipUrlSlug ?? false,
+            // skipUrlSlug: group.skipUrlSlug ?? false,
         }),
     });
 }
@@ -156,7 +156,7 @@ export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2)
             return {
                 ...dbShape,
                 items: dbShape.items.map(transformNavigationItemForDb),
-                skipUrlSlug: dbShape.skipUrlSlug ?? false,
+                // skipUrlSlug: dbShape.skipUrlSlug ?? false,
             };
         case "changelog":
             return dbShape;
