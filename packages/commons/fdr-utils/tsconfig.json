@@ -1,18 +1,5 @@
 {
   "extends": "@fern-platform/configs/tsconfig/library.json",
   "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
-  "include": [
-    "./src/**/*",
-    "../../fdr-sdk/src/navigation/__test__/getUnversionedSlug.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/hume.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/no-version-no-tabs.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/no-version-yes-tabs.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/octoai.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/primer.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/testGetAllUrlsFromDocsConfig.ts",
-    "../../fdr-sdk/src/navigation/__test__/testGetNavigationRoot.ts",
-    "../../fdr-sdk/src/navigation/__test__/uploadcare.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/yes-version-no-tabs.test.ts",
-    "../../fdr-sdk/src/navigation/__test__/yes-version-yes-tabs.test.ts"
-  ]
+  "include": ["./src/**/*"]
 }

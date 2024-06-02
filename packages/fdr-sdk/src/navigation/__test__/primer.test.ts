@@ -1,7 +1,7 @@
-import { DocsV2Read } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
-import { getNavigationRoot } from "../../../../commons/fdr-utils/src/getNavigationRoot";
+import { DocsV2Read } from "../../client";
+import { convertLoadDocsForUrlResponse, findNode } from "../utils";
 import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 
 describe("getAllUrlsFromDocsConfig", () => {
@@ -17,17 +17,11 @@ describe("getNavigationRoot", () => {
 
             const fixture = JSON.parse(content) as DocsV2Read.LoadDocsForUrlResponse;
 
-            const urls = getNavigationRoot(
-                "docs/api/introduction/getting-started".split("/"),
-                fixture.baseUrl.domain,
-                fixture.baseUrl.basePath,
-                fixture.definition.config.navigation,
-                fixture.definition.apis,
-                {},
-            );
+            const node = convertLoadDocsForUrlResponse(fixture);
+            const meta = findNode(node, "docs/api/introduction/getting-started".split("/"));
 
-            expect(urls?.type === "found" ? urls.found.versions : []).toMatchSnapshot();
-            expect(urls?.type === "found" ? urls.found.currentVersionIndex : undefined).equal(0);
+            expect(meta.type === "found" ? meta.versions : []).toMatchSnapshot();
+            expect(meta.type === "found" ? meta.currentVersion?.versionId : undefined).equal("v2.3");
         });
 
         it("gets navigation root for /docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token", async () => {
@@ -37,17 +31,14 @@ describe("getNavigationRoot", () => {
 
             const fixture = JSON.parse(content) as DocsV2Read.LoadDocsForUrlResponse;
 
-            const urls = getNavigationRoot(
+            const node = convertLoadDocsForUrlResponse(fixture);
+            const meta = findNode(
+                node,
                 "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token".split("/"),
-                fixture.baseUrl.domain,
-                fixture.baseUrl.basePath,
-                fixture.definition.config.navigation,
-                fixture.definition.apis,
-                {},
             );
 
-            expect(urls?.type === "found" ? urls.found.versions : []).toMatchSnapshot();
-            expect(urls?.type === "found" ? urls.found.currentVersionIndex : undefined).equal(2);
+            expect(meta.type === "found" ? meta.versions : []).toMatchSnapshot();
+            expect(meta.type === "found" ? meta.currentVersion?.versionId : undefined).equal("v2.1");
         });
     });
 });
