@@ -16,6 +16,8 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
             const found = findNode(node, slug.split("/"));
 
             if (found.type === "found") {
+                expect(found.node).toMatchSnapshot();
+            } else {
                 expect(found).toMatchSnapshot();
             }
         });

@@ -133,3 +133,38 @@ exports[`getAllUrlsFromDocsConfig > octoai > gets all urls from docs config 1`] 
   "octo.ai/docs/release-notes/2023/may",
 ]
 `;
+
+exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/asset-library/list 1`] = `
+{
+  "redirect": "docs/getting-started/quickstart",
+  "type": "notFound",
+}
+`;
+
+exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/octoai-api/account/get-account 1`] = `
+{
+  "redirect": "docs/getting-started/quickstart",
+  "type": "notFound",
+}
+`;
+
+exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/octoai-api/authentication 1`] = `
+{
+  "redirect": "docs/getting-started/quickstart",
+  "type": "notFound",
+}
+`;
+
+exports[`getNavigationRoot > octoai > gets navigation root for /getting-started 1`] = `
+{
+  "redirect": "docs/getting-started/quickstart",
+  "type": "notFound",
+}
+`;
+
+exports[`getNavigationRoot > octoai > gets navigation root for /getting-started/quickstart 1`] = `
+{
+  "redirect": "docs/getting-started/quickstart",
+  "type": "notFound",
+}
+`;
