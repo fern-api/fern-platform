@@ -1,5 +1,4 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { getUnversionedSlug } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
 import Head from "next/head";
@@ -245,7 +244,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     resolvedPath,
                     activeVersion: versions[currentVersionIndex ?? 0],
                     selectedSlug,
-                    unversionedSlug: getUnversionedSlug(
+                    unversionedSlug: FernNavigation.utils.getUnversionedSlug(
                         selectedSlug,
                         versions[currentVersionIndex ?? 0]?.slug,
                         basePath,

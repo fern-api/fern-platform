@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import urljoin from "url-join";
 import { DocsV2Read } from "../../client";
 import { NodeCollector } from "../NodeCollector";
 import { convertLoadDocsForUrlResponse } from "../utils";
@@ -16,7 +17,7 @@ export function testGetAllUrlsFromDocsConfig(fixtureName: string): void {
 
             const node = convertLoadDocsForUrlResponse(fixture);
             const slugCollector = NodeCollector.collect(node);
-            const urls = slugCollector.getPageSlugs();
+            const urls = slugCollector.getPageSlugs().map((slug) => urljoin(fixture.baseUrl.domain, slug));
 
             expect(urls).toMatchSnapshot();
         });
