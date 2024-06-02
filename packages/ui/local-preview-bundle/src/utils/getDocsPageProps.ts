@@ -1,69 +1,54 @@
-import { DocsV2Read } from "@fern-api/fdr-sdk";
-import { getNavigationRoot } from "@fern-ui/fdr-utils";
+import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { SidebarTab } from "@fern-ui/fdr-utils";
 import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
     DocsPageResult,
     FeatureFlags,
     convertNavigatableToResolvedPath,
-    serializeSidebarNodeDescriptionMdx,
 } from "@fern-ui/ui";
+import urljoin from "url-join";
 
 export async function getDocsPageProps(
     docs: DocsV2Read.LoadDocsForUrlResponse,
     slug: string[],
 ): Promise<DocsPageResult<DocsPage.Props>> {
-    const docsDefinition = docs.definition;
-    const basePath = docs.baseUrl.basePath;
-    const docsConfig = docsDefinition.config;
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const node = FernNavigation.utils.findNode(root, slug);
 
-    const navigation = getNavigationRoot(
-        slug,
-        docs.baseUrl.domain,
-        docs.baseUrl.basePath,
-        docsConfig.navigation,
-        docs.definition.apis,
-        docs.definition.pages,
-    );
-
-    if (navigation == null) {
+    if (node.type === "notFound") {
         // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${slug.join("/")}`);
+        console.error(`Failed to resolve navigation for ${slug.join("")}`);
+        if (node.redirect != null) {
+            return {
+                type: "redirect",
+                redirect: {
+                    destination: encodeURI(urljoin("/", node.redirect)),
+                    permanent: false,
+                },
+            };
+        }
+        return { type: "notFound", notFound: true };
+    }
+
+    if (node.type === "redirect") {
         return {
             type: "redirect",
             redirect: {
-                destination: basePath ?? "/",
+                destination: encodeURI(urljoin("/", node.redirect)),
                 permanent: false,
             },
         };
     }
-
-    if (navigation.type === "redirect") {
-        return {
-            type: "redirect",
-            redirect: {
-                destination: navigation.redirect,
-                permanent: false,
-            },
-        };
-    }
-
-    const sidebarNodes = await Promise.all(
-        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
-    );
 
     // TODO: get feature flags from the API
     const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
     const resolvedPath = await convertNavigatableToResolvedPath({
-        currentNode: navigation.found.currentNode,
-        rawSidebarNodes: navigation.found.sidebarNodes,
-        sidebarNodes,
-        apis: docsDefinition.apis,
-        pages: docsDefinition.pages,
-        mdxOptions: {
-            showError: true,
-        },
+        found: node,
+        apis: docs.definition.apis,
+        pages: docs.definition.pages,
         domain: docs.baseUrl.domain,
         featureFlags,
     });
@@ -71,23 +56,7 @@ export async function getDocsPageProps(
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${slug.join("/")}`);
-        return {
-            type: "redirect",
-            redirect: {
-                destination: basePath ?? "/",
-                permanent: false,
-            },
-        };
-    }
-
-    if (resolvedPath.type === "redirect") {
-        return {
-            type: "redirect",
-            redirect: {
-                destination: "/" + encodeURI(resolvedPath.fullSlug),
-                permanent: false,
-            },
-        };
+        return { type: "notFound", notFound: true };
     }
 
     const props: DocsPage.Props = {
@@ -119,11 +88,40 @@ export async function getDocsPageProps(
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {
-            currentTabIndex: navigation.found.currentTabIndex,
-            tabs: navigation.found.tabs,
-            currentVersionIndex: navigation.found.currentVersionIndex,
-            versions: navigation.found.versions,
-            sidebarNodes,
+            currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
+            tabs: node.tabs.map((tab, index) =>
+                visitDiscriminatedUnion(tab)._visit<SidebarTab>({
+                    tab: (tab) => ({
+                        type: "tabGroup",
+                        title: tab.title,
+                        icon: tab.icon,
+                        index,
+                        slug: tab.slug,
+                    }),
+                    link: (link) => ({
+                        type: "tabLink",
+                        title: link.title,
+                        icon: link.icon,
+                        index,
+                        url: link.url,
+                    }),
+                    changelog: (changelog) => ({
+                        type: "tabChangelog",
+                        title: changelog.title,
+                        icon: changelog.icon,
+                        index,
+                        slug: changelog.slug,
+                    }),
+                }),
+            ),
+            currentVersionIndex: node.currentVersion == null ? undefined : node.versions.indexOf(node.currentVersion),
+            versions: node.versions.map((version, index) => ({
+                id: version.versionId,
+                slug: version.slug,
+                index,
+                availability: version.availability,
+            })),
+            sidebar: node.sidebar,
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
