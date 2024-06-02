@@ -9,5 +9,4 @@ export interface NavigationTabGroup {
     icon?: string;
     items: FernRegistry.docs.v1.db.NavigationItem[];
     urlSlug: string;
-    skipUrlSlug?: boolean;
 }

@@ -5,5 +5,4 @@ import * as FernRegistry from "../../../../../../..";
 export interface NavigationTabGroup extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     title: string;
     items: FernRegistry.docs.v1.read.NavigationItem[];
-    skipUrlSlug: boolean;
 }
