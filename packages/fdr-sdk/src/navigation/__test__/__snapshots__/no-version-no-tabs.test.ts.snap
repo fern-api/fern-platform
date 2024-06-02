@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getAllUrlsFromDocsConfig > no-version-no-tabs > gets all urls from docs config 1`] = `
+[
+  "docs/api/section-1/page-1",
+  "docs/api/page-2",
+  "docs/api/section-2",
+  "docs/api/section-2/page-4",
+  "docs/api/page-5",
+  "docs/api/page-6",
+]
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for / 1`] = `undefined`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs 1`] = `undefined`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/page-6 1`] = `
+{
+  "hidden": undefined,
+  "icon": undefined,
+  "id": "root.uv.section-3.page-6",
+  "pageId": "page-6.md",
+  "slug": "docs/api/page-6",
+  "title": "Page 6",
+  "type": "page",
+}
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-1 1`] = `
+{
+  "children": [
+    {
+      "hidden": undefined,
+      "icon": undefined,
+      "id": "root.uv.section-1.page-1",
+      "pageId": "page-1.md",
+      "slug": "docs/api/section-1/page-1",
+      "title": "Page 1",
+      "type": "page",
+    },
+    {
+      "hidden": undefined,
+      "icon": undefined,
+      "id": "root.uv.section-1.page-2",
+      "pageId": "page-2.md",
+      "slug": "docs/api/page-2",
+      "title": "Page 2",
+      "type": "page",
+    },
+  ],
+  "collapsed": false,
+  "hidden": undefined,
+  "icon": undefined,
+  "id": "root.uv.section-1",
+  "overviewPageId": undefined,
+  "pointsTo": "docs/api/section-1/page-1",
+  "slug": "docs/api/section-1",
+  "title": "Section 1",
+  "type": "section",
+}
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-2 1`] = `
+{
+  "hidden": undefined,
+  "icon": undefined,
+  "id": "root.uv.section-2.page-3",
+  "pageId": "page-3.md",
+  "slug": "docs/api/section-2",
+  "title": "Page 3",
+  "type": "page",
+}
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-3 1`] = `undefined`;
