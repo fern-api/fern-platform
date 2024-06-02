@@ -709,6 +709,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../fdr-sdk
+      '@fern-fern/incident':
+        specifier: 0.0.3407
+        version: 0.0.3407
       '@fern-fern/vercel':
         specifier: 0.0.6
         version: 0.0.6
@@ -4812,6 +4815,18 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: false
+
+  /@fern-fern/incident@0.0.3407:
+    resolution: {integrity: sha512-SQ5CBjf5BmR4xiTsX5vp8OSzcD/aNfFfp83nm7mkSL94UdqgHbramdAdpLXIU3zGNyqZXJQVxEYmZK5Eubtg0A==}
+    dependencies:
+      form-data: 4.0.0
+      js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+    dev: true
 
   /@fern-fern/revalidation-sdk@0.0.9:
     resolution: {integrity: sha512-iZhm1odMdgWqlJi8B6lUPkza8YFfPz6iAhLfTkTnG4cpgPLER4sdQ8tlO+sUcGJF07Z3KkCRKmD6k54wNhv6Gg==}

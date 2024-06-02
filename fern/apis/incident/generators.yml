@@ -1,0 +1,16 @@
+api: 
+  - path: ./openapi/swagger.json
+    overrides: ./openapi/overrides.yml
+default-group: sdk
+groups:
+  sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.5
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/incident"
+        config: 
+          skipResponseValidation: true
+          namespaceExport: Incident

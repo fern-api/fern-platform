@@ -2,7 +2,7 @@ import { VercelClient } from "@fern-fern/vercel";
 import { Domain } from "@fern-fern/vercel/api/resources/v9";
 
 const VERCEL = new VercelClient({
-    token: process.env.VERCEL_TOKEN ?? "",
+    token: process.env.VERCEL_TOKEN ?? "ztSYlRhhOk0XcyvzdGZiysVI",
 });
 
 const CUSTOM_SUBPATHS = [
