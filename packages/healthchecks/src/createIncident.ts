@@ -3,7 +3,7 @@ import { RuleResult } from "./rules/runRules";
 import { ShowResponseBody13 } from "@fern-fern/incident/api";
 
 const INCIDENT = new IncidentClient({
-    token: process.env.INCIDENT_TOKEN ?? "inc_455164642ed269a788ad47bb8ace9e9ff8830dcce5fb2b9846dbf6f16be8edbb",
+    token: process.env.INCIDENT_TOKEN ?? "",
 });
 
 /**
