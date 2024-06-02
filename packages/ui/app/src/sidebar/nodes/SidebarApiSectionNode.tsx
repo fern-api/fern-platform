@@ -16,12 +16,36 @@ export function SidebarApiSectionNode({
     depth,
     className,
 }: SidebarApiSectionNodeProps): React.ReactElement | null {
-    const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
-    const expanded = checkExpanded(node.id);
-    const childSelected = checkChildSelected(node.id);
-    const showIndicator = childSelected && !expanded;
-
+    const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener, selectedNodeId } =
+        useCollapseSidebar();
     const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
+
+    if (node.children.length === 0) {
+        if (node.overviewPageId == null) {
+            return null;
+        }
+
+        if (node.hidden && selectedNodeId !== node.id) {
+            return null;
+        }
+
+        return (
+            <SidebarSlugLink
+                className={className}
+                slug={node.slug}
+                depth={Math.max(depth - 1, 0)}
+                registerScrolledToPathListener={registerScrolledToPathListener}
+                title={node.title}
+                selected={node.id === selectedNodeId}
+                icon={node.icon}
+                hidden={node.hidden}
+                shallow={selectedNodeId === node.id}
+                scrollOnShallow={true}
+            />
+        );
+    }
+
+    const childSelected = checkChildSelected(node.id);
 
     if (node.hidden && !childSelected) {
         return null;
@@ -38,6 +62,9 @@ export function SidebarApiSectionNode({
             </ul>
         );
     }
+
+    const expanded = checkExpanded(node.id);
+    const showIndicator = childSelected && !expanded;
 
     return (
         <SidebarSlugLink

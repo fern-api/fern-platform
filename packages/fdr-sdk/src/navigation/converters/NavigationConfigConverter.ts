@@ -226,6 +226,7 @@ export class NavigationConfigConverter {
             section: (section) =>
                 this.#idgen.with(section.urlSlug, (id) => {
                     const slug = createSlug(baseSlug, parentSlug, section);
+
                     const children = section.items.map((item) => this.convertNavigationItem(item, baseSlug, slug));
                     const pointsTo = followRedirects(children);
                     return {
