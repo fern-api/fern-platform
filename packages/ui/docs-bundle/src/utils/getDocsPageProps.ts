@@ -252,6 +252,7 @@ async function convertDocsToDocsPageProps({
                         icon: tab.icon,
                         index,
                         slug: tab.slug,
+                        pointsTo: tab.pointsTo,
                     }),
                     link: (link) => ({
                         type: "tabLink",
