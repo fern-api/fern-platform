@@ -126,3 +126,7 @@ exports[`getNavigationRoot > hume > gets navigation root for /support 1`] = `
   "type": "page",
 }
 `;
+
+exports[`getNavigationRoot > hume > gets navigation root for /support 2`] = `undefined`;
+
+exports[`getNavigationRoot > hume > gets navigation root for /support 3`] = `"docs"`;

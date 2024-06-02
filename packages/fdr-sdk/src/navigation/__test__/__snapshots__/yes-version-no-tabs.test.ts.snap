@@ -40,6 +40,10 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
 }
 `;
 
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/page-5 2`] = `"version-1"`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/page-5 3`] = `undefined`;
+
 exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/section-1 1`] = `
 {
   "redirect": "docs/api/section-1/page-1",
@@ -59,7 +63,11 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
 }
 `;
 
-exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 2`] = `
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 2`] = `"version-1"`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 3`] = `undefined`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 4`] = `
 {
   "hidden": undefined,
   "icon": undefined,
@@ -70,6 +78,10 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
   "type": "page",
 }
 `;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 5`] = `"version-1"`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1 6`] = `undefined`;
 
 exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/page-5 1`] = `
 {
@@ -82,6 +94,10 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
   "type": "page",
 }
 `;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/page-5 2`] = `"version-1"`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/page-5 3`] = `undefined`;
 
 exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/section-1 1`] = `
 {
@@ -102,6 +118,10 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
 }
 `;
 
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/version-1 2`] = `"version-1"`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-1/version-1 3`] = `undefined`;
+
 exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-2 1`] = `
 {
   "redirect": "docs/api/version-2/page-7",
@@ -120,3 +140,7 @@ exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /doc
   "type": "page",
 }
 `;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-2/version-1 2`] = `"version-2"`;
+
+exports[`getNavigationRoot > yes-version-no-tabs > gets navigation root for /docs/api/version-2/version-1 3`] = `undefined`;

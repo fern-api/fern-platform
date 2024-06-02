@@ -96,6 +96,10 @@ exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-ma
 }
 `;
 
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management/overview 2`] = `undefined`;
+
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management/overview 3`] = `"docs"`;
+
 exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/integrations 1`] = `
 {
   "redirect": "docs/integrations/all-integrations",
@@ -121,3 +125,7 @@ exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introdu
   "type": "page",
 }
 `;
+
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction/intro 2`] = `undefined`;
+
+exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction/intro 3`] = `"docs"`;

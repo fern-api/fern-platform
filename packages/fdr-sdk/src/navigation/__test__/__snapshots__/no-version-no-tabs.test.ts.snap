@@ -37,6 +37,10 @@ exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs
 }
 `;
 
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/page-6 2`] = `undefined`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/page-6 3`] = `undefined`;
+
 exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-1 1`] = `
 {
   "redirect": "docs/api/section-1/page-1",
@@ -55,6 +59,10 @@ exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs
   "type": "page",
 }
 `;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-2 2`] = `undefined`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-2 3`] = `undefined`;
 
 exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-3 1`] = `
 {

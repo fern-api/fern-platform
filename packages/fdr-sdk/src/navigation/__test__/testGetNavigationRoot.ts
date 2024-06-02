@@ -17,6 +17,8 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
 
             if (found.type === "found") {
                 expect(found.node).toMatchSnapshot();
+                expect(found.currentVersion?.versionId).toMatchSnapshot();
+                expect(found.currentTab?.slug).toMatchSnapshot();
             } else {
                 expect(found).toMatchSnapshot();
             }
