@@ -1,5 +1,6 @@
-import { getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
+import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
 import { NextRequest, NextResponse } from "next/server";
+import urljoin from "url-join";
 import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
@@ -23,12 +24,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 404 });
     }
 
-    const urls = getAllUrlsFromDocsConfig(
-        xFernHost,
-        docs.baseUrl.basePath,
-        docs.definition.config.navigation,
-        docs.definition.apis,
-    );
+    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const slugCollector = NodeCollector.collect(node);
+    const urls = slugCollector.getPageSlugs().map((slug) => urljoin(xFernHost, slug));
 
     const sitemap = getSitemapXml(urls.map((url) => `https://${url}`));
 

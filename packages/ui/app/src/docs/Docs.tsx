@@ -27,7 +27,7 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
-    const { layout, colors, currentVersionIndex } = useDocsContext();
+    const { layout, colors, currentVersionId } = useDocsContext();
     const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
@@ -36,7 +36,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     useMessageHandler();
 
     // set up search service
-    useCreateSearchService(currentVersionIndex);
+    useCreateSearchService(currentVersionId);
 
     useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
     useKeyboardPress({

@@ -1,0 +1,20 @@
+import { FernNavigation } from "../generated";
+import { NavigationNode } from "./NavigationNode";
+
+/**
+ * A navigation node that isn't a leaf node and contains markdown content
+ */
+export type NavigationNodeSection =
+    | FernNavigation.SectionNode
+    | FernNavigation.ApiReferenceNode
+    | FernNavigation.ChangelogNode
+    | FernNavigation.ApiSectionNode;
+
+export function isSection(node: NavigationNode): node is NavigationNodeSection {
+    return (
+        node.type === "section" ||
+        node.type === "apiReference" ||
+        node.type === "changelog" ||
+        node.type === "apiSection"
+    );
+}

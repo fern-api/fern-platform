@@ -9,7 +9,7 @@ export declare namespace StatusCodeTag {
 
 export function StatusCodeTag({ statusCode, className, ...rest }: StatusCodeTag.Props): ReactElement {
     return (
-        <FernTag colorScheme={statusCodeToColorScheme(statusCode)} {...rest}>
+        <FernTag colorScheme={statusCodeToColorScheme(statusCode)} {...rest} className={className}>
             {statusCode}
         </FernTag>
     );
