@@ -1,0 +1,848 @@
+{
+  "id": "root",
+  "type": "root",
+  "child": {
+    "id": "root.uv",
+    "type": "sidebarRoot",
+    "children": [
+      {
+        "id": "root.uv.astro-api",
+        "type": "section",
+        "collapsed": false,
+        "title": "Astro API",
+        "hidden": false,
+        "slug": "docs/api/astro-api",
+        "children": [
+          {
+            "id": "root.uv.astro-api.overview",
+            "type": "page",
+            "pageId": "docs/pages/overview.mdx",
+            "title": "Overview",
+            "slug": "docs/api/overview",
+            "hidden": false
+          },
+          {
+            "id": "root.uv.astro-api.get-started",
+            "type": "page",
+            "pageId": "docs/pages/get-started.mdx",
+            "title": "Get started",
+            "slug": "docs/api/get-started",
+            "hidden": false
+          },
+          {
+            "id": "root.uv.astro-api.versioning-and-support",
+            "type": "page",
+            "pageId": "docs/pages/versioning-and-support.mdx",
+            "title": "Versioning and support",
+            "slug": "docs/api/versioning-and-support",
+            "hidden": false
+          }
+        ],
+        "pointsTo": "docs/api/overview"
+      },
+      {
+        "id": "root.uv.platform-api-reference",
+        "type": "apiReference",
+        "title": "Platform API Reference",
+        "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+        "slug": "docs/api/platform-api-reference",
+        "hidden": false,
+        "showErrors": false,
+        "changelog": {
+          "id": "root.uv.platform-api-reference.log",
+          "type": "changelog",
+          "title": "Changelog",
+          "slug": "docs/api/platform-api-reference/changelog",
+          "hidden": false,
+          "children": [
+            {
+              "id": "root.uv.platform-api-reference.log.2024",
+              "type": "changelogYear",
+              "title": "2024",
+              "year": 2024,
+              "slug": "docs/api/platform-api-reference/changelog/2024",
+              "children": [
+                {
+                  "id": "root.uv.platform-api-reference.log.2024.5",
+                  "type": "changelogMonth",
+                  "title": "May 1900",
+                  "month": 5,
+                  "slug": "docs/api/platform-api-reference/changelog/2024/5",
+                  "children": [
+                    {
+                      "id": "root.uv.platform-api-reference.log.2024-5-15",
+                      "type": "changelogEntry",
+                      "title": "May 15, 2024",
+                      "date": "2024-05-15T00:00:00.000Z",
+                      "pageId": "/home/runner/work/docs/docs/api/fern/apis/platform/changelog/2024-05-15.md",
+                      "slug": "docs/api/platform-api-reference/changelog/2024/5/15"
+                    }
+                  ]
+                },
+                {
+                  "id": "root.uv.platform-api-reference.log.2024.4",
+                  "type": "changelogMonth",
+                  "title": "April 1900",
+                  "month": 4,
+                  "slug": "docs/api/platform-api-reference/changelog/2024/4",
+                  "children": [
+                    {
+                      "id": "root.uv.platform-api-reference.log.2024-4-23",
+                      "type": "changelogEntry",
+                      "title": "April 23, 2024",
+                      "date": "2024-04-23T00:00:00.000Z",
+                      "pageId": "/home/runner/work/docs/docs/api/fern/apis/platform/changelog/2024-04-23.md",
+                      "slug": "docs/api/platform-api-reference/changelog/2024/4/23"
+                    },
+                    {
+                      "id": "root.uv.platform-api-reference.log.2024-4-12",
+                      "type": "changelogEntry",
+                      "title": "April 12, 2024",
+                      "date": "2024-04-12T00:00:00.000Z",
+                      "pageId": "/home/runner/work/docs/docs/api/fern/apis/platform/changelog/2024-04-12.md",
+                      "slug": "docs/api/platform-api-reference/changelog/2024/4/12"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "children": [
+          {
+            "id": "root.uv.platform-api-reference.subpackage_organization",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.ListOrganizations",
+                "type": "endpoint",
+                "title": "List Organizations",
+                "endpointId": "subpackage_organization.ListOrganizations",
+                "slug": "docs/api/platform-api-reference/organization/list-organizations",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.GetOrganization",
+                "type": "endpoint",
+                "title": "Get an Organization",
+                "endpointId": "subpackage_organization.GetOrganization",
+                "slug": "docs/api/platform-api-reference/organization/get-organization",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.UpdateOrganization",
+                "type": "endpoint",
+                "title": "Update an Organization",
+                "endpointId": "subpackage_organization.UpdateOrganization",
+                "slug": "docs/api/platform-api-reference/organization/update-organization",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Organization",
+            "slug": "docs/api/platform-api-reference/organization",
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+            "pointsTo": "docs/api/platform-api-reference/organization/list-organizations"
+          },
+          {
+            "id": "root.uv.platform-api-reference.subpackage_options",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.platform-api-reference.subpackage_options.subpackage_options.GetClusterOptions",
+                "type": "endpoint",
+                "title": "Get cluster options",
+                "endpointId": "subpackage_options.GetClusterOptions",
+                "slug": "docs/api/platform-api-reference/options/get-cluster-options",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_options.subpackage_options.GetDeploymentOptions",
+                "type": "endpoint",
+                "title": "Get Deployment options",
+                "endpointId": "subpackage_options.GetDeploymentOptions",
+                "slug": "docs/api/platform-api-reference/options/get-deployment-options",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Options",
+            "slug": "docs/api/platform-api-reference/options",
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+            "pointsTo": "docs/api/platform-api-reference/options/get-cluster-options"
+          },
+          {
+            "id": "root.uv.platform-api-reference.subpackage_cluster",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.ListClusters",
+                "type": "endpoint",
+                "title": "List clusters",
+                "endpointId": "subpackage_cluster.ListClusters",
+                "slug": "docs/api/platform-api-reference/cluster/list-clusters",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.CreateCluster",
+                "type": "endpoint",
+                "title": "Create a cluster",
+                "endpointId": "subpackage_cluster.CreateCluster",
+                "slug": "docs/api/platform-api-reference/cluster/create-cluster",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.GetCluster",
+                "type": "endpoint",
+                "title": "Get a cluster",
+                "endpointId": "subpackage_cluster.GetCluster",
+                "slug": "docs/api/platform-api-reference/cluster/get-cluster",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.UpdateCluster",
+                "type": "endpoint",
+                "title": "Update a cluster",
+                "endpointId": "subpackage_cluster.UpdateCluster",
+                "slug": "docs/api/platform-api-reference/cluster/update-cluster",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.DeleteCluster",
+                "type": "endpoint",
+                "title": "Delete a cluster",
+                "endpointId": "subpackage_cluster.DeleteCluster",
+                "slug": "docs/api/platform-api-reference/cluster/delete-cluster",
+                "method": "DELETE",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Cluster",
+            "slug": "docs/api/platform-api-reference/cluster",
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+            "pointsTo": "docs/api/platform-api-reference/cluster/list-clusters"
+          },
+          {
+            "id": "root.uv.platform-api-reference.subpackage_deployment",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.ListDeployments",
+                "type": "endpoint",
+                "title": "List Deployments",
+                "endpointId": "subpackage_deployment.ListDeployments",
+                "slug": "docs/api/platform-api-reference/deployment/list-deployments",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.CreateDeployment",
+                "type": "endpoint",
+                "title": "Create a Deployment",
+                "endpointId": "subpackage_deployment.CreateDeployment",
+                "slug": "docs/api/platform-api-reference/deployment/create-deployment",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.GetDeployment",
+                "type": "endpoint",
+                "title": "Get a Deployment",
+                "endpointId": "subpackage_deployment.GetDeployment",
+                "slug": "docs/api/platform-api-reference/deployment/get-deployment",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeployment",
+                "type": "endpoint",
+                "title": "Update a Deployment",
+                "endpointId": "subpackage_deployment.UpdateDeployment",
+                "slug": "docs/api/platform-api-reference/deployment/update-deployment",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeployment",
+                "type": "endpoint",
+                "title": "Delete a Deployment",
+                "endpointId": "subpackage_deployment.DeleteDeployment",
+                "slug": "docs/api/platform-api-reference/deployment/delete-deployment",
+                "method": "DELETE",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeploymentHibernationOverride",
+                "type": "endpoint",
+                "title": "Configure a hibernation override for a deployment",
+                "endpointId": "subpackage_deployment.UpdateDeploymentHibernationOverride",
+                "slug": "docs/api/platform-api-reference/deployment/update-deployment-hibernation-override",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeploymentHibernationOverride",
+                "type": "endpoint",
+                "title": "Delete a hibernation override for a deployment",
+                "endpointId": "subpackage_deployment.DeleteDeploymentHibernationOverride",
+                "slug": "docs/api/platform-api-reference/deployment/delete-deployment-hibernation-override",
+                "method": "DELETE",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Deployment",
+            "slug": "docs/api/platform-api-reference/deployment",
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+            "pointsTo": "docs/api/platform-api-reference/deployment/list-deployments"
+          },
+          {
+            "id": "root.uv.platform-api-reference.subpackage_deploy",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.ListDeploys",
+                "type": "endpoint",
+                "title": "List deploys for a deployment",
+                "endpointId": "subpackage_deploy.ListDeploys",
+                "slug": "docs/api/platform-api-reference/deploy/list-deploys",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.CreateDeploy",
+                "type": "endpoint",
+                "title": "Create a Deploy",
+                "endpointId": "subpackage_deploy.CreateDeploy",
+                "slug": "docs/api/platform-api-reference/deploy/create-deploy",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.GetDeploy",
+                "type": "endpoint",
+                "title": "Get a deploy for a deployment",
+                "endpointId": "subpackage_deploy.GetDeploy",
+                "slug": "docs/api/platform-api-reference/deploy/get-deploy",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.UpdateDeploy",
+                "type": "endpoint",
+                "title": "Update a Deploy",
+                "endpointId": "subpackage_deploy.UpdateDeploy",
+                "slug": "docs/api/platform-api-reference/deploy/update-deploy",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.FinalizeDeploy",
+                "type": "endpoint",
+                "title": "Finalize deploy of a deployment",
+                "endpointId": "subpackage_deploy.FinalizeDeploy",
+                "slug": "docs/api/platform-api-reference/deploy/finalize-deploy",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.DeployRollback",
+                "type": "endpoint",
+                "title": "Deploy rollback of a deployment",
+                "endpointId": "subpackage_deploy.DeployRollback",
+                "slug": "docs/api/platform-api-reference/deploy/deploy-rollback",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Deploy",
+            "slug": "docs/api/platform-api-reference/deploy",
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+            "pointsTo": "docs/api/platform-api-reference/deploy/list-deploys"
+          },
+          {
+            "id": "root.uv.platform-api-reference.subpackage_workspace",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.ListWorkspaces",
+                "type": "endpoint",
+                "title": "List Workspaces",
+                "endpointId": "subpackage_workspace.ListWorkspaces",
+                "slug": "docs/api/platform-api-reference/workspace/list-workspaces",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.CreateWorkspace",
+                "type": "endpoint",
+                "title": "Create Workspace",
+                "endpointId": "subpackage_workspace.CreateWorkspace",
+                "slug": "docs/api/platform-api-reference/workspace/create-workspace",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.GetWorkspace",
+                "type": "endpoint",
+                "title": "Get Workspace",
+                "endpointId": "subpackage_workspace.GetWorkspace",
+                "slug": "docs/api/platform-api-reference/workspace/get-workspace",
+                "method": "GET",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.UpdateWorkspace",
+                "type": "endpoint",
+                "title": "Update Workspace",
+                "endpointId": "subpackage_workspace.UpdateWorkspace",
+                "slug": "docs/api/platform-api-reference/workspace/update-workspace",
+                "method": "POST",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.DeleteWorkspace",
+                "type": "endpoint",
+                "title": "Delete Workspace",
+                "endpointId": "subpackage_workspace.DeleteWorkspace",
+                "slug": "docs/api/platform-api-reference/workspace/delete-workspace",
+                "method": "DELETE",
+                "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Workspace",
+            "slug": "docs/api/platform-api-reference/workspace",
+            "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+            "pointsTo": "docs/api/platform-api-reference/workspace/list-workspaces"
+          }
+        ],
+        "pointsTo": "docs/api/platform-api-reference/organization/list-organizations"
+      },
+      {
+        "id": "root.uv.iam-api-reference",
+        "type": "apiReference",
+        "title": "IAM API Reference",
+        "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+        "slug": "docs/api/iam-api-reference",
+        "hidden": false,
+        "showErrors": false,
+        "changelog": {
+          "id": "root.uv.iam-api-reference.log",
+          "type": "changelog",
+          "title": "Changelog",
+          "slug": "docs/api/iam-api-reference/changelog",
+          "hidden": false,
+          "children": [
+            {
+              "id": "root.uv.iam-api-reference.log.2024",
+              "type": "changelogYear",
+              "title": "2024",
+              "year": 2024,
+              "slug": "docs/api/iam-api-reference/changelog/2024",
+              "children": [
+                {
+                  "id": "root.uv.iam-api-reference.log.2024.4",
+                  "type": "changelogMonth",
+                  "title": "April 1900",
+                  "month": 4,
+                  "slug": "docs/api/iam-api-reference/changelog/2024/4",
+                  "children": [
+                    {
+                      "id": "root.uv.iam-api-reference.log.2024-4-12",
+                      "type": "changelogEntry",
+                      "title": "April 12, 2024",
+                      "date": "2024-04-12T00:00:00.000Z",
+                      "pageId": "/home/runner/work/docs/docs/api/fern/apis/iam/changelog/2024-04-12.md",
+                      "slug": "docs/api/iam-api-reference/changelog/2024/4/12"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "children": [
+          {
+            "id": "root.uv.iam-api-reference.subpackage_authorization",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.iam-api-reference.subpackage_authorization.subpackage_authorization.ListPermissionGroups",
+                "type": "endpoint",
+                "title": "List authorization permission groups",
+                "endpointId": "subpackage_authorization.ListPermissionGroups",
+                "slug": "docs/api/iam-api-reference/authorization/list-permission-groups",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Authorization",
+            "slug": "docs/api/iam-api-reference/authorization",
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+            "pointsTo": "docs/api/iam-api-reference/authorization/list-permission-groups"
+          },
+          {
+            "id": "root.uv.iam-api-reference.subpackage_invite",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.iam-api-reference.subpackage_invite.subpackage_invite.CreateUserInvite",
+                "type": "endpoint",
+                "title": "Create a user invitation",
+                "endpointId": "subpackage_invite.CreateUserInvite",
+                "slug": "docs/api/iam-api-reference/invite/create-user-invite",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_invite.subpackage_invite.DeleteUserInvite",
+                "type": "endpoint",
+                "title": "Delete a user invite",
+                "endpointId": "subpackage_invite.DeleteUserInvite",
+                "slug": "docs/api/iam-api-reference/invite/delete-user-invite",
+                "method": "DELETE",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Invite",
+            "slug": "docs/api/iam-api-reference/invite",
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+            "pointsTo": "docs/api/iam-api-reference/invite/create-user-invite"
+          },
+          {
+            "id": "root.uv.iam-api-reference.subpackage_role",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoleTemplates",
+                "type": "endpoint",
+                "title": "Get role templates",
+                "endpointId": "subpackage_role.ListRoleTemplates",
+                "slug": "docs/api/iam-api-reference/role/list-role-templates",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoles",
+                "type": "endpoint",
+                "title": "List roles",
+                "endpointId": "subpackage_role.ListRoles",
+                "slug": "docs/api/iam-api-reference/role/list-roles",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.CreateCustomRole",
+                "type": "endpoint",
+                "title": "Create a custom role",
+                "endpointId": "subpackage_role.CreateCustomRole",
+                "slug": "docs/api/iam-api-reference/role/create-custom-role",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.UpdateCustomRole",
+                "type": "endpoint",
+                "title": "Update custom role",
+                "endpointId": "subpackage_role.UpdateCustomRole",
+                "slug": "docs/api/iam-api-reference/role/update-custom-role",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.DeleteCustomRole",
+                "type": "endpoint",
+                "title": "Delete a custom role",
+                "endpointId": "subpackage_role.DeleteCustomRole",
+                "slug": "docs/api/iam-api-reference/role/delete-custom-role",
+                "method": "DELETE",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.GetCustomRole",
+                "type": "endpoint",
+                "title": "Get a custom role",
+                "endpointId": "subpackage_role.GetCustomRole",
+                "slug": "docs/api/iam-api-reference/role/get-custom-role",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Role",
+            "slug": "docs/api/iam-api-reference/role",
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+            "pointsTo": "docs/api/iam-api-reference/role/list-role-templates"
+          },
+          {
+            "id": "root.uv.iam-api-reference.subpackage_team",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeams",
+                "type": "endpoint",
+                "title": "List Teams",
+                "endpointId": "subpackage_team.ListTeams",
+                "slug": "docs/api/iam-api-reference/team/list-teams",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.CreateTeam",
+                "type": "endpoint",
+                "title": "Create a Team",
+                "endpointId": "subpackage_team.CreateTeam",
+                "slug": "docs/api/iam-api-reference/team/create-team",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.GetTeam",
+                "type": "endpoint",
+                "title": "Get a Team",
+                "endpointId": "subpackage_team.GetTeam",
+                "slug": "docs/api/iam-api-reference/team/get-team",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.UpdateTeam",
+                "type": "endpoint",
+                "title": "Update a Team",
+                "endpointId": "subpackage_team.UpdateTeam",
+                "slug": "docs/api/iam-api-reference/team/update-team",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.DeleteTeam",
+                "type": "endpoint",
+                "title": "Delete a Team",
+                "endpointId": "subpackage_team.DeleteTeam",
+                "slug": "docs/api/iam-api-reference/team/delete-team",
+                "method": "DELETE",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeamMembers",
+                "type": "endpoint",
+                "title": "List Team members",
+                "endpointId": "subpackage_team.ListTeamMembers",
+                "slug": "docs/api/iam-api-reference/team/list-team-members",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.AddTeamMembers",
+                "type": "endpoint",
+                "title": "Add members to a team",
+                "endpointId": "subpackage_team.AddTeamMembers",
+                "slug": "docs/api/iam-api-reference/team/add-team-members",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.RemoveTeamMember",
+                "type": "endpoint",
+                "title": "Remove Team member",
+                "endpointId": "subpackage_team.RemoveTeamMember",
+                "slug": "docs/api/iam-api-reference/team/remove-team-member",
+                "method": "DELETE",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.UpdateTeamRoles",
+                "type": "endpoint",
+                "title": "Update Team roles",
+                "endpointId": "subpackage_team.UpdateTeamRoles",
+                "slug": "docs/api/iam-api-reference/team/update-team-roles",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              }
+            ],
+            "title": "Team",
+            "slug": "docs/api/iam-api-reference/team",
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+            "pointsTo": "docs/api/iam-api-reference/team/list-teams"
+          },
+          {
+            "id": "root.uv.iam-api-reference.subpackage_apiToken",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.ListApiTokens",
+                "type": "endpoint",
+                "title": "List API tokens",
+                "endpointId": "subpackage_apiToken.ListApiTokens",
+                "slug": "docs/api/iam-api-reference/api-token/list-api-tokens",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.CreateApiToken",
+                "type": "endpoint",
+                "title": "Create an API token",
+                "endpointId": "subpackage_apiToken.CreateApiToken",
+                "slug": "docs/api/iam-api-reference/api-token/create-api-token",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.GetApiToken",
+                "type": "endpoint",
+                "title": "Get an API token",
+                "endpointId": "subpackage_apiToken.GetApiToken",
+                "slug": "docs/api/iam-api-reference/api-token/get-api-token",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiToken",
+                "type": "endpoint",
+                "title": "Update an API token",
+                "endpointId": "subpackage_apiToken.UpdateApiToken",
+                "slug": "docs/api/iam-api-reference/api-token/update-api-token",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.DeleteApiToken",
+                "type": "endpoint",
+                "title": "Delete an API token",
+                "endpointId": "subpackage_apiToken.DeleteApiToken",
+                "slug": "docs/api/iam-api-reference/api-token/delete-api-token",
+                "method": "DELETE",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiTokenRoles",
+                "type": "endpoint",
+                "title": "Update API token roles",
+                "endpointId": "subpackage_apiToken.UpdateApiTokenRoles",
+                "slug": "docs/api/iam-api-reference/api-token/update-api-token-roles",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.RotateApiToken",
+                "type": "endpoint",
+                "title": "Rotate API token",
+                "endpointId": "subpackage_apiToken.RotateApiToken",
+                "slug": "docs/api/iam-api-reference/api-token/rotate-api-token",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              }
+            ],
+            "title": "ApiToken",
+            "slug": "docs/api/iam-api-reference/api-token",
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+            "pointsTo": "docs/api/iam-api-reference/api-token/list-api-tokens"
+          },
+          {
+            "id": "root.uv.iam-api-reference.subpackage_user",
+            "type": "apiSection",
+            "children": [
+              {
+                "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.ListUsers",
+                "type": "endpoint",
+                "title": "List users in an Organization",
+                "endpointId": "subpackage_user.ListUsers",
+                "slug": "docs/api/iam-api-reference/user/list-users",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.GetUser",
+                "type": "endpoint",
+                "title": "Get user information",
+                "endpointId": "subpackage_user.GetUser",
+                "slug": "docs/api/iam-api-reference/user/get-user",
+                "method": "GET",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              },
+              {
+                "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.UpdateUserRoles",
+                "type": "endpoint",
+                "title": "Update a user's roles",
+                "endpointId": "subpackage_user.UpdateUserRoles",
+                "slug": "docs/api/iam-api-reference/user/update-user-roles",
+                "method": "POST",
+                "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+                "isResponseStream": false
+              }
+            ],
+            "title": "User",
+            "slug": "docs/api/iam-api-reference/user",
+            "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+            "pointsTo": "docs/api/iam-api-reference/user/list-users"
+          }
+        ],
+        "pointsTo": "docs/api/iam-api-reference/authorization/list-permission-groups"
+      }
+    ]
+  },
+  "slug": "docs/api",
+  "title": "Fern Docs",
+  "hidden": false,
+  "pointsTo": "docs/api/overview"
+}

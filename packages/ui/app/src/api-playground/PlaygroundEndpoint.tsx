@@ -1,6 +1,5 @@
 import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { compact, once } from "lodash-es";
@@ -89,7 +88,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                 endpointId: endpoint.id,
                 endpointName: endpoint.title,
                 method: endpoint.method,
-                docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+                docsRoute: `/${endpoint.slug}`,
             });
             const req = {
                 url: buildEndpointUrl(endpoint, formState),
@@ -130,7 +129,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                         endpointId: endpoint.id,
                         endpointName: endpoint.title,
                         method: endpoint.method,
-                        docsRoute: `/${joinUrlSlugs(...endpoint.slug)}`,
+                        docsRoute: `/${endpoint.slug}`,
                         response: {
                             status: res.response.status,
                             statusText: res.response.statusText,
@@ -154,7 +153,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
                     endpointId: endpoint.id,
                     endpointName: endpoint.title,
                     method: endpoint.method,
-                    route: `/${joinUrlSlugs(...endpoint.slug)}`,
+                    route: `/${endpoint.slug}`,
                 },
             });
         }

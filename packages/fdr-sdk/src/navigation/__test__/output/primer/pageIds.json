@@ -1,0 +1,8 @@
+[
+  "introduction/getting-started.md",
+  "introduction/authentication.md",
+  "introduction/responses.md",
+  "introduction/idempotency-key.md",
+  "introduction/loyalty-transactions.md",
+  "introduction/changelogs.md"
+]

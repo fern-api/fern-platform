@@ -1,4 +1,4 @@
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read, NodeCollector } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";
@@ -23,7 +23,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const typography = useDeepCompareMemoize(pageProps.typography);
     const css = useDeepCompareMemoize(pageProps.css);
     const js = useDeepCompareMemoize(pageProps.js);
-    const sidebarNodes = useDeepCompareMemoize(pageProps.navigation.sidebarNodes);
+    const sidebar = useDeepCompareMemoize(pageProps.navigation.sidebar);
     const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
     const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const searchInfo = useDeepCompareMemoize(pageProps.search);
@@ -32,7 +32,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const { resolvedTheme: theme } = useTheme();
 
     const { baseUrl, title, favicon } = pageProps;
-    const { currentTabIndex, currentVersionIndex } = pageProps.navigation;
+    const { currentTabIndex, currentVersionId } = pageProps.navigation;
 
     const stylesheet = useMemo(
         () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
@@ -63,9 +63,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             resolveFile,
             currentTabIndex,
             tabs,
-            currentVersionIndex,
+            currentVersionId,
             versions,
-            sidebarNodes,
+            sidebar,
+            nodes: NodeCollector.collect(sidebar),
             searchInfo,
             navbarLinks,
             apis,
@@ -76,11 +77,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             colors,
             css,
             currentTabIndex,
-            currentVersionIndex,
+            currentVersionId,
             files,
             layout,
             resolveFile,
-            sidebarNodes,
+            sidebar,
             tabs,
             typography,
             versions,

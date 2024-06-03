@@ -24,12 +24,12 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, 
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug.join("/") });
+    const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug });
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
     // - this allows us to render the static page before hydrating, preventing layout-shift caused by the navigation context.
-    if (useShouldHideFromSsg(endpointSlug.join("/"))) {
+    if (useShouldHideFromSsg(endpointSlug)) {
         return null;
     }
 
@@ -41,7 +41,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, 
             breadcrumbs={breadcrumbs}
             containerRef={setTargetRef}
             hideBottomSeparator={isLastInApi || isApiScrollingDisabled}
-            isInViewport={resolvedPath.fullSlug === endpoint.slug.join("/")}
+            isInViewport={resolvedPath.fullSlug === endpoint.slug}
             types={types}
         />
     );

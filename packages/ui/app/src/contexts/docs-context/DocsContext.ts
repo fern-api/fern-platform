@@ -1,6 +1,13 @@
-import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
+import { DocsV1Read, FdrAPI, FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
+import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
+import { DocsPage } from "../../next-app/DocsPage";
+
+const MOCK_SIDEBAR_NODE: FernNavigation.SidebarRootNode = {
+    id: FernNavigation.NodeId("root"),
+    type: "sidebarRoot",
+    children: [],
+};
 
 export const DocsContext = React.createContext<DocsContextValue>({
     domain: "app.buildwithfern.com",
@@ -16,15 +23,16 @@ export const DocsContext = React.createContext<DocsContextValue>({
     resolveFile: () => undefined,
     currentTabIndex: undefined,
     tabs: [],
-    currentVersionIndex: undefined,
+    currentVersionId: undefined,
     versions: [],
-    sidebarNodes: [],
+    sidebar: MOCK_SIDEBAR_NODE,
+    nodes: NodeCollector.collect(MOCK_SIDEBAR_NODE),
     searchInfo: undefined,
     navbarLinks: [],
     apis: [],
 });
 
-export interface DocsContextValue extends SidebarNavigation {
+export interface DocsContextValue extends DocsPage.Navigation {
     domain: string;
     basePath: string | undefined;
     layout: DocsV1Read.DocsLayoutConfig | undefined;
@@ -35,6 +43,7 @@ export interface DocsContextValue extends SidebarNavigation {
     searchInfo: DocsV1Read.SearchInfo | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     apis: FdrAPI.ApiDefinitionId[];
+    nodes: NodeCollector;
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;
 }

@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 
 export function isVersionedNavigationConfig(
     navigationConfig: DocsV1Read.NavigationConfig,
@@ -42,16 +42,20 @@ export function assertIsUnversionedNavigationConfig(
     }
 }
 
-export function getVersionAvailabilityLabel(availability: DocsV1Read.VersionAvailability): string {
+export function getVersionAvailabilityLabel(availability: FernNavigation.Availability): string {
     switch (availability) {
-        case "Beta":
+        case FernNavigation.Availability.Beta:
             return "beta";
-        case "Deprecated":
+        case FernNavigation.Availability.Deprecated:
             return "deprecated";
-        case "GenerallyAvailable":
+        case FernNavigation.Availability.GenerallyAvailable:
             return "generally available";
-        case "Stable":
+        case FernNavigation.Availability.Stable:
             return "stable";
+        case FernNavigation.Availability.InDevelopment:
+            return "in development";
+        case FernNavigation.Availability.PreRelease:
+            return "pre-release";
         default:
             return "unknown";
     }

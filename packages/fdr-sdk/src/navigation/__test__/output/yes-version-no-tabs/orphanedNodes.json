@@ -1,0 +1,44 @@
+[
+  {
+    "id": "root",
+    "type": "root",
+    "title": "Fern Docs",
+    "slug": "docs/api"
+  },
+  {
+    "id": "root..*.uv.section-2",
+    "type": "section",
+    "title": "Introduction",
+    "slug": "docs/api/section-2"
+  },
+  {
+    "id": "root..*",
+    "type": "version",
+    "title": "Version 1",
+    "slug": "docs/api"
+  },
+  {
+    "id": "root..version-1",
+    "type": "version",
+    "title": "Version 1",
+    "slug": "docs/api/version-1"
+  },
+  {
+    "id": "root..version-1.uv.section-2",
+    "type": "section",
+    "title": "Introduction",
+    "slug": "docs/api/version-1/section-2"
+  },
+  {
+    "id": "root..version-1.uv.section-3",
+    "type": "section",
+    "title": "Section 3",
+    "slug": "docs/api/version-1"
+  },
+  {
+    "id": "root..version-2",
+    "type": "version",
+    "title": "Version 2",
+    "slug": "docs/api/version-2"
+  }
+]
