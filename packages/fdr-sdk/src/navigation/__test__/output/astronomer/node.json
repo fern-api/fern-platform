@@ -314,7 +314,7 @@
                 "isResponseStream": false
               }
             ],
-            "title": "deployment",
+            "title": "Deployment",
             "slug": "docs/api/platform-api-reference/deployment",
             "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
             "pointsTo": "docs/api/platform-api-reference/deployment/list-deployments"
@@ -384,7 +384,7 @@
                 "isResponseStream": false
               }
             ],
-            "title": "deploy",
+            "title": "Deploy",
             "slug": "docs/api/platform-api-reference/deploy",
             "apiDefinitionId": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
             "pointsTo": "docs/api/platform-api-reference/deploy/list-deploys"
@@ -511,7 +511,7 @@
                 "isResponseStream": false
               }
             ],
-            "title": "authorization",
+            "title": "Authorization",
             "slug": "docs/api/iam-api-reference/authorization",
             "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
             "pointsTo": "docs/api/iam-api-reference/authorization/list-permission-groups"
@@ -611,7 +611,7 @@
                 "isResponseStream": false
               }
             ],
-            "title": "role",
+            "title": "Role",
             "slug": "docs/api/iam-api-reference/role",
             "apiDefinitionId": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
             "pointsTo": "docs/api/iam-api-reference/role/list-role-templates"

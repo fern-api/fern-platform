@@ -1,6 +1,5 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
@@ -41,9 +40,7 @@ export declare namespace WebSocket {
     }
 }
 export const WebSocket: FC<WebSocket.Props> = (props) => {
-    const fullSlug = joinUrlSlugs(...props.websocket.slug);
-
-    if (useShouldHideFromSsg(fullSlug)) {
+    if (useShouldHideFromSsg(props.websocket.slug)) {
         return null;
     }
 
@@ -56,10 +53,9 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
     const { isApiScrollingDisabled } = useFeatureFlags();
-    const fullSlug = joinUrlSlugs(...websocket.slug);
-    const route = `/${fullSlug}`;
+    const route = `/${websocket.slug}`;
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
+    const { setTargetRef } = useApiPageCenterElement({ slug: websocket.slug });
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),

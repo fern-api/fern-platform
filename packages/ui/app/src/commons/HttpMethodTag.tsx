@@ -32,8 +32,11 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
             colorScheme={METHOD_COLOR_SCHEMES[method]}
             variant={active ? "solid" : "subtle"}
             className={clsx(
-                "uppercase font-bold",
-                { "w-10": size === "sm", "font-bold": active, "tracking-tighter": method === "STREAM" },
+                "uppercase",
+                {
+                    "w-10 font-bold": size === "sm",
+                    "tracking-tighter": method === "STREAM",
+                },
                 className,
             )}
             size={size}

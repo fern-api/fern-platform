@@ -1295,7 +1295,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "chats",
+                        "title": "Chats",
                         "slug": "docs/api-reference/chats",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/chats/create"
@@ -1345,7 +1345,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "completions",
+                        "title": "Completions",
                         "slug": "docs/api-reference/completions",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/completions/create"
@@ -1387,7 +1387,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "datapoints",
+                        "title": "Datapoints",
                         "slug": "docs/api-reference/datapoints",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/datapoints/get"
@@ -1478,7 +1478,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "datasets",
+                        "title": "Datasets",
                         "slug": "docs/api-reference/datasets",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/datasets/listallforproject"
@@ -1579,7 +1579,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "evaluations",
+                        "title": "Evaluations",
                         "slug": "docs/api-reference/evaluations",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/evaluations/get"
@@ -1639,7 +1639,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "evaluators",
+                        "title": "Evaluators",
                         "slug": "docs/api-reference/evaluators",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/evaluators/list"
@@ -1699,7 +1699,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "experiments",
+                        "title": "Experiments",
                         "slug": "docs/api-reference/experiments",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/experiments/list"
@@ -1719,7 +1719,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "feedback",
+                        "title": "Feedback",
                         "slug": "docs/api-reference/feedback",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/feedback/feedback"
@@ -1789,7 +1789,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "logs",
+                        "title": "Logs",
                         "slug": "docs/api-reference/logs",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/logs/list"
@@ -1849,7 +1849,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "modelConfigs",
+                        "title": "Model Configs",
                         "slug": "docs/api-reference/model-configs",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/model-configs/model-configs-register"
@@ -2009,7 +2009,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "projects",
+                        "title": "Projects",
                         "slug": "docs/api-reference/projects",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/projects/list"
@@ -2049,7 +2049,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "sessions",
+                        "title": "Sessions",
                         "slug": "docs/api-reference/sessions",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "docs/api-reference/sessions/list"
@@ -3356,7 +3356,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "chats",
+                        "title": "Chats",
                         "slug": "v4/docs/api-reference/chats",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/chats/create"
@@ -3406,7 +3406,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "completions",
+                        "title": "Completions",
                         "slug": "v4/docs/api-reference/completions",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/completions/create"
@@ -3448,7 +3448,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "datapoints",
+                        "title": "Datapoints",
                         "slug": "v4/docs/api-reference/datapoints",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/datapoints/get"
@@ -3539,7 +3539,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "datasets",
+                        "title": "Datasets",
                         "slug": "v4/docs/api-reference/datasets",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/datasets/listallforproject"
@@ -3640,7 +3640,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "evaluations",
+                        "title": "Evaluations",
                         "slug": "v4/docs/api-reference/evaluations",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/evaluations/get"
@@ -3700,7 +3700,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "evaluators",
+                        "title": "Evaluators",
                         "slug": "v4/docs/api-reference/evaluators",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/evaluators/list"
@@ -3760,7 +3760,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "experiments",
+                        "title": "Experiments",
                         "slug": "v4/docs/api-reference/experiments",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/experiments/list"
@@ -3780,7 +3780,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "feedback",
+                        "title": "Feedback",
                         "slug": "v4/docs/api-reference/feedback",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/feedback/feedback"
@@ -3850,7 +3850,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "logs",
+                        "title": "Logs",
                         "slug": "v4/docs/api-reference/logs",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/logs/list"
@@ -3910,7 +3910,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "modelConfigs",
+                        "title": "Model Configs",
                         "slug": "v4/docs/api-reference/model-configs",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/model-configs/model-configs-register"
@@ -4070,7 +4070,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "projects",
+                        "title": "Projects",
                         "slug": "v4/docs/api-reference/projects",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/projects/list"
@@ -4110,7 +4110,7 @@
                             "isResponseStream": false
                           }
                         ],
-                        "title": "sessions",
+                        "title": "Sessions",
                         "slug": "v4/docs/api-reference/sessions",
                         "apiDefinitionId": "8320b111-4f07-4409-8d8a-9d429c159004",
                         "pointsTo": "v4/docs/api-reference/sessions/list"

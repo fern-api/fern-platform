@@ -397,7 +397,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "tools",
+                  "title": "Tools",
                   "slug": "reference/empathic-voice-interface-evi/tools",
                   "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
                   "pointsTo": "reference/empathic-voice-interface-evi/tools/list-tools"
@@ -497,7 +497,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "prompts",
+                  "title": "Prompts",
                   "slug": "reference/empathic-voice-interface-evi/prompts",
                   "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
                   "pointsTo": "reference/empathic-voice-interface-evi/prompts/list-prompts"
@@ -597,7 +597,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "configs",
+                  "title": "Configs",
                   "slug": "reference/empathic-voice-interface-evi/configs",
                   "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
                   "pointsTo": "reference/empathic-voice-interface-evi/configs/list-configs"
@@ -627,7 +627,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "chats",
+                  "title": "Chats",
                   "slug": "reference/empathic-voice-interface-evi/chats",
                   "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
                   "pointsTo": "reference/empathic-voice-interface-evi/chats/list-chats"
@@ -657,7 +657,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "chatGroups",
+                  "title": "Chat Groups",
                   "slug": "reference/empathic-voice-interface-evi/chat-groups",
                   "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
                   "pointsTo": "reference/empathic-voice-interface-evi/chat-groups/list-chat-groups"
@@ -675,7 +675,7 @@
                       "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb"
                     }
                   ],
-                  "title": "chat",
+                  "title": "Chat",
                   "slug": "reference/empathic-voice-interface-evi/chat",
                   "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
                   "pointsTo": "reference/empathic-voice-interface-evi/chat/chat"
@@ -758,7 +758,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "batch",
+                  "title": "Batch",
                   "slug": "reference/expression-measurement-api/batch",
                   "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
                   "pointsTo": "reference/expression-measurement-api/batch/list-jobs"
@@ -776,7 +776,7 @@
                       "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e"
                     }
                   ],
-                  "title": "stream",
+                  "title": "Stream",
                   "slug": "reference/expression-measurement-api/stream",
                   "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
                   "pointsTo": "reference/expression-measurement-api/stream/stream"
@@ -869,7 +869,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "files",
+                  "title": "Files",
                   "slug": "reference/custom-models-api/files",
                   "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
                   "pointsTo": "reference/custom-models-api/files/list-files"
@@ -969,7 +969,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "datasets",
+                  "title": "Datasets",
                   "slug": "reference/custom-models-api/datasets",
                   "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
                   "pointsTo": "reference/custom-models-api/datasets/list-datasets"
@@ -1039,7 +1039,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "models",
+                  "title": "Models",
                   "slug": "reference/custom-models-api/models",
                   "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
                   "pointsTo": "reference/custom-models-api/models/list-models"
@@ -1069,7 +1069,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "jobs",
+                  "title": "Jobs",
                   "slug": "reference/custom-models-api/jobs",
                   "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
                   "pointsTo": "reference/custom-models-api/jobs/start-training-job"

@@ -290,7 +290,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "Observability API (beta)",
+                  "title": "Observability API (Beta)",
                   "slug": "docs/api/api-reference/observability-api-beta",
                   "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
                   "pointsTo": "docs/api/api-reference/observability-api-beta/external-payment"
@@ -369,7 +369,7 @@
                       "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
                     }
                   ],
-                  "title": "paymentWebhooks",
+                  "title": "Payment Webhooks",
                   "slug": "docs/api/webhooks/payment-webhooks",
                   "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
                   "pointsTo": "docs/api/webhooks/payment-webhooks/payment-status-webhook-event"
@@ -397,7 +397,7 @@
                       "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
                     }
                   ],
-                  "title": "disputeChargebacksWebhooks",
+                  "title": "Dispute Chargebacks Webhooks",
                   "slug": "docs/api/webhooks/dispute-chargebacks-webhooks",
                   "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
                   "pointsTo": "docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
@@ -696,7 +696,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "Observability API (beta)",
+                  "title": "Observability API (Beta)",
                   "slug": "docs/api/v2.3/api-reference/observability-api-beta",
                   "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
                   "pointsTo": "docs/api/v2.3/api-reference/observability-api-beta/external-payment"
@@ -775,7 +775,7 @@
                       "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
                     }
                   ],
-                  "title": "paymentWebhooks",
+                  "title": "Payment Webhooks",
                   "slug": "docs/api/v2.3/webhooks/payment-webhooks",
                   "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
                   "pointsTo": "docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event"
@@ -803,7 +803,7 @@
                       "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
                     }
                   ],
-                  "title": "disputeChargebacksWebhooks",
+                  "title": "Dispute Chargebacks Webhooks",
                   "slug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks",
                   "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
                   "pointsTo": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
@@ -1102,7 +1102,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "Observability API (beta)",
+                  "title": "Observability API (Beta)",
                   "slug": "docs/api/v2.2/api-reference/observability-api-beta",
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
                   "pointsTo": "docs/api/v2.2/api-reference/observability-api-beta/external-payment"
@@ -1181,7 +1181,7 @@
                       "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9"
                     }
                   ],
-                  "title": "paymentWebhooks",
+                  "title": "Payment Webhooks",
                   "slug": "docs/api/v2.2/webhooks/payment-webhooks",
                   "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
                   "pointsTo": "docs/api/v2.2/webhooks/payment-webhooks/payment-status-webhook-event"
@@ -1209,7 +1209,7 @@
                       "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9"
                     }
                   ],
-                  "title": "disputeChargebacksWebhooks",
+                  "title": "Dispute Chargebacks Webhooks",
                   "slug": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks",
                   "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
                   "pointsTo": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
@@ -1498,7 +1498,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "paymentWebhooks",
+                  "title": "Payment Webhooks",
                   "slug": "docs/api/v2.1/webhooks/payment-webhooks",
                   "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
                   "pointsTo": "docs/api/v2.1/webhooks/payment-webhooks/payment-status-webhook-event"
@@ -1518,7 +1518,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "disputeChargebacksWebhooks",
+                  "title": "Dispute Chargebacks Webhooks",
                   "slug": "docs/api/v2.1/webhooks/dispute-chargebacks-webhooks",
                   "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
                   "pointsTo": "docs/api/v2.1/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"

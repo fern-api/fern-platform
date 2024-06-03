@@ -1,4 +1,4 @@
-import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { noop, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
@@ -212,7 +212,7 @@ export class ApiReferenceNavigationConverter {
                     id,
                     type: "apiSection",
                     children: subpackageChildren,
-                    title: subpackage.displayName ?? subpackage.name,
+                    title: subpackage.displayName ?? titleCase(subpackage.name),
                     slug,
                     icon: undefined,
                     hidden: undefined,
@@ -306,10 +306,30 @@ export class ApiReferenceNavigationConverter {
                     children.push(this.convertWebhookNode(webhookId, webhook, parentSlug));
                     this.#visitedWebhooks.add(webhookId);
                 },
-                subpackage: ({ subpackageId, items }) => {
+                subpackage: ({ subpackageId, items, summaryPageId }) => {
                     const subpackage = this.api.subpackages[subpackageId];
+                    if (subpackage == null) {
+                        // eslint-disable-next-line no-console
+                        console.error(`Subpackage ${subpackageId} not found in ${targetSubpackageId}`);
+                        return;
+                    }
                     const slug = createSlug(this.baseSlug, parentSlug, subpackage);
-                    this.convertApiNavigationItems(items, slug, subpackageId);
+                    this.#idgen.with(subpackageId, (id) => {
+                        const convertedItems = this.convertApiNavigationItems(items, slug, subpackageId);
+                        children.push({
+                            id,
+                            type: "apiSection",
+                            children: convertedItems,
+                            title: subpackage.displayName ?? titleCase(subpackage.name),
+                            slug,
+                            icon: undefined,
+                            hidden: undefined,
+                            overviewPageId: summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined,
+                            availability: undefined,
+                            apiDefinitionId: this.apiDefinitionId,
+                            pointsTo: followRedirects(convertedItems),
+                        });
+                    });
                 },
                 _other: noop,
             });

@@ -537,7 +537,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "Add-Ons",
+                  "title": "Add Ons",
                   "slug": "api/rest-api-v-0-7/add-ons",
                   "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
                   "pointsTo": "api/rest-api-v-0-7/add-ons/aws-rekognition-execute"
@@ -577,7 +577,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "File metadata",
+                  "title": "File Metadata",
                   "slug": "api/rest-api-v-0-7/file-metadata",
                   "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
                   "pointsTo": "api/rest-api-v-0-7/file-metadata/key"
@@ -788,7 +788,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "File information",
+                  "title": "File Information",
                   "slug": "api/url-api/file-information",
                   "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
                   "pointsTo": "api/url-api/file-information/file-info-json"
@@ -808,7 +808,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "File names",
+                  "title": "File Names",
                   "slug": "api/url-api/file-names",
                   "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
                   "pointsTo": "api/url-api/file-names/file-with-name"

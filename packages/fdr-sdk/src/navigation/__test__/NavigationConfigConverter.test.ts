@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { DocsV2Read } from "../../client";
 import { NodeCollector } from "../NodeCollector";
-import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
+import { convertLoadDocsForUrlResponse } from "../utils";
 import { collectPageIds } from "../utils/collectPageIds";
 
 const fixturesDir = path.join(__dirname, "fixtures");
@@ -13,11 +13,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
         const fixturePath = path.join(fixturesDir, `${fixtureName}.json`);
         const content = fs.readFileSync(fixturePath, "utf-8");
         const fixture = JSON.parse(content) as DocsV2Read.LoadDocsForUrlResponse;
-        const node = NavigationConfigConverter.convert(
-            fixture.definition.config.navigation,
-            fixture.definition.apis,
-            fixture.baseUrl.basePath,
-        );
+        const node = convertLoadDocsForUrlResponse(fixture);
 
         const slugCollector = new NodeCollector(node);
 

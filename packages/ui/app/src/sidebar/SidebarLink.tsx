@@ -138,7 +138,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
             data-state={showIndicator ? "active" : "inactive"}
         >
             <ChevronDown
-                className={cn("size-5 lg:size-icon", {
+                className={cn("size-5 lg:size-icon lg:my-0.5", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}

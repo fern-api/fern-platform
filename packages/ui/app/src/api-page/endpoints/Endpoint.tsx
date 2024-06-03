@@ -23,6 +23,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, 
     const { isApiScrollingDisabled } = useFeatureFlags();
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
+    console.log(endpointSlug);
 
     const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug });
 

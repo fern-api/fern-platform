@@ -888,7 +888,7 @@
                           "isResponseStream": false
                         }
                       ],
-                      "title": "telemetry",
+                      "title": "Telemetry",
                       "slug": "docs/api-reference/octoai-api/telemetry",
                       "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
                       "pointsTo": "docs/api-reference/octoai-api/telemetry/get-endpoint-logs"
@@ -1008,7 +1008,7 @@
                           "isResponseStream": false
                         }
                       ],
-                      "title": "registryCredential",
+                      "title": "Registry Credential",
                       "slug": "docs/api-reference/octoai-api/registry-credential",
                       "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
                       "pointsTo": "docs/api-reference/octoai-api/registry-credential/create-registry-credential"
@@ -1028,7 +1028,7 @@
                           "isResponseStream": false
                         }
                       ],
-                      "title": "publicEndpoint",
+                      "title": "Public Endpoint",
                       "slug": "docs/api-reference/octoai-api/public-endpoint",
                       "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
                       "pointsTo": "docs/api-reference/octoai-api/public-endpoint/get-public-endpoints"
@@ -1048,7 +1048,7 @@
                           "isResponseStream": false
                         }
                       ],
-                      "title": "instanceTypes",
+                      "title": "Instance Types",
                       "slug": "docs/api-reference/octoai-api/instance-types",
                       "apiDefinitionId": "cb786748-d42f-427d-9c21-00e6c59bd56c",
                       "pointsTo": "docs/api-reference/octoai-api/instance-types/get-instance-types"
@@ -1124,7 +1124,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "asset-library",
+                  "title": "Asset Library",
                   "slug": "docs/api-reference/asset-library",
                   "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
                   "pointsTo": "docs/api-reference/asset-library/list"
@@ -1184,7 +1184,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "fine-tuning",
+                  "title": "Fine Tuning",
                   "slug": "docs/api-reference/fine-tuning",
                   "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
                   "pointsTo": "docs/api-reference/fine-tuning/create"
@@ -1254,7 +1254,7 @@
                       "isResponseStream": false
                     }
                   ],
-                  "title": "image-gen",
+                  "title": "Image Gen",
                   "slug": "docs/api-reference/image-gen",
                   "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
                   "pointsTo": "docs/api-reference/image-gen/generate-ssd"
@@ -1312,7 +1312,7 @@
                       }
                     }
                   ],
-                  "title": "text-gen",
+                  "title": "Text Gen",
                   "slug": "docs/api-reference/text-gen",
                   "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
                   "pointsTo": "docs/api-reference/text-gen/create-chat-completion"

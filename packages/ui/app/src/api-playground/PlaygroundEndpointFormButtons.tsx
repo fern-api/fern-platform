@@ -1,6 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useSetAtom } from "jotai";
 import { ReactElement } from "react";
@@ -35,7 +34,7 @@ export function PlaygroundEndpointFormButtons({
             </FernButtonGroup>
 
             <FernLink
-                href={`/${joinUrlSlugs(...endpoint.slug)}`}
+                href={`/${endpoint.slug}`}
                 shallow={apiReferenceId === endpoint.apiSectionId}
                 className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                 onClick={() => setPlaygroundOpen(false)}
