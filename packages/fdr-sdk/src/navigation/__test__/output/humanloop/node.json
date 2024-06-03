@@ -9,6 +9,7 @@
         "id": "root..*",
         "type": "version",
         "title": "v4.0",
+        "default": true,
         "versionId": "v4",
         "slug": "",
         "child": {
@@ -2069,6 +2070,7 @@
         "id": "root..v4",
         "type": "version",
         "title": "v4.0",
+        "default": false,
         "versionId": "v4",
         "slug": "v4",
         "hidden": true,

@@ -3,6 +3,7 @@
     "id": "root..*",
     "type": "version",
     "title": "Version 1",
+    "default": true,
     "versionId": "version-1",
     "slug": "docs/api",
     "child": {
@@ -89,6 +90,7 @@
     "id": "root..version-1",
     "type": "version",
     "title": "Version 1",
+    "default": false,
     "versionId": "version-1",
     "slug": "docs/api/version-1",
     "hidden": true,
@@ -176,6 +178,7 @@
     "id": "root..version-2",
     "type": "version",
     "title": "Version 2",
+    "default": false,
     "versionId": "version-2",
     "slug": "docs/api/version-2",
     "hidden": false,
