@@ -1,4 +1,4 @@
-import { mapValues } from "lodash-es";
+import { mapValues } from "@fern-ui/core-utils";
 import { DocsV1Db } from "../../../client";
 
 export function upgradeV2ToV3(v2: DocsV1Db.DocsDefinitionDb.V2): DocsV1Db.DocsDefinitionDb.V3 {

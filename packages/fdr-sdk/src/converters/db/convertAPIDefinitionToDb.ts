@@ -1,8 +1,8 @@
-import { isEqual, kebabCase, startCase } from "lodash-es";
+import { kebabCase, titleCase } from "@fern-ui/core-utils";
+import isEqual from "fast-deep-equal";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
-import { titleCase } from "../utils/titleCase";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
@@ -667,7 +667,7 @@ function transformUnDiscriminatedVariant({
         availability: writeShape.availability,
         // htmlDescription,
         type: writeShape.type,
-        displayName: writeShape.typeName != null ? startCase(writeShape.typeName) : undefined,
+        displayName: writeShape.typeName != null ? titleCase(writeShape.typeName) : undefined,
         // descriptionContainsMarkdown: true,
     };
 }

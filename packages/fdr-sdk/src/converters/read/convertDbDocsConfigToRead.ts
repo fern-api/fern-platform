@@ -1,4 +1,4 @@
-import { kebabCase } from "lodash-es";
+import { kebabCase } from "@fern-ui/core-utils";
 import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";

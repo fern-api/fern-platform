@@ -1,4 +1,4 @@
-import { once } from "lodash-es";
+import { once } from "@fern-ui/core-utils";
 import urljoin from "url-join";
 import { FernNavigation } from "./generated";
 import {

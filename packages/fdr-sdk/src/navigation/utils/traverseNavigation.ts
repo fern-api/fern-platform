@@ -1,5 +1,5 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { noop } from "lodash-es";
+import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+
 import { NavigationNode } from "../types/NavigationNode";
 
 const SKIP = "skip" as const;

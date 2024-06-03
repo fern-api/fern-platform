@@ -1,5 +1,4 @@
-import { assertNever, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { kebabCase, last } from "lodash-es";
+import { assertNever, kebabCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
 import { FernNavigation } from "../generated";
@@ -181,7 +180,7 @@ export class NavigationConfigConverter {
                 return;
             }
 
-            const lastChild = last(grouped);
+            const lastChild = grouped.length > 0 ? grouped[grouped.length - 1] : undefined;
             let sidebarGroup: FernNavigation.SidebarGroupNode;
             if (lastChild?.type === "sidebarGroup") {
                 sidebarGroup = lastChild;

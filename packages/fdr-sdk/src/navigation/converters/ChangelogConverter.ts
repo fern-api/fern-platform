@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { orderBy } from "lodash-es";
 import urljoin from "url-join";
 import { DocsV1Read } from "../../client";
 import { FernNavigation } from "../generated";
@@ -69,7 +68,7 @@ export class ChangelogNavigationConverter {
                     const slug = FernNavigation.Slug(urljoin(parentSlug, year.toString()));
                     return {
                         id,
-                        type: "changelogYear",
+                        type: "changelogYear" as const,
                         title: year.toString(),
                         year,
                         slug,
@@ -99,7 +98,7 @@ export class ChangelogNavigationConverter {
             Array.from(months.entries()).map(([month, entries]) =>
                 this.#idgen.with(month.toString(), (id) => ({
                     id,
-                    type: "changelogMonth",
+                    type: "changelogMonth" as const,
                     title: dayjs(new Date(0, month - 1)).format("MMMM YYYY"),
                     month,
                     slug: FernNavigation.Slug(urljoin(parentSlug, month.toString())),
@@ -131,4 +130,27 @@ export class ChangelogNavigationConverter {
             };
         });
     }
+}
+
+function orderBy<K extends string, T extends Record<K, string | number>>(
+    items: T[],
+    key: K,
+    order?: "asc" | "desc",
+): T[];
+function orderBy<T>(items: T[], key: (item: T) => string | number, order?: "asc" | "desc"): T[];
+function orderBy<K extends string, T extends Record<K, string | number>>(
+    items: T[],
+    key: K | ((item: T) => string | number),
+    order: "asc" | "desc" = "asc",
+): T[] {
+    return items.concat().sort((a, b) => {
+        const aValue = typeof key === "function" ? key(a) : a[key];
+        const bValue = typeof key === "function" ? key(b) : b[key];
+        if (aValue < bValue) {
+            return order === "asc" ? -1 : 1;
+        } else if (aValue > bValue) {
+            return order === "asc" ? 1 : -1;
+        }
+        return 0;
+    });
 }

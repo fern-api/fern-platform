@@ -1,5 +1,5 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { noop } from "lodash-es";
+import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+
 import urljoin from "url-join";
 import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";
