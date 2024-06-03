@@ -1,0 +1,1755 @@
+[
+  {
+    "id": "root..*",
+    "type": "version",
+    "title": "v2.3",
+    "versionId": "v2.3",
+    "slug": "docs/api",
+    "child": {
+      "id": "root..*.uv",
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "id": "root..*.uv.introduction",
+          "type": "section",
+          "collapsed": false,
+          "title": "Introduction",
+          "slug": "docs/api/introduction",
+          "children": [
+            {
+              "id": "root..*.uv.introduction.getting-started",
+              "type": "page",
+              "pageId": "introduction/getting-started.md",
+              "title": "Getting Started",
+              "slug": "docs/api/introduction/getting-started"
+            },
+            {
+              "id": "root..*.uv.introduction.authentication",
+              "type": "page",
+              "pageId": "introduction/authentication.md",
+              "title": "Authentication",
+              "slug": "docs/api/introduction/authentication"
+            },
+            {
+              "id": "root..*.uv.introduction.api-responses",
+              "type": "page",
+              "pageId": "introduction/responses.md",
+              "title": "API Responses",
+              "slug": "docs/api/introduction/api-responses"
+            },
+            {
+              "id": "root..*.uv.introduction.idempotency-key",
+              "type": "page",
+              "pageId": "introduction/idempotency-key.md",
+              "title": "Idempotency Key",
+              "slug": "docs/api/introduction/idempotency-key"
+            },
+            {
+              "id": "root..*.uv.introduction.loyalty-transactions",
+              "type": "page",
+              "pageId": "introduction/loyalty-transactions.md",
+              "title": "Loyalty Transactions",
+              "slug": "docs/api/introduction/loyalty-transactions"
+            },
+            {
+              "id": "root..*.uv.introduction.changelogs",
+              "type": "page",
+              "pageId": "introduction/changelogs.md",
+              "title": "Changelogs",
+              "slug": "docs/api/introduction/changelogs"
+            }
+          ],
+          "pointsTo": "docs/api/introduction/getting-started"
+        },
+        {
+          "id": "root..*.uv.api-reference",
+          "type": "apiReference",
+          "title": "API Reference",
+          "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+          "slug": "docs/api/api-reference",
+          "showErrors": true,
+          "children": [
+            {
+              "id": "root..*.uv.api-reference.subpackage_clientSessionApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
+                  "type": "endpoint",
+                  "title": "Retrieve a client session",
+                  "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
+                  "slug": "docs/api/api-reference/client-session-api/retrieve-client-side-token",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
+                  "type": "endpoint",
+                  "title": "Create a client session",
+                  "endpointId": "subpackage_clientSessionApi.createClientSideToken",
+                  "slug": "docs/api/api-reference/client-session-api/create-client-side-token",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
+                  "type": "endpoint",
+                  "title": "Update client session",
+                  "endpointId": "subpackage_clientSessionApi.updateClientSideToken",
+                  "slug": "docs/api/api-reference/client-session-api/update-client-side-token",
+                  "method": "PATCH",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Client Session API",
+              "slug": "docs/api/api-reference/client-session-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/api-reference/client-session-api/retrieve-client-side-token"
+            },
+            {
+              "id": "root..*.uv.api-reference.subpackage_paymentsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
+                  "type": "endpoint",
+                  "title": "Search & list payments",
+                  "endpointId": "subpackage_paymentsApi.listPayments",
+                  "slug": "docs/api/api-reference/payments-api/list-payments",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
+                  "type": "endpoint",
+                  "title": "Create a payment",
+                  "endpointId": "subpackage_paymentsApi.createPayment",
+                  "slug": "docs/api/api-reference/payments-api/create-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
+                  "type": "endpoint",
+                  "title": "Authorize a payment",
+                  "endpointId": "subpackage_paymentsApi.authorizePayment",
+                  "slug": "docs/api/api-reference/payments-api/authorize-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
+                  "type": "endpoint",
+                  "title": "Capture a payment",
+                  "endpointId": "subpackage_paymentsApi.capturePayment",
+                  "slug": "docs/api/api-reference/payments-api/capture-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
+                  "type": "endpoint",
+                  "title": "Cancel a payment",
+                  "endpointId": "subpackage_paymentsApi.cancelPayment",
+                  "slug": "docs/api/api-reference/payments-api/cancel-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
+                  "type": "endpoint",
+                  "title": "Refund a payment",
+                  "endpointId": "subpackage_paymentsApi.refundPayment",
+                  "slug": "docs/api/api-reference/payments-api/refund-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
+                  "type": "endpoint",
+                  "title": "Resume a payment",
+                  "endpointId": "subpackage_paymentsApi.resumePayment",
+                  "slug": "docs/api/api-reference/payments-api/resume-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
+                  "type": "endpoint",
+                  "title": "Adjust authorized amount",
+                  "endpointId": "subpackage_paymentsApi.adjustAuthorization",
+                  "slug": "docs/api/api-reference/payments-api/adjust-authorization",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
+                  "type": "endpoint",
+                  "title": "Get a payment",
+                  "endpointId": "subpackage_paymentsApi.getPaymentById",
+                  "slug": "docs/api/api-reference/payments-api/get-payment-by-id",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payments API",
+              "slug": "docs/api/api-reference/payments-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/api-reference/payments-api/list-payments"
+            },
+            {
+              "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "type": "endpoint",
+                  "title": "Save a payment method token",
+                  "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "slug": "docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "type": "endpoint",
+                  "title": "List saved payment methods",
+                  "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "slug": "docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "type": "endpoint",
+                  "title": "Delete a saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "slug": "docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+                  "method": "DELETE",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "type": "endpoint",
+                  "title": "Update the default saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "slug": "docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payment Methods API",
+              "slug": "docs/api/api-reference/payment-methods-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post"
+            },
+            {
+              "id": "root..*.uv.api-reference.subpackage_observabilityApiBeta",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
+                  "type": "endpoint",
+                  "title": "Create an external payment",
+                  "endpointId": "subpackage_observabilityApiBeta.external_payment",
+                  "slug": "docs/api/api-reference/observability-api-beta/external-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
+                  "type": "endpoint",
+                  "title": "Update an external payment",
+                  "endpointId": "subpackage_observabilityApiBeta.external_payment_update",
+                  "slug": "docs/api/api-reference/observability-api-beta/external-payment-update",
+                  "method": "PATCH",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Observability API (Beta)",
+              "slug": "docs/api/api-reference/observability-api-beta",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/api-reference/observability-api-beta/external-payment"
+            },
+            {
+              "id": "root..*.uv.api-reference.subpackage_loyaltyApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
+                  "type": "endpoint",
+                  "title": "Get a loyalty customer's points balance",
+                  "endpointId": "subpackage_loyaltyApi.get_loyalty_customer",
+                  "slug": "docs/api/api-reference/loyalty-api/get-loyalty-customer",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
+                  "type": "endpoint",
+                  "title": "List the transactions for a customer",
+                  "endpointId": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
+                  "slug": "docs/api/api-reference/loyalty-api/get-loyalty-customer-transactions",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..*.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
+                  "type": "endpoint",
+                  "title": "Create a loyalty transaction",
+                  "endpointId": "subpackage_loyaltyApi.post_loyalty_transaction",
+                  "slug": "docs/api/api-reference/loyalty-api/post-loyalty-transaction",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Loyalty API",
+              "slug": "docs/api/api-reference/loyalty-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/api-reference/loyalty-api/get-loyalty-customer"
+            }
+          ],
+          "pointsTo": "docs/api/api-reference/client-session-api/retrieve-client-side-token"
+        },
+        {
+          "id": "root..*.uv.webhooks",
+          "type": "apiReference",
+          "title": "Webhooks",
+          "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
+          "slug": "docs/api/webhooks",
+          "showErrors": false,
+          "children": [
+            {
+              "id": "root..*.uv.webhooks.subpackage_paymentWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "type": "webhook",
+                  "title": "Payment Status Update",
+                  "webhookId": "subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "slug": "docs/api/webhooks/payment-webhooks/payment-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                },
+                {
+                  "id": "root..*.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "type": "webhook",
+                  "title": "Payment Refund",
+                  "webhookId": "subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "slug": "docs/api/webhooks/payment-webhooks/payment-refund-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                }
+              ],
+              "title": "Payment Webhooks",
+              "slug": "docs/api/webhooks/payment-webhooks",
+              "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
+              "pointsTo": "docs/api/webhooks/payment-webhooks/payment-status-webhook-event"
+            },
+            {
+              "id": "root..*.uv.webhooks.subpackage_disputeChargebacksWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..*.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "type": "webhook",
+                  "title": "Dispute Open",
+                  "webhookId": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "slug": "docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                },
+                {
+                  "id": "root..*.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
+                  "type": "webhook",
+                  "title": "Dispute Status",
+                  "webhookId": "subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
+                  "slug": "docs/api/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                }
+              ],
+              "title": "Dispute Chargebacks Webhooks",
+              "slug": "docs/api/webhooks/dispute-chargebacks-webhooks",
+              "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
+              "pointsTo": "docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
+            }
+          ],
+          "pointsTo": "docs/api/webhooks/payment-webhooks/payment-status-webhook-event"
+        }
+      ]
+    },
+    "availability": "stable",
+    "pointsTo": "docs/api/introduction/getting-started"
+  },
+  {
+    "id": "root..v2.3",
+    "type": "version",
+    "title": "v2.3",
+    "versionId": "v2.3",
+    "slug": "docs/api/v2.3",
+    "hidden": true,
+    "child": {
+      "id": "root..v2.3.uv",
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "id": "root..v2.3.uv.introduction",
+          "type": "section",
+          "collapsed": false,
+          "title": "Introduction",
+          "slug": "docs/api/v2.3/introduction",
+          "children": [
+            {
+              "id": "root..v2.3.uv.introduction.getting-started",
+              "type": "page",
+              "pageId": "introduction/getting-started.md",
+              "title": "Getting Started",
+              "slug": "docs/api/v2.3/introduction/getting-started"
+            },
+            {
+              "id": "root..v2.3.uv.introduction.authentication",
+              "type": "page",
+              "pageId": "introduction/authentication.md",
+              "title": "Authentication",
+              "slug": "docs/api/v2.3/introduction/authentication"
+            },
+            {
+              "id": "root..v2.3.uv.introduction.api-responses",
+              "type": "page",
+              "pageId": "introduction/responses.md",
+              "title": "API Responses",
+              "slug": "docs/api/v2.3/introduction/api-responses"
+            },
+            {
+              "id": "root..v2.3.uv.introduction.idempotency-key",
+              "type": "page",
+              "pageId": "introduction/idempotency-key.md",
+              "title": "Idempotency Key",
+              "slug": "docs/api/v2.3/introduction/idempotency-key"
+            },
+            {
+              "id": "root..v2.3.uv.introduction.loyalty-transactions",
+              "type": "page",
+              "pageId": "introduction/loyalty-transactions.md",
+              "title": "Loyalty Transactions",
+              "slug": "docs/api/v2.3/introduction/loyalty-transactions"
+            },
+            {
+              "id": "root..v2.3.uv.introduction.changelogs",
+              "type": "page",
+              "pageId": "introduction/changelogs.md",
+              "title": "Changelogs",
+              "slug": "docs/api/v2.3/introduction/changelogs"
+            }
+          ],
+          "pointsTo": "docs/api/v2.3/introduction/getting-started"
+        },
+        {
+          "id": "root..v2.3.uv.api-reference",
+          "type": "apiReference",
+          "title": "API Reference",
+          "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+          "slug": "docs/api/v2.3/api-reference",
+          "showErrors": true,
+          "children": [
+            {
+              "id": "root..v2.3.uv.api-reference.subpackage_clientSessionApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
+                  "type": "endpoint",
+                  "title": "Retrieve a client session",
+                  "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
+                  "slug": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
+                  "type": "endpoint",
+                  "title": "Create a client session",
+                  "endpointId": "subpackage_clientSessionApi.createClientSideToken",
+                  "slug": "docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
+                  "type": "endpoint",
+                  "title": "Update client session",
+                  "endpointId": "subpackage_clientSessionApi.updateClientSideToken",
+                  "slug": "docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
+                  "method": "PATCH",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Client Session API",
+              "slug": "docs/api/v2.3/api-reference/client-session-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token"
+            },
+            {
+              "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
+                  "type": "endpoint",
+                  "title": "Search & list payments",
+                  "endpointId": "subpackage_paymentsApi.listPayments",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/list-payments",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
+                  "type": "endpoint",
+                  "title": "Create a payment",
+                  "endpointId": "subpackage_paymentsApi.createPayment",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/create-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
+                  "type": "endpoint",
+                  "title": "Authorize a payment",
+                  "endpointId": "subpackage_paymentsApi.authorizePayment",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/authorize-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
+                  "type": "endpoint",
+                  "title": "Capture a payment",
+                  "endpointId": "subpackage_paymentsApi.capturePayment",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/capture-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
+                  "type": "endpoint",
+                  "title": "Cancel a payment",
+                  "endpointId": "subpackage_paymentsApi.cancelPayment",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/cancel-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
+                  "type": "endpoint",
+                  "title": "Refund a payment",
+                  "endpointId": "subpackage_paymentsApi.refundPayment",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/refund-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
+                  "type": "endpoint",
+                  "title": "Resume a payment",
+                  "endpointId": "subpackage_paymentsApi.resumePayment",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/resume-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
+                  "type": "endpoint",
+                  "title": "Adjust authorized amount",
+                  "endpointId": "subpackage_paymentsApi.adjustAuthorization",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/adjust-authorization",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
+                  "type": "endpoint",
+                  "title": "Get a payment",
+                  "endpointId": "subpackage_paymentsApi.getPaymentById",
+                  "slug": "docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payments API",
+              "slug": "docs/api/v2.3/api-reference/payments-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/v2.3/api-reference/payments-api/list-payments"
+            },
+            {
+              "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "type": "endpoint",
+                  "title": "Save a payment method token",
+                  "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "slug": "docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "type": "endpoint",
+                  "title": "List saved payment methods",
+                  "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "slug": "docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "type": "endpoint",
+                  "title": "Delete a saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "slug": "docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+                  "method": "DELETE",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "type": "endpoint",
+                  "title": "Update the default saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "slug": "docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payment Methods API",
+              "slug": "docs/api/v2.3/api-reference/payment-methods-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post"
+            },
+            {
+              "id": "root..v2.3.uv.api-reference.subpackage_observabilityApiBeta",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
+                  "type": "endpoint",
+                  "title": "Create an external payment",
+                  "endpointId": "subpackage_observabilityApiBeta.external_payment",
+                  "slug": "docs/api/v2.3/api-reference/observability-api-beta/external-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
+                  "type": "endpoint",
+                  "title": "Update an external payment",
+                  "endpointId": "subpackage_observabilityApiBeta.external_payment_update",
+                  "slug": "docs/api/v2.3/api-reference/observability-api-beta/external-payment-update",
+                  "method": "PATCH",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Observability API (Beta)",
+              "slug": "docs/api/v2.3/api-reference/observability-api-beta",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/v2.3/api-reference/observability-api-beta/external-payment"
+            },
+            {
+              "id": "root..v2.3.uv.api-reference.subpackage_loyaltyApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
+                  "type": "endpoint",
+                  "title": "Get a loyalty customer's points balance",
+                  "endpointId": "subpackage_loyaltyApi.get_loyalty_customer",
+                  "slug": "docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
+                  "type": "endpoint",
+                  "title": "List the transactions for a customer",
+                  "endpointId": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
+                  "slug": "docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer-transactions",
+                  "method": "GET",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
+                  "type": "endpoint",
+                  "title": "Create a loyalty transaction",
+                  "endpointId": "subpackage_loyaltyApi.post_loyalty_transaction",
+                  "slug": "docs/api/v2.3/api-reference/loyalty-api/post-loyalty-transaction",
+                  "method": "POST",
+                  "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Loyalty API",
+              "slug": "docs/api/v2.3/api-reference/loyalty-api",
+              "apiDefinitionId": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
+              "pointsTo": "docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer"
+            }
+          ],
+          "pointsTo": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token"
+        },
+        {
+          "id": "root..v2.3.uv.webhooks",
+          "type": "apiReference",
+          "title": "Webhooks",
+          "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
+          "slug": "docs/api/v2.3/webhooks",
+          "showErrors": false,
+          "children": [
+            {
+              "id": "root..v2.3.uv.webhooks.subpackage_paymentWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "type": "webhook",
+                  "title": "Payment Status Update",
+                  "webhookId": "subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "slug": "docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                },
+                {
+                  "id": "root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "type": "webhook",
+                  "title": "Payment Refund",
+                  "webhookId": "subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "slug": "docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                }
+              ],
+              "title": "Payment Webhooks",
+              "slug": "docs/api/v2.3/webhooks/payment-webhooks",
+              "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
+              "pointsTo": "docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event"
+            },
+            {
+              "id": "root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "type": "webhook",
+                  "title": "Dispute Open",
+                  "webhookId": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "slug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                },
+                {
+                  "id": "root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
+                  "type": "webhook",
+                  "title": "Dispute Status",
+                  "webhookId": "subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
+                  "slug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193"
+                }
+              ],
+              "title": "Dispute Chargebacks Webhooks",
+              "slug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks",
+              "apiDefinitionId": "ca56f687-5be3-4661-aeed-674a0f1f7193",
+              "pointsTo": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
+            }
+          ],
+          "pointsTo": "docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event"
+        }
+      ]
+    },
+    "availability": "stable",
+    "pointsTo": "docs/api/v2.3/introduction/getting-started"
+  },
+  {
+    "id": "root..v2.2",
+    "type": "version",
+    "title": "v2.2",
+    "versionId": "v2.2",
+    "slug": "docs/api/v2.2",
+    "hidden": false,
+    "child": {
+      "id": "root..v2.2.uv",
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "id": "root..v2.2.uv.introduction",
+          "type": "section",
+          "collapsed": false,
+          "title": "Introduction",
+          "slug": "docs/api/v2.2/introduction",
+          "children": [
+            {
+              "id": "root..v2.2.uv.introduction.getting-started",
+              "type": "page",
+              "pageId": "introduction/getting-started.md",
+              "title": "Getting Started",
+              "slug": "docs/api/v2.2/introduction/getting-started"
+            },
+            {
+              "id": "root..v2.2.uv.introduction.authentication",
+              "type": "page",
+              "pageId": "introduction/authentication.md",
+              "title": "Authentication",
+              "slug": "docs/api/v2.2/introduction/authentication"
+            },
+            {
+              "id": "root..v2.2.uv.introduction.api-responses",
+              "type": "page",
+              "pageId": "introduction/responses.md",
+              "title": "API Responses",
+              "slug": "docs/api/v2.2/introduction/api-responses"
+            },
+            {
+              "id": "root..v2.2.uv.introduction.idempotency-key",
+              "type": "page",
+              "pageId": "introduction/idempotency-key.md",
+              "title": "Idempotency Key",
+              "slug": "docs/api/v2.2/introduction/idempotency-key"
+            },
+            {
+              "id": "root..v2.2.uv.introduction.loyalty-transactions",
+              "type": "page",
+              "pageId": "introduction/loyalty-transactions.md",
+              "title": "Loyalty Transactions",
+              "slug": "docs/api/v2.2/introduction/loyalty-transactions"
+            },
+            {
+              "id": "root..v2.2.uv.introduction.changelogs",
+              "type": "page",
+              "pageId": "introduction/changelogs.md",
+              "title": "Changelogs",
+              "slug": "docs/api/v2.2/introduction/changelogs"
+            }
+          ],
+          "pointsTo": "docs/api/v2.2/introduction/getting-started"
+        },
+        {
+          "id": "root..v2.2.uv.api-reference",
+          "type": "apiReference",
+          "title": "API Reference",
+          "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+          "slug": "docs/api/v2.2/api-reference",
+          "showErrors": true,
+          "children": [
+            {
+              "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
+                  "type": "endpoint",
+                  "title": "Retrieve a client session",
+                  "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
+                  "slug": "docs/api/v2.2/api-reference/client-session-api/retrieve-client-side-token",
+                  "method": "GET",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
+                  "type": "endpoint",
+                  "title": "Create a client session",
+                  "endpointId": "subpackage_clientSessionApi.createClientSideToken",
+                  "slug": "docs/api/v2.2/api-reference/client-session-api/create-client-side-token",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
+                  "type": "endpoint",
+                  "title": "Update client session",
+                  "endpointId": "subpackage_clientSessionApi.updateClientSideToken",
+                  "slug": "docs/api/v2.2/api-reference/client-session-api/update-client-side-token",
+                  "method": "PATCH",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Client Session API",
+              "slug": "docs/api/v2.2/api-reference/client-session-api",
+              "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+              "pointsTo": "docs/api/v2.2/api-reference/client-session-api/retrieve-client-side-token"
+            },
+            {
+              "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
+                  "type": "endpoint",
+                  "title": "Search & list payments",
+                  "endpointId": "subpackage_paymentsApi.listPayments",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/list-payments",
+                  "method": "GET",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
+                  "type": "endpoint",
+                  "title": "Create a payment",
+                  "endpointId": "subpackage_paymentsApi.createPayment",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/create-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
+                  "type": "endpoint",
+                  "title": "Authorize a payment",
+                  "endpointId": "subpackage_paymentsApi.authorizePayment",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/authorize-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
+                  "type": "endpoint",
+                  "title": "Capture a payment",
+                  "endpointId": "subpackage_paymentsApi.capturePayment",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/capture-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
+                  "type": "endpoint",
+                  "title": "Cancel a payment",
+                  "endpointId": "subpackage_paymentsApi.cancelPayment",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/cancel-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
+                  "type": "endpoint",
+                  "title": "Refund a payment",
+                  "endpointId": "subpackage_paymentsApi.refundPayment",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/refund-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
+                  "type": "endpoint",
+                  "title": "Resume a payment",
+                  "endpointId": "subpackage_paymentsApi.resumePayment",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/resume-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
+                  "type": "endpoint",
+                  "title": "Adjust authorized amount",
+                  "endpointId": "subpackage_paymentsApi.adjustAuthorization",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/adjust-authorization",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
+                  "type": "endpoint",
+                  "title": "Get a payment",
+                  "endpointId": "subpackage_paymentsApi.getPaymentById",
+                  "slug": "docs/api/v2.2/api-reference/payments-api/get-payment-by-id",
+                  "method": "GET",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payments API",
+              "slug": "docs/api/v2.2/api-reference/payments-api",
+              "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+              "pointsTo": "docs/api/v2.2/api-reference/payments-api/list-payments"
+            },
+            {
+              "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "type": "endpoint",
+                  "title": "Save a payment method token",
+                  "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "slug": "docs/api/v2.2/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "type": "endpoint",
+                  "title": "List saved payment methods",
+                  "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "slug": "docs/api/v2.2/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+                  "method": "GET",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "type": "endpoint",
+                  "title": "Delete a saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "slug": "docs/api/v2.2/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+                  "method": "DELETE",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "type": "endpoint",
+                  "title": "Update the default saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "slug": "docs/api/v2.2/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payment Methods API",
+              "slug": "docs/api/v2.2/api-reference/payment-methods-api",
+              "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+              "pointsTo": "docs/api/v2.2/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post"
+            },
+            {
+              "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
+                  "type": "endpoint",
+                  "title": "Create an external payment",
+                  "endpointId": "subpackage_observabilityApiBeta.external_payment",
+                  "slug": "docs/api/v2.2/api-reference/observability-api-beta/external-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
+                  "type": "endpoint",
+                  "title": "Update an external payment",
+                  "endpointId": "subpackage_observabilityApiBeta.external_payment_update",
+                  "slug": "docs/api/v2.2/api-reference/observability-api-beta/external-payment-update",
+                  "method": "PATCH",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Observability API (Beta)",
+              "slug": "docs/api/v2.2/api-reference/observability-api-beta",
+              "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+              "pointsTo": "docs/api/v2.2/api-reference/observability-api-beta/external-payment"
+            },
+            {
+              "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
+                  "type": "endpoint",
+                  "title": "Get a loyalty customer's points balance",
+                  "endpointId": "subpackage_loyaltyApi.get_loyalty_customer",
+                  "slug": "docs/api/v2.2/api-reference/loyalty-api/get-loyalty-customer",
+                  "method": "GET",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
+                  "type": "endpoint",
+                  "title": "List the transactions for a customer",
+                  "endpointId": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
+                  "slug": "docs/api/v2.2/api-reference/loyalty-api/get-loyalty-customer-transactions",
+                  "method": "GET",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
+                  "type": "endpoint",
+                  "title": "Create a loyalty transaction",
+                  "endpointId": "subpackage_loyaltyApi.post_loyalty_transaction",
+                  "slug": "docs/api/v2.2/api-reference/loyalty-api/post-loyalty-transaction",
+                  "method": "POST",
+                  "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Loyalty API",
+              "slug": "docs/api/v2.2/api-reference/loyalty-api",
+              "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+              "pointsTo": "docs/api/v2.2/api-reference/loyalty-api/get-loyalty-customer"
+            }
+          ],
+          "pointsTo": "docs/api/v2.2/api-reference/client-session-api/retrieve-client-side-token"
+        },
+        {
+          "id": "root..v2.2.uv.webhooks",
+          "type": "apiReference",
+          "title": "Webhooks",
+          "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+          "slug": "docs/api/v2.2/webhooks",
+          "showErrors": false,
+          "children": [
+            {
+              "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "type": "webhook",
+                  "title": "Payment Status Update",
+                  "webhookId": "subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "slug": "docs/api/v2.2/webhooks/payment-webhooks/payment-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9"
+                },
+                {
+                  "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "type": "webhook",
+                  "title": "Payment Refund",
+                  "webhookId": "subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "slug": "docs/api/v2.2/webhooks/payment-webhooks/payment-refund-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9"
+                }
+              ],
+              "title": "Payment Webhooks",
+              "slug": "docs/api/v2.2/webhooks/payment-webhooks",
+              "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+              "pointsTo": "docs/api/v2.2/webhooks/payment-webhooks/payment-status-webhook-event"
+            },
+            {
+              "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "type": "webhook",
+                  "title": "Dispute Open",
+                  "webhookId": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "slug": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9"
+                },
+                {
+                  "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
+                  "type": "webhook",
+                  "title": "Dispute Status",
+                  "webhookId": "subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
+                  "slug": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9"
+                }
+              ],
+              "title": "Dispute Chargebacks Webhooks",
+              "slug": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks",
+              "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+              "pointsTo": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
+            }
+          ],
+          "pointsTo": "docs/api/v2.2/webhooks/payment-webhooks/payment-status-webhook-event"
+        }
+      ]
+    },
+    "pointsTo": "docs/api/v2.2/introduction/getting-started"
+  },
+  {
+    "id": "root..v2.1",
+    "type": "version",
+    "title": "v2.1",
+    "versionId": "v2.1",
+    "slug": "docs/api/v2.1",
+    "hidden": false,
+    "child": {
+      "id": "root..v2.1.uv",
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "id": "root..v2.1.uv.introduction",
+          "type": "section",
+          "collapsed": false,
+          "title": "Introduction",
+          "slug": "docs/api/v2.1/introduction",
+          "children": [
+            {
+              "id": "root..v2.1.uv.introduction.getting-started",
+              "type": "page",
+              "pageId": "introduction/getting-started.md",
+              "title": "Getting Started",
+              "slug": "docs/api/v2.1/introduction/getting-started"
+            },
+            {
+              "id": "root..v2.1.uv.introduction.authentication",
+              "type": "page",
+              "pageId": "introduction/authentication.md",
+              "title": "Authentication",
+              "slug": "docs/api/v2.1/introduction/authentication"
+            },
+            {
+              "id": "root..v2.1.uv.introduction.api-responses",
+              "type": "page",
+              "pageId": "introduction/responses.md",
+              "title": "API Responses",
+              "slug": "docs/api/v2.1/introduction/api-responses"
+            },
+            {
+              "id": "root..v2.1.uv.introduction.idempotency-key",
+              "type": "page",
+              "pageId": "introduction/idempotency-key.md",
+              "title": "Idempotency Key",
+              "slug": "docs/api/v2.1/introduction/idempotency-key"
+            },
+            {
+              "id": "root..v2.1.uv.introduction.loyalty-transactions",
+              "type": "page",
+              "pageId": "introduction/loyalty-transactions.md",
+              "title": "Loyalty Transactions",
+              "slug": "docs/api/v2.1/introduction/loyalty-transactions"
+            },
+            {
+              "id": "root..v2.1.uv.introduction.changelogs",
+              "type": "page",
+              "pageId": "introduction/changelogs.md",
+              "title": "Changelogs",
+              "slug": "docs/api/v2.1/introduction/changelogs"
+            }
+          ],
+          "pointsTo": "docs/api/v2.1/introduction/getting-started"
+        },
+        {
+          "id": "root..v2.1.uv.api-reference",
+          "type": "apiReference",
+          "title": "API Reference",
+          "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+          "slug": "docs/api/v2.1/api-reference",
+          "showErrors": true,
+          "children": [
+            {
+              "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
+                  "type": "endpoint",
+                  "title": "Retrieve a client session",
+                  "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
+                  "slug": "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token",
+                  "method": "GET",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
+                  "type": "endpoint",
+                  "title": "Create a client session",
+                  "endpointId": "subpackage_clientSessionApi.createClientSideToken",
+                  "slug": "docs/api/v2.1/api-reference/client-session-api/create-client-side-token",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
+                  "type": "endpoint",
+                  "title": "Update client session",
+                  "endpointId": "subpackage_clientSessionApi.updateClientSideToken",
+                  "slug": "docs/api/v2.1/api-reference/client-session-api/update-client-side-token",
+                  "method": "PATCH",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Client Session API",
+              "slug": "docs/api/v2.1/api-reference/client-session-api",
+              "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+              "pointsTo": "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token"
+            },
+            {
+              "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
+                  "type": "endpoint",
+                  "title": "Search & list payments",
+                  "endpointId": "subpackage_paymentsApi.listPayments",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/list-payments",
+                  "method": "GET",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
+                  "type": "endpoint",
+                  "title": "Create a payment",
+                  "endpointId": "subpackage_paymentsApi.createPayment",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/create-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
+                  "type": "endpoint",
+                  "title": "Capture a payment",
+                  "endpointId": "subpackage_paymentsApi.capturePayment",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/capture-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
+                  "type": "endpoint",
+                  "title": "Cancel a payment",
+                  "endpointId": "subpackage_paymentsApi.cancelPayment",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/cancel-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
+                  "type": "endpoint",
+                  "title": "Refund a payment",
+                  "endpointId": "subpackage_paymentsApi.refundPayment",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/refund-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
+                  "type": "endpoint",
+                  "title": "Resume a payment",
+                  "endpointId": "subpackage_paymentsApi.resumePayment",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/resume-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
+                  "type": "endpoint",
+                  "title": "Get a payment",
+                  "endpointId": "subpackage_paymentsApi.getPaymentById",
+                  "slug": "docs/api/v2.1/api-reference/payments-api/get-payment-by-id",
+                  "method": "GET",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payments API",
+              "slug": "docs/api/v2.1/api-reference/payments-api",
+              "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+              "pointsTo": "docs/api/v2.1/api-reference/payments-api/list-payments"
+            },
+            {
+              "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "type": "endpoint",
+                  "title": "Save a payment method token",
+                  "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "slug": "docs/api/v2.1/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "type": "endpoint",
+                  "title": "List saved payment methods",
+                  "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "slug": "docs/api/v2.1/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+                  "method": "GET",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "type": "endpoint",
+                  "title": "Delete a saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "slug": "docs/api/v2.1/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+                  "method": "DELETE",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "type": "endpoint",
+                  "title": "Update the default saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "slug": "docs/api/v2.1/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+                  "method": "POST",
+                  "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payment Methods API",
+              "slug": "docs/api/v2.1/api-reference/payment-methods-api",
+              "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+              "pointsTo": "docs/api/v2.1/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post"
+            }
+          ],
+          "pointsTo": "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token"
+        },
+        {
+          "id": "root..v2.1.uv.webhooks",
+          "type": "apiReference",
+          "title": "Webhooks",
+          "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+          "slug": "docs/api/v2.1/webhooks",
+          "showErrors": false,
+          "children": [
+            {
+              "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "type": "endpoint",
+                  "title": "Payment Status Update",
+                  "endpointId": "subpackage_paymentWebhooks.payment_status_webhook_event",
+                  "slug": "docs/api/v2.1/webhooks/payment-webhooks/payment-status-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "type": "endpoint",
+                  "title": "Payment Refund",
+                  "endpointId": "subpackage_paymentWebhooks.payment_refund_webhook_event",
+                  "slug": "docs/api/v2.1/webhooks/payment-webhooks/payment-refund-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payment Webhooks",
+              "slug": "docs/api/v2.1/webhooks/payment-webhooks",
+              "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+              "pointsTo": "docs/api/v2.1/webhooks/payment-webhooks/payment-status-webhook-event"
+            },
+            {
+              "id": "root..v2.1.uv.webhooks.subpackage_disputeChargebacksWebhooks",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.1.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "type": "endpoint",
+                  "title": "Dispute Open",
+                  "endpointId": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+                  "slug": "docs/api/v2.1/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+                  "method": "POST",
+                  "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Dispute Chargebacks Webhooks",
+              "slug": "docs/api/v2.1/webhooks/dispute-chargebacks-webhooks",
+              "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+              "pointsTo": "docs/api/v2.1/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event"
+            }
+          ],
+          "pointsTo": "docs/api/v2.1/webhooks/payment-webhooks/payment-status-webhook-event"
+        }
+      ]
+    },
+    "pointsTo": "docs/api/v2.1/introduction/getting-started"
+  },
+  {
+    "id": "root..v2",
+    "type": "version",
+    "title": "v2",
+    "versionId": "v2",
+    "slug": "docs/api/v2",
+    "hidden": false,
+    "child": {
+      "id": "root..v2.uv",
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "id": "root..v2.uv.introduction",
+          "type": "section",
+          "collapsed": false,
+          "title": "Introduction",
+          "slug": "docs/api/v2/introduction",
+          "children": [
+            {
+              "id": "root..v2.uv.introduction.getting-started",
+              "type": "page",
+              "pageId": "introduction/getting-started.md",
+              "title": "Getting Started",
+              "slug": "docs/api/v2/introduction/getting-started"
+            },
+            {
+              "id": "root..v2.uv.introduction.authentication",
+              "type": "page",
+              "pageId": "introduction/authentication.md",
+              "title": "Authentication",
+              "slug": "docs/api/v2/introduction/authentication"
+            },
+            {
+              "id": "root..v2.uv.introduction.api-responses",
+              "type": "page",
+              "pageId": "introduction/responses.md",
+              "title": "API Responses",
+              "slug": "docs/api/v2/introduction/api-responses"
+            },
+            {
+              "id": "root..v2.uv.introduction.idempotency-key",
+              "type": "page",
+              "pageId": "introduction/idempotency-key.md",
+              "title": "Idempotency Key",
+              "slug": "docs/api/v2/introduction/idempotency-key"
+            },
+            {
+              "id": "root..v2.uv.introduction.loyalty-transactions",
+              "type": "page",
+              "pageId": "introduction/loyalty-transactions.md",
+              "title": "Loyalty Transactions",
+              "slug": "docs/api/v2/introduction/loyalty-transactions"
+            },
+            {
+              "id": "root..v2.uv.introduction.changelogs",
+              "type": "page",
+              "pageId": "introduction/changelogs.md",
+              "title": "Changelogs",
+              "slug": "docs/api/v2/introduction/changelogs"
+            }
+          ],
+          "pointsTo": "docs/api/v2/introduction/getting-started"
+        },
+        {
+          "id": "root..v2.uv.api-reference",
+          "type": "apiReference",
+          "title": "API Reference",
+          "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+          "slug": "docs/api/v2/api-reference",
+          "showErrors": true,
+          "children": [
+            {
+              "id": "root..v2.uv.api-reference.subpackage_clientSessionApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
+                  "type": "endpoint",
+                  "title": "Create a client session",
+                  "endpointId": "subpackage_clientSessionApi.createClientSideToken",
+                  "slug": "docs/api/v2/api-reference/client-session-api/create-client-side-token",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Client Session API",
+              "slug": "docs/api/v2/api-reference/client-session-api",
+              "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+              "pointsTo": "docs/api/v2/api-reference/client-session-api/create-client-side-token"
+            },
+            {
+              "id": "root..v2.uv.api-reference.subpackage_paymentsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
+                  "type": "endpoint",
+                  "title": "Search & list payments",
+                  "endpointId": "subpackage_paymentsApi.listPayments",
+                  "slug": "docs/api/v2/api-reference/payments-api/list-payments",
+                  "method": "GET",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
+                  "type": "endpoint",
+                  "title": "Create a payment",
+                  "endpointId": "subpackage_paymentsApi.createPayment",
+                  "slug": "docs/api/v2/api-reference/payments-api/create-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
+                  "type": "endpoint",
+                  "title": "Capture a payment",
+                  "endpointId": "subpackage_paymentsApi.capturePayment",
+                  "slug": "docs/api/v2/api-reference/payments-api/capture-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
+                  "type": "endpoint",
+                  "title": "Cancel a payment",
+                  "endpointId": "subpackage_paymentsApi.cancelPayment",
+                  "slug": "docs/api/v2/api-reference/payments-api/cancel-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
+                  "type": "endpoint",
+                  "title": "Refund a payment",
+                  "endpointId": "subpackage_paymentsApi.refundPayment",
+                  "slug": "docs/api/v2/api-reference/payments-api/refund-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
+                  "type": "endpoint",
+                  "title": "Resume a payment",
+                  "endpointId": "subpackage_paymentsApi.resumePayment",
+                  "slug": "docs/api/v2/api-reference/payments-api/resume-payment",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
+                  "type": "endpoint",
+                  "title": "Get a payment",
+                  "endpointId": "subpackage_paymentsApi.getPaymentById",
+                  "slug": "docs/api/v2/api-reference/payments-api/get-payment-by-id",
+                  "method": "GET",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payments API",
+              "slug": "docs/api/v2/api-reference/payments-api",
+              "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+              "pointsTo": "docs/api/v2/api-reference/payments-api/list-payments"
+            },
+            {
+              "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi",
+              "type": "apiSection",
+              "children": [
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "type": "endpoint",
+                  "title": "Save a payment method token",
+                  "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+                  "slug": "docs/api/v2/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "type": "endpoint",
+                  "title": "List saved payment methods",
+                  "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+                  "slug": "docs/api/v2/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+                  "method": "GET",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "type": "endpoint",
+                  "title": "Delete a saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+                  "slug": "docs/api/v2/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+                  "method": "DELETE",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "type": "endpoint",
+                  "title": "Update the default saved payment method",
+                  "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+                  "slug": "docs/api/v2/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+                  "method": "POST",
+                  "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Payment Methods API",
+              "slug": "docs/api/v2/api-reference/payment-methods-api",
+              "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+              "pointsTo": "docs/api/v2/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post"
+            }
+          ],
+          "pointsTo": "docs/api/v2/api-reference/client-session-api/create-client-side-token"
+        }
+      ]
+    },
+    "pointsTo": "docs/api/v2/introduction/getting-started"
+  }
+]

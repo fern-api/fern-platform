@@ -14,7 +14,7 @@ export declare namespace DocsPage {
     export interface Navigation {
         currentTabIndex: number | undefined;
         tabs: SidebarTab[];
-        currentVersionIndex: number | undefined;
+        currentVersionId: FernNavigation.VersionId | undefined;
         versions: SidebarVersionInfo[];
         sidebar: FernNavigation.SidebarRootNode;
     }

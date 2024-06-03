@@ -6,6 +6,7 @@ import * as FernNavigation from "../index";
 
 export interface VersionNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithRedirect {
     type: "version";
+    default: boolean;
     versionId: FernNavigation.VersionId;
     child: FernNavigation.VersionChild;
     availability: FernNavigation.Availability | undefined;

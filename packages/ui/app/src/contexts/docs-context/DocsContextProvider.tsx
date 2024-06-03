@@ -32,7 +32,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const { resolvedTheme: theme } = useTheme();
 
     const { baseUrl, title, favicon } = pageProps;
-    const { currentTabIndex, currentVersionIndex } = pageProps.navigation;
+    const { currentTabIndex, currentVersionId } = pageProps.navigation;
 
     const stylesheet = useMemo(
         () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
@@ -63,7 +63,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             resolveFile,
             currentTabIndex,
             tabs,
-            currentVersionIndex,
+            currentVersionId,
             versions,
             sidebar,
             nodes: NodeCollector.collect(sidebar),
@@ -77,7 +77,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             colors,
             css,
             currentTabIndex,
-            currentVersionIndex,
+            currentVersionId,
             files,
             layout,
             resolveFile,

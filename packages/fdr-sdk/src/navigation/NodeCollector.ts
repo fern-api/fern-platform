@@ -37,7 +37,7 @@ interface NavigationNodeWithMetadataAndParents {
 }
 
 export class NodeCollector {
-    private idToNode = new Map<FernNavigation.NodeId, NavigationNodeWithMetadata>();
+    private idToNode = new Map<FernNavigation.NodeId, NavigationNode>();
     private slugToNode: Record<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> = {};
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
 
@@ -62,6 +62,7 @@ export class NodeCollector {
 
     constructor(rootNode: NavigationNode) {
         traverseNavigation(rootNode, (node, _index, parents) => {
+            this.idToNode.set(node.id, node);
             if (node.type === "sidebarRoot") {
                 this.#last = undefined;
                 this.#lastNeighboringNode = undefined;
@@ -70,7 +71,6 @@ export class NodeCollector {
             if (!hasMetadata(node)) {
                 return;
             }
-            this.idToNode.set(node.id, node);
             const existing = this.slugToNode[node.slug];
             if (existing == null) {
                 this.#setNode(node.slug, node, parents);
@@ -114,7 +114,7 @@ export class NodeCollector {
         return this.getSlugMap();
     }
 
-    public get(id: FernNavigation.NodeId): NavigationNodeWithMetadata | undefined {
+    public get(id: FernNavigation.NodeId): NavigationNode | undefined {
         return this.idToNode.get(id);
     }
 
@@ -133,8 +133,8 @@ export class NodeCollector {
     });
 
     public getVersionNodes = once((): FernNavigation.VersionNode[] => {
-        return Object.values(this.slugToNode)
-            .filter(({ node }) => node.type === "version")
-            .map(({ node }) => node as FernNavigation.VersionNode);
+        return [...this.idToNode.values()]
+            .filter((node): node is FernNavigation.VersionNode => node.type === "version")
+            .map((node) => node);
     });
 }

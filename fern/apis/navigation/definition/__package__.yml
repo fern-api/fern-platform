@@ -120,6 +120,7 @@ types:
       - WithRedirect
     properties:
       type: literal<"version">
+      default: boolean
       versionId: VersionId
       child: VersionChild
       availability: optional<Availability>

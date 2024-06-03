@@ -47,6 +47,10 @@ function testNavigationConfigConverter(fixtureName: string): void {
             expect(JSON.stringify([...pageIds], undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/pageIds.json`,
             );
+
+            expect(JSON.stringify(slugCollector.getVersionNodes(), undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/versionNodes.json`,
+            );
         });
     });
 }

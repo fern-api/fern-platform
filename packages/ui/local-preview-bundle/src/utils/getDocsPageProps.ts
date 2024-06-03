@@ -115,7 +115,7 @@ export async function getDocsPageProps(
                     }),
                 }),
             ),
-            currentVersionIndex: node.currentVersion == null ? undefined : node.versions.indexOf(node.currentVersion),
+            currentVersionId: node.currentVersion?.versionId,
             versions: node.versions
                 .filter((version) => !version.hidden)
                 .map((version, index) => ({

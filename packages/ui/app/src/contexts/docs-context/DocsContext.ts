@@ -23,7 +23,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
     resolveFile: () => undefined,
     currentTabIndex: undefined,
     tabs: [],
-    currentVersionIndex: undefined,
+    currentVersionId: undefined,
     versions: [],
     sidebar: MOCK_SIDEBAR_NODE,
     nodes: NodeCollector.collect(MOCK_SIDEBAR_NODE),

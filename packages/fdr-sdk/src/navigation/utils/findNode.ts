@@ -49,8 +49,7 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
     if (found == null) {
         let maybeVersionNode: FernNavigation.RootNode | FernNavigation.VersionNode = root;
         for (const versionNode of collector.getVersionNodes()) {
-            const versionSlug = urljoin(versionNode.slug);
-            if (slugToFind.startsWith(versionSlug)) {
+            if (!versionNode.default && slugToFind.startsWith(versionNode.slug)) {
                 maybeVersionNode = versionNode;
                 break;
             }

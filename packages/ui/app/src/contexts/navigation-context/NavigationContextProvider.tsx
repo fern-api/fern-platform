@@ -97,7 +97,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     basePath,
     title,
 }) => {
-    const { nodes, versions, currentVersionIndex } = useDocsContext();
+    const { nodes, versions, currentVersionId } = useDocsContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
@@ -242,18 +242,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     onScrollToPath,
                     registerScrolledToPathListener: scrollToPathListeners.registerListener,
                     resolvedPath,
-                    activeVersion: versions[currentVersionIndex ?? 0],
+                    activeVersion: versions.find((version) => version.id === currentVersionId),
                     selectedSlug,
                     unversionedSlug: FernNavigation.utils.getUnversionedSlug(
                         selectedSlug,
-                        versions[currentVersionIndex ?? 0]?.slug,
+                        versions.find((version) => version.id === currentVersionId)?.slug,
                         basePath,
                     ),
                 }),
                 [
                     activeNavigatable,
                     basePath,
-                    currentVersionIndex,
+                    currentVersionId,
                     domain,
                     onScrollToPath,
                     resolvedPath,
