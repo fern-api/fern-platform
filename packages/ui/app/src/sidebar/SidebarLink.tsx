@@ -138,7 +138,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
             data-state={showIndicator ? "active" : "inactive"}
         >
             <ChevronDown
-                className={cn("size-5 lg:size-icon lg:my-0.5", {
+                className={cn("size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -167,7 +167,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                             ))}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:text-text-default">
+                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:t-accent-aaa my-0.5">
                                         {typeof icon === "string" ? (
                                             <RemoteFontAwesomeIcon
                                                 icon={icon}

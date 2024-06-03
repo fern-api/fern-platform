@@ -2,12 +2,13 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 import { SidebarApiSectionNode } from "./SidebarApiSectionNode";
+import { SidebarChangelogNode } from "./SidebarChangelogNode";
 import { SidebarEndpointPairNode } from "./SidebarEndpointPairNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";
 import { SidebarPageNode } from "./SidebarPageNode";
 
 interface SidebarApiSectionChild {
-    node: FernNavigation.ApiSectionChild;
+    node: FernNavigation.ApiSectionChild | FernNavigation.ChangelogNode;
     depth: number;
 }
 
@@ -20,5 +21,6 @@ export function SidebarApiSectionChild({ node, depth }: SidebarApiSectionChild):
         webSocket: (node) => <SidebarApiLeafNode node={node} depth={depth} />,
         webhook: (node) => <SidebarApiLeafNode node={node} depth={depth} />,
         apiSection: (node) => <SidebarApiSectionNode node={node} depth={depth} />,
+        changelog: (node) => <SidebarChangelogNode node={node} depth={depth} />,
     });
 }

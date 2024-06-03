@@ -79,33 +79,7 @@ export async function convertNavigatableToResolvedPath({
     const neighbors = await getNeighbors(found, pages);
     const { node, apiReference } = found;
 
-    if (apiReference != null) {
-        const api = apis[apiReference.apiDefinitionId];
-        if (api == null) {
-            return;
-        }
-        const holder = FernNavigation.ApiDefinitionHolder.create(api);
-        const typeResolver = new ApiTypeResolver(api.types);
-        // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
-        const apiDefinition = await ApiDefinitionResolver.resolve(
-            apiReference,
-            holder,
-            typeResolver,
-            pages,
-            mdxOptions,
-            featureFlags,
-            domain,
-        );
-        return {
-            type: "api-page",
-            fullSlug: found.node.slug,
-            api: apiReference.apiDefinitionId,
-            apiDefinition,
-            // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
-            showErrors: apiReference.showErrors ?? false,
-            neighbors,
-        };
-    } else if (node.type === "changelog") {
+    if (node.type === "changelog") {
         const pageContent = node.overviewPageId != null ? pages[node.overviewPageId] : undefined;
         const serializedMdxContent =
             pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
@@ -135,6 +109,32 @@ export async function convertNavigatableToResolvedPath({
             sectionTitleBreadcrumbs: found.breadcrumb,
             markdown: serializedMdxContent,
             items: await Promise.all(itemsPromise),
+            neighbors,
+        };
+    } else if (apiReference != null) {
+        const api = apis[apiReference.apiDefinitionId];
+        if (api == null) {
+            return;
+        }
+        const holder = FernNavigation.ApiDefinitionHolder.create(api);
+        const typeResolver = new ApiTypeResolver(api.types);
+        // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
+        const apiDefinition = await ApiDefinitionResolver.resolve(
+            apiReference,
+            holder,
+            typeResolver,
+            pages,
+            mdxOptions,
+            featureFlags,
+            domain,
+        );
+        return {
+            type: "api-page",
+            fullSlug: found.node.slug,
+            api: apiReference.apiDefinitionId,
+            apiDefinition,
+            // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
+            showErrors: apiReference.showErrors ?? false,
             neighbors,
         };
     } else if (node.type === "page") {

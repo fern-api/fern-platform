@@ -271,12 +271,14 @@ async function convertDocsToDocsPageProps({
                 }),
             ),
             currentVersionIndex: node.currentVersion == null ? undefined : node.versions.indexOf(node.currentVersion),
-            versions: node.versions.map((version, index) => ({
-                id: version.versionId,
-                slug: version.slug,
-                index,
-                availability: version.availability,
-            })),
+            versions: node.versions
+                .filter((version) => !version.hidden)
+                .map((version, index) => ({
+                    id: version.versionId,
+                    slug: version.slug,
+                    index,
+                    availability: version.availability,
+                })),
             sidebar: node.sidebar,
         },
         featureFlags,

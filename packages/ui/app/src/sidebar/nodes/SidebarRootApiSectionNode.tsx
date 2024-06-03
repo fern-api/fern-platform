@@ -71,6 +71,11 @@ export function SidebarRootApiSectionNode({
                         <SidebarApiSectionChild node={child} depth={1} />
                     </li>
                 ))}
+                {node.type === "apiReference" && node.changelog != null && (
+                    <li>
+                        <SidebarApiSectionChild node={node.changelog} depth={1} />
+                    </li>
+                )}
             </ul>
         </>
     );

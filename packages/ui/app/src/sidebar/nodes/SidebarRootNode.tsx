@@ -12,7 +12,7 @@ interface SidebarRootNodeProps {
 }
 
 type ApiGroupOrSection =
-    | { type: "apiGroup"; children: FernNavigation.ApiSectionChild[] }
+    | { type: "apiGroup"; children: (FernNavigation.ApiSectionChild | FernNavigation.ChangelogNode)[] }
     | FernNavigation.ApiSectionNode;
 
 export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElement {
@@ -36,18 +36,20 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
 
                         const groups: ApiGroupOrSection[] = [];
 
-                        apiRef.children.forEach((child) => {
-                            if (child.type === "apiSection") {
-                                groups.push(child);
-                            } else {
-                                const lastGroup = last(groups);
-                                if (lastGroup?.type === "apiGroup") {
-                                    lastGroup.children.push(child);
+                        [...apiRef.children, ...(apiRef.changelog != null ? [apiRef.changelog] : [])].forEach(
+                            (child) => {
+                                if (child.type === "apiSection") {
+                                    groups.push(child);
                                 } else {
-                                    groups.push({ type: "apiGroup", children: [child] });
+                                    const lastGroup = last(groups);
+                                    if (lastGroup?.type === "apiGroup") {
+                                        lastGroup.children.push(child);
+                                    } else {
+                                        groups.push({ type: "apiGroup", children: [child] });
+                                    }
                                 }
-                            }
-                        });
+                            },
+                        );
 
                         return (
                             <Fragment key={child.id}>

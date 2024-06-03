@@ -2,7 +2,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { SidebarApiSectionChild } from "./SidebarApiSectionChild";
 
 interface SidebarApiGroupNodeProps {
-    nodeChildren: FernNavigation.ApiSectionChild[];
+    nodeChildren: (FernNavigation.ApiSectionChild | FernNavigation.ChangelogNode)[];
 }
 export function SidebarApiGroupNode({ nodeChildren }: SidebarApiGroupNodeProps): React.ReactElement {
     return (
