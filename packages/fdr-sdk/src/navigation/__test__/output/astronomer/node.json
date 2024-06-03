@@ -70,12 +70,12 @@
                   "slug": "docs/api/platform-api-reference/changelog/2024/5",
                   "children": [
                     {
-                      "id": "root.uv.platform-api-reference.log.2024-5-14",
+                      "id": "root.uv.platform-api-reference.log.2024-5-15",
                       "type": "changelogEntry",
-                      "title": "May 14, 2024",
+                      "title": "May 15, 2024",
                       "date": "2024-05-15T00:00:00.000Z",
                       "pageId": "/home/runner/work/docs/docs/api/fern/apis/platform/changelog/2024-05-15.md",
-                      "slug": "docs/api/platform-api-reference/changelog/2024/5/14"
+                      "slug": "docs/api/platform-api-reference/changelog/2024/5/15"
                     }
                   ]
                 },
@@ -87,20 +87,20 @@
                   "slug": "docs/api/platform-api-reference/changelog/2024/4",
                   "children": [
                     {
-                      "id": "root.uv.platform-api-reference.log.2024-4-22",
+                      "id": "root.uv.platform-api-reference.log.2024-4-23",
                       "type": "changelogEntry",
-                      "title": "April 22, 2024",
+                      "title": "April 23, 2024",
                       "date": "2024-04-23T00:00:00.000Z",
                       "pageId": "/home/runner/work/docs/docs/api/fern/apis/platform/changelog/2024-04-23.md",
-                      "slug": "docs/api/platform-api-reference/changelog/2024/4/22"
+                      "slug": "docs/api/platform-api-reference/changelog/2024/4/23"
                     },
                     {
-                      "id": "root.uv.platform-api-reference.log.2024-4-11",
+                      "id": "root.uv.platform-api-reference.log.2024-4-12",
                       "type": "changelogEntry",
-                      "title": "April 11, 2024",
+                      "title": "April 12, 2024",
                       "date": "2024-04-12T00:00:00.000Z",
                       "pageId": "/home/runner/work/docs/docs/api/fern/apis/platform/changelog/2024-04-12.md",
-                      "slug": "docs/api/platform-api-reference/changelog/2024/4/11"
+                      "slug": "docs/api/platform-api-reference/changelog/2024/4/12"
                     }
                   ]
                 }
@@ -482,12 +482,12 @@
                   "slug": "docs/api/iam-api-reference/changelog/2024/4",
                   "children": [
                     {
-                      "id": "root.uv.iam-api-reference.log.2024-4-11",
+                      "id": "root.uv.iam-api-reference.log.2024-4-12",
                       "type": "changelogEntry",
-                      "title": "April 11, 2024",
+                      "title": "April 12, 2024",
                       "date": "2024-04-12T00:00:00.000Z",
                       "pageId": "/home/runner/work/docs/docs/api/fern/apis/iam/changelog/2024-04-12.md",
-                      "slug": "docs/api/iam-api-reference/changelog/2024/4/11"
+                      "slug": "docs/api/iam-api-reference/changelog/2024/4/12"
                     }
                   ]
                 }

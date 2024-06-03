@@ -33,10 +33,10 @@
   "docs/api/platform-api-reference/changelog",
   "docs/api/platform-api-reference/changelog/2024",
   "docs/api/platform-api-reference/changelog/2024/5",
-  "docs/api/platform-api-reference/changelog/2024/5/14",
+  "docs/api/platform-api-reference/changelog/2024/5/15",
   "docs/api/platform-api-reference/changelog/2024/4",
-  "docs/api/platform-api-reference/changelog/2024/4/22",
-  "docs/api/platform-api-reference/changelog/2024/4/11",
+  "docs/api/platform-api-reference/changelog/2024/4/23",
+  "docs/api/platform-api-reference/changelog/2024/4/12",
   "docs/api/iam-api-reference/authorization/list-permission-groups",
   "docs/api/iam-api-reference/invite/create-user-invite",
   "docs/api/iam-api-reference/invite/delete-user-invite",
@@ -68,5 +68,5 @@
   "docs/api/iam-api-reference/changelog",
   "docs/api/iam-api-reference/changelog/2024",
   "docs/api/iam-api-reference/changelog/2024/4",
-  "docs/api/iam-api-reference/changelog/2024/4/11"
+  "docs/api/iam-api-reference/changelog/2024/4/12"
 ]

@@ -1,4 +1,5 @@
-import { format, parseISO } from "date-fns";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { orderBy } from "lodash-es";
 import urljoin from "url-join";
 import { DocsV1Read } from "../../client";
@@ -6,9 +7,7 @@ import { FernNavigation } from "../generated";
 import { createSlug } from "../utils/createSlug";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 
-interface ChangelogEntryNodeWithDate extends Omit<FernNavigation.ChangelogEntryNode, "date"> {
-    date: Date;
-}
+dayjs.extend(utc);
 
 export class ChangelogNavigationConverter {
     public static convert(
@@ -53,10 +52,13 @@ export class ChangelogNavigationConverter {
         );
         return this.groupByYear(entries, parentSlug);
     }
-    private groupByYear(entries: ChangelogEntryNodeWithDate[], parentSlug: string): FernNavigation.ChangelogYearNode[] {
-        const years = new Map<number, ChangelogEntryNodeWithDate[]>();
+    private groupByYear(
+        entries: FernNavigation.ChangelogEntryNode[],
+        parentSlug: string,
+    ): FernNavigation.ChangelogYearNode[] {
+        const years = new Map<number, FernNavigation.ChangelogEntryNode[]>();
         for (const entry of entries) {
-            const year = entry.date.getFullYear();
+            const year = dayjs.utc(entry.date).year();
             const yearEntries = years.get(year) ?? [];
             yearEntries.push(entry);
             years.set(year, yearEntries);
@@ -83,12 +85,12 @@ export class ChangelogNavigationConverter {
     }
 
     private groupByMonth(
-        entries: ChangelogEntryNodeWithDate[],
+        entries: FernNavigation.ChangelogEntryNode[],
         parentSlug: string,
     ): FernNavigation.ChangelogMonthNode[] {
-        const months = new Map<number, ChangelogEntryNodeWithDate[]>();
+        const months = new Map<number, FernNavigation.ChangelogEntryNode[]>();
         for (const entry of entries) {
-            const month = entry.date.getMonth() + 1;
+            const month = dayjs.utc(entry.date).month() + 1;
             const monthEntries = months.get(month) ?? [];
             monthEntries.push(entry);
             months.set(month, monthEntries);
@@ -98,12 +100,12 @@ export class ChangelogNavigationConverter {
                 this.#idgen.with(month.toString(), (id) => ({
                     id,
                     type: "changelogMonth",
-                    title: format(new Date(0, month - 1), "MMMM yyyy"),
+                    title: dayjs(new Date(0, month - 1)).format("MMMM YYYY"),
                     month,
                     slug: FernNavigation.Slug(urljoin(parentSlug, month.toString())),
                     icon: undefined,
                     hidden: undefined,
-                    children: entries.map(toEntry),
+                    children: entries,
                 })),
             ),
             "month",
@@ -111,32 +113,22 @@ export class ChangelogNavigationConverter {
         );
     }
 
-    private convertChangelogEntry(item: DocsV1Read.ChangelogItem, parentSlug: string): ChangelogEntryNodeWithDate {
-        const date = parseISO(item.date);
-        return this.#idgen.with(format(date, "yyyy-M-d"), (id) => {
+    private convertChangelogEntry(
+        item: DocsV1Read.ChangelogItem,
+        parentSlug: string,
+    ): FernNavigation.ChangelogEntryNode {
+        const date = dayjs.utc(item.date);
+        return this.#idgen.with(date.format("YYYY-M-D"), (id) => {
             return {
                 id,
                 type: "changelogEntry",
-                title: format(date, "MMMM d, yyyy"),
-                date,
+                title: date.format("MMMM D, YYYY"),
+                date: item.date,
                 pageId: FernNavigation.PageId(item.pageId),
-                slug: FernNavigation.Slug(urljoin(parentSlug, format(date, "yyyy/M/d"))),
+                slug: FernNavigation.Slug(urljoin(parentSlug, date.format("YYYY/M/D"))),
                 icon: undefined,
                 hidden: undefined,
             };
         });
     }
-}
-
-function toEntry(node: ChangelogEntryNodeWithDate): FernNavigation.ChangelogEntryNode {
-    return {
-        id: node.id,
-        type: "changelogEntry",
-        title: node.title,
-        date: node.date.toISOString(),
-        pageId: node.pageId,
-        slug: node.slug,
-        icon: node.icon,
-        hidden: node.hidden,
-    };
 }

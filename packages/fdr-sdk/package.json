@@ -11,7 +11,7 @@
   "source": "src/index.ts",
   "dependencies": {
     "@fern-ui/core-utils": "workspace:^",
-    "date-fns": "^2.30.0",
+    "dayjs": "^1.11.11",
     "form-data": "4.0.0",
     "js-base64": "3.7.7",
     "lodash-es": "^4.17.21",
