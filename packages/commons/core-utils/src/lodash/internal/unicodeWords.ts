@@ -51,6 +51,7 @@ const rsOrdUpper = "\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])";
 const rsSeq = rsOptVar + reOptMod + rsOptJoin;
 const rsEmoji = `(?:${[rsDingbat, rsRegional, rsSurrPair].join("|")})${rsSeq}`;
 
+// eslint-disable-next-line no-misleading-character-class
 const reUnicodeWords = RegExp(
     [
         `${rsUpper}?${rsLower}+${rsOptContrLower}(?=${[rsBreak, rsUpper, "$"].join("|")})`,
@@ -72,7 +73,7 @@ const reUnicodeWords = RegExp(
  * @param {string} The string to inspect.
  * @returns {Array} Returns the words of `string`.
  */
-function unicodeWords(string: string) {
+function unicodeWords(string: string): RegExpMatchArray | null {
     return string.match(reUnicodeWords);
 }
 

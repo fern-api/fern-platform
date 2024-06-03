@@ -1,5 +1,5 @@
+import words from "../words";
 import toString from "./toString";
-import words from "./words";
 
 /**
  * Converts `string` to
