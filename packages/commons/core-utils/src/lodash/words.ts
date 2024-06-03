@@ -1,4 +1,4 @@
-import unicodeWords from "./lodash/internal/unicodeWords";
+import unicodeWords from "./internal/unicodeWords";
 
 const hasUnicodeWord = RegExp.prototype.test.bind(/[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/);
 
