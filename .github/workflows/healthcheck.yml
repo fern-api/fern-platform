@@ -4,7 +4,7 @@ on:
   workflow_call:
   workflow_dispatch:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: "*/10 * * * *"
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Healthchecks
         run: |
-          node packages/healthchecks/dist/cli.cjs docs run
+          node packages/healthchecks/dist/cli.cjs docs run --generate_incident true
