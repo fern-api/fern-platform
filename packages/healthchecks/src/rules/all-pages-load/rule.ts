@@ -14,6 +14,7 @@ export class AllPagesLoadRule implements Rule {
                 name: this.name,
                 success: false,
                 message: `Failed to load docs for ${url} from FDR`,
+                url,
             };
         }
         const urls = getAllUrlsFromDocsConfig(
@@ -40,6 +41,7 @@ export class AllPagesLoadRule implements Rule {
                 name: this.name,
                 success: false,
                 message: `The following URLs do not load: ${failedURLs.join(", ")}`,
+                url,
             };
         }
 
@@ -47,6 +49,7 @@ export class AllPagesLoadRule implements Rule {
             name: this.name,
             success: true,
             message: "All URLs are reachable",
+            url,
         };
     }
 }

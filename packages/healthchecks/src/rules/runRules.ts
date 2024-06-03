@@ -17,6 +17,7 @@ export interface RuleResult {
     name: string;
     success: boolean;
     message: string;
+    url: string
 }
 
 function getAllRules(): Rule[] {

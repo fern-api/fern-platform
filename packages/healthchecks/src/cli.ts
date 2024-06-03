@@ -3,7 +3,7 @@ import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { createFailedDocLoadIncident } from "./createIncident";
 import { getAllFernDocsWebsites } from "./getDocsURLs";
-import { runRules } from "./rules/runRules";
+import { RuleResult, runRules } from "./rules/runRules";
 
 void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-healthchecks")
@@ -24,26 +24,21 @@ void yargs(hideBin(process.argv))
                 }),
         async (argv) => {
             const urls = argv.url != null ? [argv.url] : await getAllFernDocsWebsites();
-            let failure = false;
-            for (const url of urls) {
-                console.log(`Running rules for ${url}...`);
-                const results = await runRules({ url });
-                for (const result of results) {
-                    if (result.success) {
-                        console.log(`:white_check_mark:  Rule ${result.name} passed`);
-                        break;
-                    } else {
-                        failure = true;
-                        console.log(`:redx:  Rule ${result.name} failed. ${result.message}`);
-                        const incidentResponse = await createFailedDocLoadIncident(url, result);
-                        console.log(
-                            `Generated incident ${incidentResponse.incident.reference}. Access here ${incidentResponse.incident.permalink}`,
-                        );
-                    }
-                }
-                break;
+            const promiseResults: Promise<RuleResult[]>[] = [];
+            urls.forEach((url) => {
+                promiseResults.push(runRules({ url }));
+            });
+            const results: RuleResult[] = (await Promise.all(promiseResults)).flat();
+            console.log(`Successful Rules: ${results.filter((result) => result.success).length}`);
+            const failedResults: RuleResult[] = results.filter((result) => !result.success);
+            console.log(`Failed Rules: ${failedResults.length}`);
+            if (failedResults.length) {
+                const incidentResponse = await createFailedDocLoadIncident(failedResults);
+                console.log(
+                    `Generated incident ${incidentResponse.incident.reference}. Access here ${incidentResponse.incident.permalink}`,
+                );
             }
-            process.exit(failure ? 1 : 0);
+            process.exit(failedResults.length ? 1 : 0);
         },
     )
     .demandCommand()
