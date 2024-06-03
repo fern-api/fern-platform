@@ -22,7 +22,7 @@ void yargs(hideBin(process.argv))
                     default: false,
                     requred: true,
                 })
-                .option("generate_incident", {
+                .option("generateIncident", {
                     boolean: true,
                     default: false,
                 }),
@@ -36,7 +36,7 @@ void yargs(hideBin(process.argv))
             console.log(`Successful Rules: ${results.filter((result) => result.success).length}`);
             const failedResults: RuleResult[] = results.filter((result) => !result.success);
             console.log(`Failed Rules: ${failedResults.length}`);
-            if (failedResults.length && argv.generate_incident) {
+            if (failedResults.length && argv.generateIncident) {
                 const incidentResponse = await createFailedDocLoadIncident(failedResults);
                 console.log(
                     `Generated incident ${incidentResponse.incident.reference}. Access here ${incidentResponse.incident.permalink}`,

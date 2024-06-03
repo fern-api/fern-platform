@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Healthchecks
         run: |
-          node packages/healthchecks/dist/cli.cjs docs run --generate_incident true
+          node packages/healthchecks/dist/cli.cjs docs run --generateIncident true
