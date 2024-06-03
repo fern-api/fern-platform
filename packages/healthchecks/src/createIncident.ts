@@ -7,13 +7,13 @@ const INCIDENT = new IncidentClient({
 });
 
 /**
- * Generates an incident. Does not return anything
+ * Generates an incident and returns the response
  */
 export async function createFailedDocLoadIncident(failedResults: RuleResult[]): Promise<ShowResponseBody13> {
     return await INCIDENT.incidentsV2.create({
         id: `${Date.now()} fern-platform-health-check-failure`,
         idempotencyKey: "fern-platform-health-check-failure",
-        mode: "test",
+        mode: "standard",
         name: "fern platform health checks have failed",
         summary: `These are the health checks that failed: ${failedResults.map((result) => formatResult(result)).flat()}`,
         severityId: "01HR85VFNXA1RTYRR744G9FN6J",

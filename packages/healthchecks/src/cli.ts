@@ -21,6 +21,10 @@ void yargs(hideBin(process.argv))
                     string: true,
                     default: false,
                     requred: true,
+                })
+                .option("generate_incident", {
+                    boolean: true,
+                    default: false,
                 }),
         async (argv) => {
             const urls = argv.url != null ? [argv.url] : await getAllFernDocsWebsites();
@@ -32,7 +36,7 @@ void yargs(hideBin(process.argv))
             console.log(`Successful Rules: ${results.filter((result) => result.success).length}`);
             const failedResults: RuleResult[] = results.filter((result) => !result.success);
             console.log(`Failed Rules: ${failedResults.length}`);
-            if (failedResults.length) {
+            if (failedResults.length && argv.generate_incident) {
                 const incidentResponse = await createFailedDocLoadIncident(failedResults);
                 console.log(
                     `Generated incident ${incidentResponse.incident.reference}. Access here ${incidentResponse.incident.permalink}`,
