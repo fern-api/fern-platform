@@ -66,7 +66,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
             {endpoint.pathParameters.length > 0 && (
-                <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} route={"/" + endpoint.slug}>
+                <EndpointSection
+                    title="Path parameters"
+                    anchorIdParts={REQUEST_PATH}
+                    route={"/" + endpoint.slug.join("/")}
+                >
                     <div>
                         {endpoint.pathParameters.map((parameter) => (
                             <div key={parameter.key}>
@@ -75,7 +79,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_PATH, parameter.key]}
-                                    route={"/" + endpoint.slug}
+                                    route={"/" + endpoint.slug.join("/")}
                                     description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
@@ -86,7 +90,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {headers.length > 0 && (
-                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} route={"/" + endpoint.slug}>
+                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} route={"/" + endpoint.slug.join("/")}>
                     <div>
                         {headers.map((parameter) => (
                             <div key={parameter.key}>
@@ -95,7 +99,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                                    route={"/" + endpoint.slug}
+                                    route={"/" + endpoint.slug.join("/")}
                                     description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
@@ -106,7 +110,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {endpoint.queryParameters.length > 0 && (
-                <EndpointSection title="Query parameters" anchorIdParts={REQUEST_QUERY} route={"/" + endpoint.slug}>
+                <EndpointSection
+                    title="Query parameters"
+                    anchorIdParts={REQUEST_QUERY}
+                    route={"/" + endpoint.slug.join("/")}
+                >
                     <div>
                         {endpoint.queryParameters.map((parameter) => (
                             <div key={parameter.key}>
@@ -115,7 +123,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_QUERY, parameter.key]}
-                                    route={"/" + endpoint.slug}
+                                    route={"/" + endpoint.slug.join("/")}
                                     description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
@@ -155,7 +163,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         key={requestBody.contentType}
                                         title="Request"
                                         anchorIdParts={REQUEST}
-                                        route={"/" + endpoint.slug}
+                                        route={"/" + endpoint.slug.join("/")}
                                         expandAll={requestExpandAll.setTrue}
                                         collapseAll={requestExpandAll.setFalse}
                                         showExpandCollapse={shouldShowExpandCollapse(requestBody.shape, types)}
@@ -164,7 +172,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                             requestBody={requestBody}
                                             onHoverProperty={onHoverRequestProperty}
                                             anchorIdParts={REQUEST_BODY}
-                                            route={"/" + endpoint.slug}
+                                            route={"/" + endpoint.slug.join("/")}
                                             defaultExpandAll={requestExpandAll.value}
                                             types={types}
                                         />
@@ -180,7 +188,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     key={endpoint.requestBody.contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
-                    route={"/" + endpoint.slug}
+                    route={"/" + endpoint.slug.join("/")}
                     expandAll={requestExpandAll.setTrue}
                     collapseAll={requestExpandAll.setFalse}
                     showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody.shape, types)}
@@ -189,7 +197,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         requestBody={endpoint.requestBody}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
-                        route={"/" + endpoint.slug}
+                        route={"/" + endpoint.slug.join("/")}
                         defaultExpandAll={requestExpandAll.value}
                         types={types}
                     />
@@ -199,7 +207,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection
                     title="Response"
                     anchorIdParts={RESPONSE}
-                    route={"/" + endpoint.slug}
+                    route={"/" + endpoint.slug.join("/")}
                     expandAll={responseExpandAll.setTrue}
                     collapseAll={responseExpandAll.setFalse}
                     showExpandCollapse={shouldShowExpandCollapse(endpoint.responseBody.shape, types)}
@@ -208,7 +216,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                         responseBody={endpoint.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
-                        route={"/" + endpoint.slug}
+                        route={"/" + endpoint.slug.join("/")}
                         defaultExpandAll={responseExpandAll.value}
                         types={types}
                     />
@@ -218,7 +226,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection
                     title="Errors"
                     anchorIdParts={RESPONSE_ERROR}
-                    route={"/" + endpoint.slug}
+                    route={"/" + endpoint.slug.join("/")}
                     expandAll={errorExpandAll.setTrue}
                     collapseAll={errorExpandAll.setFalse}
                     showExpandCollapse={false}
@@ -245,7 +253,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         ...RESPONSE_ERROR,
                                         `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
                                     ]}
-                                    route={"/" + endpoint.slug}
+                                    route={"/" + endpoint.slug.join("/")}
                                     availability={error.availability}
                                     defaultExpandAll={errorExpandAll.value}
                                     types={types}

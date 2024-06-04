@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*",
     "url-join": "4.0.1"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
+    "next-mdx-remote": "^4.4.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
     "stylelint": "^16.1.0",

@@ -1,8 +1,12 @@
-import { DocsV2Read, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
-import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath } from "@fern-ui/ui";
+import { buildUrl, getNavigationRoot, isVersionedNavigationConfig } from "@fern-ui/fdr-utils";
+import {
+    DocsPage,
+    DocsPageResult,
+    convertNavigatableToResolvedPath,
+    serializeSidebarNodeDescriptionMdx,
+} from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -155,6 +159,7 @@ async function convertDocsToDocsPageProps({
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
+    const pages = docs.definition.pages;
 
     const currentPath = urljoin("/", slug.join("/"));
 
@@ -170,40 +175,43 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
-    const node = FernNavigation.utils.findNode(root, slug);
+    const navigation = getNavigationRoot(
+        slug,
+        docs.baseUrl.domain,
+        docs.baseUrl.basePath,
+        docsConfig.navigation,
+        docs.definition.apis,
+        pages,
+    );
 
-    if (node.type === "notFound") {
+    if (navigation == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
-        if (node.redirect != null) {
-            return {
-                type: "redirect",
-                redirect: {
-                    destination: encodeURI(urljoin("/", node.redirect)),
-                    permanent: false,
-                },
-            };
-        }
-        return { type: "notFound", notFound: true };
+        return handleNotFound(docs, slug);
     }
 
-    if (node.type === "redirect") {
+    if (navigation.type === "redirect") {
         return {
             type: "redirect",
             redirect: {
-                destination: encodeURI(urljoin("/", node.redirect)),
+                destination: navigation.redirect,
                 permanent: false,
             },
         };
     }
 
+    const sidebarNodes = await Promise.all(
+        navigation.found.sidebarNodes.map((node) => serializeSidebarNodeDescriptionMdx(node)),
+    );
+
     const featureFlags = await getFeatureFlags(xFernHost);
 
     const resolvedPath = await convertNavigatableToResolvedPath({
-        found: node,
-        apis: docs.definition.apis,
-        pages: docs.definition.pages,
+        currentNode: navigation.found.currentNode,
+        rawSidebarNodes: navigation.found.sidebarNodes,
+        sidebarNodes,
+        apis: docsDefinition.apis,
+        pages: docsDefinition.pages,
         domain: docs.baseUrl.domain,
         featureFlags,
     });
@@ -211,7 +219,17 @@ async function convertDocsToDocsPageProps({
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
-        return { type: "notFound", notFound: true };
+        return handleNotFound(docs, slug);
+    }
+
+    if (resolvedPath.type === "redirect") {
+        return {
+            type: "redirect",
+            redirect: {
+                destination: "/" + encodeURI(resolvedPath.fullSlug),
+                permanent: false,
+            },
+        };
     }
 
     const props: DocsPage.Props = {
@@ -243,43 +261,11 @@ async function convertDocsToDocsPageProps({
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {
-            currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
-            tabs: node.tabs.map((tab, index) =>
-                visitDiscriminatedUnion(tab)._visit<SidebarTab>({
-                    tab: (tab) => ({
-                        type: "tabGroup",
-                        title: tab.title,
-                        icon: tab.icon,
-                        index,
-                        slug: tab.slug,
-                        pointsTo: tab.pointsTo,
-                    }),
-                    link: (link) => ({
-                        type: "tabLink",
-                        title: link.title,
-                        icon: link.icon,
-                        index,
-                        url: link.url,
-                    }),
-                    changelog: (changelog) => ({
-                        type: "tabChangelog",
-                        title: changelog.title,
-                        icon: changelog.icon,
-                        index,
-                        slug: changelog.slug,
-                    }),
-                }),
-            ),
-            currentVersionId: node.currentVersion?.versionId,
-            versions: node.versions
-                .filter((version) => !version.hidden)
-                .map((version, index) => ({
-                    id: version.versionId,
-                    slug: version.slug,
-                    index,
-                    availability: version.availability,
-                })),
-            sidebar: node.sidebar,
+            currentTabIndex: navigation.found.currentTabIndex,
+            tabs: navigation.found.tabs,
+            currentVersionIndex: navigation.found.currentVersionIndex,
+            versions: navigation.found.versions,
+            sidebarNodes,
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
@@ -309,4 +295,39 @@ async function maybeGetWorkosOrganization(host: string): Promise<string | undefi
         return undefined;
     }
     return maybeOrg.body.workosOrganizationId;
+}
+
+function handleNotFound(docs: DocsV2Read.LoadDocsForUrlResponse, slug: string[]): DocsPageResult<DocsPage.Props> {
+    if (isVersionedNavigationConfig(docs.definition.config.navigation)) {
+        // if the navigation config is versioned, determine which version's basepath to redirect to
+
+        for (const version of docs.definition.config.navigation.versions) {
+            const versionSlug = [...(docs.baseUrl.basePath?.split("/") ?? []), ...version.urlSlug.split("/")].filter(
+                (s) => s.trim(),
+            );
+
+            if (slug.length >= versionSlug.length) {
+                const isVersionMatch = versionSlug.every((part, index) => part === slug[index]);
+
+                if (isVersionMatch) {
+                    return {
+                        type: "redirect",
+                        redirect: {
+                            destination: `${docs.baseUrl.basePath ?? ""}/${version.urlSlug}`,
+                            permanent: false,
+                        },
+                    };
+                }
+            }
+        }
+    }
+
+    // essentially a 404, but redirect user to the root path
+    return {
+        type: "redirect",
+        redirect: {
+            destination: docs.baseUrl.basePath ?? "/",
+            permanent: false,
+        },
+    };
 }

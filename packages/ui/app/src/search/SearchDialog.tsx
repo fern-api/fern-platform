@@ -1,5 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
+import { SidebarNode, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
 import cn from "clsx";
@@ -83,11 +82,11 @@ interface FernInstantSearchProps {
 }
 
 function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstantSearchProps) {
-    const { sidebar } = useDocsContext();
+    const { sidebarNodes } = useDocsContext();
     const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
-        () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
-        [activeVersion, sidebar],
+        () => createSearchPlaceholderWithVersion(activeVersion, sidebarNodes),
+        [activeVersion, sidebarNodes],
     );
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
@@ -111,11 +110,11 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (providedProps) => {
-    const { sidebar } = useDocsContext();
+    const { sidebarNodes } = useDocsContext();
     const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
-        () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
-        [activeVersion, sidebar],
+        () => createSearchPlaceholderWithVersion(activeVersion, sidebarNodes),
+        [activeVersion, sidebarNodes],
     );
 
     const { searchService, children } = providedProps;
@@ -150,14 +149,14 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
 function createSearchPlaceholderWithVersion(
     activeVersion: SidebarVersionInfo | undefined,
-    sidebar: FernNavigation.SidebarRootNode,
+    sidebarNodes: SidebarNode[],
 ): string {
-    return `Search ${activeVersion != null ? `across ${activeVersion.id} ` : ""}for ${createSearchPlaceholder(sidebar)}...`;
+    return `Search ${activeVersion != null ? `across ${activeVersion.id} ` : ""}for ${createSearchPlaceholder(sidebarNodes)}...`;
 }
 
-function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode): string {
-    const hasGuides = checkHasGuides(sidebar);
-    const hasEndpoints = checkHasEndpoints(sidebar);
+function createSearchPlaceholder(sidebarNodes: SidebarNode[]): string {
+    const hasGuides = checkHasGuides(sidebarNodes);
+    const hasEndpoints = checkHasEndpoints(sidebarNodes);
     if (hasGuides && hasEndpoints) {
         return "guides and endpoints";
     }
@@ -173,32 +172,14 @@ function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode): strin
     return "guides and endpoints";
 }
 
-function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
-    let hasGuides = false;
-    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
-        if (node.type === "page") {
-            hasGuides = true;
-            return false;
-        }
-        if (node.type === "changelog") {
-            return "skip";
-        }
-        return;
-    });
-    return hasGuides;
+function checkHasGuides(sidebarNodes: SidebarNode[]): boolean {
+    return sidebarNodes.some(
+        (node) => node.type === "pageGroup" || (node.type === "section" && checkHasGuides(node.items)),
+    );
 }
 
-function checkHasEndpoints(sidebar: FernNavigation.SidebarRootNode): boolean {
-    let hasEndpoints = false;
-    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
-        if (node.type === "apiReference") {
-            hasEndpoints = true;
-            return false;
-        }
-        if (node.type === "changelog") {
-            return "skip";
-        }
-        return;
-    });
-    return hasEndpoints;
+function checkHasEndpoints(sidebarNodes: SidebarNode[]): boolean {
+    return sidebarNodes.some(
+        (node) => node.type === "apiSection" || (node.type === "section" && checkHasEndpoints(node.items)),
+    );
 }

@@ -1,12 +1,12 @@
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ReactElement, memo, useCallback } from "react";
+import { memo, ReactElement, useCallback } from "react";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import {
+    dereferenceObjectProperties,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-    dereferenceObjectProperties,
     unwrapReference,
 } from "../../resolver/types";
 import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
@@ -34,6 +34,73 @@ interface PlaygroundTypeReferenceFormProps {
     types: Record<string, ResolvedTypeDefinition>;
     disabled?: boolean;
 }
+
+// interface WithPanelProps {
+//     value: unknown;
+//     renderAsPanel: boolean;
+//     onRemove: () => void;
+//     onOpenStack?: () => void;
+//     onCloseStack?: () => void;
+//     property?: ResolvedObjectProperty;
+// }
+
+// const WithPanel: FC<PropsWithChildren<WithPanelProps>> = ({
+//     children,
+//     value,
+//     renderAsPanel,
+//     onRemove,
+//     onOpenStack,
+//     onCloseStack,
+//     property,
+// }) => {
+//     const { value: isPanelOpen, setTrue: showPanel, setFalse: hidePanel } = useBooleanState(false);
+//     useEffect(() => {
+//         if (isPanelOpen && renderAsPanel) {
+//             onOpenStack?.();
+//         } else {
+//             onCloseStack?.();
+//         }
+//     }, [isPanelOpen, onCloseStack, onOpenStack, renderAsPanel]);
+//     if (!renderAsPanel) {
+//         return <>{children}</>;
+//     }
+//     return (
+//         <>
+//             <div className={cn({ hidden: isPanelOpen })}>
+//                 <WithLabel property={property} value={value} onRemove={onRemove}>
+//                     <div
+//                         onClick={showPanel}
+//                         className="bg-tag-default-soft group relative -mx-4 min-h-10 cursor-pointer whitespace-pre-wrap break-all p-1 font-mono text-xs leading-tight"
+//                     >
+//                         <FernSyntaxHighlighter language="json" customStyle={{ fontSize: "12px", lineHeight: "20px" }}>
+//                             {JSON.stringify(value, undefined, 2)}
+//                         </FernSyntaxHighlighter>
+//                         <div className="t-muted absolute inset-y-0 right-2 flex items-center">
+//                             <ChevronDownIcon />
+//                         </div>
+//                     </div>
+//                 </WithLabel>
+//             </div>
+//             <div
+//                 className={cn("-mx-4 p-4 border-default bg-background border-y shadow-md relative", {
+//                     hidden: !isPanelOpen,
+//                 })}
+//             >
+//                 <FernButton
+//                     variant="minimal"
+//                     icon={<ChevronUpIcon />}
+//                     onClick={hidePanel}
+//                     className="absolute right-1 top-1"
+//                     rounded
+//                 />
+//                 <div className="mb-4">
+//                     <h6 className="m-0 font-mono">{property?.key}</h6>
+//                 </div>
+//                 {children}
+//             </div>
+//         </>
+//     );
+// };
 
 export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
     const { domain } = useDocsContext();

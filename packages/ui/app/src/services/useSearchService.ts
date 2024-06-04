@@ -1,4 +1,3 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
@@ -58,7 +57,7 @@ export function useSearchService(): SearchService {
     return useAtomValue(SEARCH_SERVICE_ATOM);
 }
 
-export function useCreateSearchService(currentVersionId: FernNavigation.VersionId | undefined): void {
+export function useCreateSearchService(currentVersionIndex: number | undefined): void {
     const { searchInfo, versions } = useDocsContext();
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
     const { isLocalPreview } = useLocalPreviewContext();
@@ -84,7 +83,7 @@ export function useCreateSearchService(currentVersionId: FernNavigation.VersionI
                     index: envConfig.algoliaSearchIndex,
                 };
             } else {
-                const currentVersion = versions.find((v) => v.id === currentVersionId);
+                const currentVersion = versions[currentVersionIndex ?? 0];
                 if (currentVersion == null) {
                     throw new Error("Inconsistent State: Received search info is versioned but docs are unversioned");
                 }
@@ -117,7 +116,7 @@ export function useCreateSearchService(currentVersionId: FernNavigation.VersionI
 
             return { isAvailable: false };
         }
-    }, [currentVersionId, isLocalPreview, searchInfo, versions]);
+    }, [currentVersionIndex, isLocalPreview, searchInfo, versions]);
 
     useEffect(() => {
         setSearchService(searchService);

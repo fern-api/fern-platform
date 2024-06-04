@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getAllUrlsFromDocsConfig > no-version-no-tabs > gets all urls from docs config 1`] = `
+[
+  "docs/api",
+  "docs/api/section-1",
+  "docs/api/section-1/page-1",
+  "docs/api/page-2",
+  "docs/api/section-2",
+  "docs/api/section-2/page-4",
+  "docs/api/section-3",
+  "docs/api/page-5",
+  "docs/api/page-6",
+]
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for / 1`] = `undefined`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs 1`] = `undefined`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/page-6 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "hidden": false,
+      "icon": undefined,
+      "id": "page-6.md",
+      "slug": [
+        "docs",
+        "api",
+        "page-6",
+      ],
+      "title": "Page 6",
+      "type": "page",
+      "urlSlug": "page-6",
+    },
+    "currentTabIndex": -1,
+    "currentVersionIndex": -1,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-1 1`] = `
+{
+  "redirect": "/docs/api/section-1/page-1",
+  "type": "redirect",
+}
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-2 1`] = `
+{
+  "found": {
+    "currentNode": {
+      "description": undefined,
+      "fullSlug": [
+        "section-2",
+      ],
+      "hidden": false,
+      "icon": undefined,
+      "id": "page-3.md",
+      "slug": [
+        "docs",
+        "api",
+        "section-2",
+      ],
+      "title": "Page 3",
+      "type": "page",
+      "urlSlug": "page-3",
+    },
+    "currentTabIndex": -1,
+    "currentVersionIndex": -1,
+  },
+  "type": "found",
+}
+`;
+
+exports[`getNavigationRoot > no-version-no-tabs > gets navigation root for /docs/api/section-3 1`] = `
+{
+  "redirect": "/docs/api/page-5",
+  "type": "redirect",
+}
+`;

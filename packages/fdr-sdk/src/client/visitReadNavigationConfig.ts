@@ -1,34 +1,34 @@
 import { DocsV1Read } from ".";
 
-export interface ReadNavigationConfigVisitor<T> {
-    versioned: (config: DocsV1Read.VersionedNavigationConfig) => T;
-    unversioned: (config: DocsV1Read.UnversionedNavigationConfig) => T;
+export interface ReadNavigationConfigVisitor {
+    versioned: (config: DocsV1Read.VersionedNavigationConfig) => void;
+    unversioned: (config: DocsV1Read.UnversionedNavigationConfig) => void;
 }
 
-export interface ReadUnversionedNavigationConfigVisitor<T> {
-    tabbed: (config: DocsV1Read.UnversionedTabbedNavigationConfig) => T;
-    untabbed: (config: DocsV1Read.UnversionedUntabbedNavigationConfig) => T;
+export interface ReadUnversionedNavigationConfigVisitor {
+    tabbed: (config: DocsV1Read.UnversionedTabbedNavigationConfig) => void;
+    untabbed: (config: DocsV1Read.UnversionedUntabbedNavigationConfig) => void;
 }
 
-export function visitReadNavigationConfig<T>(
+export function visitReadNavigationConfig(
     config: DocsV1Read.NavigationConfig,
-    visitor: ReadNavigationConfigVisitor<T>,
-): T {
+    visitor: ReadNavigationConfigVisitor,
+): void {
     if (isVersionedNavigationConfig(config)) {
-        return visitor.versioned(config);
+        visitor.versioned(config);
     } else {
-        return visitor.unversioned(config);
+        visitor.unversioned(config);
     }
 }
 
-export function visitUnversionedReadNavigationConfig<T>(
+export function visitUnversionedReadNavigationConfig(
     config: DocsV1Read.UnversionedNavigationConfig,
-    visitor: ReadUnversionedNavigationConfigVisitor<T>,
-): T {
+    visitor: ReadUnversionedNavigationConfigVisitor,
+): void {
     if (isTabbedNavigationConfig(config)) {
-        return visitor.tabbed(config);
+        visitor.tabbed(config);
     } else {
-        return visitor.untabbed(config);
+        visitor.untabbed(config);
     }
 }
 
