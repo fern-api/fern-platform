@@ -25,7 +25,7 @@ export class ReadmeGenerator {
         this.readmeParser = readmeParser;
         this.readmeConfig = readmeConfig;
         this.originalReadme = originalReadme;
-        this.languageTitle = this.readmeConfig.language.title;
+        this.languageTitle = languageToTitle(this.readmeConfig.language);
         this.organizationPascalCase = pascalCase(this.readmeConfig.organization);
     }
 
@@ -46,8 +46,8 @@ export class ReadmeGenerator {
     private generateBlocks(): Block[] {
         const blocks: Block[] = [];
 
-        if (this.readmeConfig.docsLink != null) {
-            blocks.push(this.generateDocumentation({ docsLink: this.readmeConfig.docsLink }));
+        if (this.readmeConfig.apiReferenceLink != null) {
+            blocks.push(this.generateDocumentation({ docsLink: this.readmeConfig.apiReferenceLink }));
         }
         if (this.readmeConfig.requirements != null) {
             blocks.push(this.generateRequirements({ requirements: this.readmeConfig.requirements }));
@@ -81,7 +81,7 @@ export class ReadmeGenerator {
             if (index > 0) {
                 writer.writeLine();
             }
-            writer.writeCodeBlock(this.readmeConfig.language.format, snippet);
+            writer.writeCodeBlock(this.readmeConfig.language.type, snippet);
         });
         if (feature.addendum != null) {
             writer.writeLine(feature.addendum);
@@ -451,6 +451,25 @@ On the other hand, contributions to the README are always very welcome!
 
     private shouldSkipFeature({ feature }: { feature: FernGeneratorCli.ReadmeFeature }): boolean {
         return !feature.snippetsAreOptional && (feature.snippets == null || feature.snippets.length === 0);
+    }
+}
+
+function languageToTitle(language: FernGeneratorCli.LanguageInfo): string {
+    switch (language.type) {
+        case "typescript":
+            return "TypeScript";
+        case "python":
+            return "Python";
+        case "go":
+            return "Go";
+        case "java":
+            return "Java";
+        case "ruby":
+            return "Ruby";
+        case "csharp":
+            return "C#";
+        default:
+            assertNever(language);
     }
 }
 
