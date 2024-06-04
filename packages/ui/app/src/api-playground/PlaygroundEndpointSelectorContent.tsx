@@ -154,11 +154,16 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectEndpoint(endpointItem)}
-                                                rightIcon={
+                                                icon={
                                                     <HttpMethodTag
-                                                        method={endpointItem.method}
+                                                        method={
+                                                            endpointItem.isResponseStream
+                                                                ? "STREAM"
+                                                                : endpointItem.method
+                                                        }
                                                         size="sm"
                                                         active={active}
+                                                        className="mr-1"
                                                     />
                                                 }
                                             />
@@ -183,7 +188,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
                                                 onClick={createSelectEndpoint(endpointItem)}
-                                                rightIcon={<HttpMethodTag method="WSS" size="sm" />}
+                                                icon={<HttpMethodTag method="WSS" size="sm" className="mr-1" />}
                                             />
                                         </FernTooltip>
                                     </li>
