@@ -749,8 +749,8 @@ importers:
         specifier: workspace:*
         version: link:../fdr-sdk
       '@fern-fern/vercel':
-        specifier: 0.0.3
-        version: 0.0.3
+        specifier: 0.0.7
+        version: 0.0.7
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
@@ -4727,8 +4727,8 @@ packages:
       - encoding
     dev: false
 
-  /@fern-fern/vercel@0.0.3:
-    resolution: {integrity: sha512-9O7SnPYNn1DhWm7P1Awb37wM4J8kG8SQI6xWjxj5bEYsI6fSHZur0dvjVFI5+1jeAcMNy9U/U5l6NkcHqFOt6Q==}
+  /@fern-fern/vercel@0.0.7:
+    resolution: {integrity: sha512-k3ioiJifaX1WYJzbEHHdtg/aIfBVTz5eMOtHoyvl7+qY/IdmYczDtpa+NSYzdfxOM5uAAoVxTGWCvAlagVv+Fg==}
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
