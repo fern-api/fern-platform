@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
@@ -73,7 +73,7 @@ export function dereferenceObjectProperties(
 
 export interface ResolvedPageMetadata {
     id: DocsV1Read.PageId;
-    slug: FernNavigation.Slug;
+    slug: readonly string[];
     title: string;
     markdown: SerializedMdxContent;
 }
@@ -84,7 +84,7 @@ export interface ResolvedNavigationItemApiSection
     type: "apiSection";
     auth: APIV1Read.ApiAuth | undefined;
     hasMultipleBaseUrls: boolean | undefined;
-    slug: FernNavigation.Slug;
+    slug: string[];
     types: Record<string, ResolvedTypeDefinition>;
     artifacts: DocsV1Read.ApiArtifacts | undefined;
 }
@@ -123,7 +123,7 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
 
 export interface ResolvedWithApiDefinition {
     items: ResolvedPackageItem[];
-    slug: FernNavigation.Slug;
+    slug: readonly string[];
 }
 
 export interface ResolvedApiPageMetadata extends ResolvedPageMetadata {
@@ -197,9 +197,9 @@ export function isWebSocket(definition: ResolvedApiDefinition): definition is Re
 
 export interface ResolvedSubpackage extends WithMetadata, ResolvedWithApiDefinition {
     type: "subpackage";
-    // apiSectionId: FdrAPI.ApiDefinitionId;
-    // id: APIV1Read.SubpackageId;
-    // name: string;
+    apiSectionId: FdrAPI.ApiDefinitionId;
+    id: APIV1Read.SubpackageId;
+    name: string;
     title: string;
 }
 
@@ -218,11 +218,10 @@ export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpack
 
 export interface ResolvedEndpointDefinition extends WithMetadata {
     type: "endpoint";
-    nodeId: FernNavigation.NodeId;
     id: APIV1Read.EndpointId;
     apiSectionId: FdrAPI.ApiDefinitionId;
-    // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
-    slug: FernNavigation.Slug;
+    apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
+    slug: string[];
     auth: APIV1Read.ApiAuth | undefined;
     availability: APIV1Read.Availability | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
@@ -394,9 +393,8 @@ export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEn
 
 export interface ResolvedWebSocketChannel {
     type: "websocket";
-    nodeId: FernNavigation.NodeId;
     id: string;
-    slug: FernNavigation.Slug;
+    slug: string[];
     name: string | undefined;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
@@ -420,9 +418,8 @@ export interface ResolvedWebSocketMessage extends WithMetadata {
 
 export interface ResolvedWebhookDefinition extends WithMetadata {
     type: "webhook";
-    nodeId: FernNavigation.NodeId;
     id: APIV1Read.WebhookId;
-    slug: FernNavigation.Slug;
+    slug: string[];
 
     method: APIV1Read.WebhookHttpMethod;
     name: string | undefined;

@@ -12,7 +12,7 @@ export interface HeaderLogoSectionProps {
 }
 
 export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({ logoHeight, logoHref }) => {
-    const { colors, resolveFile, versions } = useDocsContext();
+    const { colors, resolveFile, versions, currentVersionIndex } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
     const imageClassName = "max-h-full object-contain";
@@ -82,7 +82,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({ logoHeight
                 )}
                 {versions.length > 1 && (
                     <div>
-                        <VersionDropdown />
+                        <VersionDropdown currentVersionIndex={currentVersionIndex} versions={versions} />
                     </div>
                 )}
             </div>

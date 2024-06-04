@@ -1,4 +1,4 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 // import { Portal, Transition } from "@headlessui/react";
@@ -35,6 +35,19 @@ import {
 } from "./types";
 import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
+
+export type PlaygroundSelectionState = PlaygroundSelectionStateEndpoint | PlaygroundSelectionStateWebSocket;
+export interface PlaygroundSelectionStateEndpoint {
+    type: "endpoint";
+    api: FdrAPI.ApiId;
+    endpointId: APIV1Read.EndpointId;
+}
+
+export interface PlaygroundSelectionStateWebSocket {
+    type: "websocket";
+    api: FdrAPI.ApiId;
+    webSocketId: APIV1Read.WebSocketId;
+}
 
 const EMPTY_ENDPOINT_FORM_STATE: PlaygroundEndpointRequestFormState = {
     type: "endpoint",
@@ -86,20 +99,10 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
     const windowHeight = useWindowHeight();
 
-    const { sidebar } = useDocsContext();
-    const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
+    const { sidebarNodes } = useDocsContext();
+    const apiGroups = useMemo(() => flattenApiSection(sidebarNodes), [sidebarNodes]);
 
-    const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
-
-    const nodeIdToApiDefinition = useMemo(() => {
-        const nodes = new Map<FernNavigation.NodeId, ResolvedApiDefinition>();
-        Object.values(apis).forEach((api) => {
-            api.apiDefinitions.forEach((apiDefinition) => {
-                nodes.set(apiDefinition.nodeId, apiDefinition);
-            });
-        });
-        return nodes;
-    }, [apis]);
+    const matchedSection = selectionState != null ? apis[selectionState.api] : undefined;
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
@@ -140,7 +143,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 return;
             }
             setGlobalFormState((currentGlobalFormState) => {
-                let currentFormState = currentGlobalFormState[selectionState.id];
+                let currentFormState = currentGlobalFormState[createFormStateKey(selectionState)];
                 if (currentFormState == null || currentFormState.type !== "endpoint") {
                     currentFormState = EMPTY_ENDPOINT_FORM_STATE;
                 }
@@ -148,7 +151,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                     typeof newFormState === "function" ? newFormState(currentFormState) : newFormState;
                 return {
                     ...currentGlobalFormState,
-                    [selectionState.id]: mutatedFormState,
+                    [createFormStateKey(selectionState)]: mutatedFormState,
                 };
             });
         },
@@ -161,7 +164,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 return;
             }
             setGlobalFormState((currentGlobalFormState) => {
-                let currentFormState = currentGlobalFormState[selectionState.id];
+                let currentFormState = currentGlobalFormState[createFormStateKey(selectionState)];
                 if (currentFormState == null || currentFormState.type !== "websocket") {
                     currentFormState = EMPTY_WEBSOCKET_FORM_STATE;
                 }
@@ -169,14 +172,15 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                     typeof newFormState === "function" ? newFormState(currentFormState) : newFormState;
                 return {
                     ...currentGlobalFormState,
-                    [selectionState.id]: mutatedFormState,
+                    [createFormStateKey(selectionState)]: mutatedFormState,
                 };
             });
         },
         [selectionState, setGlobalFormState],
     );
 
-    const playgroundFormState = selectionState != null ? globalFormState[selectionState.id] : undefined;
+    const playgroundFormState =
+        selectionState != null ? globalFormState[createFormStateKey(selectionState)] : undefined;
 
     const togglePlayground = useCallback(
         (usingKeyboardShortcut: boolean) => {
@@ -198,7 +202,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             : undefined;
 
     const matchedWebSocket =
-        selectionState?.type === "webSocket"
+        selectionState?.type === "websocket"
             ? (matchedSection?.apiDefinitions.find(
                   (definition) => isWebSocket(definition) && definition.id === selectionState.webSocketId,
               ) as ResolvedApiDefinition.WebSocket | undefined)
@@ -214,7 +218,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                     types,
                 ),
             );
-        } else if (selectionState?.type === "webSocket") {
+        } else if (selectionState?.type === "websocket") {
             setPlaygroundWebSocketFormState(
                 getInitialWebSocketRequestFormState(matchedSection?.auth, matchedWebSocket, types),
             );
@@ -234,7 +238,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             setPlaygroundEndpointFormState(
                 getInitialEndpointRequestFormState(matchedSection?.auth, matchedEndpoint, types),
             );
-        } else if (selectionState?.type === "webSocket") {
+        } else if (selectionState?.type === "websocket") {
             setPlaygroundWebSocketFormState(
                 getInitialWebSocketRequestFormState(matchedSection?.auth, matchedWebSocket, types),
             );
@@ -263,8 +267,18 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     }, [togglePlayground]);
 
     const { endpoint: selectedEndpoint } = apiGroups
-        .flatMap((group) => [...group.items.map((endpoint) => ({ group, endpoint }))])
-        .find(({ endpoint }) => endpoint.id === selectionState?.id) ?? {
+        .flatMap((group) => [
+            ...group.items
+                .filter((item) => item.apiType === "endpoint" || item.apiType === "websocket")
+                .map((endpoint) => ({ group, endpoint })),
+        ])
+        .find(({ endpoint }) =>
+            selectionState?.type === "endpoint"
+                ? endpoint.slug.join("/") === selectionState?.endpointId
+                : selectionState?.type === "websocket"
+                  ? endpoint.slug.join("/") === selectionState?.webSocketId
+                  : false,
+        ) ?? {
         endpoint: undefined,
         group: undefined,
     };
@@ -283,7 +297,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                 resetWithoutExample={resetWithoutExample}
                 types={types}
             />
-        ) : selectionState?.type === "webSocket" && matchedWebSocket != null ? (
+        ) : selectionState?.type === "websocket" && matchedWebSocket != null ? (
             <PlaygroundWebSocket
                 websocket={matchedWebSocket}
                 formState={playgroundFormState?.type === "websocket" ? playgroundFormState : EMPTY_WEBSOCKET_FORM_STATE}
@@ -364,7 +378,6 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                                         apiGroups={apiGroups}
                                         selectedEndpoint={selectedEndpoint}
                                         className="h-full"
-                                        nodeIdToApiDefinition={nodeIdToApiDefinition}
                                     />
 
                                     {renderContent()}
@@ -460,4 +473,8 @@ export function getInitialEndpointRequestFormStateWithExample(
                     }
                   : { type: "json", value: exampleCall.requestBody?.value },
     };
+}
+
+export function createFormStateKey(state: PlaygroundSelectionState): string {
+    return `${state.api}/${state.type}/${state.type === "endpoint" ? state.endpointId : state.webSocketId}`;
 }

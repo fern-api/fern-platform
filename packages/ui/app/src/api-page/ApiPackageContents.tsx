@@ -45,7 +45,7 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     return (
         <>
             {items.map((item, idx) => (
-                <FernErrorBoundary component="ApiPackageContents" key={item.slug}>
+                <FernErrorBoundary component="ApiPackageContents" key={item.id}>
                     {ResolvedPackageItem.visit(item, {
                         endpoint: (endpoint) => (
                             <Endpoint

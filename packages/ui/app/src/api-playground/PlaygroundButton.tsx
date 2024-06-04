@@ -1,9 +1,9 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { FC } from "react";
 import { usePlaygroundContext } from "./PlaygroundContext";
+import { PlaygroundSelectionState } from "./PlaygroundDrawer";
 
-export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf }> = ({ state }) => {
+export const PlaygroundButton: FC<{ state: PlaygroundSelectionState }> = ({ state }) => {
     const { hasPlayground, setSelectionStateAndOpen } = usePlaygroundContext();
 
     if (!hasPlayground) {

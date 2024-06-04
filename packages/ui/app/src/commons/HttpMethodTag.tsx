@@ -14,8 +14,8 @@ const METHOD_COLOR_SCHEMES: Record<HttpMethodTag.Props["method"], FernTagColorSc
     GET: "green",
     DELETE: "red",
     POST: "blue",
-    STREAM: "blue",
-    WSS: "green",
+    STREAM: "accent",
+    WSS: "accent",
     PUT: "amber",
     PATCH: "amber",
 };
@@ -31,14 +31,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
         <FernTag
             colorScheme={METHOD_COLOR_SCHEMES[method]}
             variant={active ? "solid" : "subtle"}
-            className={clsx(
-                "uppercase",
-                {
-                    "w-10 font-bold": size === "sm",
-                    "tracking-tighter": method === "STREAM",
-                },
-                className,
-            )}
+            className={clsx("uppercase", { "w-11": size === "sm", "font-semibold": active }, className)}
             size={size}
             {...rest}
         >

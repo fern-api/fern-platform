@@ -1,5 +1,14 @@
-import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import {
+    FlattenedApiDefinition,
+    FlattenedApiDefinitionPackage,
+    FlattenedApiDefinitionPackageItem,
+    FlattenedEndpointDefinition,
+    FlattenedSubpackage,
+    FlattenedWebSocketChannel,
+    FlattenedWebhookDefinition,
+} from "@fern-ui/fdr-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
@@ -38,72 +47,89 @@ interface MergedAuthAndHeaders {
 
 export class ApiDefinitionResolver {
     public static async resolve(
-        root: FernNavigation.ApiReferenceNode,
-        holder: FernNavigation.ApiDefinitionHolder,
-        typeResolver: ApiTypeResolver,
+        title: string,
+        apiDefinition: FlattenedApiDefinition,
         pages: Record<string, DocsV1Read.PageContent>,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
         domain: string,
     ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, domain);
-        return resolver.resolveApiDefinition(mdxOptions);
+        const resolver = new ApiDefinitionResolver(apiDefinition, pages, featureFlags, domain);
+        return resolver.resolveApiDefinition(title, mdxOptions);
     }
 
+    private apiTypeResolver;
     private resolvedTypes: Record<string, ResolvedTypeDefinition> = {};
 
     private constructor(
-        private root: FernNavigation.ApiReferenceNode,
-        private holder: FernNavigation.ApiDefinitionHolder,
-        private typeResolver: ApiTypeResolver,
+        private apiDefinition: FlattenedApiDefinition,
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
         private domain: string,
-    ) {}
+        // filteredTypes?: string[],
+    ) {
+        this.apiDefinition = apiDefinition;
+        this.pages = pages;
+        this.apiTypeResolver = new ApiTypeResolver(apiDefinition.types);
+    }
 
-    private async resolveApiDefinition(mdxOptions: FernSerializeMdxOptions | undefined): Promise<ResolvedRootPackage> {
-        this.resolvedTypes = await this.typeResolver.resolve();
+    private async resolveApiDefinition(
+        title: string,
+        mdxOptions: FernSerializeMdxOptions | undefined,
+        // filteredTypes?: string[],
+    ): Promise<ResolvedRootPackage> {
+        // const highlighter = await getHighlighterInstance();
 
-        const withPackage = await this.resolveApiDefinitionPackage(this.root, mdxOptions);
+        // const resolvedTypes = Object.fromEntries(
+        //     await Promise.all(
+        //         Object.entries(filteredTypes != null ? pick(apiDefinition.types, filteredTypes) : apiDefinition.types).map(
+        //             async ([key, value]) => [key, await resolveTypeDefinition(value, apiDefinition.types)],
+        //         ),
+        //     ),
+        // );
+        this.resolvedTypes = await this.apiTypeResolver.resolve();
 
+        const withPackage = await this.resolveApiDefinitionPackage(
+            title,
+            this.apiDefinition.api,
+            this.apiDefinition,
+            mdxOptions,
+        );
         return {
             type: "rootPackage",
             ...withPackage,
-            api: this.root.apiDefinitionId,
-            auth: this.holder.api.auth,
+            api: this.apiDefinition.api,
+            auth: this.apiDefinition.auth,
             types: this.resolvedTypes,
         };
     }
 
     async resolveApiDefinitionPackage(
-        node: FernNavigation.ApiReferenceNode | FernNavigation.ApiSectionNode,
+        title: string,
+        id: APIV1Read.SubpackageId,
+        package_: FlattenedApiDefinitionPackage | undefined,
         mdxOptions: FernSerializeMdxOptions | undefined,
     ): Promise<ResolvedWithApiDefinition> {
+        if (package_ == null) {
+            return { items: [], slug: [] };
+        }
+
         const maybeItems = await Promise.all(
-            node.children.map((item) =>
-                visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
-                    endpoint: (endpoint) => this.resolveEndpointDefinition(endpoint),
-                    endpointPair: async (endpointPair) => {
-                        const [nonStream, stream] = await Promise.all([
-                            this.resolveEndpointDefinition(endpointPair.nonStream),
-                            this.resolveEndpointDefinition(endpointPair.stream),
-                        ]);
-                        nonStream.stream = stream;
-                        return nonStream;
-                    },
-                    link: async () => undefined,
-                    webSocket: (websocket) => this.resolveWebsocketChannel(websocket),
+            package_.items.map((item) =>
+                FlattenedApiDefinitionPackageItem.visit<Promise<ResolvedPackageItem | undefined>>(item, {
+                    endpoint: (endpoint) => this.resolveEndpointDefinition(id, endpoint),
+                    websocket: (websocket) => this.resolveWebsocketChannel(websocket),
                     webhook: (webhook) => this.resolveWebhookDefinition(webhook),
-                    apiSection: (section) => this.resolveSubpackage(section, mdxOptions),
+                    subpackage: (subpackage) => this.resolveSubpackage(subpackage, mdxOptions),
                     page: async (page) => {
-                        const pageContent = this.pages[page.pageId];
+                        const pageContent = this.pages[page.id];
                         if (pageContent == null) {
                             return undefined;
                         }
                         return {
                             type: "page",
-                            id: page.pageId,
-                            slug: page.slug,
+                            id: page.id,
+                            slug: item.slug,
                             title: page.title,
                             markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
                                 ...mdxOptions,
@@ -124,17 +150,17 @@ export class ApiDefinitionResolver {
 
         const items = maybeItems.filter(isNonNullish);
 
-        if (node.overviewPageId != null && this.pages[node.overviewPageId] != null) {
-            const pageContent = this.pages[node.overviewPageId];
+        if (package_.summaryPageId != null && this.pages[package_.summaryPageId] != null) {
+            const pageContent = this.pages[package_.summaryPageId];
             items.unshift({
                 type: "page",
-                id: node.overviewPageId,
-                slug: node.slug,
-                title: node.title,
+                id: package_.summaryPageId,
+                slug: package_.slug,
+                title,
                 markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
                     ...mdxOptions,
                     pageHeader: {
-                        title: node.title,
+                        title,
                         breadcrumbs: [], // TODO: implement breadcrumbs
                         editThisPageUrl: pageContent.editThisPageUrl,
                         hideNavLinks: true,
@@ -147,39 +173,45 @@ export class ApiDefinitionResolver {
 
         return {
             items,
-            slug: node.slug,
+            slug: package_.slug,
         };
     }
 
     async resolveSubpackage(
-        subpackage: FernNavigation.ApiSectionNode,
+        subpackage: FlattenedSubpackage,
         mdxOptions: FernSerializeMdxOptions | undefined,
     ): Promise<ResolvedSubpackage | undefined> {
-        const { items } = await this.resolveApiDefinitionPackage(subpackage, mdxOptions);
+        const { items } = await this.resolveApiDefinitionPackage(
+            subpackage.name,
+            subpackage.subpackageId,
+            subpackage,
+            mdxOptions,
+        );
 
         if (subpackage == null || items.length === 0) {
             return undefined;
         }
         return {
-            // description: await maybeSerializeMdxContent(subpackage.description),
-            description: undefined,
+            name: subpackage.name,
+            description: await maybeSerializeMdxContent(subpackage.description),
             availability: undefined,
-            title: subpackage.title,
+            title: subpackage.name, // titleCase() is already applied for FlattenedApiDefinition
             type: "subpackage",
+            apiSectionId: this.apiDefinition.api,
+            id: subpackage.subpackageId,
             slug: subpackage.slug,
             items,
         };
     }
 
-    async resolveEndpointDefinition(node: FernNavigation.EndpointNode): Promise<ResolvedEndpointDefinition> {
-        const endpoint = this.holder.endpoints.get(node.endpointId);
-        if (endpoint == null) {
-            throw new Error(`Endpoint with ID ${node.endpointId} not found`);
-        }
+    async resolveEndpointDefinition(
+        apiPackageId: FdrAPI.ApiDefinitionId,
+        endpoint: FlattenedEndpointDefinition,
+    ): Promise<ResolvedEndpointDefinition> {
         const pathParametersPromise = await Promise.all(
             endpoint.path.pathParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(parameter.type),
+                    this.apiTypeResolver.resolveTypeReference(parameter.type),
                     maybeSerializeMdxContent(parameter.description),
                 ]);
                 return {
@@ -195,7 +227,7 @@ export class ApiDefinitionResolver {
         const queryParametersPromise = Promise.all(
             endpoint.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(parameter.type),
+                    this.apiTypeResolver.resolveTypeReference(parameter.type),
                     maybeSerializeMdxContent(parameter.description),
                 ]);
                 return {
@@ -211,7 +243,7 @@ export class ApiDefinitionResolver {
         const headersPromise = Promise.all([
             ...endpoint.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -222,9 +254,9 @@ export class ApiDefinitionResolver {
                     hidden: false,
                 };
             }),
-            ...(this.holder.api.globalHeaders ?? []).map(async (header): Promise<ResolvedObjectProperty> => {
+            ...this.apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -238,10 +270,10 @@ export class ApiDefinitionResolver {
         ]);
 
         const errorsPromise = Promise.all(
-            (endpoint.errorsV2 ?? []).map(async (error): Promise<ResolvedError> => {
+            endpoint.errors.map(async (error): Promise<ResolvedError> => {
                 const [shape, description] = await Promise.all([
                     error.type != null
-                        ? this.typeResolver.resolveTypeShape(undefined, error.type, undefined, undefined)
+                        ? this.apiTypeResolver.resolveTypeShape(undefined, error.type, undefined, undefined)
                         : ({ type: "unknown" } as ResolvedTypeDefinition),
                     maybeSerializeMdxContent(error.description),
                 ]);
@@ -300,22 +332,22 @@ export class ApiDefinitionResolver {
             }
         });
 
-        const { auth, headers } = this.mergeAuthAndHeaders(endpoint.authed, this.holder.api.auth, rawHeaders);
+        const { auth, headers } = this.mergeAuthAndHeaders(endpoint.authed, this.apiDefinition.auth, rawHeaders);
 
         const toRet: ResolvedEndpointDefinition = {
             type: "endpoint",
-            nodeId: node.id,
-            id: node.endpointId,
-            slug: node.slug,
+            id: endpoint.id,
+            slug: endpoint.slug,
             description,
             auth,
             availability: endpoint.availability,
-            apiSectionId: node.apiDefinitionId,
+            apiSectionId: this.apiDefinition.api,
+            apiPackageId,
             environments: endpoint.environments,
             method: endpoint.method,
             examples: [],
-            title: node.title,
-            defaultEnvironment: endpoint.environments.find((env) => env.id === endpoint.defaultEnvironment),
+            title: endpoint.name,
+            defaultEnvironment: endpoint.defaultEnvironment,
             path,
             pathParameters,
             queryParameters,
@@ -324,7 +356,10 @@ export class ApiDefinitionResolver {
             responseBody,
             errors,
             snippetTemplates: endpoint.snippetTemplates,
-            stream: undefined,
+            stream:
+                endpoint.stream != null
+                    ? await this.resolveEndpointDefinition(apiPackageId, endpoint.stream)
+                    : undefined,
         };
 
         toRet.examples = await Promise.all(
@@ -411,16 +446,12 @@ export class ApiDefinitionResolver {
         return { auth: undefined, headers };
     }
 
-    async resolveWebsocketChannel(node: FernNavigation.WebSocketNode): Promise<ResolvedWebSocketChannel> {
-        const websocket = this.holder.webSockets.get(node.webSocketId);
-        if (websocket == null) {
-            throw new Error(`Websocket with ID ${node.webSocketId} not found`);
-        }
+    async resolveWebsocketChannel(websocket: FlattenedWebSocketChannel): Promise<ResolvedWebSocketChannel> {
         const pathParametersPromise = Promise.all(
             websocket.path.pathParameters.map(
                 async (parameter): Promise<ResolvedObjectProperty> => ({
                     key: parameter.key,
-                    valueShape: await this.typeResolver.resolveTypeReference(parameter.type),
+                    valueShape: await this.apiTypeResolver.resolveTypeReference(parameter.type),
                     description: await maybeSerializeMdxContent(parameter.description),
                     availability: parameter.availability,
                     hidden: false,
@@ -430,7 +461,7 @@ export class ApiDefinitionResolver {
         const headersPromise = Promise.all([
             ...websocket.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -441,9 +472,9 @@ export class ApiDefinitionResolver {
                     hidden: false,
                 };
             }),
-            ...(this.holder.api.globalHeaders ?? []).map(async (header): Promise<ResolvedObjectProperty> => {
+            ...this.apiDefinition.globalHeaders.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(header.type),
+                    this.apiTypeResolver.resolveTypeReference(header.type),
                     maybeSerializeMdxContent(header.description),
                 ]);
                 return {
@@ -458,7 +489,7 @@ export class ApiDefinitionResolver {
         const queryParametersPromise = Promise.all(
             websocket.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
-                    this.typeResolver.resolveTypeReference(parameter.type),
+                    this.apiTypeResolver.resolveTypeReference(parameter.type),
                     maybeSerializeMdxContent(parameter.description),
                 ]);
                 return {
@@ -493,17 +524,16 @@ export class ApiDefinitionResolver {
             messagesPromise,
         ]);
 
-        const { auth, headers } = this.mergeAuthAndHeaders(websocket.auth, this.holder.api.auth, rawHeaders);
+        const { auth, headers } = this.mergeAuthAndHeaders(websocket.authed, this.apiDefinition.auth, rawHeaders);
 
         return {
             type: "websocket",
             auth,
             environments: websocket.environments,
-            nodeId: node.id,
-            id: node.webSocketId,
+            id: websocket.id,
             description: websocket.description,
             availability: websocket.availability,
-            slug: node.slug,
+            slug: websocket.slug,
             name: websocket.name,
             path: websocket.path.parts
                 .map((pathPart): ResolvedEndpointPathParts | undefined => {
@@ -528,16 +558,11 @@ export class ApiDefinitionResolver {
             queryParameters,
             messages,
             examples: websocket.examples,
-            defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment),
+            defaultEnvironment: websocket.defaultEnvironment,
         };
     }
 
-    async resolveWebhookDefinition(node: FernNavigation.WebhookNode): Promise<ResolvedWebhookDefinition> {
-        const webhook = this.holder.webhooks.get(node.webhookId);
-        if (webhook == null) {
-            throw new Error(`Webhook with ID ${node.webhookId} not found`);
-        }
-
+    async resolveWebhookDefinition(webhook: FlattenedWebhookDefinition): Promise<ResolvedWebhookDefinition> {
         const [payloadShape, description, headers] = await Promise.all([
             this.resolvePayloadShape(webhook.payload.type),
             await maybeSerializeMdxContent(webhook.description),
@@ -545,7 +570,7 @@ export class ApiDefinitionResolver {
                 webhook.headers.map(
                     async (header): Promise<ResolvedObjectProperty> => ({
                         key: header.key,
-                        valueShape: await this.typeResolver.resolveTypeReference(header.type),
+                        valueShape: await this.apiTypeResolver.resolveTypeReference(header.type),
                         description: await maybeSerializeMdxContent(header.description),
                         availability: header.availability,
                         hidden: false,
@@ -558,10 +583,9 @@ export class ApiDefinitionResolver {
             name: webhook.name,
             description,
             availability: undefined,
-            slug: node.slug,
+            slug: webhook.slug,
             method: webhook.method,
-            nodeId: node.id,
-            id: node.webhookId,
+            id: webhook.id,
             path: webhook.path,
             headers,
             payload: {
@@ -584,11 +608,11 @@ export class ApiDefinitionResolver {
                 type: "object",
                 name: undefined,
                 extends: object.extends,
-                properties: await this.typeResolver.resolveObjectProperties(object),
+                properties: await this.apiTypeResolver.resolveObjectProperties(object),
                 description: undefined,
                 availability: undefined,
             }),
-            reference: (reference) => this.typeResolver.resolveTypeReference(reference.value),
+            reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
             _other: () =>
                 Promise.resolve({
                     type: "unknown",
@@ -604,7 +628,7 @@ export class ApiDefinitionResolver {
                 type: "object",
                 name: undefined,
                 extends: object.extends,
-                properties: await this.typeResolver.resolveObjectProperties(object),
+                properties: await this.apiTypeResolver.resolveObjectProperties(object),
                 description: undefined,
                 availability: undefined,
             }),
@@ -620,7 +644,7 @@ export class ApiDefinitionResolver {
                           availability: undefined,
                       }),
             bytes: (bytes) => Promise.resolve(bytes),
-            reference: (reference) => this.typeResolver.resolveTypeReference(reference.value),
+            reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
             _other: () =>
                 Promise.resolve({
                     type: "unknown",
@@ -653,7 +677,7 @@ export class ApiDefinitionResolver {
                         case "bodyProperty": {
                             const [description, valueShape] = await Promise.all([
                                 maybeSerializeMdxContent(property.description),
-                                this.typeResolver.resolveTypeReference(property.valueType),
+                                this.apiTypeResolver.resolveTypeReference(property.valueType),
                             ]);
                             return {
                                 type: "bodyProperty",
@@ -682,19 +706,19 @@ export class ApiDefinitionResolver {
                     type: "object",
                     name: undefined,
                     extends: object.extends,
-                    properties: await this.typeResolver.resolveObjectProperties(object),
+                    properties: await this.apiTypeResolver.resolveObjectProperties(object),
                     description: undefined,
                     availability: undefined,
                 }),
                 fileDownload: (fileDownload) => fileDownload,
                 streamingText: (streamingText) => streamingText,
                 streamCondition: (streamCondition) => streamCondition,
-                reference: (reference) => this.typeResolver.resolveTypeReference(reference.value),
+                reference: (reference) => this.apiTypeResolver.resolveTypeReference(reference.value),
                 stream: async (stream) => {
                     if (stream.shape.type === "reference") {
                         return {
                             type: "stream",
-                            value: await this.typeResolver.resolveTypeReference(stream.shape.value),
+                            value: await this.apiTypeResolver.resolveTypeReference(stream.shape.value),
                         };
                     }
                     return {
@@ -703,7 +727,7 @@ export class ApiDefinitionResolver {
                             type: "object",
                             name: undefined,
                             extends: stream.shape.extends,
-                            properties: await this.typeResolver.resolveObjectProperties(stream.shape),
+                            properties: await this.apiTypeResolver.resolveObjectProperties(stream.shape),
                             description: undefined,
                             availability: undefined,
                         },

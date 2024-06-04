@@ -1,6 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { SidebarNode, getUnversionedSlug, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { debounce } from "lodash-es";
+import { debounce, memoize } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
@@ -97,14 +97,19 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     basePath,
     title,
 }) => {
-    const { nodes, versions, currentVersionId } = useDocsContext();
+    const { sidebarNodes, versions, currentVersionIndex } = useDocsContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
-    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(resolvedPath.fullSlug));
+    const [activeNavigatable, setActiveNavigatable] = useState(() =>
+        resolveActiveSidebarNode(
+            sidebarNodes,
+            resolvedPath.fullSlug.split("/").filter((str) => str.trim().length > 0),
+        ),
+    );
 
     const [, anchor] = router.asPath.split("#");
-    const selectedSlug = activeNavigatable?.slug ?? "";
+    const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
     const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
     useEffect(() => {
@@ -156,7 +161,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
                 scrollToPathListeners.invokeListeners(fullSlug);
-                setActiveNavigatable(nodes.slugMap.get(fullSlug));
+                setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, fullSlug.split("/")));
                 startScrollTracking(`/${fullSlug}`, true);
             },
             300,
@@ -171,7 +176,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(nodes.slugMap.get(fullSlug));
+        setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, decodeURI(fullSlug).split("/")));
         startScrollTracking(route);
     });
 
@@ -230,7 +235,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
-    const activeDescription = convertDescriptionToString(frontmatter);
+    const activeDescription = convertDescriptionToString(activeNavigatable, frontmatter);
 
     return (
         <NavigationContext.Provider
@@ -242,18 +247,18 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     onScrollToPath,
                     registerScrolledToPathListener: scrollToPathListeners.registerListener,
                     resolvedPath,
-                    activeVersion: versions.find((version) => version.id === currentVersionId),
+                    activeVersion: versions[currentVersionIndex ?? 0],
                     selectedSlug,
-                    unversionedSlug: FernNavigation.utils.getUnversionedSlug(
-                        selectedSlug,
-                        versions.find((version) => version.id === currentVersionId)?.slug,
-                        basePath,
+                    unversionedSlug: getUnversionedSlug(
+                        selectedSlug.split("/"),
+                        versions[currentVersionIndex ?? 0]?.slug ?? [],
+                        basePath?.split("/").filter((part) => part.length > 0) ?? [],
                     ),
                 }),
                 [
                     activeNavigatable,
                     basePath,
-                    currentVersionId,
+                    currentVersionIndex,
                     domain,
                     onScrollToPath,
                     resolvedPath,
@@ -281,15 +286,17 @@ function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undef
 }
 
 function convertToTitle(
-    page: FernNavigation.NavigationNodeWithMetadata | undefined,
+    page: SidebarNode.Page | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
     return frontmatter?.title ?? page?.title;
 }
 
-function convertDescriptionToString(frontmatter: FernDocsFrontmatter | undefined): string | undefined {
-    // const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
-    const description = frontmatter?.description ?? frontmatter?.excerpt ?? undefined;
+function convertDescriptionToString(
+    page: SidebarNode.Page | undefined,
+    frontmatter: FernDocsFrontmatter | undefined,
+): string | undefined {
+    const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
 
     if (description == null) {
         return;
@@ -317,3 +324,25 @@ function convertDescriptionToString(frontmatter: FernDocsFrontmatter | undefined
         return undefined;
     }
 }
+
+const resolveActiveSidebarNode = memoize(
+    (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
+        const hits: SidebarNode.Page[] = [];
+
+        for (const node of sidebarNodes) {
+            visitSidebarNode(node, (n) => {
+                if (n.type === "page" && n.slug.join("/") === fullSlug.join("/")) {
+                    hits.push(n);
+                    return false;
+                }
+                return true;
+            });
+            if (hits.length > 0) {
+                break;
+            }
+        }
+
+        return hits[0];
+    },
+    (_sidebarNodes, fullSlug) => fullSlug.join("/"),
+);
