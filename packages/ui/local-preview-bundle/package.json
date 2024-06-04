@@ -35,8 +35,8 @@
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/components": "workspace:^",
-    "@fern-ui/core-utils": "workspace:^",
+    "@fern-ui/components": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/ui": "workspace:*",
