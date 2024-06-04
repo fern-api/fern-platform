@@ -74,7 +74,8 @@ export class NavigationConfigConverter {
                                 type: "version",
                                 title: version.version,
                                 default: true,
-                                versionId: FernNavigation.VersionId(version.urlSlug),
+                                // the versionId must match `indexSegmentsByVersionId`
+                                versionId: FernNavigation.VersionId(version.version),
                                 slug: baseSlug,
                                 icon: undefined,
                                 hidden: undefined,
@@ -95,7 +96,8 @@ export class NavigationConfigConverter {
                             type: "version",
                             title: version.version,
                             default: false,
-                            versionId: FernNavigation.VersionId(version.urlSlug),
+                            // the versionId must match `indexSegmentsByVersionId`
+                            versionId: FernNavigation.VersionId(version.version),
                             slug,
                             icon: undefined,
                             hidden: idx === 0, // hidden from the version selector

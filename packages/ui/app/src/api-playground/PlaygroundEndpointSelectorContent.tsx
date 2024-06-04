@@ -41,17 +41,38 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode): ApiGrou
                 return;
             }
 
-            const breadcrumbs = parents.filter(FernNavigation.isSection).map((parent) => parent);
+            const breadcrumbs = [...parents, node].filter(FernNavigation.isSection).map((parent) => parent.title);
             result.push({
                 api: node.apiDefinitionId,
                 id: node.id,
-                breadcrumbs: breadcrumbs.map((breadcrumb) => breadcrumb.title),
+                breadcrumbs,
                 items,
             });
         }
         return;
     });
-    return result;
+
+    if (result.length === 0) {
+        return [];
+    }
+
+    /**
+     * we want to get the lowest level of breadcrumbs shared by all groups
+     * for example:
+     * - [a, b, c]
+     * - [a, b, d]
+     *
+     * the shared breadcrumbs would be [a, b], and the resulting breadcrumbs for each group would be [c] and [d]
+     */
+    const allBreadcrumbs = result.map((group) => group.breadcrumbs);
+    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumbs) => {
+        return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumbs[idx]);
+    }, allBreadcrumbs[0]);
+
+    return result.map((group) => ({
+        ...group,
+        breadcrumbs: group.breadcrumbs.slice(sharedBreadcrumbs.length),
+    }));
 }
 
 function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigation.NavigationNodeApiLeaf): boolean {
