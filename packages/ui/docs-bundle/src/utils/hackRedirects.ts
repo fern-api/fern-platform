@@ -1,4 +1,4 @@
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import urljoin from "url-join";
 
 const HUME_REDIRECTS: DocsV1Read.RedirectConfig[] = [

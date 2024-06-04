@@ -1,4 +1,5 @@
-import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
+import { NodeCollector } from "@fern-api/fdr-sdk/dist/navigation/NodeCollector";
+import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
 import { buildUrl } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
@@ -61,7 +62,7 @@ const handler: NextApiHandler = async (
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+        const node = convertLoadDocsForUrlResponse(docs);
         const slugCollector = NodeCollector.collect(node);
         const urls = slugCollector.getSlugs().map((slug) => urljoin(xFernHost, slug));
 

@@ -1,4 +1,7 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/dist/navigation/ApiDefinitionHolder";
+import { collectApiReferences } from "@fern-api/fdr-sdk/dist/navigation/utils/collectApiReferences";
+import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
+import { findNode } from "@fern-api/fdr-sdk/dist/navigation/utils/findNode";
 import { ApiDefinitionResolver, ApiTypeResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
@@ -36,19 +39,19 @@ const resolveApiHandler: NextApiHandler = async (
 
         const basePathSlug =
             docs.baseUrl.basePath != null ? docs.baseUrl.basePath.split("/").filter((t) => t.length > 0) : [];
-        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docsResponse.body);
-        const found = FernNavigation.utils.findNode(root, basePathSlug);
+        const root = convertLoadDocsForUrlResponse(docsResponse.body);
+        const found = findNode(root, basePathSlug);
         const node = found.type === "found" ? found.currentVersion ?? found.currentTab ?? found.sidebar : root;
 
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
-        FernNavigation.utils.collectApiReferences(node).forEach((apiReference) => {
+        collectApiReferences(node).forEach((apiReference) => {
             const api = docs.definition.apis[apiReference.apiDefinitionId];
             if (api == null) {
                 return;
             }
-            const holder = FernNavigation.ApiDefinitionHolder.create(api);
+            const holder = ApiDefinitionHolder.create(api);
             const typeResolver = new ApiTypeResolver(api.types);
             const resolved = ApiDefinitionResolver.resolve(
                 apiReference,
