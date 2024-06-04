@@ -20,13 +20,13 @@ export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): Re
 
     const renderRightElement = () => {
         if (node.type === "webSocket") {
-            return <HttpMethodTag method="WSS" size="sm" active={selected} className="my-0.5" />;
+            return <HttpMethodTag method="WSS" size="sm" active={selected} />;
         } else {
             if (node.type === "endpoint" && node.isResponseStream) {
-                return <HttpMethodTag method="STREAM" size="sm" active={selected} className="my-0.5" />;
+                return <HttpMethodTag method="STREAM" size="sm" active={selected} />;
             }
 
-            return <HttpMethodTag method={node.method} size="sm" active={selected} className="my-0.5" />;
+            return <HttpMethodTag method={node.method} size="sm" active={selected} />;
         }
     };
 
