@@ -11,7 +11,7 @@
   },
   "organization": "cohere",
   "bannerLink": "https://raw.githubusercontent.com/cohere-ai/cohere-typescript/5188b11a6e91727fdd4d46f4a690419ad204224d/banner.png",
-  "docsLink": "https://docs.cohere.com",
+  "apiReferenceLink": "https://docs.cohere.com",
   "features": [
     {
       "id": "USAGE",

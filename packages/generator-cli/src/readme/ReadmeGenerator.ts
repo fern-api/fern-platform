@@ -146,7 +146,7 @@ export class ReadmeGenerator {
         const writer = new StringWriter();
         writer.writeLine("## Documentation");
         writer.writeLine();
-        writer.writeLine(`${this.organizationPascalCase} documentation is available [here](${docsLink}).`);
+        writer.writeLine(`API reference documentation is available [here](${docsLink}).`);
         writer.writeLine();
         return new Block({
             id: "DOCUMENTATION",
