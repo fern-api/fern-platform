@@ -119,6 +119,7 @@ export async function getDocsPageProps(
             versions: node.versions
                 .filter((version) => !version.hidden)
                 .map((version, index) => ({
+                    title: version.title,
                     id: version.versionId,
                     slug: version.slug,
                     index,
