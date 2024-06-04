@@ -736,18 +736,15 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
-      js-yaml:
-        specifier: ^4.0.5
-        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.12
+        version: 4.17.21
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^3.2.4
         version: 3.2.5
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.31)(ts-node@10.9.2)(typescript@4.9.5)
