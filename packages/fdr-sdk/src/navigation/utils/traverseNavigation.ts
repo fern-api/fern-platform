@@ -27,8 +27,8 @@ export function traverseNavigation(
         const v = visit(node, index, parents);
         if (v === SKIP) {
             return;
-        } else if (v === STOP || v === CONTINUE) {
-            return v;
+        } else if (v === STOP) {
+            return STOP;
         }
         return visitDiscriminatedUnion(node)._visit({
             root: (root) => internalTraverser(root.child, undefined, [...parents, root]),

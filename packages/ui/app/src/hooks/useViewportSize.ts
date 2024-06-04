@@ -6,23 +6,22 @@ export function useViewportSize(): { width: number; height: number } {
         typeof window !== "undefined" ? window.innerHeight : 0,
     );
 
-    useLayoutEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
+    if (typeof window !== "undefined") {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useLayoutEffect(() => {
+            const handleResize = () => {
+                setViewportHeight(window.innerHeight);
+                setViewportWidth(window.innerWidth);
+            };
 
-        const handleResize = () => {
-            setViewportHeight(window.innerHeight);
-            setViewportWidth(window.innerWidth);
-        };
+            handleResize();
 
-        handleResize();
-
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+            window.addEventListener("resize", handleResize);
+            return () => {
+                window.removeEventListener("resize", handleResize);
+            };
+        }, []);
+    }
 
     return { width, height };
 }
