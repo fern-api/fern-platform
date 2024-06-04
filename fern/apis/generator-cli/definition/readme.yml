@@ -12,7 +12,7 @@ types:
       language: LanguageInfo
       organization: string
       bannerLink: optional<string>
-      docsLink: optional<string>
+      apiReferenceLink: optional<string>
       requirements: optional<list<string>>
       features:
         docs: |
@@ -51,38 +51,26 @@ types:
 
   TypescriptInfo:
     properties:
-      title: literal<"TypeScript">
-      format: literal<"ts">
       publishInfo: optional<NpmPublishInfo>
 
   PythonInfo:
     properties:
-      title: literal<"Python">
-      format: literal<"python">
       publishInfo: optional<PypiPublishInfo>
 
   GoInfo:
     properties:
-      title: literal<"Go">
-      format: literal<"go">
       publishInfo: optional<GoPublishInfo>
 
   JavaInfo:
     properties:
-      title: literal<"Java">
-      format: literal<"java">
       publishInfo: optional<MavenPublishInfo>
 
   RubyInfo:
     properties:
-      title: literal<"Ruby">
-      format: literal<"ruby">
       publishInfo: optional<RubyGemsPublishInfo>
 
   CsharpInfo:
     properties:
-      title: literal<"C#">
-      format: literal<"csharp">
       publishInfo: optional<NugetPublishInfo>
 
   NpmPublishInfo:
