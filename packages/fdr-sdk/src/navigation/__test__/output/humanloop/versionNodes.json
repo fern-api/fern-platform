@@ -4,7 +4,7 @@
     "type": "version",
     "title": "v4.0",
     "default": true,
-    "versionId": "v4",
+    "versionId": "v4.0",
     "slug": "",
     "child": {
       "id": "root..*.uv",
@@ -2065,7 +2065,7 @@
     "type": "version",
     "title": "v4.0",
     "default": false,
-    "versionId": "v4",
+    "versionId": "v4.0",
     "slug": "v4",
     "hidden": true,
     "child": {
