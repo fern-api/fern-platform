@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/generator-cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "files": [
     "dist"
   ],
@@ -8,7 +8,7 @@
   "source": "src/index.ts",
   "main": "dist/cli.cjs",
   "bin": {
-    "generator-cli": "./dist/cli.cjs"
+    "generator-cli": "dist/cli.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
