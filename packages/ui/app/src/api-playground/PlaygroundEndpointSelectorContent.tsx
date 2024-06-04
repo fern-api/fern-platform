@@ -41,7 +41,15 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode): ApiGrou
                 return;
             }
 
-            const breadcrumbs = [...parents, node].filter(FernNavigation.isSection).map((parent) => parent.title);
+            const breadcrumbs = [...parents, node]
+                .filter(FernNavigation.isSection)
+                .filter((n) => {
+                    if (n.type === "apiReference") {
+                        return n.hideTitle !== true;
+                    }
+                    return true;
+                })
+                .map((parent) => parent.title);
             result.push({
                 api: node.apiDefinitionId,
                 id: node.id,
