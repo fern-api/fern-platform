@@ -1,13 +1,7 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
-import {
-    SidebarNode,
-    SidebarNodeRaw,
-    findApiSection,
-    flattenApiDefinition,
-    traverseSidebarNodes,
-} from "@fern-ui/fdr-utils";
+import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import urljoin from "url-join";
 import { captureSentryError } from "../analytics/sentry";
 import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import {
@@ -17,8 +11,8 @@ import {
     serializeMdxWithFrontmatter,
 } from "../mdx/mdx";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
-import { ResolvedRootPackage } from "../resolver/types";
 import { Changelog } from "./dateUtils";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
@@ -32,15 +26,19 @@ function getFrontmatter(content: string): FernDocsFrontmatter {
 }
 
 async function getSubtitle(
-    node: SidebarNode.Page,
+    node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<MDXRemoteSerializeResult | string | undefined> {
-    try {
-        const content = pages[node.id]?.markdown;
-        if (content == null) {
-            return;
-        }
+    const pageId = FernNavigation.utils.getPageId(node);
+    if (pageId == null) {
+        return;
+    }
+    const content = pages[pageId]?.markdown;
+    if (content == null) {
+        return;
+    }
 
+    try {
         const frontmatter = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
             return await maybeSerializeMdxContent(frontmatter.excerpt);
@@ -55,8 +53,8 @@ async function getSubtitle(
             errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
             data: {
                 pageTitle: node.title,
-                pageId: node.id,
-                route: `/${node.slug.join("/")}`,
+                pageId,
+                route: urljoin("/", node.slug),
             },
         });
         return undefined;
@@ -64,50 +62,67 @@ async function getSubtitle(
 }
 
 export async function convertNavigatableToResolvedPath({
-    rawSidebarNodes,
-    sidebarNodes,
-    currentNode,
+    found,
     apis,
     pages,
     mdxOptions,
     domain,
     featureFlags,
 }: {
-    rawSidebarNodes: readonly SidebarNodeRaw[];
-    sidebarNodes: SidebarNode[];
-    currentNode: SidebarNodeRaw.VisitableNode;
+    found: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     domain: string;
     featureFlags: FeatureFlags;
 }): Promise<ResolvedPath | undefined> {
-    const traverseState = traverseSidebarNodes(sidebarNodes, currentNode);
+    const neighbors = await getNeighbors(found, pages);
+    const { node, apiReference } = found;
 
-    if (traverseState.curr == null) {
-        return;
-    }
-
-    const neighbors = await getNeighbors(traverseState, pages);
-
-    if (currentNode.slug.join("/") !== traverseState.curr.slug.join("/")) {
+    if (node.type === "changelog") {
+        const pageContent = node.overviewPageId != null ? pages[node.overviewPageId] : undefined;
+        const serializedMdxContent =
+            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
+        const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
+        const itemsPromise: Promise<ResolvedPath.ChangelogPage["items"][0]>[] = [];
+        node.children.forEach((year) => {
+            year.children.forEach((month) => {
+                month.children.forEach((entry) => {
+                    const pageContent = pages[entry.pageId];
+                    if (pageContent == null) {
+                        return;
+                    }
+                    itemsPromise.push(
+                        serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions).then((markdown) => ({
+                            date: entry.date,
+                            dateString: Changelog.toLongDateString(entry.date),
+                            markdown,
+                        })),
+                    );
+                });
+            });
+        });
         return {
-            type: "redirect",
-            fullSlug: traverseState.curr.slug.join("/"),
+            type: "changelog-page",
+            fullSlug: node.slug,
+            title: frontmatter.title ?? node.title,
+            sectionTitleBreadcrumbs: found.breadcrumb,
+            markdown: serializedMdxContent,
+            items: await Promise.all(itemsPromise),
+            neighbors,
         };
-    }
-
-    if (SidebarNode.isApiPage(traverseState.curr)) {
-        const api = apis[traverseState.curr.api];
-        const apiSection = findApiSection(traverseState.curr.api, rawSidebarNodes);
-        if (api == null || apiSection == null) {
+    } else if (apiReference != null) {
+        const api = apis[apiReference.apiDefinitionId];
+        if (api == null) {
             return;
         }
+        const holder = FernNavigation.ApiDefinitionHolder.create(api);
+        const typeResolver = new ApiTypeResolver(api.types);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
         const apiDefinition = await ApiDefinitionResolver.resolve(
-            traverseState.curr.title,
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            apiSection.flattenedApiDefinition!,
+            apiReference,
+            holder,
+            typeResolver,
             pages,
             mdxOptions,
             featureFlags,
@@ -115,113 +130,87 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "api-page",
-            fullSlug: traverseState.curr.slug.join("/"),
-            api: traverseState.curr.api,
+            fullSlug: found.node.slug,
+            api: apiReference.apiDefinitionId,
             apiDefinition,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
-            showErrors: apiSection.showErrors,
+            showErrors: apiReference.showErrors ?? false,
             neighbors,
         };
-    } else if (SidebarNode.isChangelogPage(traverseState.curr)) {
-        const pageContent = traverseState.curr.pageId != null ? pages[traverseState.curr.pageId] : undefined;
-        const serializedMdxContent =
-            pageContent != null ? await serializeMdxWithFrontmatter(pageContent.markdown, mdxOptions) : null;
-        const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent?.frontmatter ?? {};
-        return {
-            type: "changelog-page",
-            fullSlug: traverseState.curr.slug.join("/"),
-            title: frontmatter.title ?? traverseState.curr.title,
-            sectionTitleBreadcrumbs: traverseState.sectionTitleBreadcrumbs,
-            markdown: serializedMdxContent,
-            items: await Promise.all(
-                traverseState.curr.items.map(async (item) => {
-                    const itemPageContent = pages[item.pageId];
-                    const markdown = await serializeMdxWithFrontmatter(itemPageContent?.markdown ?? "", {
-                        ...mdxOptions,
-                    });
-                    return {
-                        date: item.date,
-                        dateString: Changelog.toLongDateString(item.date),
-                        markdown,
-                    };
-                }),
-            ),
-            neighbors,
-        };
-    } else {
-        const pageContent = pages[traverseState.curr.id];
+    } else if (node.type === "page") {
+        const pageContent = pages[node.pageId];
         if (pageContent == null) {
             return;
         }
         const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
             ...mdxOptions,
             pageHeader: {
-                title: traverseState.curr.title,
-                breadcrumbs: traverseState.sectionTitleBreadcrumbs,
+                title: node.title,
+                breadcrumbs: found.breadcrumb,
                 editThisPageUrl: pageContent.editThisPageUrl,
                 isTocDefaultEnabled: featureFlags.isTocDefaultEnabled,
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
 
-        let resolvedApis: Record<string, ResolvedRootPackage> = {};
+        let apiNodes: FernNavigation.ApiReferenceNode[] = [];
         if (
             pageContent.markdown.includes("EndpointRequestSnippet") ||
             pageContent.markdown.includes("EndpointResponseSnippet")
         ) {
-            const title = traverseState.curr.title;
-            resolvedApis = Object.fromEntries(
-                await Promise.all(
-                    Object.entries(apis).map(async ([apiName, api]) => {
-                        const flattenedApiDefinition = flattenApiDefinition(api, ["dummy"], undefined, domain);
-                        return [
-                            apiName,
-                            await ApiDefinitionResolver.resolve(
-                                title,
-                                flattenedApiDefinition,
-                                pages,
-                                mdxOptions,
-                                featureFlags,
-                                domain,
-                            ),
-                        ];
-                    }),
-                ),
-            );
+            apiNodes = FernNavigation.utils.collectApiReferences(found.currentVersion ?? found.root);
         }
+        const resolvedApis = Object.fromEntries(
+            await Promise.all(
+                apiNodes.map(async (apiNode) => {
+                    const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
+                    const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types);
+                    return [
+                        apiNode.title,
+                        await ApiDefinitionResolver.resolve(
+                            apiNode,
+                            holder,
+                            typeResolver,
+                            pages,
+                            mdxOptions,
+                            featureFlags,
+                            domain,
+                        ),
+                    ];
+                }),
+            ),
+        );
         return {
             type: "custom-markdown-page",
-            fullSlug: traverseState.curr.slug.join("/"),
-            title: frontmatter.title ?? traverseState.curr.title,
+            fullSlug: node.slug,
+            title: frontmatter.title ?? node.title,
             serializedMdxContent,
             neighbors,
             apis: resolvedApis,
         };
     }
+    return undefined;
 }
 
 async function getNeighbor(
-    sidebarNode: SidebarNode.Page | undefined,
+    node: FernNavigation.NavigationNodeNeighbor | undefined,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedPath.Neighbor | null> {
-    if (sidebarNode == null) {
+    if (node == null) {
         return null;
     }
-    const excerpt = await getSubtitle(sidebarNode, pages);
+    const excerpt = await getSubtitle(node, pages);
     return {
-        fullSlug: sidebarNode.slug.join("/"),
-        title: sidebarNode.title,
+        fullSlug: urljoin(node.slug),
+        title: node.title,
         excerpt,
     };
 }
 
 async function getNeighbors(
-    traverseState: ReturnType<typeof traverseSidebarNodes>,
+    node: FernNavigation.utils.Node.Found,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<ResolvedPath.Neighbors> {
-    const [prev, next] = await Promise.all([
-        getNeighbor(traverseState.prev, pages),
-        getNeighbor(traverseState.next, pages),
-    ]);
+    const [prev, next] = await Promise.all([getNeighbor(node.prev, pages), getNeighbor(node.next, pages)]);
     return { prev, next };
 }

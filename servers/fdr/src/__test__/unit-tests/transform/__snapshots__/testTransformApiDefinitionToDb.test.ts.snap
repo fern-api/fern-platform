@@ -2942,7 +2942,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Config For Scope Computation Http Error",
+              "name": "Config for Scope Computation HTTP Error",
               "statusCode": 500,
               "type": {
                 "extends": [],
@@ -2973,7 +2973,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Scope Does Not Support Configurable Rules Http Error",
+              "name": "Scope Does Not Support Configurable Rules HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -3004,7 +3004,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Unknown Scope Http Error",
+              "name": "Unknown Scope HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -3035,7 +3035,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Rule Validation Http Failure",
+              "name": "Rule Validation HTTP Failure",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -3576,7 +3576,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Rule Not Found Http Error",
+              "name": "Rule Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],
@@ -3789,7 +3789,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Rule Not Found Http Error",
+              "name": "Rule Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],
@@ -3820,7 +3820,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Config For Scope Computation Http Error",
+              "name": "Config for Scope Computation HTTP Error",
               "statusCode": 500,
               "type": {
                 "extends": [],
@@ -3851,7 +3851,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Scope Does Not Support Configurable Rules Http Error",
+              "name": "Scope Does Not Support Configurable Rules HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -3882,7 +3882,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Unknown Scope Http Error",
+              "name": "Unknown Scope HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -3913,7 +3913,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Rule Validation Http Failure",
+              "name": "Rule Validation HTTP Failure",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -4329,7 +4329,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Rule Not Found Http Error",
+              "name": "Rule Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],
@@ -4497,7 +4497,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Config For Scope Computation Http Error",
+              "name": "Config for Scope Computation HTTP Error",
               "statusCode": 500,
               "type": {
                 "extends": [],
@@ -4528,7 +4528,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Scope Does Not Support Configurable Rules Http Error",
+              "name": "Scope Does Not Support Configurable Rules HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -4559,7 +4559,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Unknown Scope Http Error",
+              "name": "Unknown Scope HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -4855,7 +4855,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Config For Scope Computation Http Error",
+              "name": "Config for Scope Computation HTTP Error",
               "statusCode": 500,
               "type": {
                 "extends": [],
@@ -5213,7 +5213,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Type Does Not Match Value Http Error",
+              "name": "Type Does Not Match Value HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -5244,7 +5244,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Variable With Name Already Exists Http Error",
+              "name": "Variable with Name Already Exists HTTP Error",
               "statusCode": 409,
               "type": {
                 "extends": [],
@@ -5648,7 +5648,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Variable Not Found Http Error",
+              "name": "Variable Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],
@@ -5855,7 +5855,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Type Does Not Match Value Http Error",
+              "name": "Type Does Not Match Value HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -5886,7 +5886,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Variable Not Found Http Error",
+              "name": "Variable Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],
@@ -5917,7 +5917,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Variable Type Change Not Allowed Http Error",
+              "name": "Variable Type Change Not Allowed HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -5948,7 +5948,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Variable With Name Already Exists Http Error",
+              "name": "Variable with Name Already Exists HTTP Error",
               "statusCode": 409,
               "type": {
                 "extends": [],
@@ -6331,7 +6331,7 @@ current organization_id, then a response code of \`403\` will be returned.
           ],
           "errorsV2": [
             {
-              "name": "Variable In Use Http Error",
+              "name": "Variable IN Use HTTP Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -6362,7 +6362,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Variable Not Found Http Error",
+              "name": "Variable Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],
@@ -11328,7 +11328,7 @@ or encounter external id.
           ],
           "errorsV2": [
             {
-              "name": "Encounter External Id Uniqueness Error",
+              "name": "Encounter External ID Uniqueness Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -11421,7 +11421,7 @@ or encounter external id.
               },
             },
             {
-              "name": "Http Request Validations Error",
+              "name": "HTTP Request Validations Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -12608,7 +12608,7 @@ in bounds of the diagnoses list field
           ],
           "errorsV2": [
             {
-              "name": "Encounter External Id Uniqueness Error",
+              "name": "Encounter External ID Uniqueness Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -12701,7 +12701,7 @@ in bounds of the diagnoses list field
               },
             },
             {
-              "name": "Http Request Validations Error",
+              "name": "HTTP Request Validations Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -16251,7 +16251,7 @@ submitted to the payor.
           ],
           "errorsV2": [
             {
-              "name": "Http Request Validations Error",
+              "name": "HTTP Request Validations Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -16347,7 +16347,7 @@ submitted to the payor.
               },
             },
             {
-              "name": "Export Not Yet Available Error",
+              "name": "Export Not yet Available Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -17109,7 +17109,7 @@ doesn't data wrangle the modeling into the presentation shape.
           ],
           "errorsV2": [
             {
-              "name": "Http Request Validation Error",
+              "name": "HTTP Request Validation Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -23188,7 +23188,7 @@ upon creation of the invoice.
           ],
           "errorsV2": [
             {
-              "name": "Http Request Validation Error",
+              "name": "HTTP Request Validation Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -23424,7 +23424,7 @@ upon creation of the invoice.
           ],
           "errorsV2": [
             {
-              "name": "Http Request Validation Error",
+              "name": "HTTP Request Validation Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -28802,7 +28802,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             },
             {
-              "name": "Invalid Base 64 Encoding Error",
+              "name": "Invalid Base64encoding Error",
               "statusCode": 422,
               "type": {
                 "extends": [],
@@ -34771,7 +34771,7 @@ customer page will be returned (this generally is a page listing the existing cu
           ],
           "errorsV2": [
             {
-              "name": "Work Queue Not Found Http Error",
+              "name": "Work Queue Not Found HTTP Error",
               "statusCode": 404,
               "type": {
                 "extends": [],

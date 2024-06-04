@@ -1,6 +1,9 @@
+import { NodeCollector } from "@fern-api/fdr-sdk/dist/navigation/NodeCollector";
+import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
 import { isPlainObject } from "@fern-ui/core-utils";
-import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
+import { buildUrl } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import urljoin from "url-join";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
 import { cleanHost, getXFernHostNode } from "../../../../utils/xFernHost";
@@ -60,12 +63,9 @@ const handler: NextApiHandler = async (
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const urls = getAllUrlsFromDocsConfig(
-            xFernHost,
-            docs.baseUrl.basePath,
-            docs.definition.config.navigation,
-            docs.definition.apis,
-        );
+        const node = convertLoadDocsForUrlResponse(docs);
+        const slugCollector = NodeCollector.collect(node);
+        const urls = slugCollector.getSlugs().map((slug) => urljoin(xFernHost, slug));
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request

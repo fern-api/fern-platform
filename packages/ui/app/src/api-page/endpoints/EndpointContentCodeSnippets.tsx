@@ -1,11 +1,12 @@
 "use client";
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -46,7 +47,6 @@ export declare namespace EndpointContentCodeSnippets {
 }
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
-    api,
     endpoint,
     example,
     clients,
@@ -62,6 +62,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     setSelectedError,
     measureHeight,
 }) => {
+    const { nodes } = useDocsContext();
+    const maybeNode = nodes.get(endpoint.nodeId);
+    const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
+
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -169,14 +173,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }}
                 actions={
                     <>
-                        <PlaygroundButton
-                            state={{
-                                type: "endpoint",
-                                api,
-                                endpointId: endpoint.id,
-                            }}
-                            // example={selectedClient.exampleCall}
-                        />
+                        {node != null && (
+                            <PlaygroundButton
+                                state={node}
+                                // example={selectedClient.exampleCall}
+                            />
+                        )}
                         {clients.length > 1 ? (
                             <CodeExampleClientDropdown
                                 clients={clients}

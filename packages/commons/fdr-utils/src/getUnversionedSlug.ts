@@ -1,18 +1,21 @@
 export function getUnversionedSlug(
-    slug: readonly string[],
-    currentVersionSlug: readonly string[],
-    basePathSlug: readonly string[],
-): readonly string[] {
-    const isVersionMatch =
-        currentVersionSlug.length > 0 && currentVersionSlug.every((part, index) => part === slug[index]);
-
-    if (isVersionMatch) {
+    slug: string,
+    currentVersionSlug: string | undefined,
+    basePathSlug: string | undefined,
+): string {
+    if (
+        currentVersionSlug != null &&
+        slug.startsWith(currentVersionSlug) &&
+        (slug.length === currentVersionSlug.length || slug[currentVersionSlug.length] === "/")
+    ) {
         return slug.slice(currentVersionSlug.length);
     }
 
-    const isBasePathMatch = basePathSlug.length > 0 && basePathSlug.every((part, index) => part === slug[index]);
-
-    if (isBasePathMatch) {
+    if (
+        basePathSlug != null &&
+        slug.startsWith(basePathSlug) &&
+        (slug.length === basePathSlug.length || slug[basePathSlug.length] === "/")
+    ) {
         return slug.slice(basePathSlug.length);
     }
 
