@@ -1,7 +1,6 @@
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/dist/navigation/ApiDefinitionHolder";
 import { collectApiReferences } from "@fern-api/fdr-sdk/dist/navigation/utils/collectApiReferences";
 import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
-import { findNode } from "@fern-api/fdr-sdk/dist/navigation/utils/findNode";
 import { ApiDefinitionResolver, ApiTypeResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
@@ -36,17 +35,12 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const docs = docsResponse.body;
-
-        const basePathSlug =
-            docs.baseUrl.basePath != null ? docs.baseUrl.basePath.split("/").filter((t) => t.length > 0) : [];
         const root = convertLoadDocsForUrlResponse(docsResponse.body);
-        const found = findNode(root, basePathSlug);
-        const node = found.type === "found" ? found.currentVersion ?? found.currentTab ?? found.sidebar : root;
 
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
-        collectApiReferences(node).forEach((apiReference) => {
+        collectApiReferences(root).forEach((apiReference) => {
             const api = docs.definition.apis[apiReference.apiDefinitionId];
             if (api == null) {
                 return;
