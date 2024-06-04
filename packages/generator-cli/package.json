@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/generator-cli",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "files": [
     "dist"
   ],
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "dist:cli": "tsup ./src/cli.ts --format cjs",
+    "dist:cli": "tsup ./src/cli.ts --format cjs && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
     "test": "vitest --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
