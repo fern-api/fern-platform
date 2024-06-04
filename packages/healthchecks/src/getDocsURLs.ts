@@ -1,5 +1,4 @@
 import { VercelClient } from "@fern-fern/vercel";
-import { Domain } from "@fern-fern/vercel/api/resources/v9";
 
 const VERCEL = new VercelClient({
     token: process.env.VERCEL_TOKEN ?? "",
@@ -24,22 +23,9 @@ export async function getAllFernDocsWebsites(): Promise<string[]> {
         teamId: "team_6FKOM5nw037hv8g2mTk3gaH7",
         withGitRepoInfo: false,
     });
-    const domainsConfigured = await Promise.all(
-        listDomainsResponse.domains.map(async (customDomain) => ({
-            value: customDomain,
-            isConfigured: await isDomainConfigured(customDomain),
-        })),
-    );
-    const verifiedDomains = domainsConfigured
-        .filter((customDomain) => customDomain.value.verified && customDomain.isConfigured)
-        .map((customDomain) => customDomain.value.name)
+    const verifiedDomains = listDomainsResponse.domains
+        .filter((customDomain) => customDomain.verified)
+        .map((customDomain) => customDomain.name)
         .filter((domain) => !DOMAINS_TO_SKIP.includes(domain));
     return [...CUSTOM_SUBPATHS, ...verifiedDomains];
-}
-
-async function isDomainConfigured(customDomain: Domain) {
-    const getConfigResponse = await VERCEL.v9.domains.getConfig(customDomain.name, {
-        teamId: "team_6FKOM5nw037hv8g2mTk3gaH7",
-    });
-    return !getConfigResponse.misconfigured;
 }

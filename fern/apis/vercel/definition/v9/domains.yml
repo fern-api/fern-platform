@@ -2,9 +2,6 @@ types:
   ListDomainsResponse:
     properties:
       domains: list<Domain>
-  GetConfigResponse:
-    properties:
-      misconfigured: boolean
 
   Domain:
     properties:
@@ -12,30 +9,16 @@ types:
       verified: boolean
 
 service:
-  base-path: /v9
+  base-path: /v9/projects/{projectId}
+  path-parameters:
+    projectId: string
   auth: true
   endpoints:
-    getConfig:
-      docs: |
-        See Vercel's docs over here: https://vercel.com/docs/rest-api/endpoints/domains#get-a-domain's-configuration
-      method: GET
-      path: /domains/{domain}/config
-      path-parameters:
-        domain: string
-      request:
-        name: GetConfigRequest
-        query-parameters:
-          teamId:
-            type: string
-            docs: The team id to filter by
-      response: GetConfigResponse
     list:
       docs: |
         See Vercel's docs over here: https://vercel.com/docs/rest-api/endpoints/domains#list-all-the-domains
       method: GET
-      path: /projects/{projectId}/domains
-      path-parameters:
-        projectId: string
+      path: /domains
       request:
         name: ListDomainsRequest
         query-parameters:
