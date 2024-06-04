@@ -1,4 +1,4 @@
-import { kebabCase } from "@fern-ui/core-utils";
+import { kebabCase } from "lodash-es";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -194,7 +194,7 @@ function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): WithoutQuest
             pageId: item.pageId,
         })),
         pageId: writeShape.pageId,
-        urlSlug: writeShape.urlSlugOverride ?? (writeShape.title != null ? kebabCase(writeShape.title) : "changelog"),
+        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
         fullSlug: writeShape.fullSlug,
     };
 }

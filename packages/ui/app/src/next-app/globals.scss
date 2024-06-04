@@ -225,7 +225,7 @@
     }
 
     .fern-sidebar-link-content {
-        @apply inline-flex flex-1 items-start py-2.5 sm:py-2;
+        @apply inline-flex flex-1 items-center py-2.5 sm:py-2;
     }
 
     .fern-sidebar-link-text {
@@ -237,8 +237,16 @@
         @apply lg:rounded-lg;
 
         &:last-child {
-            @apply flex -mr-3 ml-1;
+            @apply flex lg:hidden -mr-3;
         }
+
+        &:not(:last-child) {
+            @apply hidden lg:flex -ml-3;
+        }
+    }
+
+    .fern-sidebar-link-indent + .fern-sidebar-link-expand {
+        @apply lg:rounded-l-none;
     }
 
     .fern-sidebar-link-expand[data-state="active"] {

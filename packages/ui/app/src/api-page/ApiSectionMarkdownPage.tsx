@@ -12,7 +12,7 @@ export const ApiSectionMarkdownPage = ({
     page: ResolvedPageMetadata;
     hideBottomSeparator: boolean;
 }): ReactElement | null => {
-    const slug = page.slug;
+    const slug = page.slug.join("/");
 
     const { setTargetRef } = useApiPageCenterElement({ slug });
 

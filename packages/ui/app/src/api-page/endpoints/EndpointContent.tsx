@@ -237,7 +237,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
                 ref={ref}
-                data-route={`/${endpoint.slug}`}
+                data-route={`/${endpoint.slug.join("/")}`}
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
@@ -257,7 +257,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                                 value && endpointProp.stream != null
                                                     ? endpointProp.stream
                                                     : endpointProp;
-                                            void router.replace(`/${endpoint.slug}`, undefined, {
+                                            void router.replace(`/${endpoint.slug.join("/")}`, undefined, {
                                                 shallow: true,
                                             });
                                             setTimeout(() => {

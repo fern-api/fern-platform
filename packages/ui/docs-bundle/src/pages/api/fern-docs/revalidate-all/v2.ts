@@ -1,8 +1,6 @@
-import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
-import { buildUrl } from "@fern-ui/fdr-utils";
+import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import urljoin from "url-join";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
 import { cleanHost, getXFernHostNode } from "../../../../utils/xFernHost";
@@ -62,9 +60,12 @@ const handler: NextApiHandler = async (
             return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
-        const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector.getSlugs().map((slug) => urljoin(xFernHost, slug));
+        const urls = getAllUrlsFromDocsConfig(
+            xFernHost,
+            docs.baseUrl.basePath,
+            docs.definition.config.navigation,
+            docs.definition.apis,
+        );
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request

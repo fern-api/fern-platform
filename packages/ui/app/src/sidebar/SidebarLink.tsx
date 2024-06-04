@@ -1,6 +1,7 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import cn, { clsx } from "clsx";
+import { joinUrlSlugs } from "@fern-ui/fdr-utils";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
+import cn from "clsx";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
@@ -17,14 +18,12 @@ import {
     useEffect,
     useRef,
 } from "react";
-import { ChevronDown } from "react-feather";
-import urljoin from "url-join";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
     icon?: ReactElement | string;
-    slug?: FernNavigation.Slug;
+    slug?: readonly string[];
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
@@ -38,7 +37,7 @@ interface SidebarSlugLinkProps {
     rightElement?: ReactNode;
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
     tooltipContent?: ReactNode;
-    hidden?: boolean;
+    hidden: boolean;
     scrollOnShallow?: boolean;
     as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
@@ -50,7 +49,7 @@ type SidebarLinkProps = PropsWithChildren<
         rel?: string | undefined;
         target?: HTMLAttributeAnchorTarget | undefined;
 
-        elementRef?: React.Ref<HTMLDivElement>;
+        elementRef?: React.Ref<HTMLLIElement>;
     }
 >;
 
@@ -132,13 +131,11 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
 
     const expandButton = (toggleExpand != null || expanded) && (
         <span
-            className={clsx("fern-sidebar-link-expand", {
-                "opacity-50 transition-opacity group-hover:opacity-80": !showIndicator,
-            })}
+            className="fern-sidebar-link-expand opacity-60 transition-opacity group-hover:opacity-100 lg:group-hover/sidebar:opacity-100"
             data-state={showIndicator ? "active" : "inactive"}
         >
-            <ChevronDown
-                className={cn("size-5 lg:size-icon", {
+            <ChevronDownIcon
+                className={cn("transition-transform size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -147,9 +144,8 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
     );
 
     return (
-        <>
+        <li ref={elementRef} className="fern-sidebar-item">
             <div
-                ref={elementRef}
                 className={cn("fern-sidebar-link-container group", className)}
                 data-state={selected ? "active" : "inactive"}
             >
@@ -165,9 +161,10 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                                     )}
                                 />
                             ))}
+                            {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:t-accent-aaa my-0.5">
+                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:text-text-default">
                                         {typeof icon === "string" ? (
                                             <RemoteFontAwesomeIcon
                                                 icon={icon}
@@ -187,7 +184,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                 )}
             </div>
             {children}
-        </>
+        </li>
     );
 });
 
@@ -197,21 +194,21 @@ export const SidebarLink = memo(SidebarLinkInternal);
 
 const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>((props, ref) => {
     const { slug, registerScrolledToPathListener, ...innerProps } = props;
-    const elementRef = useRef<HTMLDivElement>(null);
+    const elementRef = useRef<HTMLLIElement>(null);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     useEffect(() => {
         if (slug == null) {
             return undefined;
         }
-        return registerScrolledToPathListener(slug, () => {
-            elementRef.current?.scrollIntoView({ block: "center" });
+        return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
+            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
         });
     }, [slug, registerScrolledToPathListener]);
 
     useEffect(() => {
         if (isMobileSidebarOpen && props.selected) {
-            elementRef.current?.scrollIntoView({ block: "center" });
+            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
         }
     }, [isMobileSidebarOpen, props.selected]);
 
@@ -220,7 +217,7 @@ const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<
             {...innerProps}
             ref={ref}
             elementRef={elementRef}
-            href={slug != null ? urljoin("/", slug) : undefined}
+            href={slug != null ? `/${slug.join("/")}` : undefined}
         />
     );
 });

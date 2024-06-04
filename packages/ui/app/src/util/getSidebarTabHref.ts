@@ -4,9 +4,9 @@ import urljoin from "url-join";
 
 export function getSidebarTabHref(tab: SidebarTab): string {
     return visitDiscriminatedUnion(tab, "type")._visit({
-        tabGroup: (value) => urljoin("/", value.pointsTo ?? value.slug),
+        tabGroup: (value) => urljoin("/", ...value.slug),
         tabLink: (value) => value.url,
-        tabChangelog: (value) => urljoin("/", value.slug),
+        tabChangelog: (value) => urljoin("/", ...value.slug),
         _other: () => "/",
     });
 }

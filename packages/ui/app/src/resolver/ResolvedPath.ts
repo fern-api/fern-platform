@@ -53,5 +53,8 @@ export declare namespace ResolvedPath {
     }
 }
 
-export type ResolvedPath = ResolvedPath.CustomMarkdownPage | ResolvedPath.ApiPage | ResolvedPath.ChangelogPage;
-// | ResolvedPath.RedirectPage;
+export type ResolvedPath =
+    | ResolvedPath.CustomMarkdownPage
+    | ResolvedPath.ApiPage
+    | ResolvedPath.ChangelogPage
+    | ResolvedPath.RedirectPage;
