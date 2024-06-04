@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/fdr-utils": "workspace:*",
     "@fern-fern/vercel": "0.0.6",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
