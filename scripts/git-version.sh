@@ -10,6 +10,6 @@ fi
 tag="$(git describe --exact-match --tags HEAD 2> /dev/null || :)"
 version="$(git describe --tags --always --first-parent)"
 
-result="$(echo "$version" | sed 's/^fdr@//;s/^ui@//')"
+result="$(echo "$version" | sed 's/^fdr@//;s/^ui@//;s/^generator-cli@//')"
 
 echo "$result"
