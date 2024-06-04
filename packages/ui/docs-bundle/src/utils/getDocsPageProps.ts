@@ -60,6 +60,8 @@ export async function getDocsPageProps(
                 type: "redirect",
                 redirect: await getUnauthenticatedRedirect(xFernHost),
             };
+        } else if ((docs.error as any).content.statusCode === 404) {
+            return { type: "notFound", notFound: true };
         }
 
         // eslint-disable-next-line no-console
@@ -276,6 +278,7 @@ async function convertDocsToDocsPageProps({
             versions: node.versions
                 .filter((version) => !version.hidden)
                 .map((version, index) => ({
+                    title: version.title,
                     id: version.versionId,
                     slug: version.slug,
                     index,

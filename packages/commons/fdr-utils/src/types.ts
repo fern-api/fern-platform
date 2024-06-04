@@ -7,7 +7,8 @@ export interface ColorsConfig {
 }
 
 export interface SidebarVersionInfo {
-    id: string;
+    id: FernNavigation.VersionId;
+    title: string;
     slug: FernNavigation.Slug;
     index: number;
     availability: FernNavigation.Availability | undefined;

@@ -14,6 +14,8 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
     const { versions, currentVersionId } = useDocsContext();
     const { unversionedSlug } = useNavigationContext();
 
+    const currentVersion = versions.find(({ id }) => id === currentVersionId);
+
     if (versions.length <= 1) {
         return null;
     }
@@ -21,11 +23,11 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
         <div className="flex w-32">
             <FernLinkDropdown
                 value={currentVersionId}
-                options={versions.map(({ id: versionName, availability, slug }) => ({
+                options={versions.map(({ id, title, availability, slug }) => ({
                     type: "value",
-                    label: versionName,
+                    label: title,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
-                    value: versionName,
+                    value: id,
                     disabled: availability == null,
                     href: urljoin("/", slug, unversionedSlug),
                 }))}
@@ -33,7 +35,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
                 <FernButton
                     intent="primary"
                     variant="outlined"
-                    text={currentVersionId}
+                    text={currentVersion?.title ?? currentVersionId}
                     rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}
                     disableAutomaticTooltip
                 />
