@@ -493,7 +493,8 @@ export class ApiDefinitionResolver {
             messagesPromise,
         ]);
 
-        const { auth, headers } = this.mergeAuthAndHeaders(websocket.auth, this.holder.api.auth, rawHeaders);
+        // HACKHACK: force auth=true forces auth to always be included since websocket security schemes is borked in FernIR -> FDR
+        const { auth, headers } = this.mergeAuthAndHeaders(true, this.holder.api.auth, rawHeaders);
 
         return {
             type: "websocket",
