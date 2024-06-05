@@ -28,7 +28,7 @@ export class Read {
     ): Promise<core.APIResponse<FernRegistry.OrgId, FernRegistry.docs.v2.read.getOrganizationForUrl.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/organization-for-url"
             ),
             method: "POST",
@@ -77,7 +77,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/load-with-url"
             ),
             method: "POST",
@@ -127,7 +127,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/private/load-with-url"
             ),
             method: "POST",
@@ -180,7 +180,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 `/v2/registry/docs/${docsConfigId}`
             ),
             method: "GET",
@@ -228,7 +228,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/search-api-key-with-index-segment"
             ),
             method: "POST",
