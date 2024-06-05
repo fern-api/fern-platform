@@ -38,7 +38,7 @@
     "@datadog/browser-logs": "^5.14.0",
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-api/sdk": "^0.6.0",
+    "@fern-api/sdk": "0.7.0",
     "@fern-api/template-resolver": "workspace:*",
     "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",

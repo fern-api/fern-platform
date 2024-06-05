@@ -880,8 +880,6 @@ importers:
         specifier: 5.4.3
         version: 5.4.3
 
-  packages/template-resolver/dist/esm: {}
-
   packages/ui/app:
     dependencies:
       '@datadog/browser-logs':
@@ -894,8 +892,8 @@ importers:
         specifier: workspace:*
         version: link:../../fdr-sdk
       '@fern-api/sdk':
-        specifier: ^0.6.0
-        version: 0.6.0
+        specifier: 0.7.0
+        version: 0.7.0
       '@fern-api/template-resolver':
         specifier: workspace:*
         version: link:../../template-resolver
@@ -4662,10 +4660,10 @@ packages:
       json-stream-stringify: 3.1.4
       tmp-promise: 3.0.3
 
-  /@fern-api/sdk@0.6.0:
-    resolution: {integrity: sha512-3WE9vOCI1zWwaONIFFjQ5VEQXGDjMCCTyH9b2jZww0+QFYED70v/bJBILzwa4QQFQpeHSg5/isa3GdYx2WZBOw==}
+  /@fern-api/sdk@0.7.0:
+    resolution: {integrity: sha512-wGuNAujcCkjbgvK6dsle0h3TT0BbbD1RT8LEK2bIZ9FFct20YDugNT4XRA03YHxGpXJ6b2kry+AXkiN0Gw7hrw==}
     dependencies:
-      '@fern-api/template-resolver': 0.2.0
+      '@fern-api/template-resolver': 0.3.0
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
@@ -4676,8 +4674,8 @@ packages:
       - encoding
     dev: false
 
-  /@fern-api/template-resolver@0.2.0:
-    resolution: {integrity: sha512-vW3G7+GxT8WhuyADPfmUBvv6ee9vqgEAWDD52dljokZLlWYe49yinY1is9weDeg7bOsxaUeyLsW91j4//8rtmw==}
+  /@fern-api/template-resolver@0.3.0:
+    resolution: {integrity: sha512-na7B2hVkRJnR0pMqJZK7ulAQQYUHYVXXYtIVlBHZBY6Ko43G2q70DPROcM4vMx2eE6vP7xRnHAww3g4YZboniA==}
     dependencies:
       lodash: 4.17.21
     dev: false
