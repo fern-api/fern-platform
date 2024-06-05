@@ -849,9 +849,6 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../configs
       '@types/jest':
         specifier: ^29.0.3
         version: 29.5.12
@@ -879,8 +876,6 @@ importers:
       typescript:
         specifier: 5.4.3
         version: 5.4.3
-
-  packages/template-resolver/dist/esm: {}
 
   packages/ui/app:
     dependencies:

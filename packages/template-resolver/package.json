@@ -1,14 +1,11 @@
 {
   "name": "@fern-api/template-resolver",
-  "version": "0.2.0",
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "module": "dist/src/index.js",
-  "source": "src/index.ts",
+  "version": "0.3.0",
+  "private": false,
+  "repository": "https://github.com/fern-api/fern-typescript",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "compile": "tsc --build",
     "clean": "rm -rf ./dist && tsc --build --clean",
@@ -24,7 +21,6 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@fern-platform/configs": "workspace:*",
     "@types/lodash": "^4.17.4",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
