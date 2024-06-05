@@ -54,16 +54,16 @@ groups:
           namespaceExport: FdrSnippetTemplate
           includeUtilsOnUnionMembers: true
 
-  external-sdks:
+  external-sdk:
     audiences:
       - external
       - snippets
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.12.8-rc0
+        version: 0.20.9
         output:
           location: npm
-          package-name: "@fern/typescript-sdk"
+          package-name: "@fern-api/sdk"
           token: ${NPM_TOKEN}
         github:
           repository: fern-api/fern-typescript
@@ -71,7 +71,7 @@ groups:
           license: MIT
         config:
           noSerdeLayer: true
-          namespaceExport: FernInternal
+          namespaceExport: Fern
           includeApiReference: true
           extraDependencies:
             "@fern-api/template-resolver": "^0.0.9"
