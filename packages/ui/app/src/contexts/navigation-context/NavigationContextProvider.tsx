@@ -187,8 +187,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
             }
             navigateToPath(route);
-            // closeMobileSidebar();
-            // closeSearchDialog();
         };
         const handleRouteChangeError = (err: Error, route: string, options: { shallow: boolean }) => {
             if (process.env.NODE_ENV === "development") {
