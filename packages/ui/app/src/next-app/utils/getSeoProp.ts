@@ -247,6 +247,7 @@ function getPreloadedFont(
 
 function stripMarkdown(markdown: string): string {
     const tree = toHast(fromMarkdown(markdown));
+
     let toRet = "";
     visit(tree, "text", (node) => {
         toRet += node.value + " ";
