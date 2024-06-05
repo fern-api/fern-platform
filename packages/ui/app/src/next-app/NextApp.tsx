@@ -12,6 +12,7 @@ import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
+import { useFernTemplate } from "./Cohere";
 import { DocsPage } from "./DocsPage";
 import "./globals.scss";
 
@@ -28,6 +29,22 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         router,
         basePath: pageProps?.baseUrl?.basePath,
         host: pageProps?.baseUrl?.domain,
+    });
+
+    useFernTemplate({
+        request: {
+            apiId: "api",
+            orgId: "cohere",
+            endpointId: {
+                method: "GET",
+                path: "/v1/stream",
+            },
+            sdk: {
+                type: "typescript",
+                package: "cohere-ai",
+            },
+        },
+        requestOptions: {},
     });
 
     return (
