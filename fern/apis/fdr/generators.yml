@@ -74,7 +74,7 @@ groups:
           namespaceExport: Fern
           includeApiReference: true
           extraDependencies:
-            "@fern-api/template-resolver": "^0.0.9"
+            "@fern-api/template-resolver": "0.3.0"
 
   template-resolver:
     audiences:
