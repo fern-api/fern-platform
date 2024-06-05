@@ -3,6 +3,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import grayMatter from "gray-matter";
 import type { DefaultSeoProps, LinkTag, MetaTag, NextSeoProps } from "next-seo/lib/types";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getFontExtension } from "./getFontVariables";
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
@@ -109,8 +110,12 @@ export function getDefaultSeoProps(
     }
 
     // defaults
-    seo.title ??= (title != null ? `${node.title} — ${title}` : node.title) ?? title ?? "Fern Documentation";
+    seo.title ??= node.title;
     openGraph.siteName ??= title;
+    seo.defaultTitle ??= title;
+    if (title != null) {
+        seo.titleTemplate = `%s — ${title}`;
+    }
 
     if (favicon != null && files[favicon] != null) {
         const image = files[favicon];
@@ -157,12 +162,15 @@ export function getDefaultSeoProps(
 }
 
 export function getNextSeoProps(
-    title: string | undefined,
+    resolvedPath: ResolvedPath,
     node: FernNavigation.NavigationNodeWithMetadata | undefined,
 ): NextSeoProps {
     const seo: NextSeoProps = {};
-    if (node != null) {
-        seo.title ??= (title != null ? `${node.title} — ${title}` : node.title) ?? title ?? "Fern Documentation";
+
+    // HACKHACK: sets title on shallow navigation
+    // TODO: find a better way to handle this
+    if (node != null && resolvedPath.fullSlug !== node.slug) {
+        seo.title ??= node.title;
     }
     return seo;
 }

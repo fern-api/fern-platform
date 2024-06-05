@@ -212,7 +212,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         });
     }, [router, navigateToPath]);
 
-    const seo = useMemo(() => getNextSeoProps(activeNavigatable), [activeNavigatable]);
+    const seo = useMemo(() => getNextSeoProps(resolvedPath, activeNavigatable), [activeNavigatable, resolvedPath]);
 
     return (
         <NavigationContext.Provider
