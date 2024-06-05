@@ -1,7 +1,12 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import grayMatter from "gray-matter";
+import { trim } from "lodash-es";
+import { fromMarkdown } from "mdast-util-from-markdown";
+import { toHast } from "mdast-util-to-hast";
 import type { DefaultSeoProps, LinkTag, MetaTag, NextSeoProps } from "next-seo/lib/types";
+import { visit } from "unist-util-visit";
+import { stringHasMarkdown } from "../../mdx/common/util";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getFontExtension } from "./getFontVariables";
@@ -27,6 +32,7 @@ export function getDefaultSeoProps(
     { metadata, title, favicon, typographyV2: typography }: DocsV1Read.DocsConfig,
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
+    apis: Record<string, APIV1Read.ApiDefinition>,
     node: FernNavigation.NavigationNodePage,
 ): DefaultSeoProps {
     const additionalMetaTags: MetaTag[] = [];
@@ -47,6 +53,47 @@ export function getDefaultSeoProps(
     if (pageId != null && pages[pageId]) {
         const frontmatter = getFrontmatter(pages[pageId].markdown);
         ogMetadata = { ...ogMetadata, ...frontmatter };
+
+        // retrofit og:image
+        if (frontmatter.image != null) {
+            ogMetadata["og:image"] ??= { type: "url", value: frontmatter.image };
+        }
+
+        seo.title ??= frontmatter.title;
+        seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
+    }
+
+    if (FernNavigation.isApiLeaf(node) && apis[node.apiDefinitionId] != null) {
+        const api = FernNavigation.createApiHolder(apis[node.apiDefinitionId]);
+
+        visitDiscriminatedUnion(node)._visit({
+            endpoint: ({ endpointId }) => {
+                const endpoint = api.endpoints.get(endpointId);
+                if (endpoint?.description != null) {
+                    seo.description ??= endpoint.description;
+                }
+            },
+            webSocket: ({ webSocketId }) => {
+                const webSocket = api.webSockets.get(webSocketId);
+                if (webSocket?.description != null) {
+                    seo.description ??= webSocket.description;
+                }
+            },
+            webhook: ({ webhookId }) => {
+                const webhook = api.webhooks.get(webhookId);
+                if (webhook?.description != null) {
+                    seo.description ??= webhook.description;
+                }
+            },
+        });
+    }
+
+    if (seo.title != null && stringHasMarkdown(seo.title)) {
+        seo.description = stripMarkdown(seo.title);
+    }
+
+    if (seo.description != null && stringHasMarkdown(seo.description)) {
+        seo.description = stripMarkdown(seo.description);
     }
 
     openGraph.title ??= ogMetadata["og:title"];
@@ -196,4 +243,14 @@ function getPreloadedFont(
         type: `font/${fontExtension}`,
         crossOrigin: "anonymous",
     };
+}
+
+function stripMarkdown(markdown: string): string {
+    const tree = toHast(fromMarkdown(markdown));
+    let toRet = "";
+    visit(tree, "text", (node) => {
+        toRet += node.value + " ";
+    });
+
+    return trim(toRet);
 }
