@@ -1,11 +1,17 @@
 {
-  "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-    "rootDir": ".",
+    "extendedDiagnostics": true,
+    "strict": true,
+    "target": "ES6",
     "module": "CommonJS",
-    "esModuleInterop": true
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["src"],
+  "exclude": []
 }
