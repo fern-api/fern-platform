@@ -11,3 +11,4 @@ audiences:
   - external
   - fiddle
   - snippets
+  - templateResolver

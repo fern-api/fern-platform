@@ -293,6 +293,8 @@ types:
       name: string
       value: unknown
   CustomSnippetPayload:
+    audiences:
+      - templateResolver
     properties:
       headers: optional<list<ParameterPayload>>
       pathParameters: optional<list<ParameterPayload>>
@@ -314,6 +316,8 @@ types:
     type: map<commons.EndpointMethod, list<Snippet>>
 
   Snippet:
+    audiences:
+      - templateResolver
     base-properties:
       exampleIdentifier: optional<string>
     union:

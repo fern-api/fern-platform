@@ -1,6 +1,16 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
-import { isPlainObject } from "@fern-ui/core-utils";
 import { get } from "lodash-es";
+import {
+    CustomSnippetPayload,
+    EndpointSnippetTemplate,
+    ParameterPayload,
+    PayloadInput,
+    Sdk,
+    Snippet,
+    SnippetTemplate,
+    Template,
+    VersionedSnippetTemplate,
+} from "./generated/api";
+import { isPlainObject } from "./isPlainObject";
 
 interface V1Snippet {
     imports: string[];
@@ -10,15 +20,15 @@ interface V1Snippet {
 const TemplateSentinel = "$FERN_INPUT";
 
 export class SnippetTemplateResolver {
-    private payload: FdrAPI.CustomSnippetPayload;
-    private endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
+    private payload: CustomSnippetPayload;
+    private endpointSnippetTemplate: EndpointSnippetTemplate;
 
     constructor({
         payload,
         endpointSnippetTemplate,
     }: {
-        payload: FdrAPI.CustomSnippetPayload;
-        endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
+        payload: CustomSnippetPayload;
+        endpointSnippetTemplate: EndpointSnippetTemplate;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
@@ -29,7 +39,7 @@ export class SnippetTemplateResolver {
     }
 
     private accessParameterPayloadByPath(
-        parameterPayloads?: FdrAPI.ParameterPayload[],
+        parameterPayloads?: ParameterPayload[],
         locationPath?: string,
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
@@ -45,7 +55,7 @@ export class SnippetTemplateResolver {
         return undefined;
     }
 
-    private getPayloadValue(location: FdrAPI.PayloadInput, payloadOverride?: unknown): unknown | undefined {
+    private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
             return this.accessByPath(payloadOverride, location.path);
         }
@@ -67,7 +77,7 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveV1Template(template: FdrAPI.Template, payloadOverride?: unknown): V1Snippet | undefined {
+    private resolveV1Template(template: Template, payloadOverride?: unknown): V1Snippet | undefined {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
             case "generic": {
@@ -222,7 +232,7 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveSnippetV1TemplateString(template: FdrAPI.SnippetTemplate): string {
+    private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
         const clientSnippet = template.clientInstantiation;
         const endpointSnippet = this.resolveV1Template(template.functionInvocation);
 
@@ -233,7 +243,7 @@ export class SnippetTemplateResolver {
         }`;
     }
 
-    private resolveSnippetV1TemplateToSnippet(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
+    private resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Snippet {
         const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
@@ -262,9 +272,9 @@ export class SnippetTemplateResolver {
         }
     }
 
-    public resolve(): FdrAPI.Snippet {
-        const sdk: FdrAPI.Sdk = this.endpointSnippetTemplate.sdk;
-        const template: FdrAPI.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+    public resolve(): Snippet {
+        const sdk: Sdk = this.endpointSnippetTemplate.sdk;
+        const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1TemplateToSnippet(sdk, template);
@@ -274,7 +284,7 @@ export class SnippetTemplateResolver {
     }
 
     public resolveAdditionalTemplate(key: string): string | undefined {
-        const template: FdrAPI.VersionedSnippetTemplate | undefined =
+        const template: VersionedSnippetTemplate | undefined =
             this.endpointSnippetTemplate.additionalTemplates != null
                 ? this.endpointSnippetTemplate.additionalTemplates[key]
                 : undefined;

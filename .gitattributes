@@ -1,1 +1,2 @@
 packages/generator-cli/configuration/generated/** linguist-generated=true
+packages/template-resolver/src/generated/** linguist-generated=true

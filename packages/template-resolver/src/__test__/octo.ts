@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "../generated";
 
-export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
+export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
     endpointId: {
         path: "/v1/chat/completions",
         method: "POST",
@@ -626,7 +626,7 @@ export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
     },
 };
 
-export const CHAT_COMPLETION_PAYLOAD: FdrAPI.CustomSnippetPayload = {
+export const CHAT_COMPLETION_PAYLOAD: FernRegistry.CustomSnippetPayload = {
     headers: [],
     pathParameters: [],
     queryParameters: [],
