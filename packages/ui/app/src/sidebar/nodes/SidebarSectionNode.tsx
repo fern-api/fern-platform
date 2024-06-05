@@ -27,6 +27,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
 
         return (
             <SidebarSlugLink
+                nodeId={node.id}
                 className={className}
                 slug={node.slug}
                 depth={Math.max(depth - 1, 0)}
@@ -51,6 +52,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
     const showIndicator = childSelected && !expanded;
     return (
         <SidebarSlugLink
+            nodeId={node.id}
             icon={node.icon}
             className={className}
             depth={Math.max(depth - 1, 0)}

@@ -32,6 +32,7 @@ export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): Re
 
     return (
         <SidebarSlugLink
+            nodeId={node.id}
             slug={node.slug}
             title={node.title}
             depth={Math.max(0, depth - 1)}

@@ -11,6 +11,7 @@ interface SidebarLinkNodeProps {
 export function SidebarLinkNode({ node, depth, className }: SidebarLinkNodeProps): React.ReactElement {
     return (
         <SidebarLink
+            nodeId={node.id}
             className={className}
             depth={Math.max(depth - 1, 0)}
             title={node.title}

@@ -9,12 +9,10 @@ import { captureSentryError } from "../../analytics/sentry";
 import { MdxContent } from "../../mdx/MdxContent";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
-import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
-import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
@@ -144,9 +142,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, []);
 
-    // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
-    const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
-
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
@@ -155,7 +150,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
-                scrollToPathListeners.invokeListeners(fullSlug);
                 setActiveNavigatable(nodes.slugMap.get(fullSlug));
                 startScrollTracking(`/${fullSlug}`, true);
             },
@@ -175,9 +169,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         startScrollTracking(route);
     });
 
-    const closeMobileSidebar = useCloseMobileSidebar();
-    const closeSearchDialog = useCloseSearchDialog();
-
     useEffect(() => {
         const handleRouteChange = (route: string, options: { shallow: boolean }) => {
             if (!options.shallow) {
@@ -193,8 +184,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
             }
             navigateToPath(route);
-            closeMobileSidebar();
-            closeSearchDialog();
         };
         const handleRouteChangeError = (err: Error, route: string, options: { shallow: boolean }) => {
             if (process.env.NODE_ENV === "development") {
@@ -216,17 +205,15 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             router.events.off("hashChangeComplete", handleRouteChange);
             router.events.off("routeChangeError", handleRouteChangeError);
         };
-    }, [closeMobileSidebar, closeSearchDialog, navigateToPath, router.events]);
+    }, [navigateToPath, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
             navigateToPath(as);
             startScrollTracking(as);
-            closeMobileSidebar();
-            closeSearchDialog();
             return true;
         });
-    }, [router, navigateToPath, closeMobileSidebar, closeSearchDialog]);
+    }, [router, navigateToPath]);
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
@@ -240,7 +227,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                     activeNavigatable,
                     onScrollToPath,
-                    registerScrolledToPathListener: scrollToPathListeners.registerListener,
                     resolvedPath,
                     activeVersion: versions.find((version) => version.id === currentVersionId),
                     selectedSlug,
@@ -257,7 +243,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     domain,
                     onScrollToPath,
                     resolvedPath,
-                    scrollToPathListeners.registerListener,
                     selectedSlug,
                     versions,
                 ],

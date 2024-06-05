@@ -2,7 +2,8 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { useMemo } from "react";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useCloseMobileSidebar } from "../sidebar/atom";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { PageRecord } from "./content/PageRecord";
@@ -27,7 +28,8 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     onMouseEnter,
     onMouseLeave,
 }) => {
-    const { basePath } = useNavigationContext();
+    const { basePath } = useDocsContext();
+    const closeMobileSidebar = useCloseMobileSidebar();
 
     const fullPath = useMemo(() => {
         return getFullPathForSearchRecord(hit, basePath);
@@ -52,6 +54,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
             href={`/${fullPath}`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            onClick={closeMobileSidebar}
         >
             {content}
         </Link>

@@ -19,6 +19,7 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
 
     return (
         <SidebarSlugLink
+            nodeId={node.id}
             slug={node.slug}
             title={node.title}
             className={className}
