@@ -41,51 +41,71 @@ export function getDefaultSeoProps(
 
     const pageId = FernNavigation.utils.getPageId(node);
 
+    let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
+
     if (pageId != null && pages[pageId]) {
         const frontmatter = getFrontmatter(pages[pageId].markdown);
-        seo.title ??= frontmatter.title;
-        seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
-        openGraph.title ??= frontmatter["og:title"] ?? frontmatter.title;
-        openGraph.description ??= frontmatter["og:description"];
-        openGraph.locale ??= frontmatter["og:locale"];
-        openGraph.url ??= frontmatter["og:url"];
-        openGraph.siteName ??= frontmatter["og:site_name"];
-        twitter.handle ??= frontmatter["twitter:handle"];
-        twitter.site ??= frontmatter["twitter:site"];
-        twitter.cardType ??= frontmatter["twitter:card"];
+        ogMetadata = { ...ogMetadata, ...frontmatter };
+    }
 
-        if (frontmatter["og:image"] != null) {
-            const file = getFile(frontmatter["og:image"], files);
-            openGraph.images ??= [
-                {
-                    url: file.url,
-                    width: frontmatter["og:image:width"] ?? (file.type === "image" ? file.width : undefined),
-                    height: frontmatter["og:image:height"] ?? (file.type === "image" ? file.height : undefined),
-                },
-            ];
+    openGraph.title ??= ogMetadata["og:title"];
+    openGraph.description ??= ogMetadata["og:description"];
+    openGraph.locale ??= ogMetadata["og:locale"];
+    openGraph.url ??= ogMetadata["og:url"];
+    openGraph.siteName ??= ogMetadata["og:site_name"];
+    twitter.handle ??= ogMetadata["twitter:handle"];
+    twitter.site ??= ogMetadata["twitter:site"];
+    twitter.cardType ??= ogMetadata["twitter:card"];
+
+    if (ogMetadata["twitter:title"] != null) {
+        additionalMetaTags.push({
+            name: "twitter:title",
+            content: ogMetadata["twitter:title"],
+        });
+    }
+
+    if (ogMetadata["twitter:description"] != null) {
+        additionalMetaTags.push({
+            name: "twitter:description",
+            content: ogMetadata["twitter:description"],
+        });
+    }
+
+    if (ogMetadata["twitter:url"] != null) {
+        additionalMetaTags.push({
+            name: "twitter:url",
+            content: ogMetadata["twitter:url"],
+        });
+    }
+
+    if (ogMetadata["twitter:image"] != null) {
+        const file = getFile(ogMetadata["twitter:image"], files);
+        additionalMetaTags.push({
+            name: "twitter:image",
+            content: file.url,
+        });
+
+        if (file.type === "image") {
+            additionalMetaTags.push({
+                name: "twitter:image:width",
+                content: String(file.width),
+            });
+            additionalMetaTags.push({
+                name: "twitter:image:height",
+                content: String(file.height),
+            });
         }
     }
 
-    if (metadata != null) {
-        if (metadata["og:image"] != null) {
-            const file = getFile(metadata["og:image"], files);
-            openGraph.images ??= [
-                {
-                    url: file.url,
-                    width: metadata["og:image:width"] ?? (file.type === "image" ? file.width : undefined),
-                    height: metadata["og:image:height"] ?? (file.type === "image" ? file.height : undefined),
-                },
-            ];
-        }
-
-        openGraph.title ??= metadata["og:title"];
-        openGraph.description ??= metadata["og:description"];
-        openGraph.locale ??= metadata["og:locale"];
-        openGraph.url ??= metadata["og:url"];
-        openGraph.siteName ??= metadata["og:site_name"];
-        twitter.handle ??= metadata["twitter:handle"];
-        twitter.site ??= metadata["twitter:site"];
-        twitter.cardType ??= metadata["twitter:card"];
+    if (ogMetadata["og:image"] != null) {
+        const file = getFile(ogMetadata["og:image"], files);
+        openGraph.images ??= [
+            {
+                url: file.url,
+                width: ogMetadata["og:image:width"] ?? (file.type === "image" ? file.width : undefined),
+                height: ogMetadata["og:image:height"] ?? (file.type === "image" ? file.height : undefined),
+            },
+        ];
     }
 
     // defaults
