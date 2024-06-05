@@ -28,7 +28,7 @@ export class DocsCache {
     ): Promise<core.APIResponse<void, FernRegistry.docsCache.invalidate.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/docs-cache/invalidate"
             ),
             method: "POST",
