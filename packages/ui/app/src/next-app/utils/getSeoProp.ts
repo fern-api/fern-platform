@@ -109,7 +109,7 @@ export function getDefaultSeoProps(
     }
 
     // defaults
-    seo.title ??= node.title ?? title ?? "Fern Documentation";
+    seo.title ??= (title != null ? `${node.title} — ${title}` : node.title) ?? title ?? "Fern Documentation";
     openGraph.siteName ??= title;
 
     if (favicon != null && files[favicon] != null) {
@@ -156,9 +156,14 @@ export function getDefaultSeoProps(
     return seo;
 }
 
-export function getNextSeoProps(node: FernNavigation.NavigationNodeWithMetadata | undefined): NextSeoProps {
+export function getNextSeoProps(
+    title: string | undefined,
+    node: FernNavigation.NavigationNodeWithMetadata | undefined,
+): NextSeoProps {
     const seo: NextSeoProps = {};
-    seo.title ??= node?.title;
+    if (node != null) {
+        seo.title ??= (title != null ? `${node.title} — ${title}` : node.title) ?? title ?? "Fern Documentation";
+    }
     return seo;
 }
 
