@@ -74,9 +74,13 @@ export class NodeCollector {
             const existing = this.slugToNode[node.slug];
             if (existing == null) {
                 this.#setNode(node.slug, node, parents);
-            } else if (PRIORITY_LIST[node.type] < PRIORITY_LIST[existing.node.type] && !node.hidden) {
-                this.#setNode(node.slug, node, parents);
-                this.orphanedNodes.push(existing.node);
+            } else if (PRIORITY_LIST[node.type] < PRIORITY_LIST[existing.node.type]) {
+                if (!node.hidden && isPage(node)) {
+                    this.#setNode(node.slug, node, parents);
+                    this.orphanedNodes.push(existing.node);
+                } else {
+                    this.orphanedNodes.push(node);
+                }
             } else if (PRIORITY_LIST[node.type] === PRIORITY_LIST[existing.node.type]) {
                 if (
                     (!node.hidden && existing.node.hidden) ||

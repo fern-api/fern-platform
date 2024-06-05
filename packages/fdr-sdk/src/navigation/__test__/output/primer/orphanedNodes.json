@@ -1,8 +1,8 @@
 [
   {
-    "id": "root",
-    "type": "root",
-    "title": "Fern Docs",
+    "id": "root..*",
+    "type": "version",
+    "title": "v2.3",
     "slug": "docs/api"
   }
 ]

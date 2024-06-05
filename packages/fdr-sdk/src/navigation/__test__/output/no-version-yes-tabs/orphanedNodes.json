@@ -1,20 +1,20 @@
 [
   {
-    "id": "root.uv.tab-1",
-    "type": "tab",
-    "title": "Tab 1",
-    "slug": "docs/api/tab-1"
-  },
-  {
     "id": "root.uv.tab-1.tab-1.section-3",
     "type": "section",
     "title": "Section 3",
     "slug": "docs/api/tab-1"
   },
   {
-    "id": "root.uv.tab-2",
+    "id": "root.uv.tab-1",
     "type": "tab",
-    "title": "Tab 2",
+    "title": "Tab 1",
+    "slug": "docs/api/tab-1"
+  },
+  {
+    "id": "root.uv.tab-2.tab-2.section-4",
+    "type": "section",
+    "title": "Section 4",
     "slug": "docs/api/tab-2"
   },
   {
@@ -24,9 +24,9 @@
     "slug": "docs/api/tab-1"
   },
   {
-    "id": "root.uv.tab-2.tab-2.section-4",
-    "type": "section",
-    "title": "Section 4",
+    "id": "root.uv.tab-2",
+    "type": "tab",
+    "title": "Tab 2",
     "slug": "docs/api/tab-2"
   }
 ]
