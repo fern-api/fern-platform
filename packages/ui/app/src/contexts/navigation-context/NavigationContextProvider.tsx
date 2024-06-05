@@ -142,9 +142,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, []);
 
-    // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
-    // const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
-
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
@@ -214,8 +211,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         router.beforePopState(({ as }) => {
             navigateToPath(as);
             startScrollTracking(as);
-            // closeMobileSidebar();
-            // closeSearchDialog();
             return true;
         });
     }, [router, navigateToPath]);
