@@ -12,7 +12,7 @@ Object.defineProperty(navigator, "clipboard", {
 
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import renderer from "react-test-renderer";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton.js";
 
 afterEach(cleanup);
 

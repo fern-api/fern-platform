@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import { ReactElement } from "react";
-import { useShouldHideFromSsg } from "../contexts/navigation-context/useNavigationContext";
-import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPageMetadata } from "../resolver/types";
-import { useApiPageCenterElement } from "./useApiPageCenterElement";
+import { useShouldHideFromSsg } from "../contexts/navigation-context/useNavigationContext.js";
+import { MdxContent } from "../mdx/MdxContent.js";
+import { ResolvedPageMetadata } from "../resolver/types.js";
+import { useApiPageCenterElement } from "./useApiPageCenterElement.js";
 
 export const ApiSectionMarkdownPage = ({
     page,

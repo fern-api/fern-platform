@@ -1,6 +1,6 @@
 import { ProxyRequest } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
-import { buildRequestBody } from "./rest";
+import { buildRequestBody } from "./rest.js";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";

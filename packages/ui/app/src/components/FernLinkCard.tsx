@@ -2,7 +2,7 @@ import { FernCardProps } from "@fern-ui/components";
 import cn from "clsx";
 import { LinkProps } from "next/link";
 import { forwardRef, PropsWithChildren } from "react";
-import { FernLink } from "./FernLink";
+import { FernLink } from "./FernLink.js";
 
 export const FernLinkCard = forwardRef<HTMLAnchorElement, PropsWithChildren<FernCardProps & LinkProps>>(
     function FernLinkCard({ children, className, ...props }, ref) {

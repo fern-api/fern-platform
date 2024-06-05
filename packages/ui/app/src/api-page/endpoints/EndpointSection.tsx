@@ -3,9 +3,9 @@ import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
-import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { getAnchorId } from "../../util/anchor";
+import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor.js";
+import { FernErrorBoundary } from "../../components/FernErrorBoundary.js";
+import { getAnchorId } from "../../util/anchor.js";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

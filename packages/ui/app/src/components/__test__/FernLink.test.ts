@@ -1,4 +1,10 @@
-import { checkIsExternalUrl, checkIsRelativeUrl, formatUrlString, resolveRelativeUrl, toUrlObject } from "../FernLink";
+import {
+    checkIsExternalUrl,
+    checkIsRelativeUrl,
+    formatUrlString,
+    resolveRelativeUrl,
+    toUrlObject,
+} from "../FernLink.js";
 
 describe("checkIsExternalUrl", () => {
     it("returns true for external URLs", () => {

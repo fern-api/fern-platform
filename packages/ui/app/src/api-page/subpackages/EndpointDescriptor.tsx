@@ -1,9 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { MouseEventHandler } from "react";
-import { HttpMethodIcon } from "../../commons/HttpMethodIcon";
-import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { getPathParameterAsString } from "../../util/endpoint";
+import { HttpMethodIcon } from "../../commons/HttpMethodIcon.js";
+import { MonospaceText } from "../../commons/monospace/MonospaceText.js";
+import { getPathParameterAsString } from "../../util/endpoint.js";
 
 export declare namespace EndpointDescriptor {
     export interface Props {

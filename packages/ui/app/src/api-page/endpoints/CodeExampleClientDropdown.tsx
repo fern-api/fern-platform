@@ -1,6 +1,6 @@
 import { FernButton, FernDropdown, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
+import type { CodeExample, CodeExampleGroup } from "../examples/code-example.js";
 
 export declare namespace CodeExampleClientDropdown {
     export interface Props {

@@ -7,9 +7,9 @@ import {
     ResolvedDiscriminatedUnionShape,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
-} from "../resolver/types";
-import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
-import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
+} from "../resolver/types.js";
+import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm.js";
+import { castToRecord, getDefaultValueForObjectProperties } from "./utils.js";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

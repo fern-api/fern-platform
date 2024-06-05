@@ -1,12 +1,12 @@
 import clsx from "clsx";
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
-import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
-import { getJsonLineNumbers } from "./getJsonLineNumbers";
-import { JsonPropertyPath } from "./JsonPropertyPath";
-import { TitledExample } from "./TitledExample";
+import { FernErrorBoundary } from "../../components/FernErrorBoundary.js";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext.js";
+import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter.js";
+import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens.js";
+import { getJsonLineNumbers } from "./getJsonLineNumbers.js";
+import { JsonPropertyPath } from "./JsonPropertyPath.js";
+import { TitledExample } from "./TitledExample.js";
 
 export declare namespace CodeSnippetExample {
     export interface Props extends Omit<TitledExample.Props, "copyToClipboardText"> {

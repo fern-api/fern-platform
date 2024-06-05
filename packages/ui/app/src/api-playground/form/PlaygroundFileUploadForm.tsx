@@ -4,7 +4,7 @@ import cn from "clsx";
 import { uniqBy } from "lodash-es";
 import numeral from "numeral";
 import { ChangeEvent, DragEventHandler, memo, useEffect, useRef, useState } from "react";
-import { WithLabelInternal } from "../WithLabel";
+import { WithLabelInternal } from "../WithLabel.js";
 
 export interface PlaygroundFileUploadFormProps {
     id: string;

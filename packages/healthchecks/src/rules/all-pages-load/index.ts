@@ -1,1 +1,1 @@
-export { AllPagesLoadRule } from "./rule";
+export { AllPagesLoadRule } from "./rule.js";

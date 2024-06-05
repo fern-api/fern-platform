@@ -1,6 +1,6 @@
 import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { FlattenedApiDefinition } from "./flattenApiDefinition";
+import { FlattenedApiDefinition } from "./flattenApiDefinition.js";
 
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;

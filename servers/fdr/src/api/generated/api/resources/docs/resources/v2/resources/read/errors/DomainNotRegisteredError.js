@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as errors from "../../../../../../../../errors";
+import * as errors from "../../../../../../../../errors/index";
 export class DomainNotRegisteredError extends errors.FernRegistryError {
     constructor() {
         super("DomainNotRegisteredError");

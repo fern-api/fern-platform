@@ -2,7 +2,7 @@ import { CustomSnippetPayload } from "@fern-api/fdr-sdk/dist/client/generated/ap
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
-import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
+import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl.js";
 import {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
@@ -17,15 +17,15 @@ import {
     stringifyResolvedEndpointPathPartsTemplate,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../resolver/types";
-import { unknownToString } from "../util/unknownToString";
+} from "../resolver/types.js";
+import { unknownToString } from "../util/unknownToString.js";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
     PlaygroundRequestFormState,
     convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
-} from "./types";
+} from "./types.js";
 
 export function castToRecord(value: unknown): Record<string, unknown> {
     if (!isPlainObject(value)) {

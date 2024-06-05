@@ -7,8 +7,8 @@ export {
     loaded,
     loading,
     notStartedLoading,
-} from "./Loadable";
-export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable";
+} from "./Loadable.js";
+export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable.js";
 export {
     flatMapLoadable,
     getLoadableValue,
@@ -17,5 +17,5 @@ export {
     mapLoadables,
     mapNotFailedLoadableArray,
     visitLoadableArray,
-} from "./utils";
-export { visitLoadable, type LoadableVisitor } from "./visitor";
+} from "./utils.js";
+export { visitLoadable, type LoadableVisitor } from "./visitor.js";

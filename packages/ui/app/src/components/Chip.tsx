@@ -3,7 +3,7 @@ import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement } from "react";
-import { Markdown } from "../mdx/Markdown";
+import { Markdown } from "../mdx/Markdown.js";
 
 type ChipProps = {
     name: string;

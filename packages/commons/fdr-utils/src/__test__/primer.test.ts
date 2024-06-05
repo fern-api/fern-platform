@@ -1,8 +1,8 @@
 import { DocsV2Read } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
-import { getNavigationRoot } from "../getNavigationRoot";
-import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
+import { getNavigationRoot } from "../getNavigationRoot.js";
+import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig.js";
 
 describe("getAllUrlsFromDocsConfig", () => {
     testGetAllUrlsFromDocsConfig("primer");

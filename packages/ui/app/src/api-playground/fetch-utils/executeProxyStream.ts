@@ -1,6 +1,6 @@
 import urljoin from "url-join";
-import { Stream } from "../Stream";
-import { ProxyRequest } from "../types";
+import { Stream } from "../Stream.js";
+import { ProxyRequest } from "../types.js";
 
 interface ResponseChunk {
     data: string;

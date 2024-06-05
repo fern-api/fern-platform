@@ -1,2 +1,2 @@
-export * from "./client";
-export * from "./converters";
+export * from "./client/index.js";
+export * from "./converters/index.js";

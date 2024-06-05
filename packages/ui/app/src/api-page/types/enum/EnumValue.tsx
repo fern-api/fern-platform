@@ -1,8 +1,8 @@
 import cn from "clsx";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { ResolvedEnumValue } from "../../../resolver/types";
-import { ApiPageDescription } from "../../ApiPageDescription";
-import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
+import { MonospaceText } from "../../../commons/monospace/MonospaceText.js";
+import { ResolvedEnumValue } from "../../../resolver/types.js";
+import { ApiPageDescription } from "../../ApiPageDescription.js";
+import { useTypeDefinitionContext } from "../context/TypeDefinitionContext.js";
 
 export declare namespace EnumValue {
     export interface Props {

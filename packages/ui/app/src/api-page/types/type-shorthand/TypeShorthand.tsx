@@ -9,7 +9,7 @@ import {
     unwrapAlias,
     unwrapOptional,
     unwrapReference,
-} from "../../../resolver/types";
+} from "../../../resolver/types.js";
 
 export interface TypeShorthandOptions {
     plural?: boolean;

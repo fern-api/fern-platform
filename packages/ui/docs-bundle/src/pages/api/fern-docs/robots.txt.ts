@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
+import { getXFernHostEdge } from "../../../utils/xFernHost.js";
 
 export const runtime = "edge";
 

@@ -1,11 +1,11 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { useMemo } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { HeaderLogoSection } from "../docs/HeaderLogoSection";
-import { ThemeButton } from "../docs/ThemeButton";
-import { SidebarSearchBar } from "./SidebarSearchBar";
-import { useOpenSearchDialog } from "./atom";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { HeaderLogoSection } from "../docs/HeaderLogoSection.js";
+import { ThemeButton } from "../docs/ThemeButton.js";
+import { SidebarSearchBar } from "./SidebarSearchBar.js";
+import { useOpenSearchDialog } from "./atom.js";
 
 export declare namespace SidebarFixedItemsSection {
     export interface Props {

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { FdrClient } from "@fern-api/fdr-sdk";
-import { AllPagesLoadRule } from "./all-pages-load";
+import { AllPagesLoadRule } from "./all-pages-load.js";
 
 export interface RuleArgs {
     url: string;

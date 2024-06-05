@@ -6,16 +6,16 @@ import {
     ResolvedTypeShape,
     ResolvedUndiscriminatedUnionShapeVariant,
     unwrapReference,
-} from "../../../resolver/types";
-import { ApiPageDescription } from "../../ApiPageDescription";
-import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
+} from "../../../resolver/types.js";
+import { ApiPageDescription } from "../../ApiPageDescription.js";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag.js";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
-import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
+} from "../context/TypeDefinitionContext.js";
+import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions.js";
+import { renderTypeShorthand } from "../type-shorthand/TypeShorthand.js";
 
 type IconInfo = {
     content: string;

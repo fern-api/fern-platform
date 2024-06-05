@@ -1,9 +1,9 @@
 import { buildUrl, resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
 import { ApiDefinitionResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
-import { toValidPathname } from "../../../utils/toValidPathname";
-import { getXFernHostNode } from "../../../utils/xFernHost";
-import { getFeatureFlags } from "./feature-flags";
+import { toValidPathname } from "../../../utils/toValidPathname.js";
+import { getXFernHostNode } from "../../../utils/xFernHost.js";
+import { getFeatureFlags } from "./feature-flags.js";
 
 export const dynamic = "force-dynamic";
 

@@ -5,20 +5,20 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { useViewportSize } from "../../hooks/useViewportSize";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
-import { FERN_LANGUAGE_ATOM, FERN_STREAM_ATOM } from "../../sidebar/atom";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { Breadcrumbs } from "../Breadcrumbs";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { AnimatedTitle } from "./AnimatedTitle";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
-import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint.js";
+import { useViewportSize } from "../../hooks/useViewportSize.js";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types.js";
+import { FERN_LANGUAGE_ATOM, FERN_STREAM_ATOM } from "../../sidebar/atom.js";
+import { ApiPageDescription } from "../ApiPageDescription.js";
+import { Breadcrumbs } from "../Breadcrumbs.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { CodeExample, generateCodeExamples } from "../examples/code-example.js";
+import { AnimatedTitle } from "./AnimatedTitle.js";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag.js";
+import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft.js";
+import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow.js";
+import { StreamingEnabledToggle } from "./StreamingEnabledToggle.js";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),

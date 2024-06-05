@@ -10,14 +10,14 @@ import {
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
     getParameterDescription,
-} from "../../resolver/types";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { EndpointError } from "./EndpointError";
-import { EndpointParameter } from "./EndpointParameter";
-import { EndpointRequestSection } from "./EndpointRequestSection";
-import { EndpointResponseSection } from "./EndpointResponseSection";
-import { EndpointSection } from "./EndpointSection";
+} from "../../resolver/types.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator.js";
+import { EndpointError } from "./EndpointError.js";
+import { EndpointParameter } from "./EndpointParameter.js";
+import { EndpointRequestSection } from "./EndpointRequestSection.js";
+import { EndpointResponseSection } from "./EndpointResponseSection.js";
+import { EndpointSection } from "./EndpointSection.js";
 
 export interface HoveringProps {
     isHovering: boolean;

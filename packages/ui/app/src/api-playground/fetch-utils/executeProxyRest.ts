@@ -1,6 +1,6 @@
 import urljoin from "url-join";
-import { ProxyRequest, ProxyResponse } from "../types";
-import { PlaygroundResponse } from "../types/playgroundResponse";
+import { ProxyRequest, ProxyResponse } from "../types.js";
+import { PlaygroundResponse } from "../types/playgroundResponse.js";
 
 export function executeProxyRest(environment: string, req: ProxyRequest): Promise<PlaygroundResponse> {
     return fetch(urljoin(environment, "/rest"), {

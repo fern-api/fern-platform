@@ -3,7 +3,7 @@ import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
+} from "../context/TypeDefinitionContext.js";
 
 export const ListTypeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const contextValue = useTypeDefinitionContext();

@@ -12,11 +12,11 @@ import {
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { FernImage } from "../components/FernImage";
-import { FernLink } from "../components/FernLink";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor.js";
+import { FernImage } from "../components/FernImage.js";
+import { FernLink } from "../components/FernLink.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useNavigationContext } from "../contexts/navigation-context.js";
 import "./base-components.scss";
 
 /**

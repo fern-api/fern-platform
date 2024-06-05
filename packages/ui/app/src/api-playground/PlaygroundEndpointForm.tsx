@@ -7,11 +7,11 @@ import {
     dereferenceObjectProperties,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
-} from "../resolver/types";
-import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm";
-import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm";
-import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
-import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue, PlaygroundFormStateBody } from "./types";
+} from "../resolver/types.js";
+import { PlaygroundFileUploadForm } from "./form/PlaygroundFileUploadForm.js";
+import { PlaygroundObjectPropertiesForm, PlaygroundObjectPropertyForm } from "./form/PlaygroundObjectPropertyForm.js";
+import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm.js";
+import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue, PlaygroundFormStateBody } from "./types.js";
 
 interface PlaygroundEndpointFormProps {
     endpoint: ResolvedEndpointDefinition;

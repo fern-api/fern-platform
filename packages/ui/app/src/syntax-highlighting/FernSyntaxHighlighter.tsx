@@ -1,10 +1,10 @@
 import { forwardRef, useMemo } from "react";
-import { captureSentryError } from "../analytics/sentry";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { captureSentryError } from "../analytics/sentry.js";
+import { FernErrorBoundary } from "../components/FernErrorBoundary.js";
 import "./FernSyntaxHighlighter.css";
-import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
-import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
-import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
+import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens.js";
+import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized.js";
+import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki.js";
 
 // [number, number] is a range of lines to highlight
 type HighlightLine = number | [number, number];

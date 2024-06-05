@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Changelog } from "../dateUtils";
+import { Changelog } from "../dateUtils.js";
 
 describe("Changelog.toShortDateString", () => {
     it("should return the correct date", () => {

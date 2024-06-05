@@ -4,8 +4,8 @@ import { useDeepCompareEffect } from "@fern-ui/react-commons";
 import { DocsPage, useSetThemeColors } from "@fern-ui/ui";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
-import { getDocsPageProps } from "../utils/getDocsPageProps";
+import ReconnectingWebSocket from "../utils/ReconnectingWebsocket.js";
+import { getDocsPageProps } from "../utils/getDocsPageProps.js";
 
 interface LocalPreviewWebsocketMessage {
     version: 1;

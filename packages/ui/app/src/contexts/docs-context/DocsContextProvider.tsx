@@ -4,13 +4,13 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
-import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
-import { renderSegmentSnippet } from "../../analytics/segment";
-import { DocsPage } from "../../next-app/DocsPage";
-import { getThemeColor } from "../../next-app/utils/getColorVariables";
-import { getFontExtension } from "../../next-app/utils/getFontVariables";
-import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
-import { DocsContext } from "./DocsContext";
+import { CustomerAnalytics } from "../../analytics/CustomerAnalytics.js";
+import { renderSegmentSnippet } from "../../analytics/segment.js";
+import { DocsPage } from "../../next-app/DocsPage.js";
+import { getThemeColor } from "../../next-app/utils/getColorVariables.js";
+import { getFontExtension } from "../../next-app/utils/getFontVariables.js";
+import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet.js";
+import { DocsContext } from "./DocsContext.js";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<DocsPage.Props>;

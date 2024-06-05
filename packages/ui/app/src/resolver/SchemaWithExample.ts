@@ -14,7 +14,7 @@ import {
     ResolvedTypeShape,
     visitResolvedHttpRequestBodyShape,
     visitResolvedHttpResponseBodyShape,
-} from "./types";
+} from "./types.js";
 
 export interface ResolvedExampleValueWithSchema {
     schema: ResolvedTypeShape;

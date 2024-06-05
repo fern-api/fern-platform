@@ -1,20 +1,20 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { useRouteListener } from "../../../contexts/useRouteListener";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
-import { getAnchorId } from "../../../util/anchor";
+import { useRouteListener } from "../../../contexts/useRouteListener.js";
+import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types.js";
+import { getAnchorId } from "../../../util/anchor.js";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
-import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
-import { EnumValue } from "../enum/EnumValue";
-import { ObjectProperty } from "../object/ObjectProperty";
-import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import { FernCollapseWithButton } from "./FernCollapseWithButton";
-import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
+} from "../context/TypeDefinitionContext.js";
+import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant.js";
+import { EnumValue } from "../enum/EnumValue.js";
+import { ObjectProperty } from "../object/ObjectProperty.js";
+import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant.js";
+import { FernCollapseWithButton } from "./FernCollapseWithButton.js";
+import { TypeDefinitionDetails } from "./TypeDefinitionDetails.js";
 
 export declare namespace InternalTypeDefinitionError {
     export interface Props {

@@ -1,7 +1,7 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import urljoin from "url-join";
-import { resolveSidebarNodesRoot } from "./resolver";
-import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
+import { resolveSidebarNodesRoot } from "./resolver.js";
+import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw.js";
 
 export function getAllUrlsFromDocsConfig(
     host: string,

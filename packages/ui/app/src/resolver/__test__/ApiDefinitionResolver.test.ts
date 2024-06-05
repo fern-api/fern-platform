@@ -2,8 +2,8 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { flattenApiDefinition } from "@fern-ui/fdr-utils";
 import fs from "fs";
 import path from "path";
-import { DEFAULT_FEATURE_FLAGS } from "../../contexts/FeatureFlagContext";
-import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
+import { DEFAULT_FEATURE_FLAGS } from "../../contexts/FeatureFlagContext.js";
+import { ApiDefinitionResolver } from "../ApiDefinitionResolver.js";
 
 describe("resolveApiDefinition", () => {
     it("should finish resolving", async () => {

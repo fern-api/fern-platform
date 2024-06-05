@@ -1,5 +1,5 @@
 import { APIV1Write } from "../../../client";
-import { generateWebhookPayloadExample } from "./generateHttpBodyExample";
+import { generateWebhookPayloadExample } from "./generateHttpBodyExample.js";
 
 export function generateWebhookExample({
     webhookDefinition,

@@ -1,10 +1,14 @@
-import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { FernErrorTag } from "../../components/FernErrorBoundary.js";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext.js";
+import {
+    ResolvedResponseBody,
+    ResolvedTypeDefinition,
+    visitResolvedHttpResponseBodyShape,
+} from "../../resolver/types.js";
+import { ApiPageDescription } from "../ApiPageDescription.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions.js";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand.js";
 
 export declare namespace EndpointResponseSection {
     export interface Props {

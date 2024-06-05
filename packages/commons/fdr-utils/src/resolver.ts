@@ -1,13 +1,13 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "./docs";
+import { isUnversionedTabbedNavigationConfig, isVersionedNavigationConfig } from "./docs.js";
 import {
     FlattenedApiDefinitionPackage,
     FlattenedApiDefinitionPackageItem,
     flattenApiDefinition,
-} from "./flattenApiDefinition";
-import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
-import { SidebarNodeRaw } from "./types";
+} from "./flattenApiDefinition.js";
+import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts.js";
+import { SidebarNodeRaw } from "./types.js";
 
 function resolveSidebarNodeRawApiSection(
     api: FdrAPI.ApiId,

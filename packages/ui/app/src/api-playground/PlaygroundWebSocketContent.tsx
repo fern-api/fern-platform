@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
-import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
-import { PlaygroundWebSocketRequestFormState } from "./types";
+import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages.js";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types.js";
+import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm.js";
+import { PlaygroundWebSocketRequestFormState } from "./types.js";
 
 interface PlaygroundWebSocketContentProps {
     websocket: ResolvedWebSocketChannel;

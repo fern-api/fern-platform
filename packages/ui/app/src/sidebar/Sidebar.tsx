@@ -3,17 +3,17 @@ import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx as cn } from "clsx";
 import { Fragment, memo, useRef } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { useIsScrolled } from "../docs/useIsScrolled";
-import { SearchSidebar } from "../search/SearchDialog";
-import { useSearchService } from "../services/useSearchService";
-import { CollapseSidebarProvider } from "./CollapseSidebarContext";
-import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
-import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
-import { SidebarSection } from "./SidebarSection";
-import { SidebarTabButton } from "./SidebarTabButton";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint.js";
+import { useIsScrolled } from "../docs/useIsScrolled.js";
+import { SearchSidebar } from "../search/SearchDialog.js";
+import { useSearchService } from "../services/useSearchService.js";
+import { CollapseSidebarProvider } from "./CollapseSidebarContext.js";
+import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks.js";
+import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection.js";
+import { SidebarSection } from "./SidebarSection.js";
+import { SidebarTabButton } from "./SidebarTabButton.js";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom.js";
 
 export interface SidebarProps {
     currentSlug: string[];

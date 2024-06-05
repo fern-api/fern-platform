@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { notFoundResponse } from "../../../utils/serverResponse";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
+import { notFoundResponse } from "../../../utils/serverResponse.js";
+import { getXFernHostEdge } from "../../../utils/xFernHost.js";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;

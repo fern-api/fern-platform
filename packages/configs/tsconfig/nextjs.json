@@ -5,7 +5,7 @@
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true,
-    "module": "esnext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "sourceMap": true,
     "jsx": "preserve",

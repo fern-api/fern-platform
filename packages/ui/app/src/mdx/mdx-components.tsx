@@ -1,17 +1,17 @@
 import { FernScrollArea, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXRemoteProps } from "next-mdx-remote";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
-import { Breadcrumbs } from "../api-page/Breadcrumbs";
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
-import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
-import { Feedback } from "../custom-docs-page/Feedback";
-import { TableOfContents } from "../custom-docs-page/TableOfContents";
-import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Ul } from "./base-components";
-import { AccordionGroup } from "./components/AccordionGroup";
-import { Availability } from "./components/Availability";
-import { Badge } from "./components/Badge";
-import { Bleed } from "./components/Bleed";
-import { Button, ButtonGroup } from "./components/Button";
+import { Breadcrumbs } from "../api-page/Breadcrumbs.js";
+import { BottomNavigationButtons } from "../components/BottomNavigationButtons.js";
+import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary.js";
+import { Feedback } from "../custom-docs-page/Feedback.js";
+import { TableOfContents } from "../custom-docs-page/TableOfContents.js";
+import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Ul } from "./base-components.js";
+import { AccordionGroup } from "./components/AccordionGroup.js";
+import { Availability } from "./components/Availability.js";
+import { Badge } from "./components/Badge.js";
+import { Bleed } from "./components/Bleed.js";
+import { Button, ButtonGroup } from "./components/Button.js";
 import {
     Callout,
     CheckCallout,
@@ -22,19 +22,19 @@ import {
     SuccessCallout,
     TipCallout,
     WarningCallout,
-} from "./components/Callout";
-import { Card } from "./components/Card";
-import { CardGroup } from "./components/CardGroup";
-import { CodeBlock } from "./components/CodeBlock";
-import { CodeGroup } from "./components/CodeGroup";
-import { Column, ColumnGroup } from "./components/ColumnGroup";
-import { Frame } from "./components/Frame";
-import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable";
-import { IFrame } from "./components/IFrame";
-import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
-import { Steps } from "./components/Steps";
-import { TabGroup } from "./components/Tabs";
-import { Tooltip } from "./components/Tooltip";
+} from "./components/Callout.js";
+import { Card } from "./components/Card.js";
+import { CardGroup } from "./components/CardGroup.js";
+import { CodeBlock } from "./components/CodeBlock.js";
+import { CodeGroup } from "./components/CodeGroup.js";
+import { Column, ColumnGroup } from "./components/ColumnGroup.js";
+import { Frame } from "./components/Frame.js";
+import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable.js";
+import { IFrame } from "./components/IFrame.js";
+import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet.js";
+import { Steps } from "./components/Steps.js";
+import { TabGroup } from "./components/Tabs.js";
+import { Tooltip } from "./components/Tooltip.js";
 
 export const JSX_COMPONENTS = {
     // fern components

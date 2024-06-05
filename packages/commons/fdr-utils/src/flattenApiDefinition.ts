@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts";
+import { stringifyEndpointPathParts } from "./stringifyEndpointPathParts.js";
 
 /**
  * Flattened API Definition lightly transforms the APIV1Read.ApiDefinition into a more usable format:

@@ -3,11 +3,11 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
 import { parse } from "url";
-import { buildRequestUrl } from "../../api-playground/utils";
-import { HttpMethodTag } from "../../commons/HttpMethodTag";
-import { ResolvedEndpointPathParts } from "../../resolver/types";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
-import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
+import { buildRequestUrl } from "../../api-playground/utils.js";
+import { HttpMethodTag } from "../../commons/HttpMethodTag.js";
+import { ResolvedEndpointPathParts } from "../../resolver/types.js";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton.js";
+import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint.js";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{

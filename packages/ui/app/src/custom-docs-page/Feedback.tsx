@@ -4,9 +4,9 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
-import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
-import { FeedbackForm } from "./FeedbackForm";
-import { FeedbackFormDialog } from "./FeedbackFormDialog";
+import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog.js";
+import { FeedbackForm } from "./FeedbackForm.js";
+import { FeedbackFormDialog } from "./FeedbackFormDialog.js";
 
 export interface FeedbackProps {
     className?: string;

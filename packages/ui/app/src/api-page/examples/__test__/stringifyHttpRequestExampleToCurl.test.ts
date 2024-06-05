@@ -1,6 +1,6 @@
-import { ResolvedEndpointDefinition } from "../../../resolver/types";
-import { convertEndpointExampleToHttpRequestExample } from "../HttpRequestExample";
-import { stringifyHttpRequestExampleToCurl } from "../stringifyHttpRequestExampleToCurl";
+import { ResolvedEndpointDefinition } from "../../../resolver/types.js";
+import { convertEndpointExampleToHttpRequestExample } from "../HttpRequestExample.js";
+import { stringifyHttpRequestExampleToCurl } from "../stringifyHttpRequestExampleToCurl.js";
 
 const MOCK_ENV = {
     id: "",

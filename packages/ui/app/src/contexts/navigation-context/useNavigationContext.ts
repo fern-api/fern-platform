@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { useFeatureFlags } from "../FeatureFlagContext";
-import { useIsReady } from "../useIsReady";
-import { NavigationContext, type NavigationContextValue } from "./NavigationContext";
+import { useFeatureFlags } from "../FeatureFlagContext.js";
+import { useIsReady } from "../useIsReady.js";
+import { NavigationContext, type NavigationContextValue } from "./NavigationContext.js";
 
 export function useNavigationContext(): NavigationContextValue {
     return useContext(NavigationContext);

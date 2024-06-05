@@ -9,12 +9,12 @@ import {
     ResolvedTypeShape,
     dereferenceObjectProperties,
     unwrapReference,
-} from "../../resolver/types";
-import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
-import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
+} from "../../resolver/types.js";
+import { type JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions.js";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand.js";
+import { getErrorNameForStatus } from "../utils/getErrorNameForStatus.js";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag.js";
 
 export declare namespace EndpointError {
     export interface Props {

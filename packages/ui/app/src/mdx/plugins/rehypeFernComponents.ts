@@ -1,8 +1,8 @@
 import type { Element, ElementContent, Root } from "hast";
 import { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { visit } from "unist-util-visit";
-import { wrapChildren } from "./to-estree";
-import { isMdxJsxFlowElement, toAttribute } from "./utils";
+import { wrapChildren } from "./to-estree.js";
+import { isMdxJsxFlowElement, toAttribute } from "./utils.js";
 
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {

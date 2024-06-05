@@ -5,7 +5,7 @@ import cn from "clsx";
 import { Url } from "next/dist/shared/lib/router/router";
 import { Fragment, memo } from "react";
 import { Check } from "react-feather";
-import { FernLink } from "../components/FernLink";
+import { FernLink } from "../components/FernLink.js";
 import "./AbsolutelyPositionedAnchor.scss";
 
 export declare namespace AbsolutelyPositionedAnchor {

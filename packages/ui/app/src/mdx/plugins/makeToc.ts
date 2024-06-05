@@ -3,9 +3,9 @@ import type { ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit } from "unist-util-visit";
-import { TableOfContentsItem } from "../../custom-docs-page/TableOfContents";
-import { AccordionItemProps } from "../components/AccordionGroup";
-import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
+import { TableOfContentsItem } from "../../custom-docs-page/TableOfContents.js";
+import { AccordionItemProps } from "../components/AccordionGroup.js";
+import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils.js";
 
 interface FoundHeading {
     depth: number;

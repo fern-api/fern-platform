@@ -9,13 +9,13 @@ import {
     ResolvedTypeDefinition,
     unwrapDescription,
     visitResolvedHttpRequestBodyShape,
-} from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
-import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
+} from "../../resolver/types.js";
+import { ApiPageDescription } from "../ApiPageDescription.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator.js";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions.js";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand.js";
+import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter.js";
 
 export declare namespace EndpointRequestSection {
     export interface Props {

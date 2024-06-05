@@ -1,7 +1,7 @@
 import { DocsV2Read } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
-import { getAllUrlsFromDocsConfig } from "../getAllUrlsFromDocsConfig";
+import { getAllUrlsFromDocsConfig } from "../getAllUrlsFromDocsConfig.js";
 
 export function testGetAllUrlsFromDocsConfig(fixtureName: string): void {
     // eslint-disable-next-line vitest/valid-title

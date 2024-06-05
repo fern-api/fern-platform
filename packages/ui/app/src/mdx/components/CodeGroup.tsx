@@ -1,10 +1,10 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useState } from "react";
-import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
-import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
+import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask.js";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext.js";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton.js";
+import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter.js";
 
 export declare namespace CodeGroup {
     export interface Item extends FernSyntaxHighlighterProps {

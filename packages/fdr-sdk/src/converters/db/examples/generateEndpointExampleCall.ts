@@ -1,12 +1,12 @@
 import { APIV1Write } from "../../../client";
-import { assertNever } from "../../utils/assertNever";
+import { assertNever } from "../../utils/assertNever.js";
 import {
     generateExampleFromTypeReference,
     generateExampleFromTypeShape,
     generateHttpRequestBodyExample,
     generateHttpResponseBodyExample,
     ResolveTypeById,
-} from "./generateHttpBodyExample";
+} from "./generateHttpBodyExample.js";
 
 const MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS = 2;
 

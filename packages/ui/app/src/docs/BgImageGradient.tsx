@@ -1,6 +1,6 @@
 import cn from "clsx";
 import { FC } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
 import "./BgImageGradient.css";
 
 export declare namespace BgImageGradient {

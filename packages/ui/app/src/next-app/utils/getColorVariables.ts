@@ -6,7 +6,7 @@ import {
     generateRadixColors,
     getClosestGrayScale,
     lightGrayColors,
-} from "../../util/generateRadixColors";
+} from "../../util/generateRadixColors.js";
 
 interface ColorConfig {
     dark: DocsV1Read.RgbaColor;

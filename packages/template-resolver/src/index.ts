@@ -1,1 +1,1 @@
-export { SnippetTemplateResolver } from "./SnippetTemplateResolver";
+export { SnippetTemplateResolver } from "./SnippetTemplateResolver.js";

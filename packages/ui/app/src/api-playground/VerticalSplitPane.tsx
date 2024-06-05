@@ -1,6 +1,6 @@
 import cn, { clsx } from "clsx";
 import { Children, ComponentProps, PropsWithChildren, ReactElement, useCallback, useRef, useState } from "react";
-import { useHorizontalSplitPane, useVerticalSplitPane } from "./useSplitPlane";
+import { useHorizontalSplitPane, useVerticalSplitPane } from "./useSplitPlane.js";
 
 interface VerticalSplitPaneProps extends ComponentProps<"div"> {
     aboveClassName?: string;

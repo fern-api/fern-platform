@@ -1,7 +1,7 @@
 import cn, { clsx } from "clsx";
 import React, { PropsWithChildren } from "react";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { CopyToClipboardButton } from "./CopyToClipboardButton";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { CopyToClipboardButton } from "./CopyToClipboardButton.js";
 
 type CodeBlockWithClipboardButtonProps = {
     code: string;

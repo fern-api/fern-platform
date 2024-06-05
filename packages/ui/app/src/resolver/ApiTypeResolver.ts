@@ -1,14 +1,14 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { once } from "lodash-es";
-import { maybeSerializeMdxContent } from "../mdx/mdx";
+import { maybeSerializeMdxContent } from "../mdx/mdx.js";
 import {
     NonOptionalTypeShapeWithReference,
     ResolvedObjectProperty,
     ResolvedReferenceShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
-} from "./types";
+} from "./types.js";
 
 export class ApiTypeResolver {
     public constructor(private types: Record<string, APIV1Read.TypeDefinition>) {}

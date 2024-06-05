@@ -1,22 +1,22 @@
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { memo, ReactElement, useCallback } from "react";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { ReactElement, memo, useCallback } from "react";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext.js";
 import {
-    dereferenceObjectProperties,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    dereferenceObjectProperties,
     unwrapReference,
-} from "../../resolver/types";
-import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
-import { WithLabel } from "../WithLabel";
-import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
-import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
-import { PlaygroundListForm } from "./PlaygroundListForm";
-import { PlaygroundMapForm } from "./PlaygroundMapForm";
-import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
-import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
+} from "../../resolver/types.js";
+import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm.js";
+import { WithLabel } from "../WithLabel.js";
+import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm.js";
+import { PlaygroundEnumForm } from "./PlaygroundEnumForm.js";
+import { PlaygroundListForm } from "./PlaygroundListForm.js";
+import { PlaygroundMapForm } from "./PlaygroundMapForm.js";
+import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm.js";
+import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm.js";
 
 interface PlaygroundTypeReferenceFormProps {
     id: string;

@@ -8,18 +8,18 @@ import {
 } from "@fern-ui/fdr-utils";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { captureSentryError } from "../analytics/sentry";
-import { FeatureFlags } from "../contexts/FeatureFlagContext";
+import { captureSentryError } from "../analytics/sentry.js";
+import { FeatureFlags } from "../contexts/FeatureFlagContext.js";
 import {
     FernDocsFrontmatter,
     FernSerializeMdxOptions,
     maybeSerializeMdxContent,
     serializeMdxWithFrontmatter,
-} from "../mdx/mdx";
-import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
-import type { ResolvedPath } from "../resolver/ResolvedPath";
-import { ResolvedRootPackage } from "../resolver/types";
-import { Changelog } from "./dateUtils";
+} from "../mdx/mdx.js";
+import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver.js";
+import type { ResolvedPath } from "../resolver/ResolvedPath.js";
+import { ResolvedRootPackage } from "../resolver/types.js";
+import { Changelog } from "./dateUtils.js";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;

@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { TypedQueryKey } from "./TypedQueryKey";
+import { TypedQueryKey } from "./TypedQueryKey.js";
 
 export interface OptimisticUpdateOptions<T> {
     queryKey: TypedQueryKey<T>;

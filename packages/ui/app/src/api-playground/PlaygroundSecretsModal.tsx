@@ -5,8 +5,8 @@ import cn from "clsx";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { FC, useState } from "react";
-import { PasswordInputGroup } from "./PasswordInputGroup";
-import { obfuscateSecret } from "./utils";
+import { PasswordInputGroup } from "./PasswordInputGroup.js";
+import { obfuscateSecret } from "./utils.js";
 
 export interface SecretBearer {
     type: "bearer";

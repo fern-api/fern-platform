@@ -10,12 +10,12 @@ import {
     FlattenedWebhookDefinition,
 } from "@fern-ui/fdr-utils";
 import { compact, mapValues } from "lodash-es";
-import { captureSentryError } from "../analytics/sentry";
-import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
-import { FeatureFlags } from "../contexts/FeatureFlagContext";
-import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
-import { ApiTypeResolver } from "./ApiTypeResolver";
-import { resolveCodeSnippets } from "./resolveCodeSnippets";
+import { captureSentryError } from "../analytics/sentry.js";
+import { sortKeysByShape } from "../api-page/examples/sortKeysByShape.js";
+import { FeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx.js";
+import { ApiTypeResolver } from "./ApiTypeResolver.js";
+import { resolveCodeSnippets } from "./resolveCodeSnippets.js";
 import {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
@@ -38,7 +38,7 @@ import {
     ResolvedWebSocketChannel,
     ResolvedWebhookDefinition,
     ResolvedWithApiDefinition,
-} from "./types";
+} from "./types.js";
 
 interface MergedAuthAndHeaders {
     auth: APIV1Read.ApiAuth | undefined;

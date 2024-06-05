@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarNode, SidebarNodeRaw } from "@fern-ui/fdr-utils";
-import { FernSerializeMdxOptions, maybeSerializeMdxContent } from "../mdx/mdx";
+import { FernSerializeMdxOptions, maybeSerializeMdxContent } from "../mdx/mdx.js";
 
 export async function serializeSidebarNodeDescriptionMdx(
     node: SidebarNodeRaw,

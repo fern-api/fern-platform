@@ -1,5 +1,10 @@
-import { getSlugForFirstNavigatableEndpointOrWebhook } from "../../subpackage";
-import { DEFINITION, SUBPACKAGE_EMPTY, SUBPACKAGE_WITH_2_ENDPOINTS, SUBPACKAGE_WITH_NESTED_SUBPACKAGES } from "./mock";
+import { getSlugForFirstNavigatableEndpointOrWebhook } from "../../subpackage.js";
+import {
+    DEFINITION,
+    SUBPACKAGE_EMPTY,
+    SUBPACKAGE_WITH_2_ENDPOINTS,
+    SUBPACKAGE_WITH_NESTED_SUBPACKAGES,
+} from "./mock.js";
 
 describe("getSlugForFirstNavigatableEndpointOrWebhook()", () => {
     describe("correctly gets the first navigatable slug", () => {

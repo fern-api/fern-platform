@@ -1,4 +1,4 @@
-import { ApiPageDescription } from "../ApiPageDescription";
+import { ApiPageDescription } from "../ApiPageDescription.js";
 
 const STATUS_200_TEXT = "Return a 200 status to indicate that the data was received successfully.";
 

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 export class DiffService {
     constructor(methods, middleware = []) {
         this.methods = methods;
@@ -32,11 +32,10 @@ export class DiffService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'diff' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +

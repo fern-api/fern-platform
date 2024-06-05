@@ -1,7 +1,7 @@
 import { isPlainObject } from "lodash-es";
 import { DocsV1Db } from "../../../client";
-import { upgradeV1ToV2 } from "./upgradeV1ToV2";
-import { upgradeV2ToV3 } from "./upgradeV2ToV3";
+import { upgradeV1ToV2 } from "./upgradeV1ToV2.js";
+import { upgradeV2ToV3 } from "./upgradeV2ToV3.js";
 
 export function migrateDocsDbDefinition(buffer: unknown): DocsV1Db.DocsDefinitionDb.V3 {
     if (!isPlainObject(buffer)) {

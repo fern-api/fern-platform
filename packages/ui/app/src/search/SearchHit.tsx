@@ -2,13 +2,13 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { useMemo } from "react";
-import { useNavigationContext } from "../contexts/navigation-context";
-import { EndpointRecord } from "./content/EndpointRecord";
-import { EndpointRecordV2 } from "./content/EndpointRecordV2";
-import { PageRecord } from "./content/PageRecord";
-import { PageRecordV2 } from "./content/PageRecordV2";
-import type { SearchRecord } from "./types";
-import { getFullPathForSearchRecord } from "./util";
+import { useNavigationContext } from "../contexts/navigation-context.js";
+import { EndpointRecord } from "./content/EndpointRecord.js";
+import { EndpointRecordV2 } from "./content/EndpointRecordV2.js";
+import { PageRecord } from "./content/PageRecord.js";
+import { PageRecordV2 } from "./content/PageRecordV2.js";
+import type { SearchRecord } from "./types.js";
+import { getFullPathForSearchRecord } from "./util.js";
 
 export declare namespace SearchHit {
     export interface Props {

@@ -3,9 +3,9 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { FernLinkButton } from "../components/FernLinkButton";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { FernLinkButton } from "../components/FernLinkButton.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint.js";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;

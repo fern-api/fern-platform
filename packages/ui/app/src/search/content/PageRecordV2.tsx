@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
-import type { PageSearchRecordV2 } from "../types";
-import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
+import type { PageSearchRecordV2 } from "../types.js";
+import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs.js";
 
 export declare namespace PageRecordV2 {
     export interface Props {

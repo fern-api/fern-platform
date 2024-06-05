@@ -4,10 +4,10 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isEqual } from "lodash-es";
 import { Fragment, memo, useCallback, useMemo } from "react";
-import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
-import { SidebarApiSection } from "./SidebarApiSection";
-import { SidebarHeading } from "./SidebarHeading";
-import { SidebarLink, SidebarSlugLink } from "./SidebarLink";
+import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext.js";
+import { SidebarApiSection } from "./SidebarApiSection.js";
+import { SidebarHeading } from "./SidebarHeading.js";
+import { SidebarLink, SidebarSlugLink } from "./SidebarLink.js";
 
 export interface SidebarSectionProps {
     className?: string;

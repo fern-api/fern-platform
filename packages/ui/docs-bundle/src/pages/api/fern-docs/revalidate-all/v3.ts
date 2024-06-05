@@ -1,8 +1,8 @@
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { loadWithUrl } from "../../../../utils/loadWithUrl";
-import { toValidPathname } from "../../../../utils/toValidPathname";
-import { getXFernHostNode } from "../../../../utils/xFernHost";
+import { loadWithUrl } from "../../../../utils/loadWithUrl.js";
+import { toValidPathname } from "../../../../utils/toValidPathname.js";
+import { getXFernHostNode } from "../../../../utils/xFernHost.js";
 
 export const config = {
     maxDuration: 300,

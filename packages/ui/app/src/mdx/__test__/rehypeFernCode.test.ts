@@ -1,5 +1,5 @@
 import type { Element } from "hast";
-import { parseBlockMetaString } from "../plugins/rehypeFernCode";
+import { parseBlockMetaString } from "../plugins/rehypeFernCode.js";
 
 describe("parseBlockMetaString", () => {
     it("should parse block meta string with empty string", () => {

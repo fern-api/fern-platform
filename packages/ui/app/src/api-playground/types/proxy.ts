@@ -1,5 +1,5 @@
-import { JsonVariant } from "./jsonVariant";
-import { SerializableFile, SerializableFormDataEntryValue } from "./serializable";
+import { JsonVariant } from "./jsonVariant.js";
+import { SerializableFile, SerializableFormDataEntryValue } from "./serializable.js";
 
 export declare namespace ProxyRequest {
     export interface SerializableFormData {

@@ -1,10 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import Link from "next/link";
-import { FernImage } from "../components/FernImage";
-import { DEFAULT_LOGO_HEIGHT } from "../config";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { VersionDropdown } from "./VersionDropdown";
+import { FernImage } from "../components/FernImage.js";
+import { DEFAULT_LOGO_HEIGHT } from "../config.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { VersionDropdown } from "./VersionDropdown.js";
 
 export interface HeaderLogoSectionProps {
     logoHeight: DocsV1Read.Height | undefined;

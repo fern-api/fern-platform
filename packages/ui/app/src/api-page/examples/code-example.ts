@@ -1,6 +1,6 @@
 import { titleCase } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
-import { ResolvedExampleEndpointCall } from "../../resolver/types";
+import { ResolvedExampleEndpointCall } from "../../resolver/types.js";
 
 export interface CodeExample {
     key: string;

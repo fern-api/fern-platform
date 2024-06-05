@@ -1,4 +1,4 @@
-import { getUnversionedSlug } from "../getUnversionedSlug";
+import { getUnversionedSlug } from "../getUnversionedSlug.js";
 
 describe("getUnversionedSlug", () => {
     it("should return the slug without the current version", () => {

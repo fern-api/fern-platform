@@ -1,5 +1,5 @@
 import title from "title";
-import { SPECIAL_TOKENS } from "./specialTokens";
+import { SPECIAL_TOKENS } from "./specialTokens.js";
 
 export function titleCase(name: string): string {
     // regex match pascalCase or CamelCase and add spaces between words

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
-import { WebhookContext, WebhookContextValue } from "./WebhookContext";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath.js";
+import { WebhookContext, WebhookContextValue } from "./WebhookContext.js";
 
 export const WebhookContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath] = useState<JsonPropertyPath | undefined>();

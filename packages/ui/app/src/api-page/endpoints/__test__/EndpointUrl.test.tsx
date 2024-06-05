@@ -3,8 +3,8 @@
  */
 
 import { render, screen } from "@testing-library/react";
-import { ResolvedEndpointPathParts } from "../../../resolver/types";
-import { EndpointUrl } from "../EndpointUrl";
+import { ResolvedEndpointPathParts } from "../../../resolver/types.js";
+import { EndpointUrl } from "../EndpointUrl.js";
 
 function lit(value: string): ResolvedEndpointPathParts.Literal {
     return { type: "literal", value };

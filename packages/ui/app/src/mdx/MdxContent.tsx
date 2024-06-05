@@ -1,8 +1,8 @@
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import React from "react";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import type { SerializedMdxContent } from "./mdx";
-import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components";
+import { FernErrorBoundary } from "../components/FernErrorBoundary.js";
+import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components.js";
+import type { SerializedMdxContent } from "./mdx.js";
 
 export declare namespace MdxContent {
     export interface Props {

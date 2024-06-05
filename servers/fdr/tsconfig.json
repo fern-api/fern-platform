@@ -4,7 +4,6 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "isolatedModules": false,
-    "moduleResolution": "NodeNext",
     "paths": {
       "@prisma/client": ["../prisma/client"]
     },

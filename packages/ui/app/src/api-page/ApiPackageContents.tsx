@@ -1,18 +1,18 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { memo, useMemo } from "react";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { FernErrorBoundary } from "../components/FernErrorBoundary.js";
 import {
     ResolvedPackageItem,
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
     isResolvedSubpackage,
-} from "../resolver/types";
-import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
-import { Endpoint } from "./endpoints/Endpoint";
-import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { WebSocket } from "./web-socket/WebSocket";
-import { Webhook } from "./webhooks/Webhook";
+} from "../resolver/types.js";
+import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage.js";
+import { Endpoint } from "./endpoints/Endpoint.js";
+import { ApiSubpackage } from "./subpackages/ApiSubpackage.js";
+import { WebSocket } from "./web-socket/WebSocket.js";
+import { Webhook } from "./webhooks/Webhook.js";
 
 export declare namespace ApiPackageContents {
     export interface Props {

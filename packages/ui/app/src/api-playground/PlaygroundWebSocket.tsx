@@ -3,12 +3,12 @@ import { usePrevious } from "@fern-ui/react-commons";
 import { merge } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
-import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
-import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { PlaygroundWebSocketRequestFormState } from "./types";
-import { buildRequestUrl, buildUnredactedHeadersWebsocket, getDefaultValueForType } from "./utils";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types.js";
+import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath.js";
+import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent.js";
+import { useWebsocketMessages } from "./hooks/useWebsocketMessages.js";
+import { PlaygroundWebSocketRequestFormState } from "./types.js";
+import { buildRequestUrl, buildUnredactedHeadersWebsocket, getDefaultValueForType } from "./utils.js";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";

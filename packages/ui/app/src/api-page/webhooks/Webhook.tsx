@@ -1,10 +1,10 @@
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { WebhookContent } from "./WebhookContent";
-import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext.js";
+import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext.js";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types.js";
+import { useApiPageCenterElement } from "../useApiPageCenterElement.js";
+import { WebhookContent } from "./WebhookContent.js";
+import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider.js";
 
 export declare namespace Webhook {
     export interface Props {

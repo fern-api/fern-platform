@@ -1,6 +1,6 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { assertNonNullish } from "@fern-ui/core-utils";
-import { once } from "./once";
+import { once } from "./once.js";
 
 export const provideS3Client = once((): S3Client | undefined => {
     try {

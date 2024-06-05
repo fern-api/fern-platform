@@ -1,7 +1,7 @@
 import cn from "clsx";
 import React from "react";
-import { SerializedMdxContent } from "./mdx";
-import { MdxContent } from "./MdxContent";
+import { MdxContent } from "./MdxContent.js";
+import { SerializedMdxContent } from "./mdx.js";
 
 export declare namespace Markdown {
     export interface Props {

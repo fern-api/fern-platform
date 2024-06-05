@@ -1,9 +1,9 @@
 import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { jsonResponse } from "../../../utils/serverResponse";
-import { toValidPathname } from "../../../utils/toValidPathname";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
+import { loadWithUrl } from "../../../utils/loadWithUrl.js";
+import { jsonResponse } from "../../../utils/serverResponse.js";
+import { toValidPathname } from "../../../utils/toValidPathname.js";
+import { getXFernHostEdge } from "../../../utils/xFernHost.js";
 
 export const runtime = "edge";
 

@@ -1,11 +1,11 @@
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
-import { captureSentryError } from "../analytics/sentry";
-import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { getEnvConfig, type EnvironmentConfig } from "../env";
-import { REGISTRY_SERVICE } from "./registry";
+import { captureSentryError } from "../analytics/sentry.js";
+import { useLocalPreviewContext } from "../contexts/LocalPreviewContext.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { getEnvConfig, type EnvironmentConfig } from "../env.js";
+import { REGISTRY_SERVICE } from "./registry.js";
 
 export type SearchCredentials = {
     appId: string;

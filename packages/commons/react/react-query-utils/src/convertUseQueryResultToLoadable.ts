@@ -1,6 +1,6 @@
 import { Loadable } from "@fern-ui/loadable";
 import { UseQueryResult } from "@tanstack/react-query";
-import { visitUseQueryResult } from "./visitor";
+import { visitUseQueryResult } from "./visitor.js";
 
 export function convertUseQueryResultToLoadable<T, E = unknown>(useQueryResult: UseQueryResult<T, E>): Loadable<T, E> {
     return visitUseQueryResult<T, Loadable<T, E>, E>(useQueryResult, {

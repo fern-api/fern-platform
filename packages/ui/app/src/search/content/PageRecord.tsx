@@ -1,7 +1,7 @@
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Snippet } from "react-instantsearch";
-import type { SearchRecord } from "../types";
+import type { SearchRecord } from "../types.js";
 
 export declare namespace PageRecord {
     export interface Props {

@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { forwardRef } from "react";
 import urljoin from "url-join";
-import { useFernComponentsContext } from "./FernComponentsContext";
+import { useFernComponentsContext } from "./FernComponentsContext.js";
 export declare namespace RemoteFontAwesomeIcon {
     export interface Props {
         className?: string; // you must specify the bg-color rather than text-color because this is a mask.

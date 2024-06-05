@@ -1,7 +1,7 @@
-import { ResolvedPayload, ResolvedTypeDefinition } from "../../resolver/types";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { ResolvedPayload, ResolvedTypeDefinition } from "../../resolver/types.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions.js";
+import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand.js";
 
 export declare namespace WebhookPayloadSection {
     export interface Props {

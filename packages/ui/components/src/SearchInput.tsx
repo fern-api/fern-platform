@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { FernInput } from "./FernInput";
+import { FernInput } from "./FernInput.js";
 
 type SearchProps = {
     searchInput: string;

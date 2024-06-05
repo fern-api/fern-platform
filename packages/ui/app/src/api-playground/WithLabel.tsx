@@ -2,17 +2,17 @@ import { FernButton, FernTooltip } from "@fern-ui/components";
 import { Cross1Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, PropsWithChildren } from "react";
-import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
-import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
-import { Markdown } from "../mdx/Markdown";
+import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag.js";
+import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand.js";
+import { Markdown } from "../mdx/Markdown.js";
 import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     WithAvailability,
     WithDescription,
     unwrapOptional,
-} from "../resolver/types";
-import { shouldRenderInline } from "./utils";
+} from "../resolver/types.js";
+import { shouldRenderInline } from "./utils.js";
 
 interface WithLabelProps {
     htmlFor?: string;

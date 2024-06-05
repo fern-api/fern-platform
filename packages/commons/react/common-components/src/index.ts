@@ -1,1 +1,1 @@
-export * from "./loadable-element";
+export * from "./loadable-element.js";

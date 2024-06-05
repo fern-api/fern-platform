@@ -1,1 +1,1 @@
-export * from "./HTMLTable";
+export * from "./HTMLTable.js";

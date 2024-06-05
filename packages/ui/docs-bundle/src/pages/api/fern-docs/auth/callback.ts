@@ -1,7 +1,7 @@
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
-import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
-import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
+import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth.js";
+import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse.js";
 
 // export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 //     // The authorization code returned by AuthKit

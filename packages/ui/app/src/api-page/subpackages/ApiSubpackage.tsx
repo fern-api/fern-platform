@@ -1,9 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types";
-import { ApiPackageContents } from "../ApiPackageContents";
-import { ApiPageMargins } from "../page-margins/ApiPageMargins";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types.js";
+import { ApiPackageContents } from "../ApiPackageContents.js";
+import { ApiPageMargins } from "../page-margins/ApiPageMargins.js";
+import { useApiPageCenterElement } from "../useApiPageCenterElement.js";
 
 export declare namespace ApiSubpackage {
     export interface Props {

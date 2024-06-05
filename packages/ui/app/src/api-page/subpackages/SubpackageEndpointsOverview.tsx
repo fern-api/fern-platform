@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { noop } from "lodash-es";
-import { EndpointDescriptor } from "./EndpointDescriptor";
+import { EndpointDescriptor } from "./EndpointDescriptor.js";
 
 export declare namespace SubpackageEndpointsOverview {
     export interface Props {

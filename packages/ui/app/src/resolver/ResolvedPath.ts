@@ -1,6 +1,6 @@
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import type { SerializedMdxContent } from "../mdx/mdx";
-import { ResolvedRootPackage } from "./types";
+import type { SerializedMdxContent } from "../mdx/mdx.js";
+import { ResolvedRootPackage } from "./types.js";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {

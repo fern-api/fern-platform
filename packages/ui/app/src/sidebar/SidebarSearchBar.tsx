@@ -1,7 +1,7 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { memo, type MouseEventHandler } from "react";
-import { useSearchService } from "../services/useSearchService";
+import { useSearchService } from "../services/useSearchService.js";
 
 export declare namespace SidebarSearchBar {
     export interface Props {

@@ -6,32 +6,32 @@ import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { compact, once } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
 import urljoin from "url-join";
-import { capturePosthogEvent } from "../analytics/posthog";
-import { captureSentryError } from "../analytics/sentry";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { capturePosthogEvent } from "../analytics/posthog.js";
+import { captureSentryError } from "../analytics/sentry.js";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
     ResolvedHttpRequestBodyShape,
     ResolvedTypeDefinition,
-} from "../resolver/types";
+} from "../resolver/types.js";
 import "./PlaygroundEndpoint.css";
-import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
-import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import { blobToDataURL } from "./fetch-utils/blobToDataURL";
-import { executeProxyFile } from "./fetch-utils/executeProxyFile";
-import { executeProxyRest } from "./fetch-utils/executeProxyRest";
-import { executeProxyStream } from "./fetch-utils/executeProxyStream";
+import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent.js";
+import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath.js";
+import { blobToDataURL } from "./fetch-utils/blobToDataURL.js";
+import { executeProxyFile } from "./fetch-utils/executeProxyFile.js";
+import { executeProxyRest } from "./fetch-utils/executeProxyRest.js";
+import { executeProxyStream } from "./fetch-utils/executeProxyStream.js";
 import type {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormStateBody,
     ProxyRequest,
     SerializableFile,
     SerializableFormDataEntryValue,
-} from "./types";
-import { PlaygroundResponse } from "./types/playgroundResponse";
-import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
+} from "./types.js";
+import { PlaygroundResponse } from "./types/playgroundResponse.js";
+import { buildEndpointUrl, buildUnredactedHeaders } from "./utils.js";
 
 interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;

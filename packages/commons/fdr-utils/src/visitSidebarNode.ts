@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNode } from "./types";
+import { SidebarNode } from "./types.js";
 
 export function visitSidebarNode(
     node: SidebarNode | SidebarNode.Page,

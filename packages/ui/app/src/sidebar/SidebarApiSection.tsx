@@ -6,16 +6,16 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { isEqual, last, sortBy } from "lodash-es";
 import { ReactElement, ReactNode, memo, useCallback, useMemo } from "react";
-import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
-import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { FernErrorTag } from "../components/FernErrorBoundary";
-import { API_ARTIFACTS_TITLE } from "../config";
-import { useNavigationContext } from "../contexts/navigation-context";
-import { Changelog } from "../util/dateUtils";
-import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext";
-import { SidebarHeading } from "./SidebarHeading";
-import { SidebarSlugLink } from "./SidebarLink";
-import { FERN_STREAM_ATOM } from "./atom";
+import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty.js";
+import { HttpMethodTag } from "../commons/HttpMethodTag.js";
+import { FernErrorTag } from "../components/FernErrorBoundary.js";
+import { API_ARTIFACTS_TITLE } from "../config.js";
+import { useNavigationContext } from "../contexts/navigation-context.js";
+import { Changelog } from "../util/dateUtils.js";
+import { checkSlugStartsWith, useCollapseSidebar } from "./CollapseSidebarContext.js";
+import { SidebarHeading } from "./SidebarHeading.js";
+import { SidebarSlugLink } from "./SidebarLink.js";
+import { FERN_STREAM_ATOM } from "./atom.js";
 
 export interface SidebarApiSectionProps {
     apiSection: SidebarNode.ApiSection;

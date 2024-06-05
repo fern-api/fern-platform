@@ -3,12 +3,12 @@ import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
-import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
-import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
-import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
-import { BgImageGradient } from "../docs/BgImageGradient";
-import { Docs, SearchDialog } from "../docs/Docs";
-import { type ResolvedPath } from "../resolver/ResolvedPath";
+import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider.js";
+import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider.js";
+import { BgImageGradient } from "../docs/BgImageGradient.js";
+import { Docs, SearchDialog } from "../docs/Docs.js";
+import { type ResolvedPath } from "../resolver/ResolvedPath.js";
 
 export declare namespace DocsPage {
     export interface Props {

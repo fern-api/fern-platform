@@ -1,4 +1,4 @@
-import { DocsV1Read } from ".";
+import { DocsV1Read } from "..";
 
 export interface ReadNavigationConfigVisitor {
     versioned: (config: DocsV1Read.VersionedNavigationConfig) => void;

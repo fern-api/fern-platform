@@ -1,16 +1,16 @@
 import { isEqual, kebabCase, startCase } from "lodash-es";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
-import { assertNever } from "../utils/assertNever";
-import { titleCase } from "../utils/titleCase";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks.js";
+import { assertNever } from "../utils/assertNever.js";
+import { titleCase } from "../utils/titleCase.js";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
     generateEndpointStreamResponseExample,
     generateEndpointSuccessExample,
-} from "./examples/generateEndpointExampleCall";
-import { generateWebhookExample } from "./examples/generateWebhookExample";
-import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
+} from "./examples/generateEndpointExampleCall.js";
+import { generateWebhookExample } from "./examples/generateWebhookExample.js";
+import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder.js";
 
 export function convertAPIDefinitionToDb(
     writeShape: APIV1Write.ApiDefinition,

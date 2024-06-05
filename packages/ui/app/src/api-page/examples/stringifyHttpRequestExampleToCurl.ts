@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { captureSentryError } from "../../analytics/sentry";
-import { unknownToString } from "../../util/unknownToString";
-import { HttpRequestExample } from "./HttpRequestExample";
+import { captureSentryError } from "../../analytics/sentry.js";
+import { unknownToString } from "../../util/unknownToString.js";
+import { HttpRequestExample } from "./HttpRequestExample.js";
 
 function requiresUrlEncode(str: string): boolean {
     return encodeURIComponent(str) !== str;

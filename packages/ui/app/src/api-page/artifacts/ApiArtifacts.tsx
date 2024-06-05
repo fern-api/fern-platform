@@ -1,16 +1,16 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { API_ARTIFACTS_TITLE } from "../../config";
-import { ResolvedWithApiDefinition } from "../../resolver/types";
-import { ApiPageMargins } from "../page-margins/ApiPageMargins";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { SdkCard } from "./SdkCard";
-import { SdkCardLayout } from "./SdkCardLayout";
-import { DotNetLogo } from "./sdk-logos/DotNetLogo";
-import { GoLogo } from "./sdk-logos/GoLogo";
-import { JavaLogo } from "./sdk-logos/JavaLogo";
-import { PythonLogo } from "./sdk-logos/PythonLogo";
-import { RubyLogo } from "./sdk-logos/RubyLogo";
+import { API_ARTIFACTS_TITLE } from "../../config.js";
+import { ResolvedWithApiDefinition } from "../../resolver/types.js";
+import { ApiPageMargins } from "../page-margins/ApiPageMargins.js";
+import { useApiPageCenterElement } from "../useApiPageCenterElement.js";
+import { SdkCard } from "./SdkCard.js";
+import { SdkCardLayout } from "./SdkCardLayout.js";
+import { DotNetLogo } from "./sdk-logos/DotNetLogo.js";
+import { GoLogo } from "./sdk-logos/GoLogo.js";
+import { JavaLogo } from "./sdk-logos/JavaLogo.js";
+import { PythonLogo } from "./sdk-logos/PythonLogo.js";
+import { RubyLogo } from "./sdk-logos/RubyLogo.js";
 
 export declare namespace ApiArtifacts {
     export interface Props {

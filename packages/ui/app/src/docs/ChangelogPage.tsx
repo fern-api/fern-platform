@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
-import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
-import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { BottomNavigationButtons } from "../components/BottomNavigationButtons.js";
+import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage.js";
+import { MdxContent } from "../mdx/MdxContent.js";
+import { ResolvedPath } from "../resolver/ResolvedPath.js";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     return (

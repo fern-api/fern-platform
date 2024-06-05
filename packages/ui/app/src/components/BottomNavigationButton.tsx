@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
-import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../resolver/ResolvedPath";
-import { FernLinkCard } from "./FernLinkCard";
+import { MdxContent } from "../mdx/MdxContent.js";
+import { ResolvedPath } from "../resolver/ResolvedPath.js";
+import { FernLinkCard } from "./FernLinkCard.js";
 
 export declare namespace BottomNavigationButton {
     export interface Props {

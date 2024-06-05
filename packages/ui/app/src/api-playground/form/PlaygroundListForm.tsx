@@ -2,9 +2,9 @@ import { FernButton } from "@fern-ui/components";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { memo, useCallback } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
-import { getDefaultValueForType, shouldRenderInline } from "../utils";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types.js";
+import { getDefaultValueForType, shouldRenderInline } from "../utils.js";
+import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm.js";
 
 interface PlaygroundListFormProps {
     itemShape: ResolvedTypeShape;

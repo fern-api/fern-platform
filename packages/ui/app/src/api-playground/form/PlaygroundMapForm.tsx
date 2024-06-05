@@ -2,9 +2,9 @@ import { FernButton } from "@fern-ui/components";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { memo, useCallback, useEffect, useState } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
-import { getDefaultValueForType, unknownToString } from "../utils";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types.js";
+import { getDefaultValueForType, unknownToString } from "../utils.js";
+import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm.js";
 
 interface PlaygroundMapFormProps {
     id: string;

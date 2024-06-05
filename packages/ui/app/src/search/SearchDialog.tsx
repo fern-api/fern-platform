@@ -4,13 +4,13 @@ import algolia, { SearchClient } from "algoliasearch";
 import cn from "clsx";
 import { Fragment, PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { useNavigationContext } from "../contexts/navigation-context";
-import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
-import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
-import { SearchBox, SearchMobileBox } from "./SearchBox";
-import { SearchHits, SearchMobileHits } from "./SearchHits";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint.js";
+import { useNavigationContext } from "../contexts/navigation-context.js";
+import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService.js";
+import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom.js";
+import { SearchBox, SearchMobileBox } from "./SearchBox.js";
+import { SearchHits, SearchMobileHits } from "./SearchHits.js";
 
 export declare namespace SearchDialog {
     export interface Props {

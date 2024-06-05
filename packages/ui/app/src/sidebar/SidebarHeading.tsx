@@ -3,7 +3,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { range } from "lodash-es";
 import { FC, ReactNode } from "react";
-import { useCollapseSidebar } from "./CollapseSidebarContext";
+import { useCollapseSidebar } from "./CollapseSidebarContext.js";
 
 interface SidebarHeadingProps {
     className?: string;

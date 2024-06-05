@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FernTag, FernTagColorSchemes, FernTagSizes } from "../FernTag";
+import { FernTag, FernTagColorSchemes, FernTagSizes } from "../FernTag.js";
 
 const methods = ["test", "get", "post", "put", "patch", "delete", "stream", "wss"];
 

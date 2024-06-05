@@ -4,11 +4,11 @@ import type { Element } from "hast";
 import { isEqual } from "lodash-es";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { visit } from "unist-util-visit";
-import { HastToJSX } from "../mdx/common/HastToJsx";
-import { parseStringStyle } from "../util/parseStringStyle";
+import { HastToJSX } from "../mdx/common/HastToJsx.js";
+import { parseStringStyle } from "../util/parseStringStyle.js";
 import "./FernSyntaxHighlighter.css";
-import { HighlightedTokens } from "./fernShiki";
-import { flattenHighlightLines, getMaxHeight, type HighlightLine } from "./utils";
+import { HighlightedTokens } from "./fernShiki.js";
+import { flattenHighlightLines, getMaxHeight, type HighlightLine } from "./utils.js";
 
 export interface ScrollToHandle {
     scrollTo: (options: ScrollToOptions) => void;

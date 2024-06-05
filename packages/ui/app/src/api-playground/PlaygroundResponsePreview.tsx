@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useRef } from "react";
-import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
-import { ScrollToHandle } from "../syntax-highlighting/FernSyntaxHighlighterTokens";
-import { PlaygroundResponse } from "./types/playgroundResponse";
+import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter.js";
+import { ScrollToHandle } from "../syntax-highlighting/FernSyntaxHighlighterTokens.js";
+import { PlaygroundResponse } from "./types/playgroundResponse.js";
 
 interface PlaygroundResponsePreviewProps {
     response: PlaygroundResponse;

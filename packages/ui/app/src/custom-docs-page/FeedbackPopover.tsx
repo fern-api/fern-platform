@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import { Check, ThumbsDown, ThumbsUp } from "react-feather";
 import * as Selection from "selection-popover";
-import { capturePosthogEvent } from "../analytics/posthog";
-import { useSelection } from "../hooks/useSelection";
-import { FeedbackForm } from "./FeedbackForm";
+import { capturePosthogEvent } from "../analytics/posthog.js";
+import { useSelection } from "../hooks/useSelection.js";
+import { FeedbackForm } from "./FeedbackForm.js";
 
 const MotionFernButton = motion(FernButton);
 const MotionFernButtonGroup = motion(FernButtonGroup);

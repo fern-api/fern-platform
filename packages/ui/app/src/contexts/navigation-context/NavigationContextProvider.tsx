@@ -5,16 +5,16 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { renderToString } from "react-dom/server";
-import { captureSentryError } from "../../analytics/sentry";
-import { MdxContent } from "../../mdx/MdxContent";
-import { FernDocsFrontmatter } from "../../mdx/mdx";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
-import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
-import { getRouteNodeWithAnchor } from "../../util/anchor";
-import { useFeatureFlags } from "../FeatureFlagContext";
-import { useDocsContext } from "../docs-context/useDocsContext";
-import { NavigationContext } from "./NavigationContext";
-import { useSlugListeners } from "./useSlugListeners";
+import { captureSentryError } from "../../analytics/sentry.js";
+import { MdxContent } from "../../mdx/MdxContent.js";
+import { FernDocsFrontmatter } from "../../mdx/mdx.js";
+import { ResolvedPath } from "../../resolver/ResolvedPath.js";
+import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom.js";
+import { getRouteNodeWithAnchor } from "../../util/anchor.js";
+import { useFeatureFlags } from "../FeatureFlagContext.js";
+import { useDocsContext } from "../docs-context/useDocsContext.js";
+import { NavigationContext } from "./NavigationContext.js";
+import { useSlugListeners } from "./useSlugListeners.js";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{

@@ -5,9 +5,9 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
-import { FernDocsFrontmatter } from "../mdx";
-import { makeToc } from "./makeToc";
-import { toAttribute } from "./utils";
+import { FernDocsFrontmatter } from "../mdx.js";
+import { makeToc } from "./makeToc.js";
+import { toAttribute } from "./utils.js";
 
 export interface PageHeaderProps {
     breadcrumbs: string[];

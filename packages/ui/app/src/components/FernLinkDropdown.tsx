@@ -1,6 +1,6 @@
 import { FernDropdown } from "@fern-ui/components";
 import { PropsWithChildren, ReactElement } from "react";
-import { FernLink } from "./FernLink";
+import { FernLink } from "./FernLink.js";
 
 export function FernLinkDropdown(props: PropsWithChildren<FernDropdown.Props>): ReactElement {
     // dropdownMenuElement is cloned in FernDropdown and href is passed to the cloned element

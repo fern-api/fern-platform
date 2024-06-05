@@ -3,9 +3,9 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
-import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
-import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
-import { getMessageForStatus } from "../utils/getMessageForStatus";
+import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag.js";
+import { ResolvedError, ResolvedExampleError } from "../../resolver/types.js";
+import { getMessageForStatus } from "../utils/getMessageForStatus.js";
 
 export declare namespace ErrorExampleSelect {
     export interface Props {

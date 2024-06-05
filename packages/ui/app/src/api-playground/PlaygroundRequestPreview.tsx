@@ -1,10 +1,10 @@
 import { FC, useMemo } from "react";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { ResolvedEndpointDefinition } from "../resolver/types";
-import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
-import { PlaygroundEndpointRequestFormState } from "./types";
-import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { ResolvedEndpointDefinition } from "../resolver/types.js";
+import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter.js";
+import { PlaygroundEndpointRequestFormState } from "./types.js";
+import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils.js";
 
 interface PlaygroundRequestPreviewProps {
     endpoint: ResolvedEndpointDefinition;

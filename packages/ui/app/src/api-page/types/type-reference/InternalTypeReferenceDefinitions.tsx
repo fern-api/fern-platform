@@ -1,10 +1,10 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types";
-import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
-import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
-import { ListTypeContextProvider } from "./ListTypeContextProvider";
-import { MapTypeContextProvider } from "./MapTypeContextProvider";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types.js";
+import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition.js";
+import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError.js";
+import { ListTypeContextProvider } from "./ListTypeContextProvider.js";
+import { MapTypeContextProvider } from "./MapTypeContextProvider.js";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {

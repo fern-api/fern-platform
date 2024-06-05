@@ -3,22 +3,22 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
-import { Chip } from "../../../components/Chip";
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { useRouteListener } from "../../../contexts/useRouteListener";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
-import { getAnchorId } from "../../../util/anchor";
+import { Chip } from "../../../components/Chip.js";
+import { FernErrorBoundary } from "../../../components/FernErrorBoundary.js";
+import { useRouteListener } from "../../../contexts/useRouteListener.js";
+import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types.js";
+import { getAnchorId } from "../../../util/anchor.js";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
-import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
-import { ObjectProperty } from "../object/ObjectProperty";
-import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
-import { EnumTypeDefinition } from "./EnumTypeDefinition";
-import { FernCollapseWithButton } from "./FernCollapseWithButton";
-import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
+} from "../context/TypeDefinitionContext.js";
+import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant.js";
+import { ObjectProperty } from "../object/ObjectProperty.js";
+import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant.js";
+import { EnumTypeDefinition } from "./EnumTypeDefinition.js";
+import { FernCollapseWithButton } from "./FernCollapseWithButton.js";
+import { TypeDefinitionDetails } from "./TypeDefinitionDetails.js";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {

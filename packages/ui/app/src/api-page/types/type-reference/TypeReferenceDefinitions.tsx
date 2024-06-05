@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../resolver/types";
-import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
-import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
-import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
+import { FernErrorBoundary } from "../../../components/FernErrorBoundary.js";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../resolver/types.js";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath.js";
+import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider.js";
+import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions.js";
 
 export declare namespace TypeReferenceDefinitions {
     export interface Props {

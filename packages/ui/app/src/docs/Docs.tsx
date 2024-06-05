@@ -3,17 +3,17 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
-import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
-import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
-import { useCreateSearchService } from "../services/useSearchService";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
-import { DocsMainContent } from "./DocsMainContent";
-import { HeaderContainer } from "./HeaderContainer";
+import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext.js";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint.js";
+import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext.js";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover.js";
+import { useCreateSearchService } from "../services/useSearchService.js";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern.js";
+import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom.js";
+import { DocsMainContent } from "./DocsMainContent.js";
+import { HeaderContainer } from "./HeaderContainer.js";
 
 const Sidebar = dynamic(() => import("../sidebar/Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 

@@ -2,14 +2,14 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { atom, useAtom } from "jotai";
 import { useCallback, useEffect, useMemo } from "react";
-import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown";
-import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
-import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
-import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
-import { useNavigationContext } from "../../contexts/navigation-context";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
-import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
-import { findEndpoint } from "../../util/processRequestSnippetComponents";
+import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown.js";
+import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow.js";
+import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample.js";
+import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example.js";
+import { useNavigationContext } from "../../contexts/navigation-context.js";
+import { ResolvedEndpointDefinition } from "../../resolver/types.js";
+import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom.js";
+import { findEndpoint } from "../../util/processRequestSnippetComponents.js";
 
 export declare namespace RequestSnippet {
     export interface Props {

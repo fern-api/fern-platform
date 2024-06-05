@@ -1,10 +1,10 @@
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { memo, useCallback, useMemo, useState } from "react";
-import { Markdown } from "../../mdx/Markdown";
-import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
-import { getDefaultValueForType, matchesTypeReference } from "../utils";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { Markdown } from "../../mdx/Markdown.js";
+import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types.js";
+import { getDefaultValueForType, matchesTypeReference } from "../utils.js";
+import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm.js";
 
 interface PlaygroundUniscriminatedUnionFormProps {
     undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;

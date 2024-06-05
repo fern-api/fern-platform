@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createGetSignedUrl, createPutSignedUrl } from "../../../utils/createSignedUrl";
+import { createGetSignedUrl, createPutSignedUrl } from "../../../utils/createSignedUrl.js";
 
 export const runtime = "edge";
 export const maxDuration = 5;

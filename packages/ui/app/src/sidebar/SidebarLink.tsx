@@ -18,8 +18,8 @@ import {
     useEffect,
     useRef,
 } from "react";
-import { getRouteNodeWithAnchor } from "../util/anchor";
-import { useIsMobileSidebarOpen } from "./atom";
+import { getRouteNodeWithAnchor } from "../util/anchor.js";
+import { useIsMobileSidebarOpen } from "./atom.js";
 
 interface SidebarSlugLinkProps {
     icon?: ReactElement | string;

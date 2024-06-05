@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 import { createRef, useEffect, useMemo } from "react";
-import { ResolvedExampleWebhookPayload } from "../../../resolver/types";
-import { getJsonLineNumbers } from "../../examples/getJsonLineNumbers";
-import { useWebhookContext } from "../webhook-context/useWebhookContext";
+import { ResolvedExampleWebhookPayload } from "../../../resolver/types.js";
+import { getJsonLineNumbers } from "../../examples/getJsonLineNumbers.js";
+import { useWebhookContext } from "../webhook-context/useWebhookContext.js";
 
 const CodeSnippetExample = dynamic(
     () => import("../../examples/CodeSnippetExample").then(({ CodeSnippetExample }) => CodeSnippetExample),

@@ -2,8 +2,8 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, noop } from "lodash-es";
 import urljoin from "url-join";
-import { ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "../../resolver/types";
-import { getEndpointEnvironmentUrl } from "../../util/endpoint";
+import { ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "../../resolver/types.js";
+import { getEndpointEnvironmentUrl } from "../../util/endpoint.js";
 
 export interface HttpRequestExample {
     method: string;

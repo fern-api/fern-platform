@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
-import { getDocsPageProps, getPrivateDocsPageProps } from "../../../utils/getDocsPageProps";
+import { getDocsPageProps, getPrivateDocsPageProps } from "../../../utils/getDocsPageProps.js";
 
 export default DocsPage;
 

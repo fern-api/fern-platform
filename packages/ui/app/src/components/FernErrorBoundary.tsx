@@ -5,8 +5,8 @@ import { memoize } from "lodash-es";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
-import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
+import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry.js";
+import { useLocalPreviewContext } from "../contexts/LocalPreviewContext.js";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred

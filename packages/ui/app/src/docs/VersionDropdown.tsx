@@ -1,8 +1,8 @@
 import { FernButton } from "@fern-ui/components";
 import { SidebarVersionInfo, getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { FernLinkDropdown } from "../components/FernLinkDropdown";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { FernLinkDropdown } from "../components/FernLinkDropdown.js";
+import { useNavigationContext } from "../contexts/navigation-context.js";
 
 export declare namespace VersionDropdown {
     export interface Props {

@@ -1,8 +1,8 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import jp from "jsonpath";
-import { captureSentryError } from "../../analytics/sentry";
-import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
-import { lineNumberOf } from "./utils";
+import { captureSentryError } from "../../analytics/sentry.js";
+import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath.js";
+import { lineNumberOf } from "./utils.js";
 
 export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start = 0): (number | [number, number])[] {
     const jsonString = JSON.stringify(json, undefined, 2);

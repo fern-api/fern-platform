@@ -11,8 +11,8 @@ import {
     useRef,
     useState,
 } from "react";
-import { FernScrollArea } from "./FernScrollArea";
-import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import { FernScrollArea } from "./FernScrollArea.js";
+import { FernTooltip, FernTooltipProvider } from "./FernTooltip.js";
 
 export declare namespace FernDropdown {
     export interface ValueOption {

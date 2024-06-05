@@ -1,23 +1,23 @@
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
-import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
-import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { useRouteListener } from "../../../contexts/useRouteListener";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
-import { getAnchorId } from "../../../util/anchor";
-import { ApiPageDescription } from "../../ApiPageDescription";
-import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
-import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
+import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor.js";
+import { FernErrorBoundary } from "../../../components/FernErrorBoundary.js";
+import { useRouteListener } from "../../../contexts/useRouteListener.js";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types.js";
+import { getAnchorId } from "../../../util/anchor.js";
+import { ApiPageDescription } from "../../ApiPageDescription.js";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag.js";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath.js";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
+} from "../context/TypeDefinitionContext.js";
 import {
     InternalTypeReferenceDefinitions,
     hasInternalTypeReference,
-} from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
+} from "../type-reference/InternalTypeReferenceDefinitions.js";
+import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand.js";
 
 export declare namespace ObjectProperty {
     export interface Props {

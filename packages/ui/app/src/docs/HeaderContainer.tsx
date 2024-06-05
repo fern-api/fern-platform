@@ -1,13 +1,13 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { FC, useCallback } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { useCloseMobileSidebar, useOpenMobileSidebar } from "../sidebar/atom";
-import { BgImageGradient } from "./BgImageGradient";
-import { Header } from "./Header";
-import { HeaderTabs } from "./HeaderTabs";
-import { useIsScrolled } from "./useIsScrolled";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint.js";
+import { useCloseMobileSidebar, useOpenMobileSidebar } from "../sidebar/atom.js";
+import { BgImageGradient } from "./BgImageGradient.js";
+import { Header } from "./Header.js";
+import { HeaderTabs } from "./HeaderTabs.js";
+import { useIsScrolled } from "./useIsScrolled.js";
 
 interface HeaderContainerProps {
     isMobileSidebarOpen: boolean;

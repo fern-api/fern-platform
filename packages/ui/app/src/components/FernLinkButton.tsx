@@ -1,7 +1,7 @@
 import { FernButtonSharedProps, getButtonClassName, renderButtonContent } from "@fern-ui/components";
 import Link from "next/link";
 import { ComponentProps, PropsWithChildren, forwardRef } from "react";
-import { FernLink } from "./FernLink";
+import { FernLink } from "./FernLink.js";
 
 interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> {}
 

@@ -5,8 +5,8 @@ import type {
     MdxJsxExpressionAttribute,
     MdxJsxFlowElementHast,
 } from "mdast-util-mdx-jsx";
-import { unknownToString } from "../../util/unknownToString";
-import { valueToEstree } from "./to-estree";
+import { unknownToString } from "../../util/unknownToString.js";
+import { valueToEstree } from "./to-estree.js";
 
 export function isMdxJsxFlowElement(node: Node): node is MdxJsxFlowElementHast {
     return node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement";

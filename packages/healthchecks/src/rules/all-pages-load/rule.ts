@@ -1,5 +1,5 @@
 import { getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
-import { Rule, RuleArgs, RuleResult } from "../runRules";
+import { Rule, RuleArgs, RuleResult } from "../runRules.js";
 
 export class AllPagesLoadRule implements Rule {
     name = "all-pages-load";

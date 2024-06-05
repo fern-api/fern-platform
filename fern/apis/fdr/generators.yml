@@ -4,17 +4,15 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-express
-        version: 0.9.9
+        version: 0.15.0
         output:
           location: local-file-system
           path: ../../../servers/fdr/src/api/generated
         config:
           noSerdeLayer: true
           outputEsm: true
-          # extraDevDependencies:
-          #   "@types/mime": "3.0.4"
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.12.8-rc0
+        version: 0.20.8
         output:
           location: local-file-system
           path: ../../../packages/fdr-sdk/src/client/generated

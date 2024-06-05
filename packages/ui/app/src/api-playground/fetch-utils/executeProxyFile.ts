@@ -1,6 +1,6 @@
 import urljoin from "url-join";
-import { PlaygroundResponse } from "../types/playgroundResponse";
-import { ProxyRequest } from "../types/proxy";
+import { PlaygroundResponse } from "../types/playgroundResponse.js";
+import { ProxyRequest } from "../types/proxy.js";
 
 export async function executeProxyFile(environment: string, req: ProxyRequest): Promise<PlaygroundResponse> {
     const r = await fetch(urljoin(environment, "/file"), {

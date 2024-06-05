@@ -1,9 +1,9 @@
-export { convertUseQueryResultToLoadable } from "./convertUseQueryResultToLoadable";
-export { performOptimisticUpdate, performOptimisticUpdateWithoutInvalidating } from "./performOptimisticUpdate";
-export type { OptimisticUpdateOptions } from "./performOptimisticUpdate";
-export { TypedQueryKey } from "./TypedQueryKey";
-export { useNullableQuery } from "./useNullableQuery";
-export { useQueryWithLoadableKey } from "./useQueryWithLoadableKey";
-export { useTypedQuery } from "./useTypedQuery";
-export { visitUseQueryResult } from "./visitor";
-export type { UseQueryResultVisitor } from "./visitor";
+export { TypedQueryKey } from "./TypedQueryKey.js";
+export { convertUseQueryResultToLoadable } from "./convertUseQueryResultToLoadable.js";
+export { performOptimisticUpdate, performOptimisticUpdateWithoutInvalidating } from "./performOptimisticUpdate.js";
+export type { OptimisticUpdateOptions } from "./performOptimisticUpdate.js";
+export { useNullableQuery } from "./useNullableQuery.js";
+export { useQueryWithLoadableKey } from "./useQueryWithLoadableKey.js";
+export { useTypedQuery } from "./useTypedQuery.js";
+export { visitUseQueryResult } from "./visitor.js";
+export type { UseQueryResultVisitor } from "./visitor.js";

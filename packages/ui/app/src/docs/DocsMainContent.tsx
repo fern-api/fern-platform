@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useNavigationContext } from "../contexts/navigation-context";
-import { useIsReady } from "../contexts/useIsReady";
+import { useNavigationContext } from "../contexts/navigation-context.js";
+import { useIsReady } from "../contexts/useIsReady.js";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),

@@ -1,5 +1,5 @@
-import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
-import { testGetNavigationRoot } from "./testGetNavigationRoot";
+import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig.js";
+import { testGetNavigationRoot } from "./testGetNavigationRoot.js";
 
 const FIXTURE = "yes-version-yes-tabs";
 

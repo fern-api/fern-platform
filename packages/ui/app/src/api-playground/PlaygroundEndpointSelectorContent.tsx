@@ -7,9 +7,9 @@ import cn, { clsx } from "clsx";
 import { compact, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { HttpMethodTag } from "../commons/HttpMethodTag";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { usePlaygroundContext } from "./PlaygroundContext";
+import { HttpMethodTag } from "../commons/HttpMethodTag.js";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern.js";
+import { usePlaygroundContext } from "./PlaygroundContext.js";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 

@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNode, SidebarNodeRaw } from "./types";
+import { SidebarNode, SidebarNodeRaw } from "./types.js";
 
 function partialMatchSlug(slug: readonly string[], nodeSlug: readonly string[]): boolean {
     for (let i = 0; i < slug.length; i++) {

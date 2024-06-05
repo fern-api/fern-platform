@@ -5,24 +5,24 @@ import dynamic from "next/dynamic";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import urljoin from "url-join";
-import { capturePosthogEvent } from "../analytics/posthog";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { capturePosthogEvent } from "../analytics/posthog.js";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
 import {
     ResolvedApiDefinition,
     ResolvedRootPackage,
     flattenRootPackage,
     isEndpoint,
     isWebSocket,
-} from "../resolver/types";
-import { APIS } from "../sidebar/atom";
+} from "../resolver/types.js";
+import { APIS } from "../sidebar/atom.js";
 import {
     PlaygroundSelectionState,
     createFormStateKey,
     getInitialEndpointRequestFormStateWithExample,
     usePlaygroundHeight,
-} from "./PlaygroundDrawer";
-import { PlaygroundRequestFormState } from "./types";
+} from "./PlaygroundDrawer.js";
+import { PlaygroundRequestFormState } from "./types.js";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
     ssr: false,

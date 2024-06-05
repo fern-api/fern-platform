@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { resolveSidebarNodesRoot } from "./resolver";
-import { SidebarNavigationRaw, SidebarNodeRaw, SidebarTab } from "./types";
-import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw";
+import { resolveSidebarNodesRoot } from "./resolver.js";
+import { SidebarNavigationRaw, SidebarNodeRaw, SidebarTab } from "./types.js";
+import { visitSidebarNodeRaw } from "./visitSidebarNodeRaw.js";
 
 interface Redirect {
     type: "redirect";

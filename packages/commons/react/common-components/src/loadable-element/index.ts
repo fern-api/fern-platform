@@ -1,1 +1,1 @@
-export { LoadableElement } from "./LoadableElement";
+export { LoadableElement } from "./LoadableElement.js";

@@ -2,7 +2,7 @@ import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { SerializedMdxContent } from "../mdx/mdx";
+import { SerializedMdxContent } from "../mdx/mdx.js";
 
 type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];

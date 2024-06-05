@@ -1,6 +1,6 @@
 import { APIV1Db, APIV1Read } from "../../client";
-import { assertNever } from "../utils/assertNever";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever.js";
+import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks.js";
 
 export function convertDbAPIDefinitionsToRead(dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>) {
     return Object.fromEntries(

@@ -1,7 +1,7 @@
 import { flatMapLoadable, isLoaded, Loadable } from "@fern-ui/loadable";
 import { QueryFunction, UseQueryOptions } from "@tanstack/react-query";
-import { TypedQueryKey } from "./TypedQueryKey";
-import { useNullableQuery } from "./useNullableQuery";
+import { TypedQueryKey } from "./TypedQueryKey.js";
+import { useNullableQuery } from "./useNullableQuery.js";
 
 export function useQueryWithLoadableKey<
     TQueryFnData = unknown,

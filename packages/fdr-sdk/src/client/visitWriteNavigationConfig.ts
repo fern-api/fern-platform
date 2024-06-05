@@ -1,4 +1,4 @@
-import { DocsV1Write } from ".";
+import { DocsV1Write } from "..";
 
 export interface WriteNavigationConfigVisitor<T> {
     versioned: (config: DocsV1Write.VersionedNavigationConfig) => T;

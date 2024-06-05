@@ -2,7 +2,7 @@ import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
-import { ResolvedRootPackage } from "../resolver/types";
+import { ResolvedRootPackage } from "../resolver/types.js";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);

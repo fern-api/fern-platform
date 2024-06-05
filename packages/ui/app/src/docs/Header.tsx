@@ -4,14 +4,14 @@ import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } fr
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import { FernLinkButton } from "../components/FernLinkButton";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
-import { useSearchService } from "../services/useSearchService";
-import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { useOpenSearchDialog } from "../sidebar/atom";
-import { HeaderLogoSection } from "./HeaderLogoSection";
-import { ThemeButton } from "./ThemeButton";
+import { FernLinkButton } from "../components/FernLinkButton.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { SEARCH_BOX_MOUNTED } from "../search/SearchBox.js";
+import { useSearchService } from "../services/useSearchService.js";
+import { SidebarSearchBar } from "../sidebar/SidebarSearchBar.js";
+import { useOpenSearchDialog } from "../sidebar/atom.js";
+import { HeaderLogoSection } from "./HeaderLogoSection.js";
+import { ThemeButton } from "./ThemeButton.js";
 
 export declare namespace Header {
     export interface Props {

@@ -2,12 +2,12 @@ import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
-import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
-import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
-import { PlaygroundWebSocketRequestFormState } from "./types";
+import { WebSocketMessage, WebSocketMessages } from "../api-page/web-socket/WebSocketMessages.js";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types.js";
+import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm.js";
+import { HorizontalSplitPane } from "./VerticalSplitPane.js";
+import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm.js";
+import { PlaygroundWebSocketRequestFormState } from "./types.js";
 
 interface PlaygroundWebSocketSessionFormProps {
     websocket: ResolvedWebSocketChannel;

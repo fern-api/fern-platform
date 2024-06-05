@@ -1,5 +1,5 @@
 import { APIV1Write } from "../../../client";
-import { assertNever } from "../../utils/assertNever";
+import { assertNever } from "../../utils/assertNever.js";
 
 export type ResolveTypeById = (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition;
 

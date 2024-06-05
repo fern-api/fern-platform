@@ -1,7 +1,7 @@
 import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { FC } from "react";
-import { usePlaygroundContext } from "./PlaygroundContext";
-import { PlaygroundSelectionState } from "./PlaygroundDrawer";
+import { usePlaygroundContext } from "./PlaygroundContext.js";
+import { PlaygroundSelectionState } from "./PlaygroundDrawer.js";
 
 export const PlaygroundButton: FC<{ state: PlaygroundSelectionState }> = ({ state }) => {
     const { hasPlayground, setSelectionStateAndOpen } = usePlaygroundContext();

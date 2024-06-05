@@ -3,27 +3,27 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
-import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
-import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
+import { PlaygroundButton } from "../../api-playground/PlaygroundButton.js";
+import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag.js";
+import { FernErrorTag } from "../../components/FernErrorBoundary.js";
+import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample.js";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
     ResolvedExampleEndpointCall,
     ResolvedExampleError,
-} from "../../resolver/types";
-import { AudioExample } from "../examples/AudioExample";
-import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TitledExample } from "../examples/TitledExample";
-import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
-import { lineNumberOf } from "../examples/utils";
-import { getMessageForStatus } from "../utils/getMessageForStatus";
-import { WebSocketMessages } from "../web-socket/WebSocketMessages";
-import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
-import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
-import { ErrorExampleSelect } from "./ErrorExampleSelect";
+} from "../../resolver/types.js";
+import { AudioExample } from "../examples/AudioExample.js";
+import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TitledExample } from "../examples/TitledExample.js";
+import type { CodeExample, CodeExampleGroup } from "../examples/code-example.js";
+import { lineNumberOf } from "../examples/utils.js";
+import { getMessageForStatus } from "../utils/getMessageForStatus.js";
+import { WebSocketMessages } from "../web-socket/WebSocketMessages.js";
+import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown.js";
+import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow.js";
+import { ErrorExampleSelect } from "./ErrorExampleSelect.js";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {

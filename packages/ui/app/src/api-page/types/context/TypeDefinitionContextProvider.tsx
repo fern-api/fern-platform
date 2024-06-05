@@ -1,6 +1,6 @@
 import { PropsWithChildren, useCallback } from "react";
-import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
-import { TypeDefinitionContext, TypeDefinitionContextValue } from "./TypeDefinitionContext";
+import { JsonPropertyPath } from "../../examples/JsonPropertyPath.js";
+import { TypeDefinitionContext, TypeDefinitionContextValue } from "./TypeDefinitionContext.js";
 
 export declare namespace TypeReferenceDefinitions {
     export type Props = PropsWithChildren<{

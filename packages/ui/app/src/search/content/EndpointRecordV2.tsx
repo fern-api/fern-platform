@@ -1,8 +1,8 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
-import type { EndpointSearchRecordV2 } from "../types";
-import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
+import type { EndpointSearchRecordV2 } from "../types.js";
+import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs.js";
 
 export declare namespace EndpointRecordV2 {
     export interface Props {

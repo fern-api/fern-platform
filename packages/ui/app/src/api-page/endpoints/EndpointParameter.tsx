@@ -2,14 +2,14 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
-import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useRouteListener } from "../../contexts/useRouteListener";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
-import { getAnchorId } from "../../util/anchor";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
+import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor.js";
+import { useRouteListener } from "../../contexts/useRouteListener.js";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types.js";
+import { getAnchorId } from "../../util/anchor.js";
+import { ApiPageDescription } from "../ApiPageDescription.js";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions.js";
+import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand.js";
+import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag.js";
 
 export declare namespace EndpointParameter {
     export interface Props {

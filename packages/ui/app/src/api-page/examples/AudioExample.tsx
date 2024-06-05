@@ -1,8 +1,8 @@
 import { FernAudioPlayer } from "@fern-ui/components";
 import { FC } from "react";
-import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { TitledExample } from "./TitledExample";
+import { FernErrorBoundary } from "../../components/FernErrorBoundary.js";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext.js";
+import { TitledExample } from "./TitledExample.js";
 
 export declare namespace AudioExample {
     export interface Props extends Omit<TitledExample.Props, "copyToClipboardText"> {}

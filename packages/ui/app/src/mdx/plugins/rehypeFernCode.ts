@@ -2,10 +2,10 @@ import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
-import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
-import { unknownToString } from "../../util/unknownToString";
-import type { CodeGroup } from "../components/CodeGroup";
-import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
+import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter.js";
+import { unknownToString } from "../../util/unknownToString.js";
+import type { CodeGroup } from "../components/CodeGroup.js";
+import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils.js";
 
 declare module "hast" {
     interface ElementData {

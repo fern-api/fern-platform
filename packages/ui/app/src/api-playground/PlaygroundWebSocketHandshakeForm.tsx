@@ -1,10 +1,10 @@
 import { FernCard } from "@fern-ui/components";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { Callout } from "../mdx/components/Callout";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../resolver/types";
-import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
-import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
-import { PlaygroundWebSocketRequestFormState } from "./types";
+import { Callout } from "../mdx/components/Callout.js";
+import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../resolver/types.js";
+import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm.js";
+import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm.js";
+import { PlaygroundWebSocketRequestFormState } from "./types.js";
 
 interface PlaygroundWebSocketHandshakeFormProps {
     websocket: ResolvedWebSocketChannel;

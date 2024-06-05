@@ -4,10 +4,10 @@ import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SearchHit } from "./SearchHit";
-import type { SearchRecord } from "./types";
-import { getFullPathForSearchRecord } from "./util";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { SearchHit } from "./SearchHit.js";
+import type { SearchRecord } from "./types.js";
+import { getFullPathForSearchRecord } from "./util.js";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
     return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;

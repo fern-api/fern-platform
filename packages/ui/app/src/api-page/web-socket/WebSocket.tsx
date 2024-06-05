@@ -5,10 +5,10 @@ import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
-import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { PlaygroundButton } from "../../api-playground/PlaygroundButton.js";
+import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor.js";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext.js";
+import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext.js";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
@@ -18,18 +18,18 @@ import {
     getParameterDescription,
     stringifyResolvedEndpointPathParts,
     unwrapReference,
-} from "../../resolver/types";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
-import { getSlugFromChildren } from "../../util/getSlugFromText";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { EndpointParameter } from "../endpoints/EndpointParameter";
-import { EndpointSection } from "../endpoints/EndpointSection";
-import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
-import { TitledExample } from "../examples/TitledExample";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
+} from "../../resolver/types.js";
+import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton.js";
+import { getSlugFromChildren } from "../../util/getSlugFromText.js";
+import { ApiPageDescription } from "../ApiPageDescription.js";
+import { EndpointParameter } from "../endpoints/EndpointParameter.js";
+import { EndpointSection } from "../endpoints/EndpointSection.js";
+import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow.js";
+import { TitledExample } from "../examples/TitledExample.js";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator.js";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions.js";
+import { useApiPageCenterElement } from "../useApiPageCenterElement.js";
+import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages.js";
 
 export declare namespace WebSocket {
     export interface Props {

@@ -2,8 +2,8 @@ import { FernButton, FernDropdown } from "@fern-ui/components";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { sortBy } from "lodash-es";
 import { memo, useMemo } from "react";
-import { Markdown } from "../../mdx/Markdown";
-import { ResolvedEnumValue } from "../../resolver/types";
+import { Markdown } from "../../mdx/Markdown.js";
+import { ResolvedEnumValue } from "../../resolver/types.js";
 
 // const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
 //     ssr: true,

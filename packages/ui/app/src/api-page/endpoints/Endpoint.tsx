@@ -1,10 +1,10 @@
 import { useAtomValue } from "jotai";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
-import { FERN_STREAM_ATOM } from "../../sidebar/atom";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { EndpointContent } from "./EndpointContent";
+import { useFeatureFlags } from "../../contexts/FeatureFlagContext.js";
+import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext.js";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types.js";
+import { FERN_STREAM_ATOM } from "../../sidebar/atom.js";
+import { useApiPageCenterElement } from "../useApiPageCenterElement.js";
+import { EndpointContent } from "./EndpointContent.js";
 
 export declare namespace Endpoint {
     export interface Props {

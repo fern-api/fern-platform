@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
-import { SeparatedElements } from "../../../commons/SeparatedElements";
-import { TypeComponentSeparator } from "../TypeComponentSeparator";
+import { SeparatedElements } from "../../../commons/SeparatedElements.js";
+import { TypeComponentSeparator } from "../TypeComponentSeparator.js";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {

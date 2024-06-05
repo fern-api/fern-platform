@@ -1,4 +1,4 @@
-import { ResolvedEndpointDefinition, ResolvedWithApiDefinition } from "../resolver/types";
+import { ResolvedEndpointDefinition, ResolvedWithApiDefinition } from "../resolver/types.js";
 
 // const REQUEST_SNIPPET = "<RequestSnippet";
 // const ENDPOINT_PARAMETER: RegExp = /endpoint="([^"]+)"/;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { notFoundResponse, redirectResponse } from "../../../utils/serverResponse";
+import { notFoundResponse, redirectResponse } from "../../../utils/serverResponse.js";
 
 export const runtime = "edge";
 

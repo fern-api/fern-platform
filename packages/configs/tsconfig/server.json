@@ -4,8 +4,8 @@
   "extends": "./base.json",
   "compilerOptions": {
     "allowJs": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strictNullChecks": true,
     "sourceMap": true,
     "jsx": "preserve",

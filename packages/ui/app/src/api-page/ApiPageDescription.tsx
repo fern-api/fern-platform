@@ -1,6 +1,6 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
-import { SerializedMdxContent } from "../mdx/mdx";
+import { SerializedMdxContent } from "../mdx/mdx.js";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

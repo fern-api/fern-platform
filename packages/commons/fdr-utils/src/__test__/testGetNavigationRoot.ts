@@ -1,7 +1,7 @@
 import { DocsV2Read } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
-import { getNavigationRoot } from "../getNavigationRoot";
+import { getNavigationRoot } from "../getNavigationRoot.js";
 
 export function testGetNavigationRoot(fixtureName: string, slug: string): void {
     // eslint-disable-next-line vitest/valid-title

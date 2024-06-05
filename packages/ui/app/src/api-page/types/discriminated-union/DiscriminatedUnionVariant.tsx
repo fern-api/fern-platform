@@ -5,15 +5,15 @@ import {
     ResolvedDiscriminatedUnionShapeVariant,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
-} from "../../../resolver/types";
-import { ApiPageDescription } from "../../ApiPageDescription";
-import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
+} from "../../../resolver/types.js";
+import { ApiPageDescription } from "../../ApiPageDescription.js";
+import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag.js";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "../context/TypeDefinitionContext";
-import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
+} from "../context/TypeDefinitionContext.js";
+import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition.js";
 
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {

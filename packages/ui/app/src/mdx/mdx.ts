@@ -8,13 +8,13 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { captureSentryError } from "../analytics/sentry";
-import { stringHasMarkdown } from "./common/util";
-import { rehypeFernCode } from "./plugins/rehypeFernCode";
-import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
-import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout";
-import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
-import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
+import { captureSentryError } from "../analytics/sentry.js";
+import { stringHasMarkdown } from "./common/util.js";
+import { rehypeFernCode } from "./plugins/rehypeFernCode.js";
+import { rehypeFernComponents } from "./plugins/rehypeFernComponents.js";
+import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout.js";
+import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX.js";
+import { customHeadingHandler } from "./plugins/remarkRehypeHandlers.js";
 
 /**
  * The layout used for guides. This is the default layout.

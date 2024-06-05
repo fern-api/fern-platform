@@ -1,11 +1,11 @@
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useIsReady } from "../contexts/useIsReady";
-import { ResolvedRootPackage } from "../resolver/types";
-import { APIS } from "../sidebar/atom";
-import { ApiPackageContents } from "./ApiPackageContents";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext.js";
+import { useIsReady } from "../contexts/useIsReady.js";
+import { ResolvedRootPackage } from "../resolver/types.js";
+import { APIS } from "../sidebar/atom.js";
+import { ApiPackageContents } from "./ApiPackageContents.js";
 
 export declare namespace ApiPage {
     export interface Props {

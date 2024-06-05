@@ -4,15 +4,15 @@ import type { Element } from "hast";
 import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 import { visit } from "unist-util-visit";
-import { HastToJSX } from "../mdx/common/HastToJsx";
-import { parseStringStyle } from "../util/parseStringStyle";
+import { HastToJSX } from "../mdx/common/HastToJsx.js";
+import { parseStringStyle } from "../util/parseStringStyle.js";
 import "./FernSyntaxHighlighter.css";
 import {
     FernSyntaxHighlighterTokensProps,
     ScrollToHandle,
     fernSyntaxHighlighterTokenPropsAreEqual,
-} from "./FernSyntaxHighlighterTokens";
-import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils";
+} from "./FernSyntaxHighlighterTokens.js";
+import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils.js";
 
 interface CodeBlockContext {
     fontSize: "sm" | "base" | "lg";

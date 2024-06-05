@@ -1,7 +1,7 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { ReactElement } from "react";
-import { FernLink } from "../components/FernLink";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { FernLink } from "../components/FernLink.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
 
 export function HeaderTabs(): ReactElement {
     const { tabs, currentTabIndex } = useDocsContext();

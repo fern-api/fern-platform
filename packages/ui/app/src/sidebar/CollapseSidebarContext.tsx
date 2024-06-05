@@ -1,8 +1,8 @@
 import { SidebarNode, visitSidebarNode } from "@fern-ui/fdr-utils";
 import { noop } from "lodash-es";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext.js";
 
 interface CollapseSidebarContextValue {
     expanded: string[][]; // true = expand all, string[] = expand only these slugs

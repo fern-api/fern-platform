@@ -10,9 +10,9 @@ import {
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
-import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
-import { getRedirectForPath } from "./hackRedirects";
+import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags.js";
+import { getAuthorizationUrl, getJwtTokenSecret } from "./auth.js";
+import { getRedirectForPath } from "./hackRedirects.js";
 
 async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(

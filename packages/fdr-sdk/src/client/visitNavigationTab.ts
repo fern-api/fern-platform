@@ -1,4 +1,4 @@
-import { DocsV1Db, DocsV1Read, DocsV1Write } from ".";
+import { DocsV1Db, DocsV1Read, DocsV1Write } from "..";
 
 export interface DbNavigationTabVisitor<T> {
     link: (config: DocsV1Read.NavigationTabLink) => T;

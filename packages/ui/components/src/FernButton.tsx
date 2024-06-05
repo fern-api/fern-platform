@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { ComponentProps, forwardRef, PropsWithChildren, ReactElement, ReactNode, useRef } from "react";
-import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
-import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
+import { FernTooltip, FernTooltipProvider } from "./FernTooltip.js";
+import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon.js";
 
 export type Intent = "none" | "primary" | "success" | "warning" | "danger";
 

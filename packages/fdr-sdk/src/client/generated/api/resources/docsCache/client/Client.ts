@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as FernRegistry from "../../..";
+import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace DocsCache {
@@ -16,12 +16,22 @@ export declare namespace DocsCache {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class DocsCache {
     constructor(protected readonly _options: DocsCache.Options = {}) {}
 
+    /**
+     * @param {FernRegistry.InvalidateCachedDocsRequest} request
+     * @param {DocsCache.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docsCache.invalidate({
+     *         url: "string"
+     *     })
+     */
     public async invalidate(
         request: FernRegistry.InvalidateCachedDocsRequest,
         requestOptions?: DocsCache.RequestOptions
@@ -42,6 +52,7 @@ export class DocsCache {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -56,7 +67,7 @@ export class DocsCache {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -1,14 +1,19 @@
 import { noop } from "lodash-es";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { checkReleaseBlockers } from "./checkReleaseBlockers";
+import { checkReleaseBlockers } from "./checkReleaseBlockers.js";
 
 void yargs(hideBin(process.argv))
-    .scriptName(process.env.CLI_NAME ?? "fern-scripts")
-    .strict()
-    .command("check-docs-release-blockers", "Check that there are no release blockers for docs", noop, async () => {
-        await checkReleaseBlockers("release-blockers-docs.yml");
-    })
-    .demandCommand()
-    .showHelpOnFail(true)
-    .parse();
+  .scriptName(process.env.CLI_NAME ?? "fern-scripts")
+  .strict()
+  .command(
+    "check-docs-release-blockers",
+    "Check that there are no release blockers for docs",
+    noop,
+    async () => {
+      await checkReleaseBlockers("release-blockers-docs.yml");
+    },
+  )
+  .demandCommand()
+  .showHelpOnFail(true)
+  .parse();

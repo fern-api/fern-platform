@@ -1,6 +1,6 @@
 import { describe } from "vitest";
-import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
-import { testGetNavigationRoot } from "./testGetNavigationRoot";
+import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig.js";
+import { testGetNavigationRoot } from "./testGetNavigationRoot.js";
 
 const FIXTURE = "hume";
 

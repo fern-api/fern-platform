@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { LayoutBreakpoint } from "./LayoutBreakpoint";
+import { LayoutBreakpoint } from "./LayoutBreakpoint.js";
 
 /*
 theme: {

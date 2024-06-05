@@ -1,6 +1,6 @@
 import { camelCase } from "lodash-es";
 import StyleToObject from "style-to-object";
-import { captureSentryError } from "../analytics/sentry";
+import { captureSentryError } from "../analytics/sentry.js";
 
 export function parseStringStyle(value: unknown): Record<string, string> | undefined {
     if (typeof value !== "string") {

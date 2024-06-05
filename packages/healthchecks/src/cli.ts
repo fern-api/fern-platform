@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { getAllFernDocsWebsites } from "./getDocsURLs";
-import { runRules } from "./rules/runRules";
+import { getAllFernDocsWebsites } from "./getDocsURLs.js";
+import { runRules } from "./rules/runRules.js";
 
 void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-healthchecks")

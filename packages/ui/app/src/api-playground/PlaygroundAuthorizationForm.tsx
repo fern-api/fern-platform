@@ -6,9 +6,9 @@ import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
 import { Key } from "react-feather";
-import { PasswordInputGroup } from "./PasswordInputGroup";
-import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
-import { PlaygroundRequestFormAuth } from "./types";
+import { PasswordInputGroup } from "./PasswordInputGroup.js";
+import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal.js";
+import { PlaygroundRequestFormAuth } from "./types.js";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;

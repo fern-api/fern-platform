@@ -8,10 +8,10 @@ import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
-import { capturePosthogEvent } from "../analytics/posthog";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { capturePosthogEvent } from "../analytics/posthog.js";
+import { FernErrorBoundary } from "../components/FernErrorBoundary.js";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext.js";
+import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint.js";
 import {
     FlattenedRootPackage,
     ResolvedApiDefinition,
@@ -21,20 +21,20 @@ import {
     ResolvedWebSocketChannel,
     isEndpoint,
     isWebSocket,
-} from "../resolver/types";
-import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
-import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
-import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
-import { HorizontalSplitPane } from "./VerticalSplitPane";
+} from "../resolver/types.js";
+import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext.js";
+import { PlaygroundEndpoint } from "./PlaygroundEndpoint.js";
+import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent.js";
+import { PlaygroundWebSocket } from "./PlaygroundWebSocket.js";
+import { HorizontalSplitPane } from "./VerticalSplitPane.js";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundRequestFormAuth,
     PlaygroundWebSocketRequestFormState,
-} from "./types";
-import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
-import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
+} from "./types.js";
+import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane.js";
+import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils.js";
 
 export type PlaygroundSelectionState = PlaygroundSelectionStateEndpoint | PlaygroundSelectionStateWebSocket;
 export interface PlaygroundSelectionStateEndpoint {

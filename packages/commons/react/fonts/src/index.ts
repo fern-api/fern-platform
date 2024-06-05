@@ -1,1 +1,1 @@
-export { useAreFontsReady, useIsFontReady } from "./useAreFontsReady";
+export { useAreFontsReady, useIsFontReady } from "./useAreFontsReady.js";

@@ -4,10 +4,10 @@ import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../resolver/types";
-import { castToRecord, getDefaultValueForType, isExpandable } from "../utils";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand.js";
+import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../resolver/types.js";
+import { castToRecord, getDefaultValueForType, isExpandable } from "../utils.js";
+import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm.js";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

@@ -4,9 +4,9 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import React, { ReactElement, useState } from "react";
 import { Search } from "react-feather";
-import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
-import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
-import { FernCollapseWithButton } from "./FernCollapseWithButton";
+import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext.js";
+import { EnumDefinitionDetails } from "./EnumDefinitionDetails.js";
+import { FernCollapseWithButton } from "./FernCollapseWithButton.js";
 
 type EnumTypeDefinitionProps = {
     elements: ReactElement[];

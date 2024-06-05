@@ -1,10 +1,10 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
-import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample";
-import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
-import { buildRequestUrl, unknownToString } from "../api-playground/utils";
-import { ResolvedCodeSnippet, ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "./types";
+import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample.js";
+import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl.js";
+import { buildRequestUrl, unknownToString } from "../api-playground/utils.js";
+import { ResolvedCodeSnippet, ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "./types.js";
 
 interface HTTPSnippetClient {
     targetId: TargetId;

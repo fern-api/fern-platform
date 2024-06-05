@@ -1,16 +1,16 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import React, { useCallback } from "react";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
-import { Breadcrumbs } from "../Breadcrumbs";
-import { EndpointParameter } from "../endpoints/EndpointParameter";
-import { EndpointSection } from "../endpoints/EndpointSection";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { WebhookPayloadSection } from "./WebhookPayloadSection";
-import { WebhookResponseSection } from "./WebhookResponseSection";
-import { useWebhookContext } from "./webhook-context/useWebhookContext";
+import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types.js";
+import { ApiPageDescription } from "../ApiPageDescription.js";
+import { Breadcrumbs } from "../Breadcrumbs.js";
+import { EndpointParameter } from "../endpoints/EndpointParameter.js";
+import { EndpointSection } from "../endpoints/EndpointSection.js";
+import { JsonPropertyPath } from "../examples/JsonPropertyPath.js";
+import { TypeComponentSeparator } from "../types/TypeComponentSeparator.js";
+import { WebhookPayloadSection } from "./WebhookPayloadSection.js";
+import { WebhookResponseSection } from "./WebhookResponseSection.js";
+import { useWebhookContext } from "./webhook-context/useWebhookContext.js";
 
 const WebhookExample = dynamic(
     () => import("./webhook-examples/WebhookExample").then(({ WebhookExample }) => WebhookExample),

@@ -2,10 +2,10 @@ import type { JSXFragment } from "estree-jsx";
 import { SKIP as ESTREE_SKIP, visit as visitEstree } from "estree-util-visit";
 import type { ElementContent, Root } from "hast";
 import { SKIP, visit } from "unist-util-visit";
-import { parseStringStyle } from "../../util/parseStringStyle";
-import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
-import { JSX_COMPONENTS } from "../mdx-components";
-import { isMdxJsxFlowElement, toAttribute } from "./utils";
+import { parseStringStyle } from "../../util/parseStringStyle.js";
+import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements.js";
+import { JSX_COMPONENTS } from "../mdx-components.js";
+import { isMdxJsxFlowElement, toAttribute } from "./utils.js";
 
 export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean } = {}): (tree: Root) => void {
     const SUPPORTED_JSX_TAGS = [...Object.keys(JSX_COMPONENTS), ...INTRINSIC_JSX_TAGS];

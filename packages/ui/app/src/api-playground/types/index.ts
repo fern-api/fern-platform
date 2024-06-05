@@ -1,9 +1,9 @@
 import { assertNever } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
-import { ResolvedFormDataRequestProperty, ResolvedFormValue } from "../../resolver/types";
-import { PlaygroundRequestFormAuth } from "./auth";
-import { PlaygroundFormDataEntryValue } from "./formDataEntryValue";
-import { JsonVariant } from "./jsonVariant";
+import { ResolvedFormDataRequestProperty, ResolvedFormValue } from "../../resolver/types.js";
+import { PlaygroundRequestFormAuth } from "./auth.js";
+import { PlaygroundFormDataEntryValue } from "./formDataEntryValue.js";
+import { JsonVariant } from "./jsonVariant.js";
 
 export type PlaygroundRequestFormState = PlaygroundEndpointRequestFormState | PlaygroundWebSocketRequestFormState;
 
@@ -83,7 +83,7 @@ export interface PlaygroundWebSocketRequestFormState {
     messages: Record<string, unknown>;
 }
 
-export * from "./auth";
-export * from "./formDataEntryValue";
-export * from "./proxy";
-export * from "./serializable";
+export * from "./auth.js";
+export * from "./formDataEntryValue.js";
+export * from "./proxy.js";
+export * from "./serializable.js";

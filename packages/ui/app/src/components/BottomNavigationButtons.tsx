@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useNavigationContext } from "../contexts/navigation-context";
-import { BottomNavigationButton } from "./BottomNavigationButton";
+import { useNavigationContext } from "../contexts/navigation-context.js";
+import { BottomNavigationButton } from "./BottomNavigationButton.js";
 
 export const BottomNavigationButtons: FC<{ showPrev?: boolean }> = ({ showPrev = false }) => {
     const { resolvedPath } = useNavigationContext();

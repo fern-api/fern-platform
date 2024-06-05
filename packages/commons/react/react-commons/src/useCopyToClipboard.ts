@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useTimeout } from "./useTimeout";
+import { useTimeout } from "./useTimeout.js";
 
 export declare namespace useCopyToClipboard {
     export interface Return {

@@ -9,10 +9,10 @@ import {
     visitUnversionedWriteNavigationConfig,
     visitWriteNavigationConfig,
 } from "../../client";
-import { isNavigationTabLink } from "../../client/visitNavigationTab";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
-import { assertNever } from "../utils/assertNever";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
+import { isNavigationTabLink } from "../../client/visitNavigationTab.js";
+import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks.js";
+import { assertNever } from "../utils/assertNever.js";
+import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors.js";
 
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
