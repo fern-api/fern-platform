@@ -17,6 +17,7 @@ export function SidebarPageNode({ node, depth, className }: SidebarPageNodeProps
 
     return (
         <SidebarSlugLink
+            nodeId={node.id}
             className={className}
             slug={node.slug}
             depth={Math.max(depth - 1, 0)}

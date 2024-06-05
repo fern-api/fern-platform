@@ -1,8 +1,20 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
 import { noop } from "lodash-es";
-import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import {
+    FC,
+    PropsWithChildren,
+    RefObject,
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
+import urljoin from "url-join";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
+import { useActiveValueListeners } from "../hooks/useActiveValueListeners";
 
 interface CollapseSidebarContextValue {
     expanded: FernNavigation.NodeId[];
@@ -10,7 +22,7 @@ interface CollapseSidebarContextValue {
     selectedNodeId: FernNavigation.NodeId | undefined;
     checkExpanded: (id: FernNavigation.NodeId) => boolean;
     checkChildSelected: (id: FernNavigation.NodeId) => boolean;
-    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
+    registerScrolledToPathListener: (nodeId: FernNavigation.NodeId, ref: RefObject<HTMLDivElement>) => () => void;
 }
 
 const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
@@ -24,36 +36,97 @@ const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
 
 export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(CollapseSidebarContext);
 
-export const CollapseSidebarProvider: FC<PropsWithChildren> = ({ children }) => {
+function toSlug(route: string): FernNavigation.Slug {
+    let parts = route.slice(1).split("#")[0].split("/") ?? [];
+    if (typeof window === "undefined") {
+        parts = parts.slice(2);
+    }
+    return FernNavigation.Slug(urljoin(parts));
+}
+
+export const CollapseSidebarProvider: FC<
+    PropsWithChildren<{
+        scrollRef: RefObject<HTMLDivElement>;
+    }>
+> = ({ children, scrollRef: scrollContainerRef }) => {
+    const router = useRouter();
     const { sidebar } = useDocsContext();
-    const { activeNavigatable, registerScrolledToPathListener } = useNavigationContext();
+    const nodeCollector = useMemo(() => new NodeCollector(sidebar), [sidebar]);
+    const [selectedNodeId, setSelectedNodeId] = useState(() => nodeCollector.slugMap.get(toSlug(router.asPath))?.id);
 
-    const selectedNodeId = activeNavigatable?.id;
+    const { invokeListeners, registerListener } = useActiveValueListeners(selectedNodeId);
 
-    const parentIdMap = useMemo(() => {
-        const map = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+    useEffect(() => {
+        const handleRouteChange = (route: string) => {
+            const nextSelectedNodeId = nodeCollector.slugMap.get(toSlug(route))?.id;
+            setSelectedNodeId(nextSelectedNodeId);
+            if (nextSelectedNodeId != null) {
+                invokeListeners(nextSelectedNodeId);
+            }
+        };
+        const handleRouteChangeError = (_err: Error, route: string) => {
+            handleRouteChange(route);
+        };
+        router.events.on("routeChangeComplete", handleRouteChange);
+        router.events.on("hashChangeStart", handleRouteChange);
+        router.events.on("hashChangeComplete", handleRouteChange);
+        router.events.on("routeChangeError", handleRouteChangeError);
+        return () => {
+            router.events.off("routeChangeComplete", handleRouteChange);
+            router.events.off("hashChangeStart", handleRouteChange);
+            router.events.off("hashChangeComplete", handleRouteChange);
+            router.events.off("routeChangeError", handleRouteChangeError);
+        };
+    }, [invokeListeners, nodeCollector.slugMap, router.events]);
+
+    const registerScrolledToPathListener = useCallback(
+        (nodeId: FernNavigation.NodeId, targetRef: RefObject<HTMLDivElement>) =>
+            registerListener(nodeId, () => {
+                if (scrollContainerRef.current == null || targetRef.current == null) {
+                    return;
+                }
+
+                // if the target is already in view, don't scroll
+                if (
+                    targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
+                    targetRef.current.offsetTop + targetRef.current.clientHeight <=
+                        scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
+                ) {
+                    return;
+                }
+
+                // if the target is outside of the scroll container, scroll to it (centered)
+                scrollContainerRef.current.scrollTo({
+                    top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 2,
+                    behavior: "smooth",
+                });
+            }),
+        [registerListener, scrollContainerRef],
+    );
+
+    const { parentIdMap, parentToChildrenMap } = useMemo(() => {
+        const parentIdMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+        const parentToChildrenMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+
         FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
             if (FernNavigation.hasMetadata(node)) {
-                map.set(
+                parentIdMap.set(
                     node.id,
                     parents.map((p) => p.id),
                 );
             }
         });
-        return map;
-    }, [sidebar]);
 
-    const parentToChildrenMap = useMemo(() => {
-        const map = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
         parentIdMap.forEach((parents, id) => {
             parents.forEach((parentId) => {
-                const children = map.get(parentId) ?? [];
+                const children = parentToChildrenMap.get(parentId) ?? [];
                 children.push(id);
-                map.set(parentId, children);
+                parentToChildrenMap.set(parentId, children);
             });
         });
-        return map;
-    }, [parentIdMap]);
+
+        return { parentIdMap, parentToChildrenMap };
+    }, [sidebar]);
 
     const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() =>
         selectedNodeId == null ? [] : [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])],

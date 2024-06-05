@@ -31,6 +31,7 @@ export function SidebarApiSectionNode({
 
         return (
             <SidebarSlugLink
+                nodeId={node.id}
                 className={className}
                 slug={node.slug}
                 depth={Math.max(depth - 1, 0)}
@@ -68,6 +69,7 @@ export function SidebarApiSectionNode({
 
     return (
         <SidebarSlugLink
+            nodeId={node.id}
             icon={node.icon}
             className={className}
             depth={Math.max(depth - 1, 0)}

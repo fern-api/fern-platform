@@ -70,7 +70,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             ))}
                         </ul>
                     )}
-                    <CollapseSidebarProvider>
+                    <CollapseSidebarProvider scrollRef={scrollRef}>
                         <FernTooltipProvider>
                             <SidebarRootNode node={sidebar} />
                         </FernTooltipProvider>

@@ -11,7 +11,6 @@ export const NavigationContext = React.createContext<NavigationContextValue>({
     selectedSlug: "",
     activeNavigatable: undefined,
     onScrollToPath: noop,
-    registerScrolledToPathListener: () => noop,
     resolvedPath: {
         type: "custom-markdown-page",
         fullSlug: "",
@@ -33,7 +32,6 @@ export interface NavigationContextValue {
     selectedSlug: string;
     activeNavigatable: FernNavigation.NavigationNodeWithMetadata | undefined;
     onScrollToPath: (slug: string) => void;
-    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     resolvedPath: ResolvedPath; // the initial path that was hard-navigated
     unversionedSlug: string;
 }

@@ -26,6 +26,7 @@ export function SidebarRootApiSectionNode({
 
         return (
             <SidebarSlugLink
+                nodeId={node.id}
                 linkClassName="font-semibold !text-text-default"
                 className={className}
                 slug={node.slug}
@@ -54,6 +55,7 @@ export function SidebarRootApiSectionNode({
                 </div>
             ) : (
                 <SidebarSlugLink
+                    nodeId={node.id}
                     linkClassName="font-semibold !text-text-default"
                     icon={node.icon}
                     className={className}

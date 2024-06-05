@@ -28,7 +28,7 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
     const { layout, colors, currentVersionId } = useDocsContext();
-    const { registerScrolledToPathListener, selectedSlug } = useNavigationContext();
+    const { selectedSlug } = useNavigationContext();
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
 
@@ -88,7 +88,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                 : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block"
                         }
                         currentSlug={currentSlug}
-                        registerScrolledToPathListener={registerScrolledToPathListener}
+                        // registerScrolledToPathListener={registerScrolledToPathListener}
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                         showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}

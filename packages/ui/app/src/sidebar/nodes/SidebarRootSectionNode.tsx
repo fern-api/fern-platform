@@ -23,6 +23,7 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
 
         return (
             <SidebarSlugLink
+                nodeId={node.id}
                 linkClassName="font-semibold !text-text-default"
                 className={className}
                 slug={node.slug}
@@ -51,6 +52,7 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
                 </div>
             ) : (
                 <SidebarSlugLink
+                    nodeId={node.id}
                     linkClassName="font-semibold !text-text-default"
                     icon={node.icon}
                     className={className}

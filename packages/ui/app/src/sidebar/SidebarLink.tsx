@@ -11,18 +11,20 @@ import {
     PropsWithChildren,
     ReactElement,
     ReactNode,
+    RefObject,
     createElement,
     forwardRef,
-    memo,
     useEffect,
+    useImperativeHandle,
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
 import urljoin from "url-join";
 import { getRouteNodeWithAnchor } from "../util/anchor";
-import { useIsMobileSidebarOpen } from "./atom";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
+    nodeId: FernNavigation.NodeId;
     icon?: ReactElement | string;
     slug?: FernNavigation.Slug;
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
@@ -36,7 +38,7 @@ interface SidebarSlugLinkProps {
     toggleExpand?: () => void;
     expanded?: boolean;
     rightElement?: ReactNode;
-    registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
+    registerScrolledToPathListener: (nodeId: FernNavigation.NodeId, ref: RefObject<HTMLDivElement>) => () => void;
     tooltipContent?: ReactNode;
     hidden?: boolean;
     scrollOnShallow?: boolean;
@@ -54,7 +56,7 @@ type SidebarLinkProps = PropsWithChildren<
     }
 >;
 
-const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((props, ref) => {
+export const SidebarLink = forwardRef<HTMLDivElement, SidebarLinkProps>((props, parentRef) => {
     const {
         icon,
         className,
@@ -70,7 +72,6 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         expanded = false,
         rightElement,
         children,
-        elementRef,
         tooltipContent,
         target,
         rel,
@@ -78,6 +79,10 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         scrollOnShallow,
         as = "span",
     } = props;
+
+    const ref = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(parentRef, () => ref.current!);
 
     if (hidden && !expanded && !selected) {
         return null;
@@ -111,7 +116,6 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                     onClick?.(e);
                     toggleExpand?.();
                 }}
-                ref={ref}
             >
                 {child}
             </button>
@@ -149,7 +153,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
     return (
         <>
             <div
-                ref={elementRef}
+                ref={ref}
                 className={cn("fern-sidebar-link-container group", className)}
                 data-state={selected ? "active" : "inactive"}
             >
@@ -191,40 +195,40 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
     );
 });
 
-SidebarLinkInternal.displayName = "SidebarLink";
+SidebarLink.displayName = "SidebarLink";
 
-export const SidebarLink = memo(SidebarLinkInternal);
+export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<SidebarSlugLinkProps>>(
+    (props, parentRef) => {
+        const { slug, registerScrolledToPathListener, ...innerProps } = props;
+        const ref = useRef<HTMLDivElement>(null);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        useImperativeHandle(parentRef, () => ref.current!);
+        const isMobileSidebarOpen = useIsMobileSidebarOpen();
+        const closeMobileSidebar = useCloseMobileSidebar();
 
-const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>((props, ref) => {
-    const { slug, registerScrolledToPathListener, ...innerProps } = props;
-    const elementRef = useRef<HTMLDivElement>(null);
-    const isMobileSidebarOpen = useIsMobileSidebarOpen();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        useEffect(() => registerScrolledToPathListener(props.nodeId, ref), [props.nodeId]);
 
-    useEffect(() => {
-        if (slug == null) {
-            return undefined;
-        }
-        return registerScrolledToPathListener(slug, () => {
-            elementRef.current?.scrollIntoView({ block: "center" });
-        });
-    }, [slug, registerScrolledToPathListener]);
+        useEffect(() => {
+            if (isMobileSidebarOpen && props.selected) {
+                ref.current?.scrollIntoView({ block: "center" });
+            }
+        }, [isMobileSidebarOpen, props.selected]);
 
-    useEffect(() => {
-        if (isMobileSidebarOpen && props.selected) {
-            elementRef.current?.scrollIntoView({ block: "center" });
-        }
-    }, [isMobileSidebarOpen, props.selected]);
+        return (
+            <SidebarLink
+                {...innerProps}
+                ref={ref}
+                href={slug != null ? urljoin("/", slug) : undefined}
+                onClick={(e) => {
+                    innerProps.onClick?.(e);
+                    if (slug != null) {
+                        closeMobileSidebar();
+                    }
+                }}
+            />
+        );
+    },
+);
 
-    return (
-        <SidebarLink
-            {...innerProps}
-            ref={ref}
-            elementRef={elementRef}
-            href={slug != null ? urljoin("/", slug) : undefined}
-        />
-    );
-});
-
-SidebarSlugLinkInternal.displayName = "SidebarSlugLink";
-
-export const SidebarSlugLink = memo(SidebarSlugLinkInternal);
+SidebarSlugLink.displayName = "SidebarSlugLink";
