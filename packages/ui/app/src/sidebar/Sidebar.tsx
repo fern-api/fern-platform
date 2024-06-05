@@ -16,20 +16,12 @@ import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
 export interface SidebarProps {
-    currentSlug: string[];
-    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     showSearchBar?: boolean;
 }
 
-const SidebarInner = memo<SidebarProps>(function SidebarInner({
-    // currentSlug,
-    // registerScrolledToPathListener,
-    logoHeight,
-    logoHref,
-    showSearchBar,
-}) {
+const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logoHref, showSearchBar }) {
     const { layout, tabs, currentTabIndex, sidebar } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);

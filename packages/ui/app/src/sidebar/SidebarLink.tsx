@@ -14,6 +14,8 @@ import {
     RefObject,
     createElement,
     forwardRef,
+    memo,
+    useCallback,
     useEffect,
     useImperativeHandle,
     useRef,
@@ -56,7 +58,7 @@ type SidebarLinkProps = PropsWithChildren<
     }
 >;
 
-export const SidebarLink = forwardRef<HTMLDivElement, SidebarLinkProps>((props, parentRef) => {
+const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props, parentRef) => {
     const {
         icon,
         className,
@@ -195,11 +197,13 @@ export const SidebarLink = forwardRef<HTMLDivElement, SidebarLinkProps>((props, 
     );
 });
 
-SidebarLink.displayName = "SidebarLink";
+SidebarLinkInternal.displayName = "SidebarLink";
+
+export const SidebarLink = memo(SidebarLinkInternal);
 
 export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<SidebarSlugLinkProps>>(
     (props, parentRef) => {
-        const { slug, registerScrolledToPathListener, ...innerProps } = props;
+        const { slug, registerScrolledToPathListener, onClick, ...innerProps } = props;
         const ref = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(parentRef, () => ref.current!);
@@ -214,18 +218,22 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
                 ref.current?.scrollIntoView({ block: "center" });
             }
         }, [isMobileSidebarOpen, props.selected]);
+        const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>>(
+            (e) => {
+                onClick?.(e);
+                if (slug != null) {
+                    closeMobileSidebar();
+                }
+            },
+            [closeMobileSidebar, onClick, slug],
+        );
 
         return (
             <SidebarLink
                 {...innerProps}
                 ref={ref}
                 href={slug != null ? urljoin("/", slug) : undefined}
-                onClick={(e) => {
-                    innerProps.onClick?.(e);
-                    if (slug != null) {
-                        closeMobileSidebar();
-                    }
-                }}
+                onClick={handleClick}
             />
         );
     },
