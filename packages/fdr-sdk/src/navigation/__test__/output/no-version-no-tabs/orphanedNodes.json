@@ -6,9 +6,9 @@
     "slug": "docs/api/section-2"
   },
   {
-    "id": "root",
-    "type": "root",
-    "title": "Fern Docs",
+    "id": "root.uv.section-3",
+    "type": "section",
+    "title": "Section 3",
     "slug": "docs/api"
   }
 ]

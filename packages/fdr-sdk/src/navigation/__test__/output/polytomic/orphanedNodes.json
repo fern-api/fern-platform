@@ -1,50 +1,50 @@
 [
   {
-    "id": "root",
-    "type": "root",
-    "title": "Fern Docs",
+    "id": "root..*",
+    "type": "version",
+    "title": "2024-02-08",
     "slug": ""
   },
   {
-    "id": "root..*.uv.guides",
-    "type": "tab",
-    "title": "Guides",
+    "id": "root..*.uv.guides.guides.getting-started",
+    "type": "section",
+    "title": "Getting started",
     "slug": "guides"
   },
   {
-    "id": "root..*.uv.api-reference",
-    "type": "tab",
+    "id": "root..*.uv.api-reference.api-reference.api-reference",
+    "type": "apiReference",
     "title": "API Reference",
     "slug": "api-reference"
   },
   {
-    "id": "root..2024-02-08.uv.guides",
-    "type": "tab",
-    "title": "Guides",
+    "id": "root..2024-02-08.uv.guides.guides.getting-started",
+    "type": "section",
+    "title": "Getting started",
     "slug": "2024-02-08/guides"
   },
   {
-    "id": "root..2024-02-08.uv.api-reference",
-    "type": "tab",
+    "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference",
+    "type": "apiReference",
     "title": "API Reference",
     "slug": "2024-02-08/api-reference"
   },
   {
-    "id": "root..2023-04-25",
-    "type": "version",
-    "title": "2023-04-25",
+    "id": "root..2023-04-25.uv.getting-started",
+    "type": "section",
+    "title": "Getting started",
     "slug": "2023-04-25"
   },
   {
-    "id": "root..2022-12-12",
-    "type": "version",
-    "title": "2022-12-12",
+    "id": "root..2022-12-12.uv.getting-started",
+    "type": "section",
+    "title": "Getting started",
     "slug": "2022-12-12"
   },
   {
-    "id": "root..2021-05-23",
-    "type": "version",
-    "title": "2021-05-23",
+    "id": "root..2021-05-23.uv.getting-started",
+    "type": "section",
+    "title": "Getting started",
     "slug": "2021-05-23"
   }
 ]

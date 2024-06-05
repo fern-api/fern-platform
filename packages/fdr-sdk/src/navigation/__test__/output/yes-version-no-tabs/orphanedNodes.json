@@ -1,8 +1,8 @@
 [
   {
-    "id": "root",
-    "type": "root",
-    "title": "Fern Docs",
+    "id": "root..*",
+    "type": "version",
+    "title": "Version 1",
     "slug": "docs/api"
   },
   {
@@ -12,9 +12,9 @@
     "slug": "docs/api/section-2"
   },
   {
-    "id": "root..*",
-    "type": "version",
-    "title": "Version 1",
+    "id": "root..*.uv.section-3",
+    "type": "section",
+    "title": "Section 3",
     "slug": "docs/api"
   },
   {
@@ -36,9 +36,9 @@
     "slug": "docs/api/version-1"
   },
   {
-    "id": "root..version-2",
-    "type": "version",
-    "title": "Version 2",
+    "id": "root..version-2.uv.section-4",
+    "type": "section",
+    "title": "Section 4",
     "slug": "docs/api/version-2"
   }
 ]

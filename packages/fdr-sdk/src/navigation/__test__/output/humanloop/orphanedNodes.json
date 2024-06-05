@@ -1,21 +1,15 @@
 [
   {
-    "id": "root",
-    "type": "root",
-    "title": "Fern Docs",
+    "id": "root..*",
+    "type": "version",
+    "title": "v4.0",
     "slug": ""
   },
   {
-    "id": "root..*.uv.docs",
-    "type": "tab",
-    "title": "Docs",
-    "slug": "docs"
-  },
-  {
-    "id": "root..*.uv.docs.docs.guides",
+    "id": "root..*.uv.docs.docs.getting-started",
     "type": "section",
-    "title": "Guides",
-    "slug": "docs/guides"
+    "title": "Getting Started",
+    "slug": "docs"
   },
   {
     "id": "root..*.uv.docs.docs.guides.generate-and-logging",
@@ -36,10 +30,10 @@
     "slug": "docs/guides"
   },
   {
-    "id": "root..*.uv.docs.docs.getting-started",
+    "id": "root..*.uv.docs.docs.guides.tools",
     "type": "section",
-    "title": "Getting Started",
-    "slug": "docs"
+    "title": "Tools",
+    "slug": "docs/guides"
   },
   {
     "id": "root..*.uv.docs.docs.core-concepts",
@@ -54,10 +48,10 @@
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs/api-reference",
-    "type": "tab",
-    "title": "API Reference",
-    "slug": "docs/api-reference"
+    "id": "root..*.uv.docs.docs.references",
+    "type": "section",
+    "title": "References",
+    "slug": "docs"
   },
   {
     "id": "root..*.uv.docs/api-reference.docs/api-reference.introduction",
@@ -66,16 +60,16 @@
     "slug": "docs/api-reference"
   },
   {
-    "id": "root..v4.uv.docs",
+    "id": "root..*.uv.docs/api-reference",
     "type": "tab",
-    "title": "Docs",
-    "slug": "v4/docs"
+    "title": "API Reference",
+    "slug": "docs/api-reference"
   },
   {
-    "id": "root..v4.uv.docs.docs.guides",
+    "id": "root..v4.uv.docs.docs.getting-started",
     "type": "section",
-    "title": "Guides",
-    "slug": "v4/docs/guides"
+    "title": "Getting Started",
+    "slug": "v4/docs"
   },
   {
     "id": "root..v4.uv.docs.docs.guides.generate-and-logging",
@@ -96,10 +90,10 @@
     "slug": "v4/docs/guides"
   },
   {
-    "id": "root..v4.uv.docs.docs.getting-started",
+    "id": "root..v4.uv.docs.docs.guides.tools",
     "type": "section",
-    "title": "Getting Started",
-    "slug": "v4/docs"
+    "title": "Tools",
+    "slug": "v4/docs/guides"
   },
   {
     "id": "root..v4.uv.docs.docs.core-concepts",
@@ -114,15 +108,21 @@
     "slug": "v4/docs"
   },
   {
-    "id": "root..v4.uv.docs/api-reference",
-    "type": "tab",
-    "title": "API Reference",
-    "slug": "v4/docs/api-reference"
+    "id": "root..v4.uv.docs.docs.references",
+    "type": "section",
+    "title": "References",
+    "slug": "v4/docs"
   },
   {
     "id": "root..v4.uv.docs/api-reference.docs/api-reference.introduction",
     "type": "section",
     "title": "Introduction",
+    "slug": "v4/docs/api-reference"
+  },
+  {
+    "id": "root..v4.uv.docs/api-reference",
+    "type": "tab",
+    "title": "API Reference",
     "slug": "v4/docs/api-reference"
   }
 ]
