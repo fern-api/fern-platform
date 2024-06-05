@@ -135,6 +135,7 @@ export async function getDocsPageProps(
             docs.definition.config,
             docs.definition.pages,
             docs.definition.filesV2,
+            docs.definition.apis,
             node.node,
         ),
     };
