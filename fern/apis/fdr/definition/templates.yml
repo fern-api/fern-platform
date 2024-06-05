@@ -206,6 +206,8 @@ types:
       clientInstantiation: string
       functionInvocation: Template
   VersionedSnippetTemplate:
+    audiences:
+      - templateResolver
     union:
       v1: SnippetTemplate
 
@@ -223,6 +225,8 @@ types:
           an async example, you could have { "async": Template(...) }.
 
   EndpointSnippetTemplate:
+    audiences:
+      - templateResolver
     properties:
       sdk: snippets.SDK
       endpointId: commons.EndpointIdentifier

@@ -845,12 +845,6 @@ importers:
 
   packages/template-resolver:
     dependencies:
-      '@fern-api/fdr-sdk':
-        specifier: ^0.85.1-5824999e3
-        version: 0.85.1-7990009b5
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../commons/core-utils
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -885,6 +879,8 @@ importers:
       typescript:
         specifier: 5.4.3
         version: 5.4.3
+
+  packages/template-resolver/dist/esm: {}
 
   packages/ui/app:
     dependencies:
@@ -4655,21 +4651,6 @@ packages:
     dependencies:
       strip-ansi: 7.1.0
       ua-parser-js: 1.0.37
-
-  /@fern-api/fdr-sdk@0.85.1-7990009b5:
-    resolution: {integrity: sha512-w1Apy/yztskZROmvxf2mjpqA3sK04f99XVs5UQaBpQMynnyLeOiZlg4Wcztu2SqrwJ8+Tkrkx5FWQg/AvTlLyA==}
-    dependencies:
-      form-data: 4.0.0
-      js-base64: 3.7.7
-      lodash: 4.17.21
-      marked: 5.1.2
-      node-fetch: 2.7.0
-      qs: 6.12.0
-      tinycolor2: 1.6.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-    dev: false
 
   /@fern-api/fs-utils@0.15.0-rc63:
     resolution: {integrity: sha512-lDbmFyGs9phjI0ewoijwYLB7dkEc59Gt/tg2l2um5E1Xmgfnt5EKFXNywnmDIXN1xb8aYhmo+N9ZKJje6/a+iw==}
