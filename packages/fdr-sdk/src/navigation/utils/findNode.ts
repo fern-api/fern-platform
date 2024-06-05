@@ -80,6 +80,11 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
         };
     }
 
+    // if the slug points matches the root node, redirect to the root node's pointsTo
+    if (root.type === "root" && root.slug === slugToFind && root.pointsTo != null) {
+        return { type: "redirect", redirect: root.pointsTo };
+    }
+
     const redirect = hasPointsTo(found.node) ? found.node.pointsTo : version?.pointsTo ?? root.pointsTo;
 
     if (redirect == null || redirect === slugToFind) {
