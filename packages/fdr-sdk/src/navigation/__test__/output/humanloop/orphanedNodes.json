@@ -12,12 +12,6 @@
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs.docs.guides",
-    "type": "section",
-    "title": "Guides",
-    "slug": "docs/guides"
-  },
-  {
     "id": "root..*.uv.docs.docs.guides.generate-and-logging",
     "type": "section",
     "title": "Generate and Logging",
@@ -33,6 +27,12 @@
     "id": "root..*.uv.docs.docs.guides.create-and-use-datasets",
     "type": "section",
     "title": "Create and use Datasets",
+    "slug": "docs/guides"
+  },
+  {
+    "id": "root..*.uv.docs.docs.guides.tools",
+    "type": "section",
+    "title": "Tools",
     "slug": "docs/guides"
   },
   {
@@ -72,12 +72,6 @@
     "slug": "v4/docs"
   },
   {
-    "id": "root..v4.uv.docs.docs.guides",
-    "type": "section",
-    "title": "Guides",
-    "slug": "v4/docs/guides"
-  },
-  {
     "id": "root..v4.uv.docs.docs.guides.generate-and-logging",
     "type": "section",
     "title": "Generate and Logging",
@@ -93,6 +87,12 @@
     "id": "root..v4.uv.docs.docs.guides.create-and-use-datasets",
     "type": "section",
     "title": "Create and use Datasets",
+    "slug": "v4/docs/guides"
+  },
+  {
+    "id": "root..v4.uv.docs.docs.guides.tools",
+    "type": "section",
+    "title": "Tools",
     "slug": "v4/docs/guides"
   },
   {

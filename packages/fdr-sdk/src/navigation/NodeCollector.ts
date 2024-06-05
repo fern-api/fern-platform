@@ -11,24 +11,6 @@ import {
 } from "./types";
 import { traverseNavigation } from "./utils";
 
-// lower number means higher priority
-const PRIORITY_LIST: Record<NavigationNodeWithMetadata["type"], number> = {
-    page: 0,
-    endpoint: 0,
-    webSocket: 0,
-    webhook: 0,
-    changelogEntry: 0,
-    changelogYear: 1,
-    changelogMonth: 1,
-    changelog: 2,
-    apiSection: 3,
-    section: 3,
-    apiReference: 3,
-    tab: 5,
-    version: 6,
-    root: 999,
-};
-
 interface NavigationNodeWithMetadataAndParents {
     node: NavigationNodeWithMetadata;
     parents: NavigationNode[];
@@ -74,29 +56,14 @@ export class NodeCollector {
             const existing = this.slugToNode[node.slug];
             if (existing == null) {
                 this.#setNode(node.slug, node, parents);
-            } else if (PRIORITY_LIST[node.type] < PRIORITY_LIST[existing.node.type]) {
-                if (!node.hidden && isPage(node)) {
-                    this.#setNode(node.slug, node, parents);
-                    this.orphanedNodes.push(existing.node);
-                } else {
-                    this.orphanedNodes.push(node);
+            } else if (!node.hidden && isPage(node) && (existing.node.hidden || !isPage(existing.node))) {
+                this.orphanedNodes.push(existing.node);
+                this.#setNode(node.slug, node, parents);
+            } else {
+                if (isPage(existing.node)) {
+                    // eslint-disable-next-line no-console
+                    console.warn(`Duplicate slug found: ${node.slug}`);
                 }
-            } else if (PRIORITY_LIST[node.type] === PRIORITY_LIST[existing.node.type]) {
-                if (
-                    (!node.hidden && existing.node.hidden) ||
-                    parents.indexOf(existing.node) > -1 ||
-                    !isPage(existing.node)
-                ) {
-                    this.#setNode(node.slug, node, parents);
-                    this.orphanedNodes.push(existing.node);
-                } else {
-                    if (!node.hidden) {
-                        // eslint-disable-next-line no-console
-                        console.warn(`Duplicate slug found: ${node.slug}`);
-                    }
-                    this.orphanedNodes.push(node);
-                }
-            } else if (PRIORITY_LIST[node.type] > PRIORITY_LIST[existing.node.type]) {
                 this.orphanedNodes.push(node);
             }
         });
