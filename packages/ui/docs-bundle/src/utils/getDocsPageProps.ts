@@ -1,4 +1,6 @@
-import { FdrClient, FernNavigation, type DocsV2Read } from "@fern-api/fdr-sdk";
+import { FdrClient, type DocsV2Read } from "@fern-api/fdr-sdk";
+import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
+import { findNode } from "@fern-api/fdr-sdk/dist/navigation/utils/findNode";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
@@ -172,8 +174,8 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
-    const node = FernNavigation.utils.findNode(root, slug);
+    const root = convertLoadDocsForUrlResponse(docs);
+    const node = findNode(root, slug);
 
     if (node.type === "notFound") {
         // eslint-disable-next-line no-console

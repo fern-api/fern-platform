@@ -1,5 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
+import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/dist/navigation/ApiDefinitionHolder";
+import { collectApiReferences } from "@fern-api/fdr-sdk/dist/navigation/utils/collectApiReferences";
+import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
 import { ApiDefinitionResolver, ApiTypeResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
@@ -34,12 +35,12 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const docs = docsResponse.body;
-        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docsResponse.body);
+        const root = convertLoadDocsForUrlResponse(docsResponse.body);
 
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
-        FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {
+        collectApiReferences(root).forEach((apiReference) => {
             const api = docs.definition.apis[apiReference.apiDefinitionId];
             if (api == null) {
                 return;

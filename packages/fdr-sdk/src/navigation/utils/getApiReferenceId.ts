@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "../../utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { FernNavigation } from "../generated";
 import { NavigationNode } from "../types/NavigationNode";
 

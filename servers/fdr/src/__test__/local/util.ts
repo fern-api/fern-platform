@@ -1,4 +1,5 @@
-import { APIResponse, APIV1Write, FdrClient } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrClient } from "@fern-api/fdr-sdk";
+import { APIResponse } from "@fern-api/fdr-sdk/dist/client/generated/core";
 import type { DocsV2, IndexSegment } from "@prisma/client";
 
 export function getUniqueDocsForUrl(prefix: string): string {

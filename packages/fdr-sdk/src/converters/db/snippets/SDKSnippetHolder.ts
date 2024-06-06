@@ -183,7 +183,7 @@ export class SDKSnippetHolder {
             return exampleId != null && snippet.exampleIdentifier === exampleId;
         });
         // if no example match, just pick first snippet for backwards-compatibility reasons
-        if (snippets.length === 0 && snippetsForEndpoint[0] != null) {
+        if (snippets.length === 0) {
             snippets = [snippetsForEndpoint[0]];
         }
 

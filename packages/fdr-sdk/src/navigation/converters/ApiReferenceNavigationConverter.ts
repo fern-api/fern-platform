@@ -1,6 +1,6 @@
+import { noop, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
-import { noop, titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";

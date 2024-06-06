@@ -1,5 +1,4 @@
-import { DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { DocsV1Read, FdrAPI, FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
 import { DocsPage } from "../../next-app/DocsPage";
