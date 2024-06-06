@@ -21,7 +21,7 @@ export class AllPagesLoadRule implements Rule {
         const slugCollector = NodeCollector.collect(node);
         const urls = slugCollector
             .getPageSlugs()
-            .map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/ ${slug}`);
+            .map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
 
         const responses = await Promise.all(
             urls.map(async (url) => {
