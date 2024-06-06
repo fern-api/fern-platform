@@ -18,6 +18,7 @@
     "url-join": "4.0.1"
   },
   "devDependencies": {
+    "@fern-platform/configs": "workspace:^",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
