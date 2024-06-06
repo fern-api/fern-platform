@@ -1,22 +1,22 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "main": "./dist/fdr-sdk/src/index.js",
-  "types": "./dist/fdr-sdk/src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "type": "module",
-  "module": "dist/fdr-sdk/src/index.js",
+  "module": "dist/index.js",
   "source": "src/index.ts",
   "exports": {
     "./navigation": {
-      "types": "./dist/fdr-sdk/src/navigation/index.d.ts",
-      "import": "./dist/fdr-sdk/src/navigation/index.js"
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.js"
     },
     ".": {
-      "types": "./dist/fdr-sdk/src/index.d.ts",
-      "default": "./dist/fdr-sdk/src/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "dependencies": {
