@@ -41,6 +41,10 @@ export class DocsFeStack extends Stack {
         );
 
         const local_preview_bundle_dist_zip = path.resolve(__dirname, "../../ui/local-preview-bundle/dist/out.zip");
+        if (!fs.existsSync(LOCAL_PREVIEW_BUNDLE_OUT_DIR) || !fs.lstatSync(LOCAL_PREVIEW_BUNDLE_OUT_DIR).isDirectory()) {
+            throw new Error(`Local preview bundle not found at ${LOCAL_PREVIEW_BUNDLE_OUT_DIR}`);
+        }
+
         void zipFolder(LOCAL_PREVIEW_BUNDLE_OUT_DIR, local_preview_bundle_dist_zip).then(() => {
             new BucketDeployment(this, "deploy-local-preview-bundle2", {
                 sources: [Source.asset(local_preview_bundle_dist_zip)],
