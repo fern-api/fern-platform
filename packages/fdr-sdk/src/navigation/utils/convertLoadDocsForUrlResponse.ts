@@ -1,5 +1,5 @@
-import { mapValues } from "@/utils";
 import { APIV1Read, DocsV2Read } from "../../client";
+import { mapValues } from "../../utils";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
 
 export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUrlResponse) {

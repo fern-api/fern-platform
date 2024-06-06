@@ -1,5 +1,5 @@
-import { once } from "@/utils";
 import urljoin from "url-join";
+import { once } from "../utils";
 import { FernNavigation } from "./generated";
 import {
     NavigationNode,

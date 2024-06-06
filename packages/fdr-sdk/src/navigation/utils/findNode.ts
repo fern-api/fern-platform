@@ -1,4 +1,4 @@
-import { noop, visitDiscriminatedUnion } from "@/utils";
+import { noop, visitDiscriminatedUnion } from "../../utils";
 
 import urljoin from "url-join";
 import { NodeCollector } from "../NodeCollector";

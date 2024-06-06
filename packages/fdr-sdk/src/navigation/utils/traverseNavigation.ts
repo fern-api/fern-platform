@@ -1,4 +1,4 @@
-import { noop, visitDiscriminatedUnion } from "@/utils";
+import { noop, visitDiscriminatedUnion } from "../../utils";
 
 import { NavigationNode } from "../types/NavigationNode";
 

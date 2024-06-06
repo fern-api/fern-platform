@@ -1,7 +1,7 @@
-import { kebabCase } from "@/utils";
 import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
+import { kebabCase } from "../../utils";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";

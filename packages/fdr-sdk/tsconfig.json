@@ -5,10 +5,7 @@
     "isolatedModules": false,
     "lib": ["ESNext", "DOM"],
     "outDir": "./dist",
-    "rootDir": "./src",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "rootDir": "./src"
   },
   "include": ["./src/**/*"]
 }
