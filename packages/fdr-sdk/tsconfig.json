@@ -1,5 +1,5 @@
 {
   "extends": "@fern-platform/configs/tsconfig/library.json",
-  "compilerOptions": { "outDir": "./dist", "rootDir": ".", "lib": ["dom"] },
+  "compilerOptions": { "outDir": "./dist", "rootDir": ".", "lib": ["dom", "ESNext"] },
   "include": ["./src/**/*"]
 }
