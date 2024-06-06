@@ -1,6 +1,6 @@
-import { assertNever, kebabCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
+import { assertNever, kebabCase, visitDiscriminatedUnion } from "../../utils";
 import { FernNavigation } from "../generated";
 import { followRedirect, followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
