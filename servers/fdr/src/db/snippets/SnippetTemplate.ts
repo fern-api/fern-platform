@@ -10,7 +10,7 @@ import {
     SdkRequest,
     Template,
 } from "../../api/generated/api";
-import { readBuffer, writeBuffer } from "../../util";
+import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
 import { SdkDaoImpl, SdkPackage } from "../sdk/SdkDao";
 import { SdkIdFactory } from "./SdkIdFactory";
 import {
@@ -222,7 +222,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         const sdkDao = new SdkDaoImpl(this.prisma);
 
         await this.prisma.$transaction(async (tx) => {
-            const snippets: Prisma.Enumerable<Prisma.SnippetTemplateCreateManyInput> = [];
+            const snippets: Prisma.Enumerable<WithoutQuestionMarks<Prisma.SnippetTemplateCreateManyInput>> = [];
             const sdks: Prisma.Enumerable<SdkPackage> = [];
             storeSnippetsInfo.snippets.map(async (snippet) => {
                 const sdkId = this.getSdkId(snippet.sdk);
@@ -234,6 +234,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     apiDefinitionId: storeSnippetsInfo.apiDefinitionId,
                     endpointPath: snippet.endpointId.path,
                     endpointMethod: snippet.endpointId.method,
+                    identifierOverride: snippet.endpointId.identifierOverride,
                     sdkId,
                     version: snippet.snippetTemplate.type,
                     functionInvocation: writeBuffer(snippet.snippetTemplate.functionInvocation),
