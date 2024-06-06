@@ -1,6 +1,5 @@
 import { default as FormData } from "form-data";
 import qs from "qs";
-import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
@@ -76,17 +75,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         body = JSON.stringify(args.body);
     }
 
-    // In Node.js environments, the SDK always uses`node-fetch`.
-    // If not in Node.js the SDK uses global fetch if available,
-    // and falls back to node-fetch.
-    const fetchFn =
-        RUNTIME.type === "node"
-            ? // `.default` is required due to this issue:
-              // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-              require("node-fetch").default
-            : typeof fetch == "function"
-            ? fetch
-            : require("node-fetch").default;
+    // This is overridden now.
+    const fetchFn = fetch;
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();

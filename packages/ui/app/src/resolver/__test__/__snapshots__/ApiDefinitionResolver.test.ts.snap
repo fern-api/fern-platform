@@ -9,13 +9,10 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
   },
   "items": [
     {
-      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "availability": undefined,
       "description": undefined,
-      "id": "subpackage_merchants",
       "items": [
         {
-          "apiPackageId": "subpackage_merchants",
           "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
           "auth": {
             "tokenName": "token",
@@ -30,6 +27,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
           "headers": [],
           "id": "subpackage_merchants.getMerchants",
           "method": "GET",
+          "nodeId": "api-reference.subpackage_merchants.subpackage_merchants.getMerchants",
           "path": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -48,25 +46,19 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
             },
             "statusCode": 200,
           },
-          "slug": [
-            "merchants",
-            "get-merchants",
-          ],
+          "slug": "api-reference/merchants/get-merchants",
           "snippetTemplates": undefined,
           "stream": undefined,
           "title": "Get Merchants",
           "type": "endpoint",
         },
       ],
-      "name": "Merchants",
-      "slug": [
-        "merchants",
-      ],
+      "slug": "api-reference/merchants",
       "title": "Merchants",
       "type": "subpackage",
     },
   ],
-  "slug": [],
+  "slug": "api-reference",
   "type": "rootPackage",
   "types": {
     "type_merchants:Merchant": {
@@ -135,7 +127,6 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
   },
   "items": [
     {
-      "apiPackageId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": undefined,
       "availability": undefined,
@@ -155,6 +146,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "headers": [],
       "id": "getToken",
       "method": "POST",
+      "nodeId": "api-reference.getToken",
       "path": [
         {
           "type": "literal",
@@ -248,16 +240,13 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
         },
         "statusCode": 200,
       },
-      "slug": [
-        "get-token",
-      ],
+      "slug": "api-reference/get-token",
       "snippetTemplates": undefined,
       "stream": undefined,
       "title": "Get Token",
       "type": "endpoint",
     },
     {
-      "apiPackageId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": {
         "tokenName": "token",
@@ -280,6 +269,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "headers": [],
       "id": "testAuth",
       "method": "POST",
+      "nodeId": "api-reference.testAuth",
       "path": [
         {
           "type": "literal",
@@ -308,16 +298,13 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
         },
         "statusCode": 200,
       },
-      "slug": [
-        "test-authed",
-      ],
+      "slug": "api-reference/test-authed",
       "snippetTemplates": undefined,
       "stream": undefined,
       "title": "Get Token",
       "type": "endpoint",
     },
     {
-      "apiPackageId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": {
         "headerWireValue": "test-api-key",
@@ -340,6 +327,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "headers": [],
       "id": "testHeaderAuth",
       "method": "POST",
+      "nodeId": "api-reference.testHeaderAuth",
       "path": [
         {
           "type": "literal",
@@ -368,16 +356,14 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
         },
         "statusCode": 200,
       },
-      "slug": [
-        "test-header-auth",
-      ],
+      "slug": "api-reference/test-header-auth",
       "snippetTemplates": undefined,
       "stream": undefined,
       "title": "Get Token",
       "type": "endpoint",
     },
   ],
-  "slug": [],
+  "slug": "api-reference",
   "type": "rootPackage",
   "types": {
     "type_auth:AuthResponse": {

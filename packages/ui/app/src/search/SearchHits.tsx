@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useCloseSearchDialog } from "../sidebar/atom";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
@@ -19,6 +20,7 @@ export const SearchHits: React.FC = () => {
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
+    const closeSearchDialog = useCloseSearchDialog();
 
     const getFullPathForHit = useCallback(
         (hit: Hit<SearchRecord>) => {
@@ -99,6 +101,7 @@ export const SearchHits: React.FC = () => {
             void router.replace(`/${fullPath}`, undefined, {
                 shallow: false,
             });
+            closeSearchDialog();
         },
         preventDefault: true,
         capture: true,

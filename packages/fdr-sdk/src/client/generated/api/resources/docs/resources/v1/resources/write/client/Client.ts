@@ -33,7 +33,7 @@ export class Write {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/registry/docs/init"
             ),
             method: "POST",
@@ -68,7 +68,7 @@ export class Write {
     ): Promise<core.APIResponse<void, FernRegistry.docs.v1.write.finishDocsRegister.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 `/registry/docs/register/${docsRegistrationId}`
             ),
             method: "POST",

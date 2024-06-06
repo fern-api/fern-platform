@@ -31,7 +31,7 @@ export class Templates {
     ): Promise<core.APIResponse<void, FernRegistry.templates.register.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippet-template/register"
             ),
             method: "POST",
@@ -68,7 +68,7 @@ export class Templates {
     ): Promise<core.APIResponse<void, FernRegistry.templates.registerBatch.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippet-template/register/batch"
             ),
             method: "POST",
@@ -105,7 +105,7 @@ export class Templates {
     ): Promise<core.APIResponse<FernRegistry.EndpointSnippetTemplate, FernRegistry.templates.get.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippet-template/get"
             ),
             method: "POST",

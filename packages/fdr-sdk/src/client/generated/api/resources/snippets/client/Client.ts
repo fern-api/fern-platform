@@ -39,7 +39,7 @@ export class Snippets {
     ): Promise<core.APIResponse<FernRegistry.Snippet[], FernRegistry.snippets.get.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippets"
             ),
             method: "POST",
@@ -97,7 +97,7 @@ export class Snippets {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippets/load"
             ),
             method: "POST",

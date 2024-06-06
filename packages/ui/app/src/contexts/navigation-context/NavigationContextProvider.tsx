@@ -1,6 +1,6 @@
-import { SidebarNode, getUnversionedSlug, visitSidebarNode } from "@fern-ui/fdr-utils";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { debounce, memoize } from "lodash-es";
+import { debounce } from "lodash-es";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
@@ -9,12 +9,10 @@ import { captureSentryError } from "../../analytics/sentry";
 import { MdxContent } from "../../mdx/MdxContent";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
-import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
-import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
@@ -97,19 +95,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     basePath,
     title,
 }) => {
-    const { sidebarNodes, versions, currentVersionIndex } = useDocsContext();
+    const { nodes, versions, currentVersionId } = useDocsContext();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
-    const [activeNavigatable, setActiveNavigatable] = useState(() =>
-        resolveActiveSidebarNode(
-            sidebarNodes,
-            resolvedPath.fullSlug.split("/").filter((str) => str.trim().length > 0),
-        ),
-    );
+    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(resolvedPath.fullSlug));
 
     const [, anchor] = router.asPath.split("#");
-    const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
+    const selectedSlug = activeNavigatable?.slug ?? "";
     const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
     useEffect(() => {
@@ -149,9 +142,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, []);
 
-    // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
-    const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
-
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
@@ -160,8 +150,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
-                scrollToPathListeners.invokeListeners(fullSlug);
-                setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, fullSlug.split("/")));
+                setActiveNavigatable(nodes.slugMap.get(fullSlug));
                 startScrollTracking(`/${fullSlug}`, true);
             },
             300,
@@ -176,12 +165,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, decodeURI(fullSlug).split("/")));
+        setActiveNavigatable(nodes.slugMap.get(fullSlug));
         startScrollTracking(route);
     });
-
-    const closeMobileSidebar = useCloseMobileSidebar();
-    const closeSearchDialog = useCloseSearchDialog();
 
     useEffect(() => {
         const handleRouteChange = (route: string, options: { shallow: boolean }) => {
@@ -198,8 +184,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
             }
             navigateToPath(route);
-            closeMobileSidebar();
-            closeSearchDialog();
         };
         const handleRouteChangeError = (err: Error, route: string, options: { shallow: boolean }) => {
             if (process.env.NODE_ENV === "development") {
@@ -221,21 +205,19 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             router.events.off("hashChangeComplete", handleRouteChange);
             router.events.off("routeChangeError", handleRouteChangeError);
         };
-    }, [closeMobileSidebar, closeSearchDialog, navigateToPath, router.events]);
+    }, [navigateToPath, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
             navigateToPath(as);
             startScrollTracking(as);
-            closeMobileSidebar();
-            closeSearchDialog();
             return true;
         });
-    }, [router, navigateToPath, closeMobileSidebar, closeSearchDialog]);
+    }, [router, navigateToPath]);
 
     const frontmatter = getFrontmatter(resolvedPath);
     const activeTitle = convertToTitle(activeNavigatable, frontmatter);
-    const activeDescription = convertDescriptionToString(activeNavigatable, frontmatter);
+    const activeDescription = convertDescriptionToString(frontmatter);
 
     return (
         <NavigationContext.Provider
@@ -245,24 +227,22 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                     activeNavigatable,
                     onScrollToPath,
-                    registerScrolledToPathListener: scrollToPathListeners.registerListener,
                     resolvedPath,
-                    activeVersion: versions[currentVersionIndex ?? 0],
+                    activeVersion: versions.find((version) => version.id === currentVersionId),
                     selectedSlug,
-                    unversionedSlug: getUnversionedSlug(
-                        selectedSlug.split("/"),
-                        versions[currentVersionIndex ?? 0]?.slug ?? [],
-                        basePath?.split("/").filter((part) => part.length > 0) ?? [],
+                    unversionedSlug: FernNavigation.utils.getUnversionedSlug(
+                        selectedSlug,
+                        versions.find((version) => version.id === currentVersionId)?.slug,
+                        basePath,
                     ),
                 }),
                 [
                     activeNavigatable,
                     basePath,
-                    currentVersionIndex,
+                    currentVersionId,
                     domain,
                     onScrollToPath,
                     resolvedPath,
-                    scrollToPathListeners.registerListener,
                     selectedSlug,
                     versions,
                 ],
@@ -286,17 +266,15 @@ function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undef
 }
 
 function convertToTitle(
-    page: SidebarNode.Page | undefined,
+    page: FernNavigation.NavigationNodeWithMetadata | undefined,
     frontmatter: FernDocsFrontmatter | undefined,
 ): string | undefined {
     return frontmatter?.title ?? page?.title;
 }
 
-function convertDescriptionToString(
-    page: SidebarNode.Page | undefined,
-    frontmatter: FernDocsFrontmatter | undefined,
-): string | undefined {
-    const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
+function convertDescriptionToString(frontmatter: FernDocsFrontmatter | undefined): string | undefined {
+    // const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
+    const description = frontmatter?.description ?? frontmatter?.excerpt ?? undefined;
 
     if (description == null) {
         return;
@@ -324,25 +302,3 @@ function convertDescriptionToString(
         return undefined;
     }
 }
-
-const resolveActiveSidebarNode = memoize(
-    (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
-        const hits: SidebarNode.Page[] = [];
-
-        for (const node of sidebarNodes) {
-            visitSidebarNode(node, (n) => {
-                if (n.type === "page" && n.slug.join("/") === fullSlug.join("/")) {
-                    hits.push(n);
-                    return false;
-                }
-                return true;
-            });
-            if (hits.length > 0) {
-                break;
-            }
-        }
-
-        return hits[0];
-    },
-    (_sidebarNodes, fullSlug) => fullSlug.join("/"),
-);

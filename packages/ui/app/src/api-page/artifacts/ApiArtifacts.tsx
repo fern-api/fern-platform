@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
+import urljoin from "url-join";
 import { API_ARTIFACTS_TITLE } from "../../config";
 import { ResolvedWithApiDefinition } from "../../resolver/types";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
@@ -20,7 +20,7 @@ export declare namespace ApiArtifacts {
 }
 
 export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
-    const slug = joinUrlSlugs(...(apiDefinition?.slug ?? []), "client-libraries");
+    const slug = urljoin(apiDefinition?.slug ?? "", "client-libraries");
 
     const { setTargetRef } = useApiPageCenterElement({ slug });
 

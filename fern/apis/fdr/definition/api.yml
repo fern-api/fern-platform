@@ -1,13 +1,13 @@
 name: registry
 auth: bearer
-default-environment: Dev
-environments: 
-  Dev: https://registry-dev2.buildwithfern.com
+default-environment: Prod
+environments:
   Prod: https://registry.buildwithfern.com
 error-discrimination:
   strategy: property
   property-name: error
-audiences: 
+audiences:
   - external
   - fiddle
   - snippets
+  - templateResolver

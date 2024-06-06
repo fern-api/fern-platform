@@ -31,7 +31,7 @@ export class SnippetsFactory {
     ): Promise<core.APIResponse<void, FernRegistry.snippetsFactory.createSnippetsForSdk.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippets/create"
             ),
             method: "POST",

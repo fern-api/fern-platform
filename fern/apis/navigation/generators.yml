@@ -1,0 +1,17 @@
+default-group: local
+
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.17.1
+        output:
+          location: local-file-system
+          path: ../../../packages/fdr-sdk/src/navigation/generated
+        config:
+          noOptionalProperties: true
+          outputEsm: true
+          outputSourceFiles: true
+          useBrandedStringAliases: true
+          noSerdeLayer: true
+          neverThrowErrors: true

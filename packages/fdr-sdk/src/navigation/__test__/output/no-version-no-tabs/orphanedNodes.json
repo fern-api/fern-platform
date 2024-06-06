@@ -1,0 +1,14 @@
+[
+  {
+    "id": "root.uv.section-2",
+    "type": "section",
+    "title": "Introduction",
+    "slug": "docs/api/section-2"
+  },
+  {
+    "id": "root.uv.section-3",
+    "type": "section",
+    "title": "Section 3",
+    "slug": "docs/api"
+  }
+]

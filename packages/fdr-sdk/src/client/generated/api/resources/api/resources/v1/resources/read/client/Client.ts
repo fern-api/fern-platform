@@ -28,7 +28,7 @@ export class Read {
     ): Promise<core.APIResponse<FernRegistry.api.v1.read.ApiDefinition, FernRegistry.api.v1.read.getApi.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 `/registry/api/load/${apiDefinitionId}`
             ),
             method: "GET",

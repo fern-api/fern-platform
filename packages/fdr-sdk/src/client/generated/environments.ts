@@ -3,8 +3,7 @@
  */
 
 export const FernRegistryEnvironment = {
-    Dev: "https://registry-dev2.buildwithfern.com",
     Prod: "https://registry.buildwithfern.com",
 } as const;
 
-export type FernRegistryEnvironment = typeof FernRegistryEnvironment.Dev | typeof FernRegistryEnvironment.Prod;
+export type FernRegistryEnvironment = typeof FernRegistryEnvironment.Prod;

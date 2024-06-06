@@ -1,0 +1,14 @@
+[
+  {
+    "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api",
+    "type": "apiReference",
+    "title": "OctoAI API",
+    "slug": "docs/api-reference/octoai-api"
+  },
+  {
+    "id": "root.uv.api-reference.api-reference.octo-ai-api",
+    "type": "apiReference",
+    "title": "OctoAI API",
+    "slug": "docs/api-reference"
+  }
+]

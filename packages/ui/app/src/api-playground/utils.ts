@@ -1,4 +1,4 @@
-import { CustomSnippetPayload } from "@fern-api/fdr-sdk/dist/client/generated/api";
+import { Snippets } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues, noop } from "lodash-es";
@@ -334,7 +334,9 @@ ${buildRequests({})}`,
     });
 }
 
-export function convertToCustomSnippetPayload(formState: PlaygroundEndpointRequestFormState): CustomSnippetPayload {
+export function convertToCustomSnippetPayload(
+    formState: PlaygroundEndpointRequestFormState,
+): Snippets.CustomSnippetPayload {
     return {
         pathParameters: Object.entries(formState.pathParameters).map(([name, value]) => ({ name, value })),
         queryParameters: Object.entries(formState.queryParameters).map(([name, value]) => ({ name, value })),
