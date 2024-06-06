@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as FernRegistry from "../../../../../../..";
+import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Register {
@@ -16,12 +16,38 @@ export declare namespace Register {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Register {
     constructor(protected readonly _options: Register.Options = {}) {}
 
+    /**
+     * @param {FernRegistry.api.v1.register.RegisterApiDefinitionRequest} request
+     * @param {Register.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.api.v1.register.registerApiDefinition({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         definition: {
+     *             rootPackage: {},
+     *             types: {
+     *                 "string": {}
+     *             },
+     *             subpackages: {
+     *                 "string": {}
+     *             },
+     *             auth: {
+     *                 type: "bearerAuth"
+     *             },
+     *             globalHeaders: [{}],
+     *             snippetsConfiguration: {},
+     *             navigation: {}
+     *         }
+     *     })
+     */
     public async registerApiDefinition(
         request: FernRegistry.api.v1.register.RegisterApiDefinitionRequest,
         requestOptions?: Register.RequestOptions
@@ -47,6 +73,7 @@ export class Register {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -72,7 +99,7 @@ export class Register {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

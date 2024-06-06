@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as FernRegistry from "../../..";
+import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Diff {
@@ -16,12 +16,23 @@ export declare namespace Diff {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Diff {
     constructor(protected readonly _options: Diff.Options = {}) {}
 
+    /**
+     * @param {FernRegistry.ApiDiffRequest} request
+     * @param {Diff.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.diff.diff({
+     *         previousApiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         currentApiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
+     */
     public async diff(
         request: FernRegistry.ApiDiffRequest,
         requestOptions?: Diff.RequestOptions
@@ -46,6 +57,7 @@ export class Diff {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -60,7 +72,7 @@ export class Diff {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

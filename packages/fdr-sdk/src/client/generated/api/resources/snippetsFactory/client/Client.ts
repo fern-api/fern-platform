@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as FernRegistry from "../../..";
+import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace SnippetsFactory {
@@ -16,6 +16,7 @@ export declare namespace SnippetsFactory {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -24,6 +25,20 @@ export class SnippetsFactory {
 
     /**
      * Store endpoint snippets for a particular SDK.
+     *
+     * @param {FernRegistry.CreateSnippetRequest} request
+     * @param {SnippetsFactory.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.snippetsFactory.createSnippetsForSdk({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         snippets: {
+     *             type: "typescript",
+     *             sdk: {},
+     *             snippets: [{}]
+     *         }
+     *     })
      */
     public async createSnippetsForSdk(
         request: FernRegistry.CreateSnippetRequest,
@@ -45,6 +60,7 @@ export class SnippetsFactory {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -72,7 +88,7 @@ export class SnippetsFactory {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;
