@@ -183,7 +183,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         }
         return {
             endpointId: {
-                path: snippetTemplate.apiDefinitionId,
+                path: snippetTemplate.endpointPath,
                 method: snippetTemplate.endpointMethod,
                 identifierOverride: snippetTemplate.identifierOverride ?? undefined,
             },
