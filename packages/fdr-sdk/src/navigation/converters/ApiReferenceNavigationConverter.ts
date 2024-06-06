@@ -1,4 +1,4 @@
-import { noop, titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { noop, titleCase, visitDiscriminatedUnion } from "@/utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";

@@ -1,4 +1,4 @@
-import { assertNever, kebabCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNever, kebabCase, visitDiscriminatedUnion } from "@/utils";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
 import { FernNavigation } from "../generated";

@@ -1,4 +1,4 @@
-import { mapValues } from "@fern-ui/core-utils";
+import { mapValues } from "@/utils";
 import { APIV1Read, DocsV2Read } from "../../client";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
 

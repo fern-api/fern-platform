@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever } from "@/utils";
 import { APIV1Read, DocsV1Read } from "../../client";
 import { FernNavigation } from "../generated";
 

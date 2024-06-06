@@ -1,4 +1,4 @@
-import { kebabCase } from "@fern-ui/core-utils";
+import { kebabCase } from "@/utils";
 import {
     DocsV1Db,
     DocsV1Read,

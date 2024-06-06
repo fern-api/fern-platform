@@ -26,6 +26,7 @@
     "js-base64": "3.7.7",
     "qs": "6.12.0",
     "tinycolor2": "^1.6.0",
+    "title": "^3.5.3",
     "url-join": "4.0.1"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@fern-platform/configs": "workspace:*",
     "@types/qs": "6.9.14",
     "@types/tinycolor2": "^1.4.6",
+    "@types/title": "^3.4.3",
     "@types/url-join": "4.0.1",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
