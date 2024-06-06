@@ -63,32 +63,32 @@ function transformTypographyToV2(
     };
 }
 
-function transformFontConfigV2ToV1(fontConfig: DocsV1Read.FontConfigV2 | undefined): DocsV1Read.FontConfig | undefined {
-    if (fontConfig == null) {
-        return undefined;
-    }
-    const firstVariant = fontConfig.variants[0];
-    if (firstVariant == null) {
-        return undefined;
-    }
-    return {
-        name: fontConfig.name,
-        fontFile: firstVariant.fontFile,
-    };
-}
+// function transformFontConfigV2ToV1(fontConfig: DocsV1Read.FontConfigV2 | undefined): DocsV1Read.FontConfig | undefined {
+//     if (fontConfig == null) {
+//         return undefined;
+//     }
+//     const firstVariant = fontConfig.variants[0];
+//     if (firstVariant == null) {
+//         return undefined;
+//     }
+//     return {
+//         name: fontConfig.name,
+//         fontFile: firstVariant.fontFile,
+//     };
+// }
 
-function transformTypographyV2ToV1(
-    typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-): DocsV1Read.DocsTypographyConfig | undefined {
-    if (typography == null) {
-        return undefined;
-    }
-    return {
-        headingsFont: transformFontConfigV2ToV1(typography.headingsFont),
-        bodyFont: transformFontConfigV2ToV1(typography.bodyFont),
-        codeFont: transformFontConfigV2ToV1(typography.codeFont),
-    };
-}
+// function transformTypographyV2ToV1(
+//     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
+// ): DocsV1Read.DocsTypographyConfig | undefined {
+//     if (typography == null) {
+//         return undefined;
+//     }
+//     return {
+//         headingsFont: transformFontConfigV2ToV1(typography.headingsFont),
+//         bodyFont: transformFontConfigV2ToV1(typography.bodyFont),
+//         codeFont: transformFontConfigV2ToV1(typography.codeFont),
+//     };
+// }
 
 export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConfig): DocsV1Read.NavigationConfig {
     return visitDbNavigationConfig<DocsV1Read.NavigationConfig>(dbShape, {
