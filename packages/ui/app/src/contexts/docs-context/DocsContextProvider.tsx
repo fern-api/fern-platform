@@ -1,13 +1,14 @@
-import { DocsV1Read, NodeCollector } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read, NodeCollector } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
-import { PropsWithChildren, useCallback, useMemo } from "react";
+import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
+import { getFontExtension } from "../../next-app/utils/getFontVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
 import { DocsContext } from "./DocsContext";
 
@@ -30,7 +31,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const apis = useDeepCompareMemoize(pageProps.apis);
     const { resolvedTheme: theme } = useTheme();
 
-    const { domain, basePath } = pageProps.baseUrl;
+    const { baseUrl, title, favicon } = pageProps;
     const { currentTabIndex, currentVersionId } = pageProps.navigation;
 
     const stylesheet = useMemo(
@@ -52,8 +53,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
 
     const value = useMemo(
         () => ({
-            domain,
-            basePath,
+            domain: baseUrl.domain,
+            basePath: baseUrl.basePath,
             layout,
             colors,
             typography,
@@ -71,19 +72,19 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             apis,
         }),
         [
-            domain,
-            basePath,
-            layout,
+            baseUrl.basePath,
+            baseUrl.domain,
             colors,
-            typography,
             css,
-            files,
-            resolveFile,
             currentTabIndex,
-            tabs,
             currentVersionId,
-            versions,
+            files,
+            layout,
+            resolveFile,
             sidebar,
+            tabs,
+            typography,
+            versions,
             searchInfo,
             navbarLinks,
             apis,
@@ -97,12 +98,18 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                 />
+                {title != null && <title>{title}</title>}
+                {favicon != null && <link rel="icon" id="favicon" href={files[favicon]?.url} />}
+                {typography?.bodyFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {typography?.headingsFont?.variants.map((v) => getPreloadedFont(v, files))}
+                {typography?.codeFont?.variants.map((v) => getPreloadedFont(v, files))}
                 {theme === "light" && colors.light != null && (
                     <meta name="theme-color" content={getThemeColor(colors.light)} />
                 )}
                 {theme === "dark" && colors.dark != null && (
                     <meta name="theme-color" content={getThemeColor(colors.dark)} />
                 )}
+                {maybeRenderNoIndex(baseUrl)}
             </Head>
             {/* 
                 We concatenate all global styles into a single instance,
@@ -133,8 +140,52 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-            <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
-            <CustomerAnalytics domain={domain} />
+            <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(baseUrl.domain) }} />
+            <CustomerAnalytics domain={baseUrl.domain} />
         </DocsContext.Provider>
     );
 };
+
+function getPreloadedFont(
+    variant: DocsV1Read.CustomFontConfigVariant,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+) {
+    const file = files[variant.fontFile]?.url;
+    if (file == null) {
+        return null;
+    }
+    let fontExtension: string;
+    try {
+        fontExtension = getFontExtension(new URL(file).pathname);
+    } catch (err) {
+        fontExtension = getFontExtension(file);
+    }
+    return (
+        <link
+            key={variant.fontFile}
+            rel="preload"
+            href={file}
+            as="font"
+            type={`font/${fontExtension}`}
+            crossOrigin="anonymous"
+        />
+    );
+}
+
+function maybeRenderNoIndex(baseUrl: DocsV2Read.BaseUrl): ReactNode {
+    // If the basePath is present, it's not clear whether or not the site is hosted on a custom domain.
+    // In this case, we don't want to render the no-track script. If this changes, we should update this logic.
+    if (baseUrl.basePath != null && process.env.NODE_ENV === "production") {
+        return null;
+    }
+
+    if (
+        baseUrl.domain.includes("docs.dev.buildwithfern.com") ||
+        baseUrl.domain.includes("docs.staging.buildwithfern.com") ||
+        baseUrl.domain.includes(".docs.buildwithfern.com") ||
+        process.env.NODE_ENV !== "production"
+    ) {
+        return <meta name="robots" content="noindex, nofollow" />;
+    }
+    return null;
+}
