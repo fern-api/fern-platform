@@ -13,6 +13,7 @@
     { "path": "../components" },
     { "path": "../../commons/react/react-commons" },
     { "path": "../../template-resolver" },
-    { "path": "../../fdr-sdk" }
+    { "path": "../../fdr-sdk" },
+    { "path": "../../commons/fdr-utils" }
   ]
 }

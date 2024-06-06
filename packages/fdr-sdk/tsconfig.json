@@ -5,8 +5,11 @@
     "isolatedModules": false,
     "lib": ["ESNext", "DOM"],
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "../",
+    "paths": {
+      "@fern-ui/core-utils": ["../commons/core-utils/src/index.ts"],
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../commons/core-utils" }]
+  "include": ["./src/**/*", "../commons/core-utils/src/**/*"]
 }
