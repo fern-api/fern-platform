@@ -1,5 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
 import { noop } from "lodash-es";
 import { useRouter } from "next/router";
 import {

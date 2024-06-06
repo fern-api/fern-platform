@@ -1,5 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { DocsV1Read, NodeCollector } from "@fern-api/fdr-sdk";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";

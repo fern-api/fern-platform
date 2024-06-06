@@ -11,4 +11,4 @@ export { ApiReferenceNavigationConverter } from "./converters/ApiReferenceNaviga
 export * from "./generated/api";
 export * from "./types";
 export * as utils from "./utils";
-export { ApiDefinitionHolder, collectSlugs, convert, createApiHolder, NavigationConfigConverter, NodeCollector };
+export { collectSlugs, convert, createApiHolder };

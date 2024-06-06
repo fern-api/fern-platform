@@ -24,4 +24,3 @@ clis/docs-migrator/src/__test__/fixtures/bland/api-reference/endpoint/call.mdx
 **/__test__/**/*.json
 **/__test__/fixtures/
 **/__test__/outputs/
-.turbo

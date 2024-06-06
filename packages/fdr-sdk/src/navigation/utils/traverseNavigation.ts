@@ -1,9 +1,9 @@
-import { noop, visitDiscriminatedUnion } from "../../utils";
+import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 
 import { NavigationNode } from "../types/NavigationNode";
 
 const SKIP = "skip" as const;
-// const CONTINUE = true as const;
+const CONTINUE = true as const;
 const STOP = false as const;
 
 export function traverseNavigation(

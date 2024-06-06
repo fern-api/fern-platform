@@ -1,3 +1,4 @@
+import { kebabCase } from "@fern-ui/core-utils";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -9,7 +10,6 @@ import {
     visitWriteNavigationConfig,
 } from "../../client";
 import { isNavigationTabLink } from "../../client/visitNavigationTab";
-import { kebabCase } from "../../utils";
 import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
