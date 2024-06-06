@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as FernRegistry from "../../../../../../..";
+import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Read {
@@ -16,12 +16,20 @@ export declare namespace Read {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Read {
     constructor(protected readonly _options: Read.Options = {}) {}
 
+    /**
+     * @param {string} domain
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v1.read.getDocsForDomainLegacy("string")
+     */
     public async getDocsForDomainLegacy(
         domain: string,
         requestOptions?: Read.RequestOptions
@@ -34,7 +42,7 @@ export class Read {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/registry/docs/load/${domain}`
+                `/registry/docs/load/${encodeURIComponent(domain)}`
             ),
             method: "GET",
             headers: {
@@ -46,6 +54,7 @@ export class Read {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -70,6 +79,15 @@ export class Read {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v1.read.LoadDocsForDomainRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v1.read.getDocsForDomain({
+     *         domain: "string"
+     *     })
+     */
     public async getDocsForDomain(
         request: FernRegistry.docs.v1.read.LoadDocsForDomainRequest,
         requestOptions?: Read.RequestOptions
@@ -92,6 +110,7 @@ export class Read {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -116,7 +135,7 @@ export class Read {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;
