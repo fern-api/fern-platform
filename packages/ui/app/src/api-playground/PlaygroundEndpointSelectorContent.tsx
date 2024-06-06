@@ -1,5 +1,4 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { traverseNavigation } from "@fern-api/fdr-sdk/dist/navigation/utils";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
@@ -30,7 +29,7 @@ export interface ApiGroup {
 
 export function flattenApiSection(root: FernNavigation.SidebarRootNode): ApiGroup[] {
     const result: ApiGroup[] = [];
-    traverseNavigation(root, (node, _, parents) => {
+    FernNavigation.utils.traverseNavigation(root, (node, _, parents) => {
         if (node.type === "changelog") {
             return "skip";
         }
