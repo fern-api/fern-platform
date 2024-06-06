@@ -8,7 +8,6 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
-  "types": "dist/index.d.ts",
   "exports": {
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
