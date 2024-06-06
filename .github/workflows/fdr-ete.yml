@@ -33,5 +33,6 @@ jobs:
         # pnpm turbo --filter= docker:local
         run: |
           cd servers/fdr
+          pnpm compile
           pnpm run docker:local
           pnpm run test:ete
