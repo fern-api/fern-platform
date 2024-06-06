@@ -1024,8 +1024,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3(@babel/core@7.24.5)(@playwright/test@1.44.1)(react-dom@18.3.1)(react@18.3.1)(sass@1.77.0)
       next-mdx-remote:
-        specifier: ^4.4.1
-        version: 4.4.1(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
+        specifier: ^5.0.0
+        version: 5.0.0(@types/react@18.3.1)(react@18.3.1)
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.3.1)(react@18.3.1)
@@ -20893,6 +20893,24 @@ packages:
       - supports-color
     dev: false
 
+  /next-mdx-remote@5.0.0(@types/react@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-RNNbqRpK9/dcIFZs/esQhuLA8jANqlH694yqoDBK8hkVdJUndzzGmnPHa2nyi90N4Z9VmzuSWNRpr5ItT3M7xQ==}
+    engines: {node: '>=14', npm: '>=7'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@babel/code-frame': 7.24.2
+      '@mdx-js/mdx': 3.0.1
+      '@mdx-js/react': 3.0.1(@types/react@18.3.1)(react@18.3.1)
+      react: 18.3.1
+      unist-util-remove: 3.1.1
+      vfile: 6.0.1
+      vfile-matter: 5.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+    dev: false
+
   /next-router-mock@0.9.13(next@14.2.3)(react@18.3.1):
     resolution: {integrity: sha512-906n2RRaE6Y28PfYJbaz5XZeJ6Tw8Xz1S6E31GGwZ0sXB6/XjldD1/2azn1ZmBmRk5PQRkzjg+n+RHZe5xQzWA==}
     peerDependencies:
@@ -26282,6 +26300,13 @@ packages:
       '@types/js-yaml': 4.0.9
       is-buffer: 2.0.5
       js-yaml: 4.1.0
+    dev: false
+
+  /vfile-matter@5.0.0:
+    resolution: {integrity: sha512-jhPSqlj8hTSkTXOqyxbUeZAFFVq/iwu/jukcApEqc/7DOidaAth6rDc0Zgg0vWpzUnWkwFP7aK28l6nBmxMqdQ==}
+    dependencies:
+      vfile: 6.0.1
+      yaml: 2.4.2
     dev: false
 
   /vfile-message@3.1.4:
