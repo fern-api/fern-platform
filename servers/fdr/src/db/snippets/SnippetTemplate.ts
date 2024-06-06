@@ -156,23 +156,36 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }): Promise<EndpointSnippetTemplate | null> {
         const sdkFromRequest = await getSdkFromSdkRequest(this.prisma, loadSnippetTemplateRequest.sdk);
 
-        const snippetTemplate = await this.prisma.snippetTemplate.findFirst({
-            where: {
-                orgId: loadSnippetTemplateRequest.orgId,
-                apiName: loadSnippetTemplateRequest.apiId,
-                endpointPath: loadSnippetTemplateRequest.endpointId?.path,
-                endpointMethod: loadSnippetTemplateRequest.endpointId?.method,
-                sdkId: this.getSdkId(sdkFromRequest),
-            },
-        });
+        let snippetTemplate;
+        if (loadSnippetTemplateRequest.endpointId.identifierOverride != null) {
+            snippetTemplate = await this.prisma.snippetTemplate.findFirst({
+                where: {
+                    orgId: loadSnippetTemplateRequest.orgId,
+                    apiName: loadSnippetTemplateRequest.apiId,
+                    identifierOverride: loadSnippetTemplateRequest.endpointId.identifierOverride,
+                    sdkId: this.getSdkId(sdkFromRequest),
+                },
+            });
+        } else {
+            snippetTemplate = await this.prisma.snippetTemplate.findFirst({
+                where: {
+                    orgId: loadSnippetTemplateRequest.orgId,
+                    apiName: loadSnippetTemplateRequest.apiId,
+                    endpointPath: loadSnippetTemplateRequest.endpointId?.path,
+                    endpointMethod: loadSnippetTemplateRequest.endpointId?.method,
+                    sdkId: this.getSdkId(sdkFromRequest),
+                },
+            });
+        }
 
         if (!snippetTemplate) {
             return null;
         }
         return {
             endpointId: {
-                path: snippetTemplate.endpointPath,
+                path: snippetTemplate.apiDefinitionId,
                 method: snippetTemplate.endpointMethod,
+                identifierOverride: snippetTemplate.identifierOverride ?? undefined,
             },
             sdk: sdkFromRequest,
             snippetTemplate: {
