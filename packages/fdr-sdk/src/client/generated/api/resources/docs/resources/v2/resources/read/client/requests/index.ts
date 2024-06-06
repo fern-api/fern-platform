@@ -1,4 +1,4 @@
-export { GetOrganizationForUrlRequest } from "./GetOrganizationForUrlRequest";
-export { LoadDocsForUrlRequest } from "./LoadDocsForUrlRequest";
-export { LoadPrivateDocsForUrlRequest } from "./LoadPrivateDocsForUrlRequest";
-export { GetSearchApiKeyForIndexSegmentRequest } from "./GetSearchApiKeyForIndexSegmentRequest";
+export { type GetOrganizationForUrlRequest } from "./GetOrganizationForUrlRequest";
+export { type LoadDocsForUrlRequest } from "./LoadDocsForUrlRequest";
+export { type LoadPrivateDocsForUrlRequest } from "./LoadPrivateDocsForUrlRequest";
+export { type GetSearchApiKeyForIndexSegmentRequest } from "./GetSearchApiKeyForIndexSegmentRequest";

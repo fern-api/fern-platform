@@ -38,7 +38,7 @@ type OverviewLayout = "overview";
  */
 type ReferenceLayout = "reference";
 
-export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
+export interface FernDocsFrontmatter {
     /**
      * The layout of the page. This will determine the width of the content.
      * Defaults to "guide"

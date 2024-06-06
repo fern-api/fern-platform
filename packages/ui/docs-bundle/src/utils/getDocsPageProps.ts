@@ -1,10 +1,8 @@
-import { FdrClient, type DocsV2Read } from "@fern-api/fdr-sdk";
-import { convertLoadDocsForUrlResponse } from "@fern-api/fdr-sdk/dist/navigation/utils/convertLoadDocsForUrlResponse";
-import { findNode } from "@fern-api/fdr-sdk/dist/navigation/utils/findNode";
+import { FdrClient, FernNavigation, type DocsV2Read } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
-import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath, getDefaultSeoProps } from "@fern-ui/ui";
+import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -174,8 +172,8 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const root = convertLoadDocsForUrlResponse(docs);
-    const node = findNode(root, slug);
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
         // eslint-disable-next-line no-console
@@ -288,13 +286,6 @@ async function convertDocsToDocsPageProps({
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
-        seo: getDefaultSeoProps(
-            docs.baseUrl.domain,
-            docs.definition.config,
-            docs.definition.pages,
-            docs.definition.filesV2,
-            node.node,
-        ),
     };
 
     return {

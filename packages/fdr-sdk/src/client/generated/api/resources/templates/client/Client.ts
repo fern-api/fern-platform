@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as FernRegistry from "../../..";
+import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Templates {
@@ -16,6 +16,7 @@ export declare namespace Templates {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -24,6 +25,64 @@ export class Templates {
 
     /**
      * Store endpoint snippet for a particular SDK.
+     *
+     * @param {FernRegistry.RegisterSnippetTemplateRequest} request
+     * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.templates.register({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         snippet: {
+     *             sdk: {
+     *                 type: "typescript",
+     *                 package: "string",
+     *                 version: "string"
+     *             },
+     *             endpointId: {
+     *                 path: "string",
+     *                 method: FernRegistry.EndpointMethod.Put,
+     *                 identifierOverride: "string"
+     *             },
+     *             snippetTemplate: {
+     *                 type: "v1",
+     *                 clientInstantiation: "string",
+     *                 functionInvocation: {
+     *                     type: "generic",
+     *                     imports: ["string"],
+     *                     isOptional: true,
+     *                     templateString: "string",
+     *                     templateInputs: [{
+     *                             type: "template",
+     *                             value: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     inputDelimiter: "string"
+     *                 }
+     *             },
+     *             additionalTemplates: {
+     *                 "string": {
+     *                     type: "v1",
+     *                     clientInstantiation: "string",
+     *                     functionInvocation: {
+     *                         type: "generic",
+     *                         imports: ["string"],
+     *                         isOptional: true,
+     *                         templateString: "string",
+     *                         templateInputs: [{
+     *                                 type: "template",
+     *                                 value: {
+     *                                     "key": "value"
+     *                                 }
+     *                             }],
+     *                         inputDelimiter: "string"
+     *                     }
+     *                 }
+     *             }
+     *         }
+     *     })
      */
     public async register(
         request: FernRegistry.RegisterSnippetTemplateRequest,
@@ -31,7 +90,7 @@ export class Templates {
     ): Promise<core.APIResponse<void, FernRegistry.templates.register.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippet-template/register"
             ),
             method: "POST",
@@ -45,6 +104,7 @@ export class Templates {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -61,6 +121,64 @@ export class Templates {
 
     /**
      * Store endpoint snippets for a particular SDK.
+     *
+     * @param {FernRegistry.RegisterSnippetTemplateBatchRequest} request
+     * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.templates.registerBatch({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         snippets: [{
+     *                 sdk: {
+     *                     type: "typescript",
+     *                     package: "string",
+     *                     version: "string"
+     *                 },
+     *                 endpointId: {
+     *                     path: "string",
+     *                     method: FernRegistry.EndpointMethod.Put,
+     *                     identifierOverride: "string"
+     *                 },
+     *                 snippetTemplate: {
+     *                     type: "v1",
+     *                     clientInstantiation: "string",
+     *                     functionInvocation: {
+     *                         type: "generic",
+     *                         imports: ["string"],
+     *                         isOptional: true,
+     *                         templateString: "string",
+     *                         templateInputs: [{
+     *                                 type: "template",
+     *                                 value: {
+     *                                     "key": "value"
+     *                                 }
+     *                             }],
+     *                         inputDelimiter: "string"
+     *                     }
+     *                 },
+     *                 additionalTemplates: {
+     *                     "string": {
+     *                         type: "v1",
+     *                         clientInstantiation: "string",
+     *                         functionInvocation: {
+     *                             type: "generic",
+     *                             imports: ["string"],
+     *                             isOptional: true,
+     *                             templateString: "string",
+     *                             templateInputs: [{
+     *                                     type: "template",
+     *                                     value: {
+     *                                         "key": "value"
+     *                                     }
+     *                                 }],
+     *                             inputDelimiter: "string"
+     *                         }
+     *                     }
+     *                 }
+     *             }]
+     *     })
      */
     public async registerBatch(
         request: FernRegistry.RegisterSnippetTemplateBatchRequest,
@@ -68,7 +186,7 @@ export class Templates {
     ): Promise<core.APIResponse<void, FernRegistry.templates.registerBatch.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippet-template/register/batch"
             ),
             method: "POST",
@@ -82,6 +200,7 @@ export class Templates {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -98,6 +217,25 @@ export class Templates {
 
     /**
      * Get the endpoint's snippet template for a particular SDK.
+     *
+     * @param {FernRegistry.GetSnippetTemplate} request
+     * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.templates.get({
+     *         orgId: "string",
+     *         apiId: "string",
+     *         sdk: {
+     *             type: "typescript",
+     *             package: "string",
+     *             version: "string"
+     *         },
+     *         endpointId: {
+     *             path: "string",
+     *             method: FernRegistry.EndpointMethod.Put,
+     *             identifierOverride: "string"
+     *         }
+     *     })
      */
     public async get(
         request: FernRegistry.GetSnippetTemplate,
@@ -105,7 +243,7 @@ export class Templates {
     ): Promise<core.APIResponse<FernRegistry.EndpointSnippetTemplate, FernRegistry.templates.get.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippet-template/get"
             ),
             method: "POST",
@@ -119,6 +257,7 @@ export class Templates {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -144,7 +283,7 @@ export class Templates {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

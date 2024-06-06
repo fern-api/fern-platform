@@ -7,7 +7,6 @@ import {
     DocsPageResult,
     FeatureFlags,
     convertNavigatableToResolvedPath,
-    getDefaultSeoProps,
 } from "@fern-ui/ui";
 import urljoin from "url-join";
 
@@ -130,13 +129,6 @@ export async function getDocsPageProps(
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
-        seo: getDefaultSeoProps(
-            docs.baseUrl.domain,
-            docs.definition.config,
-            docs.definition.pages,
-            docs.definition.filesV2,
-            node.node,
-        ),
     };
 
     return {

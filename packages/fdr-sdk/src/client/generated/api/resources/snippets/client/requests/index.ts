@@ -1,2 +1,2 @@
-export { GetSnippetRequest } from "./GetSnippetRequest";
-export { ListSnippetsRequest } from "./ListSnippetsRequest";
+export { type GetSnippetRequest } from "./GetSnippetRequest";
+export { type ListSnippetsRequest } from "./ListSnippetsRequest";

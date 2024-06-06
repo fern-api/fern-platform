@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as FernRegistry from "../../../../../../..";
+import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Read {
@@ -16,20 +16,28 @@ export declare namespace Read {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Read {
     constructor(protected readonly _options: Read.Options = {}) {}
 
+    /**
+     * @param {FernRegistry.ApiDefinitionId} apiDefinitionId
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.api.v1.read.getApi("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     */
     public async getApi(
         apiDefinitionId: FernRegistry.ApiDefinitionId,
         requestOptions?: Read.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.api.v1.read.ApiDefinition, FernRegistry.api.v1.read.getApi.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
-                `/registry/api/load/${apiDefinitionId}`
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                `/registry/api/load/${encodeURIComponent(apiDefinitionId)}`
             ),
             method: "GET",
             headers: {
@@ -41,6 +49,7 @@ export class Read {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -65,7 +74,7 @@ export class Read {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

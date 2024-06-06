@@ -10,7 +10,7 @@ import {
     SdkRequest,
     Template,
 } from "../../api/generated/api";
-import { readBuffer, writeBuffer } from "../../util";
+import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
 import { SdkDaoImpl, SdkPackage } from "../sdk/SdkDao";
 import { SdkIdFactory } from "./SdkIdFactory";
 import {
@@ -156,15 +156,28 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }): Promise<EndpointSnippetTemplate | null> {
         const sdkFromRequest = await getSdkFromSdkRequest(this.prisma, loadSnippetTemplateRequest.sdk);
 
-        const snippetTemplate = await this.prisma.snippetTemplate.findFirst({
-            where: {
-                orgId: loadSnippetTemplateRequest.orgId,
-                apiName: loadSnippetTemplateRequest.apiId,
-                endpointPath: loadSnippetTemplateRequest.endpointId?.path,
-                endpointMethod: loadSnippetTemplateRequest.endpointId?.method,
-                sdkId: this.getSdkId(sdkFromRequest),
-            },
-        });
+        let snippetTemplate = null;
+        if (loadSnippetTemplateRequest.endpointId.identifierOverride != null) {
+            snippetTemplate = await this.prisma.snippetTemplate.findFirst({
+                where: {
+                    orgId: loadSnippetTemplateRequest.orgId,
+                    apiName: loadSnippetTemplateRequest.apiId,
+                    identifierOverride: loadSnippetTemplateRequest.endpointId.identifierOverride,
+                    sdkId: this.getSdkId(sdkFromRequest),
+                },
+            });
+        }
+        if (snippetTemplate == null) {
+            snippetTemplate = await this.prisma.snippetTemplate.findFirst({
+                where: {
+                    orgId: loadSnippetTemplateRequest.orgId,
+                    apiName: loadSnippetTemplateRequest.apiId,
+                    endpointPath: loadSnippetTemplateRequest.endpointId?.path,
+                    endpointMethod: loadSnippetTemplateRequest.endpointId?.method,
+                    sdkId: this.getSdkId(sdkFromRequest),
+                },
+            });
+        }
 
         if (!snippetTemplate) {
             return null;
@@ -173,6 +186,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             endpointId: {
                 path: snippetTemplate.endpointPath,
                 method: snippetTemplate.endpointMethod,
+                identifierOverride: snippetTemplate.identifierOverride ?? undefined,
             },
             sdk: sdkFromRequest,
             snippetTemplate: {
@@ -222,7 +236,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         const sdkDao = new SdkDaoImpl(this.prisma);
 
         await this.prisma.$transaction(async (tx) => {
-            const snippets: Prisma.Enumerable<Prisma.SnippetTemplateCreateManyInput> = [];
+            const snippets: Prisma.Enumerable<WithoutQuestionMarks<Prisma.SnippetTemplateCreateManyInput>> = [];
             const sdks: Prisma.Enumerable<SdkPackage> = [];
             storeSnippetsInfo.snippets.map(async (snippet) => {
                 const sdkId = this.getSdkId(snippet.sdk);
@@ -234,6 +248,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     apiDefinitionId: storeSnippetsInfo.apiDefinitionId,
                     endpointPath: snippet.endpointId.path,
                     endpointMethod: snippet.endpointId.method,
+                    identifierOverride: snippet.endpointId.identifierOverride,
                     sdkId,
                     version: snippet.snippetTemplate.type,
                     functionInvocation: writeBuffer(snippet.snippetTemplate.functionInvocation),

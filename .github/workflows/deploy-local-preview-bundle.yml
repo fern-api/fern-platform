@@ -28,7 +28,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: ENABLE_SOURCE_MAPS=true pnpm turbo --filter=@fern-ui/local-preview-bundle build
+        run: |
+          pnpm compile
+          ENABLE_SOURCE_MAPS=true pnpm --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
         run: pnpm --filter=@fern-ui/cdk run deploy:dev2
 
@@ -47,6 +49,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
+        run: |
+          pnpm compile
+          pnpm --filter=@fern-ui/local-preview-bundle build
       - name: Deploy local preview bundle
         run: pnpm --filter=@fern-ui/cdk run deploy:prod

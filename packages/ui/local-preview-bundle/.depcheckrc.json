@@ -16,7 +16,8 @@
     "lodash-es",
     "@types/lodash-es",
     "node-fetch",
-    "@types/node-fetch"
+    "@types/node-fetch",
+    "@emotion/is-prop-valid"
   ],
   "ignore-patterns": ["dist"]
 }
