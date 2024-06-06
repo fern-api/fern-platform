@@ -1,5 +1,5 @@
-import { assertNever } from "@fern-ui/core-utils";
 import { APIV1Read, DocsV1Read } from "../../client";
+import { assertNever } from "../../utils";
 import { FernNavigation } from "../generated";
 
 export function convertAvailability(

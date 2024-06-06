@@ -1,4 +1,3 @@
-"use client";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
