@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as FernRegistry from "../../../../../../..";
+import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Write {
@@ -16,12 +16,36 @@ export declare namespace Write {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Write {
     constructor(protected readonly _options: Write.Options = {}) {}
 
+    /**
+     * @param {FernRegistry.docs.v2.write.StartDocsRegisterRequestV2} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.write.startDocsRegister({
+     *         domain: "string",
+     *         customDomains: ["string"],
+     *         authConfig: {
+     *             type: "public"
+     *         },
+     *         orgId: "string",
+     *         apiId: "string",
+     *         filepaths: ["string"],
+     *         images: [{
+     *                 filePath: "string",
+     *                 width: 1.1,
+     *                 height: 1.1,
+     *                 blurDataUrl: "string",
+     *                 alt: "string"
+     *             }]
+     *     })
+     */
     public async startDocsRegister(
         request: FernRegistry.docs.v2.write.StartDocsRegisterRequestV2,
         requestOptions?: Write.RequestOptions
@@ -47,6 +71,7 @@ export class Write {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -73,6 +98,26 @@ export class Write {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v2.write.StartDocsPreviewRegisterRequestV2} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.write.startDocsPreviewRegister({
+     *         orgId: "string",
+     *         authConfig: {
+     *             type: "public"
+     *         },
+     *         filepaths: ["string"],
+     *         images: [{
+     *                 filePath: "string",
+     *                 width: 1.1,
+     *                 height: 1.1,
+     *                 blurDataUrl: "string",
+     *                 alt: "string"
+     *             }]
+     *     })
+     */
     public async startDocsPreviewRegister(
         request: FernRegistry.docs.v2.write.StartDocsPreviewRegisterRequestV2,
         requestOptions?: Write.RequestOptions
@@ -98,6 +143,7 @@ export class Write {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -122,6 +168,21 @@ export class Write {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v1.write.DocsRegistrationId} docsRegistrationId
+     * @param {FernRegistry.docs.v2.write.RegisterDocsRequest} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.write.finishDocsRegister("string", {
+     *         docsDefinition: {
+     *             pages: {
+     *                 "string": {}
+     *             },
+     *             config: {}
+     *         }
+     *     })
+     */
     public async finishDocsRegister(
         docsRegistrationId: FernRegistry.docs.v1.write.DocsRegistrationId,
         request: FernRegistry.docs.v2.write.RegisterDocsRequest,
@@ -130,7 +191,7 @@ export class Write {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/v2/registry/docs/register/${docsRegistrationId}`
+                `/v2/registry/docs/register/${encodeURIComponent(docsRegistrationId)}`
             ),
             method: "POST",
             headers: {
@@ -143,6 +204,7 @@ export class Write {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -169,7 +231,7 @@ export class Write {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;
