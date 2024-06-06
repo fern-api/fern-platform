@@ -156,7 +156,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     }): Promise<EndpointSnippetTemplate | null> {
         const sdkFromRequest = await getSdkFromSdkRequest(this.prisma, loadSnippetTemplateRequest.sdk);
 
-        let snippetTemplate;
+        let snippetTemplate = null;
         if (loadSnippetTemplateRequest.endpointId.identifierOverride != null) {
             snippetTemplate = await this.prisma.snippetTemplate.findFirst({
                 where: {
@@ -166,7 +166,8 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     sdkId: this.getSdkId(sdkFromRequest),
                 },
             });
-        } else {
+        }
+        if (snippetTemplate == null) {
             snippetTemplate = await this.prisma.snippetTemplate.findFirst({
                 where: {
                     orgId: loadSnippetTemplateRequest.orgId,
