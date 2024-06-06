@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "rootDir": "../",
     "paths": {
-      "@fern-ui/core-utils": ["../commons/core-utils/src/index.ts"],
+      "@fern-ui/core-utils": ["../commons/core-utils/src"],
       "@/*": ["./src/*"]
     }
   },
