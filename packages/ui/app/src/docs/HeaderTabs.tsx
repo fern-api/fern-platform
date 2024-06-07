@@ -6,7 +6,7 @@ import { getSidebarTabHref } from "../util/getSidebarTabHref";
 export function HeaderTabs(): ReactElement {
     const { tabs, currentTabIndex } = useDocsContext();
     return (
-        <nav aria-label="tabs" className="bg-white h-[48px] max-lg:hidden">
+        <nav aria-label="tabs" className="h-[49px] max-lg:hidden  border-[#E8EAED] border-t">
             <ul className="fern-tabs">
                 {tabs.map((tab) => (
                     <li key={tab.index} className="fern-tab">

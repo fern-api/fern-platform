@@ -327,7 +327,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={setPlaygroundOpen} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
-                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
+                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-white backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
                         onInteractOutside={(e) => {
                             e.preventDefault();
                         }}

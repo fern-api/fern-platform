@@ -114,7 +114,7 @@
         @apply relative z-50;
         @apply animate-popover;
         @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
-        @apply border-default flex max-h-[300px] flex-col rounded-lg border bg-background-translucent backdrop-blur will-change-[opacity,transform];
+        @apply border-default flex max-h-[300px] flex-col rounded-md border bg-background-translucent backdrop-blur will-change-[opacity,transform];
         @apply shadow-xl;
 
         .fern-dropdown-item {
@@ -132,14 +132,14 @@
         @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed;
 
         > .fern-button {
-            @apply rounded-lg shrink min-w-0;
+            @apply rounded-md shrink min-w-0;
         }
     }
 
     .fern-button {
         @apply transition-[background];
         @apply inline-flex items-center justify-center;
-        @apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;
+        @apply rounded-md px-3 py-1 text-sm h-10 sm:h-8;
         @apply cursor-default;
 
         &.multiline,
@@ -569,7 +569,7 @@
     .fern-numeric-input-group {
         @apply flex items-center overflow-hidden;
         @apply focus-within:fern-input-focus;
-        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
+        @apply ring-default rounded-md ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
     }
 
     .fern-input-icon {

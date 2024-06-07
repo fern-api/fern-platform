@@ -47,7 +47,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     rightIcon={<ChevronDownIcon />}
                     text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
                     size="small"
-                    variant="outlined"
+                    variant="minimal"
                     mono={true}
                 />
             </FernDropdown>

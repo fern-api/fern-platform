@@ -24,7 +24,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => 
     }, [initialApi, setDefinitions]);
 
     return (
-        <div className="min-h-0 pb-36 m-6 bg-white shadow-google">
+        <div className="min-h-0 pb-36 lg:m-6 bg-white shadow-google">
             <ApiPackageContents
                 api={initialApi.api}
                 types={initialApi.types}

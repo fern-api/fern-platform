@@ -88,7 +88,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
                 style={scrollAreaStyle}
                 viewportRef={viewportRef}
                 language={language}
-                fontSize="sm"
+                fontSize="base"
                 highlightLines={requestHighlightLines}
                 code={code}
             />

@@ -104,7 +104,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     multiple={type === "fileArray"}
                 />
                 <FernCard
-                    className={cn("w-full rounded-lg", {
+                    className={cn("w-full rounded-md", {
                         elevated: drag,
                     })}
                     onDragOver={dragOver}

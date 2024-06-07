@@ -33,7 +33,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
         >
             <div
                 className={cn("h-10", {
-                    "bg-tag-default-soft": intent === "none" || intent === "primary",
+                    "bg-[#E8EAED]": intent === "none" || intent === "primary",
                     "bg-tag-warning-soft": intent === "warning",
                     "bg-tag-success-soft": intent === "success",
                     "bg-tag-danger-soft": intent === "danger",

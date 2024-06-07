@@ -50,7 +50,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({ onClos
 
     const [value, setValue] = useState<string>("");
     const modal = (
-        <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-lg p-4">
+        <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-md p-4">
             <FernButton className="absolute right-2 top-2" variant="minimal" icon={<Cross1Icon />} onClick={onClose} />
             <h3 className="m-0 mb-4">Secrets</h3>
             <ul>

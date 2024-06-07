@@ -17,7 +17,7 @@ export const FeedbackFormDialog: FC<FeedbackFormDialogProps> = ({ trigger, conte
                     side="bottom"
                     sideOffset={8}
                     className={clsx(
-                        "z-50 border-default w-[calc(100vw-32px)] sm:w-96 rounded-lg border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-background/50",
+                        "z-50 border-default w-[calc(100vw-32px)] sm:w-96 rounded-md border bg-white/50 p-4 shadow-xl backdrop-blur-xl dark:bg-background/50",
                         "will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slide-down-and-fade data-[state=open]:data-[side=right]:animate-slide-left-and-fade data-[state=open]:data-[side=bottom]:animate-slide-up-and-fade data-[state=open]:data-[side=left]:animate-slide-right-and-fade",
                         className,
                     )}

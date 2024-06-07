@@ -46,7 +46,7 @@
 }
 
 .fern-table-root.fullscreen {
-    @apply text-base bg-background-translucent shadow-2xl rounded-lg;
+    @apply text-base bg-background-translucent shadow-2xl rounded-md;
 
     .fern-table .fern-table-cell {
         @apply h-10 p-3 bg-background;

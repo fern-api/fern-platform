@@ -1,6 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import LanguageIcon from "@mui/icons-material/Language";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import SearchIcon from "@mui/icons-material/Search";
 import { TriangleDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
@@ -45,13 +47,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     return (
         <nav
             aria-label="primary"
-            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-6 shrink-0 h-full", className)}
+            className={cn("flex justify-between items-center px-6 shrink-0 h-full", className)}
             ref={ref}
             style={style}
         >
             <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
 
-            <ul className="fern-tabs flex-1 ml-[0.5px]">
+            <ul className="fern-tabs flex-1 ml-[0.5px] max-lg:hidden">
                 <li className="fern-tab">
                     <FernLink className="group/tab-button" href="/api" data-state="active">
                         <div className="flex min-w-0 items-center justify-start space-x-2">
@@ -95,13 +97,25 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 </li>
             </ul>
 
-            <SidebarSearchBar onClick={openSearchDialog} />
+            <div className="flex items-center">
+                <SidebarSearchBar onClick={openSearchDialog} className="max-lg:hidden" />
 
-            <button className="size-8 rounded-full border border-default t-muted ml-4">
-                <MoreVertIcon />
-            </button>
+                <button className="size-8 rounded-full t-muted ml-4 hover:bg-tag-default transition-colors lg:hidden">
+                    <SearchIcon />
+                </button>
 
-            <button className="size-8 rounded-full bg-accent opacity-90 ml-4"></button>
+                <button className="h-9 t-muted border-default border rounded-[4px] px-2.5 inline-flex items-center gap-2 ml-4 hover:bg-tag-default  transition-colors">
+                    <LanguageIcon />
+                    <span className="text-sm font-medium ">English</span>
+                    <TriangleDownIcon className="size-[16px] scale-x-125 -ml-1 mr-0.5" />
+                </button>
+
+                <button className="size-8 rounded-full border border-default t-muted ml-4 hover:bg-tag-default  transition-colors">
+                    <MoreVertIcon />
+                </button>
+
+                <button className="size-8 rounded-full bg-accent opacity-90 ml-4"></button>
+            </div>
         </nav>
     );
 });

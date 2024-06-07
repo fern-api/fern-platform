@@ -190,7 +190,7 @@
 
     .fern-sidebar-link {
         @apply text-left relative inline-flex flex-1 content-between items-stretch;
-        @apply max-lg:rounded-none lg:rounded-lg;
+        @apply max-lg:rounded-none lg:rounded-md;
     }
 
     .fern-sidebar-link-container[data-state="active"] {
@@ -214,7 +214,7 @@
 
     .fern-sidebar-link-expand {
         @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none ease-out;
-        @apply lg:rounded-lg -ml-6;
+        @apply lg:rounded-md -ml-6;
 
         &:last-child {
             @apply flex -mr-3 ml-1;
@@ -263,17 +263,42 @@
         .fern-tab {
             @apply h-full relative flex items-center;
 
-            a {
+            a,
+            button {
                 @apply px-[18px];
+
+                &:before {
+                    @apply absolute inset-x-[22px] bottom-0 h-[3px] rounded-t-[3px];
+                }
             }
 
-            a[data-state="active"] {
+            a[data-state="active"],
+            button[data-state="active"] {
                 @apply t-default;
             }
 
-            a[data-state="active"]:before {
+            a[data-state="active"]:before,
+            button[data-state="active"]:before {
                 content: "";
-                @apply absolute inset-x-[22px] bottom-0 h-[3px] bg-accent rounded-t-[3px];
+                @apply bg-accent;
+            }
+
+            a:not([data-state="active"]):hover:before,
+            button:not([data-state="active"]):hover:before {
+                content: "";
+                @apply bg-grayscale-9;
+            }
+        }
+    }
+
+    .fern-tabs.fern-snippet-examples {
+        @apply w-full border-b border-default -mb-6 h-10 text-sm px-0;
+
+        button {
+            @apply px-[12px];
+
+            &:before {
+                @apply h-[2px] rounded-t-[2px];
             }
         }
     }

@@ -27,7 +27,7 @@ export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf 
                     variant="outlined"
                     intent="primary"
                     size="small"
-                    mono={true}
+                    rounded
                 >
                     Play
                 </FernButton>

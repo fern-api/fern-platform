@@ -33,7 +33,7 @@ export const StreamingEnabledToggle: FC<PropsWithChildren<StreamingEnabledToggle
     //             </FernButton>
     //         </Select.Trigger>
     //         <Select.Portal>
-    //             <Select.Content className="overflow-hidden rounded-lg bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
+    //             <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
     //                 <Select.ScrollUpButton />
     //                 <Select.Viewport className="p-[5px]">
     //                     <Select.Item value="true" className={SELECT_ITEM_CLSX}>
