@@ -1,10 +1,9 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 // import { Portal, Transition } from "@headlessui/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { atom, useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
@@ -24,16 +23,15 @@ import {
 } from "../resolver/types";
 import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
+import { flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
-import { HorizontalSplitPane } from "./VerticalSplitPane";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundRequestFormAuth,
     PlaygroundWebSocketRequestFormState,
 } from "./types";
-import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
+import { useWindowHeight } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
 
 const EMPTY_ENDPOINT_FORM_STATE: PlaygroundEndpointRequestFormState = {
@@ -84,52 +82,52 @@ interface PlaygroundDrawerProps {
 
 export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
-    const windowHeight = useWindowHeight();
+    // const windowHeight = useWindowHeight();
 
     const { sidebar } = useDocsContext();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
 
     const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
 
-    const nodeIdToApiDefinition = useMemo(() => {
-        const nodes = new Map<FernNavigation.NodeId, ResolvedApiDefinition>();
-        Object.values(apis).forEach((api) => {
-            api.apiDefinitions.forEach((apiDefinition) => {
-                nodes.set(apiDefinition.nodeId, apiDefinition);
-            });
-        });
-        return nodes;
-    }, [apis]);
+    // const nodeIdToApiDefinition = useMemo(() => {
+    //     const nodes = new Map<FernNavigation.NodeId, ResolvedApiDefinition>();
+    //     Object.values(apis).forEach((api) => {
+    //         api.apiDefinitions.forEach((apiDefinition) => {
+    //             nodes.set(apiDefinition.nodeId, apiDefinition);
+    //         });
+    //     });
+    //     return nodes;
+    // }, [apis]);
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
     const layoutBreakpoint = useLayoutBreakpoint();
-    const [height, setHeight] = usePlaygroundHeight();
+    // const [height, setHeight] = usePlaygroundHeight();
 
-    const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
-    const [scope, animate] = useAnimate();
+    // const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
+    // const [scope, animate] = useAnimate();
 
-    const setOffset = useCallback(
-        (offset: number) => {
-            windowHeight != null && setHeight(windowHeight - offset);
-        },
-        [setHeight, windowHeight],
-    );
+    // const setOffset = useCallback(
+    //     (offset: number) => {
+    //         windowHeight != null && setHeight(windowHeight - offset);
+    //     },
+    //     [setHeight, windowHeight],
+    // );
 
-    const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
+    // const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
 
-    useEffect(() => {
-        if (isResizing) {
-            x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
-        } else {
-            if (scope.current != null) {
-                // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
-                void animate(scope.current, { height: layoutBreakpoint !== "mobile" ? height : windowHeight });
-            } else {
-                x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
-            }
-        }
-    }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
+    // useEffect(() => {
+    //     if (isResizing) {
+    //         x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+    //     } else {
+    //         if (scope.current != null) {
+    //             // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
+    //             void animate(scope.current, { height: layoutBreakpoint !== "mobile" ? height : windowHeight });
+    //         } else {
+    //             x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+    //         }
+    //     }
+    // }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -324,53 +322,37 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             showError={true}
             reset={resetWithoutExample}
         >
-            <Dialog.Root open={isPlaygroundOpen} onOpenChange={setPlaygroundOpen} modal={false}>
+            <Dialog.Root open={isPlaygroundOpen && selectedEndpoint != null} onOpenChange={setPlaygroundOpen}>
                 <Dialog.Portal>
+                    <Dialog.Overlay
+                        className="inset-0 fixed data-[state=open]:animate-backdrop-blur backdrop-blur"
+                        onClickCapture={() => setPlaygroundOpen(false)}
+                    />
                     <Dialog.Content
-                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-white backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
+                        className="data-[state=open]:animate-slide-up-and-fade fixed inset-0 lg:inset-20 bg-white shadow-google-header rounded-lg max-sm:h-full"
                         onInteractOutside={(e) => {
                             e.preventDefault();
                         }}
-                        asChild
                     >
-                        <motion.div style={{ height: x }} ref={scope}>
-                            {layoutBreakpoint !== "mobile" ? (
-                                <>
-                                    <div
-                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
-                                        onMouseDown={handleVerticalResize}
-                                    >
-                                        <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
-                                        <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
-                                            <div className="bg-accent h-1 w-10 rounded-full" />
-                                        </div>
-                                    </div>
-                                    <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
-                                        <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
-                                    </Dialog.Close>
-                                </>
-                            ) : (
-                                renderMobileHeader()
-                            )}
-                            {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
-                                renderContent()
-                            ) : (
-                                <HorizontalSplitPane
-                                    mode="pixel"
-                                    className="size-full"
-                                    leftClassName="border-default border-r"
+                        {layoutBreakpoint !== "mobile" ? (
+                            <>
+                                {/* <div
+                                    className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
+                                    onMouseDown={handleVerticalResize}
                                 >
-                                    <PlaygroundEndpointSelectorContent
-                                        apiGroups={apiGroups}
-                                        selectedEndpoint={selectedEndpoint}
-                                        className="h-full"
-                                        nodeIdToApiDefinition={nodeIdToApiDefinition}
-                                    />
-
-                                    {renderContent()}
-                                </HorizontalSplitPane>
-                            )}
-                        </motion.div>
+                                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                                    <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
+                                        <div className="bg-accent h-1 w-10 rounded-full" />
+                                    </div>
+                                </div> */}
+                                <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
+                                    <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
+                                </Dialog.Close>
+                            </>
+                        ) : (
+                            renderMobileHeader()
+                        )}
+                        {renderContent()}
                     </Dialog.Content>
                 </Dialog.Portal>
             </Dialog.Root>

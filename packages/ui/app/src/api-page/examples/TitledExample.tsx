@@ -1,13 +1,15 @@
-import { Intent } from "@fern-ui/components";
+import { FernButton, FernTooltip, FernTooltipProvider, Intent } from "@fern-ui/components";
+import Brightness6Icon from "@mui/icons-material/Brightness6";
 import cn from "clsx";
-import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
+import { atom, useAtom } from "jotai";
+import { MouseEventHandler, PropsWithChildren, ReactNode, forwardRef } from "react";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 
 export declare namespace TitledExample {
     export interface Props {
         title: ReactNode;
         intent?: Intent;
-        actions?: ReactElement;
+        actions?: ReactNode;
         className?: string;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text
         onClick?: MouseEventHandler<HTMLDivElement>;
@@ -17,47 +19,46 @@ export declare namespace TitledExample {
     }
 }
 
+const DARK_CODE_ENABLED = atom(false);
+
 export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<TitledExample.Props>>(function TitledExample(
     { title, intent = "none", className, actions, children, copyToClipboardText, onClick, disableClipboard = false },
     ref,
 ) {
+    const [isDarkCodeEnabled, setDarkCodeEnabled] = useAtom(DARK_CODE_ENABLED);
     return (
         <div
             className={cn(
-                "overflow-hidden flex flex-col bg-card after:pointer-events-none relative",
+                "overflow-hidden flex flex-col bg-card relative border border-default rounded-lg",
                 "max-md:max-h-vh-minus-header-padded",
                 className,
+                { "code-dark": isDarkCodeEnabled },
             )}
             onClick={onClick}
             ref={ref}
         >
             <div
-                className={cn("h-10", {
-                    "bg-[#E8EAED]": intent === "none" || intent === "primary",
+                className={cn("h-12 border-b border-default flex items-center shrink-0", {
+                    "bg-white": intent === "none" || intent === "primary",
                     "bg-tag-warning-soft": intent === "warning",
                     "bg-tag-success-soft": intent === "success",
                     "bg-tag-danger-soft": intent === "danger",
                 })}
             >
-                <div className="mx-px flex min-h-10 items-center justify-between px-2 shadow-[inset_0_-1px_0_0] shadow-border-default">
-                    {typeof title === "string" ? (
-                        <div
-                            className={cn("text-sm px-1", {
-                                "t-muted": intent === "none" || intent === "primary",
-                                "t-warning": intent === "warning",
-                                "t-success": intent === "success",
-                                "t-danger": intent === "danger",
-                            })}
-                        >
-                            {title}
-                        </div>
-                    ) : (
-                        <div className="min-w-0 flex-1 shrink">{title}</div>
-                    )}
-                    <div className="flex gap-2">
-                        {actions}
-                        {!disableClipboard && <CopyToClipboardButton content={copyToClipboardText} className="-m-1" />}
-                    </div>
+                <div className={"min-w-0 flex-1 shrink self-stretch flex items-center px-3"}>{title}</div>
+                <div className="flex gap-0 px-2 items-center">
+                    {actions}
+                    <FernTooltipProvider>
+                        <FernTooltip content={isDarkCodeEnabled ? "Light mode theme" : "Dark mode theme"} side="top">
+                            <FernButton
+                                icon={<Brightness6Icon />}
+                                rounded
+                                variant="minimal"
+                                onClick={() => setDarkCodeEnabled((prev) => !prev)}
+                            />
+                        </FernTooltip>
+                    </FernTooltipProvider>
+                    {!disableClipboard && <CopyToClipboardButton content={copyToClipboardText} />}
                 </div>
             </div>
             {children}

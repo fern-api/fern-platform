@@ -319,6 +319,10 @@ module.exports = {
                     from: { opacity: "0", transform: "translate(0, 48%)" },
                     to: { opacity: "1", transform: "translate(0, 0)" },
                 },
+                "backdrop-blur": {
+                    from: { backdropFilter: "blur(0)" },
+                    to: { backdropFilter: "blur(8px)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -336,6 +340,7 @@ module.exports = {
                 "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show-from-bottom": "content-show-from-bottom 500ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "backdrop-blur": "backdrop-blur 400ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

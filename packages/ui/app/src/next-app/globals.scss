@@ -144,6 +144,10 @@
         mask-image: linear-gradient(to top, transparent 0, black 40px);
     }
 
+    .mask-grad-right-6 {
+        mask-image: linear-gradient(to left, transparent 0, black 24px);
+    }
+
     .fern-search-bar {
         @apply cursor-text text-left;
         background-color: #f1f3f4;
@@ -265,7 +269,7 @@
 
             a,
             button {
-                @apply px-[18px];
+                @apply px-[18px] h-full inline-flex items-center;
 
                 &:before {
                     @apply absolute inset-x-[22px] bottom-0 h-[3px] rounded-t-[3px];
@@ -275,6 +279,13 @@
             a[data-state="active"],
             button[data-state="active"] {
                 @apply t-default;
+            }
+
+            &.accented {
+                a[data-state="active"],
+                button[data-state="active"] {
+                    @apply t-accent;
+                }
             }
 
             a[data-state="active"]:before,
@@ -291,15 +302,15 @@
         }
     }
 
-    .fern-tabs.fern-snippet-examples {
-        @apply w-full border-b border-default -mb-6 h-10 text-sm px-0;
+    // .fern-tabs.fern-snippet-examples {
+    //     @apply w-full border-b border-default -mb-6 h-10 text-sm px-0;
 
-        button {
-            @apply px-[12px];
+    //     button {
+    //         @apply px-[12px];
 
-            &:before {
-                @apply h-[2px] rounded-t-[2px];
-            }
-        }
-    }
+    //         &:before {
+    //             @apply h-[2px] rounded-t-[2px];
+    //         }
+    //     }
+    // }
 }

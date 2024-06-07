@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from "react";
 import { captureSentryError } from "../analytics/sentry";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import "./FernSyntaxHighlighter.css";
+import "./FernSyntaxHighlighter.scss";
 import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
 import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";

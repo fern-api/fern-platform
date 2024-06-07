@@ -21,9 +21,8 @@ import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
-import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
-import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 import { ErrorExampleSelect } from "./ErrorExampleSelect";
+import { LanguageTabs } from "./LanguageTabs";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -107,7 +106,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     }, [selectedError]);
 
     const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
-    const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
+    // const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
 
     const successTitle =
         exampleWithSchema.responseBody != null
@@ -130,7 +129,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             {successTitle}
         </ErrorExampleSelect>
     ) : (
-        <span className="text-sm t-muted">{successTitle}</span>
+        <span className="text-base t-muted">{successTitle}</span>
     );
 
     return (
@@ -138,7 +137,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full max-h-fit"
             ref={ref}
         >
-            {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
+            {/* {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <ul className="fern-tabs fern-snippet-examples">
                     {selectedClientGroup.examples.map((example) => (
                         <li key={example.key} className="fern-tab">
@@ -156,34 +155,20 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         </li>
                     ))}
                 </ul>
-            )}
+            )} */}
             <CodeSnippetExample
-                title={
-                    <EndpointUrlWithOverflow
-                        path={endpoint.path}
-                        method={endpoint.method}
-                        environment={endpoint.defaultEnvironment?.baseUrl}
-                    />
-                }
+                title={<LanguageTabs clients={clients} onClickClient={onClickClient} selectedClient={selectedClient} />}
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
                 actions={
-                    <>
-                        {node != null && (
-                            <PlaygroundButton
-                                state={node}
-                                // example={selectedClient.exampleCall}
-                            />
-                        )}
-                        {clients.length > 1 ? (
-                            <CodeExampleClientDropdown
-                                clients={clients}
-                                onClickClient={onClickClient}
-                                selectedClient={selectedClient}
-                            />
-                        ) : undefined}
-                    </>
+                    node != null && (
+                        <PlaygroundButton
+                            className="mr-2"
+                            state={node}
+                            // example={selectedClient.exampleCall}
+                        />
+                    )
                 }
                 code={requestCodeSnippet}
                 language={selectedClient.language}
@@ -209,7 +194,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
                     json: (value) => (
                         <JsonCodeSnippetExample
-                            title={errorSelector}
+                            title={
+                                selectedClient.language !== "curl" ? (
+                                    <span className="t-muted px-1">Output</span>
+                                ) : (
+                                    errorSelector
+                                )
+                            }
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}

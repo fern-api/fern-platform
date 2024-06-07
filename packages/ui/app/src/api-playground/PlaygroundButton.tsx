@@ -3,7 +3,10 @@ import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/component
 import { FC } from "react";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
-export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf }> = ({ state }) => {
+export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf; className?: string }> = ({
+    state,
+    className,
+}) => {
     const { hasPlayground, setSelectionStateAndOpen } = usePlaygroundContext();
 
     if (!hasPlayground) {
@@ -26,8 +29,8 @@ export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf 
                     rightIcon="play"
                     variant="outlined"
                     intent="primary"
-                    size="small"
                     rounded
+                    className={className}
                 >
                     Play
                 </FernButton>
