@@ -180,7 +180,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     type: "payload",
                                                                                                     location:
                                                                                                         "RELATIVE",
-                                                                                                    path: null,
+                                                                                                    path: undefined,
                                                                                                 },
                                                                                             ],
                                                                                         },
@@ -195,7 +195,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     type: "payload",
                                                                                                     location:
                                                                                                         "RELATIVE",
-                                                                                                    path: null,
+                                                                                                    path: undefined,
                                                                                                 },
                                                                                             ],
                                                                                         },
@@ -306,7 +306,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     type: "payload",
                                                                                                     location:
                                                                                                         "RELATIVE",
-                                                                                                    path: null,
+                                                                                                    path: undefined,
                                                                                                 },
                                                                                             ],
                                                                                         },
@@ -321,7 +321,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     type: "payload",
                                                                                                     location:
                                                                                                         "RELATIVE",
-                                                                                                    path: null,
+                                                                                                    path: undefined,
                                                                                                 },
                                                                                             ],
                                                                                         },
@@ -432,7 +432,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     type: "payload",
                                                                                                     location:
                                                                                                         "RELATIVE",
-                                                                                                    path: null,
+                                                                                                    path: undefined,
                                                                                                 },
                                                                                             ],
                                                                                         },
@@ -447,7 +447,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     type: "payload",
                                                                                                     location:
                                                                                                         "RELATIVE",
-                                                                                                    path: null,
+                                                                                                    path: undefined,
                                                                                                 },
                                                                                             ],
                                                                                         },
@@ -557,7 +557,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                                     type: "payload",
                                                                                                                     location:
                                                                                                                         "RELATIVE",
-                                                                                                                    path: null,
+                                                                                                                    path: undefined,
                                                                                                                 },
                                                                                                             ],
                                                                                                     },
@@ -574,7 +574,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                                     type: "payload",
                                                                                                                     location:
                                                                                                                         "RELATIVE",
-                                                                                                                    path: null,
+                                                                                                                    path: undefined,
                                                                                                                 },
                                                                                                             ],
                                                                                                     },
@@ -618,7 +618,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                         type: "payload",
                                                                                                         location:
                                                                                                             "RELATIVE",
-                                                                                                        path: null,
+                                                                                                        path: undefined,
                                                                                                     },
                                                                                                 ],
                                                                                             },
@@ -633,13 +633,13 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                         type: "payload",
                                                                                                         location:
                                                                                                             "RELATIVE",
-                                                                                                        path: null,
+                                                                                                        path: undefined,
                                                                                                     },
                                                                                                 ],
                                                                                             },
                                                                                             templateInput: {
                                                                                                 location: "RELATIVE",
-                                                                                                path: null,
+                                                                                                path: undefined,
                                                                                             },
                                                                                         },
                                                                                         templateInput: {
@@ -664,7 +664,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         },
                                         templateInput: {
                                             location: "RELATIVE",
-                                            path: null,
+                                            path: undefined,
                                         },
                                     },
                                     templateInput: {
@@ -790,7 +790,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             {
                                                                 type: "payload",
                                                                 location: "RELATIVE",
-                                                                path: null,
+                                                                path: undefined,
                                                             },
                                                         ],
                                                     },
@@ -803,7 +803,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             {
                                                                 type: "payload",
                                                                 location: "RELATIVE",
-                                                                path: null,
+                                                                path: undefined,
                                                             },
                                                         ],
                                                     },
@@ -861,7 +861,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 {
                                                     type: "payload",
                                                     location: "RELATIVE",
-                                                    path: null,
+                                                    path: undefined,
                                                 },
                                             ],
                                         },
@@ -874,13 +874,13 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 {
                                                     type: "payload",
                                                     location: "RELATIVE",
-                                                    path: null,
+                                                    path: undefined,
                                                 },
                                             ],
                                         },
                                         templateInput: {
                                             location: "RELATIVE",
-                                            path: null,
+                                            path: undefined,
                                         },
                                     },
                                     templateInput: {
@@ -1019,7 +1019,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             {
                                                 type: "payload",
                                                 location: "RELATIVE",
-                                                path: null,
+                                                path: undefined,
                                             },
                                         ],
                                     },
@@ -1159,7 +1159,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             {
                                                                 type: "payload",
                                                                 location: "RELATIVE",
-                                                                path: null,
+                                                                path: undefined,
                                                             },
                                                         ],
                                                     },
@@ -1293,7 +1293,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                         {
                                                                             type: "payload",
                                                                             location: "RELATIVE",
-                                                                            path: null,
+                                                                            path: undefined,
                                                                         },
                                                                     ],
                                                                 },
@@ -1306,7 +1306,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                         {
                                                                             type: "payload",
                                                                             location: "RELATIVE",
-                                                                            path: null,
+                                                                            path: undefined,
                                                                         },
                                                                     ],
                                                                 },
@@ -1345,7 +1345,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                 {
                                                                     type: "payload",
                                                                     location: "RELATIVE",
-                                                                    path: null,
+                                                                    path: undefined,
                                                                 },
                                                             ],
                                                         },
@@ -1358,13 +1358,13 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                 {
                                                                     type: "payload",
                                                                     location: "RELATIVE",
-                                                                    path: null,
+                                                                    path: undefined,
                                                                 },
                                                             ],
                                                         },
                                                         templateInput: {
                                                             location: "RELATIVE",
-                                                            path: null,
+                                                            path: undefined,
                                                         },
                                                     },
                                                     templateInput: {

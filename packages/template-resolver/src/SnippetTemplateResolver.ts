@@ -103,7 +103,7 @@ export class SnippetTemplateResolver {
                             });
                         }
                     } else {
-                        if (payloadOverride == null && input.value.type != "generic" && input.value.isOptional) {
+                        if (payloadOverride == null && input.value.type !== "generic" && input.value.isOptional) {
                             continue;
                         }
                         const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
