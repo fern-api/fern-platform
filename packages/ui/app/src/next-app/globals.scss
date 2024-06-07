@@ -43,7 +43,8 @@
 
 @layer base {
     html,
-    body {
+    body,
+    #docs-content {
         font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
     }
 

@@ -1,7 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
+import clsx from "clsx";
 import dynamic from "next/dynamic";
+import { Roboto, Roboto_Mono } from "next/font/google";
 import { memo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
@@ -23,6 +25,19 @@ interface DocsProps {
 
 export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
     ssr: true,
+});
+
+const roboto = Roboto({
+    weight: ["400", "500", "700"],
+    subsets: ["latin"],
+    preload: true,
+    variable: "--typography-body-font-family",
+});
+const robotoMono = Roboto_Mono({
+    weight: ["400", "500", "700"],
+    subsets: ["latin"],
+    preload: true,
+    variable: "--typography-code-font-family",
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
@@ -54,7 +69,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <PlaygroundContextProvider>
-            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col z-0">
+            <div
+                id="docs-content"
+                className={clsx("relative flex min-h-screen flex-1 flex-col z-0", roboto.variable, robotoMono.variable)}
+            >
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
