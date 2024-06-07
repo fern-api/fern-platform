@@ -104,7 +104,6 @@ export class SnippetTemplateResolver {
                         }
                     } else {
                         if (payloadOverride == null && input.value.isOptional && input.value.type === "enum") {
-                            console.log("Skipping", input);
                             continue;
                         }
                         const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
