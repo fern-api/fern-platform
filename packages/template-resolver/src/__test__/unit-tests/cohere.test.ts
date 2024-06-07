@@ -17,8 +17,6 @@ describe("Snippet Template Resolver", () => {
             throw new Error("Expected snippet to be typescript");
         }
 
-        console.log(customSnippet.client);
-
         expect(customSnippet.client).toMatchSnapshot();
     });
 });

@@ -117,7 +117,7 @@ describe("Snippet Template Resolver", () => {
                         type: "template",
                         value: {
                             imports: [],
-                            isOptional: true,
+                            isOptional: false,
                             templateString: "output_format=$FERN_INPUT",
                             values: {
                                 mp3_22050_32: '"mp3_22050_32"',
@@ -166,10 +166,11 @@ describe("Snippet Template Resolver", () => {
         const resolver = new SnippetTemplateResolver({ payload, endpointSnippetTemplate });
         const customSnippet = resolver.resolve();
 
-        expect(customSnippet.type).toEqual("python");
-        expect((customSnippet as FernRegistry.PythonSnippet).sync_client).toEqual(
-            'from octoai.image_gen import ImageGenerationRequest\nfrom octoai.image_gen import Scheduler\n\nfrom octoai import AsyncAcme\n\nclient = AsyncAcme(api_key=\'YOUR_API_KEY\')\nclient.image_gen.generate_sdxl(\n\tImageGenerationRequest(\n\t\tprompt="A prompt",\n\t\tnegative_prompt="A negative prompt",\n\t\ttune_id="someId",\n\t\toffset="10",\n\t\toutput_format="pcm_16000",\n\t\tloras={"key1": "value1", "key2": "value2"},\n\t\tsampler=OctoAI.myenum.PNDM\n\t)\n)'
-        );
+        if (customSnippet.type !== "python") {
+            throw new Error("Expected snippet to be python");
+        }
+
+        expect(customSnippet.sync_client).toMatchSnapshot();
     });
 
     it("Empty payload", () => {
@@ -207,7 +208,11 @@ describe("Snippet Template Resolver", () => {
         });
         const customSnippet = resolver.resolve();
 
-        expect(customSnippet.type).toEqual("python");
+        if (customSnippet.type !== "python") {
+            throw new Error("Expected snippet to be python");
+        }
+
+        expect(customSnippet.sync_client).toMatchSnapshot();
     });
 
     it("Test Chat Completion snippet", () => {
@@ -217,6 +222,10 @@ describe("Snippet Template Resolver", () => {
         });
         const customSnippet = resolver.resolve();
 
-        expect(customSnippet.type).toEqual("python");
+        if (customSnippet.type !== "python") {
+            throw new Error("Expected snippet to be python");
+        }
+
+        expect(customSnippet.sync_client).toMatchSnapshot();
     });
 });
