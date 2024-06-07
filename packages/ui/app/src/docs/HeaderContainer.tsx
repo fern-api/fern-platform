@@ -47,7 +47,7 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen,
     return (
         <header id="fern-header">
             <div
-                className="fixed inset-x-0 top-0 z-30 shadow-google h-header-height-real lg:h-header-height"
+                className="fixed inset-x-0 top-0 z-30 shadow-google-header h-header-height-real lg:h-header-height"
                 data-border={
                     isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         ? "show"

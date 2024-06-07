@@ -83,7 +83,7 @@
     }
 
     .fern-main {
-        @apply relative w-full min-w-0 flex-1 mt-header-height;
+        @apply relative w-full min-w-0 flex-1 lg:mt-header-height mt-header-height-real;
     }
 }
 
@@ -147,10 +147,12 @@
     .fern-search-bar {
         @apply cursor-text text-left;
         background-color: #f1f3f4;
-        border-radius: 2px;
+        border-radius: 4px;
         width: 200px;
         padding: 8px;
         height: 36px;
+        font-size: 16px;
+        line-height: 20px;
 
         .search-placeholder {
             @apply flex items-center;
@@ -160,6 +162,10 @@
         .keyboard-shortcut-hint {
             display: none;
         }
+    }
+
+    .fern-sidebar-heading {
+        @apply font-semibold t-muted;
     }
 
     .fern-sidebar-heading,

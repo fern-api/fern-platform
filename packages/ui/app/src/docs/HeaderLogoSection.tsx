@@ -15,7 +15,7 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({ logoHeight
     const { colors, resolveFile, versions } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
 
-    const imageClassName = "max-h-full object-contain";
+    const imageClassName = "max-h-full object-contain -ml-[0.75px]";
 
     const renderLogoContent = () => {
         if (colors == null) {
@@ -71,8 +71,8 @@ export const HeaderLogoSection: React.FC<HeaderLogoSectionProps> = ({ logoHeight
     };
 
     return (
-        <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
-            <div className="flex items-center gap-2 pr-4">
+        <div className="relative flex h-full min-w-fit shrink-0 items-center gap-2 py-1">
+            <div className="flex items-center gap-2 pr-2">
                 {logoHref != null ? (
                     <Link href={logoHref} className="fern-logo-container">
                         {renderLogoContent()}
