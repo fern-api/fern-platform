@@ -61,21 +61,21 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         </div>
                     </FernLink>
                 </li>
-                <li className="fern-tab">
+                <li className="fern-tab max-xl:!hidden">
                     <FernLink className="group/tab-button" href="https://ai.google.dev/gemma" data-state="inactive">
                         <div className="flex min-w-0 items-center justify-start space-x-2">
                             <span className="truncate font-medium font-headings">Gemma</span>
                         </div>
                     </FernLink>
                 </li>
-                <li className="fern-tab">
+                <li className="fern-tab max-xl:!hidden">
                     <FernLink className="group/tab-button" href="https://ai.google.dev/edge" data-state="inactive">
                         <div className="flex min-w-0 items-center justify-start space-x-2">
                             <span className="truncate font-medium font-headings">Google AI Edge</span>
                         </div>
                     </FernLink>
                 </li>
-                <li className="fern-tab">
+                <li className="fern-tab max-xl:!hidden">
                     <FernLink className="group/tab-button" href="https://ai.google.dev/tools" data-state="inactive">
                         <div className="flex min-w-0 items-center justify-start space-x-2">
                             <span className="truncate font-medium font-headings">Tools</span>
@@ -85,7 +85,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         </div>
                     </FernLink>
                 </li>
-                <li className="fern-tab">
+                <li className="fern-tab max-xl:!hidden">
                     <FernLink className="group/tab-button" href="https://discuss.ai.google.dev/" data-state="inactive">
                         <div className="flex min-w-0 items-center justify-start space-x-2">
                             <span className="truncate font-medium font-headings">Community</span>
@@ -104,7 +104,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     <SearchIcon />
                 </button>
 
-                <button className="h-9 t-muted border-default border rounded-[4px] px-2.5 inline-flex items-center gap-2 ml-4 hover:bg-tag-default  transition-colors">
+                <button className="h-9 t-muted border-default border rounded-[4px] px-2.5 inline-flex items-center gap-2 ml-4 hover:bg-tag-default transition-colors max-sm:hidden">
                     <LanguageIcon />
                     <span className="text-sm font-medium ">English</span>
                     <TriangleDownIcon className="size-[16px] scale-x-125 -ml-1 mr-0.5" />
