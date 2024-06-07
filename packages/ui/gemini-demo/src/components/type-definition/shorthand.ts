@@ -1,3 +1,4 @@
+import { fdr } from "@/gemini";
 import { visitDiscriminatedUnion } from "@/utils/visitDiscriminatedUnion";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 
@@ -7,19 +8,18 @@ export interface TypeShorthandOptions {
     nullable?: boolean; // determines whether to render "Optional" or "Nullable"
 }
 
-function getTypeReferenceShorthand(
+export function getTypeReferenceShorthand(
     typeReference: APIV1Read.TypeReference,
     { plural = false, withArticle = false, nullable = false }: TypeShorthandOptions = {
         plural: false,
         withArticle: false,
         nullable: false,
     },
-    types: Record<string, APIV1Read.TypeDefinition>,
 ): string {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
     return visitDiscriminatedUnion(typeReference)._visit({
-        id: ({ value: id }) => getTypeDefinitionShorthand(types[id], { plural, withArticle, nullable }, types),
+        id: ({ value: id }) => getTypeDefinitionShorthand(fdr.types[id], { plural, withArticle, nullable }),
         primitive: (primitive) =>
             visitDiscriminatedUnion(primitive.value, "type")._visit({
                 string: () => (plural ? "strings" : maybeWithArticle("a", "string")),
@@ -32,13 +32,13 @@ function getTypeReferenceShorthand(
                 base64: () => (plural ? "Base64 strings" : maybeWithArticle("a", "Base64 string")),
                 date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
             }),
-        optional: ({ itemType }) => getTypeReferenceShorthand(itemType, { plural, withArticle, nullable: true }, types),
+        optional: ({ itemType }) => getTypeReferenceShorthand(itemType, { plural, withArticle, nullable: true }),
         list: ({ itemType }) =>
-            `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${getTypeReferenceShorthand(itemType, { plural: true, withArticle: false, nullable: false }, types)}`,
+            `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${getTypeReferenceShorthand(itemType, { plural: true, withArticle: false, nullable: false })}`,
         set: ({ itemType }) =>
-            `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${getTypeReferenceShorthand(itemType, { plural: true, withArticle: false, nullable: false }, types)}`,
+            `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${getTypeReferenceShorthand(itemType, { plural: true, withArticle: false, nullable: false })}`,
         map: ({ keyType, valueType }) =>
-            `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${getTypeReferenceShorthand(keyType, { plural: true, withArticle: false, nullable: false }, types)} to ${getTypeReferenceShorthand(valueType, { plural: true, withArticle: false, nullable: false }, types)}`,
+            `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${getTypeReferenceShorthand(keyType, { plural: true, withArticle: false, nullable: false })} to ${getTypeReferenceShorthand(valueType, { plural: true, withArticle: false, nullable: false })}`,
         literal: ({ value }) =>
             visitDiscriminatedUnion(value)._visit({
                 booleanLiteral: ({ value }) => (value ? "true" : "false"),
@@ -55,13 +55,12 @@ export function getTypeDefinitionShorthand(
         withArticle: false,
         nullable: false,
     },
-    types: Record<string, APIV1Read.TypeDefinition>,
 ): string {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
     return visitDiscriminatedUnion(type.shape)._visit({
         object: () => (plural ? "dictionaries" : maybeWithArticle("a", "dictionary")),
-        alias: (alias) => getTypeReferenceShorthand(alias.value, { plural, withArticle, nullable }, types),
+        alias: (alias) => getTypeReferenceShorthand(alias.value, { plural, withArticle, nullable }),
         enum: () => (plural ? "enums" : maybeWithArticle("an", "enum")),
         undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
         discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),

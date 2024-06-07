@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+        @apply antialiased;
+        
+        text-rendering: optimizelegibility;
+    }
+}
+
 @layer utilities {
     .shadow-google {
         box-shadow:

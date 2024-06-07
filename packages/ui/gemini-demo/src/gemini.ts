@@ -1,6 +1,7 @@
-import { APIV1Read, SDKSnippetHolder, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead } from "@fern-api/fdr-sdk";
+import { APIV1Write, SDKSnippetHolder, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead } from "@fern-api/fdr-sdk";
+import { ApiReferenceNavigationConverter, ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 
-const fdrWrite: APIV1Read.ApiDefinition = {
+const fdrWrite: APIV1Write.ApiDefinition = {
     types: {
         "type_v1Beta/models:Content": {
             description: "The base structured datatype containing multi-part content of a message.",
@@ -2248,3 +2249,18 @@ const mockHolder = new SDKSnippetHolder({
 });
 
 export const fdr = convertDbAPIDefinitionToRead(convertAPIDefinitionToDb(fdrWrite, "fdr", mockHolder));
+
+export const root = ApiReferenceNavigationConverter.convert(
+    {
+        title: "API Reference",
+        api: "api-reference",
+        skipUrlSlug: true,
+        showErrors: false,
+        urlSlug: "api-reference",
+    },
+    fdr,
+    "",
+    "",
+);
+
+export const holder = ApiDefinitionHolder.create(fdr);

@@ -1,13 +1,16 @@
-// import { FernIr } from "@fern-fern/ir-sdk";
-// import { ReactElement } from "react";
-// import { QueryParameter } from "./QueryParameter";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ReactElement } from "react";
+import { Parameter } from "./Parameter";
 
-// export function QueryParameters({ parameters }: { parameters: FernIr.QueryParameter[] }): ReactElement {
-//     return (
-//         <ul>
-//             {parameters.map((parameter) => (
-//                 <QueryParameter key={parameter.name.wireValue} parameter={parameter} />
-//             ))}
-//         </ul>
-//     );
-// }
+export function QueryParameters({ parameters }: { parameters: APIV1Read.QueryParameter[] }): ReactElement {
+    return (
+        <>
+            <h3 className="mb-3 mt-12 text-2xl">Query parameters</h3>
+            <ul>
+                {parameters.map((parameter) => (
+                    <Parameter key={parameter.key} parameter={parameter} />
+                ))}
+            </ul>
+        </>
+    );
+}

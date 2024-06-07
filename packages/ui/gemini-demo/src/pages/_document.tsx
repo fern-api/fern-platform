@@ -5,7 +5,7 @@ export default function Document(): ReactElement {
     return (
         <Html lang="en">
             <Head />
-            <body className="antialiased">
+            <body>
                 <Main />
                 <NextScript />
             </body>
