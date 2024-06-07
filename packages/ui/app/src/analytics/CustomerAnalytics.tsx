@@ -21,6 +21,11 @@ const CUSTOMER_ANALYTICS: Record<string, Analytics> = {
             id: "GTM-P859DNW4",
         },
     },
+    humansignal: {
+        ga4: {
+            id: "G-5MGM6QQVFS",
+        },
+    },
 };
 
 export function CustomerAnalytics({ domain }: { domain: string }): ReactElement | null {
