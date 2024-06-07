@@ -32,7 +32,8 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY shared shared
 COPY fern fern
-RUN pnpm turbo run codegen build --filter=@fern-platform/fdr
+RUN pnpm turbo compile --filter=@fern-api/fdr-sdk
+RUN pnpm turbo codegen compile --filter=@fern-platform/fdr
 
 FROM base AS runner
 WORKDIR /app
