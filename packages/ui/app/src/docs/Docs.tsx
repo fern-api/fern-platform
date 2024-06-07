@@ -26,7 +26,7 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
-    const { layout, colors, currentVersionId } = useDocsContext();
+    const { layout, currentVersionId } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
 

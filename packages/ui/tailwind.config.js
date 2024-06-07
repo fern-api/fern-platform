@@ -27,6 +27,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 mono: "var(--typography-code-font-family)",
+                headings: "var(--typography-heading-font-family)",
             },
             spacing: {
                 "page-width": "var(--spacing-page-width)",

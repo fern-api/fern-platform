@@ -57,7 +57,7 @@ export function getLayoutVariables(
               });
 
     const headerTabsHeightRem =
-        hasTabs && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true ? 44 / 16 : 0;
+        hasTabs && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true ? 48 / 16 : 0;
 
     const headerHeight = `${headerHeightRem + headerTabsHeightRem}rem`;
 

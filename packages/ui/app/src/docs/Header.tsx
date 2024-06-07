@@ -41,7 +41,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     return (
         <nav
             aria-label="primary"
-            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full", className)}
+            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-6 shrink-0 h-full", className)}
             ref={ref}
             style={style}
         >
