@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/template-resolver",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": false,
   "repository": "https://github.com/fern-api/fern-typescript",
   "license": "MIT",
