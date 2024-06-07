@@ -188,7 +188,7 @@
     }
 
     .fern-sidebar-link-container[data-state="active"] {
-        @apply bg-tag-primary text-accent-aaa font-semibold;
+        @apply bg-tag-primary text-accent-aa font-medium;
     }
     .fern-sidebar-link-container[data-state="active"]:hover {
         @apply text-accent;

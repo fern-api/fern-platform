@@ -40,7 +40,7 @@ function hrefToString(href: Url): string {
  */
 export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>(function AbsolutelyPositionedAnchor({
     href,
-    smallGap = false,
+    // smallGap = false,
 }) {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() => window.location.origin + hrefToString(href));
 
