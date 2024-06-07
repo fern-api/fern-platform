@@ -60,6 +60,7 @@ module.exports = {
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.2), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
                 "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.05), 0 2px 24px rgba(221, 243, 255,.05)",
+                google: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
             },
 
             colors: {

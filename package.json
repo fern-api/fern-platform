@@ -101,6 +101,7 @@
     }
   },
   "dependencies": {
+    "@radix-ui/colors": "^3.0.0",
     "fern-api": "^0.21.0"
   }
 }

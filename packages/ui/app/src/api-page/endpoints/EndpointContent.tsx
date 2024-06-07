@@ -228,7 +228,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
+            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-10"}
             onClick={() => setSelectedError(undefined)}
             ref={viewportRef}
         >

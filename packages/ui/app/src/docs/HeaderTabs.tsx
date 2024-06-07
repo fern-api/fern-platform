@@ -7,7 +7,7 @@ import { getSidebarTabHref } from "../util/getSidebarTabHref";
 export function HeaderTabs(): ReactElement {
     const { tabs, currentTabIndex } = useDocsContext();
     return (
-        <nav aria-label="tabs" className="bg-header border-concealed h-[44px] border-b max-lg:hidden">
+        <nav aria-label="tabs" className="bg-white h-[44px] max-lg:hidden">
             <ul className="mx-auto flex max-w-page-width shrink-0 list-none items-center justify-start px-4 md:px-6 lg:px-8">
                 {tabs.map((tab) => (
                     <li key={tab.index} className="group">
