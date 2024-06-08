@@ -52,15 +52,9 @@ jobs:
         # which makes steps.has-changed.outputs.RESULT = 'true'
         run: npx turbo-ignore ${{ env.PACKAGE_NAME }} || echo "RESULT=true" >> $GITHUB_OUTPUT
 
-      - name: 🪴 Generate Fern SDKs
-        run: |
-          pnpm fern generate --local --api fdr --group local --log-level debug
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-
       - name: 🧪 Build and test
         env:
-            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
           pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
           pnpm --filter "@fern-platform/fdr" sentry:sourcemaps

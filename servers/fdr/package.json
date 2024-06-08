@@ -85,7 +85,7 @@
     "docker:local": "dotenv -e .env.test -- ./create_docker.sh local",
     "docker:dev": "dotenv -e .env.dev -- ./create_docker.sh",
     "docker:prod": "dotenv -e .env.prod -- ./create_docker.sh",
-    "test": "vitest src/__test__/unit-tests --globals",
+    "test": "vitest src/__test__/unit-tests --globals --run",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "test:local": "dotenv -e .env.test -- vitest src/__test__/local --globals --config src/__test__/local/vitest.config.ts",
