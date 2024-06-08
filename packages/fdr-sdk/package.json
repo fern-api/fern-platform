@@ -54,6 +54,6 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
-    "test": "vitest"
+    "test": "vitest --run"
   }
 }

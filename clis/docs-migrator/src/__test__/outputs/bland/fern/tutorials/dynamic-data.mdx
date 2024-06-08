@@ -10,6 +10,7 @@ slug: tutorials/dynamic-data
 With Dynamic Data, you can make external API requests at the start and throughout your phone call. This allows you to load data from your database, or from any other API. You can then use that data in your AI responses, or to define circumstantial behavior for each call.
 
 Some examples of what Dynamic Data enables:
+
 - Maintain conversation history between calls
 - Define behavior based on the user's location
 - Handle real-time data like status updates or prices
@@ -73,7 +74,7 @@ Here's how to make an [Inbound Agent](../api-v1/post/inbound-number-update.mdx) 
             ]
         },
         {
-            // Helpful tip for debugging: 
+            // Helpful tip for debugging:
             // You can send the data to a webhook to see what it looks like
             "url": "https://webhook.site/...",
             "method": "POST",
@@ -97,6 +98,7 @@ Here's how to make an [Inbound Agent](../api-v1/post/inbound-number-update.mdx) 
 </Accordion>
 
 We'll cover the following features in this section:
+
 - System variables
 - External API requests
 - Extracting data from responses
@@ -110,6 +112,7 @@ Variables are defined with double curly braces, like `{{variable}}`. System vari
 Note: Variables are NOT case sensitive, and outer spaces are trimmed automatically.
 
 Base variables:
+
 - `{{phone_number}}` - Always the other party's number
 - `{{country}}` - The country code (ex. US)
 - `{{state}}` - The state or province's abbreviation (ex. CA for California)
@@ -127,7 +130,7 @@ Variables can be used mid-sentence, like this:
 
 ```json
 {
-    "task": "... Today is {{now}} ..."
+  "task": "... Today is {{now}} ..."
 }
 ```
 
@@ -155,16 +158,11 @@ Here's a simple request that can be used to load public data about the current p
 ```
 
 <Accordion title="Additional Parameters">
-- `timeout` - The maximum number of milliseconds to wait for a response. 
-    - Default: `2000`
-- `method` - The HTTP method to use. 
-    - Defaults to `GET`, otherwise `POST` is allowed.
-- `headers` - An object of headers to send with the request.
-- `body` - The body of the request. Only used if `method` is `POST`.
-- `response_data` - An array of objects that define how to extract data from the response. 
-    - See the next section for more details.
-- `cache` - Whether to store the response, or refresh that data before each AI response. 
-    - Defaults to `true`.
+  - `timeout` - The maximum number of milliseconds to wait for a response. - Default: `2000` - `method` - The HTTP
+  method to use. - Defaults to `GET`, otherwise `POST` is allowed. - `headers` - An object of headers to send with the
+  request. - `body` - The body of the request. Only used if `method` is `POST`. - `response_data` - An array of objects
+  that define how to extract data from the response. - See the next section for more details. - `cache` - Whether to
+  store the response, or refresh that data before each AI response. - Defaults to `true`.
 </Accordion>
 
 ## Extracting Data from Responses
@@ -173,20 +171,20 @@ Rather than using the full response, you can extract specific data from the resp
 
 ```json
 {
-    "bpi": {
-        "USD": {
-            "code": "USD",
-            "rate": "9,000.00",
-            "description": "United States Dollar",
-            "rate_float": 9000
-        },
-        "GBP": {
-            "code": "GBP",
-            "rate": "6,000.00",
-            "description": "British Pound Sterling",
-            "rate_float": 6000
-        }
+  "bpi": {
+    "USD": {
+      "code": "USD",
+      "rate": "9,000.00",
+      "description": "United States Dollar",
+      "rate_float": 9000
+    },
+    "GBP": {
+      "code": "GBP",
+      "rate": "6,000.00",
+      "description": "British Pound Sterling",
+      "rate_float": 6000
     }
+  }
 }
 ```
 
@@ -194,10 +192,9 @@ Then `$.bpi.USD.rate` would return `9,000.00`.
 
 More complex filters can be used if they follow the [JSONPath format](https://docs.hevodata.com/sources/engg-analytics/streaming/rest-api/writing-jsonpath-expressions).
 
-
 ## Variables as Parameters
 
-Once defined with `response_data`, variables can be used nearly anywhere. 
+Once defined with `response_data`, variables can be used nearly anywhere.
 
 - In the `task` or `prompt` parameters
 - In the `context` parameter of `response_data`
@@ -215,70 +212,59 @@ For this example, imagine a delivery service that offers instant checkout for cu
 
 ```json
 {
-    "dynamic_data": [
+  "dynamic_data": [
+    {
+      "url": "https://api.restaurant.com/customers",
+      "method": "GET",
+      "headers": {
+        "authorization": "ExtremelySecureCredentials"
+      },
+      "query": {
+        "phone_number": "{{phone_number}}"
+      },
+      "response_data": [
         {
-            "url": "https://api.restaurant.com/customers",
-            "method": "GET",
-            "headers": {
-                "authorization": "ExtremelySecureCredentials"
-            },
-            "query": {
-                "phone_number": "{{phone_number}}"
-            },
-            "response_data": [
-                {
-                    "name": "member_id",
-                    "data": "$.customer.member_id"
-                }
-            ]
-        },
-        //...
-    ]
+          "name": "member_id",
+          "data": "$.customer.member_id"
+        }
+      ]
+    }
+    //...
+  ]
 }
 ```
 
 We just created that `{{member_id}}` variable - now we can use it in the next request.
 
-This delivery service also can be called to check on an order status. 
+This delivery service also can be called to check on an order status.
 
 Note a difference: The `cache` parameter is set to `false`, so if the order status changes during the call, the agent will immediately know about it and be able to inform the customer.
 
 ```json
 {
-    "dynamic_data": [
-        //...
+  "dynamic_data": [
+    //...
+    {
+      "url": "https://api.restaurant.com/orders",
+      "method": "GET",
+      "cache": false,
+      "headers": {
+        "authorization": "ExtremelySecureCredentials"
+      },
+      "query": {
+        "member_id": "{{member_id}}"
+      },
+      "response_data": [
         {
-            "url": "https://api.restaurant.com/orders",
-            "method": "GET",
-            "cache": false,
-            "headers": {
-                "authorization": "ExtremelySecureCredentials"
-            },
-            "query": {
-                "member_id": "{{member_id}}"
-            },
-            "response_data": [
-                {
-                    "name": "order_id",
-                    "data": "$.orders[0].id"
-                },
-                {
-                    "name": "order_status",
-                    "data": "$.orders[0].status"
-                }
-            ]
+          "name": "order_id",
+          "data": "$.orders[0].id"
+        },
+        {
+          "name": "order_status",
+          "data": "$.orders[0].status"
         }
-    ]
+      ]
+    }
+  ]
 }
 ```
-
-
-
-
-
-
-
-
-
-
-

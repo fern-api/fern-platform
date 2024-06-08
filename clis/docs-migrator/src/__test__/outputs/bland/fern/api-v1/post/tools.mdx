@@ -33,8 +33,9 @@ slug: api-v1/post/tools
     - `play`
     - `dial`
     - `hang`
-    
+
     Choosing too similar of names to the default tools could cause the AI to select the wrong one, so decriptive two to three-word names are preferred.
+
 </ParamField>
 
 <ParamField body="description" type="string" required>
@@ -47,6 +48,7 @@ slug: api-v1/post/tools
     - `Press Buttons`: Presses buttons on phone. Each character is a different button.
     - `Wait`: Wait and go silent for an extended period of time (only use if absolutely necessary).
     - `Finish`: Say a goodbye message and end the call once completed.
+
 </ParamField>
 
 <ParamField body="speech" type="string">
@@ -59,44 +61,49 @@ slug: api-v1/post/tools
     Special Note: You can have the AI dynamically generate speech by defining `input.speech` in the `input_schema`.
 
     <Accordion title="Dynamic Speech Example">
+
 ```json
-    {
-        "input_schema": {
-            "example": {
-                "speech": "Checking your account details right now John!",
-                "name": "John Doe",
-                "email": "johndoe@gmail.com"
-            },
-            "type": "object",
-            "properties": {
-                "speech": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string",
-                    "format": "email"
-                }
-            },
-            "required": ["speech", "name", "email"]
-        }
-    }
+{
+  "input_schema": {
+    "example": {
+      "speech": "Checking your account details right now John!",
+      "name": "John Doe",
+      "email": "johndoe@gmail.com"
+    },
+    "type": "object",
+    "properties": {
+      "speech": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "required": ["speech", "name", "email"]
+  }
+}
 ```
+
     </Accordion>
+
 </ParamField>
 
 <ParamField body="url" type="string" required>
     This is the endpoint of the external API that the tool will call.
 
     It must begin with `https://` and be a valid URL.
+
 </ParamField>
 
 <ParamField body="method" type="string" default="GET">
     This is the HTTP method that the tool will use to call the external API.
 
     Valid options are `GET` and `POST`.
+
 </ParamField>
 
 <ParamField body="headers" type="object">
@@ -109,22 +116,25 @@ slug: api-v1/post/tools
     Since prompt variables are supported, you can use them in the headers to send dynamic information to the external API.
 
     <Accordion title="Prompt Variables Example (Headers)">
+
 ```json
-    // At the top level of your send call request you can define variables that you can access later using the double curly braces/dot syntax.
+// At the top level of your send call request you can define variables that you can access later using the double curly braces/dot syntax.
+{
+  "request_data": {
+    "api_key": "sk-1234567890"
+  },
+  "tools": [
     {
-        "request_data": {
-            "api_key": "sk-1234567890",
-        },
-        "tools": [
-            {
-                "headers": {
-                    "Authorization": "Bearer {{api_key}}"
-                }
-            }
-        ]
+      "headers": {
+        "Authorization": "Bearer {{api_key}}"
+      }
     }
+  ]
+}
 ```
+
     </Accordion>
+
 </ParamField>
 
 <ParamField body="body" type="object">
@@ -139,6 +149,7 @@ slug: api-v1/post/tools
     Note: `GET` requests do not have a body.
 
     <Accordion title="Prompt Variables Example (Body)">
+
 ```json
     // AI-generated input is created as the `input` Prompt Variable - and the structure is defined by the input schema.
     // `input` will match the structure of `input_schema.example` if it is defined.
@@ -155,7 +166,9 @@ slug: api-v1/post/tools
         }
     }
 ```
+
     </Accordion>
+
 </ParamField>
 
 <ParamField body="query" type="object">
@@ -168,16 +181,19 @@ slug: api-v1/post/tools
     This is generally used with GET requests and built-in Prompt Variables like `"{{phone_number}}"` or `"{{call_id}}"`.
 
     <Accordion title="Prompt Variables Example (Query)">
+
 ```json
-    // appends ?pn={{phone_number}}&callId={{call_id}} to the URL
-    {
-        "query": {
-            "pn": "{{phone_number}}",
-            "callId": "{{call_id}}"
-        }
-    }
+// appends ?pn={{phone_number}}&callId={{call_id}} to the URL
+{
+  "query": {
+    "pn": "{{phone_number}}",
+    "callId": "{{call_id}}"
+  }
+}
 ```
+
     </Accordion>
+
 </ParamField>
 
 <ParamField body="input_schema" type="object">
@@ -204,34 +220,37 @@ slug: api-v1/post/tools
     Agent input can be nested, and the will be transformed into JSON even if it's initially a string.
 
     <Accordion title="Schema Example">
+
 ```json
-    {
-        "input_schema": {
-            "example": {
-                "name": "John Doe",
-                "email": "johndoe@gmail.com"
-            },
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string",
-                    "format": "email"
-                }
-            },
-            "required": ["name", "email"]
-        },
-        // both of these methods are identical, since {{input}} will be transformed into JSON
-        "body": "{{input}}",
-        "body": {
-            "name": "{{input.name}}",
-            "email": "{{input.email}}"
-        }
-    }
+{
+  "input_schema": {
+    "example": {
+      "name": "John Doe",
+      "email": "johndoe@gmail.com"
+    },
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "required": ["name", "email"]
+  },
+  // both of these methods are identical, since {{input}} will be transformed into JSON
+  "body": "{{input}}",
+  "body": {
+    "name": "{{input.name}}",
+    "email": "{{input.email}}"
+  }
+}
 ```
+
     </Accordion>
+
 </ParamField>
 
 <ParamField body="response" type="object">
@@ -242,6 +261,7 @@ slug: api-v1/post/tools
     The path to the data you want must be in JSON Path format. Generally this means using dot notation to traverse the JSON object and is only required if you need to use that information on other tools or the response is too large.
 
     Example:
+
 ```json
     // If the external API response is:
     {
@@ -283,6 +303,7 @@ slug: api-v1/post/tools
         "prompt": "The store is located at {{address_info.street}}, {{address_info.city}}, {{address_info.state}} {{zip_code}}."
     }
 ```
+
 </ParamField>
 
 <ParamField body="timeout" default="10000" type="number">
@@ -293,11 +314,13 @@ slug: api-v1/post/tools
     The default timeout is 10 seconds (10000 milliseconds).
 
     To always wait for a response, set the timeout to an extremely high value like 99999999.
+
 </ParamField>
 
 ### Response
+
 <ResponseField name="status" type="string">
-    Whether the tool creation succeeded.
+  Whether the tool creation succeeded.
 </ResponseField>
 
 <ResponseField name="tool_id" type="string">
@@ -312,6 +335,7 @@ slug: api-v1/post/tools
         ]
     }
     ```
+
 </ResponseField>
 
 <ResponseExample>
@@ -322,4 +346,3 @@ slug: api-v1/post/tools
 }
 ```
 </ResponseExample>
-    

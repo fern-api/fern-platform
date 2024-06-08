@@ -30,6 +30,7 @@ of both.
 Memory search also supports querying by message creation date.
 
 Read more about [constructing search queries](/working-with-search#maximal-marginal-relevance-re-ranking).
+
 </Note>
 
 <Tabs group="search">
@@ -60,32 +61,33 @@ for search_result in search_results:
     # print(search_result.messsage.dict())
     print(search_result.summary.dict())
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-import { MemorySearchPayload, ZepClient } from '@getzep/zep-js';
-
+import { MemorySearchPayload, ZepClient } from "@getzep/zep-js";
 
 // This uniquely identifies the user's session
 const session_id: string = "my_session_id";
 
 // Initialize the Zep client before running this code
 const search_payload: MemorySearchPayload = {
-    text: "Is Lauren Olamina a character in a book?",
-    search_scope: "summary", // This could be messages or summary
-    search_type: "mmr", // Remove this if you'd prefer not to rerank results
-    mmr_lambda: 0.5, // Tune diversity vs relevance
+  text: "Is Lauren Olamina a character in a book?",
+  search_scope: "summary", // This could be messages or summary
+  search_type: "mmr", // Remove this if you'd prefer not to rerank results
+  mmr_lambda: 0.5, // Tune diversity vs relevance
 };
 
 const search_results = await client.memory.searchMemory(session_id, search_payload);
 
 search_results.forEach((search_result) => {
-    // Uncomment for message search
-    // console.log(search_result.message);
-    console.log(search_result.summary);
+  // Uncomment for message search
+  // console.log(search_result.message);
+  console.log(search_result.summary);
 });
 ```
+
 </Tab>
 </Tabs>
 
@@ -121,24 +123,21 @@ zep_client.memory.search_memory(
     ),
 )
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-await client.memory.searchMemory(
-    session_id,
-    {
-        query: "I enjoy reading science fiction.",
-        metadata: {
-            where: { jsonpath: '$[*] ? (@.foo == "bar")' },
-        },
-    }
-);
+await client.memory.searchMemory(session_id, {
+  query: "I enjoy reading science fiction.",
+  metadata: {
+    where: { jsonpath: '$[*] ? (@.foo == "bar")' },
+  },
+});
 ```
+
 </Tab>
 </Tabs>
-
-
 
 ```json
 {
@@ -193,5 +192,5 @@ Zep can return all messages from a search up to a certain row limit. This limit 
 Searching through chat histories can be tricky. Chat messages are often brief and might not carry much "information". When these short texts are turned into high-dimensional embedding vectors, the result can be very sparse vectors.
 
 This sparsity means a lot of these vectors end up being close to each other in the vector space, which can lead to a higher chance of getting false positives in your search results for relevant messages. As a result, we recommend searching over Summaries, which include more information than Messages.
-</Info>
 
+</Info>
