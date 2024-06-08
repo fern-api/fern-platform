@@ -700,6 +700,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
@@ -757,6 +760,9 @@ importers:
       '@fern-fern/vercel':
         specifier: 0.0.7
         version: 0.0.7
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12

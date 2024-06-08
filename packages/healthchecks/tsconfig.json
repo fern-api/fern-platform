@@ -1,5 +1,5 @@
 {
-  "extends": "../../shared/tsconfig.shared.json",
+  "extends": "@fern-platform/configs/tsconfig/library.json",
   "compilerOptions": { "composite": true, "outDir": "dist", "rootDir": "." },
   "include": ["./src/**/*"]
 }
