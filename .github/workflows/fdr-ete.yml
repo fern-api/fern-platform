@@ -32,7 +32,4 @@ jobs:
         # TODO: re-enable when moving to turbo
         # pnpm turbo --filter= docker:local
         run: |
-          cd servers/fdr
-          pnpm compile
-          pnpm run docker:local
-          pnpm run test:ete
+          pnpm --filter=@fern-platform/fdr docker:local test:ete

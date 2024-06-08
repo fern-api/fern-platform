@@ -7,7 +7,7 @@ RUN apk update
 
 # Produce a pruned version of the monorepo
 WORKDIR /app
-RUN npm install -g turbo
+RUN npm install -g turbo@2.0.1
 COPY . .
 RUN turbo prune @fern-platform/fdr --docker
 
@@ -32,8 +32,9 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY shared shared
 COPY fern fern
-RUN pnpm turbo compile --filter=@fern-api/fdr-sdk
-RUN pnpm turbo codegen compile --filter=@fern-platform/fdr
+RUN pnpm --filter=@fern-api/fdr-sdk compile
+RUN pnpm --filter=@fern-platform/fdr codegen
+RUN pnpm --filter=@fern-platform/fdr compile
 
 FROM base AS runner
 WORKDIR /app
