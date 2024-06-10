@@ -14,7 +14,7 @@ export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUr
 function isLexicographicSortEnabled(domain: string): boolean {
     // HACKHACK: This is a temporary solution to enable lexicographic sorting for AIA docs.
     // Vercel's edge config UI is broken right now so we can't modify it there.
-    return domain.startsWith("aia.docs.buildwithfern.com");
+    return domain.toLowerCase().includes("aia.docs.buildwithfern.com");
 }
 
 function hackReorderApis(

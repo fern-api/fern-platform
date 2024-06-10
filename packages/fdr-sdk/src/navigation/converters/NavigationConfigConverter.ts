@@ -23,7 +23,7 @@ export class NavigationConfigConverter {
         basePath: string | undefined,
         lexicographic?: boolean,
     ): FernNavigation.RootNode {
-        return new NavigationConfigConverter(config, apis, basePath).convert();
+        return new NavigationConfigConverter(config, apis, basePath, lexicographic).convert();
     }
 
     #idgen = new NodeIdGenerator();
