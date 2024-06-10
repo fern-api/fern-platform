@@ -103,6 +103,9 @@ export class SnippetTemplateResolver {
                             });
                         }
                     } else {
+                        if (payloadOverride == null && input.value.isOptional && input.value.type === "enum") {
+                            continue;
+                        }
                         const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
@@ -194,11 +197,11 @@ export class SnippetTemplateResolver {
                 const unionMembers = template.members;
                 const discriminator = template.discriminantField;
 
-                if (template.templateInput == null) {
-                    return undefined;
-                }
-
-                const maybeUnionValue = this.getPayloadValue(template.templateInput, payloadOverride);
+                const maybeUnionValue = this.getPayloadValue(
+                    // Defaults to relative since the python generator didn't specify this on historical templates
+                    template.templateInput ?? { location: "RELATIVE" },
+                    payloadOverride,
+                );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
                     return undefined;
                 }

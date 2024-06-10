@@ -1,5 +1,5 @@
-import { once } from "@fern-ui/core-utils";
 import urljoin from "url-join";
+import { once } from "../utils";
 import { FernNavigation } from "./generated";
 import {
     NavigationNode,

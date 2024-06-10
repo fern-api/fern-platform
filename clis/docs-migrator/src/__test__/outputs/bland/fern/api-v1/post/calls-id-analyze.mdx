@@ -20,7 +20,8 @@ slug: api-v1/post/calls-id-analyze
 ### Request Body
 
 <ParamField body="goal" type="string" required>
-  This is the overall purpose of the call. Provides context for the analysis to guide how the questions/transcripts are interpreted.
+  This is the overall purpose of the call. Provides context for the analysis to guide how the questions/transcripts are
+  interpreted.
 </ParamField>
 
 <ParamField body="questions" type="array" required>
@@ -28,17 +29,19 @@ slug: api-v1/post/calls-id-analyze
   
   Each question should be an array with two elements: the question text and the expected answer type (e.g., "string", "boolean").
 
-  Fairly flexible in terms of the expected answer type, and unanswerable questions will default to `null`.
+Fairly flexible in terms of the expected answer type, and unanswerable questions will default to `null`.
 
-  Examples:
-  ```json
-  "questions": [
-        ["Who answered the call?", "human or voicemail"],
-        ["Positive feedback about the product: ", "string"],
-        ["Negative feedback about the product: ", "string"],
-        ["Customer confirmed they were satisfied", "boolean"]
-    ]
-  ```
+Examples:
+
+```json
+"questions": [
+      ["Who answered the call?", "human or voicemail"],
+      ["Positive feedback about the product: ", "string"],
+      ["Negative feedback about the product: ", "string"],
+      ["Customer confirmed they were satisfied", "boolean"]
+  ]
+```
+
 </ParamField>
 
 ### Response
@@ -58,9 +61,10 @@ slug: api-v1/post/calls-id-analyze
 <ResponseField type="number" name="credits_used">
   Token-based price for the analysis request.
 
-  As a rough estimate, the base cost is `0.003` credits with an additional `0.0015` credits per call in the call.
+As a rough estimate, the base cost is `0.003` credits with an additional `0.0015` credits per call in the call.
 
-  Longer call transcripts and higher numbers of questions can increase the cost, however the cost scales very effectively with calls vs. individual calls.
+Longer call transcripts and higher numbers of questions can increase the cost, however the cost scales very effectively with calls vs. individual calls.
+
 </ResponseField>
 
 <ResponseExample>
@@ -77,10 +81,3 @@ slug: api-v1/post/calls-id-analyze
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-

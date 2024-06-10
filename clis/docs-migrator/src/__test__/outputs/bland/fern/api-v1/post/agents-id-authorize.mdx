@@ -10,24 +10,21 @@ slug: api-v1/post/agents-id-authorize
 <ParamField header="authorization" type="string" required>
   Your API key for authentication.
 
-  Example web call usage (client side):
+Example web call usage (client side):
+
 ```javascript
-import { BlandWebClient } from 'bland-client-js-sdk';
+import { BlandWebClient } from "bland-client-js-sdk";
 
-const agentId = 'YOUR-AGENT-ID';
-const sessionToken = 'YOUR-SESSION-TOKEN';
+const agentId = "YOUR-AGENT-ID";
+const sessionToken = "YOUR-SESSION-TOKEN";
 
-
-document.addEventListener('DOMContentLoaded', async () => {
-    document.getElementById('btn').addEventListener('click', async () => {
-        const blandClient = new BlandWebClient(
-            agentId,
-            sessionToken
-        );
-        await blandClient.initConversation({
-            sampleRate: 44100,
-        });
+document.addEventListener("DOMContentLoaded", async () => {
+  document.getElementById("btn").addEventListener("click", async () => {
+    const blandClient = new BlandWebClient(agentId, sessionToken);
+    await blandClient.initConversation({
+      sampleRate: 44100,
     });
+  });
 });
 ```
 
@@ -38,7 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 <ParamField path="agent_id" type="string" required>
   The web agent to authorize a call for.
 
-  Special note: While in Beta, this request must be made to the `web.bland.ai` domain.
+Special note: While in Beta, this request must be made to the `web.bland.ai` domain.
+
 </ParamField>
 
 ### Response

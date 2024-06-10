@@ -2,12 +2,9 @@
 slug: chat-history-memory/messages
 ---
 
-<Card
-    title="Messages"
-    icon="message"
->
-Messages are the individual components of a conversation, each linked to a [Session](sessions.mdx) in a many-to-one relationship.
-To incorporate messages into sessions, utilize the [Memories](memories.mdx) feature.
+<Card title="Messages" icon="message">
+  Messages are the individual components of a conversation, each linked to a [Session](sessions.mdx) in a many-to-one
+  relationship. To incorporate messages into sessions, utilize the [Memories](memories.mdx) feature.
 </Card>
 
 ## Get a Specific Message from a Session
@@ -36,17 +33,17 @@ async with ZepClient(api_key=api_key) as client:
 const client: ZepClient = await ZepClient.init(api_key);
 
 try {
-    const session_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc6"; // Replace with the actual session_id
-    const message_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc7"; // Replace with the actual message_id
+  const session_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc6"; // Replace with the actual session_id
+  const message_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc7"; // Replace with the actual message_id
 
-    const message: Message = await client.message.getSessionMessage(session_id, message_id);
-    console.log(message);
+  const message: Message = await client.message.getSessionMessage(session_id, message_id);
+  console.log(message);
 } catch (error) {
-    if (error instanceof NotFoundError) {
-        console.log("Message not found");
-    } else {
-        throw error;
-    }
+  if (error instanceof NotFoundError) {
+    console.log("Message not found");
+  } else {
+    throw error;
+  }
 }
 ```
 
@@ -85,6 +82,7 @@ async with ZepClient(api_key) as client:
     except NotFoundError:
         print("Sesssion not found")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -92,18 +90,19 @@ async with ZepClient(api_key) as client:
 const client: ZepClient = await ZepClient.init(api_key);
 
 try {
-    const messages: Message[] = await client.message.getSessionMessages(session_id);
-    messages.forEach((message: Message) => {
-        console.log(message);
-    });
+  const messages: Message[] = await client.message.getSessionMessages(session_id);
+  messages.forEach((message: Message) => {
+    console.log(message);
+  });
 } catch (error) {
-    if (error instanceof NotFoundError) {
-        console.log("Message not found");
-    } else {
-        throw error;
-    }
+  if (error instanceof NotFoundError) {
+    console.log("Message not found");
+  } else {
+    throw error;
+  }
 }
 ```
+
 </Tab>
 </Tabs>
 
@@ -134,7 +133,7 @@ try {
 
 You have the ability to modify the metadata of a message. Please provide the metadata in the following format. Note that at this time, it's not possible to update the content of a message itself.
 
-```json 
+```json
 {
   "metadata": {
     "foo": "bar"
@@ -160,6 +159,7 @@ async with ZepClient(api_key) as client:
     except NotFoundError:
         print("Session not found")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -167,14 +167,15 @@ async with ZepClient(api_key) as client:
 const client: ZepClient = await ZepClient.init(api_key);
 
 try {
-    const session_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc6"; // Replace with the actual session_id
-    const message_uuid: string = "3e0e4af9-71ff-4541-b206-6133574bbbc7"; // Replace with the actual message_id
-    const metadata: any = { metadata: { foo: "bar" } }; // Replace with the desired metadata
-    await client.message.updateSessionMessageMetadata(session_id, message_uuid, metadata);
+  const session_id: string = "3e0e4af9-71ff-4541-b206-6133574bbbc6"; // Replace with the actual session_id
+  const message_uuid: string = "3e0e4af9-71ff-4541-b206-6133574bbbc7"; // Replace with the actual message_id
+  const metadata: any = { metadata: { foo: "bar" } }; // Replace with the desired metadata
+  await client.message.updateSessionMessageMetadata(session_id, message_uuid, metadata);
 } catch (error) {
-    console.error("Session not found", error);
+  console.error("Session not found", error);
 }
 ```
+
 </Tab>
 </Tabs>
 
@@ -195,4 +196,3 @@ try {
   }
 }
 ```
-

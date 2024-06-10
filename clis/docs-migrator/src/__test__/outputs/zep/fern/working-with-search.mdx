@@ -5,14 +5,14 @@ slug: working-with-search
 
 
 <Card title="Searching in Zep" icon="magnifying-glass">
-    Zep's Collection and Memory search supports semantic similarity search and similarity search re-ranked by [Maximal Marginal Relevance](#maximal-marginal-relevance-re-ranking).
-    Both of these search types can be filtered by JSONPath-based metadata filters. Memory search also supports querying by message or summary creation date.
+  Zep's Collection and Memory search supports semantic similarity search and similarity search re-ranked by [Maximal
+  Marginal Relevance](#maximal-marginal-relevance-re-ranking). Both of these search types can be filtered by
+  JSONPath-based metadata filters. Memory search also supports querying by message or summary creation date.
 </Card>
-
 
 ## Simple, Text-based Semantic Queries
 
-The simplest form of search query is a text-based semantic simailrity query. No metadata filter is required, and the query is simply a string of text. 
+The simplest form of search query is a text-based semantic simailrity query. No metadata filter is required, and the query is simply a string of text.
 Zep will convert the query into an embedding and find semantically similar documents, chat history summaries, or chat messages.
 
 Below is an example search against a chat session using only search text.
@@ -33,7 +33,7 @@ search_payload = MemorySearchPayload(
         search_scope="messages",
         metadata={"where": {"jsonpath": '$[*] ? (@.bar == "foo")'}},
     )
-    
+
 search_results = await client.memory.search_memory(session_id, search_payload)
 ```
 
@@ -47,9 +47,9 @@ import { ZepClient, MemorySearchPayload } from "@getzep/zep-js";
 const zepClient = await ZepClient.init(process.env.ZEP_API_KEY);
 
 const searchPayload = new MemorySearchPayload({
-    text: query,
-    search_scope: "messages",
-    metadata: { where: { jsonpath: '$[*] ? (@.bar == "foo")' } }
+  text: query,
+  search_scope: "messages",
+  metadata: { where: { jsonpath: '$[*] ? (@.bar == "foo")' } },
 });
 
 const searchResults = await client.memory.searchMemory(sessionId, searchPayload);
@@ -57,8 +57,6 @@ const searchResults = await client.memory.searchMemory(sessionId, searchPayload)
 
 </Tab>
 </Tabs>
-
-
 
 Read more about [chat message history search](chat-history-memory/search.mdx).
 
@@ -84,8 +82,6 @@ If you request fewer than 10 results, Zep will return 10 results, but still retu
 Zep's MMR algorithm is SIMD-hardware accelerated on `amd64` archicture CPUs, ensuring that MMR adds little overhead to your search.
 
 <h1>Constructing an MMR Re-Ranked Search Query</h1>
-
-
 
 #### MMR Search over Chat History
 
@@ -123,10 +119,10 @@ import { ZepClient, MemorySearchPayload } from "@getzep/zep-js";
 const zepClient = await ZepClient.init(process.env.ZEP_API_KEY);
 
 const searchPayload = new MemorySearchPayload({
-    text: query,
-    search_scope: "summary", // This could be messages or summary
-    search_type: "mmr",
-    mmrLambda: 0.5, // tune diversity vs relevance
+  text: query,
+  search_scope: "summary", // This could be messages or summary
+  search_type: "mmr",
+  mmrLambda: 0.5, // tune diversity vs relevance
 });
 
 const searchResults = await client.memory.searchMemory(sessionId, searchPayload, 3);
@@ -134,7 +130,6 @@ const searchResults = await client.memory.searchMemory(sessionId, searchPayload,
 
 </Tab>
 </Tabs>
-
 
 #### MMR Search over Document Collections
 
@@ -158,11 +153,14 @@ docs = collection.search(
 
 ```typescript
 // This assumes you've created a collection and added documents to it
-const docs = await collection.search({
+const docs = await collection.search(
+  {
     text: query,
     search_type: "mmr",
     mmr_lambda: 0.5,
-}, 3);
+  },
+  3,
+);
 ```
 
 </Tab>
@@ -175,6 +173,7 @@ Zep supports filtering search queries by metadata. Metadata filters are [JSONPat
 JSONPath queries allow for building sophisticated filters that match on elements at any level of the JSON document. The boolean logic overlay allows for combining multiple JSONPath queries using `and` and `or` operators.
 
 ### Useful resources for building and testing JSONPath queries
+
 - [JSONPath Syntax](https://goessner.net/articles/JsonPath/)
 - [JSONPath Online Evaluator](https://jsonpath.com/)
 - [JSONPath Expression Tester](https://jsonpath.curiousconcept.com/#).
@@ -196,7 +195,6 @@ Executing the above query against a chat session looks as follows:
 <Tabs group="search">
 <Tab title="Python" group-key="python">
 
-
 ```python
 search_payload = MemorySearchPayload(
     text="Is Lauren Olamina a character in a book",
@@ -216,16 +214,15 @@ search_results = client.memory.search_memory(session_id, search_payload)
 
 ```typescript
 const searchPayload = new MemorySearchPayload({
-    text: "Is Lauren Olamina a character in a book",
-    metadata: { where: { jsonpath: '$[*] ? (@.author == "Octavia Butler")' } }
+  text: "Is Lauren Olamina a character in a book",
+  metadata: { where: { jsonpath: '$[*] ? (@.author == "Octavia Butler")' } },
 });
 
-const search_results = await client.memory.searchMemory(session_id, search_payload)
+const search_results = await client.memory.searchMemory(session_id, search_payload);
 ```
 
 </Tab>
 </Tabs>
-
 
 ### Combining multiple JSONPath filters using boolean logic
 

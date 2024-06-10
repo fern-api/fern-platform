@@ -1,6 +1,5 @@
 {
   "extends": "@fern-platform/configs/tsconfig/library.json",
-  "compilerOptions": { "outDir": "./dist", "rootDir": "." },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../commons/core-utils" }]
+  "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
+  "include": ["./src/**/*"]
 }

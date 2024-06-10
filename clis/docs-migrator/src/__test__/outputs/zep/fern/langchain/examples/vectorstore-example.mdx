@@ -3,13 +3,12 @@ title: VectorStore Example
 slug: langchain/examples/vectorstore-example
 ---
 
+
 Zep Python SDK ships with `ZepVectorStore` class which can be used with [LangChain Expression Language (LCEL)](https://python.langchain.com/docs/expression_language/get_started)
 
 Let's explore how to create a RAG chain using the `ZepVectorStore` for semantic search.
 
-<Note>
-    **You can generate a project api key in [Zep Dashboard](https://app.getzep.com/projects).**
-</Note>
+<Note>**You can generate a project api key in [Zep Dashboard](https://app.getzep.com/projects).**</Note>
 
 <Info>
     Before diving into these examples, please ensure you've set the following environment variables:
@@ -17,6 +16,7 @@ Let's explore how to create a RAG chain using the `ZepVectorStore` for semantic 
     `ZEP_API_KEY` - API key to your zep project
 
     `OPENAI_API_KEY` - Open AI api key which the chain will require to generate the answer
+
 </Info>
 
 <Info>
@@ -28,8 +28,8 @@ Let's explore how to create a RAG chain using the `ZepVectorStore` for semantic 
 
     Alternatively, you can create a collection by running either [Document example](https://github.com/getzep/zep-python/blob/main/examples/documents/documents_async.py)
     in python sdk repository or [Document example](https://github.com/getzep/zep-js/blob/main/examples/documents/index.ts) in typescript sdk repository.
-</Info>
 
+</Info>
 
 <Tabs group="langchain">
 
@@ -39,6 +39,7 @@ Let's explore how to create a RAG chain using the `ZepVectorStore` for semantic 
 ZEP_API_KEY = os.environ.get("ZEP_API_KEY")
 ZEP_COLLECTION_NAME = os.environ.get("ZEP_COLLECTION")
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -46,14 +47,14 @@ ZEP_COLLECTION_NAME = os.environ.get("ZEP_COLLECTION")
 const ZEP_API_KEY = process.env.ZEP_API_KEY;
 const ZEP_COLLECTION_NAME = process.env.ZEP_COLLECTION;
 ```
+
 </Tab>
 </Tabs>
 
-<Note>
-    **Need a project API key? Create one from the [Zep Dashboard](https://app.getzep.com/projects).**
-</Note>
+<Note>**Need a project API key? Create one from the [Zep Dashboard](https://app.getzep.com/projects).**</Note>
 
 Initialize ZepClient with necessary imports
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -82,36 +83,28 @@ zep = ZepClient(
     api_key=ZEP_API_KEY,
 )
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 import { ZepClient } from "@getep/zep-js";
 import { ChatOpenAI } from "@langchain/openai";
-import {
-    BasePromptTemplate,
-    ChatPromptTemplate,
-    PromptTemplate,
-} from "@langchain/core/prompts";
+import { BasePromptTemplate, ChatPromptTemplate, PromptTemplate } from "@langchain/core/prompts";
 import { ZepVectorStore, formatDocument } from "@getep/zep-js/langchain";
 import { Document } from "@langchain/core/documents";
-import {
-    RunnableMap,
-    RunnableLambda,
-    RunnablePassthrough,
-} from "@langchain/core/runnables";
+import { RunnableMap, RunnableLambda, RunnablePassthrough } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ConsoleCallbackHandler } from "@langchain/core/tracers/console";
 
-
-const zepClient = await ZepClient.init(
-    ZEP_API_KEY,
-);
+const zepClient = await ZepClient.init(ZEP_API_KEY);
 ```
+
 </Tab>
 </Tabs>
 
 Initialize ZepVectorStore
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -122,19 +115,22 @@ vectorstore = ZepVectorStore(
     zep_client=zep,
 )
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 const vectorStore = await ZepVectorStore.init({
-    client: zepClient,
-    collectionName: ZEP_COLLECTION_NAME,
+  client: zepClient,
+  collectionName: ZEP_COLLECTION_NAME,
 });
 ```
+
 </Tab>
 </Tabs>
 
 Let's set up the retriever. We'll use `vectorstore` for this purpose and configure it to use [MMR](Search.md) search result reranking.
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -142,17 +138,20 @@ Let's set up the retriever. We'll use `vectorstore` for this purpose and configu
 ```python
 retriever = vectorstore.as_retriever()
 ```
+
 </Tab>
 
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-   const retriever = vectorStore.asRetriever();
+const retriever = vectorStore.asRetriever();
 ```
+
 </Tab>
 </Tabs>
 
 Create a prompt template for synthesizing answers.
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -169,6 +168,7 @@ answer_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -185,11 +185,12 @@ const prompt = ChatPromptTemplate.fromMessages([
     ],
 ]);
 ```
+
 </Tab>
 </Tabs>
 
-
 Create the default document prompt and define the helper function for merging documents.
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -205,6 +206,7 @@ def _combine_documents(
     doc_strings = [format_document(doc, document_prompt) for doc in docs]
     return document_separator.join(doc_strings)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -212,18 +214,19 @@ def _combine_documents(
 const DEFAULT_DOCUMENT_PROMPT = PromptTemplate.fromTemplate("{pageContent}");
 
 async function combineDocuments(
-    docs: Document[],
-    documentPrompt: BasePromptTemplate = DEFAULT_DOCUMENT_PROMPT,
-    documentSeparator: string = "\n\n",
+  docs: Document[],
+  documentPrompt: BasePromptTemplate = DEFAULT_DOCUMENT_PROMPT,
+  documentSeparator: string = "\n\n",
 ) {
-    const docStrings: string[] = await Promise.all(
-        docs.map((doc) => {
-            return formatDocument(doc, documentPrompt);
-        }),
-    );
-    return docStrings.join(documentSeparator);
+  const docStrings: string[] = await Promise.all(
+    docs.map((doc) => {
+      return formatDocument(doc, documentPrompt);
+    }),
+  );
+  return docStrings.join(documentSeparator);
 }
 ```
+
 </Tab>
 </Tabs>
 
@@ -241,6 +244,7 @@ inputs = RunnableParallel(
     {"question": lambda x: x["question"], "context": retriever | _combine_documents},
 ).with_types(input_type=UserInput)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 Define context retriever chain with output parser
@@ -249,17 +253,18 @@ Define context retriever chain with output parser
 const outputParser = new StringOutputParser();
 
 const setupAndRetrieval = RunnableMap.from({
-    context: new RunnableLambda({
-        func: (input: string) =>
-            retriever.invoke(input).then(combineDocuments),
-    }),
-    question: new RunnablePassthrough(),
+  context: new RunnableLambda({
+    func: (input: string) => retriever.invoke(input).then(combineDocuments),
+  }),
+  question: new RunnablePassthrough(),
 });
 ```
+
 </Tab>
 </Tabs>
 
 Compose final chain
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -267,18 +272,20 @@ Compose final chain
 ```python
 chain = inputs | answer_prompt | ChatOpenAI() | StrOutputParser()
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
 const chain = setupAndRetrieval
-    .pipe(prompt)
-    .pipe(model)
-    .pipe(outputParser)
-    .withConfig({
-        callbacks: [new ConsoleCallbackHandler()],
-    }); // Optional console callback handler if you want to see input and output of each step in the chain
+  .pipe(prompt)
+  .pipe(model)
+  .pipe(outputParser)
+  .withConfig({
+    callbacks: [new ConsoleCallbackHandler()],
+  }); // Optional console callback handler if you want to see input and output of each step in the chain
 ```
+
 </Tab>
 </Tabs>
 
@@ -290,6 +297,7 @@ Here's a quick rundown of how the process works:
 4. Finally, `StrOutputParser` extracts the LLM's result into a string.
 
 To invote this chain manually, simply pass the `question` into the chain's input.
+
 <Tabs group="langchain">
 
 <Tab title="Python" group-key="python">
@@ -299,15 +307,16 @@ chain_with_history.invoke(
     {"question": "-"},
 )
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-   const result = await chain.invoke("-"); // Pass the question as input
+const result = await chain.invoke("-"); // Pass the question as input
 ```
+
 </Tab>
 </Tabs>
-
 
 ## Running the Chain with LangServe
 
@@ -316,6 +325,7 @@ You can run this chain, along with others, using our LangServe sample project.
 Here's what you'll need to do:
 
 Clone our [Python SDK](https://github.com/getzep/zep-python)
+
 ```bash
 git clone https://github.com/getzep/zep-python
 cd examples/langchain-langserve
@@ -324,4 +334,3 @@ cd examples/langchain-langserve
 Review the [README](https://github.com/getzep/zep-python/blob/main/examples/README.md) in the `langchain-langserve` directory for setup instructions.
 
 After firing up the server, head over to `http://localhost:8000/rag_vector_store/playground` to explore the LangServe playground using this chain.
-
