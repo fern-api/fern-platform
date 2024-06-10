@@ -142,6 +142,7 @@ types:
       icon: optional<string>
       items: list<NavigationItem>
       urlSlug: string
+      skipUrlSlug: optional<boolean>
 
   UnversionedUntabbedNavigationConfig:
     properties:

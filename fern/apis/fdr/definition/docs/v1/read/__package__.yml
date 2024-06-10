@@ -233,6 +233,7 @@ types:
     properties:
       title: string
       items: list<NavigationItem>
+      skipUrlSlug: boolean
 
   NavigationTabLink:
     properties:

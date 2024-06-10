@@ -17,7 +17,6 @@ slug: api-v1/get/calls-corrected-transcript
   The unique identifier for the call to be corrected.
 </ParamField>
 
-
 ### Response
 
 <ResponseField type="object" name="status">
@@ -40,11 +39,12 @@ This will contain an array of objects. Each object will be constructed as the fo
 ```
 </ResponseField>
 <ResponseField type="array" name="aligned">
-Corrected transcripts provides us with a raw output that is generally unusable because we can't eveen neccessarily align the 'assistant' and 'user' roles. To fix this, we provide our version of an 'aligned' transcript. This means essentailly a transcript where the roles are matched to the pieces of text. 
+Corrected transcripts provides us with a raw output that is generally unusable because we can't eveen neccessarily align the 'assistant' and 'user' roles. To fix this, we provide our version of an 'aligned' transcript. This means essentailly a transcript where the roles are matched to the pieces of text.
 
 We do this by vectorizing the text, taking the cosine similarity, and adding a predictive layer based off of the `wait_for_greeting` param (essentially how sure are we that assistant or user spoke first).
 
-This will contain an array of objects. Each object will be constructed as the following. 
+This will contain an array of objects. Each object will be constructed as the following.
+
 ```json
 {
 "id": 3056004,
@@ -54,6 +54,7 @@ This will contain an array of objects. Each object will be constructed as the fo
 "c_id": "bfaf99a1-b7c0-4f96-9630-90bc41cea488"
 },
 ```
+
 </ResponseField>
 
 <ResponseExample>
@@ -340,10 +341,3 @@ This will contain an array of objects. Each object will be constructed as the fo
 }
 ```
 </ResponseExample>
-
-
-
-
-
-
-

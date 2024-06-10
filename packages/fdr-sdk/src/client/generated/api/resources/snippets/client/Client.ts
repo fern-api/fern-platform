@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as FernRegistry from "../../..";
+import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Snippets {
@@ -16,6 +16,7 @@ export declare namespace Snippets {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -24,6 +25,9 @@ export class Snippets {
 
     /**
      * Get snippet by endpoint method and path
+     *
+     * @param {FernRegistry.GetSnippetRequest} request
+     * @param {Snippets.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fernRegistry.snippets.get({
@@ -39,7 +43,7 @@ export class Snippets {
     ): Promise<core.APIResponse<FernRegistry.Snippet[], FernRegistry.snippets.get.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippets"
             ),
             method: "POST",
@@ -53,6 +57,7 @@ export class Snippets {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -85,6 +90,21 @@ export class Snippets {
         };
     }
 
+    /**
+     * @param {FernRegistry.ListSnippetsRequest} request
+     * @param {Snippets.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.snippets.load({
+     *         page: 1,
+     *         orgId: "vellum",
+     *         apiId: "vellum-ai",
+     *         sdks: [{
+     *                 type: "python",
+     *                 package: "vellum-ai"
+     *             }]
+     *     })
+     */
     public async load(
         request: FernRegistry.ListSnippetsRequest = {},
         requestOptions?: Snippets.RequestOptions
@@ -97,7 +117,7 @@ export class Snippets {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/snippets/load"
             ),
             method: "POST",
@@ -112,6 +132,7 @@ export class Snippets {
             body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -144,7 +165,7 @@ export class Snippets {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -1,0 +1,34 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.20.9
+        output:
+          location: local-file-system
+          path: ../../../packages/generator-cli/src/configuration/generated
+        config:
+          includeUtilsOnUnionMembers: true
+          useBrandedStringAliases: true
+          outputSourceFiles: true
+          outputEsm: true
+
+  sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.20.9
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/generator-cli-sdk"
+        config:
+          includeUtilsOnUnionMembers: true
+          useBrandedStringAliases: true
+
+      - name: fernapi/fern-go-sdk
+        version: 0.22.0
+        github:
+          repository: fern-api/generator-cli-go
+        config:
+          union: v1
+          packageName: generatorcli

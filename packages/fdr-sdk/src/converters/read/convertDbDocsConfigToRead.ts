@@ -1,4 +1,3 @@
-import { kebabCase } from "lodash-es";
 import tinycolor from "tinycolor2";
 import {
     APIV1Read,
@@ -9,6 +8,7 @@ import {
     visitUnversionedDbNavigationConfig,
 } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
+import { kebabCase } from "../../utils";
 import { transformPageNavigationItemForDb } from "../db/convertDocsDefinitionToDb";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
@@ -73,20 +73,6 @@ function transformTypographyToV2(
     };
 }
 
-function transformFontConfigV2ToV1(fontConfig: DocsV1Read.FontConfigV2 | undefined): DocsV1Read.FontConfig | undefined {
-    if (fontConfig == null) {
-        return undefined;
-    }
-    const firstVariant = fontConfig.variants[0];
-    if (firstVariant == null) {
-        return undefined;
-    }
-    return {
-        name: fontConfig.name,
-        fontFile: firstVariant.fontFile,
-    };
-}
-
 export function transformNavigationV1ConfigToRead(
     dbShape: DocsV1Db.NavigationConfig,
     apis: Record<string, APIV1Read.ApiDefinition>,
@@ -148,6 +134,7 @@ export function transformNavigationTabForDb(
             type: "group",
             ...group,
             items: group.items.map((item) => transformNavigationItemForDb(item, apis)),
+            skipUrlSlug: group.skipUrlSlug ?? false,
         }),
     });
 }
@@ -163,6 +150,7 @@ export function transformNavigationTabV2ForDb(
             return {
                 ...dbShape,
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item, apis)),
+                skipUrlSlug: dbShape.skipUrlSlug ?? false,
             };
         case "changelog":
             return dbShape;

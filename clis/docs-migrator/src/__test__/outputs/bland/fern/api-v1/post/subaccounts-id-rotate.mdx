@@ -14,20 +14,21 @@ slug: api-v1/post/subaccounts-id-rotate
 ### Path Parameters
 
 <ParamField path="subaccount_id" type="string" required>
-    The unique identifier of the subaccount to which you want to transfer credits.
+  The unique identifier of the subaccount to which you want to transfer credits.
 </ParamField>
 
 ### Response
+
 <ResponseField name="status" type="string">
-    Whether the subaccount creation succeeded.
+  Whether the subaccount creation succeeded.
 </ResponseField>
 
 <ResponseField name="subaccount_id" type="string">
-    The affected subaccount's unique identifier.
+  The affected subaccount's unique identifier.
 </ResponseField>
 
 <ResponseField name="api_key" type="string">
-    The new API key for the subaccount.
+  The new API key for the subaccount.
 </ResponseField>
 
 <ResponseExample>

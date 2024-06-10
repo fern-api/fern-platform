@@ -32,13 +32,13 @@ slug: api-v1/get/calls-id-recording
   
   A 404 error will be returned if the call does not exist or the recording is not available. We can only retrieve recordings if the call was created with `record` set to `true`.
 
-  A 400/500 error will be returned if there is an error retrieving the recording.
+A 400/500 error will be returned if there is an error retrieving the recording.
+
 </ResponseField>
 
 <ResponseField name="url" type="string">
   If the status is `success`, the `url` will provide the exact location of the MP3 file storing the call's audio.
 </ResponseField>
-
 
 <ResponseExample>
 
@@ -61,10 +61,3 @@ slug: api-v1/get/calls-id-recording
 ```
 
 </ResponseExample>
-
-
-
-
-
-
-

@@ -1,4 +1,3 @@
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
 import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
@@ -16,13 +15,12 @@ export declare namespace Webhook {
 }
 
 export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi, types }) => {
-    const fullSlug = joinUrlSlugs(...webhook.slug);
-    const { setTargetRef } = useApiPageCenterElement({ slug: fullSlug });
+    const { setTargetRef } = useApiPageCenterElement({ slug: webhook.slug });
     const { isApiScrollingDisabled } = useFeatureFlags();
-    const route = `/${fullSlug}`;
+    const route = `/${webhook.slug}`;
 
     // TODO: merge this with the Endpoint component
-    if (useShouldHideFromSsg(fullSlug)) {
+    if (useShouldHideFromSsg(webhook.slug)) {
         return null;
     }
 

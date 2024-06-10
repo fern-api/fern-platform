@@ -1,14 +1,21 @@
 {
   "name": "@fern-api/template-resolver",
   "version": "0.0.0",
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
   "files": [
     "dist"
   ],
   "type": "module",
-  "module": "dist/src/index.js",
+  "module": "src/index.ts",
   "source": "src/index.ts",
+  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./src/index.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "compile": "tsc --build",
     "clean": "rm -rf ./dist && tsc --build --clean",
@@ -18,11 +25,9 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "^0.85.1-5824999e3",
-    "@fern-ui/core-utils": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

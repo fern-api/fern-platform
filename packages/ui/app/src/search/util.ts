@@ -1,4 +1,4 @@
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
+import urljoin from "url-join";
 import type { SearchRecord } from "./types";
 
 export function getFullPathForSearchRecord(record: SearchRecord, basePath: string | undefined): string {
@@ -22,7 +22,7 @@ export function getFullPathForSearchRecord(record: SearchRecord, basePath: strin
             parts.push(record.version.urlSlug, ...leadingPath);
         }
     }
-    return joinUrlSlugs(...parts);
+    return urljoin(parts);
 }
 
 function getLeadingPathForSearchRecord(record: SearchRecord): string[] {

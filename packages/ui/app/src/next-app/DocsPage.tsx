@@ -1,5 +1,5 @@
-import { DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
+import { DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
@@ -11,10 +11,18 @@ import { Docs, SearchDialog } from "../docs/Docs";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace DocsPage {
+    export interface Navigation {
+        currentTabIndex: number | undefined;
+        tabs: SidebarTab[];
+        currentVersionId: FernNavigation.VersionId | undefined;
+        versions: SidebarVersionInfo[];
+        sidebar: FernNavigation.SidebarRootNode;
+    }
+
     export interface Props {
         // docs: DocsV2Read.LoadDocsForUrlResponse;
         baseUrl: DocsV2Read.BaseUrl;
-        navigation: SidebarNavigation;
+        navigation: Navigation;
 
         title: string | undefined;
         favicon: string | undefined;

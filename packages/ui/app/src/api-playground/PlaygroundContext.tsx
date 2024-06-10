@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import * as Sentry from "@sentry/nextjs";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -17,12 +18,7 @@ import {
     isWebSocket,
 } from "../resolver/types";
 import { APIS } from "../sidebar/atom";
-import {
-    PlaygroundSelectionState,
-    createFormStateKey,
-    getInitialEndpointRequestFormStateWithExample,
-    usePlaygroundHeight,
-} from "./PlaygroundDrawer";
+import { getInitialEndpointRequestFormStateWithExample, usePlaygroundHeight } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
@@ -31,8 +27,8 @@ const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => 
 
 interface PlaygroundContextValue {
     hasPlayground: boolean;
-    selectionState: PlaygroundSelectionState | undefined;
-    setSelectionStateAndOpen: (state: PlaygroundSelectionState) => void;
+    selectionState: FernNavigation.NavigationNodeApiLeaf | undefined;
+    setSelectionStateAndOpen: (state: FernNavigation.NavigationNodeApiLeaf) => void;
     expandPlayground: () => void;
     collapsePlayground: () => void;
 }
@@ -60,7 +56,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
     const { basePath } = useDocsContext();
-    const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
+    const [selectionState, setSelectionState] = useState<FernNavigation.NavigationNodeApiLeaf | undefined>();
 
     const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
 
@@ -88,8 +84,8 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const collapsePlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
 
     const setSelectionStateAndOpen = useCallback(
-        async (newSelectionState: PlaygroundSelectionState) => {
-            const matchedPackage = flattenedApis[newSelectionState.api];
+        async (newSelectionState: FernNavigation.NavigationNodeApiLeaf) => {
+            const matchedPackage = flattenedApis[newSelectionState.apiDefinitionId];
             if (matchedPackage == null) {
                 Sentry.captureMessage("Could not find package for API playground selection state", "fatal");
                 return;
@@ -108,11 +104,11 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                     endpointId: newSelectionState.endpointId,
                     endpointName: matchedEndpoint?.title,
                 });
-                if (matchedEndpoint != null && globalFormState[createFormStateKey(newSelectionState)] == null) {
+                if (matchedEndpoint != null && globalFormState[newSelectionState.id] == null) {
                     setGlobalFormState((currentFormState) => {
                         return {
                             ...currentFormState,
-                            [createFormStateKey(newSelectionState)]: getInitialEndpointRequestFormStateWithExample(
+                            [newSelectionState.id]: getInitialEndpointRequestFormStateWithExample(
                                 matchedPackage?.auth,
                                 matchedEndpoint,
                                 matchedEndpoint?.examples[0],
@@ -121,7 +117,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                         };
                     });
                 }
-            } else if (newSelectionState.type === "websocket") {
+            } else if (newSelectionState.type === "webSocket") {
                 const matchedWebSocket = matchedPackage.apiDefinitions.find(
                     (definition) => isWebSocket(definition) && definition.id === newSelectionState.webSocketId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;

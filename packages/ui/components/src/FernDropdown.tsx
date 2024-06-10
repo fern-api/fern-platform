@@ -6,6 +6,7 @@ import {
     ReactElement,
     ReactNode,
     cloneElement,
+    forwardRef,
     useCallback,
     useEffect,
     useRef,
@@ -47,58 +48,71 @@ export declare namespace FernDropdown {
     }
 }
 
-export function FernDropdown({
-    options,
-    onValueChange,
-    value,
-    children,
-    onOpen,
-    usePortal = true,
-    side,
-    align,
-    defaultOpen = false,
-    dropdownMenuElement,
-}: PropsWithChildren<FernDropdown.Props>): ReactElement {
-    const [isOpen, setOpen] = useState(defaultOpen);
-    const handleOpenChange = useCallback(
-        (toOpen: boolean) => {
-            setOpen(toOpen);
-            if (toOpen && onOpen != null) {
-                onOpen();
-            }
+export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<FernDropdown.Props>>(
+    (
+        {
+            options,
+            onValueChange,
+            value,
+            children,
+            onOpen,
+            usePortal = true,
+            side,
+            align,
+            defaultOpen = false,
+            dropdownMenuElement,
         },
-        [onOpen],
-    );
-    const renderDropdownContent = () => (
-        <DropdownMenu.Content className="fern-dropdown" sideOffset={4} side={side} align={align}>
-            <FernTooltipProvider>
-                <FernScrollArea rootClassName="min-h-0 shrink" className="p-1" scrollbars="vertical">
-                    <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
-                        {options.map((option, idx) =>
-                            option.type === "value" ? (
-                                <FernDropdownItemValue
-                                    key={option.value}
-                                    option={option}
-                                    value={value}
-                                    dropdownMenuElement={dropdownMenuElement}
-                                />
-                            ) : (
-                                <DropdownMenu.Separator key={idx} className="mx-2 my-1 h-px bg-border-default" />
-                            ),
-                        )}
-                    </DropdownMenu.RadioGroup>
-                </FernScrollArea>
-            </FernTooltipProvider>
-        </DropdownMenu.Content>
-    );
+        ref,
+    ): ReactElement => {
+        const [isOpen, setOpen] = useState(defaultOpen);
+        const handleOpenChange = useCallback(
+            (toOpen: boolean) => {
+                setOpen(toOpen);
+                if (toOpen && onOpen != null) {
+                    onOpen();
+                }
+            },
+            [onOpen],
+        );
+        const renderDropdownContent = () => (
+            <DropdownMenu.Content className="fern-dropdown" sideOffset={4} side={side} align={align}>
+                <FernTooltipProvider>
+                    <FernScrollArea rootClassName="min-h-0 shrink" className="p-1" scrollbars="vertical">
+                        <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
+                            {options.map((option, idx) =>
+                                option.type === "value" ? (
+                                    <FernDropdownItemValue
+                                        key={option.value}
+                                        option={option}
+                                        value={value}
+                                        dropdownMenuElement={dropdownMenuElement}
+                                    />
+                                ) : (
+                                    <DropdownMenu.Separator key={idx} className="mx-2 my-1 h-px bg-border-default" />
+                                ),
+                            )}
+                        </DropdownMenu.RadioGroup>
+                    </FernScrollArea>
+                </FernTooltipProvider>
+            </DropdownMenu.Content>
+        );
 
-    return (
-        <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={false} defaultOpen={defaultOpen}>
-            <DropdownMenu.Trigger asChild={true}>{children}</DropdownMenu.Trigger>
-            {usePortal ? <DropdownMenu.Portal>{renderDropdownContent()}</DropdownMenu.Portal> : renderDropdownContent()}
-        </DropdownMenu.Root>
-    );
-}
+        return (
+            <DropdownMenu.Root onOpenChange={handleOpenChange} open={isOpen} modal={false} defaultOpen={defaultOpen}>
+                <DropdownMenu.Trigger asChild={true} ref={ref}>
+                    {children}
+                </DropdownMenu.Trigger>
+                {usePortal ? (
+                    <DropdownMenu.Portal>{renderDropdownContent()}</DropdownMenu.Portal>
+                ) : (
+                    renderDropdownContent()
+                )}
+            </DropdownMenu.Root>
+        );
+    },
+);
+
+FernDropdown.displayName = "FernDropdown";
 
 function FernDropdownItemValue({
     option,
