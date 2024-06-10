@@ -1,12 +1,15 @@
 ---
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { getColorVariables } from "@fern-ui/ui/src/next-app/utils/getColorVariables";
 import type { GetStaticPaths } from "astro";
+import cn from "clsx";
 import DocsMainContent from "../components/DocsMainContent.astro";
-import { getRoot } from "../utils";
+import { getDocs } from "../utils";
 
 export const getStaticPaths = (async () => {
-    const root = await getRoot("gemini.ferndocs.com");
+    const docs = await getDocs("gemini.ferndocs.com");
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
     return NodeCollector.collect(root)
         .getPageSlugs()
         .map((path) => {
@@ -18,7 +21,8 @@ export const getStaticPaths = (async () => {
 
 const { path } = Astro.params;
 
-const root = await getRoot("gemini.ferndocs.com");
+const docs = await getDocs("gemini.ferndocs.com");
+const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
 const node = FernNavigation.utils.findNode(root, path.split("/"));
 
 if (node.type === "notFound") {
@@ -28,15 +32,40 @@ if (node.type === "notFound") {
 if (node.type === "redirect") {
     return Astro.redirect(node.redirect);
 }
+
+const colorVariables = getColorVariables(
+    {
+        dark: undefined,
+        light: undefined,
+    },
+    docs.definition.filesV2
+);
 ---
 
 <html>
     <head>
         <title>{node.node.title}</title>
+        <style
+            is:global
+            define:vars={Object.fromEntries(
+                Object.entries(colorVariables.light).map(([key, value]) => [key.replace(/^--/, ""), value])
+            )}
+        ></style>
     </head>
     <body>
-        <ul>
-            {node.breadcrumb.map((crumb) => <li>{crumb}</li>)}
+        <ul class="mb-8 flex">
+            {
+                node.breadcrumb.map((crumb, index) => (
+                    <li
+                        class={cn(
+                            index &&
+                                "flex items-center before:border-t before:border-r before:block before:border-current before:size-[0.5em] before:rotate-45 before:mx-2"
+                        )}
+                    >
+                        {crumb}
+                    </li>
+                ))
+            }
         </ul>
         <DocsMainContent node={node.node} />
     </body>

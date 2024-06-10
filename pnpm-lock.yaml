@@ -36,6 +36,9 @@ importers:
       '@playwright/test':
         specifier: ^1.44.1
         version: 1.44.1
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@tailwindcss/forms':
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.3)
@@ -664,7 +667,7 @@ importers:
         version: 4.6.2(eslint@8.57.0)
       eslint-plugin-tailwindcss:
         specifier: ^3.13.1
-        version: 3.15.1(tailwindcss@3.4.3)
+        version: 3.15.1(tailwindcss@3.4.4)
       eslint-plugin-vitest:
         specifier: ^0.3.26
         version: 0.3.26(@typescript-eslint/eslint-plugin@7.3.1)(eslint@8.57.0)(typescript@4.9.5)(vitest@1.6.0)
@@ -1778,6 +1781,9 @@ importers:
       '@fern-ui/react-commons':
         specifier: workspace:*
         version: link:../../commons/react/react-commons
+      '@fern-ui/ui':
+        specifier: workspace:*
+        version: link:../app
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -1787,6 +1793,9 @@ importers:
       astro:
         specifier: ^4.10.1
         version: 4.10.1(@types/node@18.19.33)(typescript@5.4.3)
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -6607,7 +6616,6 @@ packages:
 
   /@radix-ui/colors@3.0.0:
     resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
-    dev: false
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -15875,6 +15883,18 @@ packages:
       fast-glob: 3.3.2
       postcss: 8.4.31
       tailwindcss: 3.4.3(ts-node@10.9.2)
+    dev: true
+
+  /eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.4.4):
+    resolution: {integrity: sha512-4RXRMIaMG07C2TBEW1k0VM4+dDazz1kxcZhkK4zirvmHGZTA4jnlSO2kq5mamuSPi+Wo17dh2SlC8IyFBuCd7Q==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: ^3.4.0
+    dependencies:
+      fast-glob: 3.3.2
+      postcss: 8.4.31
+      tailwindcss: 3.4.4(ts-node@10.9.2)
+    dev: false
 
   /eslint-plugin-vitest@0.3.26(@typescript-eslint/eslint-plugin@7.3.1)(eslint@8.57.0)(typescript@4.9.5)(vitest@1.6.0):
     resolution: {integrity: sha512-oxe5JSPgRjco8caVLTh7Ti8PxpwJdhSV0hTQAmkFcNcmy/9DnqLB/oNVRA11RmVRP//2+jIIT6JuBEcpW3obYg==}
@@ -25666,6 +25686,7 @@ packages:
       sucrase: 3.35.0
     transitivePeerDependencies:
       - ts-node
+    dev: true
 
   /tailwindcss@3.4.4(ts-node@10.9.2):
     resolution: {integrity: sha512-ZoyXOdJjISB7/BcLTR6SEsLgKtDStYyYZVLsUtWChO4Ps20CBad7lfJKVDiejocV4ME1hLmyY0WJE3hSDcmQ2A==}

@@ -9,7 +9,6 @@ export default {
     ...baseConfig,
     content: [
         "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
-        "../tailwind.config.js",
         path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
     ],
 };

@@ -8,15 +8,17 @@ export const EndpointUrl: React.FC<{
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(endpoint.slug);
     return (
         <FernTooltipProvider>
-            <FernTooltip
-                content={wasJustCopied ? "Copied!" : "Copy to clipboard"}
-                open={wasJustCopied ? true : undefined}
-            >
-                <div className="flex gap-2" onClick={copyToClipboard}>
-                    <FernTag colorScheme="blue">{endpoint.method}</FernTag>
-                    <div>{endpoint.slug}</div>
-                </div>
-            </FernTooltip>
+            <div className="flex">
+                <FernTooltip
+                    content={wasJustCopied ? "Copied!" : "Copy to clipboard"}
+                    open={wasJustCopied ? true : undefined}
+                >
+                    <div className="flex gap-2" onClick={copyToClipboard}>
+                        <FernTag colorScheme="blue">{endpoint.method}</FernTag>
+                        <div>{endpoint.slug}</div>
+                    </div>
+                </FernTooltip>
+            </div>
         </FernTooltipProvider>
     );
 };

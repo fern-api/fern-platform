@@ -1,6 +1,6 @@
-import { FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV2Read, FdrClient } from "@fern-api/fdr-sdk";
 
-export const getRoot = async (url: string): Promise<FernNavigation.RootNode> => {
+export const getDocs = async (url: string): Promise<DocsV2Read.LoadDocsForUrlResponse> => {
     const client = new FdrClient({
         environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     });
@@ -11,5 +11,5 @@ export const getRoot = async (url: string): Promise<FernNavigation.RootNode> => 
         throw new Error("Failed to fetch docs");
     }
 
-    return FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
+    return docs.body;
 };
