@@ -1,0 +1,39 @@
+---
+
+---
+
+<fern-tooltip class="relative">
+    <slot id="test" />
+    <div id="test" popover class="m-0 -translate-x-1/2">test</div>
+</fern-tooltip>
+
+<script>
+    class Tooltip extends HTMLElement {
+        constructor() {
+            super();
+
+            const popover = this.querySelector<HTMLElement>("[popover]");
+
+            if (popover) {
+                const initialText = popover.innerText;
+
+                this.addEventListener("mouseenter", () => {
+                    const { top, left, width, height } = this.getBoundingClientRect();
+
+                    popover.style.top = `${top + height}px`;
+                    popover.style.left = `${left + width / 2}px`;
+
+                    popover.showPopover();
+                });
+
+                this.addEventListener("mouseleave", () => {
+                    popover.hidePopover();
+                    popover.innerText = initialText;
+                    popover.removeAttribute("style");
+                });
+            }
+        }
+    }
+
+    customElements.define("fern-tooltip", Tooltip);
+</script>

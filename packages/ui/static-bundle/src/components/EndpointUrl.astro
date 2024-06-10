@@ -1,0 +1,45 @@
+---
+import type { FernNavigation } from "@fern-api/fdr-sdk";
+import Tooltip from "./Tooltip.astro";
+
+type Props = {
+    endpoint: FernNavigation.EndpointNode;
+};
+
+const { endpoint } = Astro.props;
+---
+
+<div class="flex items-center gap-1">
+    <div class="rounded bg-blue-100 px-2 leading-loose">{endpoint.method}</div>
+    <Tooltip>
+        <fern-endpoint
+            class="block font-mono hover:bg-gray-200 px-2 transition-colors rounded cursor-pointer leading-loose"
+        >
+            {endpoint.slug}
+        </fern-endpoint>
+    </Tooltip>
+</div>
+
+<script>
+    class Endpoint extends HTMLElement {
+        constructor() {
+            super();
+            this.addEventListener("click", async (event) => {
+                event.preventDefault();
+
+                try {
+                    await navigator.clipboard.writeText(this.innerText);
+                    const popover = this.parentElement?.querySelector<HTMLElement>("[popover]");
+                    if (popover) {
+                        popover.innerText = "Copied!";
+                        popover.showPopover();
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    customElements.define("fern-endpoint", Endpoint);
+</script>

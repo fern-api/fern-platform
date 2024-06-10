@@ -1,7 +1,6 @@
 ---
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { getColorVariables } from "@fern-ui/ui/src/next-app/utils/getColorVariables";
 import type { GetStaticPaths } from "astro";
 import DocsMainContent from "../components/DocsMainContent.astro";
 import { getDocs } from "../utils";
@@ -31,25 +30,11 @@ if (node.type === "notFound") {
 if (node.type === "redirect") {
     return Astro.redirect(node.redirect);
 }
-
-const colorVariables = getColorVariables(
-    {
-        dark: undefined,
-        light: undefined,
-    },
-    docs.definition.filesV2
-);
 ---
 
 <html>
     <head>
         <title>{node.node.title}</title>
-        <style
-            is:global
-            define:vars={Object.fromEntries(
-                Object.entries(colorVariables.light).map(([key, value]) => [key.replace(/^--/, ""), value])
-            )}
-        ></style>
     </head>
     <body>
         <ul class="mb-8 flex">
