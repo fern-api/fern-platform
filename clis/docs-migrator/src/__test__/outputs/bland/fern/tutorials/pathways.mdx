@@ -9,13 +9,14 @@ slug: tutorials/pathways
 
 [Template Pathway Video Tutorial](https://www.loom.com/share/be9d6f1072ae4267abc0717e36e66078?sid=82a7843f-9e7c-457a-8f7b-4d8ca026e1ff)
 
-
 ## Introduction
 
 Conversational pathways are our new way of prompting Bland that has led to major breakthroughs in realism.
+
 <CardGroup cols={2}>
   <Card title="Greater dialogue control" icon="message">
-    Give your agent instructions on how it should respond at specific points of the conversation. Choose between prompting or fixed sentences.
+    Give your agent instructions on how it should respond at specific points of the conversation. Choose between
+    prompting or fixed sentences.
   </Card>
   <Card title="Webhooks" icon="calendar">
     Execute webhooks at any point during the conversation, and send speech during/after the webhook.
@@ -54,7 +55,6 @@ In order to instruct the agent when to take this pathway, you would click on the
 
 And there you have it! You have now created a pathway from one node to another, and instructed the agent when to take this pathway. You can connect as many nodes as you want in this manner, and create as many pathways as you want. In order to create a new Node, press the 'Add new Node' button at the top-left of the screen.
 
-
 # How the Pathways Agent Works
 
 The agent starts at the first node, and then moves to the next node based on the pathway that the agent decides to take. The agent will then execute the instructions in the node as dialogue, and then move on to the next node based on the pathway that the agent decides to take. This process will continue until the agent decides to end the call.
@@ -63,7 +63,7 @@ The agent will make decisions based on the labels you put in the pathways, when 
 
 <img style={{ borderRadius: "0.5rem" }} src="pathway_label.png" />
 
-For Example, 
+For Example,
 
 In this example, at the node named 'Ask for reservation info', the node asks for the user's reservation information. Based on the user's response, the agent will then move on to the next node based on the labels you put in the pathways. For the current node, it will check if the user has provided reservation information where the number of guests is either less than 8 or more than 8. If the user has provided reservation information where the number of guests is less than 8, the agent will move on to the node named 'Reservation booking'. If the user has provided reservation information where the number of guests is more than 8, the agent will move on to the node named 'Transfer Call'. The agent will then execute the instructions in the node as dialogue, and then move on to the next node based on the pathway that the agent decides to take. And the process repeats!
 
@@ -77,29 +77,28 @@ This helps you to ensure that the user provides the necessary information before
 
 <img style={{ borderRadius: "0.5rem" }} src="condition_eg.png" />
 
-
 ## Global Nodes
 
 <img style={{ borderRadius: "0.5rem" }} src="global_node.png" />
 
-Global Nodes take precendence over the condition decisions made by the agent. You can treat a global node as a node, that every other node in the pathway has a pathway to, with the label as the 'Global Pathway Label'. 
+Global Nodes take precendence over the condition decisions made by the agent. You can treat a global node as a node, that every other node in the pathway has a pathway to, with the label as the 'Global Pathway Label'.
 
 Using the Reservation Booking Example, if the user were to ask a question like 'What are the opening hours of the restaurant' when the agent is at the 'Ask for reservation info' node, the condition decision would not be met as the user did not provide the date, time, and number of guests for the reservation. However, the pathway label would be 'user has a question about the restaurant's hours or location', which links to a Global Node. As Global Nodes take precedence over the condition decision, the agent would then move to the 'Global Node' named 'Restaurant Questions' and provide the user with the opening hours of the restaurant. After providing the user with the opening hours of the restaurant, the agent would then automatically return to the 'Ask for reservation info' node, and continue with the flow of the conversation.
 
 This helps you to handle edge cases where the user might ask a question that is not related to the current conversation, and allows you to provide the user with the information they need, before returning to the conversation.
 
-Tip: The variables `{{lastUserMessage}}` and `{{prevNodePrompt}}` can be used in the Global Node to provide the agent with context on what the user said, and steering the conversation back to its own original goal. 
+Tip: The variables `{{lastUserMessage}}` and `{{prevNodePrompt}}` can be used in the Global Node to provide the agent with context on what the user said, and steering the conversation back to its own original goal.
 
 <Accordion title="Example Global Node Prompt:">
-You are to answer any questions the user has, to the best of your knowledge. If you do not know the answer, simply say 'I don't have that information at that moment'. Do not make up any information/facts about the appointment. 
+You are to answer any questions the user has, to the best of your knowledge. If you do not know the answer, simply say 'I don't have that information at that moment'. Do not make up any information/facts about the appointment.
 
 After you answer the question, you are to direct the conversation back to your initial goal, which was as follows:
 
 Previous Goal:
 `{{prevNodePrompt}}`
 
-If you deem the goal as achieved, you can simply ask the user 'So, shall we proceed?' . If the goal has not been achieved, you are to steer the conversation back to achieve your goal. 
-If you deem the goal as achieved, simply confirm the result with the user. If the goal has not been achieved, you are to steer the conversation back to achieve your goal. 
+If you deem the goal as achieved, you can simply ask the user 'So, shall we proceed?' . If the goal has not been achieved, you are to steer the conversation back to achieve your goal.
+If you deem the goal as achieved, simply confirm the result with the user. If the goal has not been achieved, you are to steer the conversation back to achieve your goal.
 
 ```
 Examples
@@ -109,72 +108,70 @@ user: what day is it today?
 assistant: The day today is April 15th. So, what date works for you?
 --
 
--- 
+--
 assistant: what date works for you?
 user: probably tomorrow, what time does the clinic open?
 assistant: The clinic opens at 9am. So, do you want to schedule for tomorrow?
--- 
+--
 ```
+
 </Accordion>
 
 <img style={{ borderRadius: "0.5rem" }} src="global_eg.png" />
 
-
 # Node Types
 
-
 There are currently 6 different types of Nodes
-- Default 
+
+- Default
 - Webhook
 - Knowledge Base
-- End Call 
+- End Call
 - Transfer Call
 - Wait for Response
 
 You can select the type of node you want by clicking on the dropdown of `Node Type`.
-
 
 ## Base/Default Node (Important!)
 
 The default node provides the ability to generate a response to the user. This functionality is exposed to all other nodes as well.
 
 You can either:
-- Use the `Prompt` field to give instructions on what the agent should do at this point in the conversation. This is the recommended way to generate responses as it makes the conversation more human and natural. 
-- Enable the 'Static Text' toggle to provide a fixed response, and the agent will always say the same thing at this point in the conversation.
 
+- Use the `Prompt` field to give instructions on what the agent should do at this point in the conversation. This is the recommended way to generate responses as it makes the conversation more human and natural.
+- Enable the 'Static Text' toggle to provide a fixed response, and the agent will always say the same thing at this point in the conversation.
 
 <img style={{ borderRadius: "0.5rem" }} src="default_node.png" />
 
 ### Optional Decision Guide
 
-The optional decision guide is only to be used if your phone agent currently is not going down the correct pathway. We do not expect this to happen often, but still want to provide you the tools to handle these issues if they arise. 
+The optional decision guide is only to be used if your phone agent currently is not going down the correct pathway. We do not expect this to happen often, but still want to provide you the tools to handle these issues if they arise.
 
 It is a way to provide the phone agent with example scenarios of what the user might say, and what pathway the agent should take in response.
 
 You would put in examples of what the user might say in the `User Input` field, and then in the `Pathway` field, you would provide the pathway the agent should take in response.
 
-### Condition 
+### Condition
 
-The condition is a way to provide the agent with a condition that must be met in order for the agent to move on to the next node. If the condition is not met, the agent will stay on the same node and ensure the condition is met until the condition is fulfilled. 
+The condition is a way to provide the agent with a condition that must be met in order for the agent to move on to the next node. If the condition is not met, the agent will stay on the same node and ensure the condition is met until the condition is fulfilled.
 
 ### Global Nodes
 
-Each node can be configured to be a Global Node. Global Nodes are nodes that are accessible by every other node in the Conversational Pathway. This means that it has an implicit pathway to every other node, and the label would be the 'Global Label'. 
+Each node can be configured to be a Global Node. Global Nodes are nodes that are accessible by every other node in the Conversational Pathway. This means that it has an implicit pathway to every other node, and the label would be the 'Global Label'.
 
 After entering a Global Node, the agent will execute the instructions inside the Global Node, and then automatically return to the node it was at before entering the Global Node, so it can continue with the flow of the conversation.
 
-In a Global Node, you can also forward the agent to another node, by toggling the 'Enable Forwarding', which will allow you to select the node you want to move the agent to. This is useful if you want to move the agent to a existing node for a certain scenario, which could happen at any point in the conversation. 
+In a Global Node, you can also forward the agent to another node, by toggling the 'Enable Forwarding', which will allow you to select the node you want to move the agent to. This is useful if you want to move the agent to a existing node for a certain scenario, which could happen at any point in the conversation.
 
 <img style={{ borderRadius: "0.5rem" }} src="global_node.png" />
 
 ## Transfer Call Node
 
-The transfer call node is used to transfer the call to another number when the node is reached, and the dialogue at this node is complete. 
+The transfer call node is used to transfer the call to another number when the node is reached, and the dialogue at this node is complete.
 
-As such, you may have the agent say any final words before the call is transferred. 
+As such, you may have the agent say any final words before the call is transferred.
 
 <img style={{ borderRadius: "0.5rem" }} src="transfer_node.png" />
-
 
 ## End Call Node
 
@@ -188,7 +185,7 @@ As such, you may have the agent say any final words before the call is ended.
 
 The knowledge base node is used to connect your agent to a knowledge base, to answer any questions the user has.
 
-Paste in any text in the 'Knowledge Base' field, and the agent will search through the knowledge base to answer the user. 
+Paste in any text in the 'Knowledge Base' field, and the agent will search through the knowledge base to answer the user.
 
 Coming soon - PDF Upload/Vector Database Integrations...
 
@@ -197,7 +194,6 @@ Coming soon - PDF Upload/Vector Database Integrations...
 ## Wait for Response Node
 
 The Wait for Response Node works the same way as the Default Node, except it is also equipped with the ability to wait if the user requires time to respond or needs to hold for a moment.
-
 
 ## Webhook Node
 
@@ -208,7 +204,6 @@ The webhook node is used to execute webhooks at any point during the conversatio
 Similar to how the dialogue is handled in all other nodes, you can control the dialogue sent before, and after the webhook is executed.
 
 Variables received from the webhook can be used in the dialogue as well, as shown in the example below.
-
 
 <img style={{ borderRadius: "0.5rem" }} src="webhook_node.png" />
 
@@ -230,9 +225,7 @@ You can test the responses from your pathway agent by clicking on the 'Chat with
 
 <img style={{ borderRadius: "0.5rem" }} src="pathway_chat.png" />
 
-
-
-# Variables Reference/ Extraction 
+# Variables Reference/ Extraction
 
 ## Variables
 
@@ -247,10 +240,9 @@ Some examples of variables that you can access at each node:
 - `{{to}}` - The phone number the call is to
 - `{{call_id}}` - The unique identifier for the call
 
-
 ## Extracting Variables from Call/User Response
 
-At each node, you can also extract variables from the user's response using the `Extract Variables from Call Info` field. You would put in the name of the variable you want to extract, the type of the variable (integer, string, boolean), and the description for what information you want the variable to store. You can also provide specific formats you expect and examples in the description. The more descriptive it is, the better the agent will be at extracting the variable more accurately. 
+At each node, you can also extract variables from the user's response using the `Extract Variables from Call Info` field. You would put in the name of the variable you want to extract, the type of the variable (integer, string, boolean), and the description for what information you want the variable to store. You can also provide specific formats you expect and examples in the description. The more descriptive it is, the better the agent will be at extracting the variable more accurately.
 
 Do note that when enable variable extraction, and wanting to reference the variable in the subsequent nodes, it would introduce slight latency as the agent would have to extract the variable from the user's response before generating the dialogue for the next node.
 
@@ -262,7 +254,7 @@ For Example, the image below shows how the Webhook Node is set up to extract the
 
 # Fine Tuning the Pathway agent
 
-While Conversational Pathways gives you a lot greater control compared to the regular call agent, hallucinations can still occur, or the agent might make wrong decisions in the pathway. However, we have provided you with the tools to handle these issues if they arise. Each node can be fine-tuned on the decision it makes, as well as the expected dialogue it generates, allowing you to handle even the most extreme edge cases that might arise easily. 
+While Conversational Pathways gives you a lot greater control compared to the regular call agent, hallucinations can still occur, or the agent might make wrong decisions in the pathway. However, we have provided you with the tools to handle these issues if they arise. Each node can be fine-tuned on the decision it makes, as well as the expected dialogue it generates, allowing you to handle even the most extreme edge cases that might arise easily.
 
 ### Steps to Fine-Tuning the agent
 
@@ -280,11 +272,10 @@ Upon saving your changes, you will be able to see the fine-tuning data in the no
 
 Do note that the decisions for the condition and pathway chosen is made by the node the agent is currently at, and the dialogue is generated by the node which the agent decides to take the pathway to.
 
-For Example, 
+For Example,
 If the agent is at Node 1, and the agent decides that the condition is achieved, and decides to take the pathway to Node 2, the dialogue generated will be from Node 2, and the decisions for the condition and pathway chosen will be from Node 1. As such, the training data for the condition and pathway chosen will be stored in Node 1, and amendments to the dialogue generated will be stored in Node 2.
 
 <img style={{ borderRadius: "0.5rem" }} src="finetune.png" />
-
 
 # Quick Start with Tutorial / Templates
 
@@ -295,6 +286,4 @@ We have also created a video walkthrough of that template to help you get starte
 
 Create a pathway now! Click [here](https://app.bland.ai/dashboard?page=convo-pathways) to get started!
 
-
 If you have any additional questions, reach out on our [Discord](https://discord.gg/QvxDz8zcKe) and one of our engineers will help.
-

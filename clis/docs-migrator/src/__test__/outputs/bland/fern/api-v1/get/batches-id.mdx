@@ -61,7 +61,6 @@ slug: api-v1/get/batches-id
   An object containing parameters for the calls in the batch.
 </ResponseField>
 
-
 <ResponseField name="analysis" type="object">
   An object containing analysis data for the batch.
 </ResponseField>
@@ -81,24 +80,26 @@ slug: api-v1/get/batches-id
 <ResponseField name="analysis.queue_statuses" type="object">
   An object containing the number of calls in each queue status.
 
-  Example:
-  ```json
-  {
-    "complete": 237,
-    "queued": 2,
-    "call_error": 1
-  }
-  ```
+Example:
+
+```json
+{
+  "complete": 237,
+  "queued": 2,
+  "call_error": 1
+}
+```
+
 </ResponseField>
 
 <ResponseField name="analysis.call_lengths" type="object">
   Contains `average`, `average_nonzero`, `summary` and `all` fields.
 
-  - `average`: The average call length in minutes.
-  - `average_nonzero`: The average call length in minutes, excluding calls with a length of less than one second.
-  - `summary`: A summary of the call lengths, grouped into ranges.
-  - `all`: Contains each call length, in case you want to use a different grouping than the default.
-</ResponseField>
+- `average`: The average call length in minutes.
+- `average_nonzero`: The average call length in minutes, excluding calls with a length of less than one second.
+- `summary`: A summary of the call lengths, grouped into ranges.
+- `all`: Contains each call length, in case you want to use a different grouping than the default.
+  </ResponseField>
 
 <ResponseField name="analysis.call_ids" type="array">
   Contains each `call_id` in the batch.
@@ -107,15 +108,17 @@ slug: api-v1/get/batches-id
 <ResponseField name="analysis.error_messages" type="array">
   Contains any error messages that calls in the batch may have.
 
-  Example: 
-  ```json
-  [
-    {
-      "call_id": "c52f5f8c-147e-478c-4b40-88214feeba29",
-      "error_message": "Cannot transfer to +12223334444 - Call is no longer active"
-    }
-  ]
-  ```
+Example:
+
+```json
+[
+  {
+    "call_id": "c52f5f8c-147e-478c-4b40-88214feeba29",
+    "error_message": "Cannot transfer to +12223334444 - Call is no longer active"
+  }
+]
+```
+
 </ResponseField>
 
 <ResponseField name="analysis.endpoints" type="object">
@@ -153,13 +156,14 @@ slug: api-v1/get/batches-id
 <ResponseField name="call_data[].answered_by" type="array">
   Contains a string value if the batch had `answered_by_enabled` set to true.
 
-  Values:
-  - `voicemail`
-  - `human`
-  - `unknown`
-  - `no-answer`
-  - `null`
-</ResponseField>
+Values:
+
+- `voicemail`
+- `human`
+- `unknown`
+- `no-answer`
+- `null`
+  </ResponseField>
 
 <ResponseExample>
 
@@ -181,108 +185,98 @@ slug: api-v1/get/batches-id
     }
   },
   "call_data": [
-      {
-          "status": "completed",
-          "corrected_duration": "12",
-          "end_at": "2023-12-16T00:17:38.000Z",
-          "call_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e",
-          "to": "1112223333",
-          "from": "+17473423273",
-          "completed": true,
-          "created_at": "2023-12-16T00:17:22.383682+00:00",
-          "queue_status": "complete",
-          "endpoint_url": "api.bland.ai",
-          "max_duration": 30,
-          "error_message": null,
-          "answered_by": "voicemail",
-          "request_data": {
-              "phone_number": "1112223333",
-              "reduce_latency": true,
-              "wait": false,
-              "language": "ENG"
-          },
-          "transcripts": [
-              {
-                  "id": 1188954,
-                  "created_at": "2023-12-16T00:17:30.46833+00:00",
-                  "text": " Hi, Im calling about the laundromat for sale.  —  ",
-                  "user": "assistant",
-                  "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
-              },
-              {
-                  "id": 1188957,
-                  "created_at": "2023-12-16T00:17:35.14056+00:00",
-                  "text": "I'll get back to you as soon as you can. Just leave a message. Thank you. Bye.",
-                  "user": "user",
-                  "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
-              },
-              {
-                  "id": 1188959,
-                  "created_at": "2023-12-16T00:17:36.710551+00:00",
-                  "text": "Ended call: Goodbye",
-                  "user": "agent-action",
-                  "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
-              }
-          ],
-          "call_length": 0.12345
-      },  
-    //...
-  ],
-    "analysis": {
-      "total_calls": 88,
-      "completed_calls": 86,
-      "in_progress_calls": 2,
-      "queue_statuses": {
-          "complete": 85,
-          "started": 2,
-          "call_error": 1
+    {
+      "status": "completed",
+      "corrected_duration": "12",
+      "end_at": "2023-12-16T00:17:38.000Z",
+      "call_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e",
+      "to": "1112223333",
+      "from": "+17473423273",
+      "completed": true,
+      "created_at": "2023-12-16T00:17:22.383682+00:00",
+      "queue_status": "complete",
+      "endpoint_url": "api.bland.ai",
+      "max_duration": 30,
+      "error_message": null,
+      "answered_by": "voicemail",
+      "request_data": {
+        "phone_number": "1112223333",
+        "reduce_latency": true,
+        "wait": false,
+        "language": "ENG"
       },
-      "call_lengths": {
-          "average": 17,
-          "average_nonzero": 31, 
-          "summary": {
-              "0-5": 18,
-              "5-10": 4,
-              "10-15": 3,
-              "15-20": 2,
-              "20-30": 14,
-              "30-45": 28,
-              "45-60": 11,
-              "60-90": 6,
-              "90-120": 1,
-              "120+": 1
-          },
-          "all": [
-              7,
-              32,
-              //...
-          ]
-      },
-      "call_ids": [
-          "ffa99be3-63dd-44dc-9523-380cd25c1b9e",
-          "591338a8-34b2-41e6-93da-b9029c9bdedc",
-          //...
-      ],
-      "error_messages": [
+      "transcripts": [
         {
-          "call_id": "c52f5f8c-147e-478c-4b40-88214feeba29",
-          "error_message": "Cannot transfer to +12223334444 - Call is no longer active"
+          "id": 1188954,
+          "created_at": "2023-12-16T00:17:30.46833+00:00",
+          "text": " Hi, Im calling about the laundromat for sale.  —  ",
+          "user": "assistant",
+          "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
+        },
+        {
+          "id": 1188957,
+          "created_at": "2023-12-16T00:17:35.14056+00:00",
+          "text": "I'll get back to you as soon as you can. Just leave a message. Thank you. Bye.",
+          "user": "user",
+          "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
+        },
+        {
+          "id": 1188959,
+          "created_at": "2023-12-16T00:17:36.710551+00:00",
+          "text": "Ended call: Goodbye",
+          "user": "agent-action",
+          "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
         }
       ],
-      "endpoints": {
-        "api.bland.ai": 88
+      "call_length": 0.12345
+    }
+    //...
+  ],
+  "analysis": {
+    "total_calls": 88,
+    "completed_calls": 86,
+    "in_progress_calls": 2,
+    "queue_statuses": {
+      "complete": 85,
+      "started": 2,
+      "call_error": 1
+    },
+    "call_lengths": {
+      "average": 17,
+      "average_nonzero": 31,
+      "summary": {
+        "0-5": 18,
+        "5-10": 4,
+        "10-15": 3,
+        "15-20": 2,
+        "20-30": 14,
+        "30-45": 28,
+        "45-60": 11,
+        "60-90": 6,
+        "90-120": 1,
+        "120+": 1
+      },
+      "all": [
+        7, 32
+        //...
+      ]
+    },
+    "call_ids": [
+      "ffa99be3-63dd-44dc-9523-380cd25c1b9e",
+      "591338a8-34b2-41e6-93da-b9029c9bdedc"
+      //...
+    ],
+    "error_messages": [
+      {
+        "call_id": "c52f5f8c-147e-478c-4b40-88214feeba29",
+        "error_message": "Cannot transfer to +12223334444 - Call is no longer active"
       }
+    ],
+    "endpoints": {
+      "api.bland.ai": 88
+    }
   }
 }
 ```
 
 </ResponseExample>
-
-
-
-
-
-
-
-
-
