@@ -450,6 +450,46 @@ importers:
         specifier: ^1.5.0
         version: 1.6.0(@types/node@18.19.33)
 
+  packages/commons/next-seo:
+    dependencies:
+      next:
+        specifier: ^14.2.3
+        version: 14.2.3(@babel/core@7.24.5)(@playwright/test@1.44.1)(react-dom@18.3.1)(react@18.3.1)(sass@1.77.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+    devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      '@types/react':
+        specifier: ^18.0.20
+        version: 18.3.1
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^3.2.4
+        version: 3.2.5
+      stylelint:
+        specifier: ^16.1.0
+        version: 16.5.0(typescript@5.4.3)
+      typescript:
+        specifier: 5.4.3
+        version: 5.4.3
+      vitest:
+        specifier: ^1.5.0
+        version: 1.6.0(@types/node@18.19.33)
+
   packages/commons/react/common-components:
     dependencies:
       '@fern-ui/loadable':
@@ -912,6 +952,9 @@ importers:
       '@fern-ui/loadable':
         specifier: workspace:*
         version: link:../../commons/loadable
+      '@fern-ui/next-seo':
+        specifier: workspace:*
+        version: link:../../commons/next-seo
       '@fern-ui/react-commons':
         specifier: workspace:*
         version: link:../../commons/react/react-commons
@@ -1032,9 +1075,6 @@ importers:
       next-mdx-remote:
         specifier: ^4.4.1
         version: 4.4.1(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
-      next-seo:
-        specifier: ^6.5.0
-        version: 6.5.0(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.3.1)(react@18.3.1)
@@ -20785,18 +20825,6 @@ packages:
       next: 14.2.3(@babel/core@7.24.5)(@playwright/test@1.44.1)(react-dom@18.3.1)(react@18.3.1)(sass@1.77.0)
       react: 18.3.1
     dev: true
-
-  /next-seo@6.5.0(next@14.2.3)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-MfzUeWTN/x/rsKp/1n0213eojO97lIl0unxqbeCY+6pAucViHDA8GSLRRcXpgjsSmBxfCFdfpu7LXbt4ANQoNQ==}
-    peerDependencies:
-      next: ^8.1.1-canary.54 || >=9.0.0
-      react: '>=16.0.0'
-      react-dom: '>=16.0.0'
-    dependencies:
-      next: 14.2.3(@babel/core@7.24.5)(@playwright/test@1.44.1)(react-dom@18.3.1)(react@18.3.1)(sass@1.77.0)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-    dev: false
 
   /next-themes@0.3.0(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}

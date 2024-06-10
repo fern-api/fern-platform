@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { NextSeo } from "@fern-ui/next-seo";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { debounce } from "lodash-es";
-import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { getNextSeoProps } from "../../next-app/utils/getSeoProp";

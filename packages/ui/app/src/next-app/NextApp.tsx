@@ -1,6 +1,6 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import { DefaultSeo } from "@fern-ui/next-seo";
 import { Provider as JotaiProvider, createStore } from "jotai";
-import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
