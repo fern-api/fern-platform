@@ -1,10 +1,10 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import type { DefaultSeoProps, LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
 import grayMatter from "gray-matter";
 import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
-import type { DefaultSeoProps, LinkTag, MetaTag, NextSeoProps } from "next-seo/lib/types";
 import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { FernDocsFrontmatter } from "../../mdx/mdx";
