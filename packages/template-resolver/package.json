@@ -25,7 +25,7 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
     "lodash-es": "^4.17.21"

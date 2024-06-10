@@ -10,6 +10,7 @@ associated with it.
 
 The `SessionID` is a string key that accepts arbitrary identifiers. Related data you'd like to store can be persisted
 as metadata.
+
 </Card>
 
 ## Adding a Session
@@ -23,34 +24,37 @@ conversation a user might have with your app
 Sessions are created automatically when adding Memories. If the SessionID already exists, then the Memory is upserted into the Session.
 
 Manually creating a session can be useful if you want to associate it with a user or add metadata.
+
 </Note>
 <Tabs group="sessions">
 
 <Tab title="Python" group-key="python">
 
-```python 
+```python
 async with ZepClient(api_key=api_key) as client:
     session_id = uuid.uuid4().hex # A new session identifier
     session = Session(
-                session_id=session_id, 
+                session_id=session_id,
                 user_id=user_id,  # Optionally associate this session with a user
                 metadata={"foo" : "bar"}
             )
     await client.memory.aadd_session(session)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
-```typescript 
+```typescript
 const client: ZepClient = await ZepClient.init(api_key);
 const session_id: string = uuid.v4(); // Generate a new session identifier
 const session: Session = new Session({
-    session_id,
-    user_id: user.user_id, // Optionally associate this session with a user
-    metadata: { "foo": "bar" },
+  session_id,
+  user_id: user.user_id, // Optionally associate this session with a user
+  metadata: { foo: "bar" },
 });
 await client.memory.addSession(session);
 ```
+
 </Tab>
 </Tabs>
 
@@ -60,6 +64,7 @@ await client.memory.addSession(session);
 
 You can update a session's metadata by providing a Session object with new metadata. Note that
 metadata is merged, so any existing metadata will be preserved.
+
 <Tabs group="sessions">
 
 <Tab title="Python" group-key="python">
@@ -74,8 +79,8 @@ await client.memory.aupdate_session(session)
 
 ```typescript
 const session: Session = new Session({
-    session_id,
-    metadata: { "qax": "baz" },
+  session_id,
+  metadata: { qax: "baz" },
 });
 await client.memory.updateSession(session);
 ```
@@ -84,6 +89,7 @@ await client.memory.updateSession(session);
 </Tabs>
 
 ## Getting a Session
+
 <Tabs group="sessions">
 
 <Tab title="Python" group-key="python">
@@ -92,6 +98,7 @@ await client.memory.updateSession(session);
 session = await client.memory.aget_session(session_id)
 print(session.dict())
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -99,10 +106,9 @@ print(session.dict())
 const session = await client.memory.getSession(session_id);
 console.log(session);
 ```
+
 </Tab>
 </Tabs>
-
-
 
 ## Deleting a Session
 
@@ -120,16 +126,16 @@ Soft-deleted data is hard-deleted periodically.
 ```python
 await client.memory.adelete_memory(session_id)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
 ```typescript
-await client.memory.deleteMemory(session_id)
+await client.memory.deleteMemory(session_id);
 ```
+
 </Tab>
 </Tabs>
-
-
 
 ## Listing Sessions
 
@@ -152,6 +158,7 @@ for session_chunk in all_sessions:
     for session in session_chunk:
         print(session)
 ```
+
 </Tab>
 <Tab title="Typescript" group-key="ts">
 
@@ -159,15 +166,15 @@ for session_chunk in all_sessions:
 // List the first 10 Sessions
 const sessions: Session[] = await client.memory.listSessions(10, 0);
 console.log("First 10 Sessions:");
-sessions.forEach(session => console.log(session));
+sessions.forEach((session) => console.log(session));
 
 // List All Sessions using a generator
 console.log("All Sessions:");
 const allSessionsGenerator = client.memory.listSessionsChunked(100);
 for await (const sessionChunk of allSessionsGenerator) {
-    sessionChunk.forEach(session => console.log(session));
+  sessionChunk.forEach((session) => console.log(session));
 }
 ```
+
 </Tab>
 </Tabs>
-

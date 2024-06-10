@@ -20,9 +20,10 @@ slug: api-v1/post/voices-id-sample
 ### Request Body
 
 <ParamField body="text" type="string" required>
-  The text content to be spoken in the voice sample. 
+  The text content to be spoken in the voice sample.
 
-  Character limit: `200` characters.
+Character limit: `200` characters.
+
 </ParamField>
 
 <ParamField body="voice_settings" type="object" optional>
@@ -32,24 +33,14 @@ slug: api-v1/post/voices-id-sample
 <ParamField body="language" type="string" optional>
   The language of the text content. Default is `ENG`.
 
-  Some other language codes: "ESP", "GER", "FRE"
+Some other language codes: "ESP", "GER", "FRE"
+
 </ParamField>
 
 ### Response
 
 <ResponseField type="audio" name="sample">
-    The generated audio file of the spoken text using the specified or overridden voice preset settings.
+  The generated audio file of the spoken text using the specified or overridden voice preset settings.
 </ResponseField>
 
-<ResponseExample>
-```json
-(Generated audio file)
-```
-</ResponseExample>
-
-
-
-
-
-
-
+<ResponseExample>```json (Generated audio file) ```</ResponseExample>
