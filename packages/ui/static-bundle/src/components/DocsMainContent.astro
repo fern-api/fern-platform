@@ -1,0 +1,14 @@
+---
+import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { isApiLeaf } from "@fern-api/fdr-sdk/navigation";
+import ApiPage from "./ApiPage.astro";
+
+type Props = {
+    node: FernNavigation.NavigationNodePage;
+};
+
+const { node } = Astro.props;
+---
+
+<h1>{node.title}</h1>
+{isApiLeaf(node) && <ApiPage node={node} />}

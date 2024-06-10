@@ -1,0 +1,12 @@
+---
+import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { EndpointUrl } from "./EndpointUrl";
+
+type Props = {
+    node: FernNavigation.NavigationNodeApiLeaf;
+};
+
+const { node } = Astro.props;
+---
+
+{node.type === "endpoint" && <EndpointUrl endpoint={node} client:load />}
