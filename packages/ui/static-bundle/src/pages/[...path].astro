@@ -3,7 +3,6 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { getColorVariables } from "@fern-ui/ui/src/next-app/utils/getColorVariables";
 import type { GetStaticPaths } from "astro";
-import cn from "clsx";
 import DocsMainContent from "../components/DocsMainContent.astro";
 import { getDocs } from "../utils";
 
@@ -56,13 +55,11 @@ const colorVariables = getColorVariables(
         <ul class="mb-8 flex">
             {
                 node.breadcrumb.map((crumb, index) => (
-                    <li
-                        class={cn(
-                            index &&
-                                "flex items-center before:border-t before:border-r before:block before:border-current before:size-[0.5em] before:rotate-45 before:mx-2"
+                    <li class="flex items-center">
+                        {index > 0 && (
+                            <div class="border-t border-r block border-current size-[0.5em] rotate-45 mx-2" />
                         )}
-                    >
-                        {crumb}
+                        <span>{crumb}</span>
                     </li>
                 ))
             }
