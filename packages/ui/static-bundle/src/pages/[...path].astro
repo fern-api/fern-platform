@@ -1,0 +1,37 @@
+---
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import type { GetStaticPaths } from "astro";
+import { getRoot } from "../utils";
+
+export const getStaticPaths = (async () => {
+    const root = await getRoot("gemini.ferndocs.com");
+    return NodeCollector.collect(root)
+        .getPageSlugs()
+        .map((path) => {
+            return {
+                params: { path },
+            };
+        });
+}) satisfies GetStaticPaths;
+
+const { path } = Astro.params;
+
+const root = await getRoot("gemini.ferndocs.com");
+const node = FernNavigation.utils.findNode(root, path.split("/"));
+
+if (node.type === "notFound") {
+    return Astro.rewrite("/404");
+}
+
+if (node.type === "redirect") {
+    return Astro.redirect(node.redirect);
+}
+---
+
+<div>
+    <ul>
+        {node.breadcrumb.map((crumb) => <li>{crumb}</li>)}
+    </ul>
+    <h1>{node.node.title}</h1>
+</div>
