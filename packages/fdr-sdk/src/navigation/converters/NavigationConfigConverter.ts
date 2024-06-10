@@ -14,14 +14,16 @@ export class NavigationConfigConverter {
         private config: DocsV1Read.NavigationConfig,
         private apis: Record<string, APIV1Read.ApiDefinition>,
         private basePath: string | undefined,
+        private lexicographic?: boolean,
     ) {}
 
     public static convert(
         config: DocsV1Read.NavigationConfig,
         apis: Record<string, APIV1Read.ApiDefinition>,
         basePath: string | undefined,
+        lexicographic?: boolean,
     ): FernNavigation.RootNode {
-        return new NavigationConfigConverter(config, apis, basePath).convert();
+        return new NavigationConfigConverter(config, apis, basePath, lexicographic).convert();
     }
 
     #idgen = new NodeIdGenerator();
@@ -250,7 +252,14 @@ export class NavigationConfigConverter {
                 if (api == null) {
                     throw new Error(`API ${apiSection.api} not found}`);
                 }
-                return ApiReferenceNavigationConverter.convert(apiSection, api, baseSlug, parentSlug, this.#idgen);
+                return ApiReferenceNavigationConverter.convert(
+                    apiSection,
+                    api,
+                    baseSlug,
+                    parentSlug,
+                    this.#idgen,
+                    this.lexicographic,
+                );
             },
             changelog: (changelog) =>
                 ChangelogNavigationConverter.convert(changelog, baseSlug, parentSlug, this.#idgen),

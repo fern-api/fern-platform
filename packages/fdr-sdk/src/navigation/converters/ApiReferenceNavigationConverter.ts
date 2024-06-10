@@ -18,6 +18,7 @@ export class ApiReferenceNavigationConverter {
         baseSlug: string,
         parentSlug: string,
         idgen?: NodeIdGenerator,
+        lexicographic?: boolean,
     ) {
         return new ApiReferenceNavigationConverter(
             apiSection,
@@ -25,6 +26,7 @@ export class ApiReferenceNavigationConverter {
             baseSlug,
             parentSlug,
             idgen ?? new NodeIdGenerator(),
+            lexicographic,
         ).convert();
     }
 
@@ -41,6 +43,7 @@ export class ApiReferenceNavigationConverter {
         private baseSlug: string,
         private apiDefinitionParentSlug: string,
         idgen: NodeIdGenerator,
+        private lexicographic: boolean = false,
     ) {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api);
@@ -229,7 +232,17 @@ export class ApiReferenceNavigationConverter {
 
         this.#visitedSubpackages.add(subpackageId);
 
-        return this.mergeEndpointPairs(children);
+        const toRet = this.mergeEndpointPairs(children);
+
+        if (this.lexicographic) {
+            toRet.sort((a, b) => {
+                const aTitle = a.type === "endpointPair" ? a.nonStream.title : a.title;
+                const bTitle = b.type === "endpointPair" ? b.nonStream.title : b.title;
+                return aTitle.localeCompare(bTitle);
+            });
+        }
+
+        return toRet;
     }
 
     private convertApiNavigationItems(
