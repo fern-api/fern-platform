@@ -17,8 +17,9 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
-const SdkSdkIdLazyImport = createFileRoute('/sdk/$sdkId')()
-const ApiApiNameLazyImport = createFileRoute('/api/$apiName')()
+const ApiApiIdLazyImport = createFileRoute('/api/$apiId')()
+const SdkSdkIdIndexLazyImport = createFileRoute('/sdk/$sdkId/')()
+const SdkSdkIdJobJobIdLazyImport = createFileRoute('/sdk/$sdkId/job/$jobId')()
 
 // Create/Update Routes
 
@@ -27,15 +28,24 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const SdkSdkIdLazyRoute = SdkSdkIdLazyImport.update({
-  path: '/sdk/$sdkId',
+const ApiApiIdLazyRoute = ApiApiIdLazyImport.update({
+  path: '/api/$apiId',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/sdk.$sdkId.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/api.$apiId.lazy').then((d) => d.Route))
 
-const ApiApiNameLazyRoute = ApiApiNameLazyImport.update({
-  path: '/api/$apiName',
+const SdkSdkIdIndexLazyRoute = SdkSdkIdIndexLazyImport.update({
+  path: '/sdk/$sdkId/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/api.$apiName.lazy').then((d) => d.Route))
+} as any).lazy(() =>
+  import('./routes/sdk/$sdkId/index.lazy').then((d) => d.Route),
+)
+
+const SdkSdkIdJobJobIdLazyRoute = SdkSdkIdJobJobIdLazyImport.update({
+  path: '/sdk/$sdkId/job/$jobId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/sdk/$sdkId/job.$jobId.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -48,18 +58,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/api/$apiName': {
-      id: '/api/$apiName'
-      path: '/api/$apiName'
-      fullPath: '/api/$apiName'
-      preLoaderRoute: typeof ApiApiNameLazyImport
+    '/api/$apiId': {
+      id: '/api/$apiId'
+      path: '/api/$apiId'
+      fullPath: '/api/$apiId'
+      preLoaderRoute: typeof ApiApiIdLazyImport
       parentRoute: typeof rootRoute
     }
-    '/sdk/$sdkId': {
-      id: '/sdk/$sdkId'
+    '/sdk/$sdkId/': {
+      id: '/sdk/$sdkId/'
       path: '/sdk/$sdkId'
       fullPath: '/sdk/$sdkId'
-      preLoaderRoute: typeof SdkSdkIdLazyImport
+      preLoaderRoute: typeof SdkSdkIdIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/sdk/$sdkId/job/$jobId': {
+      id: '/sdk/$sdkId/job/$jobId'
+      path: '/sdk/$sdkId/job/$jobId'
+      fullPath: '/sdk/$sdkId/job/$jobId'
+      preLoaderRoute: typeof SdkSdkIdJobJobIdLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -69,8 +86,38 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  ApiApiNameLazyRoute,
-  SdkSdkIdLazyRoute,
+  ApiApiIdLazyRoute,
+  SdkSdkIdIndexLazyRoute,
+  SdkSdkIdJobJobIdLazyRoute,
 })
 
 /* prettier-ignore-end */
+
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/",
+        "/api/$apiId",
+        "/sdk/$sdkId/",
+        "/sdk/$sdkId/job/$jobId"
+      ]
+    },
+    "/": {
+      "filePath": "index.lazy.tsx"
+    },
+    "/api/$apiId": {
+      "filePath": "api.$apiId.lazy.tsx"
+    },
+    "/sdk/$sdkId/": {
+      "filePath": "sdk/$sdkId/index.lazy.tsx"
+    },
+    "/sdk/$sdkId/job/$jobId": {
+      "filePath": "sdk/$sdkId/job.$jobId.lazy.tsx"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

@@ -6,7 +6,7 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "../components/src/FernLogo.tsx"],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },

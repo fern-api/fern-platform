@@ -1,11 +1,10 @@
-import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { FernLogo, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useContext } from "react";
 import { FernLink } from "../components/FernLink";
 import { FeatureFlagContext } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { FernLogo } from "./FernLogo";
 
 const BUILT_WITH_FERN_TOOLTIP_CONTENT = "Handcrafted SDKs and Docs for your API";
 

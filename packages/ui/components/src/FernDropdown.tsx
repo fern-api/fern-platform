@@ -192,6 +192,18 @@ function FernDropdownItemValue({
                         },
                         renderButtonContent(),
                     )
+                ) : option.href != null ? (
+                    <button
+                        ref={option.value === value ? activeRef : undefined}
+                        className={cn("fern-dropdown-item", option.className)}
+                        onClick={() => {
+                            return () => {
+                                window.open(option.href, "_blank", "noopener");
+                            };
+                        }}
+                    >
+                        {renderButtonContent()}
+                    </button>
                 ) : (
                     <button
                         ref={option.value === value ? activeRef : undefined}

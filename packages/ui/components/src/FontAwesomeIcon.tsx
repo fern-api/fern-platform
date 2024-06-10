@@ -46,7 +46,7 @@ function getIconUrl(icon: string | undefined): string {
 }
 
 function getCdnHost() {
-    const CDN_HOST = process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
+    const CDN_HOST = process.env?.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
     if (CDN_HOST == null) {
         return "https://fontawesome-cdn.vercel.app";
     }
