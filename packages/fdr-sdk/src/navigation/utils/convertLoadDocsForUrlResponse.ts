@@ -7,7 +7,14 @@ export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUr
         response.definition.config.navigation,
         hackReorderApis(response.definition.apis, response.baseUrl.domain),
         response.baseUrl.basePath,
+        isLexicographicSortEnabled(response.baseUrl.domain),
     );
+}
+
+function isLexicographicSortEnabled(domain: string): boolean {
+    // HACKHACK: This is a temporary solution to enable lexicographic sorting for AIA docs.
+    // Vercel's edge config UI is broken right now so we can't modify it there.
+    return domain.startsWith("aia.docs.buildwithfern.com");
 }
 
 function hackReorderApis(

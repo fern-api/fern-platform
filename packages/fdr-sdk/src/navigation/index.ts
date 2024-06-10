@@ -2,7 +2,7 @@ import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { NavigationConfigConverter } from "./converters/NavigationConfigConverter";
 import { NodeCollector } from "./NodeCollector";
 
-const convert = NavigationConfigConverter.convert;
+// const convert = NavigationConfigConverter.convert;
 const collectSlugs = NodeCollector.collect;
 const createApiHolder = ApiDefinitionHolder.create;
 
@@ -11,4 +11,4 @@ export { ApiReferenceNavigationConverter } from "./converters/ApiReferenceNaviga
 export * from "./generated/api";
 export * from "./types";
 export * as utils from "./utils";
-export { ApiDefinitionHolder, collectSlugs, convert, createApiHolder, NavigationConfigConverter, NodeCollector };
+export { ApiDefinitionHolder, collectSlugs, createApiHolder, NavigationConfigConverter, NodeCollector };
