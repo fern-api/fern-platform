@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import LanguageIcon from "@mui/icons-material/Language";
+import MenuIcon from "@mui/icons-material/Menu";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,7 +9,7 @@ import cn from "clsx";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { FernLink } from "../components/FernLink";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { useOpenSearchDialog } from "../sidebar/atom";
+import { useOpenMobileSidebar, useOpenSearchDialog } from "../sidebar/atom";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 
 export declare namespace Header {
@@ -41,6 +42,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 ) {
     // const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
+    const openMobileSidebar = useOpenMobileSidebar();
     // const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     // const searchService = useSearchService();
 
@@ -51,51 +53,64 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             ref={ref}
             style={style}
         >
-            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
+            <div className="flex items-center h-full">
+                <button
+                    className="size-10 rounded-full t-muted mr-2 -ml-3 hover:bg-tag-default transition-colors lg:hidden"
+                    onClick={openMobileSidebar}
+                >
+                    <MenuIcon />
+                </button>
 
-            <ul className="fern-tabs flex-1 ml-[0.5px] max-lg:hidden">
-                <li className="fern-tab">
-                    <FernLink className="group/tab-button" href="/api" data-state="active">
-                        <div className="flex min-w-0 items-center justify-start space-x-2">
-                            <span className="truncate font-medium font-headings">Gemini API</span>
-                        </div>
-                    </FernLink>
-                </li>
-                <li className="fern-tab max-xl:!hidden">
-                    <FernLink className="group/tab-button" href="https://ai.google.dev/gemma" data-state="inactive">
-                        <div className="flex min-w-0 items-center justify-start space-x-2">
-                            <span className="truncate font-medium font-headings">Gemma</span>
-                        </div>
-                    </FernLink>
-                </li>
-                <li className="fern-tab max-xl:!hidden">
-                    <FernLink className="group/tab-button" href="https://ai.google.dev/edge" data-state="inactive">
-                        <div className="flex min-w-0 items-center justify-start space-x-2">
-                            <span className="truncate font-medium font-headings">Google AI Edge</span>
-                        </div>
-                    </FernLink>
-                </li>
-                <li className="fern-tab max-xl:!hidden">
-                    <FernLink className="group/tab-button" href="https://ai.google.dev/tools" data-state="inactive">
-                        <div className="flex min-w-0 items-center justify-start space-x-2">
-                            <span className="truncate font-medium font-headings">Tools</span>
-                            <span className="pl-3.5">
-                                <TriangleDownIcon className="size-[16px] scale-x-125 text-black -mr-0.5" />
-                            </span>
-                        </div>
-                    </FernLink>
-                </li>
-                <li className="fern-tab max-xl:!hidden">
-                    <FernLink className="group/tab-button" href="https://discuss.ai.google.dev/" data-state="inactive">
-                        <div className="flex min-w-0 items-center justify-start space-x-2">
-                            <span className="truncate font-medium font-headings">Community</span>
-                            <span>
-                                <OpenInNewIcon className="size-[18px] -ml-1 -mt-0.5" />
-                            </span>
-                        </div>
-                    </FernLink>
-                </li>
-            </ul>
+                <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
+
+                <ul className="fern-tabs flex-1 ml-[0.5px] max-lg:hidden">
+                    <li className="fern-tab">
+                        <FernLink className="group/tab-button" href="/api" data-state="active">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Gemini API</span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink className="group/tab-button" href="https://ai.google.dev/gemma" data-state="inactive">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Gemma</span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink className="group/tab-button" href="https://ai.google.dev/edge" data-state="inactive">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Google AI Edge</span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink className="group/tab-button" href="https://ai.google.dev/tools" data-state="inactive">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Tools</span>
+                                <span className="pl-3.5">
+                                    <TriangleDownIcon className="size-[16px] scale-x-125 text-black -mr-0.5" />
+                                </span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink
+                            className="group/tab-button"
+                            href="https://discuss.ai.google.dev/"
+                            data-state="inactive"
+                        >
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Community</span>
+                                <span>
+                                    <OpenInNewIcon className="size-[18px] -ml-1 -mt-0.5" />
+                                </span>
+                            </div>
+                        </FernLink>
+                    </li>
+                </ul>
+            </div>
 
             <div className="flex items-center">
                 <SidebarSearchBar onClick={openSearchDialog} className="max-lg:hidden" />

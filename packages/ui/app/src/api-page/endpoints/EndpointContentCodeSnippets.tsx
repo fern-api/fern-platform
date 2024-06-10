@@ -106,7 +106,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     }, [selectedError]);
 
     const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
-    // const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
+    const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
 
     const successTitle =
         exampleWithSchema.responseBody != null
@@ -137,12 +137,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full max-h-fit"
             ref={ref}
         >
-            {/* {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
-                <ul className="fern-tabs fern-snippet-examples">
+            {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
+                <ul className="fern-tabs h-10 -mb-6">
                     {selectedClientGroup.examples.map((example) => (
-                        <li key={example.key} className="fern-tab">
+                        <li key={example.key} className="fern-tab accent">
                             <button
-                                className="group/tab-button"
+                                className="group/tab-button px-[18px]"
                                 onClick={() => {
                                     onClickClient(example);
                                 }}
@@ -155,7 +155,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         </li>
                     ))}
                 </ul>
-            )} */}
+            )}
             <CodeSnippetExample
                 title={<LanguageTabs clients={clients} onClickClient={onClickClient} selectedClient={selectedClient} />}
                 onClick={(e) => {
