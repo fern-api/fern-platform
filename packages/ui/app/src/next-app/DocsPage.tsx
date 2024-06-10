@@ -2,6 +2,7 @@ import { DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sd
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
+import type { DefaultSeoProps } from "next-seo";
 import { ReactElement } from "react";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
@@ -42,13 +43,15 @@ export declare namespace DocsPage {
 
         featureFlags: FeatureFlags;
         apis: FdrAPI.ApiDefinitionId[];
+
+        seo: DefaultSeoProps;
     }
 }
 
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
 
-    const { baseUrl, title, layout, logoHeight, logoHref, resolvedPath } = pageProps;
+    const { baseUrl, layout, logoHeight, logoHref, resolvedPath } = pageProps;
 
     return (
         <FeatureFlagContext.Provider value={featureFlags}>
@@ -58,7 +61,6 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     resolvedPath={resolvedPath} // this changes between pages
                     domain={baseUrl.domain}
                     basePath={baseUrl.basePath}
-                    title={title}
                 >
                     <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                     <Docs logoHeight={logoHeight} logoHref={logoHref} />
