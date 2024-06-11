@@ -1,13 +1,20 @@
 ---
+type Props = {
+    label: string;
+    id: string;
+};
 
+const { label, id } = Astro.props;
 ---
 
-<fern-tooltip class="relative">
-    <slot id="test" />
-    <div id="test" popover class="m-0 -translate-x-1/2">test</div>
+<fern-tooltip>
+    <slot />
+    <div popover id={id} role="tooltip" class="m-0 w-max left-0 top-0 border">{label}</div>
 </fern-tooltip>
 
 <script>
+    import { computePosition } from "@floating-ui/dom";
+
     class Tooltip extends HTMLElement {
         constructor() {
             super();
@@ -15,18 +22,24 @@
             const popover = this.querySelector<HTMLElement>("[popover]");
 
             if (popover) {
+                let timeout: NodeJS.Timeout | undefined;
                 const initialText = popover.innerText;
 
                 this.addEventListener("mouseenter", () => {
-                    const { top, left, width, height } = this.getBoundingClientRect();
+                    timeout = setTimeout(async () => {
+                        popover.showPopover();
 
-                    popover.style.top = `${top + height}px`;
-                    popover.style.left = `${left + width / 2}px`;
+                        const { x, y } = await computePosition(this, popover);
 
-                    popover.showPopover();
+                        Object.assign(popover.style, {
+                            top: `${y}px`,
+                            left: `${x}px`,
+                        });
+                    }, 250);
                 });
 
                 this.addEventListener("mouseleave", () => {
+                    clearTimeout(timeout);
                     popover.hidePopover();
                     popover.innerText = initialText;
                     popover.removeAttribute("style");

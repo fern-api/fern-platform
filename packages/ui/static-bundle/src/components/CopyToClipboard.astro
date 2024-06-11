@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Tooltip from "./Tooltip.astro";
+import { randomBytes } from "crypto";
+
+type Props = {
+    text: string;
+    textToCopy?: string;
+} & HTMLAttributes<"button">;
+
+const { text, textToCopy = text, ...props } = Astro.props;
+
+const id = "copy-" + randomBytes(8).toString("base64");
+---
+
+<Tooltip label="Copy to clipboard" id={id}>
+    <button data-clipboard-text={textToCopy} popovertargetaction="show" popovertarget={id} {...props}>
+        {text}
+    </button>
+</Tooltip>
+
+<script>
+    import { computePosition } from "@floating-ui/dom";
+
+    document.querySelectorAll<HTMLButtonElement>("button[data-clipboard-text]").forEach((button) => {
+        button.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(button.innerText);
+                const { parentElement } = button;
+                if (parentElement) {
+                    const popover = parentElement.querySelector<HTMLElement>("[popover]");
+                    if (popover) {
+                        popover.innerText = "Copied!";
+
+                        const { x, y } = await computePosition(parentElement, popover);
+
+                        Object.assign(popover.style, {
+                            top: `${y}px`,
+                            left: `${x}px`,
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

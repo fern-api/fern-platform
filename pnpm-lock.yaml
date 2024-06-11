@@ -1784,6 +1784,9 @@ importers:
       '@fern-ui/ui':
         specifier: workspace:*
         version: link:../app
+      '@floating-ui/dom':
+        specifier: ^1.6.5
+        version: 1.6.5
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
