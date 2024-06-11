@@ -7,6 +7,13 @@ describe("Snippet Template Resolver", () => {
             payload: {
                 requestBody: {
                     message: "Hello world!",
+                    chat_history: [
+                        { role: "USER", message: "Who discovered gravity?" },
+                        {
+                            role: "CHATBOT",
+                            message: "The man who is widely credited with discovering gravity is Sir Isaac Newton",
+                        },
+                    ],
                 },
             },
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
