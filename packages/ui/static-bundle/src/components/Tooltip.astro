@@ -1,52 +1,53 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { randomBytes } from "node:crypto";
+import { type Except } from "type-fest";
+
 type Props = {
     label: string;
-    id: string;
-};
+} & Except<HTMLAttributes<"button">, "id">;
 
-const { label, id } = Astro.props;
+const { label, ...props } = Astro.props;
+
+const id = "copy-" + randomBytes(8).toString("base64");
 ---
 
-<fern-tooltip>
+<button popovertargetaction="show" popovertarget={id} {...props}>
     <slot />
-    <div popover id={id} role="tooltip" class="m-0 w-max left-0 top-0 border">{label}</div>
-</fern-tooltip>
+</button>
+<div popover id={id} role="tooltip" class="m-0 w-max left-0 top-0 border">{label}</div>
 
 <script>
     import { computePosition } from "@floating-ui/dom";
 
-    class Tooltip extends HTMLElement {
-        constructor() {
-            super();
+    document.querySelectorAll<HTMLButtonElement>("button[popovertarget]").forEach((button) => {
+        const popover = document.getElementById(button.getAttribute("popovertarget")!);
 
-            const popover = this.querySelector<HTMLElement>("[popover]");
-
-            if (popover) {
-                let timeout: NodeJS.Timeout | undefined;
-                const initialText = popover.innerText;
-
-                this.addEventListener("mouseenter", () => {
-                    timeout = setTimeout(async () => {
-                        popover.showPopover();
-
-                        const { x, y } = await computePosition(this, popover);
-
-                        Object.assign(popover.style, {
-                            top: `${y}px`,
-                            left: `${x}px`,
-                        });
-                    }, 250);
-                });
-
-                this.addEventListener("mouseleave", () => {
-                    clearTimeout(timeout);
-                    popover.hidePopover();
-                    popover.innerText = initialText;
-                    popover.removeAttribute("style");
-                });
-            }
+        if (!popover) {
+            return;
         }
-    }
 
-    customElements.define("fern-tooltip", Tooltip);
+        let timeout: NodeJS.Timeout | undefined;
+        const initialText = popover.innerText;
+
+        button.addEventListener("mouseenter", () => {
+            timeout = setTimeout(async () => {
+                popover.showPopover();
+
+                const { x, y } = await computePosition(button, popover);
+
+                Object.assign(popover.style, {
+                    top: `${y}px`,
+                    left: `${x}px`,
+                });
+            }, 250);
+        });
+
+        button.addEventListener("mouseleave", () => {
+            clearTimeout(timeout);
+            popover.hidePopover();
+            popover.innerText = initialText;
+            popover.removeAttribute("style");
+        });
+    });
 </script>

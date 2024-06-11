@@ -1,7 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import Tooltip from "./Tooltip.astro";
-import { randomBytes } from "crypto";
 
 type Props = {
     text: string;
@@ -9,14 +8,10 @@ type Props = {
 } & HTMLAttributes<"button">;
 
 const { text, textToCopy = text, ...props } = Astro.props;
-
-const id = "copy-" + randomBytes(8).toString("base64");
 ---
 
-<Tooltip label="Copy to clipboard" id={id}>
-    <button data-clipboard-text={textToCopy} popovertargetaction="show" popovertarget={id} {...props}>
-        {text}
-    </button>
+<Tooltip label="Copy to clipboard" data-clipboard-text={textToCopy} {...props}>
+    {text}
 </Tooltip>
 
 <script>
@@ -26,20 +21,21 @@ const id = "copy-" + randomBytes(8).toString("base64");
         button.addEventListener("click", async () => {
             try {
                 await navigator.clipboard.writeText(button.innerText);
-                const { parentElement } = button;
-                if (parentElement) {
-                    const popover = parentElement.querySelector<HTMLElement>("[popover]");
-                    if (popover) {
-                        popover.innerText = "Copied!";
 
-                        const { x, y } = await computePosition(parentElement, popover);
+                const popover = document.getElementById(button.getAttribute("popovertarget")!);
 
-                        Object.assign(popover.style, {
-                            top: `${y}px`,
-                            left: `${x}px`,
-                        });
-                    }
+                if (!popover) {
+                    return;
                 }
+
+                popover.innerText = "Copied!";
+
+                const { x, y } = await computePosition(button, popover);
+
+                Object.assign(popover.style, {
+                    top: `${y}px`,
+                    left: `${x}px`,
+                });
             } catch (error) {
                 console.error(error);
             }
