@@ -2,6 +2,7 @@ const assetPrefix =
     process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "export",
     reactStrictMode: true,
     transpilePackages: ["@fern-ui/ui"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
@@ -100,6 +101,7 @@ const nextConfig = {
         };
     },
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: "https",
