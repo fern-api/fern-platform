@@ -7,7 +7,7 @@ env:
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
   DATADOG_CLIENT_TOKEN: ${{ secrets.DATADOG_API_KEY }}
-  FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
+  FONTAWESOME_CDN_HOST: https://icons.ferndocs.com
   WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
   JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
@@ -84,7 +84,7 @@ jobs:
           --minified-path-prefix=https://app.buildwithfern.com/_next/static
         env:
           DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
-  
+
   smoke-test:
     needs: deploy
     runs-on: ubuntu-latest
@@ -107,7 +107,7 @@ jobs:
           else
               exit 1
           fi
-  
+
   healthchecks:
     needs: deploy
     uses: ./.github/workflows/healthcheck.yml
