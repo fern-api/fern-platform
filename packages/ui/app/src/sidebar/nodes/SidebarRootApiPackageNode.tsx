@@ -2,17 +2,17 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
-import { SidebarApiSectionChild } from "./SidebarApiSectionChild";
+import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
-export interface SidebarRootApiSectionNodeProps {
-    node: FernNavigation.ApiReferenceNode | FernNavigation.ApiSectionNode;
+export interface SidebarRootApiPackageNodeProps {
+    node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
     className?: string;
 }
 
-export function SidebarRootApiSectionNode({
+export function SidebarRootApiPackageNode({
     node,
     className,
-}: SidebarRootApiSectionNodeProps): React.ReactElement | null {
+}: SidebarRootApiPackageNodeProps): React.ReactElement | null {
     const { checkChildSelected, registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
 
     if (node.children.length === 0) {
@@ -70,12 +70,12 @@ export function SidebarRootApiSectionNode({
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiSectionChild node={child} depth={1} />
+                        <SidebarApiPackageChild node={child} depth={1} />
                     </li>
                 ))}
                 {node.type === "apiReference" && node.changelog != null && (
                     <li>
-                        <SidebarApiSectionChild node={node.changelog} depth={1} />
+                        <SidebarApiPackageChild node={node.changelog} depth={1} />
                     </li>
                 )}
             </ul>

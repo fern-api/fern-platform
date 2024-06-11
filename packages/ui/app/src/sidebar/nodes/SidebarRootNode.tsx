@@ -4,7 +4,7 @@ import { last } from "lodash-es";
 import { Fragment } from "react";
 import { SidebarApiGroupNode } from "./SidebarApiGroupNode";
 import { SidebarGroupNode } from "./SidebarGroupNode";
-import { SidebarRootApiSectionNode } from "./SidebarRootApiSectionNode";
+import { SidebarRootApiPackageNode } from "./SidebarRootApiPackageNode";
 import { SidebarRootSectionNode } from "./SidebarRootSectionNode";
 
 interface SidebarRootNodeProps {
@@ -12,8 +12,8 @@ interface SidebarRootNodeProps {
 }
 
 type ApiGroupOrSection =
-    | { type: "apiGroup"; children: (FernNavigation.ApiSectionChild | FernNavigation.ChangelogNode)[] }
-    | FernNavigation.ApiSectionNode;
+    | { type: "apiGroup"; children: (FernNavigation.ApiPackageChild | FernNavigation.ChangelogNode)[] }
+    | FernNavigation.ApiPackageNode;
 
 export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElement {
     return (
@@ -29,7 +29,7 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
                         if (!apiRef.hideTitle) {
                             return (
                                 <li key={child.id} className="mt-6">
-                                    <SidebarRootApiSectionNode node={apiRef} />
+                                    <SidebarRootApiPackageNode node={apiRef} />
                                 </li>
                             );
                         }
@@ -56,7 +56,7 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
                                 {groups.map((child, idx) =>
                                     child.type === "apiSection" ? (
                                         <li key={idx} className="mt-6">
-                                            <SidebarRootApiSectionNode node={child} />
+                                            <SidebarRootApiPackageNode node={child} />
                                         </li>
                                     ) : (
                                         <li key={idx} className="mt-6">

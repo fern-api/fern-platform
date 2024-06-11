@@ -94,7 +94,7 @@ export class ApiDefinitionResolver {
                     link: async () => undefined,
                     webSocket: (websocket) => this.resolveWebsocketChannel(websocket),
                     webhook: (webhook) => this.resolveWebhookDefinition(webhook),
-                    apiSection: (section) => this.resolveSubpackage(section, mdxOptions),
+                    apiPackage: (section) => this.resolveSubpackage(section, mdxOptions),
                     page: async (page) => {
                         const pageContent = this.pages[page.pageId];
                         if (pageContent == null) {

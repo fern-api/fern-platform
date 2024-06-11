@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import clsx from "clsx";
-import { SidebarApiSectionNode } from "./SidebarApiSectionNode";
+import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
 import { SidebarChangelogNode } from "./SidebarChangelogNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -15,7 +15,7 @@ interface SidebarNavigationChildProps {
 
 export function SidebarNavigationChild({ node, depth, root }: SidebarNavigationChildProps): React.ReactElement {
     return visitDiscriminatedUnion(node)._visit({
-        apiReference: (apiRef) => <SidebarApiSectionNode node={apiRef} depth={depth} />,
+        apiReference: (apiRef) => <SidebarApiPackageNode node={apiRef} depth={depth} />,
         section: (section) => (
             <SidebarSectionNode
                 node={section}

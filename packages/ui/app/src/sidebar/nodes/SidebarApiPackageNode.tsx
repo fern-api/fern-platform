@@ -3,19 +3,19 @@ import clsx from "clsx";
 import { useCallback } from "react";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
-import { SidebarApiSectionChild } from "./SidebarApiSectionChild";
+import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
-export interface SidebarApiSectionNodeProps {
-    node: FernNavigation.ApiReferenceNode | FernNavigation.ApiSectionNode;
+export interface SidebarApiPackageNodeProps {
+    node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
     depth: number;
     className?: string;
 }
 
-export function SidebarApiSectionNode({
+export function SidebarApiPackageNode({
     node,
     depth,
     className,
-}: SidebarApiSectionNodeProps): React.ReactElement | null {
+}: SidebarApiPackageNodeProps): React.ReactElement | null {
     const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener, selectedNodeId } =
         useCollapseSidebar();
     const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
@@ -57,7 +57,7 @@ export function SidebarApiSectionNode({
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiSectionChild node={child} depth={depth} />
+                        <SidebarApiPackageChild node={child} depth={depth} />
                     </li>
                 ))}
             </ul>
@@ -88,7 +88,7 @@ export function SidebarApiSectionNode({
             >
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiSectionChild node={child} depth={depth + 1} />
+                        <SidebarApiPackageChild node={child} depth={depth + 1} />
                     </li>
                 ))}
             </ul>
