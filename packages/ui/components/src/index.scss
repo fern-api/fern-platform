@@ -140,7 +140,7 @@
         @apply transition-[background];
         @apply inline-flex items-center justify-center;
         @apply rounded-md px-3 py-1 text-sm h-10 sm:h-8;
-        @apply cursor-default;
+        @apply cursor-pointer;
 
         &.multiline,
         &.multiline > .fern-button-content {
