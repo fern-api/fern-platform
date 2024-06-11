@@ -144,6 +144,8 @@ export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): Do
             ...group,
             items: group.items.map(transformNavigationItemForDb),
             skipUrlSlug: group.skipUrlSlug ?? false,
+            hidden: undefined,
+            fullSlug: undefined,
         }),
     });
 }
@@ -157,6 +159,8 @@ export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2)
                 ...dbShape,
                 items: dbShape.items.map(transformNavigationItemForDb),
                 skipUrlSlug: dbShape.skipUrlSlug ?? false,
+                hidden: undefined,
+                fullSlug: undefined,
             };
         case "changelog":
             return dbShape;
@@ -185,6 +189,8 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
             };
         case "changelog":
+            return dbShape;
+        case "apiV2":
             return dbShape;
         default:
             assertNever(dbShape);

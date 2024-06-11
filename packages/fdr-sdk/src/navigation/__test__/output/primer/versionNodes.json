@@ -72,7 +72,7 @@
           "children": [
             {
               "id": "root..*.uv.api-reference.subpackage_clientSessionApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
@@ -112,7 +112,7 @@
             },
             {
               "id": "root..*.uv.api-reference.subpackage_paymentsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
@@ -212,7 +212,7 @@
             },
             {
               "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -262,7 +262,7 @@
             },
             {
               "id": "root..*.uv.api-reference.subpackage_observabilityApiBeta",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
@@ -292,7 +292,7 @@
             },
             {
               "id": "root..*.uv.api-reference.subpackage_loyaltyApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
@@ -343,7 +343,7 @@
           "children": [
             {
               "id": "root..*.uv.webhooks.subpackage_paymentWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
@@ -371,7 +371,7 @@
             },
             {
               "id": "root..*.uv.webhooks.subpackage_disputeChargebacksWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..*.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -479,7 +479,7 @@
           "children": [
             {
               "id": "root..v2.3.uv.api-reference.subpackage_clientSessionApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
@@ -519,7 +519,7 @@
             },
             {
               "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
@@ -619,7 +619,7 @@
             },
             {
               "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -669,7 +669,7 @@
             },
             {
               "id": "root..v2.3.uv.api-reference.subpackage_observabilityApiBeta",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
@@ -699,7 +699,7 @@
             },
             {
               "id": "root..v2.3.uv.api-reference.subpackage_loyaltyApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
@@ -750,7 +750,7 @@
           "children": [
             {
               "id": "root..v2.3.uv.webhooks.subpackage_paymentWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
@@ -778,7 +778,7 @@
             },
             {
               "id": "root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -886,7 +886,7 @@
           "children": [
             {
               "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
@@ -926,7 +926,7 @@
             },
             {
               "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
@@ -1026,7 +1026,7 @@
             },
             {
               "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -1076,7 +1076,7 @@
             },
             {
               "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
@@ -1106,7 +1106,7 @@
             },
             {
               "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
@@ -1157,7 +1157,7 @@
           "children": [
             {
               "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
@@ -1185,7 +1185,7 @@
             },
             {
               "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -1292,7 +1292,7 @@
           "children": [
             {
               "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
@@ -1332,7 +1332,7 @@
             },
             {
               "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
@@ -1412,7 +1412,7 @@
             },
             {
               "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -1473,7 +1473,7 @@
           "children": [
             {
               "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
@@ -1503,7 +1503,7 @@
             },
             {
               "id": "root..v2.1.uv.webhooks.subpackage_disputeChargebacksWebhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.1.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -1602,7 +1602,7 @@
           "children": [
             {
               "id": "root..v2.uv.api-reference.subpackage_clientSessionApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
@@ -1622,7 +1622,7 @@
             },
             {
               "id": "root..v2.uv.api-reference.subpackage_paymentsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
@@ -1702,7 +1702,7 @@
             },
             {
               "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",

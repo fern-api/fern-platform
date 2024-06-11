@@ -7,6 +7,7 @@ import * as FernRegistry from "../../../../../../../index";
 export type NavigationItem =
     | FernRegistry.docs.v1.db.NavigationItem.Page
     | FernRegistry.docs.v1.db.NavigationItem.Api
+    | FernRegistry.docs.v1.db.NavigationItem.ApiV2
     | FernRegistry.docs.v1.db.NavigationItem.Section
     | FernRegistry.docs.v1.db.NavigationItem.Link
     | FernRegistry.docs.v1.db.NavigationItem.Changelog;
@@ -18,6 +19,10 @@ export declare namespace NavigationItem {
 
     interface Api extends FernRegistry.docs.v1.db.ApiSection {
         type: "api";
+    }
+
+    interface ApiV2 extends FernRegistry.docs.v1.read.ApiSectionV2 {
+        type: "apiV2";
     }
 
     interface Section extends FernRegistry.docs.v1.db.DocsSection {

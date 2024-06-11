@@ -13,6 +13,6 @@ export interface ApiReferenceNode
     disableLongScrolling: boolean | undefined;
     showErrors: boolean | undefined;
     hideTitle: boolean | undefined;
-    children: FernNavigation.ApiSectionChild[];
+    children: FernNavigation.ApiPackageChild[];
     changelog: FernNavigation.ChangelogNode | undefined;
 }

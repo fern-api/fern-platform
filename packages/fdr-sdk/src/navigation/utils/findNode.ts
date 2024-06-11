@@ -128,8 +128,8 @@ function createBreadcrumb(nodes: NavigationNode[]): string[] {
             changelogMonth: (changelogMonth) => {
                 breadcrumb.push(changelogMonth.title);
             },
-            apiSection: (apiSection) => {
-                breadcrumb.push(apiSection.title);
+            apiPackage: (apiPackage) => {
+                breadcrumb.push(apiPackage.title);
             },
             changelogEntry: noop,
             endpoint: noop,

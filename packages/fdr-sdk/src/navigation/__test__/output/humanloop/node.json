@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.",
     "type": "versioned",
@@ -1253,7 +1254,7 @@
                     "children": [
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.create",
@@ -1303,7 +1304,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.create",
@@ -1353,7 +1354,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.get",
@@ -1395,7 +1396,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listallforproject",
@@ -1486,7 +1487,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.get",
@@ -1587,7 +1588,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.list",
@@ -1647,7 +1648,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.list",
@@ -1707,7 +1708,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback.endpoint_feedback.feedback",
@@ -1727,7 +1728,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.list",
@@ -1797,7 +1798,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_register",
@@ -1857,7 +1858,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.list",
@@ -2017,7 +2018,7 @@
                       },
                       {
                         "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.list",
@@ -3315,7 +3316,7 @@
                     "children": [
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_chats.endpoint_chats.create",
@@ -3365,7 +3366,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_completions.endpoint_completions.create",
@@ -3415,7 +3416,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datapoints.endpoint_datapoints.get",
@@ -3457,7 +3458,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_datasets.endpoint_datasets.listallforproject",
@@ -3548,7 +3549,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluations.endpoint_evaluations.get",
@@ -3649,7 +3650,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_evaluators.endpoint_evaluators.list",
@@ -3709,7 +3710,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_experiments.endpoint_experiments.list",
@@ -3769,7 +3770,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_feedback.endpoint_feedback.feedback",
@@ -3789,7 +3790,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_logs.endpoint_logs.list",
@@ -3859,7 +3860,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_modelConfigs.endpoint_modelConfigs.ModelConfigs_register",
@@ -3919,7 +3920,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_projects.endpoint_projects.list",
@@ -4079,7 +4080,7 @@
                       },
                       {
                         "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..v4.uv.docs/api-reference.docs/api-reference.humanloop-api.subpackage_sessions.endpoint_sessions.list",

@@ -257,6 +257,8 @@ export function transformNavigationItemForDb(
             };
         case "changelog":
             return { type: "changelog", ...toChangelogDb(writeShape) };
+        case "apiV2":
+            return writeShape;
         default:
             assertNever(writeShape);
     }
@@ -311,6 +313,8 @@ function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): Fd
             return [];
         case "changelog":
             return [];
+        case "apiV2":
+            return [item.node.apiDefinitionId];
         default:
             assertNever(item);
     }

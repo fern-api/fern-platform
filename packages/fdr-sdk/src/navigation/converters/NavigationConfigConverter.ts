@@ -47,6 +47,7 @@ export class NavigationConfigConverter {
             return {
                 id,
                 type: "root",
+                version: "v1",
                 child,
                 slug,
 
@@ -263,6 +264,8 @@ export class NavigationConfigConverter {
             },
             changelog: (changelog) =>
                 ChangelogNavigationConverter.convert(changelog, baseSlug, parentSlug, this.#idgen),
+            // Note: apiSection.node is imported from `navigation`, and is guaranteed to be a FernNavigation.ApiReferenceNode
+            apiV2: (apiSection) => apiSection.node as unknown as FernNavigation.ApiReferenceNode,
             _other: (value) => assertNever(value as never),
         });
     }

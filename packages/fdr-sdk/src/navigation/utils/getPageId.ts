@@ -11,9 +11,11 @@ export function getPageId(node: NavigationNodePage): FernNavigation.PageId | und
         section: RETURN_OVERVIEW_PAGEID,
         apiReference: RETURN_OVERVIEW_PAGEID,
         changelog: RETURN_OVERVIEW_PAGEID,
-        apiSection: RETURN_OVERVIEW_PAGEID,
+        apiPackage: RETURN_OVERVIEW_PAGEID,
         changelogEntry: RETURN_PAGEID,
         page: RETURN_PAGEID,
+
+        // if the following changes, make sure to update the algolia records generator
         endpoint: RETURN_UNDEFINED,
         webSocket: RETURN_UNDEFINED,
         webhook: RETURN_UNDEFINED,

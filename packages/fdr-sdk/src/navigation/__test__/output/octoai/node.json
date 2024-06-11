@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.uv",
     "type": "tabbed",
@@ -735,7 +736,7 @@
                   "children": [
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_account",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_account.endpoint_account.getAccount",
@@ -765,7 +766,7 @@
                     },
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_endpoint.endpoint_endpoint.createEndpoint",
@@ -845,7 +846,7 @@
                     },
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_telemetry.endpoint_telemetry.getEndpointLogs",
@@ -895,7 +896,7 @@
                     },
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_secret.endpoint_secret.createSecret",
@@ -955,7 +956,7 @@
                     },
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_registryCredential.endpoint_registryCredential.createRegistryCredential",
@@ -1015,7 +1016,7 @@
                     },
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_publicEndpoint",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_publicEndpoint.endpoint_publicEndpoint.getPublicEndpoints",
@@ -1035,7 +1036,7 @@
                     },
                     {
                       "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_instanceTypes",
-                      "type": "apiSection",
+                      "type": "apiPackage",
                       "children": [
                         {
                           "id": "root.uv.api-reference.api-reference.octoai-api.octo-ai-api.subpackage_instanceTypes.endpoint_instanceTypes.getInstanceTypes",
@@ -1071,7 +1072,7 @@
               "children": [
                 {
                   "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_asset-library.endpoint_asset-library.list",
@@ -1131,7 +1132,7 @@
                 },
                 {
                   "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_fine-tuning.endpoint_fine-tuning.create",
@@ -1191,7 +1192,7 @@
                 },
                 {
                   "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_image-gen.endpoint_image-gen.generateSsd",
@@ -1261,7 +1262,7 @@
                 },
                 {
                   "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint-pair",

@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.uv",
     "type": "sidebarRoot",
@@ -25,7 +26,7 @@
           },
           {
             "id": "root.uv.api-reference.subpackage_files",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.api-reference.subpackage_files.endpoint_files.upload",
@@ -45,7 +46,7 @@
           },
           {
             "id": "root.uv.api-reference.subpackage_transcripts",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.submit",
@@ -145,7 +146,7 @@
           },
           {
             "id": "root.uv.api-reference.subpackage_lemur",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.task",
@@ -205,7 +206,7 @@
           },
           {
             "id": "root.uv.api-reference.subpackage_streaming",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.api-reference.subpackage_streaming.endpoint_realtime.createTemporaryToken",

@@ -52,10 +52,10 @@ types:
       - LinkNode
       - ChangelogNode
 
-  ApiSectionChild:
+  ApiPackageChild:
     discriminated: false
     union:
-      - ApiSectionNode
+      - ApiPackageNode
       - EndpointNode
       - EndpointPairNode
       - WebSocketNode
@@ -112,6 +112,7 @@ types:
       - WithRedirect
     properties:
       type: literal<"root">
+      version: literal<"v1">
       child: RootChild
 
   VersionNode:
@@ -189,7 +190,7 @@ types:
       disableLongScrolling: optional<boolean>
       showErrors: optional<boolean>
       hideTitle: optional<boolean>
-      children: list<ApiSectionChild>
+      children: list<ApiPackageChild>
       changelog: optional<ChangelogNode>
 
   EndpointNode:
@@ -219,15 +220,15 @@ types:
       method: HttpMethod
       webhookId: WebhookId
 
-  ApiSectionNode:
+  ApiPackageNode:
     extends:
       - WithNodeMetadata
       - WithOverviewPage
       - WithApiDefinitionId
       - WithRedirect
     properties:
-      type: literal<"apiSection">
-      children: list<ApiSectionChild>
+      type: literal<"apiPackage">
+      children: list<ApiPackageChild>
 
   # utilities
 

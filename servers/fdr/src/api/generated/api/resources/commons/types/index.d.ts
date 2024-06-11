@@ -1,4 +1,5 @@
 export * from "./ApiDefinitionId";
+export * from "./VersionId";
 export * from "./OrgId";
 export * from "./ApiId";
 export * from "./DocsConfigId";

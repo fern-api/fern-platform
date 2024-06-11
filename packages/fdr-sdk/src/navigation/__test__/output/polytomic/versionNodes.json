@@ -946,7 +946,7 @@
                 "children": [
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_bulkSync",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.endpoint_bulkSync.List",
@@ -1050,7 +1050,7 @@
                       },
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions.endpoint_bulkSync/executions.List",
@@ -1080,7 +1080,7 @@
                       },
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
@@ -1136,7 +1136,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_connections",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_connections.endpoint_connections.GetTypes",
@@ -1226,7 +1226,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_modelSync",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_modelSync.endpoint_modelSync.GetSource",
@@ -1360,7 +1360,7 @@
                       },
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_modelSync.subpackage_modelSync/executions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
@@ -1416,7 +1416,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_schemas",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_schemas.endpoint_schemas.Refresh",
@@ -1466,7 +1466,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_models",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_models.endpoint_models.Post",
@@ -1556,7 +1556,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_events",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_events.endpoint_events.List",
@@ -1586,7 +1586,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_jobs",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_jobs.endpoint_jobs.Get",
@@ -1606,7 +1606,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_identity",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_identity.endpoint_identity.Get",
@@ -1626,7 +1626,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_organization",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_organization.endpoint_organization.List",
@@ -1686,7 +1686,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_users",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_users.endpoint_users.List",
@@ -1756,11 +1756,11 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_permissions",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/policies",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
@@ -1820,7 +1820,7 @@
                       },
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/roles",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
@@ -1886,7 +1886,7 @@
                   },
                   {
                     "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_webhooks",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..*.uv.api-reference.api-reference.api-reference.subpackage_webhooks.endpoint_webhooks.List",
@@ -2903,7 +2903,7 @@
                 "children": [
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_bulkSync",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.endpoint_bulkSync.List",
@@ -3007,7 +3007,7 @@
                       },
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions.endpoint_bulkSync/executions.List",
@@ -3037,7 +3037,7 @@
                       },
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
@@ -3093,7 +3093,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_connections",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_connections.endpoint_connections.GetTypes",
@@ -3183,7 +3183,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_modelSync",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_modelSync.endpoint_modelSync.GetSource",
@@ -3317,7 +3317,7 @@
                       },
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_modelSync.subpackage_modelSync/executions",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
@@ -3373,7 +3373,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_schemas",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_schemas.endpoint_schemas.Refresh",
@@ -3423,7 +3423,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_models",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_models.endpoint_models.Post",
@@ -3513,7 +3513,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_events",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_events.endpoint_events.List",
@@ -3543,7 +3543,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_jobs",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_jobs.endpoint_jobs.Get",
@@ -3563,7 +3563,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_identity",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_identity.endpoint_identity.Get",
@@ -3583,7 +3583,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_organization",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_organization.endpoint_organization.List",
@@ -3643,7 +3643,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_users",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_users.endpoint_users.List",
@@ -3713,11 +3713,11 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_permissions",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/policies",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
@@ -3777,7 +3777,7 @@
                       },
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/roles",
-                        "type": "apiSection",
+                        "type": "apiPackage",
                         "children": [
                           {
                             "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
@@ -3843,7 +3843,7 @@
                   },
                   {
                     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_webhooks",
-                    "type": "apiSection",
+                    "type": "apiPackage",
                     "children": [
                       {
                         "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference.subpackage_webhooks.endpoint_webhooks.List",
@@ -4756,7 +4756,7 @@
           "children": [
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetDestination",
@@ -4880,7 +4880,7 @@
                 },
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions.endpoint_bulkSync/executions.List",
@@ -4910,7 +4910,7 @@
                 },
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
@@ -4966,7 +4966,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_connections",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
@@ -5096,7 +5096,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_schemas",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_schemas.endpoint_schemas.GetRecords",
@@ -5116,7 +5116,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_models",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Post",
@@ -5206,7 +5206,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_events",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_events.endpoint_events.List",
@@ -5236,7 +5236,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_jobs",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_jobs.endpoint_jobs.Get",
@@ -5256,7 +5256,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_identity",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_identity.endpoint_identity.Get",
@@ -5276,7 +5276,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_organization",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_organization.endpoint_organization.List",
@@ -5336,7 +5336,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_users",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_users.endpoint_users.List",
@@ -5406,11 +5406,11 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_permissions",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/policies",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
@@ -5470,7 +5470,7 @@
                 },
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/roles",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
@@ -5536,7 +5536,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
@@ -5630,7 +5630,7 @@
                 },
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
@@ -5686,7 +5686,7 @@
             },
             {
               "id": "root..2023-04-25.uv.api-reference.subpackage_webhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2023-04-25.uv.api-reference.subpackage_webhooks.endpoint_webhooks.List",
@@ -6595,7 +6595,7 @@
           "children": [
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetDestination",
@@ -6679,7 +6679,7 @@
                 },
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
@@ -6735,7 +6735,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_connections",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
@@ -6855,7 +6855,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_models",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Post",
@@ -6945,7 +6945,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_events",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_events.endpoint_events.List",
@@ -6975,7 +6975,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_jobs",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_jobs.endpoint_jobs.Get",
@@ -6995,7 +6995,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_identity",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_identity.endpoint_identity.Get",
@@ -7015,7 +7015,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_organization",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.List",
@@ -7075,7 +7075,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_users",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.List",
@@ -7145,11 +7145,11 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_permissions",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
@@ -7209,7 +7209,7 @@
                 },
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
@@ -7275,7 +7275,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
@@ -7369,7 +7369,7 @@
                 },
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
@@ -7425,7 +7425,7 @@
             },
             {
               "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.List",
@@ -8276,7 +8276,7 @@
           "children": [
             {
               "id": "root..2021-05-23.uv.api-reference.subpackage_connections",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
@@ -8346,7 +8346,7 @@
             },
             {
               "id": "root..2021-05-23.uv.api-reference.subpackage_identity",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2021-05-23.uv.api-reference.subpackage_identity.endpoint_identity.api/v1.GetIdentity",
@@ -8366,7 +8366,7 @@
             },
             {
               "id": "root..2021-05-23.uv.api-reference.subpackage_organization",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.List",
@@ -8416,7 +8416,7 @@
             },
             {
               "id": "root..2021-05-23.uv.api-reference.subpackage_users",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Create",
@@ -8466,7 +8466,7 @@
             },
             {
               "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync",
-              "type": "apiSection",
+              "type": "apiPackage",
               "children": [
                 {
                   "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
@@ -8500,7 +8500,7 @@
                 },
                 {
                   "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.Get",
