@@ -85,7 +85,7 @@ export function trimCode(code: string): string {
 }
 
 export const LIGHT_THEME: BundledTheme = "min-light";
-export const DARK_THEME: BundledTheme = "material-theme-darker";
+export const DARK_THEME: BundledTheme = "material-theme-palenight";
 
 export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
     lang = lang.trim();

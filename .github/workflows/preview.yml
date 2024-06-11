@@ -1,83 +1,83 @@
-name: Vercel Preview Deployment
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
-  ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
-  ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
-  FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
-  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
-  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
-  JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
-on: pull_request
+# name: Vercel Preview Deployment
+# env:
+#   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+#   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+#   ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+#   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+#   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
+#   FONTAWESOME_CDN_HOST: https://fontawesome-cdn.vercel.app
+#   WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+#   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+#   JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
+# on: pull_request
 
-# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+# # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+#   cancel-in-progress: true
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - uses: actions/checkout@v4
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     permissions: write-all
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
+#       - name: Setup pnpm
+#         uses: pnpm/action-setup@v2
+#         with:
+#           version: 8
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: pnpm
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+#           cache: pnpm
 
-      - name: Comment in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          message: |
-            ## PR Preview
-            Building...
-          comment_tag: pr_preview
+#       - name: Comment in PR
+#         uses: thollander/actions-comment-pull-request@v2.4.3
+#         with:
+#           message: |
+#             ## PR Preview
+#             Building...
+#           comment_tag: pr_preview
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+#       - name: Install Vercel CLI
+#         run: npm install --global vercel@latest
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+#       - name: Pull Vercel Environment Information
+#         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project Artifacts
-        run: VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
+#       - name: Build Project Artifacts
+#         run: VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Comment in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          message: |
-            ## PR Preview
-            Deploying...
-          comment_tag: pr_preview
+#       - name: Comment in PR
+#         uses: thollander/actions-comment-pull-request@v2.4.3
+#         with:
+#           message: |
+#             ## PR Preview
+#             Deploying...
+#           comment_tag: pr_preview
 
-      - name: Deploy Project Artifacts to Vercel
-        run: |
-          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
-          echo "Deployment URL: $DEPLOYMENT_URL"
+#       - name: Deploy Project Artifacts to Vercel
+#         run: |
+#           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
+#           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v9/projects/fern-prod/domains?limit=50&teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H  "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
-          ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
+#           DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v9/projects/fern-prod/domains?limit=50&teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H  "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+#           ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
 
-          echo "## PR Preview" > preview.txt
+#           echo "## PR Preview" > preview.txt
 
-          for DOMAIN in ${ALIAS_DOMAINS[@]}; do
-            echo "Handling domain: $DOMAIN"
-            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
-              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
-            fi
-          done
+#           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+#             echo "Handling domain: $DOMAIN"
+#             if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
+#               echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
+#             fi
+#           done
 
-      - name: Comment URL in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          filePath: preview.txt
-          comment_tag: pr_preview
+#       - name: Comment URL in PR
+#         uses: thollander/actions-comment-pull-request@v2.4.3
+#         with:
+#           filePath: preview.txt
+#           comment_tag: pr_preview

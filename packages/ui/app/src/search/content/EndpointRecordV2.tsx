@@ -23,7 +23,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 >
                     <div
                         className={cn(
-                            "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
+                            "flex font-mono shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-sm uppercase",
                             {
                                 "bg-tag-default": !isHovered,
                                 "bg-white/20 dark:bg-black/20": isHovered,

@@ -43,7 +43,8 @@
 
 @layer base {
     html,
-    body {
+    body,
+    #docs-content {
         font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
     }
 
@@ -61,7 +62,7 @@
     h5,
     h6 {
         @apply scroll-mt-header-height-padded;
-
+        font-weight: 400 !important;
         font-family: var(--typography-heading-font-family);
 
         &:first-child {
@@ -82,7 +83,7 @@
     }
 
     .fern-main {
-        @apply relative w-full min-w-0 flex-1 mt-header-height;
+        @apply relative w-full min-w-0 flex-1 lg:mt-header-height mt-header-height-real;
     }
 }
 
@@ -143,37 +144,39 @@
         mask-image: linear-gradient(to top, transparent 0, black 40px);
     }
 
+    .mask-grad-right-6 {
+        mask-image: linear-gradient(to left, transparent 0, black 24px);
+    }
+
     .fern-search-bar {
-        @apply cursor-pointer;
-        @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;
-        @apply bg-tag-default;
-        @apply hover:bg-tag-default-hover transition-[background,shadow];
-        @apply ring-inset ring-default hover:ring-default ring-1;
+        @apply cursor-text text-left;
+        background-color: #f1f3f4;
+        border-radius: 4px;
+        width: 200px;
+        padding: 8px;
+        height: 36px;
+        font-size: 16px;
+        line-height: 20px;
 
         .search-placeholder {
-            @apply inline-flex flex-1 items-center space-x-2.5;
-
-            span {
-                @apply text-faded;
-            }
+            @apply flex items-center;
+            color: rgb(95, 99, 104);
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted ring-default shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
-            @apply dark:shadow-card-dark bg-card;
-        }
-
-        &:hover .keyboard-shortcut-hint {
-            @apply ring-default;
-        }
-
-        &:disabled {
-            @apply shadow-none bg-tag-default-soft cursor-default;
+            display: none;
         }
     }
 
     .fern-sidebar-heading {
-        @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
+        @apply font-semibold t-muted;
+    }
+
+    .fern-sidebar-heading,
+    .fern-sidebar-link-container {
+        @apply pl-6 pr-2 py-1 mr-2 rounded-r-[12px] flex items-center;
+        font-size: 13px;
+        line-height: 16px;
     }
 
     .fern-sidebar-group {
@@ -185,56 +188,37 @@
         }
     }
 
-    .fern-sidebar-item {
-        @apply scroll-my-32;
-    }
-
-    .fern-sidebar-link-container {
-        @apply items-stretch relative flex min-h-[36px];
-        @apply data-[state=active]:t-accent-aaa;
-        @apply data-[state=inactive]:hover:t-accent-aaa;
-
-        &:not(.top-level) {
-            @apply data-[state=inactive]:t-muted;
-        }
-    }
-
     .fern-sidebar-link-indent {
-        @apply relative flex-none w-4 lg:w-3 shrink-0 border-l;
-    }
-
-    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link-indent {
-        @apply border-border-concealed md:border-border-accent-muted;
-    }
-
-    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link-indent {
-        @apply border-border-concealed md:border-default lg:opacity-60;
+        @apply relative flex-none w-4 shrink-0;
     }
 
     .fern-sidebar-link {
-        @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
-        @apply max-lg:rounded-none lg:rounded-lg;
+        @apply text-left relative inline-flex flex-1 content-between items-stretch;
+        @apply max-lg:rounded-none lg:rounded-md;
     }
 
-    .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
-        @apply bg-tag-primary;
+    .fern-sidebar-link-container[data-state="active"] {
+        @apply bg-tag-primary text-accent-aa font-medium;
+    }
+    .fern-sidebar-link-container[data-state="active"]:hover {
+        @apply text-accent;
     }
 
-    .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
+    .fern-sidebar-link-container[data-state="inactive"] {
         @apply hover:bg-tag-default transition-colors;
     }
 
     .fern-sidebar-link-content {
-        @apply inline-flex flex-1 items-start py-2.5 sm:py-2;
+        @apply inline-flex flex-1 items-center;
     }
 
     .fern-sidebar-link-text {
-        @apply flex-1 text-base leading-6 lg:text-sm lg:leading-5;
+        @apply flex-1 overflow-x-clip;
     }
 
     .fern-sidebar-link-expand {
         @apply relative flex w-10 lg:w-6 justify-center items-center transition-colors rounded-none ease-out;
-        @apply lg:rounded-lg;
+        @apply lg:rounded-md -ml-6;
 
         &:last-child {
             @apply flex -mr-3 ml-1;
@@ -276,4 +260,57 @@
     .custom-backdrop [data-rmiz-modal-overlay="visible"] {
         @apply bg-text-default/20;
     }
+
+    .fern-tabs {
+        @apply flex h-full text-sm px-[6px] t-muted;
+
+        .fern-tab {
+            @apply h-full relative flex items-center;
+
+            a,
+            button {
+                @apply px-[18px] h-full inline-flex items-center;
+
+                &:before {
+                    @apply absolute inset-x-[22px] bottom-0 h-[3px] rounded-t-[3px];
+                }
+            }
+
+            a[data-state="active"],
+            button[data-state="active"] {
+                @apply t-default;
+            }
+
+            &.accented {
+                a[data-state="active"],
+                button[data-state="active"] {
+                    @apply t-accent;
+                }
+            }
+
+            a[data-state="active"]:before,
+            button[data-state="active"]:before {
+                content: "";
+                @apply bg-accent;
+            }
+
+            a:not([data-state="active"]):hover:before,
+            button:not([data-state="active"]):hover:before {
+                content: "";
+                @apply bg-grayscale-9;
+            }
+        }
+    }
+
+    // .fern-tabs.fern-snippet-examples {
+    //     @apply w-full border-b border-default -mb-6 h-10 text-sm px-0;
+
+    //     button {
+    //         @apply px-[12px];
+
+    //         &:before {
+    //             @apply h-[2px] rounded-t-[2px];
+    //         }
+    //     }
+    // }
 }

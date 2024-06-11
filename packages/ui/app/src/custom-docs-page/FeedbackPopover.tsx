@@ -168,7 +168,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                         transition={{ type: "spring", duration: 0.4, bounce: 0 }}
                         sideOffset={8}
                         className={clsx(
-                            "z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
+                            "z-50 rounded-md border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
                             {
                                 "p-2 space-y-2 min-w-80": isHelpful !== undefined,
                             },

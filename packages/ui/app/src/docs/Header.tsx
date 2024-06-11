@@ -1,17 +1,16 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import LanguageIcon from "@mui/icons-material/Language";
+import MenuIcon from "@mui/icons-material/Menu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import SearchIcon from "@mui/icons-material/Search";
+import { TriangleDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import { FernLinkButton } from "../components/FernLinkButton";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
-import { useSearchService } from "../services/useSearchService";
+import { FernLink } from "../components/FernLink";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { useOpenSearchDialog } from "../sidebar/atom";
+import { useOpenMobileSidebar, useOpenSearchDialog } from "../sidebar/atom";
 import { HeaderLogoSection } from "./HeaderLogoSection";
-import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
     export interface Props {
@@ -31,125 +30,106 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     {
         className,
         style,
-        navbarLinks,
-        isMobileSidebarOpen,
-        openMobileSidebar,
-        closeMobileSidebar,
-        showSearchBar = true,
+        // navbarLinks,
+        // isMobileSidebarOpen,
+        // openMobileSidebar,
+        // closeMobileSidebar,
+        // showSearchBar = true,
         logoHeight,
         logoHref,
     },
     ref,
 ) {
-    const { colors } = useDocsContext();
+    // const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
-    const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
-    const searchService = useSearchService();
-
-    const navbarLinksSection = (
-        <div className="hidden lg:block">
-            <FernButtonGroup>
-                {navbarLinks?.map((navbarLink, idx) =>
-                    navbarLink.type === "github" ? null : (
-                        <FernLinkButton
-                            key={idx}
-                            className="group cursor-pointer"
-                            href={navbarLink.url}
-                            icon={navbarLink.icon}
-                            intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
-                            rightIcon={
-                                navbarLink.rightIcon ??
-                                (navbarLink.type === "primary" ||
-                                (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                    <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
-                                ) : undefined)
-                            }
-                            variant={
-                                navbarLink.type === "primary"
-                                    ? "outlined"
-                                    : navbarLink.type === "secondary"
-                                      ? "minimal"
-                                      : navbarLink.type
-                            }
-                            rounded={navbarLink.rounded}
-                        >
-                            {navbarLink.text}
-                        </FernLinkButton>
-                    ),
-                )}
-
-                {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
-            </FernButtonGroup>
-        </div>
-    );
+    const openMobileSidebar = useOpenMobileSidebar();
+    // const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
+    // const searchService = useSearchService();
 
     return (
         <nav
             aria-label="primary"
-            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full", className)}
+            className={cn("flex justify-between items-center px-6 shrink-0 h-full", className)}
             ref={ref}
             style={style}
         >
-            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
-
-            {showSearchBar && (
-                <div
-                    className={cn("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
-                        invisible: isSearchBoxMounted,
-                    })}
+            <div className="flex items-center h-full">
+                <button
+                    className="size-10 rounded-full t-muted mr-2 -ml-3 hover:bg-tag-default transition-colors lg:hidden"
+                    onClick={openMobileSidebar}
                 >
-                    <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
-                </div>
-            )}
+                    <MenuIcon />
+                </button>
 
-            <div
-                className={cn("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
-                    "flex-1": showSearchBar,
-                })}
-            >
-                {navbarLinksSection}
+                <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
 
-                <div className="flex lg:hidden">
-                    {colors.dark && colors.light && <ThemeButton size="large" />}
+                <ul className="fern-tabs flex-1 ml-[0.5px] max-lg:hidden">
+                    <li className="fern-tab">
+                        <FernLink className="group/tab-button" href="/api" data-state="active">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Gemini API</span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink className="group/tab-button" href="https://ai.google.dev/gemma" data-state="inactive">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Gemma</span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink className="group/tab-button" href="https://ai.google.dev/edge" data-state="inactive">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Google AI Edge</span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink className="group/tab-button" href="https://ai.google.dev/tools" data-state="inactive">
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Tools</span>
+                                <span className="pl-3.5">
+                                    <TriangleDownIcon className="size-[16px] scale-x-125 text-black -mr-0.5" />
+                                </span>
+                            </div>
+                        </FernLink>
+                    </li>
+                    <li className="fern-tab max-xl:!hidden">
+                        <FernLink
+                            className="group/tab-button"
+                            href="https://discuss.ai.google.dev/"
+                            data-state="inactive"
+                        >
+                            <div className="flex min-w-0 items-center justify-start space-x-2">
+                                <span className="truncate font-medium font-headings">Community</span>
+                                <span>
+                                    <OpenInNewIcon className="size-[18px] -ml-1 -mt-0.5" />
+                                </span>
+                            </div>
+                        </FernLink>
+                    </li>
+                </ul>
+            </div>
 
-                    {searchService.isAvailable && (
-                        <FernButton
-                            onClickCapture={(e) => {
-                                e.stopPropagation();
-                                openSearchDialog();
-                            }}
-                            icon={<MagnifyingGlassIcon className="!size-5" />}
-                            intent="none"
-                            variant="minimal"
-                            rounded={true}
-                            size="large"
-                            className="hidden sm:inline"
-                        />
-                    )}
+            <div className="flex items-center">
+                <SidebarSearchBar onClick={openSearchDialog} className="max-lg:hidden" />
 
-                    <FernButton
-                        onClickCapture={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            if (isMobileSidebarOpen) {
-                                closeMobileSidebar();
-                            } else {
-                                openMobileSidebar();
-                            }
-                        }}
-                        icon={
-                            isMobileSidebarOpen ? (
-                                <Cross1Icon className="!size-5" />
-                            ) : (
-                                <HamburgerMenuIcon className="!size-5" />
-                            )
-                        }
-                        intent={isMobileSidebarOpen ? "primary" : "none"}
-                        variant={isMobileSidebarOpen ? "filled" : "minimal"}
-                        rounded={true}
-                        size="large"
-                    />
-                </div>
+                <button className="size-8 rounded-full t-muted ml-4 hover:bg-tag-default transition-colors lg:hidden">
+                    <SearchIcon />
+                </button>
+
+                <button className="h-9 t-muted border-default border rounded-[4px] px-2.5 inline-flex items-center gap-2 ml-4 hover:bg-tag-default transition-colors max-sm:hidden">
+                    <LanguageIcon />
+                    <span className="text-sm font-medium ">English</span>
+                    <TriangleDownIcon className="size-[16px] scale-x-125 -ml-1 mr-0.5" />
+                </button>
+
+                <button className="size-8 rounded-full border border-default t-muted ml-4 hover:bg-tag-default  transition-colors">
+                    <MoreVertIcon />
+                </button>
+
+                <button className="size-8 rounded-full bg-accent opacity-90 ml-4"></button>
             </div>
         </nav>
     );

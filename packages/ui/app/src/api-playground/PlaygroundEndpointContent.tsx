@@ -1,12 +1,4 @@
-import {
-    FernAudioPlayer,
-    FernButton,
-    FernButtonGroup,
-    FernCard,
-    FernTabs,
-    FernTooltip,
-    FernTooltipProvider,
-} from "@fern-ui/components";
+import { FernAudioPlayer, FernButton, FernCard, FernTabs, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import { DownloadIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
@@ -57,6 +49,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const { domain } = useDocsContext();
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
+    useEffect(() => {
+        setRequestType("curl");
+    }, [setRequestType]);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
@@ -110,11 +105,11 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     );
 
     const requestCard = (
-        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
-            <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
-                <span className="t-muted text-xs uppercase">Request</span>
+        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-lg shadow-sm">
+            <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2 bg-white">
+                <span className="t-muted text-sm">Request</span>
 
-                <FernButtonGroup>
+                {/* <FernButtonGroup>
                     <FernButton
                         onClick={() => setRequestType("curl")}
                         size="small"
@@ -142,7 +137,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     >
                         Python
                     </FernButton>
-                </FernButtonGroup>
+                </FernButtonGroup> */}
 
                 <CopyToClipboardButton
                     content={() =>
@@ -177,9 +172,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     );
 
     const responseCard = (
-        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
-            <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
-                <span className="t-muted text-xs uppercase">Response</span>
+        <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-lg shadow-sm">
+            <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2 bg-white">
+                <span className="t-muted text-sm">Response</span>
 
                 {response.type === "loaded" && (
                     <div className="flex items-center gap-2 text-xs">

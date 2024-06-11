@@ -141,10 +141,10 @@ export function getColorVariables(
 } {
     const backgroundColorLight = enforceBackgroundTheme(getColor(colorsV3, "background", "light"), "light").toRgb();
     const backgroundColorDark = enforceBackgroundTheme(getColor(colorsV3, "background", "dark"), "dark").toRgb();
-    const shouldUseAccentColorLight =
-        colorsV3.light?.background.type === "gradient" || tinycolor(backgroundColorLight).toHexString() === "#ffffff";
-    const shouldUseAccentColorDark =
-        colorsV3.dark?.background.type === "gradient" || tinycolor(backgroundColorDark).toHexString() === "#000000";
+    // const shouldUseAccentColorLight =
+    //     colorsV3.light?.background.type === "gradient" || tinycolor(backgroundColorLight).toHexString() === "#ffffff";
+    // const shouldUseAccentColorDark =
+    //     colorsV3.dark?.background.type === "gradient" || tinycolor(backgroundColorDark).toHexString() === "#000000";
 
     const accentPrimaryLightUi = increaseForegroundContrast(
         getColor(colorsV3, "accentPrimary", "light"),
@@ -157,12 +157,8 @@ export function getColorVariables(
         "ui",
     ).toRgb();
 
-    const radixGrayscaleLight = getClosestGrayScale(
-        tinycolor(shouldUseAccentColorLight ? accentPrimaryLightUi : backgroundColorLight).toHexString(),
-    );
-    const radixGrayscaleDark = getClosestGrayScale(
-        tinycolor(shouldUseAccentColorDark ? accentPrimaryDarkUi : backgroundColorDark).toHexString(),
-    );
+    const radixGrayscaleLight = getClosestGrayScale(tinycolor(accentPrimaryLightUi).toHexString());
+    const radixGrayscaleDark = getClosestGrayScale(tinycolor(accentPrimaryDarkUi).toHexString());
 
     const radixColorsLight = generateRadixColors({
         appearance: "light",

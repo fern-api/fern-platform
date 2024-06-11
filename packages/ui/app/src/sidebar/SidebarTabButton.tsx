@@ -18,7 +18,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             <FernLink
                 className={cn(
                     "min-h-[32px] lg:min-h-[36px]",
-                    "text-base lg:text-sm flex flex-1 py-2 lg:px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:t-accent",
+                    "text-base lg:text-sm flex flex-1 py-2 lg:px-3 group/tab-button group-hover/tab-button:transition rounded-md justify-start items-center select-none min-w-0 hover:t-accent",
                     "data-[state=active]:t-accent data-[state=inactive]:t-muted",
                 )}
                 href={getSidebarTabHref(tab)}

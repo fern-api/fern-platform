@@ -39,7 +39,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     const value = `${selectedErrorIndex}:${selectedExampleIndex}`;
 
     if (errors.length === 0) {
-        return <span className="t-muted text-sm">{children}</span>;
+        return <span className="t-muted text-base">{children}</span>;
     }
 
     const renderValue = () => {
@@ -138,7 +138,7 @@ export const FernSelectItem = forwardRef<
     return (
         <Select.Item
             className={clsx(
-                "text-text-default data-[disabled]:text-text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
+                "text-text-default data-[disabled]:text-text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-base leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
                 {
                     "data-[highlighted]:bg-tag-default": intent === "none" || intent === "primary",
                     "data-[highlighted]:bg-tag-warning": intent === "warning",

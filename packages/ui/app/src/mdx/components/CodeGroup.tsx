@@ -21,7 +21,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     const containerClass = clsx(
-        "after:ring-default bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
+        "after:ring-default bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-md shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
         {
             "dark bg-card-solid": isDarkCodeEnabled,
         },
@@ -30,13 +30,11 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     if (items.length === 1 && items[0] != null) {
         return (
             <div className={containerClass}>
-                <div className="rounded-t-[inherit] bg-tag-default-soft">
-                    <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
-                        <div className="flex min-h-10 overflow-x-auto">
+                <div className="rounded-t-[inherit] bg-white">
+                    <div className="mx-px flex min-h-12 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
+                        <div className="flex min-h-12f overflow-x-auto">
                             <div className="flex items-center px-3 py-1.5">
-                                <span className="t-muted rounded text-sm font-semibold">
-                                    {items[0].title ?? "Untitled"}
-                                </span>
+                                <span className="t-muted rounded font-normal">{items[0].title ?? "Untitled"}</span>
                             </div>
                         </div>
                         <CopyToClipboardButton className="ml-2 mr-1" content={items[0].code} />

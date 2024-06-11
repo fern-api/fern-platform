@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -140,7 +140,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? curlExample!;
     });
     useEffect(() => {
-        setSelectedClient((prev) => clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev);
+        setSelectedClient((prev) => {
+            if (prev.language !== selectedLanguage) {
+                return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev;
+            }
+            return prev;
+        });
     }, [clients, selectedLanguage]);
 
     const setSelectedExampleClientAndScrollToTop = useCallback(
@@ -228,14 +233,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
+            className={clsx("px-4 scroll-mt-header-height-padded md:px-6 lg:px-10", {
+                "border-default border-b mb-px pb-12": !hideBottomSeparator,
+            })}
             onClick={() => setSelectedError(undefined)}
             ref={viewportRef}
         >
             <div
-                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-12": !hideBottomSeparator,
-                })}
+                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto")}
                 ref={ref}
                 data-route={`/${endpoint.slug}`}
             >

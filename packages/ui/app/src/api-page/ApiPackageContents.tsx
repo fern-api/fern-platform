@@ -2,6 +2,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import {
     ResolvedPackageItem,
     ResolvedTypeDefinition,
@@ -35,6 +36,7 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     anchorIdParts,
     breadcrumbs = EMPTY_ARRAY,
 }) => {
+    const { isApiScrollingDisabled } = useFeatureFlags();
     const { items } = apiDefinition;
     const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
     const currentBreadcrumbs = useMemo(
@@ -53,7 +55,9 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 showErrors={showErrors}
                                 endpoint={endpoint}
                                 breadcrumbs={currentBreadcrumbs}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
+                                isLastInApi={
+                                    isApiScrollingDisabled || (isLastInParentPackage && idx === items.length - 1)
+                                }
                                 types={types}
                             />
                         ),
@@ -62,7 +66,9 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 key={webhook.id}
                                 webhook={webhook}
                                 breadcrumbs={breadcrumbs}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
+                                isLastInApi={
+                                    isApiScrollingDisabled || (isLastInParentPackage && idx === items.length - 1)
+                                }
                                 types={types}
                             />
                         ),
@@ -70,7 +76,9 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                             <WebSocket
                                 api={api}
                                 websocket={websocket}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
+                                isLastInApi={
+                                    isApiScrollingDisabled || (isLastInParentPackage && idx === items.length - 1)
+                                }
                                 types={types}
                             />
                         ),
@@ -80,7 +88,9 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 types={types}
                                 showErrors={showErrors}
                                 apiDefinition={subpackage}
-                                isLastInParentPackage={isLastInParentPackage && idx === items.length - 1}
+                                isLastInParentPackage={
+                                    isApiScrollingDisabled || (isLastInParentPackage && idx === items.length - 1)
+                                }
                                 anchorIdParts={anchorIdParts}
                                 breadcrumbs={currentBreadcrumbs}
                             />
@@ -88,7 +98,9 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                         page: (page) => (
                             <ApiSectionMarkdownPage
                                 page={page}
-                                hideBottomSeparator={isLastInParentPackage && idx === items.length - 1}
+                                hideBottomSeparator={
+                                    isApiScrollingDisabled || (isLastInParentPackage && idx === items.length - 1)
+                                }
                             />
                         ),
                     })}

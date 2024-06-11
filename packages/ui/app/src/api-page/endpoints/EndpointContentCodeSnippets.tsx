@@ -1,5 +1,5 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
+import { FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
@@ -21,9 +21,8 @@ import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
-import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
-import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 import { ErrorExampleSelect } from "./ErrorExampleSelect";
+import { LanguageTabs } from "./LanguageTabs";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
@@ -130,7 +129,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             {successTitle}
         </ErrorExampleSelect>
     ) : (
-        <span className="text-sm t-muted">{successTitle}</span>
+        <span className="text-base t-muted">{successTitle}</span>
     );
 
     return (
@@ -138,54 +137,38 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full max-h-fit"
             ref={ref}
         >
-            {/* TODO: Replace this with a proper segmented control component */}
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
-                <FernButtonGroup className="min-w-0 shrink">
-                    {selectedClientGroup?.examples.map((example) => (
-                        <FernButton
-                            key={example.key}
-                            rounded={true}
-                            onClick={() => {
-                                onClickClient(example);
-                            }}
-                            className="min-w-0 shrink truncate"
-                            mono
-                            size="small"
-                            variant={example === selectedClient ? "outlined" : "minimal"}
-                            intent={example === selectedClient ? "primary" : "none"}
-                        >
-                            {example.name}
-                        </FernButton>
+                <ul className="fern-tabs h-10 -mb-6">
+                    {selectedClientGroup.examples.map((example) => (
+                        <li key={example.key} className="fern-tab accent">
+                            <button
+                                className="group/tab-button px-[18px]"
+                                onClick={() => {
+                                    onClickClient(example);
+                                }}
+                                data-state={example === selectedClient ? "active" : "inactive"}
+                            >
+                                <div className="flex min-w-0 items-center justify-start space-x-2">
+                                    <span className="truncate font-medium font-headings">{example.name}</span>
+                                </div>
+                            </button>
+                        </li>
                     ))}
-                </FernButtonGroup>
+                </ul>
             )}
             <CodeSnippetExample
-                title={
-                    <EndpointUrlWithOverflow
-                        path={endpoint.path}
-                        method={endpoint.method}
-                        environment={endpoint.defaultEnvironment?.baseUrl}
-                    />
-                }
+                title={<LanguageTabs clients={clients} onClickClient={onClickClient} selectedClient={selectedClient} />}
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
                 actions={
-                    <>
-                        {node != null && (
-                            <PlaygroundButton
-                                state={node}
-                                // example={selectedClient.exampleCall}
-                            />
-                        )}
-                        {clients.length > 1 ? (
-                            <CodeExampleClientDropdown
-                                clients={clients}
-                                onClickClient={onClickClient}
-                                selectedClient={selectedClient}
-                            />
-                        ) : undefined}
-                    </>
+                    node != null && (
+                        <PlaygroundButton
+                            className="mr-2"
+                            state={node}
+                            // example={selectedClient.exampleCall}
+                        />
+                    )
                 }
                 code={requestCodeSnippet}
                 language={selectedClient.language}
@@ -211,7 +194,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
                     json: (value) => (
                         <JsonCodeSnippetExample
-                            title={errorSelector}
+                            title={
+                                selectedClient.language !== "curl" ? (
+                                    <span className="t-muted px-1">Output</span>
+                                ) : (
+                                    errorSelector
+                                )
+                            }
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}

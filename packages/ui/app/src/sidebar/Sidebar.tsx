@@ -30,12 +30,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logo
     const searchService = useSearchService();
 
     return (
-        <nav
-            className={cn("h-full w-full flex flex-col", {
-                "lg:pl-1": layout?.disableHeader !== true,
-            })}
-            aria-label="secondary"
-        >
+        <nav className={cn("h-full w-full flex flex-col")} aria-label="secondary">
             <SidebarFixedItemsSection
                 showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
                 showSearchBar={showSearchBar}
@@ -45,7 +40,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logo
             <SearchSidebar searchService={searchService}>
                 <FernScrollArea
                     rootClassName="flex-1"
-                    className={cn("group/sidebar mask-grad-y-6 px-4 pb-12", {
+                    className={cn("group/sidebar mask-grad-y-6 px-0 pb-12", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}
                     scrollbars="vertical"

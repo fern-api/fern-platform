@@ -27,6 +27,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 mono: "var(--typography-code-font-family)",
+                headings: "var(--typography-heading-font-family)",
             },
             spacing: {
                 "page-width": "var(--spacing-page-width)",
@@ -60,6 +61,8 @@ module.exports = {
                 "card-light-elevated": "0 1px 2px rgba(17,20,24,.2), 0 3px 6px rgba(17,20,24,.06)",
                 "card-dark": "0 2px 4px rgba(221, 243, 255,.07)",
                 "card-dark-elevated": "0 2px 4px rgba(221, 243, 255,.05), 0 2px 24px rgba(221, 243, 255,.05)",
+                "google-header": "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+                google: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
             },
 
             colors: {
@@ -316,6 +319,10 @@ module.exports = {
                     from: { opacity: "0", transform: "translate(0, 48%)" },
                     to: { opacity: "1", transform: "translate(0, 0)" },
                 },
+                "backdrop-blur": {
+                    from: { backdropFilter: "blur(0)" },
+                    to: { backdropFilter: "blur(8px)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -333,6 +340,7 @@ module.exports = {
                 "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show-from-bottom": "content-show-from-bottom 500ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "backdrop-blur": "backdrop-blur 400ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

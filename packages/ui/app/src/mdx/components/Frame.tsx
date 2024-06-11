@@ -15,7 +15,7 @@ export const Frame: FC<PropsWithChildren<Frame.Props>> = ({ caption, background 
                 "bg-tag-default-soft": background === "subtle",
             })}
         >
-            <div className="relative flex justify-center overflow-hidden rounded-lg shadow-sm">{children}</div>
+            <div className="relative flex justify-center overflow-hidden rounded-md shadow-sm">{children}</div>
             {caption && (
                 <figcaption className="t-muted relative mt-3 flex justify-center px-8 pb-2 pt-0 text-sm">
                     {caption}

@@ -1,9 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 
 export const CSS_VARIABLES = {
-    BODY_FONT: "--typography-body-font-family",
-    HEADING_FONT: "--typography-heading-font-family",
-    CODE_FONT: "--typography-code-font-family",
+    BODY_FONT: "--typography-body-font-family" as const,
+    HEADING_FONT: "--typography-heading-font-family" as const,
+    CODE_FONT: "--typography-code-font-family" as const,
 };
 
 export function getFontExtension(url: string): string {
@@ -17,7 +17,7 @@ export function getFontExtension(url: string): string {
 const BODY_FONT_FALLBACK =
     "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif";
 
-const MONO_FONT_FALLBACK = "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace";
+// const MONO_FONT_FALLBACK = "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace";
 
 function generateFontFace(
     variant: DocsV1Read.CustomFontConfigVariant,
@@ -57,27 +57,27 @@ export function getFontVariables(
 ): TypographyResult {
     const fontFaces: string[] = [];
     const cssVariables: Record<string, string> = {
-        [CSS_VARIABLES.BODY_FONT]: BODY_FONT_FALLBACK,
+        // [CSS_VARIABLES.BODY_FONT]: BODY_FONT_FALLBACK,
         [CSS_VARIABLES.HEADING_FONT]: BODY_FONT_FALLBACK,
-        [CSS_VARIABLES.CODE_FONT]: MONO_FONT_FALLBACK,
+        // [CSS_VARIABLES.CODE_FONT]: MONO_FONT_FALLBACK,
     };
-    let additionalCss: string = "";
+    const additionalCss: string = "";
 
-    if (typography?.bodyFont != null && typography.bodyFont.variants != null) {
-        let setVariant = false;
-        for (const variant of typography.bodyFont.variants) {
-            const fontFace = generateFontFace(variant, typography.bodyFont, files);
-            if (fontFace != null) {
-                fontFaces.push(fontFace);
-                setVariant = true;
-            }
-        }
-        if (setVariant) {
-            cssVariables[CSS_VARIABLES.BODY_FONT] = `'${typography.bodyFont.name}', ${
-                typography.bodyFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
-            }`;
-        }
-    }
+    // if (typography?.bodyFont != null && typography.bodyFont.variants != null) {
+    //     let setVariant = false;
+    //     for (const variant of typography.bodyFont.variants) {
+    //         const fontFace = generateFontFace(variant, typography.bodyFont, files);
+    //         if (fontFace != null) {
+    //             fontFaces.push(fontFace);
+    //             setVariant = true;
+    //         }
+    //     }
+    //     if (setVariant) {
+    //         cssVariables[CSS_VARIABLES.BODY_FONT] = `'${typography.bodyFont.name}', ${
+    //             typography.bodyFont.fallback?.join(", ") ?? BODY_FONT_FALLBACK
+    //         }`;
+    //     }
+    // }
 
     if (typography?.headingsFont != null && typography.headingsFont.variants != null) {
         let setVariant = false;
@@ -94,26 +94,26 @@ export function getFontVariables(
             }`;
         }
 
-        if (typography.headingsFont.fontVariationSettings != null) {
-            additionalCss += `h1, h2, h3 {\n    font-variation-settings: ${typography.headingsFont.fontVariationSettings};\n}\n`;
-        }
+        // if (typography.headingsFont.fontVariationSettings != null) {
+        //     additionalCss += `h1, h2, h3 {\n    font-variation-settings: ${typography.headingsFont.fontVariationSettings};\n}\n`;
+        // }
     }
 
-    if (typography?.codeFont != null && typography.codeFont.variants != null) {
-        let setVariant = false;
-        for (const variant of typography.codeFont.variants) {
-            const fontFace = generateFontFace(variant, typography.codeFont, files);
-            if (fontFace != null) {
-                fontFaces.push(fontFace);
-                setVariant = true;
-            }
-        }
-        if (setVariant) {
-            cssVariables[CSS_VARIABLES.CODE_FONT] = `'${typography.codeFont.name}', ${
-                typography.codeFont.fallback?.join(", ") ?? MONO_FONT_FALLBACK
-            }`;
-        }
-    }
+    // if (typography?.codeFont != null && typography.codeFont.variants != null) {
+    //     let setVariant = false;
+    //     for (const variant of typography.codeFont.variants) {
+    //         const fontFace = generateFontFace(variant, typography.codeFont, files);
+    //         if (fontFace != null) {
+    //             fontFaces.push(fontFace);
+    //             setVariant = true;
+    //         }
+    //     }
+    //     if (setVariant) {
+    //         cssVariables[CSS_VARIABLES.CODE_FONT] = `'${typography.codeFont.name}', ${
+    //             typography.codeFont.fallback?.join(", ") ?? MONO_FONT_FALLBACK
+    //         }`;
+    //     }
+    // }
 
     return {
         fontFaces,

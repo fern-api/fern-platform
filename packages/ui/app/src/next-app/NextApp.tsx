@@ -1,7 +1,9 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import clsx from "clsx";
 import { Provider as JotaiProvider, createStore } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
+import { Roboto, Roboto_Mono } from "next/font/google";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
@@ -17,6 +19,20 @@ import "./globals.scss";
 
 const store = createStore();
 
+const roboto = Roboto({
+    weight: ["400", "500", "700"],
+    subsets: ["latin"],
+    preload: true,
+    variable: "--typography-body-font-family",
+});
+
+const robotoMono = Roboto_Mono({
+    weight: ["400", "500", "700"],
+    subsets: ["latin"],
+    preload: true,
+    variable: "--typography-code-font-family",
+});
+
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
@@ -30,25 +46,39 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
         host: pageProps?.baseUrl?.domain,
     });
 
+    useEffect(() => {
+        if (typeof document !== "undefined") {
+            document.body.classList.add(roboto.variable, robotoMono.variable);
+        }
+    }, []);
+
     return (
-        <FernTooltipProvider>
-            <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                <ThemeProvider colors={pageProps?.colors}>
-                    <IsReadyProvider>
-                        <RouteListenerContextProvider>
-                            <DatadogInit />
-                            <JotaiProvider store={store}>
-                                <LayoutBreakpointProvider>
-                                    <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                                    <Component {...pageProps} />
-                                </LayoutBreakpointProvider>
-                            </JotaiProvider>
-                        </RouteListenerContextProvider>
-                    </IsReadyProvider>
-                    <Toaster />
-                </ThemeProvider>
-            </FernErrorBoundary>
-        </FernTooltipProvider>
+        <div
+            id="docs-content"
+            className={clsx("relative flex min-h-screen flex-1 flex-col z-0", roboto.variable, robotoMono.variable)}
+        >
+            <FernTooltipProvider>
+                <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                    <ThemeProvider colors={pageProps?.colors}>
+                        <IsReadyProvider>
+                            <RouteListenerContextProvider>
+                                <DatadogInit />
+                                <JotaiProvider store={store}>
+                                    <LayoutBreakpointProvider>
+                                        <NextNProgress
+                                            options={{ showSpinner: false, speed: 400 }}
+                                            showOnShallow={false}
+                                        />
+                                        <Component {...pageProps} />
+                                    </LayoutBreakpointProvider>
+                                </JotaiProvider>
+                            </RouteListenerContextProvider>
+                        </IsReadyProvider>
+                        <Toaster />
+                    </ThemeProvider>
+                </FernErrorBoundary>
+            </FernTooltipProvider>
+        </div>
     );
 }
 

@@ -29,7 +29,7 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
                     "t-default bg-tag-default hover:bg-tag-default-hover cursor-default font-mono text-xs flex items-center",
                     {
                         ["py-1 px-1.5 rounded-md h-5"]: small,
-                        ["py-1 px-2 rounded-lg h-6"]: !small,
+                        ["py-1 px-2 rounded-md h-6"]: !small,
                     },
                 )}
                 style={{
