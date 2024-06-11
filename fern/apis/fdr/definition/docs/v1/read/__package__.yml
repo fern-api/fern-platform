@@ -5,6 +5,7 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   commons: ../commons/commons.yml
+  navigation: ../../../navigation/__package__.yml
 
 service:
   base-path: /registry/docs
@@ -305,6 +306,7 @@ types:
     union:
       page: PageMetadata
       api: ApiSection
+      apiV2: ApiSectionV2
       section: DocsSection
       link: LinkMetadata
       changelog: ChangelogSection
@@ -342,6 +344,10 @@ types:
       navigation: optional<ApiNavigationConfigRoot>
       longScrolling: optional<boolean>
       flattened: optional<boolean>
+
+  ApiSectionV2:
+    properties:
+      node: navigation.ApiReferenceNode
 
   ApiNavigationConfigRoot:
     availability: deprecated

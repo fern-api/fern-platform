@@ -43,6 +43,7 @@ export * from "./PageMetadata";
 export * from "./NavigationNodeMetadata";
 export * from "./LinkMetadata";
 export * from "./ApiSection";
+export * from "./ApiSectionV2";
 export * from "./ApiNavigationConfigRoot";
 export * from "./ApiNavigationConfigItem";
 export * from "./ApiNavigationConfigSubpackage";

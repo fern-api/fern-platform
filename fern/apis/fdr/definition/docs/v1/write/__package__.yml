@@ -3,6 +3,7 @@
 imports:
   rootCommons: ../../../commons.yml
   commons: ../commons/commons.yml
+  navigation: ../../../navigation/__package__.yml
 
 service:
   base-path: /registry/docs
@@ -252,6 +253,7 @@ types:
     union:
       page: PageMetadata
       api: ApiSection
+      apiV2: ApiSectionV2
       section: DocsSection
       link: LinkMetadata
       changelog: ChangelogSectionV2
@@ -300,6 +302,10 @@ types:
       navigation: optional<ApiNavigationConfigRoot>
       longScrolling: optional<boolean>
       flattened: optional<boolean>
+
+  ApiSectionV2:
+    properties:
+      node: navigation.ApiReferenceNode
 
   ApiNavigationConfigRoot:
     availability: deprecated
