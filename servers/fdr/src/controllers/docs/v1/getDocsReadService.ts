@@ -1,4 +1,5 @@
 import {
+    Algolia,
     convertDbAPIDefinitionToRead,
     convertDbDocsConfigToRead,
     migrateDocsDbDefinition,
@@ -166,7 +167,7 @@ export async function loadIndexSegmentsAndGetSearchInfo({
     app: FdrApplication;
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     docsV2: LoadDocsDefinitionByUrlResponse | null;
-}): Promise<DocsV1Read.SearchInfo> {
+}): Promise<Algolia.SearchInfo> {
     const activeIndexSegments =
         docsV2?.indexSegmentIds != null
             ? await app.services.db.prisma.indexSegment.findMany({
@@ -194,13 +195,13 @@ function getSearchInfoFromDocs({
     activeIndexSegments: IndexSegment[];
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     app: FdrApplication;
-}): DocsV1Read.SearchInfo {
+}): Algolia.SearchInfo {
     if (indexSegmentIds == null) {
         return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
     }
-    return visitDbNavigationConfig<DocsV1Read.SearchInfo>(docsDbDefinition.config.navigation, {
+    return visitDbNavigationConfig<Algolia.SearchInfo>(docsDbDefinition.config.navigation, {
         versioned: () => {
-            const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, DocsV1Read.IndexSegment>>(
+            const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, Algolia.IndexSegment>>(
                 (acc, indexSegment) => {
                     const searchApiKey =
                         app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
