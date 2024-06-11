@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  algolia: ../../../algolia.yml
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
-  apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   commons: ../commons/commons.yml
   navigation: ../../../navigation/__package__.yml
 
@@ -56,58 +56,21 @@ types:
 
   Height: double
 
-  AlgoliaSearchIndex: string
-
   LoadDocsForUrlResponse:
     properties:
       baseUrl: string
       definition: DocsDefinition
 
-  VersionId: string
-
-  IndexSegmentId: string
-
-  IndexSegment:
-    properties:
-      id: IndexSegmentId
-      searchApiKey: string
-
-  LegacyMultiAlgoliaIndexInfo:
-    properties:
-      algoliaIndex: optional<string>
-
-  SingleAlgoliaIndexInfo:
-    union:
-      unversioned: UnversionedSingleAlgoliaIndexInfo
-      versioned: VersionedSingleAlgoliaIndexInfo
-
-  UnversionedSingleAlgoliaIndexInfo:
-    properties:
-      indexSegment: IndexSegment
-
-  VersionedSingleAlgoliaIndexInfo:
-    properties:
-      indexSegmentsByVersionId: map<VersionId, IndexSegment>
-
-  SearchInfo:
-    union:
-      legacyMultiAlgoliaIndex:
-        docs: The legacy search storage where each docs website got its own algolia index.
-        type: LegacyMultiAlgoliaIndexInfo
-      singleAlgoliaIndex:
-        docs: Every docs website is indexed in a global Algolia Index
-        type: SingleAlgoliaIndexInfo
-
   DocsDefinition:
     properties:
-      algoliaSearchIndex: optional<AlgoliaSearchIndex>
+      algoliaSearchIndex: optional<algolia.AlgoliaSearchIndex>
       pages: map<commons.PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       files: map<commons.FileId, commons.Url>
       filesV2: map<commons.FileId, File>
       id: optional<rootCommons.DocsConfigId>
       config: DocsConfig
-      search: SearchInfo
+      search: algolia.SearchInfo
 
   PageContent:
     properties:
@@ -252,7 +215,7 @@ types:
 
   VersionedNavigationConfigData:
     properties:
-      version: VersionId
+      version: rootCommons.VersionId
       urlSlug: string
       availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
@@ -430,75 +393,6 @@ types:
     properties:
       name: string
       url: string
-
-  AlgoliaEndpointRecord:
-    properties:
-      title: string
-      subtitle: string
-      path: string # path does not include version slug
-      version: optional<VersionId>
-      versionSlug: optional<string>
-      indexSegmentId: optional<string>
-
-  AlgoliaPageRecord:
-    properties:
-      title: string
-      subtitle: string
-      path: string # path does not include version slug
-      version: optional<VersionId>
-      versionSlug: optional<string>
-      indexSegmentId: optional<string>
-
-  AlgoliaRecordEndpointPath:
-    properties:
-      parts: list<apiReadV1Endpoint.EndpointPathPart>
-
-  AlgoliaRecordPathPart:
-    properties:
-      name: string
-      urlSlug: string
-      skipUrlSlug: optional<boolean>
-
-  AlgoliaRecordPath:
-    docs: The path corresponding to a search record represented as a list of parts. If the docs are versioned, the version prefix must be added when building the string representation of the path.
-    properties:
-      parts: list<AlgoliaRecordPathPart>
-
-  AlgoliaRecordEndpointSummary:
-    properties:
-      name: optional<string>
-      description: optional<string>
-      method: apiReadV1Endpoint.HttpMethod
-      path: AlgoliaRecordEndpointPath
-
-  AlgoliaRecordVersion:
-    properties:
-      id: VersionId
-      urlSlug: string
-
-  AlgoliaEndpointRecordV2:
-    properties:
-      endpoint: AlgoliaRecordEndpointSummary
-      path: AlgoliaRecordPath
-      version: optional<AlgoliaRecordVersion>
-      indexSegmentId: string
-
-  AlgoliaPageRecordV2:
-    properties:
-      title: string
-      content: string
-      path: AlgoliaRecordPath
-      version: optional<AlgoliaRecordVersion>
-      indexSegmentId: string
-
-  AlgoliaRecord:
-    audiences:
-      - read
-    union:
-      endpoint: AlgoliaEndpointRecord
-      page: AlgoliaPageRecord
-      endpoint-v2: AlgoliaEndpointRecordV2
-      page-v2: AlgoliaPageRecordV2
 
 errors:
   DomainNotRegisteredError:

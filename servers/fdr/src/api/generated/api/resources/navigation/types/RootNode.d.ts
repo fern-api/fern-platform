@@ -4,5 +4,6 @@
 import * as FernRegistry from "../../..";
 export interface RootNode extends FernRegistry.navigation.WithNodeMetadata, FernRegistry.navigation.WithRedirect {
     type: "root";
+    version: "v1";
     child: FernRegistry.navigation.RootChild;
 }

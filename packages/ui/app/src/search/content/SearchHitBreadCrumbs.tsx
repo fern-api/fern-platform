@@ -1,9 +1,9 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { Algolia } from "@fern-api/fdr-sdk";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { Fragment, ReactElement } from "react";
 
 interface SearchHitBreadCrumbsProps {
-    parts: DocsV1Read.AlgoliaRecordPathPart[];
+    parts: Algolia.AlgoliaRecordPathPart[];
 }
 
 export function SearchHitBreadCrumbs({ parts }: SearchHitBreadCrumbsProps): ReactElement {

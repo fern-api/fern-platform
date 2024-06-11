@@ -1,4 +1,11 @@
-import { DocsV1Read, visitDbNavigationTab, visitUnversionedDbNavigationConfig } from "@fern-api/fdr-sdk";
+import {
+    DocsV1Read,
+    FernNavigation,
+    convertDbAPIDefinitionToRead,
+    visitDbNavigationTab,
+    visitDiscriminatedUnion,
+    visitUnversionedDbNavigationConfig,
+} from "@fern-api/fdr-sdk";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
@@ -234,8 +241,142 @@ export class AlgoliaSearchRecordGenerator {
             return [];
         } else if (item.type === "changelog") {
             return this.generateAlgoliaSearchRecordsForChangelogSection(item, context);
+        } else if (item.type === "apiV2") {
+            return this.generateAlgoliaSearchRecordsForApiReferenceNode(
+                item.node as FernNavigation.ApiReferenceNode,
+                context,
+            );
         }
         assertNever(item);
+    }
+
+    private generateAlgoliaSearchRecordsForApiReferenceNode(
+        root: FernNavigation.ApiReferenceNode,
+        context: NavigationContext,
+    ): AlgoliaSearchRecord[] {
+        const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
+        if (api == null) {
+            LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
+        }
+        const holder =
+            api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
+        const records: AlgoliaSearchRecord[] = [];
+
+        const breadcrumbs = context.pathParts.map((part) => part.name);
+
+        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+            return [
+                ...breadcrumbs,
+                ...parents
+                    .filter(FernNavigation.hasMetadata)
+                    .filter((parent) => (parent.type === "apiReference" ? parent.hideTitle !== true : true))
+                    .map((parent) => parent.title),
+            ];
+        }
+
+        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.hasMetadata(node)) {
+                return;
+            }
+
+            if (node.hidden) {
+                return "skip";
+            }
+
+            if (FernNavigation.isApiLeaf(node)) {
+            } else if (FernNavigation.hasMarkdown(node)) {
+                const pageId = FernNavigation.utils.getPageId(node);
+            }
+
+            visitDiscriminatedUnion(node)._visit({
+                endpoint: (node) => {
+                    const endpoint = holder?.endpoints.get(node.endpointId);
+                    if (endpoint == null) {
+                        LOGGER.error("Failed to find endpoint for API reference node. id=", node.endpointId);
+                        return;
+                    }
+                    records.push(
+                        compact({
+                            type: "endpoint-v3",
+                            objectID: uuid(),
+                            title: node.title,
+                            content: endpoint.description,
+                            breadcrumbs: toBreadcrumbs(parents),
+                            slug: node.slug,
+                            version:
+                                context.indexSegment.type === "versioned"
+                                    ? {
+                                          id: context.indexSegment.version.id,
+                                          slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                                      }
+                                    : undefined,
+                            indexSegmentId: context.indexSegment.id,
+                            endpointMethod: endpoint.method,
+                            endpointPath: endpoint.path.parts,
+                        }),
+                    );
+                },
+                page: (page) => {
+                    const pageContent: string | undefined = this.config.docsDefinition.pages[page.pageId]?.markdown;
+                    records.push(
+                        compact({
+                            type: "page-v3",
+                            objectID: uuid(),
+                            title: node.title,
+                            content: pageContent,
+                            breadcrumbs: toBreadcrumbs(parents),
+                            slug: node.slug,
+                            version:
+                                context.indexSegment.type === "versioned"
+                                    ? {
+                                          id: context.indexSegment.version.id,
+                                          slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                                      }
+                                    : undefined,
+                            indexSegmentId: context.indexSegment.id,
+                        }),
+                    );
+                },
+                section(value: FernNavigation.SectionNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                changelog(value: FernNavigation.ChangelogNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                version(value: FernNavigation.VersionNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                apiReference(value: FernNavigation.ApiReferenceNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                root(value: FernNavigation.RootNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                tab(value: FernNavigation.TabNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                changelogYear(value: FernNavigation.ChangelogYearNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                changelogMonth(value: FernNavigation.ChangelogMonthNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                changelogEntry(value: FernNavigation.ChangelogEntryNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                webSocket(value: FernNavigation.WebSocketNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                webhook(value: FernNavigation.WebhookNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+                apiPackage(value: FernNavigation.ApiPackageNode): unknown {
+                    throw new Error("Function not implemented.");
+                },
+            });
+        });
+
+        return records;
     }
 
     private generateAlgoliaSearchRecordsForChangelogSection(

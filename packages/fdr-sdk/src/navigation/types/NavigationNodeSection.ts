@@ -15,6 +15,6 @@ export function isSection(node: NavigationNode): node is NavigationNodeSection {
         node.type === "section" ||
         node.type === "apiReference" ||
         node.type === "changelog" ||
-        node.type === "apiSection"
+        node.type === "apiPackage"
     );
 }
