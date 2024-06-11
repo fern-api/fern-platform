@@ -25,5 +25,9 @@
     }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "../../commons/react/react-commons" }]
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "../../commons/react/react-commons" },
+    { "path": "../components" }
+  ]
 }

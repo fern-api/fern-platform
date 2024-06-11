@@ -1,0 +1,73 @@
+name: Fern Dashboard - Vercel Preview Deployment
+env:
+  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+  AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+  VENUS_ORIGIN: ${{ secrets.VENUS_ORIGIN }}
+  VENUS_AUDIENCE: ${{ secrets.VENUS_AUDIENCE }}
+on:
+  pull_request:
+    paths:
+      - "packages/ui/fern-dashboard/**"
+      - "packages/ui/components/**"
+
+# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: Comment in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            ## PR Preview
+            Building...
+          comment_tag: dashboard_pr_preview
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Build Vercel Environment Information & Project Artifacts
+        working-directory: packages/ui/fern-dashboard
+        run: |
+          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+          VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Comment in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            ## PR Preview
+            Deploying...
+          comment_tag: dashboard_pr_preview
+
+      - name: Deploy Project Artifacts to Vercel
+        working-directory: packages/ui/fern-dashboard
+        run: |
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
+
+          echo "## PR Preview" > preview.txt
+          echo "Deployment URL: $DEPLOYMENT_URL" > preview.txt
+
+      - name: Comment URL in PR
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          filePath: preview.txt
+          comment_tag: dashboard_pr_preview

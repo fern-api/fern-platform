@@ -104,7 +104,7 @@ const DummyActivityLog: ActivityLogData = {
     ],
 };
 
-export const ActivityLog: React.FC<ActivityLogProps> = (props) => {
+export const ActivityLog: React.FC<ActivityLogProps> = () => {
     // TODO: get this activity log from Github + our backend, given we need to understand the impacted SDKs
     const transformedActivity: Record<string, ActivityLogDataEntry[]> = DummyActivityLog.entries.reduce(
         (group, activity) => {
