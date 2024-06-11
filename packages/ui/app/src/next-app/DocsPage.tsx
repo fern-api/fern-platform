@@ -1,4 +1,4 @@
-import { DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import type { DefaultSeoProps } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
@@ -37,7 +37,7 @@ export declare namespace DocsPage {
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
 
-        search: DocsV1Read.SearchInfo;
+        search: Algolia.SearchInfo;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
 

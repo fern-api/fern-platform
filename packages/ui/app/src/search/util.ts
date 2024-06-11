@@ -14,13 +14,15 @@ export function getFullPathForSearchRecord(record: SearchRecord, basePath: strin
         } else {
             parts.push(record.versionSlug, ...leadingPath);
         }
-    } else {
+    } else if (record.type === "endpoint-v2" || record.type === "page-v2") {
         if (record.version == null) {
             parts.push(...leadingPath);
         } else {
             // return `${record.version.urlSlug}/${leadingPath}`;
             parts.push(record.version.urlSlug, ...leadingPath);
         }
+    } else {
+        parts.push(...record.slug.split("/"));
     }
     return urljoin(parts);
 }
@@ -33,5 +35,7 @@ function getLeadingPathForSearchRecord(record: SearchRecord): string[] {
         case "page-v2":
         case "endpoint-v2":
             return record.path.parts.filter((p) => p.skipUrlSlug !== true).map((p) => p.urlSlug);
+        default:
+            return [];
     }
 }

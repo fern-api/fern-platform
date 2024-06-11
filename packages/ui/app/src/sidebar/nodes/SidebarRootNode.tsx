@@ -38,7 +38,7 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
 
                         [...apiRef.children, ...(apiRef.changelog != null ? [apiRef.changelog] : [])].forEach(
                             (child) => {
-                                if (child.type === "apiSection") {
+                                if (child.type === "apiPackage") {
                                     groups.push(child);
                                 } else {
                                     const lastGroup = last(groups);
@@ -54,7 +54,7 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
                         return (
                             <Fragment key={child.id}>
                                 {groups.map((child, idx) =>
-                                    child.type === "apiSection" ? (
+                                    child.type === "apiPackage" ? (
                                         <li key={idx} className="mt-6">
                                             <SidebarRootApiPackageNode node={child} />
                                         </li>

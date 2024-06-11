@@ -1,4 +1,4 @@
-import { DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { Algolia, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
@@ -41,7 +41,7 @@ export interface DocsContextValue extends DocsPage.Navigation {
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
     css: DocsV1Read.CssConfig | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-    searchInfo: DocsV1Read.SearchInfo | undefined;
+    searchInfo: Algolia.SearchInfo | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     apis: FdrAPI.ApiDefinitionId[];
     nodes: NodeCollector;
