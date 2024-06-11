@@ -3,14 +3,14 @@ import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
-export declare namespace PageRecordV2 {
+export declare namespace PageRecordV3 {
     export interface Props {
         hit: Algolia.AlgoliaPageRecordV3;
         isHovered: boolean;
     }
 }
 
-export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) => {
+export const PageRecordV3: React.FC<PageRecordV3.Props> = ({ hit, isHovered }) => {
     return (
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">

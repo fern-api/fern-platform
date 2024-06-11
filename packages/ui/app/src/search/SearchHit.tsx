@@ -6,8 +6,10 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useCloseMobileSidebar } from "../sidebar/atom";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
+import { EndpointRecordV3 } from "./content/EndpointRecordV3";
 import { PageRecord } from "./content/PageRecord";
 import { PageRecordV2 } from "./content/PageRecordV2";
+import { PageRecordV3 } from "./content/PageRecordV3";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
 

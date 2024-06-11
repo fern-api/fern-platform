@@ -317,6 +317,7 @@ export class AlgoliaSearchRecordGenerator {
                                 indexSegmentId: context.indexSegment.id,
                                 method: endpoint.method,
                                 endpointPath: endpoint.path.parts,
+                                isResponseStream: node.isResponseStream,
                             }),
                         );
                     },

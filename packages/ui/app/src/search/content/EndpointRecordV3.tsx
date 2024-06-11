@@ -2,16 +2,17 @@ import { Algolia } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
-import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
+import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
-export declare namespace EndpointRecordV2 {
+export declare namespace EndpointRecordV3 {
     export interface Props {
         hit: Algolia.AlgoliaRecord.EndpointV3 | Algolia.AlgoliaRecord.WebsocketV3 | Algolia.AlgoliaRecord.WebhookV3;
         isHovered: boolean;
     }
 }
 
-export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHovered }) => {
+export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHovered }) => {
     return (
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
@@ -21,23 +22,18 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                         "t-accent-contrast": isHovered,
                     })}
                 >
-                    <div
-                        className={cn(
-                            "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
-                            {
-                                "bg-tag-default": !isHovered,
-                                "bg-white/20 dark:bg-black/20": isHovered,
-                            },
-                            {
-                                "t-muted": !isHovered,
-                                "t-accent-contrast": isHovered,
-                            },
-                        )}
-                    >
-                        {hit.endpoint.method}
-                    </div>
+                    <HttpMethodTag
+                        method={
+                            hit.type === "websocket-v3"
+                                ? "WSS"
+                                : hit.type === "endpoint-v3" && hit.isResponseStream
+                                  ? "STREAM"
+                                  : hit.method
+                        }
+                        active={isHovered}
+                    />
                     <div className="space-x-0.5 font-mono">
-                        {hit.endpoint.path.parts
+                        {hit.endpointPath
                             .filter((p) => p.type !== "literal" || p.value !== "")
                             .map((p, idx) =>
                                 visitDiscriminatedUnion(p, "type")._visit({
@@ -81,7 +77,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                         "t-muted": !isHovered,
                     })}
                 >
-                    <SearchHitBreadCrumbs parts={hit.path.parts} />
+                    <SearchHitBreadCrumbsV2 breadcrumbs={hit.breadcrumbs} />
                 </span>
 
                 <CornerDownLeft
