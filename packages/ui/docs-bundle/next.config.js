@@ -1,5 +1,5 @@
-const assetPrefix =
-    process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
+// const assetPrefix =
+//     process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -19,7 +19,7 @@ const nextConfig = {
      *
      * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
      */
-    assetPrefix,
+    // assetPrefix,
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
         // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
