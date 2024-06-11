@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import cn, { clsx } from "clsx";
+import { TriangleDownIcon } from "@radix-ui/react-icons";
+import cn from "clsx";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
@@ -20,7 +21,6 @@ import {
     useImperativeHandle,
     useRef,
 } from "react";
-import { ChevronDown } from "react-feather";
 import urljoin from "url-join";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
@@ -137,14 +137,9 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     };
 
     const expandButton = (toggleExpand != null || expanded) && (
-        <span
-            className={clsx("fern-sidebar-link-expand", {
-                "opacity-50 transition-opacity group-hover:opacity-80": !showIndicator,
-            })}
-            data-state={showIndicator ? "active" : "inactive"}
-        >
-            <ChevronDown
-                className={cn("size-5 lg:size-icon", {
+        <span className="fern-sidebar-link-expand" data-state={showIndicator ? "active" : "inactive"}>
+            <TriangleDownIcon
+                className={cn("size-4", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -171,6 +166,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                                     )}
                                 />
                             ))}
+                            {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
                                     <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:t-accent-aaa my-0.5">
@@ -187,7 +183,6 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                                 {createElement(as, { className: "fern-sidebar-link-text" }, title)}
                                 {rightElement}
                             </span>
-                            {expandButton}
                         </>,
                     ),
                 )}
