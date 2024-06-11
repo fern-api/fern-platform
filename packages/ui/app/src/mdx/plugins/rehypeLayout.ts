@@ -135,8 +135,8 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
 
         return h(
             "div",
-            { class: "relative flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0" },
-            h("div", { class: "z-10 w-full min-w-0 pt-8 lg:pr-8" }, article),
+            { class: "relative flex justify-between px-4 md:px-6 lg:px-10" },
+            h("div", { class: "z-10 w-full min-w-0 pt-8" }, article),
             layout !== "reference"
                 ? h(
                       "aside",
@@ -145,7 +145,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                           ? {
                                 type: "mdxJsxFlowElement",
                                 name: "ScrollArea",
-                                attributes: [toAttribute("className", "px-4 pb-12 pt-8 lg:pr-8")],
+                                attributes: [toAttribute("className", "px-4 pb-12 pt-8")],
                                 children: [makeToc(tree, props?.isTocDefaultEnabled)],
                             }
                           : undefined,

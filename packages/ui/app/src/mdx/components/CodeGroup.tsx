@@ -30,13 +30,11 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     if (items.length === 1 && items[0] != null) {
         return (
             <div className={containerClass}>
-                <div className="rounded-t-[inherit] bg-tag-default-soft">
-                    <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
-                        <div className="flex min-h-10 overflow-x-auto">
+                <div className="rounded-t-[inherit] bg-white">
+                    <div className="mx-px flex min-h-12 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
+                        <div className="flex min-h-12f overflow-x-auto">
                             <div className="flex items-center px-3 py-1.5">
-                                <span className="t-muted rounded text-sm font-semibold">
-                                    {items[0].title ?? "Untitled"}
-                                </span>
+                                <span className="t-muted rounded font-normal">{items[0].title ?? "Untitled"}</span>
                             </div>
                         </div>
                         <CopyToClipboardButton className="ml-2 mr-1" content={items[0].code} />
