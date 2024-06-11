@@ -17,7 +17,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <div
-                    className={cn("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
+                    className={cn("line-clamp-1 flex gap-1 items-center text-sm text-start", {
                         "t-muted": !isHovered,
                         "t-accent-contrast": isHovered,
                     })}
