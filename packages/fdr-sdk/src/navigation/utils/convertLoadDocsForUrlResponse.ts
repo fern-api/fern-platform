@@ -11,10 +11,12 @@ export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUr
     );
 }
 
+const LEXICOGRAPHIC_SORT_ENABLED_DOMAINS = ["aia.docs.buildwithfern.com", "mongodb"];
+
 function isLexicographicSortEnabled(domain: string): boolean {
     // HACKHACK: This is a temporary solution to enable lexicographic sorting for AIA docs.
     // Vercel's edge config UI is broken right now so we can't modify it there.
-    return domain.toLowerCase().includes("aia.docs.buildwithfern.com");
+    return LEXICOGRAPHIC_SORT_ENABLED_DOMAINS.some((d) => domain.toLowerCase().includes(d));
 }
 
 function hackReorderApis(

@@ -47,8 +47,8 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
     return (
         <>
             {node.overviewPageId == null ? (
-                <div className={clsx("fern-sidebar-heading px-4 lg:px-3 flex items-center", className)}>
-                    <h6 className="m-0 text-base leading-6 lg:text-sm lg:leading-5">{node.title}</h6>
+                <div className={clsx("fern-sidebar-heading pl-5 pr-6 py-2 flex items-center", className)}>
+                    <span className="m-0 text-base leading-6 lg:text-sm lg:leading-5">{node.title}</span>
                 </div>
             ) : (
                 <SidebarSlugLink
