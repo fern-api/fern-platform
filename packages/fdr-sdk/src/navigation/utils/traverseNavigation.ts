@@ -60,7 +60,7 @@ export function traverseNavigation(
             endpoint: noop,
             webSocket: noop,
             webhook: noop,
-            apiSection: (apiSection) => internalChildrenTraverser(apiSection.children, [...parents, apiSection]),
+            apiPackage: (apiPackage) => internalChildrenTraverser(apiPackage.children, [...parents, apiPackage]),
             endpointPair: (endpointPair) => {
                 const result = internalTraverser(endpointPair.nonStream, undefined, [...parents, endpointPair]);
                 if (result === STOP) {

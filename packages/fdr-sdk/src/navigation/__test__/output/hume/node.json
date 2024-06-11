@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.uv",
     "type": "tabbed",
@@ -304,7 +305,7 @@
               "children": [
                 {
                   "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tools",
@@ -404,7 +405,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompts",
@@ -504,7 +505,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-configs",
@@ -604,7 +605,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chats",
@@ -634,7 +635,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-groups",
@@ -664,7 +665,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat.subpackage_chat.chat",
@@ -695,7 +696,7 @@
               "children": [
                 {
                   "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.list-jobs",
@@ -765,7 +766,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.expression-measurement-api.subpackage_stream",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.expression-measurement-api.subpackage_stream.subpackage_stream.stream",
@@ -796,7 +797,7 @@
               "children": [
                 {
                   "id": "root.uv.reference.reference.custom-models-api.subpackage_files",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.list-files",
@@ -876,7 +877,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-datasets",
@@ -976,7 +977,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.custom-models-api.subpackage_models",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-models",
@@ -1046,7 +1047,7 @@
                 },
                 {
                   "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-training-job",

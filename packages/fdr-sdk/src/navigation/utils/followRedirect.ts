@@ -20,7 +20,7 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
         webhook: (node) => node.slug,
 
         // nodes with overview
-        apiSection: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
+        apiPackage: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
         section: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
         apiReference: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
 

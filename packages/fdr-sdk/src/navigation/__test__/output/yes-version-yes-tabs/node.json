@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.",
     "type": "versioned",

@@ -23,4 +23,4 @@ export type NavigationNode =
     | FernNavigation.EndpointPairNode
     | FernNavigation.WebSocketNode
     | FernNavigation.WebhookNode
-    | FernNavigation.ApiSectionNode;
+    | FernNavigation.ApiPackageNode;

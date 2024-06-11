@@ -162,6 +162,7 @@ types:
     union:
       page: docsReadV1.PageMetadata
       api: ApiSection
+      apiV2: docsReadV1.ApiSectionV2
       section: DocsSection
       link: docsReadV1.LinkMetadata
       changelog: docsReadV1.ChangelogSection

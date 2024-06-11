@@ -33,7 +33,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode): ApiGrou
         if (node.type === "changelog") {
             return "skip";
         }
-        if (node.type === "apiReference" || node.type === "apiSection") {
+        if (node.type === "apiReference" || node.type === "apiPackage") {
             // webhooks are not supported in the playground
             const items = node.children.filter(FernNavigation.isApiLeaf).filter((item) => item.type !== "webhook");
             if (items.length === 0) {

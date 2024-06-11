@@ -1,0 +1,161 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ./commons.yml
+  apiReadV1Endpoint: ./api/v1/read/endpoint.yml
+  navigation: ./navigation/__package__.yml
+
+types:
+  AlgoliaSearchIndex: string
+  Breadcrumbs: list<string>
+  IndexSegmentId: string
+
+  AlgoliaRecord:
+    audiences:
+      - read
+    union:
+      page-v3: AlgoliaPageRecordV3
+      endpoint-v3: AlgoliaEndpointRecordV3
+      websocket-v3: AlgoliaWebSocketRecordV3
+      webhook-v3: AlgoliaWebhookRecordV3
+
+      # deprecated
+      endpoint: AlgoliaEndpointRecord
+      page: AlgoliaPageRecord
+      endpoint-v2: AlgoliaEndpointRecordV2
+      page-v2: AlgoliaPageRecordV2
+
+  AlgoliaRecordVersionV3:
+    properties:
+      id: commons.VersionId
+      slug: navigation.Slug
+
+  AlgoliaPageRecordV3:
+    properties:
+      title: string
+      content: optional<string>
+      breadcrumbs: Breadcrumbs
+      slug: navigation.Slug
+      version: optional<AlgoliaRecordVersionV3>
+      indexSegmentId: IndexSegmentId
+
+  AlgoliaEndpointRecordV3:
+    extends: AlgoliaPageRecordV3
+    properties:
+      method: apiReadV1Endpoint.HttpMethod
+      endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+      isResponseStream: optional<boolean>
+
+  AlgoliaWebSocketRecordV3:
+    extends: AlgoliaPageRecordV3
+    properties:
+      endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+
+  AlgoliaWebhookRecordV3:
+    extends: AlgoliaPageRecordV3
+    properties:
+      method: apiReadV1Endpoint.HttpMethod
+      endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+
+  IndexSegment:
+    properties:
+      id: IndexSegmentId
+      searchApiKey: string
+
+  SingleAlgoliaIndexInfo:
+    union:
+      unversioned: UnversionedSingleAlgoliaIndexInfo
+      versioned: VersionedSingleAlgoliaIndexInfo
+
+  UnversionedSingleAlgoliaIndexInfo:
+    properties:
+      indexSegment: IndexSegment
+
+  VersionedSingleAlgoliaIndexInfo:
+    properties:
+      indexSegmentsByVersionId: map<commons.VersionId, IndexSegment>
+
+  SearchInfo:
+    union:
+      legacyMultiAlgoliaIndex:
+        docs: The legacy search storage where each docs website got its own algolia index.
+        type: LegacyMultiAlgoliaIndexInfo
+      singleAlgoliaIndex:
+        docs: Every docs website is indexed in a global Algolia Index
+        type: SingleAlgoliaIndexInfo
+
+  # Deprecated
+
+  LegacyMultiAlgoliaIndexInfo:
+    availability: deprecated
+    properties:
+      algoliaIndex: optional<string>
+
+  AlgoliaEndpointRecord:
+    availability: deprecated
+    properties:
+      title: string
+      subtitle: string
+      path: string # path does not include version slug
+      version: optional<commons.VersionId>
+      versionSlug: optional<string>
+      indexSegmentId: optional<string>
+
+  AlgoliaPageRecord:
+    availability: deprecated
+    properties:
+      title: string
+      subtitle: string
+      path: string # path does not include version slug
+      version: optional<commons.VersionId>
+      versionSlug: optional<string>
+      indexSegmentId: optional<string>
+
+  AlgoliaRecordEndpointPath:
+    availability: deprecated
+    properties:
+      parts: list<apiReadV1Endpoint.EndpointPathPart>
+
+  AlgoliaRecordPathPart:
+    availability: deprecated
+    properties:
+      name: string
+      urlSlug: string
+      skipUrlSlug: optional<boolean>
+
+  AlgoliaRecordPath:
+    availability: deprecated
+    docs: The path corresponding to a search record represented as a list of parts. If the docs are versioned, the version prefix must be added when building the string representation of the path.
+    properties:
+      parts: list<AlgoliaRecordPathPart>
+
+  AlgoliaRecordEndpointSummary:
+    availability: deprecated
+    properties:
+      name: optional<string>
+      description: optional<string>
+      method: apiReadV1Endpoint.HttpMethod
+      path: AlgoliaRecordEndpointPath
+
+  AlgoliaRecordVersion:
+    availability: deprecated
+    properties:
+      id: commons.VersionId
+      urlSlug: string
+
+  AlgoliaEndpointRecordV2:
+    availability: deprecated
+    properties:
+      endpoint: AlgoliaRecordEndpointSummary
+      path: AlgoliaRecordPath
+      version: optional<AlgoliaRecordVersion>
+      indexSegmentId: IndexSegmentId
+
+  AlgoliaPageRecordV2:
+    availability: deprecated
+    properties:
+      title: string
+      content: string
+      path: AlgoliaRecordPath
+      version: optional<AlgoliaRecordVersion>
+      indexSegmentId: IndexSegmentId
