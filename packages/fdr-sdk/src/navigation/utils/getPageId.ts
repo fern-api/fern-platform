@@ -11,7 +11,7 @@ export function getPageId(node: NavigationNodePage): FernNavigation.PageId | und
         section: RETURN_OVERVIEW_PAGEID,
         apiReference: RETURN_OVERVIEW_PAGEID,
         changelog: RETURN_OVERVIEW_PAGEID,
-        apiSection: RETURN_OVERVIEW_PAGEID,
+        apiPackage: RETURN_OVERVIEW_PAGEID,
         changelogEntry: RETURN_PAGEID,
         page: RETURN_PAGEID,
         endpoint: RETURN_UNDEFINED,

@@ -4,8 +4,8 @@
 
 import * as FernRegistry from "../../../index";
 
-export type ApiSectionChild =
-    | FernRegistry.navigation.ApiSectionNode
+export type ApiPackageChild =
+    | FernRegistry.navigation.ApiPackageNode
     | FernRegistry.navigation.EndpointNode
     | FernRegistry.navigation.EndpointPairNode
     | FernRegistry.navigation.WebSocketNode

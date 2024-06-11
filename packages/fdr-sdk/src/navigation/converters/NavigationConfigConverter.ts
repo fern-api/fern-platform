@@ -47,6 +47,7 @@ export class NavigationConfigConverter {
             return {
                 id,
                 type: "root",
+                version: "v1",
                 child,
                 slug,
 

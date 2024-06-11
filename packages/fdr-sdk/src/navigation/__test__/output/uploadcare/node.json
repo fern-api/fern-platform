@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.uv",
     "type": "tabbed",
@@ -233,7 +234,7 @@
               "children": [
                 {
                   "id": "root.uv.api.api.upload-api.subpackage_upload",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.baseUpload",
@@ -313,7 +314,7 @@
                 },
                 {
                   "id": "root.uv.api.api.upload-api.subpackage_groups",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.createFilesGroup",
@@ -364,7 +365,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesList",
@@ -454,7 +455,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecute",
@@ -544,7 +545,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.key",
@@ -584,7 +585,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.groupsList",
@@ -624,7 +625,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project.subpackage_project.info",
@@ -644,7 +645,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.webhooksList",
@@ -694,7 +695,7 @@
                 },
                 {
                   "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertInfo",
@@ -765,7 +766,7 @@
               "children": [
                 {
                   "id": "root.uv.api.api.url-api.subpackage_fileInformation",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJson",
@@ -795,7 +796,7 @@
                 },
                 {
                   "id": "root.uv.api.api.url-api.subpackage_fileNames",
-                  "type": "apiSection",
+                  "type": "apiPackage",
                   "children": [
                     {
                       "id": "root.uv.api.api.url-api.subpackage_fileNames.subpackage_fileNames.fileWithName",

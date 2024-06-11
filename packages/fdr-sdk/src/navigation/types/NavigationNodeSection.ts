@@ -8,7 +8,7 @@ export type NavigationNodeSection =
     | FernNavigation.SectionNode
     | FernNavigation.ApiReferenceNode
     | FernNavigation.ChangelogNode
-    | FernNavigation.ApiSectionNode;
+    | FernNavigation.ApiPackageNode;
 
 export function isSection(node: NavigationNode): node is NavigationNodeSection {
     return (

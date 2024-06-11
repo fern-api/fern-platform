@@ -76,7 +76,7 @@ export class ApiDefinitionResolver {
     }
 
     async resolveApiDefinitionPackage(
-        node: FernNavigation.ApiReferenceNode | FernNavigation.ApiSectionNode,
+        node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode,
         mdxOptions: FernSerializeMdxOptions | undefined,
     ): Promise<ResolvedWithApiDefinition> {
         const maybeItems = await Promise.all(
@@ -152,7 +152,7 @@ export class ApiDefinitionResolver {
     }
 
     async resolveSubpackage(
-        subpackage: FernNavigation.ApiSectionNode,
+        subpackage: FernNavigation.ApiPackageNode,
         mdxOptions: FernSerializeMdxOptions | undefined,
     ): Promise<ResolvedSubpackage | undefined> {
         const { items } = await this.resolveApiDefinitionPackage(subpackage, mdxOptions);

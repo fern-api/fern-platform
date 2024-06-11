@@ -7,6 +7,6 @@ export interface ApiReferenceNode extends FernRegistry.navigation.WithNodeMetada
     disableLongScrolling?: boolean;
     showErrors?: boolean;
     hideTitle?: boolean;
-    children: FernRegistry.navigation.ApiSectionChild[];
+    children: FernRegistry.navigation.ApiPackageChild[];
     changelog?: FernRegistry.navigation.ChangelogNode;
 }

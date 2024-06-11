@@ -4,11 +4,11 @@
 
 import * as FernRegistry from "../../../index";
 
-export interface ApiSectionNode
+export interface ApiPackageNode
     extends FernRegistry.navigation.WithNodeMetadata,
         FernRegistry.navigation.WithOverviewPage,
         FernRegistry.navigation.WithApiDefinitionId,
         FernRegistry.navigation.WithRedirect {
-    type: "apiSection";
-    children: FernRegistry.navigation.ApiSectionChild[];
+    type: "apiPackage";
+    children: FernRegistry.navigation.ApiPackageChild[];
 }

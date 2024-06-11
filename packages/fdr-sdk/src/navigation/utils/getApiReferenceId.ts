@@ -31,6 +31,6 @@ export function getApiReferenceId(node: NavigationNode | undefined): FernNavigat
         endpointPair: (node) => node.nonStream.apiDefinitionId,
         webSocket: RETURN_API_DEFINITION_ID,
         webhook: RETURN_API_DEFINITION_ID,
-        apiSection: RETURN_API_DEFINITION_ID,
+        apiPackage: RETURN_API_DEFINITION_ID,
     });
 }

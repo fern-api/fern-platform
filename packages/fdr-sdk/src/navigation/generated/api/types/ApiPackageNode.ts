@@ -4,11 +4,11 @@
 
 import * as FernNavigation from "../index";
 
-export interface ApiSectionNode
+export interface ApiPackageNode
     extends FernNavigation.WithNodeMetadata,
         FernNavigation.WithOverviewPage,
         FernNavigation.WithApiDefinitionId,
         FernNavigation.WithRedirect {
-    type: "apiSection";
-    children: FernNavigation.ApiSectionChild[];
+    type: "apiPackage";
+    children: FernNavigation.ApiPackageChild[];
 }

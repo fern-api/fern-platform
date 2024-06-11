@@ -4,8 +4,8 @@
 
 import * as FernNavigation from "../index";
 
-export type ApiSectionChild =
-    | FernNavigation.ApiSectionNode
+export type ApiPackageChild =
+    | FernNavigation.ApiPackageNode
     | FernNavigation.EndpointNode
     | FernNavigation.EndpointPairNode
     | FernNavigation.WebSocketNode

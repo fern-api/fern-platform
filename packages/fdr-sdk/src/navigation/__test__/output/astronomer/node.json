@@ -1,6 +1,7 @@
 {
   "id": "root",
   "type": "root",
+  "version": "v1",
   "child": {
     "id": "root.uv",
     "type": "sidebarRoot",
@@ -111,7 +112,7 @@
         "children": [
           {
             "id": "root.uv.platform-api-reference.subpackage_organization",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.platform-api-reference.subpackage_organization.subpackage_organization.ListOrganizations",
@@ -151,7 +152,7 @@
           },
           {
             "id": "root.uv.platform-api-reference.subpackage_options",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.platform-api-reference.subpackage_options.subpackage_options.GetClusterOptions",
@@ -181,7 +182,7 @@
           },
           {
             "id": "root.uv.platform-api-reference.subpackage_cluster",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.ListClusters",
@@ -241,7 +242,7 @@
           },
           {
             "id": "root.uv.platform-api-reference.subpackage_deployment",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.ListDeployments",
@@ -321,7 +322,7 @@
           },
           {
             "id": "root.uv.platform-api-reference.subpackage_deploy",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.ListDeploys",
@@ -391,7 +392,7 @@
           },
           {
             "id": "root.uv.platform-api-reference.subpackage_workspace",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.ListWorkspaces",
@@ -498,7 +499,7 @@
         "children": [
           {
             "id": "root.uv.iam-api-reference.subpackage_authorization",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.iam-api-reference.subpackage_authorization.subpackage_authorization.ListPermissionGroups",
@@ -518,7 +519,7 @@
           },
           {
             "id": "root.uv.iam-api-reference.subpackage_invite",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.iam-api-reference.subpackage_invite.subpackage_invite.CreateUserInvite",
@@ -548,7 +549,7 @@
           },
           {
             "id": "root.uv.iam-api-reference.subpackage_role",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoleTemplates",
@@ -618,7 +619,7 @@
           },
           {
             "id": "root.uv.iam-api-reference.subpackage_team",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeams",
@@ -718,7 +719,7 @@
           },
           {
             "id": "root.uv.iam-api-reference.subpackage_apiToken",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.ListApiTokens",
@@ -798,7 +799,7 @@
           },
           {
             "id": "root.uv.iam-api-reference.subpackage_user",
-            "type": "apiSection",
+            "type": "apiPackage",
             "children": [
               {
                 "id": "root.uv.iam-api-reference.subpackage_user.subpackage_user.ListUsers",

@@ -84,7 +84,7 @@ export class ApiReferenceNavigationConverter {
         });
     }
 
-    private convertChildren(parentSlug: string): FernNavigation.ApiSectionChild[] {
+    private convertChildren(parentSlug: string): FernNavigation.ApiPackageChild[] {
         if (this.apiSection.navigation != null) {
             return this.convertApiNavigationItems(this.apiSection.navigation.items, parentSlug, "root");
         }
@@ -154,8 +154,8 @@ export class ApiReferenceNavigationConverter {
     private convertPackageToChildren(
         package_: APIV1Read.ApiDefinitionPackage,
         parentSlug: string,
-    ): FernNavigation.ApiSectionChild[] {
-        const children: FernNavigation.ApiSectionChild[] = [];
+    ): FernNavigation.ApiPackageChild[] {
+        const children: FernNavigation.ApiPackageChild[] = [];
 
         let subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
         while (package_.pointsTo != null) {
@@ -204,7 +204,7 @@ export class ApiReferenceNavigationConverter {
                 console.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
                 return;
             }
-            const child = this.#idgen.with(subpackageId, (id): FernNavigation.ApiSectionNode | undefined => {
+            const child = this.#idgen.with(subpackageId, (id): FernNavigation.ApiPackageNode | undefined => {
                 const slug = createSlug(this.baseSlug, parentSlug, subpackage);
                 const subpackageChildren = this.convertPackageToChildren(subpackage, slug);
                 if (subpackageChildren.length === 0) {
@@ -213,7 +213,7 @@ export class ApiReferenceNavigationConverter {
                 const pointsTo = followRedirects(subpackageChildren);
                 return {
                     id,
-                    type: "apiSection",
+                    type: "apiPackage",
                     children: subpackageChildren,
                     title: subpackage.displayName ?? titleCase(subpackage.name),
                     slug,
@@ -249,8 +249,8 @@ export class ApiReferenceNavigationConverter {
         items: DocsV1Read.ApiNavigationConfigItem[],
         parentSlug: string,
         subpackageId: string,
-    ): FernNavigation.ApiSectionChild[] {
-        const children: FernNavigation.ApiSectionChild[] = [];
+    ): FernNavigation.ApiPackageChild[] {
+        const children: FernNavigation.ApiPackageChild[] = [];
         let subpackage = subpackageId === "root" ? this.api.rootPackage : this.api.subpackages[subpackageId];
         while (subpackage.pointsTo != null) {
             subpackage = this.api.subpackages[subpackage.pointsTo];
@@ -331,7 +331,7 @@ export class ApiReferenceNavigationConverter {
                         const convertedItems = this.convertApiNavigationItems(items, slug, subpackageId);
                         children.push({
                             id,
-                            type: "apiSection",
+                            type: "apiPackage",
                             children: convertedItems,
                             title: subpackage.displayName ?? titleCase(subpackage.name),
                             slug,
@@ -352,8 +352,8 @@ export class ApiReferenceNavigationConverter {
         return this.mergeEndpointPairs(children);
     }
 
-    private mergeEndpointPairs(children: FernNavigation.ApiSectionChild[]): FernNavigation.ApiSectionChild[] {
-        const toRet: FernNavigation.ApiSectionChild[] = [];
+    private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {
+        const toRet: FernNavigation.ApiPackageChild[] = [];
 
         const methodAndPathToEndpointNode = new Map<string, FernNavigation.EndpointNode>();
         children.forEach((child) => {
