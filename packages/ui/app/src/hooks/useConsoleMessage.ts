@@ -1,10 +1,13 @@
 import { useEffect } from "react";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 
 let hasBeenCalled = false;
 
 export const useConsoleMessage = (): void => {
+    const { isWhitelabeled } = useFeatureFlags();
+
     useEffect(() => {
-        if (hasBeenCalled) {
+        if (hasBeenCalled || isWhitelabeled) {
             return;
         }
 
@@ -35,5 +38,5 @@ export const useConsoleMessage = (): void => {
                 color: ${color};
             `,
         );
-    }, []);
+    }, [isWhitelabeled]);
 };
