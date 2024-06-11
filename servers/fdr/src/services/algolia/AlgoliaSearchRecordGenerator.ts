@@ -264,12 +264,26 @@ export class AlgoliaSearchRecordGenerator {
 
         const breadcrumbs = context.pathParts.map((part) => part.name);
 
+        const version =
+            context.indexSegment.type === "versioned"
+                ? {
+                      id: context.indexSegment.version.id,
+                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                  }
+                : undefined;
+
         function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
                     .filter(FernNavigation.hasMetadata)
-                    .filter((parent) => (parent.type === "apiReference" ? parent.hideTitle !== true : true))
+                    .filter((parent) =>
+                        parent.type === "apiReference"
+                            ? parent.hideTitle !== true
+                            : parent.type === "changelogMonth" || parent.type === "changelogYear"
+                              ? false
+                              : true,
+                    )
                     .map((parent) => parent.title),
             ];
         }
@@ -284,96 +298,96 @@ export class AlgoliaSearchRecordGenerator {
             }
 
             if (FernNavigation.isApiLeaf(node)) {
+                visitDiscriminatedUnion(node)._visit({
+                    endpoint: (node) => {
+                        const endpoint = holder?.endpoints.get(node.endpointId);
+                        if (endpoint == null) {
+                            LOGGER.error("Failed to find endpoint for API reference node.", node);
+                            return;
+                        }
+                        records.push(
+                            compact({
+                                type: "endpoint-v3",
+                                objectID: uuid(),
+                                title: node.title,
+                                content: endpoint.description,
+                                breadcrumbs: toBreadcrumbs(parents),
+                                slug: node.slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                method: endpoint.method,
+                                endpointPath: endpoint.path.parts,
+                            }),
+                        );
+                    },
+                    webSocket: (node) => {
+                        const ws = holder?.webSockets.get(node.webSocketId);
+                        if (ws == null) {
+                            LOGGER.error("Failed to find websocket for API reference node.", node);
+                            return;
+                        }
+                        records.push(
+                            compact({
+                                type: "websocket-v3",
+                                objectID: uuid(),
+                                title: node.title,
+                                content: ws.description,
+                                breadcrumbs: toBreadcrumbs(parents),
+                                slug: node.slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                endpointPath: ws.path.parts,
+                            }),
+                        );
+                    },
+                    webhook: (node) => {
+                        const webhook = holder?.webhooks.get(node.webhookId);
+                        if (webhook == null) {
+                            LOGGER.error("Failed to find webhook for API reference node.", node);
+                            return;
+                        }
+                        records.push(
+                            compact({
+                                type: "webhook-v3",
+                                objectID: uuid(),
+                                title: node.title,
+                                content: webhook.description,
+                                breadcrumbs: toBreadcrumbs(parents),
+                                slug: node.slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                method: webhook.method,
+                                endpointPath: webhook.path.map((path) => ({ type: "literal", value: path })),
+                            }),
+                        );
+                    },
+                });
             } else if (FernNavigation.hasMarkdown(node)) {
                 const pageId = FernNavigation.utils.getPageId(node);
-            }
+                if (pageId == null) {
+                    return;
+                }
 
-            visitDiscriminatedUnion(node)._visit({
-                endpoint: (node) => {
-                    const endpoint = holder?.endpoints.get(node.endpointId);
-                    if (endpoint == null) {
-                        LOGGER.error("Failed to find endpoint for API reference node. id=", node.endpointId);
-                        return;
-                    }
-                    records.push(
-                        compact({
-                            type: "endpoint-v3",
-                            objectID: uuid(),
-                            title: node.title,
-                            content: endpoint.description,
-                            breadcrumbs: toBreadcrumbs(parents),
-                            slug: node.slug,
-                            version:
-                                context.indexSegment.type === "versioned"
-                                    ? {
-                                          id: context.indexSegment.version.id,
-                                          slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
-                                      }
-                                    : undefined,
-                            indexSegmentId: context.indexSegment.id,
-                            endpointMethod: endpoint.method,
-                            endpointPath: endpoint.path.parts,
-                        }),
-                    );
-                },
-                page: (page) => {
-                    const pageContent: string | undefined = this.config.docsDefinition.pages[page.pageId]?.markdown;
-                    records.push(
-                        compact({
-                            type: "page-v3",
-                            objectID: uuid(),
-                            title: node.title,
-                            content: pageContent,
-                            breadcrumbs: toBreadcrumbs(parents),
-                            slug: node.slug,
-                            version:
-                                context.indexSegment.type === "versioned"
-                                    ? {
-                                          id: context.indexSegment.version.id,
-                                          slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
-                                      }
-                                    : undefined,
-                            indexSegmentId: context.indexSegment.id,
-                        }),
-                    );
-                },
-                section(value: FernNavigation.SectionNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                changelog(value: FernNavigation.ChangelogNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                version(value: FernNavigation.VersionNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                apiReference(value: FernNavigation.ApiReferenceNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                root(value: FernNavigation.RootNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                tab(value: FernNavigation.TabNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                changelogYear(value: FernNavigation.ChangelogYearNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                changelogMonth(value: FernNavigation.ChangelogMonthNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                changelogEntry(value: FernNavigation.ChangelogEntryNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                webSocket(value: FernNavigation.WebSocketNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                webhook(value: FernNavigation.WebhookNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-                apiPackage(value: FernNavigation.ApiPackageNode): unknown {
-                    throw new Error("Function not implemented.");
-                },
-            });
+                const md = this.config.docsDefinition.pages[pageId]?.markdown;
+                if (md == null) {
+                    LOGGER.error("Failed to find markdown for node", node);
+                    return;
+                }
+
+                records.push(
+                    compact({
+                        type: "page-v3",
+                        objectID: uuid(),
+                        title: node.title,
+                        content: md,
+                        breadcrumbs: toBreadcrumbs(parents),
+                        slug: node.slug,
+                        version,
+                        indexSegmentId: context.indexSegment.id,
+                    }),
+                );
+            }
+            return;
         });
 
         return records;

@@ -44,6 +44,7 @@ types:
     properties:
       method: apiReadV1Endpoint.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+      isResponseStream: optional<literal<true>>
 
   AlgoliaWebSocketRecordV3:
     extends: AlgoliaPageRecordV3
