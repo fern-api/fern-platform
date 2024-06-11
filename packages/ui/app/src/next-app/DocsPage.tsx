@@ -8,6 +8,7 @@ import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvide
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
+import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace DocsPage {
@@ -49,6 +50,8 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
 
     const { baseUrl, title, layout, logoHeight, logoHref, resolvedPath } = pageProps;
+
+    useConsoleMessage();
 
     return (
         <FeatureFlagContext.Provider value={featureFlags}>
