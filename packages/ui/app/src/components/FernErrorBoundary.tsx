@@ -95,6 +95,9 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     refreshOnError,
     showError,
 }) => {
+    // eslint-disable-next-line no-console
+    console.error("boundary", error);
+
     const router = useRouter();
 
     useEffect(() => {

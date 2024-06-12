@@ -32,7 +32,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     return (
         <FernTooltipProvider>
-            <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+            <FernErrorBoundary className="flex h-screen items-center justify-center">
                 <ThemeProvider colors={pageProps?.colors}>
                     <IsReadyProvider>
                         <RouteListenerContextProvider>

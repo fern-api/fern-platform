@@ -56,6 +56,10 @@ for (const entry of entries) {
         template.querySelector("head")?.appendChild(node);
     });
 
+    root.querySelectorAll("head > meta").forEach((node) => {
+        template.querySelector("head")?.appendChild(node);
+    });
+
     const dir = path.join(OUT_DIR, path.dirname(entry.path));
     if (!existsSync(dir)) {
         await mkdir(dir, { recursive: true });
