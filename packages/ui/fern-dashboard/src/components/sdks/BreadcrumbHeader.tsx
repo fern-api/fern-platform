@@ -5,11 +5,12 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { cn } from "@/lib/utils";
 import { useAuth0 } from "@auth0/auth0-react";
-import { FernButton, FernButtonGroup, FernDropdown, FernLogo, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import { useIsHovering } from "@fern-ui/react-commons";
+import { FernButton, FernButtonGroup, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { Link } from "@tanstack/react-router";
 import { LogOutIcon, Slash } from "lucide-react";
+import { FernLogo } from "../FernLogo";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,10 +24,7 @@ import {
 interface BreadcrumbDropdownProps {
     name: string;
     options: BreadcrumbLinkProps[];
-    action?: {
-        name: string;
-        onClick: () => void;
-    };
+    action?: (val: string) => void;
 }
 
 // Note these are meant to be internal links to navigate to, at least to start
@@ -48,14 +46,13 @@ const FernBreadcrumbSeparator = () => {
 };
 
 export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) => {
-    const { isHovering } = useIsHovering();
     const { logout } = useAuth0();
 
     return (
         <nav className="flex flex-row contents-center items-center gap-x-4 fixed inset-x-0 top-0 z-50 bg-white shadow-sm translate-y-0 md:translate-y-0/2 dark:bg-gray-950 p-6 h-16 justify-between">
             <div className="flex flex-row gap-x-3 items-center">
                 <Link to="/">
-                    <FernLogo muted={!isHovering} className="-mt-0.5 h-7 transition" />
+                    <FernLogo className={cn("-mt-0.5 h-7 mr-2 transition fill-black")} />
                 </Link>
                 <Breadcrumb className="w-full">
                     <BreadcrumbList className="justify-center">
@@ -63,44 +60,59 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                         {entries.map((entry, index) => {
                             let item: React.ReactNode;
                             if ("options" in entry) {
-                                const dropdownOptions = entry.options.map(
-                                    (option): FernDropdown.Option => ({
-                                        type: "value",
-                                        label: option.name,
-                                        value: option.path,
-                                    }),
-                                );
                                 item = (
                                     <BreadcrumbItem key={index}>
                                         {entry.options.length > 0 ? (
-                                            <FernDropdown options={dropdownOptions}>
-                                                <FernButton
-                                                    disabled
-                                                    text={entry.name}
-                                                    rightIcon={
-                                                        <RemoteFontAwesomeIcon
-                                                            icon="angles-up-down"
-                                                            className="ml-1.5"
-                                                            size={3}
-                                                        />
-                                                    }
-                                                    className="w-full text-left p-0 gap-x-4 text-bold !bg-white"
-                                                    variant="outlined"
-                                                />
-                                            </FernDropdown>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <FernButton
+                                                        intent="primary"
+                                                        text={entry.name}
+                                                        rightIcon={
+                                                            <RemoteFontAwesomeIcon
+                                                                icon="angles-up-down"
+                                                                className="ml-1.5 !bg-black"
+                                                                size={3}
+                                                            />
+                                                        }
+                                                        className="w-full text-left gap-x-4 !p-0 !pl-1 !bg-white !focus:ring-0 !focus:ring-offset-0"
+                                                        variant="outlined"
+                                                        size="large"
+                                                    />
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="w-fit min-w-40">
+                                                    <DropdownMenuLabel>Your Organizations</DropdownMenuLabel>
+                                                    <DropdownMenuSeparator />
+                                                    <DropdownMenuGroup>
+                                                        {entry.options.map((option, index) => (
+                                                            <DropdownMenuItem
+                                                                key={index}
+                                                                onClick={() => {
+                                                                    if (entry.action) {
+                                                                        entry.action(option.path);
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <span>{option.name}</span>
+                                                            </DropdownMenuItem>
+                                                        ))}
+                                                    </DropdownMenuGroup>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         ) : (
                                             <FernButton
-                                                disabled
+                                                intent="primary"
                                                 text={entry.name}
                                                 rightIcon={
                                                     <RemoteFontAwesomeIcon
                                                         icon="angles-up-down"
-                                                        className="ml-1.5"
+                                                        className="ml-1.5 !bg-black"
                                                         size={3}
                                                     />
                                                 }
-                                                className="w-full text-left p-0 gap-x-4 text-bold !bg-white"
+                                                className="w-full text-left gap-x-4 !p-0 !pl-1 !bg-white"
                                                 variant="outlined"
+                                                size="large"
                                             />
                                         )}
                                     </BreadcrumbItem>
@@ -154,9 +166,8 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                     }}
                     intent="warning"
                 >
-                    Documentation
+                    <span className="text-intent-warning">Documentation</span>
                 </FernButton>
-                {/* TODO: Add in the avatar for log out and eventually managing profile */}
             </FernButtonGroup>
         </nav>
     );

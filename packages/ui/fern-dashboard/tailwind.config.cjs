@@ -19,11 +19,12 @@ module.exports = {
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
+                background: "#FBFFFA",
+                foreground: "#081008",
+                black: "#081008",
                 primary: {
-                    DEFAULT: "hsl(var(--primary))",
-                    foreground: "hsl(var(--primary-foreground))"
+                    DEFAULT: "#FBFFFA",
+                    foreground: "#FBFFFA"
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",
@@ -38,8 +39,8 @@ module.exports = {
                     foreground: "hsl(var(--muted-foreground))"
                 },
                 accent: {
-                    DEFAULT: "hsl(var(--accent))",
-                    foreground: "hsl(var(--accent-foreground))"
+                    DEFAULT: "#1EA32A",
+                    foreground: "#1EA32A"
                 },
                 popover: {
                     DEFAULT: "hsl(var(--popover))",

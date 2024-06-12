@@ -12,15 +12,20 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthLoginImport } from './routes/_auth/login'
-import { Route as AuthenticatedTeamIndexImport } from './routes/_authenticated/team/index'
-import { Route as AuthenticatedTeamOrgIdImport } from './routes/_authenticated/team/$orgId'
+import { Route as AuthenticatedTeamOrgIdImport } from './routes/_authenticated/team.$orgId'
 
 // Create/Update Routes
 
 const AuthenticatedRoute = AuthenticatedImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -31,12 +36,7 @@ const IndexRoute = IndexImport.update({
 
 const AuthLoginRoute = AuthLoginImport.update({
   path: '/login',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthenticatedTeamIndexRoute = AuthenticatedTeamIndexImport.update({
-  path: '/team/',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const AuthenticatedTeamOrgIdRoute = AuthenticatedTeamOrgIdImport.update({
@@ -55,6 +55,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -67,20 +74,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthImport
     }
     '/_authenticated/team/$orgId': {
       id: '/_authenticated/team/$orgId'
       path: '/team/$orgId'
       fullPath: '/team/$orgId'
       preLoaderRoute: typeof AuthenticatedTeamOrgIdImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/team/': {
-      id: '/_authenticated/team/'
-      path: '/team'
-      fullPath: '/team'
-      preLoaderRoute: typeof AuthenticatedTeamIndexImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -90,11 +90,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  AuthRoute: AuthRoute.addChildren({ AuthLoginRoute }),
   AuthenticatedRoute: AuthenticatedRoute.addChildren({
     AuthenticatedTeamOrgIdRoute,
-    AuthenticatedTeamIndexRoute,
   }),
-  AuthLoginRoute,
 })
 
 /* prettier-ignore-end */
@@ -107,29 +106,31 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_authenticated",
-        "/_auth/login"
+        "/_auth",
+        "/_authenticated"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/login"
+      ]
+    },
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/team/$orgId",
-        "/_authenticated/team/"
+        "/_authenticated/team/$orgId"
       ]
     },
     "/_auth/login": {
-      "filePath": "_auth/login.tsx"
+      "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
     },
     "/_authenticated/team/$orgId": {
-      "filePath": "_authenticated/team/$orgId.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/team/": {
-      "filePath": "_authenticated/team/index.tsx",
+      "filePath": "_authenticated/team.$orgId.tsx",
       "parent": "/_authenticated"
     }
   }

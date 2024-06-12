@@ -5,6 +5,7 @@ import "./index.scss";
 
 // Import the generated route tree
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { Toaster } from "@fern-ui/components";
 import { routeTree } from "./routeTree.gen";
 import { getEnvVar } from "./utils";
 
@@ -38,9 +39,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             authorizationParams={{
                 redirect_uri: window.location.origin,
                 audience: getEnvVar("VENUS_AUDIENCE", "venus-dev"),
+                // Make login redirect go right to github and not auth0's
+                // universal login page.
+                connection: "github",
             }}
         >
             <EnrichedRouterProvider />
         </Auth0Provider>
+        <Toaster position="top-center" />
     </React.StrictMode>,
 );

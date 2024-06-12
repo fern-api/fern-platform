@@ -5,10 +5,15 @@ import { Toaster as SonnerToaster } from "sonner";
 export { toast } from "sonner";
 export type { ToastT } from "sonner";
 
-export const Toaster: FC = () => {
+interface ToasterProps {
+    // Sonner doesn't export this type or it's props, so we're manually copying them over
+    position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
+}
+
+export const Toaster: FC<ToasterProps> = ({ position }) => {
     return (
         <SonnerToaster
-            position="bottom-center"
+            position={position ?? "bottom-center"}
             toastOptions={{
                 unstyled: true,
                 classNames: {

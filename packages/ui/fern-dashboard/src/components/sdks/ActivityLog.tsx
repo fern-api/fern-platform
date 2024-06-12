@@ -117,8 +117,6 @@ export const ActivityLog: React.FC<ActivityLogProps> = () => {
         {} as Record<string, ActivityLogDataEntry[]>,
     );
 
-    console.log("printing activity", transformedActivity);
-
     return Object.keys(transformedActivity).length > 0 ? (
         <GroupedActivitiyLog activity={transformedActivity} />
     ) : (
