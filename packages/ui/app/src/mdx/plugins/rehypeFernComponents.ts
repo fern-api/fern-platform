@@ -42,6 +42,30 @@ export function rehypeFernComponents(): (tree: Root) => void {
             }
         });
 
+        let example: string | undefined;
+        visit(tree, (node) => {
+            if (isMdxJsxFlowElement(node)) {
+                const isRequestSnippet = node.name === "EndpointRequestSnippet";
+                const isResponseSnippet = node.name === "EndpointResponseSnippet";
+                if (isRequestSnippet || isResponseSnippet) {
+                    const exampleAttr = node.attributes.find((attr) => "name" in attr && attr.name === "example");
+
+                    if (isRequestSnippet) {
+                        if (typeof exampleAttr?.value === "string") {
+                            example = exampleAttr.value;
+                        } else {
+                            example = undefined;
+                        }
+                    } else {
+                        if (!exampleAttr && example) {
+                            node.attributes.push(toAttribute("example", example));
+                        }
+                        example = undefined;
+                    }
+                }
+            }
+        });
+
         // convert img to Image
         visit(tree, (node, index) => {
             if (index == null) {
