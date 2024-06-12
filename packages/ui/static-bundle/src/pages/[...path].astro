@@ -2,6 +2,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { GetStaticPaths } from "astro";
+import { Markdown } from "astro-remote";
+import matter from "gray-matter";
+import Aside from "../components/Aside.astro";
 import DocsMainContent from "../components/DocsMainContent.astro";
 import { getDocs } from "../utils";
 
@@ -30,6 +33,8 @@ if (node.type === "notFound") {
 if (node.type === "redirect") {
     return Astro.redirect(node.redirect);
 }
+
+const apiReferences = FernNavigation.utils.collectApiReferences(root);
 ---
 
 <html>
@@ -49,6 +54,33 @@ if (node.type === "redirect") {
                 ))
             }
         </ul>
-        <DocsMainContent node={node.node} />
+        <DocsMainContent node={node} />
+        {
+            apiReferences.map((apiReference) => (
+                <>
+                    <div>
+                        <h2>{apiReference.title}</h2>
+                    </div>
+                    {apiReference.children.map((child) => {
+                        switch (child.type) {
+                            case "page": {
+                                const { markdown } = docs.definition.pages[child.pageId];
+                                const { content, data } = matter(markdown);
+                                return (
+                                    <div>
+                                        <h1>{data.title}</h1>
+                                        <Markdown
+                                            content={content}
+                                            components={{ Aside }}
+                                            sanitize={{ allowComponents: true }}
+                                        />
+                                    </div>
+                                );
+                            }
+                        }
+                    })}
+                </>
+            ))
+        }
     </body>
 </html>
