@@ -73,6 +73,13 @@ const apiReferences = FernNavigation.utils.collectApiReferences(root);
                                             content={content}
                                             components={{ Aside }}
                                             sanitize={{ allowComponents: true }}
+                                            marked={{
+                                                extensions: [
+                                                    {
+                                                        renderer: {},
+                                                    },
+                                                ],
+                                            }}
                                         />
                                     </div>
                                 );
