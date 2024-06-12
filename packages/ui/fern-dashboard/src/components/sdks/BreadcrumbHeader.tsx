@@ -8,8 +8,9 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FernButton, FernButtonGroup, RemoteFontAwesomeIcon } from "@fern-ui/components";
+import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { Link } from "@tanstack/react-router";
-import { LogOutIcon, Slash } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import { FernLogo } from "../FernLogo";
 import {
     DropdownMenu,
@@ -39,8 +40,8 @@ export interface BreadcrumbHeaderProps {
 
 const FernBreadcrumbSeparator = () => {
     return (
-        <BreadcrumbSeparator>
-            <Slash />
+        <BreadcrumbSeparator className="[&>svg]:size-7">
+            <DividerVerticalIcon color="gray" />
         </BreadcrumbSeparator>
     );
 };
@@ -52,7 +53,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
         <nav className="flex flex-row contents-center items-center gap-x-4 fixed inset-x-0 top-0 z-50 bg-white shadow-sm translate-y-0 md:translate-y-0/2 dark:bg-gray-950 p-6 h-16 justify-between">
             <div className="flex flex-row gap-x-3 items-center">
                 <Link to="/">
-                    <FernLogo className={cn("-mt-0.5 h-7 mr-2 transition fill-black")} />
+                    <FernLogo className={cn("-mt-0.5 h-7 transition fill-black")} />
                 </Link>
                 <Breadcrumb className="w-full">
                     <BreadcrumbList className="justify-center">
@@ -75,7 +76,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                                                                 size={3}
                                                             />
                                                         }
-                                                        className="w-full text-left gap-x-4 !p-0 !pl-1 !bg-white !focus:ring-0 !focus:ring-offset-0"
+                                                        className="w-full text-left gap-x-4 !p-0 !bg-white font-bold"
                                                         variant="outlined"
                                                         size="large"
                                                     />
