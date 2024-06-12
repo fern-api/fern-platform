@@ -28,9 +28,8 @@ function useSelectedClient(
     exampleName: string | undefined,
 ): [CodeExample | undefined, (nextClient: CodeExample) => void] {
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
-    const selectedClient = clients
-        .find((c) => c.language === selectedLanguage)
-        ?.examples?.find((example) => exampleName == null || example.name === exampleName);
+    const client = clients.find((c) => c.language === selectedLanguage) ?? clients[0];
+    const selectedClient = exampleName ? client.examples.find((e) => e.name === exampleName) : client.examples[0];
 
     const handleClickClient = useCallback(
         (nextClient: CodeExample) => {
