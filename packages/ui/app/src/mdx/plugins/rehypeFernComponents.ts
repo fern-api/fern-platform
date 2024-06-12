@@ -57,6 +57,8 @@ export function rehypeFernComponents(): (tree: Root) => void {
                             example = undefined;
                         }
                     } else {
+                        // TODO: check method and path are the same as the previous request snippet
+                        // TODO: write comments describing the use-case
                         if (!exampleAttr && example) {
                             node.attributes.push(toAttribute("example", example));
                         }
