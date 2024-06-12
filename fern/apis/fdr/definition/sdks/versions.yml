@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  base-path: /sdks
+  auth: true
+  endpoints:
+    computeSemanticVersion:
+      docs: |
+        Computes a semantic version for the SDK to be relesed on.
+      path: /semantic-version/compute
+      request:
+        name: ComputeSemanticVersionRequest
+        body:
+          # TODO(armando): take the inputted API Definition, release type (beta/alpha),
+          # and generator version upgrade to make this more robust
+          properties:
+            org:
+              type: string
+              docs: The Organization ID that owns this package.
+            package:
+              type: string
+              docs: The name of the package (e.g. `@org/sdk` or `com.org:org-java`)
+            previousVersion:
+              type: optional<string>
+              docs: |
+                The previous version the package was released at. If not present, 
+                the value will be fetched from the FDR database.
+      response: ComputedSemanticVersionResponse
+
+types:
+  VersionBump:
+    enum:
+      - MAJOR
+      - MINOR
+      - PATCH
+
+  ComputedSemanticVersionResponse:
+    properties:
+      version:
+        type: string
+        docs: The recommended version to release the SDK at
+      bump: VersionBump
