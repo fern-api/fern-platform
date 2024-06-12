@@ -7,6 +7,11 @@ service:
     computeSemanticVersion:
       docs: |
         Computes a semantic version for the SDK to be relesed on.
+
+        The endpoint tries to find existing versions by looking up against 
+        registries and github repositories. If none are found an error is thrown. 
+
+        If a version is found, a new semantic version is returned. 
       path: /semantic-version/compute
       request:
         name: ComputeSemanticVersionRequest
@@ -20,14 +25,26 @@ service:
             package:
               type: string
               docs: The name of the package (e.g. `@org/sdk` or `com.org:org-java`)
-            previousVersion:
+            language: 
+              type: optional<Language>
+            githubRepository: 
               type: optional<string>
-              docs: |
-                The previous version the package was released at. If not present, 
-                the value will be fetched from the FDR database.
+              docs: | 
+                The name of the GitHub repository (e.g. `owner/repo`). 
+                The repositories latest release will be queried to find the existing 
+                package version. 
       response: ComputedSemanticVersionResponse
 
 types:
+  Language: 
+    enum: 
+      - Go
+      - TypeScript
+      - Java
+      - Python
+      - Csharp
+      - Ruby
+
   VersionBump:
     enum:
       - MAJOR
