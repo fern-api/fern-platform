@@ -44,4 +44,7 @@ ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run.sh"]
+
+# For debugging container contents
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
