@@ -28,8 +28,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Setup database
-        # TODO: re-enable when moving to turbo
-        # pnpm turbo --filter= docker:local
-        run: |
-          pnpm --filter=@fern-platform/fdr docker:local test:ete
+      - name: Run docker
+        run: pnpm --filter=@fern-platform/fdr docker:local
+
+      - name: Run ete test
+        run: pnpm --filter=@fern-platform/fdr test:ete
