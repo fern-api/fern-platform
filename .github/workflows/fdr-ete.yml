@@ -42,6 +42,4 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Run ete test
-        run: |
-          pnpm --filter=@fern-platform/fdr docker:local
-          pnpm --filter=@fern-platform/fdr test:ete
+        run: pnpm --filter=@fern-platform/fdr test:ete
