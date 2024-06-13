@@ -1,11 +1,14 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
+
+const REGISTRY_SERVICE = new FdrClient({
+    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
+});
 
 export const runtime = "edge";
 
@@ -19,13 +22,15 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     headers.set("x-fern-host", xFernHost);
 
     const url = buildUrlFromApiEdge(xFernHost, req);
-    const docs = await loadWithUrl(url);
+    // const docs = await loadWithUrl(url);
 
-    if (docs == null) {
+    const response = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl(url);
+
+    if (!response.ok) {
         return jsonResponse(404, [], { headers });
     }
 
-    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(response.body);
     const slugCollector = NodeCollector.collect(node);
     const urls = slugCollector.getPageSlugs().map((slug) => urljoin(xFernHost, slug));
 
