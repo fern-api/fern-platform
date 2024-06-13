@@ -21,9 +21,6 @@ service:
           # TODO(armando): take the inputted API Definition, release type (beta/alpha),
           # and generator version upgrade to make this more robust
           properties:
-            org:
-              type: string
-              docs: The Organization ID that owns this package.
             package:
               type: string
               docs: The name of the package (e.g. `@org/sdk` or `com.org:org-java`)

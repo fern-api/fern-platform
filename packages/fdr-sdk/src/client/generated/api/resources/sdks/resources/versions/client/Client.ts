@@ -36,7 +36,6 @@ export class Versions {
      *
      * @example
      *     await fernRegistry.sdks.versions.computeSemanticVersion({
-     *         org: "string",
      *         package: "string",
      *         language: FernRegistry.sdks.Language.Go,
      *         githubRepository: "string"

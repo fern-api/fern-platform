@@ -7,15 +7,12 @@ import * as FernRegistry from "../../../../../../index";
 /**
  * @example
  *     {
- *         org: "string",
  *         package: "string",
  *         language: FernRegistry.sdks.Language.Go,
  *         githubRepository: "string"
  *     }
  */
 export interface ComputeSemanticVersionRequest {
-    /** The Organization ID that owns this package. */
-    org: string;
     /** The name of the package (e.g. `@org/sdk` or `com.org:org-java`) */
     package: string;
     language: FernRegistry.sdks.Language;
