@@ -6,7 +6,6 @@ export async function formatSnippet(snippet: Snippet): Promise<Snippet> {
         case "typescript": {
             const client = await prettier.format(snippet.client, { tabWidth: 4, parser: "babel" });
             return {
-                type: "typescript",
                 ...snippet,
                 client,
             };
