@@ -9,7 +9,6 @@ export function rehypeFernComponents(): (tree: Root) => void {
         // convert img to Image
         visit(tree, (node) => {
             if (isMdxJsxFlowElement(node)) {
-                console.log(node.name);
                 if (node.name === "img") {
                     node.name = "Image";
                 } else if (node.name === "iframe") {
