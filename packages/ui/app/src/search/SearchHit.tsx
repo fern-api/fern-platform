@@ -3,7 +3,7 @@ import cn from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useCloseMobileSidebar } from "../sidebar/atom";
+import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { EndpointRecordV3 } from "./content/EndpointRecordV3";
@@ -32,6 +32,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
 }) => {
     const { basePath } = useDocsContext();
     const closeMobileSidebar = useCloseMobileSidebar();
+    const closeSearchDialog = useCloseSearchDialog();
 
     const fullPath = useMemo(() => {
         return getFullPathForSearchRecord(hit, basePath);
@@ -61,7 +62,10 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
             href={`/${fullPath}`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            onClick={closeMobileSidebar}
+            onClick={() => {
+                closeMobileSidebar();
+                closeSearchDialog();
+            }}
         >
             {content}
         </Link>
