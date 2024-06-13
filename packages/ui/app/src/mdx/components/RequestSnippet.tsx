@@ -6,6 +6,7 @@ import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleC
 import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
 import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
+import { ApiReferenceButton } from "../../components/ApiReferenceButton";
 import { useNavigationContext } from "../../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
@@ -115,13 +116,16 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                     />
                 }
                 actions={
-                    clients.length > 1 ? (
-                        <CodeExampleClientDropdown
-                            clients={clients}
-                            onClickClient={setSelectedClient}
-                            selectedClient={selectedClient}
-                        />
-                    ) : undefined
+                    <>
+                        {clients.length > 1 && (
+                            <CodeExampleClientDropdown
+                                clients={clients}
+                                onClickClient={setSelectedClient}
+                                selectedClient={selectedClient}
+                            />
+                        )}
+                        <ApiReferenceButton slug={endpoint.slug} />
+                    </>
                 }
                 code={selectedClient.code}
                 language={selectedClient.language}
