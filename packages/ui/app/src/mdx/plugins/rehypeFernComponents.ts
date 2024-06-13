@@ -1,6 +1,6 @@
 import type { Element, ElementContent, Root } from "hast";
 import { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import { visit } from "unist-util-visit";
+import { CONTINUE, visit } from "unist-util-visit";
 import { wrapChildren } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
@@ -42,30 +42,65 @@ export function rehypeFernComponents(): (tree: Root) => void {
             }
         });
 
-        let example: string | undefined;
+        /**
+         * The code below copies the `example` prop of an
+         * `EndpointRequestSnippet` to the next `EndpointResponseSnippet` in the
+         * tree. For this behavior to take effect, the following conditions
+         * must be met:
+         *
+         * - The `EndpointResponseSnippet` must not have an `example` prop.
+         * - The `EndpointResponseSnippet` must have the same `path` and
+         * `method` props as the `EndpointRequestSnippet`.
+         */
+
+        let request: { path: string; method: string; example: string } | undefined;
+
         visit(tree, (node) => {
             if (isMdxJsxFlowElement(node)) {
                 const isRequestSnippet = node.name === "EndpointRequestSnippet";
                 const isResponseSnippet = node.name === "EndpointResponseSnippet";
+
+                // check that the current node is a request or response snippet
                 if (isRequestSnippet || isResponseSnippet) {
-                    const exampleAttr = node.attributes.find((attr) => "name" in attr && attr.name === "example");
+                    const props = collectProps(node);
 
                     if (isRequestSnippet) {
-                        if (typeof exampleAttr?.value === "string") {
-                            example = exampleAttr.value;
-                        } else {
-                            example = undefined;
+                        if (
+                            typeof props.path === "string" &&
+                            typeof props.method === "string" &&
+                            typeof props.example === "string"
+                        ) {
+                            // if the request snippet contains all of the
+                            // required props, record them and continue to the
+                            // next node
+                            request = {
+                                path: props.path,
+                                method: props.method,
+                                example: props.example,
+                            };
+
+                            // this avoids the request reference from being
+                            // reset to undefined at the end of this iteration
+                            return CONTINUE;
                         }
-                    } else {
-                        // TODO: check method and path are the same as the previous request snippet
-                        // TODO: write comments describing the use-case
-                        if (!exampleAttr && example) {
-                            node.attributes.push(toAttribute("example", example));
-                        }
-                        example = undefined;
+                    } else if (
+                        !props.example &&
+                        request &&
+                        request.path === props.path &&
+                        request.method === props.method
+                    ) {
+                        // if the response snippet meets the conditions, copy
+                        // the example prop from the request snippet
+                        node.attributes.push(toAttribute("example", request.example));
                     }
+
+                    // reset the request reference in all cases (except when the
+                    // request snippet props are being recorded)
+                    request = undefined;
                 }
             }
+
+            return CONTINUE; // this line helps avoid a typescript warning
         });
 
         // convert img to Image
