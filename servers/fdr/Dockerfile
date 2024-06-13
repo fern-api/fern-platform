@@ -32,10 +32,6 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY shared shared
 COPY fern fern
-RUN pnpm turbo --filter=@fern-api/fdr-sdk compile
-RUN pnpm turbo --filter=@fern-api/template-resolver compile
-RUN pnpm turbo --filter=@fern-api/github compile
-RUN pnpm turbo --filter=@fern-platform/fdr codegen
 RUN pnpm turbo --filter=@fern-platform/fdr compile
 
 FROM base AS runner
@@ -48,4 +44,4 @@ ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run.sh"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
