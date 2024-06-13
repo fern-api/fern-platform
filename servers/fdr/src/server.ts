@@ -14,6 +14,7 @@ import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "./controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Service";
+import { getVersionsService } from "./controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplatesService } from "./controllers/snippets/getTemplatesService";
@@ -111,6 +112,9 @@ async function startServer(): Promise<void> {
             templates: getTemplatesService(app),
             diff: getApiDiffService(app),
             docsCache: getDocsCacheService(app),
+            sdks: {
+                versions: getVersionsService(app),
+            },
         });
         registerBackgroundTasks(app);
         app.logger.info(`Listening for requests on port ${PORT}`);

@@ -18,5 +18,9 @@
     "sourceRoot": "/"
   },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../../packages/fdr-sdk" }, { "path": "../../packages/template-resolver" }]
+  "references": [
+    { "path": "../../packages/fdr-sdk" },
+    { "path": "../../packages/template-resolver" },
+    { "path": "../../packages/commons/github" }
+  ]
 }
