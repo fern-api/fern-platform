@@ -25,8 +25,7 @@ describe("resolveApiDefinition", () => {
                 urlSlug: "api-reference",
             },
             fixture,
-            "",
-            "",
+            FernNavigation.SlugGenerator.init(""),
         );
 
         const resolved = await ApiDefinitionResolver.resolve(
@@ -59,8 +58,7 @@ describe("resolveApiDefinition", () => {
                 urlSlug: "api-reference",
             },
             fixture,
-            "",
-            "",
+            FernNavigation.SlugGenerator.init(""),
         );
 
         const resolved = await ApiDefinitionResolver.resolve(

@@ -61,8 +61,14 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
             node: found.node,
             breadcrumb: createBreadcrumb(found.parents),
             root,
+            // this is used to render the version switcher
             versions: collector.getVersionNodes().map((node) => {
                 if (node.default) {
+                    // if we're currently viewing the default version, we may be viewing the non-pruned version
+                    if (node.id === currentVersion?.id) {
+                        return currentVersion;
+                    }
+                    // otherwise, we should always use the pruned version node
                     return collector.defaultVersionNode ?? node;
                 }
                 return node;
