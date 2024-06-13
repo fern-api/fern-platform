@@ -2,11 +2,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { GetStaticPaths } from "astro";
-import { Markdown } from "astro-remote";
-import matter from "gray-matter";
-import Aside from "../components/Aside.astro";
-import DocsMainContent from "../components/DocsMainContent.astro";
-import { getDocs } from "../utils";
+import DocsMainContent from "~/components/DocsMainContent.astro";
+import Page from "~/components/Page.astro";
+import { getDocs } from "~/utils";
 
 export const getStaticPaths = (async () => {
     const docs = await getDocs("gemini.ferndocs.com");
@@ -63,27 +61,8 @@ const apiReferences = FernNavigation.utils.collectApiReferences(root);
                     </div>
                     {apiReference.children.map((child) => {
                         switch (child.type) {
-                            case "page": {
-                                const { markdown } = docs.definition.pages[child.pageId];
-                                const { content, data } = matter(markdown);
-                                return (
-                                    <div>
-                                        <h1>{data.title}</h1>
-                                        <Markdown
-                                            content={content}
-                                            components={{ Aside }}
-                                            sanitize={{ allowComponents: true }}
-                                            marked={{
-                                                extensions: [
-                                                    {
-                                                        renderer: {},
-                                                    },
-                                                ],
-                                            }}
-                                        />
-                                    </div>
-                                );
-                            }
+                            case "page":
+                                return <Page content={docs.definition.pages[child.pageId]} />;
                         }
                     })}
                 </>

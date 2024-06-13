@@ -1,0 +1,14 @@
+---
+import { codeToHtml } from "shiki";
+
+const { lang, code, ...props } = Astro.props;
+const highlighted = await codeToHtml(code, {
+    lang,
+    theme: "dracula",
+});
+---
+
+<div>
+    {props.title && <h2>{props.title}</h2>}
+    <pre class={`language-${lang}`}><code set:html={highlighted} /></pre>
+</div>

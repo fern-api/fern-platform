@@ -1,0 +1,26 @@
+---
+import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { Markdown } from "astro-remote";
+import matter from "gray-matter";
+import Aside from "./Aside.astro";
+import CodeBlock from "./CodeBlock.astro";
+
+type Props = {
+    content: DocsV1Read.PageContent;
+};
+
+const { markdown } = Astro.props.content;
+const { content, data } = matter(markdown);
+---
+
+<div>
+    <h1>{data.title}</h1>
+    <Markdown
+        content={content}
+        sanitize={{ allowComponents: true }}
+        components={{
+            Aside,
+            CodeBlock,
+        }}
+    />
+</div>

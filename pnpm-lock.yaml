@@ -1790,6 +1790,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      shiki:
+        specifier: ^1.6.0
+        version: 1.6.3
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4(ts-node@10.9.2)
