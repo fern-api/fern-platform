@@ -5,6 +5,8 @@ service:
   auth: true
   endpoints:
     computeSemanticVersion:
+      audiences:
+        - fiddle
       docs: |
         Computes a semantic version for the SDK to be relesed on.
 
