@@ -38,9 +38,15 @@ export class VersionsService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'computeSemanticVersion' unexpectedly threw ${error.constructor.name}.` +
-                        ` If this was intentional, please add ${error.constructor.name} to` +
-                        " the endpoint's errors list in your Fern Definition.");
+                    switch (error.errorName) {
+                        case "FailedToComputeExistingVersion":
+                        case "FailedToIncrementVersion":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'computeSemanticVersion' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
                     yield error.send(res);
                 }
                 else {

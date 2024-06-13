@@ -18,7 +18,7 @@ export interface ComputeSemanticVersionRequest {
     org: string;
     /** The name of the package (e.g. `@org/sdk` or `com.org:org-java`) */
     package: string;
-    language?: FernRegistry.sdks.Language;
+    language: FernRegistry.sdks.Language;
     /**
      * The name of the GitHub repository (e.g. `owner/repo`).
      * The repositories latest release will be queried to find the existing

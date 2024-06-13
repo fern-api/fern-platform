@@ -76,6 +76,17 @@ export class Versions {
             };
         }
 
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.sdks.versions.computeSemanticVersion.Error)?.error) {
+                case "FailedToComputeExistingVersion":
+                case "FailedToIncrementVersion":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.sdks.versions.computeSemanticVersion.Error,
+                    };
+            }
+        }
+
         return {
             ok: false,
             error: FernRegistry.sdks.versions.computeSemanticVersion.Error._unknown(_response.error),
