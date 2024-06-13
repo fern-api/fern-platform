@@ -5,6 +5,7 @@ import { FernNavigation } from "../generated";
 import { followRedirect, followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
 import { createSlug } from "../utils/createSlug";
+import { toDefaultSlug } from "../utils/pruneVersionNode";
 import { ApiReferenceNavigationConverter } from "./ApiReferenceNavigationConverter";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -43,7 +44,13 @@ export class NavigationConfigConverter {
                 versioned: (versioned) => this.convertVersionedNavigationConfig(versioned, slug),
                 unversioned: (unversioned) => this.convertUnversionedNavigationConfig(unversioned, slug, slug),
             });
-            const pointsTo = followRedirect(child);
+            let pointsTo = followRedirect(child);
+            if (pointsTo != null && child.type === "versioned") {
+                const defaultVersion = child.children.find((v) => v.default);
+                if (defaultVersion != null) {
+                    pointsTo = toDefaultSlug(pointsTo, slug, defaultVersion.slug);
+                }
+            }
             return {
                 id,
                 type: "root",
@@ -65,51 +72,26 @@ export class NavigationConfigConverter {
         baseSlug: FernNavigation.Slug,
     ): FernNavigation.VersionedNode {
         return this.#idgen.with("", (id) => {
-            const children: FernNavigation.VersionNode[] = [];
-            versioned.versions.forEach((version, idx) => {
-                if (idx === 0) {
-                    children.push(
-                        this.#idgen.with("*", (id) => {
-                            const child = this.convertUnversionedNavigationConfig(version.config, baseSlug, baseSlug);
-                            const pointsTo = followRedirect(child);
-                            return {
-                                id,
-                                type: "version",
-                                title: version.version,
-                                default: true,
-                                // the versionId must match `indexSegmentsByVersionId`
-                                versionId: FernNavigation.VersionId(version.version),
-                                slug: baseSlug,
-                                icon: undefined,
-                                hidden: undefined,
-                                child,
-                                availability: convertAvailability(version.availability),
-                                pointsTo,
-                            };
-                        }),
-                    );
-                }
+            const children = versioned.versions.map((version, idx): FernNavigation.VersionNode => {
                 const slug = createSlug(baseSlug, baseSlug, version);
-                children.push(
-                    this.#idgen.with(version.urlSlug, (id) => {
-                        const child = this.convertUnversionedNavigationConfig(version.config, slug, slug);
-                        const pointsTo = followRedirect(child);
-                        return {
-                            id,
-                            type: "version",
-                            title: version.version,
-                            default: false,
-                            // the versionId must match `indexSegmentsByVersionId`
-                            versionId: FernNavigation.VersionId(version.version),
-                            slug,
-                            icon: undefined,
-                            hidden: idx === 0, // hidden from the version selector
-                            child,
-                            availability: convertAvailability(version.availability),
-                            pointsTo,
-                        };
-                    }),
-                );
+                return this.#idgen.with(version.urlSlug, (id) => {
+                    const child = this.convertUnversionedNavigationConfig(version.config, slug, slug);
+                    const pointsTo = followRedirect(child);
+                    return {
+                        id,
+                        type: "version",
+                        title: version.version,
+                        default: idx === 0,
+                        // the versionId must match `indexSegmentsByVersionId`
+                        versionId: FernNavigation.VersionId(version.version),
+                        slug,
+                        icon: undefined,
+                        hidden: false,
+                        child,
+                        availability: convertAvailability(version.availability),
+                        pointsTo,
+                    };
+                });
             });
             return { id, type: "versioned", children };
         });
