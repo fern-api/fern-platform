@@ -27,7 +27,7 @@ jobs:
 
       - name: Publish Fiddle FDR SDK
         env: 
-          FERN_TOKEN: ${{ secrets.FERN_TLKEN }}
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           git_version="$(scripts/fdr-version.sh)"
           fern generate --api fdr --group fiddle --version $git_version
