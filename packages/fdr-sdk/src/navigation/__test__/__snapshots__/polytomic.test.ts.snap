@@ -878,8 +878,7 @@ exports[`getNavigationRoot > polytomic > gets navigation root for /2024-02-08/gu
 exports[`getNavigationRoot > polytomic > gets navigation root for /guides/introduction 1`] = `
 {
   "hidden": false,
-  "icon": undefined,
-  "id": "root..*.uv.guides.guides.getting-started.introduction",
+  "id": "root..2024-02-08.uv.guides.guides.getting-started.introduction",
   "pageId": "docs/2024-02-08/pages/getting-started/introduction.mdx",
   "slug": "guides/introduction",
   "title": "Introduction",

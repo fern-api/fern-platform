@@ -1,21 +1,19 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import urljoin from "url-join";
 import { DocsV1Read } from "../../client";
 import { FernNavigation } from "../generated";
-import { createSlug } from "../utils/createSlug";
 import { NodeIdGenerator } from "./NodeIdGenerator";
+import { SlugGenerator } from "./SlugGenerator";
 
 dayjs.extend(utc);
 
 export class ChangelogNavigationConverter {
     public static convert(
         changelog: DocsV1Read.ChangelogSection,
-        baseSlug: string,
-        parentSlug: string,
+        slug: SlugGenerator,
         idgen: NodeIdGenerator,
     ): FernNavigation.ChangelogNode {
-        return new ChangelogNavigationConverter(idgen).convert(changelog, baseSlug, parentSlug);
+        return new ChangelogNavigationConverter(idgen).convert(changelog, slug);
     }
 
     #idgen: NodeIdGenerator;
@@ -23,19 +21,15 @@ export class ChangelogNavigationConverter {
         this.#idgen = idgen;
     }
 
-    private convert(
-        changelog: DocsV1Read.ChangelogSection,
-        baseSlug: string,
-        parentSlug: string,
-    ): FernNavigation.ChangelogNode {
+    private convert(changelog: DocsV1Read.ChangelogSection, parentSlug: SlugGenerator): FernNavigation.ChangelogNode {
         return this.#idgen.with("log", (id) => {
-            const slug = createSlug(baseSlug, parentSlug, changelog);
+            const slug = parentSlug.apply(changelog);
             return {
                 id,
                 type: "changelog",
                 title: changelog.title ?? "Changelog",
                 overviewPageId: changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined,
-                slug,
+                slug: slug.get(),
                 icon: changelog.icon,
                 hidden: changelog.hidden,
                 children: this.convertYear(changelog.items, slug),
@@ -43,17 +37,17 @@ export class ChangelogNavigationConverter {
         });
     }
 
-    private convertYear(items: DocsV1Read.ChangelogItem[], parentSlug: string): FernNavigation.ChangelogYearNode[] {
+    private convertYear(items: DocsV1Read.ChangelogItem[], slug: SlugGenerator): FernNavigation.ChangelogYearNode[] {
         const entries = orderBy(
-            items.map((item) => this.convertChangelogEntry(item, parentSlug)),
+            items.map((item) => this.convertChangelogEntry(item, slug)),
             (entry) => entry.date,
             "desc",
         );
-        return this.groupByYear(entries, parentSlug);
+        return this.groupByYear(entries, slug);
     }
     private groupByYear(
         entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.ChangelogYearNode[] {
         const years = new Map<number, FernNavigation.ChangelogEntryNode[]>();
         for (const entry of entries) {
@@ -65,13 +59,13 @@ export class ChangelogNavigationConverter {
         return orderBy(
             Array.from(years.entries()).map(([year, entries]) =>
                 this.#idgen.with(year.toString(), (id) => {
-                    const slug = FernNavigation.Slug(urljoin(parentSlug, year.toString()));
+                    const slug = parentSlug.append(year.toString());
                     return {
                         id,
                         type: "changelogYear" as const,
                         title: year.toString(),
                         year,
-                        slug,
+                        slug: slug.get(),
                         icon: undefined,
                         hidden: undefined,
                         children: this.groupByMonth(entries, slug),
@@ -85,7 +79,7 @@ export class ChangelogNavigationConverter {
 
     private groupByMonth(
         entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.ChangelogMonthNode[] {
         const months = new Map<number, FernNavigation.ChangelogEntryNode[]>();
         for (const entry of entries) {
@@ -101,7 +95,7 @@ export class ChangelogNavigationConverter {
                     type: "changelogMonth" as const,
                     title: dayjs(new Date(0, month - 1)).format("MMMM YYYY"),
                     month,
-                    slug: FernNavigation.Slug(urljoin(parentSlug, month.toString())),
+                    slug: parentSlug.append(month.toString()).get(),
                     icon: undefined,
                     hidden: undefined,
                     children: entries,
@@ -114,7 +108,7 @@ export class ChangelogNavigationConverter {
 
     private convertChangelogEntry(
         item: DocsV1Read.ChangelogItem,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.ChangelogEntryNode {
         const date = dayjs.utc(item.date);
         return this.#idgen.with(date.format("YYYY-M-D"), (id) => {
@@ -124,7 +118,7 @@ export class ChangelogNavigationConverter {
                 title: date.format("MMMM D, YYYY"),
                 date: item.date,
                 pageId: FernNavigation.PageId(item.pageId),
-                slug: FernNavigation.Slug(urljoin(parentSlug, date.format("YYYY/M/D"))),
+                slug: parentSlug.append(date.format("YYYY/M/D")).get(),
                 icon: undefined,
                 hidden: undefined,
             };

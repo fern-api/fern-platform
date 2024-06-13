@@ -41,9 +41,7 @@ exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /do
 
 exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /docs/api/tab-1 1`] = `
 {
-  "hidden": undefined,
-  "icon": undefined,
-  "id": "root..*.uv.tab-1.tab-1.section-3.page-6",
+  "id": "root..version-1.uv.tab-1.tab-1.section-3.page-6",
   "pageId": "page-6.md",
   "slug": "docs/api/tab-1",
   "title": "Page 6",

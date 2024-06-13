@@ -1,18 +1,18 @@
 [
   {
-    "id": "root..*",
+    "id": "root..2024-02-08",
     "type": "version",
     "title": "2024-02-08",
     "slug": ""
   },
   {
-    "id": "root..*.uv.guides.guides.getting-started",
+    "id": "root..2024-02-08.uv.guides.guides.getting-started",
     "type": "section",
     "title": "Getting started",
     "slug": "guides"
   },
   {
-    "id": "root..*.uv.api-reference.api-reference.api-reference",
+    "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference",
     "type": "apiReference",
     "title": "API Reference",
     "slug": "api-reference"

@@ -1,66 +1,66 @@
 [
   {
-    "id": "root..*",
+    "id": "root..v4",
     "type": "version",
     "title": "v4.0",
     "slug": ""
   },
   {
-    "id": "root..*.uv.docs.docs.getting-started",
+    "id": "root..v4.uv.docs.docs.getting-started",
     "type": "section",
     "title": "Getting Started",
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs.docs.guides.generate-and-logging",
+    "id": "root..v4.uv.docs.docs.guides.generate-and-logging",
     "type": "section",
     "title": "Generate and Logging",
     "slug": "docs/guides"
   },
   {
-    "id": "root..*.uv.docs.docs.guides.run-an-experiment",
+    "id": "root..v4.uv.docs.docs.guides.run-an-experiment",
     "type": "section",
     "title": "Run an experiment",
     "slug": "docs/guides"
   },
   {
-    "id": "root..*.uv.docs.docs.guides.create-and-use-datasets",
+    "id": "root..v4.uv.docs.docs.guides.create-and-use-datasets",
     "type": "section",
     "title": "Create and use Datasets",
     "slug": "docs/guides"
   },
   {
-    "id": "root..*.uv.docs.docs.guides.tools",
+    "id": "root..v4.uv.docs.docs.guides.tools",
     "type": "section",
     "title": "Tools",
     "slug": "docs/guides"
   },
   {
-    "id": "root..*.uv.docs.docs.core-concepts",
+    "id": "root..v4.uv.docs.docs.core-concepts",
     "type": "section",
     "title": "Core concepts",
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs.docs.examples",
+    "id": "root..v4.uv.docs.docs.examples",
     "type": "section",
     "title": "Examples",
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs.docs.references",
+    "id": "root..v4.uv.docs.docs.references",
     "type": "section",
     "title": "References",
     "slug": "docs"
   },
   {
-    "id": "root..*.uv.docs/api-reference.docs/api-reference.introduction",
+    "id": "root..v4.uv.docs/api-reference.docs/api-reference.introduction",
     "type": "section",
     "title": "Introduction",
     "slug": "docs/api-reference"
   },
   {
-    "id": "root..*.uv.docs/api-reference",
+    "id": "root..v4.uv.docs/api-reference",
     "type": "tab",
     "title": "API Reference",
     "slug": "docs/api-reference"
