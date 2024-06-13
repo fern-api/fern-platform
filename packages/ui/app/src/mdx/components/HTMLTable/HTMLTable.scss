@@ -16,22 +16,12 @@
 
     .fern-table-cell {
         @apply h-9 p-2 text-left;
-
-        /* box-shadow: inset 0 -1px var(--grayscale-a5); */
         @apply border-b border-grayscale-a5;
     }
 
     tbody > .fern-table-row:last-child > .fern-table-cell {
-        /* box-shadow: none; */
-        @apply border-none;
+        @apply border-b-0;
     }
-
-    /*
-    tbody > .fern-table-row:nth-child(even) {
-        @apply bg-tag-default-soft;
-        background-clip: content-box;
-    }
-    */
 }
 
 .fern-table-root.fullscreen .fern-table thead .fern-table-cell {
