@@ -3,7 +3,6 @@
  */
 import * as FernRegistry from "../../../../../..";
 export interface ComputeSemanticVersionRequest {
-    org: string;
     package: string;
     language: FernRegistry.sdks.Language;
     githubRepository?: string;
