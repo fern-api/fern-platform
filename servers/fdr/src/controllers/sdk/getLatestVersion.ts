@@ -1,9 +1,7 @@
 import latestVersion from "latest-version";
 
 export async function getLatestVersionFromNpm(packageName: string): Promise<string | undefined> {
-    return await latestVersion(packageName, {
-        version: "prerelease",
-    });
+    return await latestVersion(packageName);
 }
 
 export async function getLatestVersionFromPypi(packageName: string): Promise<string | undefined> {
@@ -11,7 +9,9 @@ export async function getLatestVersionFromPypi(packageName: string): Promise<str
 
     if (response.ok) {
         // Extract the latest version from the response data
-        return ((await response.json()) as any).data.info.version;
+        const packageData = (await response.json()) as any;
+        console.log(JSON.stringify(packageData, undefined, 2));
+        return packageData.info.version;
     }
 
     return undefined;
