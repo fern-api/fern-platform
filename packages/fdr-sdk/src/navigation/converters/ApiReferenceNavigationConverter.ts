@@ -5,25 +5,23 @@ import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
-import { createSlug } from "../utils/createSlug";
 import { isSubpackage } from "../utils/isSubpackage";
 import { stringifyEndpointPathParts } from "../utils/stringifyEndpointPathParts";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
+import { SlugGenerator } from "./SlugGenerator";
 
 export class ApiReferenceNavigationConverter {
     public static convert(
         apiSection: DocsV1Read.ApiSection,
         api: APIV1Read.ApiDefinition,
-        baseSlug: string,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
         idgen?: NodeIdGenerator,
         lexicographic?: boolean,
     ) {
         return new ApiReferenceNavigationConverter(
             apiSection,
             api,
-            baseSlug,
             parentSlug,
             idgen ?? new NodeIdGenerator(),
             lexicographic,
@@ -40,8 +38,7 @@ export class ApiReferenceNavigationConverter {
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
         private api: APIV1Read.ApiDefinition,
-        private baseSlug: string,
-        private apiDefinitionParentSlug: string,
+        private parentSlug: SlugGenerator,
         idgen: NodeIdGenerator,
         private lexicographic: boolean = false,
     ) {
@@ -57,11 +54,11 @@ export class ApiReferenceNavigationConverter {
                     ? FernNavigation.PageId(this.apiSection.navigation.summaryPageId)
                     : undefined;
 
-            const slug = createSlug(this.baseSlug, this.apiDefinitionParentSlug, this.apiSection);
+            const slug = this.parentSlug.apply(this.apiSection);
             const children = this.convertChildren(slug);
             const changelog =
                 this.apiSection.changelog != null
-                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, this.baseSlug, slug, this.#idgen)
+                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, slug, this.#idgen)
                     : undefined;
             const pointsTo = followRedirects(children) ?? changelog?.slug;
             return {
@@ -71,7 +68,7 @@ export class ApiReferenceNavigationConverter {
                 apiDefinitionId: FernNavigation.ApiDefinitionId(this.apiSection.api),
                 overviewPageId,
                 disableLongScrolling: this.apiSection.longScrolling === false ? true : undefined,
-                slug,
+                slug: slug.get(),
                 icon: this.apiSection.icon,
                 hidden: this.apiSection.hidden,
                 hideTitle: this.apiSection.flattened,
@@ -84,7 +81,7 @@ export class ApiReferenceNavigationConverter {
         });
     }
 
-    private convertChildren(parentSlug: string): FernNavigation.ApiPackageChild[] {
+    private convertChildren(parentSlug: SlugGenerator): FernNavigation.ApiPackageChild[] {
         if (this.apiSection.navigation != null) {
             return this.convertApiNavigationItems(this.apiSection.navigation.items, parentSlug, "root");
         }
@@ -95,7 +92,7 @@ export class ApiReferenceNavigationConverter {
     private convertEndpointNode(
         endpointId: FernNavigation.EndpointId,
         endpoint: APIV1Read.EndpointDefinition,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.EndpointNode | FernNavigation.EndpointPairNode {
         return this.#idgen.with(endpointId, (id) => {
             return {
@@ -103,7 +100,7 @@ export class ApiReferenceNavigationConverter {
                 type: "endpoint",
                 title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 endpointId,
-                slug: createSlug(this.baseSlug, parentSlug, endpoint),
+                slug: parentSlug.apply(endpoint).get(),
                 icon: undefined,
                 hidden: undefined,
                 method: endpoint.method,
@@ -117,14 +114,14 @@ export class ApiReferenceNavigationConverter {
     private convertWebSocketNode(
         webSocketId: FernNavigation.WebSocketId,
         webSocket: APIV1Read.WebSocketChannel,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.WebSocketNode {
         return this.#idgen.with(webSocketId, (id) => ({
             id,
             type: "webSocket",
             title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
             webSocketId,
-            slug: createSlug(this.baseSlug, parentSlug, webSocket),
+            slug: parentSlug.apply(webSocket).get(),
             icon: undefined,
             hidden: undefined,
             apiDefinitionId: this.apiDefinitionId,
@@ -135,14 +132,14 @@ export class ApiReferenceNavigationConverter {
     private convertWebhookNode(
         webhookId: FernNavigation.WebhookId,
         webhook: APIV1Read.WebhookDefinition,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.WebhookNode {
         return this.#idgen.with(webhookId, (id) => ({
             id,
             type: "webhook",
             title: webhook.name ?? urljoin("/", ...webhook.path),
             webhookId,
-            slug: createSlug(this.baseSlug, parentSlug, webhook),
+            slug: parentSlug.apply(webhook).get(),
             icon: undefined,
             hidden: undefined,
             method: webhook.method,
@@ -153,7 +150,7 @@ export class ApiReferenceNavigationConverter {
 
     private convertPackageToChildren(
         package_: APIV1Read.ApiDefinitionPackage,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.ApiPackageChild[] {
         const children: FernNavigation.ApiPackageChild[] = [];
 
@@ -205,7 +202,7 @@ export class ApiReferenceNavigationConverter {
                 return;
             }
             const child = this.#idgen.with(subpackageId, (id): FernNavigation.ApiPackageNode | undefined => {
-                const slug = createSlug(this.baseSlug, parentSlug, subpackage);
+                const slug = parentSlug.apply(subpackage);
                 const subpackageChildren = this.convertPackageToChildren(subpackage, slug);
                 if (subpackageChildren.length === 0) {
                     return;
@@ -216,7 +213,7 @@ export class ApiReferenceNavigationConverter {
                     type: "apiPackage",
                     children: subpackageChildren,
                     title: subpackage.displayName ?? titleCase(subpackage.name),
-                    slug,
+                    slug: slug.get(),
                     icon: undefined,
                     hidden: undefined,
                     overviewPageId: undefined,
@@ -247,7 +244,7 @@ export class ApiReferenceNavigationConverter {
 
     private convertApiNavigationItems(
         items: DocsV1Read.ApiNavigationConfigItem[],
-        parentSlug: string,
+        parentSlug: SlugGenerator,
         subpackageId: string,
     ): FernNavigation.ApiPackageChild[] {
         const children: FernNavigation.ApiPackageChild[] = [];
@@ -280,7 +277,7 @@ export class ApiReferenceNavigationConverter {
                             type: "page",
                             title: page.title,
                             pageId: FernNavigation.PageId(page.id),
-                            slug: createSlug(this.baseSlug, parentSlug, page),
+                            slug: parentSlug.apply(page).get(),
                             icon: page.icon,
                             hidden: page.hidden,
                         })),
@@ -326,7 +323,7 @@ export class ApiReferenceNavigationConverter {
                         console.error(`Subpackage ${subpackageId} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const slug = createSlug(this.baseSlug, parentSlug, subpackage);
+                    const slug = parentSlug.apply(subpackage);
                     this.#idgen.with(subpackageId, (id) => {
                         const convertedItems = this.convertApiNavigationItems(items, slug, subpackageId);
                         children.push({
@@ -334,7 +331,7 @@ export class ApiReferenceNavigationConverter {
                             type: "apiPackage",
                             children: convertedItems,
                             title: subpackage.displayName ?? titleCase(subpackage.name),
-                            slug,
+                            slug: slug.get(),
                             icon: undefined,
                             hidden: undefined,
                             overviewPageId: summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined,

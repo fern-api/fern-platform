@@ -1,14 +1,13 @@
-import urljoin from "url-join";
 import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
 import { assertNever, kebabCase, visitDiscriminatedUnion } from "../../utils";
 import { FernNavigation } from "../generated";
 import { followRedirect, followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
-import { createSlug } from "../utils/createSlug";
 import { toDefaultSlug } from "../utils/pruneVersionNode";
 import { ApiReferenceNavigationConverter } from "./ApiReferenceNavigationConverter";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
+import { SlugGenerator } from "./SlugGenerator";
 
 export class NavigationConfigConverter {
     private constructor(
@@ -30,25 +29,16 @@ export class NavigationConfigConverter {
     #idgen = new NodeIdGenerator();
     private convert(): FernNavigation.RootNode {
         return this.#idgen.with("root", (id) => {
-            const slug = FernNavigation.Slug(
-                this.basePath != null
-                    ? urljoin(
-                          this.basePath
-                              .trim()
-                              .split("/")
-                              .filter((b) => b.length > 0),
-                      )
-                    : "",
-            );
+            const baseSlug = SlugGenerator.init(this.basePath ?? "");
             const child = visitReadNavigationConfig<FernNavigation.RootChild>(this.config, {
-                versioned: (versioned) => this.convertVersionedNavigationConfig(versioned, slug),
-                unversioned: (unversioned) => this.convertUnversionedNavigationConfig(unversioned, slug, slug),
+                versioned: (versioned) => this.convertVersionedNavigationConfig(versioned, baseSlug),
+                unversioned: (unversioned) => this.convertUnversionedNavigationConfig(unversioned, baseSlug),
             });
             let pointsTo = followRedirect(child);
             if (pointsTo != null && child.type === "versioned") {
                 const defaultVersion = child.children.find((v) => v.default);
                 if (defaultVersion != null) {
-                    pointsTo = toDefaultSlug(pointsTo, slug, defaultVersion.slug);
+                    pointsTo = toDefaultSlug(pointsTo, baseSlug.get(), defaultVersion.slug);
                 }
             }
             return {
@@ -56,7 +46,7 @@ export class NavigationConfigConverter {
                 type: "root",
                 version: "v1",
                 child,
-                slug,
+                slug: baseSlug.get(),
 
                 // the following don't matter:
                 title: "Fern Docs",
@@ -69,13 +59,13 @@ export class NavigationConfigConverter {
 
     private convertVersionedNavigationConfig(
         versioned: DocsV1Read.VersionedNavigationConfig,
-        baseSlug: FernNavigation.Slug,
+        parentSlug: SlugGenerator,
     ): FernNavigation.VersionedNode {
         return this.#idgen.with("", (id) => {
             const children = versioned.versions.map((version, idx): FernNavigation.VersionNode => {
-                const slug = createSlug(baseSlug, baseSlug, version);
+                const slug = parentSlug.setVersionSlug(version.urlSlug);
                 return this.#idgen.with(version.urlSlug, (id) => {
-                    const child = this.convertUnversionedNavigationConfig(version.config, slug, slug);
+                    const child = this.convertUnversionedNavigationConfig(version.config, slug);
                     const pointsTo = followRedirect(child);
                     return {
                         id,
@@ -84,7 +74,7 @@ export class NavigationConfigConverter {
                         default: idx === 0,
                         // the versionId must match `indexSegmentsByVersionId`
                         versionId: FernNavigation.VersionId(version.version),
-                        slug,
+                        slug: slug.get(),
                         icon: undefined,
                         hidden: false,
                         child,
@@ -99,8 +89,7 @@ export class NavigationConfigConverter {
 
     private convertUnversionedNavigationConfig(
         unversioned: DocsV1Read.UnversionedNavigationConfig,
-        baseSlug: string,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.VersionChild {
         return this.#idgen.with("uv", (id) => {
             return visitUnversionedReadNavigationConfig<FernNavigation.VersionChild>(unversioned, {
@@ -110,12 +99,12 @@ export class NavigationConfigConverter {
                     children: tabbed.tabs.map((tab): FernNavigation.TabChild => {
                         if (tab.type === "group" || (tab.type == null && Array.isArray(tab.items))) {
                             return this.#idgen.with(tab.urlSlug, (id) => {
-                                const slug = createSlug(baseSlug, parentSlug, tab);
+                                const slug = parentSlug.apply(tab);
                                 const child: FernNavigation.SidebarRootNode = this.#idgen.with(tab.urlSlug, (id) => ({
                                     id,
                                     type: "sidebarRoot",
                                     children: this.groupSidebarRootChildren(
-                                        tab.items.map((item) => this.convertNavigationItem(item, baseSlug, slug)),
+                                        tab.items.map((item) => this.convertNavigationItem(item, slug)),
                                     ),
                                 }));
                                 const pointsTo = followRedirect(child);
@@ -123,7 +112,7 @@ export class NavigationConfigConverter {
                                     id,
                                     type: "tab",
                                     title: tab.title,
-                                    slug,
+                                    slug: slug.get(),
                                     icon: tab.icon,
                                     hidden: false,
                                     child,
@@ -139,7 +128,8 @@ export class NavigationConfigConverter {
                                 icon: tab.icon,
                             }));
                         } else if (tab.type === "changelog") {
-                            return ChangelogNavigationConverter.convert(tab, baseSlug, parentSlug, this.#idgen);
+                            const slug = parentSlug.apply(tab);
+                            return ChangelogNavigationConverter.convert(tab, slug, this.#idgen);
                         } else {
                             assertNever(tab as never);
                         }
@@ -149,7 +139,7 @@ export class NavigationConfigConverter {
                     id,
                     type: "sidebarRoot",
                     children: this.groupSidebarRootChildren(
-                        untabbed.items.map((item) => this.convertNavigationItem(item, baseSlug, parentSlug)),
+                        untabbed.items.map((item) => this.convertNavigationItem(item, parentSlug)),
                     ),
                 }),
             });
@@ -189,8 +179,7 @@ export class NavigationConfigConverter {
 
     private convertNavigationItem(
         item: DocsV1Read.NavigationItem,
-        baseSlug: string,
-        parentSlug: string,
+        parentSlug: SlugGenerator,
     ): FernNavigation.NavigationChild {
         return visitDiscriminatedUnion(item, "type")._visit<FernNavigation.NavigationChild>({
             page: (page) =>
@@ -199,7 +188,7 @@ export class NavigationConfigConverter {
                     type: "page",
                     pageId: FernNavigation.PageId(page.id),
                     title: page.title,
-                    slug: createSlug(baseSlug, parentSlug, page),
+                    slug: parentSlug.apply(page).get(),
                     icon: page.icon,
                     hidden: page.hidden,
                 })),
@@ -213,9 +202,9 @@ export class NavigationConfigConverter {
                 })),
             section: (section) =>
                 this.#idgen.with(section.urlSlug, (id) => {
-                    const slug = createSlug(baseSlug, parentSlug, section);
+                    const slug = parentSlug.apply(section);
 
-                    const children = section.items.map((item) => this.convertNavigationItem(item, baseSlug, slug));
+                    const children = section.items.map((item) => this.convertNavigationItem(item, slug));
                     const pointsTo = followRedirects(children);
                     return {
                         id,
@@ -225,7 +214,7 @@ export class NavigationConfigConverter {
                         icon: section.icon,
                         hidden: section.hidden,
                         overviewPageId: undefined,
-                        slug,
+                        slug: slug.get(),
                         children,
                         pointsTo,
                     };
@@ -238,14 +227,12 @@ export class NavigationConfigConverter {
                 return ApiReferenceNavigationConverter.convert(
                     apiSection,
                     api,
-                    baseSlug,
                     parentSlug,
                     this.#idgen,
                     this.lexicographic,
                 );
             },
-            changelog: (changelog) =>
-                ChangelogNavigationConverter.convert(changelog, baseSlug, parentSlug, this.#idgen),
+            changelog: (changelog) => ChangelogNavigationConverter.convert(changelog, parentSlug, this.#idgen),
             // Note: apiSection.node is imported from `navigation`, and is guaranteed to be a FernNavigation.ApiReferenceNode
             apiV2: (apiSection) => apiSection.node as unknown as FernNavigation.ApiReferenceNode,
             _other: (value) => assertNever(value as never),
