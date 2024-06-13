@@ -6,6 +6,18 @@ import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {
+        // convert img to Image
+        visit(tree, (node) => {
+            if (isMdxJsxFlowElement(node)) {
+                console.log(node.name);
+                if (node.name === "img") {
+                    node.name = "Image";
+                } else if (node.name === "iframe") {
+                    node.name = "IFrame";
+                }
+            }
+        });
+
         visit(tree, (node, index, parent) => {
             if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
                 return;
@@ -38,20 +50,6 @@ export function rehypeFernComponents(): (tree: Root) => void {
 
                 if (node.name === "Accordion") {
                     transformAccordion(node, index, parent);
-                }
-            }
-        });
-
-        // convert img to Image
-        visit(tree, (node, index) => {
-            if (index == null) {
-                return;
-            }
-            if (isMdxJsxFlowElement(node)) {
-                if (node.name === "img") {
-                    node.name = "Image";
-                } else if (node.name === "iframe") {
-                    node.name = "IFrame";
                 }
             }
         });
