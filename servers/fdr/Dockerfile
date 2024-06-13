@@ -33,6 +33,8 @@ COPY turbo.json turbo.json
 COPY shared shared
 COPY fern fern
 RUN pnpm turbo --filter=@fern-api/fdr-sdk compile
+RUN pnpm turbo --filter=@fern-api/template-resolver compile
+RUN pnpm turbo --filter=@fern-api/github compile
 RUN pnpm turbo --filter=@fern-platform/fdr codegen
 RUN pnpm turbo --filter=@fern-platform/fdr compile
 
