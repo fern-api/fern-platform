@@ -1,10 +1,10 @@
 import { noop, visitDiscriminatedUnion } from "../../utils";
 
-import urljoin from "url-join";
 import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";
 import { NavigationNode, NavigationNodeNeighbor, NavigationNodePage, hasMetadata, isPage } from "../types";
 import { hasRedirect } from "../types/NavigationNodeWithRedirect";
+import { slugjoin } from "./slugjoin";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
@@ -36,7 +36,7 @@ export declare namespace Node {
 }
 
 export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
-    const slugToFind = urljoin(slug);
+    const slugToFind = slugjoin(...slug);
     const collector = NodeCollector.collect(root);
     const map = collector.getSlugMapWithParents();
     const found = map.get(slugToFind);

@@ -1,4 +1,3 @@
-import urljoin from "url-join";
 import { once } from "../utils";
 import { FernNavigation } from "./generated";
 import {
@@ -126,7 +125,7 @@ export class NodeCollector {
     public getPageSlugs = once((): string[] => {
         return Object.values(this.slugToNode)
             .filter(({ node }) => isPage(node))
-            .map(({ node }) => urljoin(node.slug));
+            .map(({ node }) => node.slug);
     });
 
     public getVersionNodes = once((): FernNavigation.VersionNode[] => {

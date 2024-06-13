@@ -1,9 +1,8 @@
-import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
 import { noop, titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
-import { followRedirects } from "../utils";
+import { followRedirects, slugjoin } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
 import { isSubpackage } from "../utils/isSubpackage";
 import { stringifyEndpointPathParts } from "../utils/stringifyEndpointPathParts";
@@ -137,7 +136,7 @@ export class ApiReferenceNavigationConverter {
         return this.#idgen.with(webhookId, (id) => ({
             id,
             type: "webhook",
-            title: webhook.name ?? urljoin("/", ...webhook.path),
+            title: webhook.name ?? `${slugjoin(...webhook.path)}`,
             webhookId,
             slug: parentSlug.apply(webhook).get(),
             icon: undefined,
