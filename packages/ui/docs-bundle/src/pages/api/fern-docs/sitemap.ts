@@ -24,7 +24,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const url = buildUrlFromApiEdge(xFernHost, req);
     // const docs = await loadWithUrl(url);
 
-    const response = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl(url);
+    const response = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+        url,
+    });
 
     if (!response.ok) {
         return jsonResponse(404, [], { headers });
