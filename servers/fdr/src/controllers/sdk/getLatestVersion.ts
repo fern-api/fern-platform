@@ -10,7 +10,6 @@ export async function getLatestVersionFromPypi(packageName: string): Promise<str
     if (response.ok) {
         // Extract the latest version from the response data
         const packageData = (await response.json()) as any;
-        console.log(JSON.stringify(packageData, undefined, 2));
         return packageData.info.version;
     }
 
