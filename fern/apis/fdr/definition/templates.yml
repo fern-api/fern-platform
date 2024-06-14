@@ -193,6 +193,7 @@ types:
       - PATH
       - HEADERS
       - RELATIVE
+      - AUTH
   PayloadInput:
     properties:
       location: PayloadLocation
@@ -202,8 +203,7 @@ types:
 
   SnippetTemplate:
     properties:
-      # TODO: Make clientInstantiation a Template
-      clientInstantiation: string
+      clientInstantiation: Template
       functionInvocation: Template
   VersionedSnippetTemplate:
     audiences:

@@ -47,7 +47,19 @@ export class Templates {
      *             },
      *             snippetTemplate: {
      *                 type: "v1",
-     *                 clientInstantiation: "string",
+     *                 clientInstantiation: {
+     *                     type: "generic",
+     *                     imports: ["string"],
+     *                     isOptional: true,
+     *                     templateString: "string",
+     *                     templateInputs: [{
+     *                             type: "template",
+     *                             value: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     inputDelimiter: "string"
+     *                 },
      *                 functionInvocation: {
      *                     type: "generic",
      *                     imports: ["string"],
@@ -65,7 +77,19 @@ export class Templates {
      *             additionalTemplates: {
      *                 "string": {
      *                     type: "v1",
-     *                     clientInstantiation: "string",
+     *                     clientInstantiation: {
+     *                         type: "generic",
+     *                         imports: ["string"],
+     *                         isOptional: true,
+     *                         templateString: "string",
+     *                         templateInputs: [{
+     *                                 type: "template",
+     *                                 value: {
+     *                                     "key": "value"
+     *                                 }
+     *                             }],
+     *                         inputDelimiter: "string"
+     *                     },
      *                     functionInvocation: {
      *                         type: "generic",
      *                         imports: ["string"],
@@ -143,7 +167,19 @@ export class Templates {
      *                 },
      *                 snippetTemplate: {
      *                     type: "v1",
-     *                     clientInstantiation: "string",
+     *                     clientInstantiation: {
+     *                         type: "generic",
+     *                         imports: ["string"],
+     *                         isOptional: true,
+     *                         templateString: "string",
+     *                         templateInputs: [{
+     *                                 type: "template",
+     *                                 value: {
+     *                                     "key": "value"
+     *                                 }
+     *                             }],
+     *                         inputDelimiter: "string"
+     *                     },
      *                     functionInvocation: {
      *                         type: "generic",
      *                         imports: ["string"],
@@ -161,7 +197,19 @@ export class Templates {
      *                 additionalTemplates: {
      *                     "string": {
      *                         type: "v1",
-     *                         clientInstantiation: "string",
+     *                         clientInstantiation: {
+     *                             type: "generic",
+     *                             imports: ["string"],
+     *                             isOptional: true,
+     *                             templateString: "string",
+     *                             templateInputs: [{
+     *                                     type: "template",
+     *                                     value: {
+     *                                         "key": "value"
+     *                                     }
+     *                                 }],
+     *                             inputDelimiter: "string"
+     *                         },
      *                         functionInvocation: {
      *                             type: "generic",
      *                             imports: ["string"],

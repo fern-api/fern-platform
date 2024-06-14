@@ -89,14 +89,14 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         type: "discriminatedUnion",
                                         imports: [],
                                         isOptional: true,
-                                        templateString: "'$FERN_INPUT'",
+                                        templateString: "$FERN_INPUT",
                                         discriminantField: "role",
                                         members: {
                                             CHATBOT: {
                                                 type: "generic",
                                                 imports: [],
                                                 templateString:
-                                                    '{ \n\t\t\t\trole : "CHATBOT", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
+                                                    '{ \n\t\t\t\trole: "CHATBOT", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
                                                 isOptional: true,
                                                 templateInputs: [
                                                     {
@@ -104,9 +104,9 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "{\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                            templateString: "$FERN_INPUT",
                                                             isOptional: true,
-                                                            inputDelimiter: ",\n\t\t\t\t\t",
+                                                            inputDelimiter: ",\n\t\t\t\t",
                                                             templateInputs: [
                                                                 {
                                                                     type: "template",
@@ -222,7 +222,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 type: "generic",
                                                 imports: [],
                                                 templateString:
-                                                    '{ \n\t\t\t\trole : "SYSTEM", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
+                                                    '{ \n\t\t\t\trole: "SYSTEM", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
                                                 isOptional: true,
                                                 templateInputs: [
                                                     {
@@ -230,9 +230,9 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "{\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                            templateString: "$FERN_INPUT",
                                                             isOptional: true,
-                                                            inputDelimiter: ",\n\t\t\t\t\t",
+                                                            inputDelimiter: ",\n\t\t\t\t",
                                                             templateInputs: [
                                                                 {
                                                                     type: "template",
@@ -348,7 +348,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 type: "generic",
                                                 imports: [],
                                                 templateString:
-                                                    '{ \n\t\t\t\trole : "USER", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
+                                                    '{ \n\t\t\t\trole: "USER", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
                                                 isOptional: true,
                                                 templateInputs: [
                                                     {
@@ -356,9 +356,9 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "{\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                            templateString: "$FERN_INPUT",
                                                             isOptional: true,
-                                                            inputDelimiter: ",\n\t\t\t\t\t",
+                                                            inputDelimiter: ",\n\t\t\t\t",
                                                             templateInputs: [
                                                                 {
                                                                     type: "template",
@@ -474,7 +474,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 type: "generic",
                                                 imports: [],
                                                 templateString:
-                                                    '{ \n\t\t\t\trole : "TOOL", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
+                                                    '{ \n\t\t\t\trole: "TOOL", \n\t\t\t\t$FERN_INPUT\n\t\t\t}',
                                                 isOptional: true,
                                                 templateInputs: [
                                                     {
@@ -482,9 +482,9 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "{\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                            templateString: "$FERN_INPUT",
                                                             isOptional: true,
-                                                            inputDelimiter: ",\n\t\t\t\t\t",
+                                                            inputDelimiter: ",\n\t\t\t\t",
                                                             templateInputs: [
                                                                 {
                                                                     type: "template",
@@ -1402,7 +1402,57 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                 },
             ],
         },
-        clientInstantiation:
-            'const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });\n',
+        clientInstantiation: {
+            imports: [],
+            templateString: "const cohere = new CohereClient($FERN_INPUT);",
+            isOptional: false,
+            inputDelimiter: ",",
+            templateInputs: [
+                {
+                    value: {
+                        imports: [],
+                        templateString: "{ $FERN_INPUT }",
+                        isOptional: true,
+                        templateInputs: [
+                            {
+                                value: {
+                                    imports: [],
+                                    templateString: "token: $FERN_INPUT",
+                                    isOptional: false,
+                                    templateInputs: [
+                                        {
+                                            location: "AUTH",
+                                            path: "token",
+                                            type: "payload",
+                                        },
+                                    ],
+                                    type: "generic",
+                                },
+                                type: "template",
+                            },
+                            {
+                                value: {
+                                    imports: [],
+                                    templateString: "clientName: $FERN_INPUT",
+                                    isOptional: true,
+                                    templateInputs: [
+                                        {
+                                            location: "HEADERS",
+                                            path: "X-Client-Name",
+                                            type: "payload",
+                                        },
+                                    ],
+                                    type: "generic",
+                                },
+                                type: "template",
+                            },
+                        ],
+                        type: "generic",
+                    },
+                    type: "template",
+                },
+            ],
+            type: "generic",
+        },
     },
 };
