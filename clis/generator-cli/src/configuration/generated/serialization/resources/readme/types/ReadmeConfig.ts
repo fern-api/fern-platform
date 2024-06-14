@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernGeneratorCli from "../../../../api/index";
 import * as core from "../../../../core";
+import { Remote } from "./Remote";
 import { LanguageInfo } from "./LanguageInfo";
 import { ReadmeFeature } from "./ReadmeFeature";
 
@@ -12,6 +13,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<
     serializers.ReadmeConfig.Raw,
     FernGeneratorCli.ReadmeConfig
 > = core.serialization.object({
+    remote: Remote.optional(),
     language: LanguageInfo,
     organization: core.serialization.string(),
     bannerLink: core.serialization.string().optional(),
@@ -22,6 +24,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<
 
 export declare namespace ReadmeConfig {
     interface Raw {
+        remote?: Remote.Raw | null;
         language: LanguageInfo.Raw;
         organization: string;
         bannerLink?: string | null;

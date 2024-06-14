@@ -35,13 +35,16 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "octokit": "^3.2.0"
+    "@fern-api/fs-utils": "0.15.0-rc63",
+    "octokit": "^3.2.0",
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
+    "simple-git": "^3.24.0",
     "vitest": "^1.5.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.2.4",
