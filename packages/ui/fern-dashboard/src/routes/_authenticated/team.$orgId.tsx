@@ -13,14 +13,14 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { getOrganization } from "@/services/venus";
+import { getVenusClient, useOrganization, useOrganizations } from "@/services/venus";
 import { LightweightUser, Organization, OrganizationId } from "@fern-api/venus-api-sdk/api";
 import { FernButton, FernTooltip, RemoteFontAwesomeIcon, toast } from "@fern-ui/components";
-import { createFileRoute, useNavigate, useRouteContext } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { FernVenusApiClient } from "@fern-api/venus-api-sdk";
+import { useAuth0 } from "@auth0/auth0-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useToggle } from "react-use";
@@ -36,18 +36,18 @@ export const Route = createFileRoute("/_authenticated/team/$orgId")({
 
 const UserRow: React.FC<{
     user: LightweightUser;
-    venusClient?: FernVenusApiClient;
     auth0OrgId: OrganizationId;
     toggleShouldRefetchOrg: (nextValue?: any) => void;
-}> = ({ user, venusClient, auth0OrgId, toggleShouldRefetchOrg }) => {
+    token?: string;
+}> = ({ user, token, auth0OrgId, toggleShouldRefetchOrg }) => {
     const [isDialogOpen, toggleDialogOpen] = useToggle(false);
     const [isDeleteUserLoading, toggleDeleteUserLoading] = useToggle(false);
 
     async function onDelete() {
         toggleDeleteUserLoading(true);
         try {
-            if (venusClient) {
-                await venusClient?.organization.removeUser({ userId: user.userId, auth0OrgId });
+            if (token) {
+                await getVenusClient({ token }).organization.removeUser({ userId: user.userId, auth0OrgId });
             }
         } catch (e) {
             toast.error("Failed to remove user. Please try again later.");
@@ -65,7 +65,7 @@ const UserRow: React.FC<{
     const deleteUserModal = (
         <Dialog open={isDialogOpen} onOpenChange={toggleDialogOpen}>
             <DialogTrigger asChild>
-                <FernButton icon="trash" intent="danger" variant="outlined" disabled={venusClient == null} />
+                <FernButton icon="trash" intent="danger" variant="outlined" disabled={token == null} />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -114,7 +114,16 @@ const EmailFormSchema = z.object({
 
 const TeamPage: React.FC = () => {
     const { orgId } = Route.useParams();
-    const context = useRouteContext({ strict: false });
+    const auth = useAuth0();
+    const [token, setToken] = useState<string>();
+    useEffect(() => {
+        const getToken = async () => {
+            setToken(await auth.getAccessTokenSilently());
+        };
+        if (!token) {
+            getToken();
+        }
+    }, [auth.isAuthenticated, auth.isLoading]);
 
     const [maybeCurrentOrg, setMaybeCurrentOrg] = useState<Organization>();
     const [organizations, setOrganizations] = useState<Organization[]>();
@@ -131,8 +140,8 @@ const TeamPage: React.FC = () => {
     async function onSubmitEmail(data: z.infer<typeof EmailFormSchema>) {
         toggleInviteUserLoading(true);
         try {
-            if (context.venusClient && maybeCurrentOrg) {
-                await context.venusClient.organization.inviteUser({
+            if (token && maybeCurrentOrg) {
+                await getVenusClient({ token }).organization.inviteUser({
                     emailAddress: data.email,
                     auth0OrgId: OrganizationId(maybeCurrentOrg.auth0Id),
                 });
@@ -149,26 +158,16 @@ const TeamPage: React.FC = () => {
     }
 
     const [shouldRefetchOrg, toggleShouldRefetchOrg] = useToggle(false);
+    const { isLoading: isOrgLoading, data: currentOrgQuery } = useOrganization(token, orgId);
+    const { isLoading: areOrgsLoading, data: organizationsQuery } = useOrganizations(token);
     useEffect(() => {
-        const getOrgs = async () => {
-            setMaybeCurrentOrg(context?.venusClient ? await getOrganization(context?.venusClient, orgId) : undefined);
-            setOrganizations(
-                (
-                    await Promise.all(
-                        context?.venusClient
-                            ? context.orgIds?.map((id) => {
-                                  return getOrganization(context?.venusClient!, id);
-                              }) ?? []
-                            : [],
-                    )
-                ).filter((org) => org !== undefined) as Organization[],
-            );
-        };
-        if (orgId !== maybeCurrentOrg?.organizationId || shouldRefetchOrg) {
-            getOrgs();
-            toggleShouldRefetchOrg();
+        if (!isOrgLoading) {
+            setMaybeCurrentOrg(currentOrgQuery);
         }
-    }, [organizations, orgId, context, shouldRefetchOrg]);
+        if (!areOrgsLoading) {
+            setOrganizations(organizationsQuery.filter((org): org is Organization => org != null));
+        }
+    }, [isOrgLoading, areOrgsLoading]);
 
     const navigate = useNavigate();
 
@@ -257,7 +256,7 @@ const TeamPage: React.FC = () => {
                                     <UserRow
                                         key={index}
                                         user={user}
-                                        venusClient={context.venusClient}
+                                        token={token}
                                         auth0OrgId={OrganizationId(maybeCurrentOrg.auth0Id)}
                                         toggleShouldRefetchOrg={toggleShouldRefetchOrg}
                                     />

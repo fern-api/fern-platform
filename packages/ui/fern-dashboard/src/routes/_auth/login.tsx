@@ -1,4 +1,5 @@
 import { FernLogo } from "@/components/FernLogo";
+import { useAuth0 } from "@auth0/auth0-react";
 import { FernButton, RemoteFontAwesomeIcon, toast } from "@fern-ui/components";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -19,13 +20,13 @@ export const Route = createFileRoute("/_auth/login")({
 });
 
 const Login: React.FC = () => {
-    const context = Route.useRouteContext();
+    const auth = useAuth0();
 
     const { invitation, organization, organization_name } = Route.useSearch();
     // When redirected to from the invite email, for some reason we have to re-envoke loginWithRedirect
     // https://github.com/auth0/auth0-react/blob/main/EXAMPLES.md#use-with-auth0-organizations
     if (invitation && organization && organization_name) {
-        context.auth?.loginWithRedirect({
+        auth.loginWithRedirect({
             authorizationParams: {
                 organization,
                 invitation,
@@ -43,7 +44,7 @@ const Login: React.FC = () => {
                 <div className="flex flex-col w-[30%] gap-y-10 self-center">
                     <h2 className="text-muted">Log in to manage your APIs.</h2>
                     <FernButton
-                        onClick={() => context.auth?.loginWithRedirect()}
+                        onClick={() => auth.loginWithRedirect()}
                         icon={
                             <RemoteFontAwesomeIcon
                                 icon="fa-brands fa-github"

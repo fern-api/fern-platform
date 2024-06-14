@@ -1,8 +1,8 @@
 import { ErrorRenderer } from "@/components/errors/ErrorRenderer";
-import { getAPIResponse } from "@/services/fern";
-import { getVenusClient } from "@/services/venus";
-import { checkAuthAndThrow } from "@/utils";
-import { CatchBoundary, Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { useOrganizationIds } from "@/services/venus";
+import { useAuth0 } from "@auth0/auth0-react";
+import { CatchBoundary, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/")({
     component: () => (
@@ -11,40 +11,46 @@ export const Route = createFileRoute("/")({
             onCatch={(error) => console.error(error)}
             errorComponent={ErrorRenderer}
         >
-            <Outlet />
+            <Index />
         </CatchBoundary>
     ),
-    beforeLoad: async ({ context }) => {
-        const isAuthenticated = await checkAuthAndThrow(context.auth);
+});
 
-        // redundant check for typing
-        if (!context.auth) {
-            throw new Error("Auth0 context not found.");
+const Index: React.FC = () => {
+    const auth = useAuth0();
+    const navigate = useNavigate();
+    const [isAuthLoading, setIsAuthLoading] = useState(true);
+    const [token, setToken] = useState<string>();
+
+    // Check for Auth0 to update auth
+    useEffect(() => {
+        setIsAuthLoading(auth.isLoading);
+
+        const getToken = async () => {
+            setToken(await auth.getAccessTokenSilently());
+        };
+        if (!auth.isLoading && auth.isAuthenticated) {
+            getToken();
         }
+    }, [auth.isAuthenticated, auth.isLoading]);
 
-        // log the user in if they're accessing an authenticated route without being authenticated
-        if (!isAuthenticated) {
-            console.debug("User is not authenticated, redirecting to /login");
-            throw redirect({ to: "/login" });
-        }
-
-        // // Since we only have one page, let's just always redirect to /team for now
-        const orgIds = context.orgIds;
-        let orgId: string;
-
-        // Technically could just assert that orgIds is non-null, but
-        // it's better to be safe than sorry
-        if (!orgIds || orgIds.length === 0) {
-            const token = await context.auth!.getAccessTokenSilently();
-            const client = getVenusClient({ token });
-            const fetchedIds = getAPIResponse(await client.organization.getOrgIdsFromToken());
+    // Check for our organization query to complete
+    const { isLoading: isDataLoading, data: fetchedIds } = useOrganizationIds(token);
+    useEffect(() => {
+        if (!isDataLoading) {
             if (!fetchedIds || fetchedIds.length === 0) {
                 throw new Error("No organizations found");
             }
-            orgId = fetchedIds?.[0];
-        } else {
-            orgId = orgIds[0];
+            navigate({ to: "/team/$orgId", params: { orgId: fetchedIds[0] } });
         }
-        throw redirect({ to: "/team/$orgId", params: { orgId } });
-    },
-});
+    }, [isAuthLoading, auth.isAuthenticated, isDataLoading]);
+
+    // Outlet depending on the auth status
+    if (isAuthLoading) {
+        return <div>Loading...</div>;
+    }
+    if (!auth.isAuthenticated) {
+        console.debug("User is not authenticated, redirecting to /login");
+        navigate({ to: "/login" });
+    }
+};

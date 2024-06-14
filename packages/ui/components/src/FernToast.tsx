@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { AlertCircle, CheckCircle, Info, Loader, XCircle } from "react-feather";
 import { Toaster as SonnerToaster } from "sonner";
 
@@ -10,10 +9,10 @@ interface ToasterProps {
     position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
 }
 
-export const Toaster: FC<ToasterProps> = ({ position }) => {
+export const Toaster: React.FC<ToasterProps> = ({ position = "bottom-center" }: ToasterProps) => {
     return (
         <SonnerToaster
-            position={position ?? "bottom-center"}
+            position={position}
             toastOptions={{
                 unstyled: true,
                 classNames: {

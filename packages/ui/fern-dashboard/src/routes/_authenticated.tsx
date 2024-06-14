@@ -1,38 +1,38 @@
-import { getAPIResponse } from "@/services/fern";
-import { getVenusClient } from "@/services/venus";
-import { checkAuthAndThrow } from "@/utils";
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { ErrorRenderer } from "@/components/errors/ErrorRenderer";
+import { useAuth0 } from "@auth0/auth0-react";
+import { CatchBoundary, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
-    component: () => <Outlet />,
-    beforeLoad: async ({ context }) => {
-        const isAuthenticated = await checkAuthAndThrow(context.auth);
-
-        // redundant check for typing
-        if (!context.auth) {
-            throw new Error("Auth0 context not found.");
-        }
-
-        // log the user in if they're accessing an authenticated route without being authenticated
-        if (!isAuthenticated) {
-            console.debug("User is not authenticated, redirecting to /login");
-            throw redirect({ to: "/login" });
-        }
-
-        // fetch info from venus
-        const orgIds = context.orgIds;
-        const token = await context.auth.getAccessTokenSilently();
-        let fetchedIds: string[] | undefined = undefined;
-
-        const venusClient = context.venusClient ?? getVenusClient({ token });
-
-        if (!orgIds || orgIds.length === 0) {
-            fetchedIds = getAPIResponse(await venusClient.organization.getOrgIdsFromToken());
-        }
-        return {
-            ...context,
-            venusClient,
-            orgIds: fetchedIds ?? orgIds,
-        };
-    },
+    component: () => (
+        <CatchBoundary
+            getResetKey={() => "reset"}
+            onCatch={(error) => console.error(error)}
+            errorComponent={ErrorRenderer}
+        >
+            <AuthenticatedOutlet />
+        </CatchBoundary>
+    ),
 });
+
+const AuthenticatedOutlet: React.FC = () => {
+    const auth = useAuth0();
+    const [isAuthLoading, setIsAuthLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsAuthLoading(auth.isLoading);
+    }, [auth, auth.isLoading]);
+
+    if (isAuthLoading) {
+        console.log("Loading...");
+        return <div>Loading...</div>;
+    }
+
+    if (!auth.isAuthenticated) {
+        console.debug("User is not authenticated, redirecting to /login");
+        navigate({ to: "/login" });
+    }
+
+    return <Outlet />;
+};

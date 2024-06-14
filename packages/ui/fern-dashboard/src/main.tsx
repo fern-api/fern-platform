@@ -4,19 +4,15 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 
 // Import the generated route tree
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { Toaster } from "@fern-ui/components";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
 import { getEnvVar } from "./utils";
 
 // Create a new router instance
 const router = createRouter({
     routeTree,
-    context: {
-        auth: undefined,
-        venusClient: undefined,
-        orgIds: undefined,
-    },
 });
 
 // Register the router instance for type safety
@@ -26,10 +22,7 @@ declare module "@tanstack/react-router" {
     }
 }
 
-function EnrichedRouterProvider() {
-    const auth = useAuth0();
-    return <RouterProvider router={router} context={{ auth }} />;
-}
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
@@ -44,8 +37,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 connection: "github",
             }}
         >
-            <EnrichedRouterProvider />
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
         </Auth0Provider>
-        <Toaster position="top-center" />
+        <Toaster {...{ position: "top-center" }} />
     </React.StrictMode>,
 );
