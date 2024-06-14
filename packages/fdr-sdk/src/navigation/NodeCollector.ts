@@ -10,6 +10,7 @@ import {
     isPage,
 } from "./types";
 import { traverseNavigation } from "./utils";
+import { pruneVersionNode } from "./utils/pruneVersionNode";
 
 interface NavigationNodeWithMetadataAndParents {
     node: NavigationNodeWithMetadata;
@@ -42,31 +43,52 @@ export class NodeCollector {
         }
     }
 
+    private defaultVersion: FernNavigation.VersionNode | undefined;
     constructor(rootNode: NavigationNode) {
         traverseNavigation(rootNode, (node, _index, parents) => {
             this.idToNode.set(node.id, node);
-            if (node.type === "sidebarRoot") {
-                this.#last = undefined;
-                this.#lastNeighboringNode = undefined;
+
+            const parent = parents[parents.length - 1];
+            if (
+                node.type === "version" &&
+                node.default &&
+                parent != null &&
+                parent.type === "versioned" &&
+                rootNode.type === "root"
+            ) {
+                const copy = JSON.parse(JSON.stringify(node)) as FernNavigation.VersionNode;
+                this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
+                traverseNavigation(this.defaultVersion, (node, _index, innerParents) => {
+                    this.visitNode(node, [...parents, ...innerParents]);
+                });
             }
 
-            if (!hasMetadata(node)) {
-                return;
-            }
-            const existing = this.slugToNode[node.slug];
-            if (existing == null) {
-                this.#setNode(node.slug, node, parents);
-            } else if (!node.hidden && isPage(node) && (existing.node.hidden || !isPage(existing.node))) {
-                this.orphanedNodes.push(existing.node);
-                this.#setNode(node.slug, node, parents);
-            } else {
-                if (isPage(existing.node)) {
-                    // eslint-disable-next-line no-console
-                    console.warn(`Duplicate slug found: ${node.slug}`);
-                }
-                this.orphanedNodes.push(node);
-            }
+            this.visitNode(node, parents);
         });
+    }
+
+    private visitNode(node: NavigationNode, parents: NavigationNode[]): void {
+        if (node.type === "sidebarRoot") {
+            this.#last = undefined;
+            this.#lastNeighboringNode = undefined;
+        }
+
+        if (!hasMetadata(node)) {
+            return;
+        }
+        const existing = this.slugToNode[node.slug];
+        if (existing == null) {
+            this.#setNode(node.slug, node, parents);
+        } else if (!node.hidden && isPage(node) && (existing.node.hidden || !isPage(existing.node))) {
+            this.orphanedNodes.push(existing.node);
+            this.#setNode(node.slug, node, parents);
+        } else {
+            if (isPage(existing.node)) {
+                // eslint-disable-next-line no-console
+                console.warn(`Duplicate slug found: ${node.slug}`);
+            }
+            this.orphanedNodes.push(node);
+        }
     }
 
     public getOrphanedNodes(): NavigationNodeWithMetadata[] {
@@ -83,6 +105,10 @@ export class NodeCollector {
 
     get slugMap(): Map<string, NavigationNodeWithMetadata> {
         return this.getSlugMap();
+    }
+
+    get defaultVersionNode(): FernNavigation.VersionNode | undefined {
+        return this.defaultVersion;
     }
 
     public get(id: FernNavigation.NodeId): NavigationNode | undefined {

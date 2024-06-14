@@ -3,14 +3,8 @@ import { noop, visitDiscriminatedUnion } from "../../utils";
 import urljoin from "url-join";
 import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";
-import {
-    NavigationNode,
-    NavigationNodeNeighbor,
-    NavigationNodePage,
-    NavigationNodeWithMetadata,
-    hasMetadata,
-    isPage,
-} from "../types";
+import { NavigationNode, NavigationNodeNeighbor, NavigationNodePage, hasMetadata, isPage } from "../types";
+import { hasRedirect } from "../types/NavigationNodeWithRedirect";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
@@ -49,27 +43,38 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
     if (found == null) {
         let maybeVersionNode: FernNavigation.RootNode | FernNavigation.VersionNode = root;
         for (const versionNode of collector.getVersionNodes()) {
-            if (!versionNode.default && slugToFind.startsWith(versionNode.slug)) {
+            if (slugToFind.startsWith(versionNode.slug)) {
                 maybeVersionNode = versionNode;
                 break;
             }
         }
 
-        return { type: "notFound", redirect: maybeVersionNode.pointsTo };
+        return { type: "notFound", redirect: maybeVersionNode.pointsTo ?? root.pointsTo };
     }
 
     const sidebar = found.parents.find((node): node is FernNavigation.SidebarRootNode => node.type === "sidebarRoot");
-    const version = found.parents.find((node): node is FernNavigation.VersionNode => node.type === "version");
+    const currentVersion = found.parents.find((node): node is FernNavigation.VersionNode => node.type === "version");
     if (isPage(found.node) && sidebar != null) {
-        const rootChild = (version ?? root).child;
+        const rootChild = (currentVersion ?? root).child;
         return {
             type: "found",
             node: found.node,
             breadcrumb: createBreadcrumb(found.parents),
             root,
-            versions: collector.getVersionNodes(),
+            // this is used to render the version switcher
+            versions: collector.getVersionNodes().map((node) => {
+                if (node.default) {
+                    // if we're currently viewing the default version, we may be viewing the non-pruned version
+                    if (node.id === currentVersion?.id) {
+                        return currentVersion;
+                    }
+                    // otherwise, we should always use the pruned version node
+                    return collector.defaultVersionNode ?? node;
+                }
+                return node;
+            }),
             tabs: rootChild.type === "tabbed" ? rootChild.children : [],
-            currentVersion: version,
+            currentVersion,
             currentTab: found.parents.findLast((node): node is FernNavigation.TabNode => node.type === "tab"),
             sidebar,
             apiReference:
@@ -85,19 +90,13 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
         return { type: "redirect", redirect: root.pointsTo };
     }
 
-    const redirect = hasPointsTo(found.node) ? found.node.pointsTo : version?.pointsTo ?? root.pointsTo;
+    const redirect = hasRedirect(found.node) ? found.node.pointsTo : currentVersion?.pointsTo ?? root.pointsTo;
 
     if (redirect == null || redirect === slugToFind) {
         return { type: "notFound", redirect: undefined };
     }
 
     return { type: "redirect", redirect };
-}
-
-function hasPointsTo(
-    node: NavigationNodeWithMetadata,
-): node is NavigationNodeWithMetadata & FernNavigation.WithRedirect {
-    return (node as FernNavigation.WithRedirect).pointsTo != null;
 }
 
 function createBreadcrumb(nodes: NavigationNode[]): string[] {

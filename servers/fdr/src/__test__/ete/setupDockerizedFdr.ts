@@ -6,9 +6,6 @@ export async function setup() {
     await execa("pnpm", ["docker:local"], { stdio: "inherit" });
     await execa("docker-compose", ["-f", "docker-compose.ete.yml", "up", "-d"], { stdio: "inherit" });
     await sleep(10000);
-    await execa("pnpm", ["prisma", "migrate", "deploy"], {
-        stdio: "inherit",
-    });
     return async () => {
         if (teardown) {
             throw new Error("teardown called twice");

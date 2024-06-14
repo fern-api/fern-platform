@@ -1,4 +1,4 @@
-name: Publish FDR SDK
+name: Publish FDR SDKs
 
 on:
   workflow_call:
@@ -12,6 +12,27 @@ env:
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 jobs:
+  publish_fiddle_sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Publish Fiddle FDR SDK
+        env: 
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          git_version="$(scripts/fdr-version.sh)"
+          fern generate --api fdr --group fiddle --version $git_version
+          
+
   publish_sdk:
     runs-on: ubuntu-latest
     steps:

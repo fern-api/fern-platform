@@ -6,38 +6,13 @@ import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {
-        visit(tree, (node, index, parent) => {
-            if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
-                return;
-            }
-
-            if (isMdxJsxFlowElement(node) && node.name != null) {
-                if (node.name === "Tabs") {
-                    transformTabs(node, index, parent);
-                }
-
-                if (node.name === "TabGroup") {
-                    transformTabs(node, index, parent);
-                }
-
-                if (node.name === "AccordionGroup") {
-                    transformAccordionGroup(node, index, parent);
-                }
-            }
-        });
-
-        visit(tree, (node, index, parent) => {
-            if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
-                return;
-            }
-
-            if (isMdxJsxFlowElement(node) && node.name != null) {
-                if (node.name === "Tab") {
-                    transformTabItem(node, index, parent);
-                }
-
-                if (node.name === "Accordion") {
-                    transformAccordion(node, index, parent);
+        // convert img to Image
+        visit(tree, (node) => {
+            if (isMdxJsxFlowElement(node)) {
+                if (node.name === "img") {
+                    node.name = "Image";
+                } else if (node.name === "iframe") {
+                    node.name = "IFrame";
                 }
             }
         });
@@ -103,16 +78,38 @@ export function rehypeFernComponents(): (tree: Root) => void {
             return CONTINUE; // this line helps avoid a typescript warning
         });
 
-        // convert img to Image
-        visit(tree, (node, index) => {
-            if (index == null) {
+        visit(tree, (node, index, parent) => {
+            if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
                 return;
             }
-            if (isMdxJsxFlowElement(node)) {
-                if (node.name === "img") {
-                    node.name = "Image";
-                } else if (node.name === "iframe") {
-                    node.name = "IFrame";
+
+            if (isMdxJsxFlowElement(node) && node.name != null) {
+                if (node.name === "Tabs") {
+                    transformTabs(node, index, parent);
+                }
+
+                if (node.name === "TabGroup") {
+                    transformTabs(node, index, parent);
+                }
+
+                if (node.name === "AccordionGroup") {
+                    transformAccordionGroup(node, index, parent);
+                }
+            }
+        });
+
+        visit(tree, (node, index, parent) => {
+            if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
+                return;
+            }
+
+            if (isMdxJsxFlowElement(node) && node.name != null) {
+                if (node.name === "Tab") {
+                    transformTabItem(node, index, parent);
+                }
+
+                if (node.name === "Accordion") {
+                    transformAccordion(node, index, parent);
                 }
             }
         });
