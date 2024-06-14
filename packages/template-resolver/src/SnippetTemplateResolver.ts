@@ -40,7 +40,7 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
@@ -88,7 +88,7 @@ export class SnippetTemplateResolver {
                         invocation: template.templateString.replace(
                             // TODO: fix the typescript generator to create literals not as types
                             TemplateSentinel,
-                            "",
+                            ""
                         ),
                     };
                 }
@@ -118,7 +118,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
                           ),
                       }
                     : undefined;
@@ -143,7 +143,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -173,7 +173,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -200,7 +200,7 @@ export class SnippetTemplateResolver {
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
                     template.templateInput ?? { location: "RELATIVE" },
-                    payloadOverride,
+                    payloadOverride
                 );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
                     return undefined;
@@ -219,7 +219,7 @@ export class SnippetTemplateResolver {
 
                 const evaluatedMember: V1Snippet | undefined = this.resolveV1Template(
                     selectedMemberTemplate,
-                    payloadOverride,
+                    payloadOverride
                 );
                 return evaluatedMember != null
                     ? {
@@ -235,9 +235,44 @@ export class SnippetTemplateResolver {
         }
     }
 
+    private isPayloadEmpty(): boolean {
+        return (
+            this.payload.requestBody == null &&
+            this.payload.queryParameters == null &&
+            this.payload.pathParameters == null &&
+            this.payload.headers == null
+        );
+    }
+
     private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
         const clientSnippet = template.clientInstantiation;
-        const endpointSnippet = this.resolveV1Template(template.functionInvocation);
+        let endpointSnippet: V1Snippet | undefined;
+        if (this.isPayloadEmpty()) {
+            let invocation: string;
+
+            // The top level template should really be generic, but we're not enforcing that right now.
+            switch (template.functionInvocation.type) {
+                case "generic":
+                case "discriminatedUnion":
+                case "union":
+                case "enum":
+                    invocation = template.functionInvocation.templateString?.replace(TemplateSentinel, "") ?? "";
+                    break;
+                case "dict":
+                    invocation = "{}";
+                    break;
+                case "iterable":
+                    invocation = template.functionInvocation.containerTemplateString.replace(TemplateSentinel, "");
+                    break;
+            }
+
+            endpointSnippet = {
+                imports: template.functionInvocation.imports ?? [],
+                invocation,
+            };
+        } else {
+            endpointSnippet = this.resolveV1Template(template.functionInvocation);
+        }
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
