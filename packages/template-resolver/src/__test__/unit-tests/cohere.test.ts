@@ -19,4 +19,18 @@ describe("Snippet Template Resolver", () => {
 
         expect(customSnippet.client).toMatchSnapshot();
     });
+
+    it("Test empty payload", () => {
+        const resolver = new SnippetTemplateResolver({
+            payload: {},
+            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
+        });
+        const customSnippet = resolver.resolve();
+
+        if (customSnippet.type !== "typescript") {
+            throw new Error("Expected snippet to be typescript");
+        }
+
+        expect(customSnippet.client).toMatchSnapshot();
+    });
 });
