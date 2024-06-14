@@ -1,4 +1,3 @@
-import { kebabCase } from "lodash-es";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -10,6 +9,7 @@ import {
     visitWriteNavigationConfig,
 } from "../../client";
 import { isNavigationTabLink } from "../../client/visitNavigationTab";
+import { kebabCase } from "../../utils";
 import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
@@ -149,7 +149,8 @@ function transformUnversionedNavigationConfigForDb(
         },
         tabbed: (config) => {
             return {
-                tabs: config.tabs.map(transformNavigationTabForDb),
+                tabs: config.tabs?.map(transformNavigationTabForDb),
+                tabsV2: config.tabsV2?.map(transformNavigationTabV2ForDb),
             };
         },
     });
@@ -163,6 +164,38 @@ export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTa
         ...writeShape,
         items: writeShape.items.map(transformNavigationItemForDb),
         urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+    };
+}
+
+function transformNavigationTabV2ForDb(writeShape: DocsV1Write.NavigationTabV2): DocsV1Db.NavigationTabV2 {
+    switch (writeShape.type) {
+        case "group":
+            return {
+                ...writeShape,
+                items: writeShape.items.map(transformNavigationItemForDb),
+                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+            };
+        case "link":
+            return writeShape;
+        case "changelog": {
+            return { type: "changelog", ...toChangelogDb(writeShape) };
+        }
+    }
+}
+
+function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): WithoutQuestionMarks<DocsV1Read.ChangelogSection> {
+    return {
+        title: writeShape.title,
+        icon: writeShape.icon,
+        hidden: writeShape.hidden ?? false,
+        description: writeShape.description,
+        items: writeShape.items.map((item) => ({
+            date: item.date,
+            pageId: item.pageId,
+        })),
+        pageId: writeShape.pageId,
+        urlSlug: writeShape.urlSlugOverride ?? (writeShape.title != null ? kebabCase(writeShape.title) : "changelog"),
+        fullSlug: writeShape.fullSlug,
     };
 }
 
@@ -222,6 +255,12 @@ export function transformNavigationItemForDb(
                 icon: writeShape.icon,
                 url: writeShape.url,
             };
+        case "changelog":
+            return { type: "changelog", ...toChangelogDb(writeShape) };
+        case "apiV2":
+            return writeShape;
+        default:
+            assertNever(writeShape);
     }
 }
 
@@ -242,16 +281,22 @@ function getReferencedApiDefinitionIdsForUnversionedReadConfig(
     config: DocsV1Db.UnversionedNavigationConfig,
 ): FdrAPI.ApiDefinitionId[] {
     return visitUnversionedDbNavigationConfig<FdrAPI.ApiDefinitionId[]>(config, {
-        untabbed: (config) => {
-            return config.items.flatMap(getReferencedApiDefinitionIdFromItem);
-        },
+        untabbed: (config) => config.items.flatMap(getReferencedApiDefinitionIdFromItem),
         tabbed: (config) => {
-            return config.tabs.flatMap((tab) => {
+            const toRet: FdrAPI.ApiDefinitionId[] = [];
+            config.tabs?.forEach((tab) => {
                 if (isNavigationTabLink(tab)) {
-                    return [];
+                    return;
+                } else {
+                    toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
                 }
-                return tab.items.flatMap(getReferencedApiDefinitionIdFromItem);
             });
+            config.tabsV2?.forEach((tab) => {
+                if (tab.type === "group") {
+                    toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                }
+            });
+            return toRet;
         },
     });
 }
@@ -266,6 +311,10 @@ function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): Fd
             return item.items.flatMap((sectionItem) => getReferencedApiDefinitionIdFromItem(sectionItem));
         case "link":
             return [];
+        case "changelog":
+            return [];
+        case "apiV2":
+            return [item.node.apiDefinitionId];
         default:
             assertNever(item);
     }

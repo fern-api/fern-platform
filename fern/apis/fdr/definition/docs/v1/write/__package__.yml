@@ -3,6 +3,7 @@
 imports:
   rootCommons: ../../../commons.yml
   commons: ../commons/commons.yml
+  navigation: ../../../navigation/__package__.yml
 
 service:
   base-path: /registry/docs
@@ -57,32 +58,21 @@ types:
     properties:
       uploadUrl: string
       fileId:
-        type: FileId
+        type: commons.FileId
         docs: |
-          When reading docs we will return a map<FileId, URL> that you can use to look up the docs.
-
-  FileId: string
+          When reading docs we will return a map<commons.FileId, URL> that you can use to look up the docs.
 
   Height: double
 
-  PageId: string
-
-  Url: string
-
-  FileIdOrUrl:
-    union:
-      fileId: FileId
-      url: Url
-
   DocsDefinition:
     properties:
-      pages: map<PageId, PageContent>
+      pages: map<commons.PageId, PageContent>
       config: DocsConfig
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a FileId ?
-      editThisPageUrl: optional<Url>
+      markdown: string # eventually PageContent should just be a commons.FileId ?
+      editThisPageUrl: optional<commons.Url>
 
   DocsConfig:
     properties:
@@ -90,45 +80,45 @@ types:
 
       # navigation
       navigation: NavigationConfig
-      navbarLinks: optional<list<NavbarLink>>
-      footerLinks: optional<list<FooterLink>>
+      navbarLinks: optional<list<commons.NavbarLink>>
+      footerLinks: optional<list<commons.FooterLink>>
 
       # logo
       logoHeight: optional<Height>
-      logoHref: optional<Url>
-      favicon: optional<FileId>
+      logoHref: optional<commons.Url>
+      favicon: optional<commons.FileId>
 
       # seo
-      metadata: optional<MetadataConfig>
-      redirects: optional<list<RedirectConfig>>
+      metadata: optional<commons.MetadataConfig>
+      redirects: optional<list<commons.RedirectConfig>>
       # TODO: customize 404 page/behavior
 
       # styles
       colorsV3: optional<ColorsConfigV3>
       layout: optional<DocsLayoutConfig>
-      typographyV2: optional<DocsTypographyConfigV2>
+      typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
-      integrations: optional<IntegrationsConfig>
+      integrations: optional<commons.IntegrationsConfig>
 
       # css and js
-      css: optional<CssConfig>
-      js: optional<JsConfig>
+      css: optional<commons.CssConfig>
+      js: optional<commons.JsConfig>
 
       # deprecated
-      backgroundImage: optional<FileId>
-      logoV2: optional<ThemedFileId>
+      backgroundImage: optional<commons.FileId>
+      logoV2: optional<commons.ThemedFileId>
       logo:
-        type: optional<FileId>
+        type: optional<commons.FileId>
         availability: deprecated
       colors:
-        type: optional<ColorsConfig>
+        type: optional<commons.ColorsConfig>
         availability: deprecated
       colorsV2:
-        type: optional<ColorsConfigV2>
+        type: optional<commons.ColorsConfigV2>
         availability: deprecated
       typography:
-        type: optional<DocsTypographyConfig>
+        type: optional<commons.DocsTypographyConfig>
         availability: deprecated
 
   ColorsConfigV3:
@@ -139,99 +129,22 @@ types:
 
   ThemeConfig:
     properties:
-      logo: optional<FileId>
-      backgroundImage: optional<FileId>
-      accentPrimary: RgbaColor
-      background: optional<RgbaColor>
-      border: optional<RgbaColor>
-      sidebarBackground: optional<RgbaColor>
-      headerBackground: optional<RgbaColor>
-      cardBackground: optional<RgbaColor>
+      logo: optional<commons.FileId>
+      backgroundImage: optional<commons.FileId>
+      accentPrimary: commons.RgbaColor
+      background: optional<commons.RgbaColor>
+      border: optional<commons.RgbaColor>
+      sidebarBackground: optional<commons.RgbaColor>
+      headerBackground: optional<commons.RgbaColor>
+      cardBackground: optional<commons.RgbaColor>
 
   DarkAndLightModeConfig:
     properties:
       dark: ThemeConfig
       light: ThemeConfig
 
-  ThemedFileId:
-    properties:
-      dark: optional<FileId>
-      light: optional<FileId>
-
-  DocsTypographyConfig:
-    properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
-
-  DocsTypographyConfigV2:
-    properties:
-      headingsFont: optional<FontConfigV2>
-      bodyFont: optional<FontConfigV2>
-      codeFont: optional<FontConfigV2>
-
-  FontConfig:
-    properties:
-      name: string
-      fontFile: FileId
-
-  # TODO: add support for google fonts
-  FontConfigV2:
-    union:
-      custom: CustomFontConfig
-
-  CustomFontConfig:
-    properties:
-      name: string
-      variants: list<CustomFontConfigVariant>
-      display: optional<FontDisplay>
-      fallback: optional<list<string>>
-      # declarations
-      fontVariationSettings: optional<string>
-
-  CustomFontConfigVariant:
-    properties:
-      fontFile: FileId
-      weight: optional<list<string>>
-      style: optional<list<FontStyle>>
-
-  FontStyle:
-    enum:
-      - normal
-      - italic
-
-  FontDisplay:
-    enum:
-      - auto
-      - block
-      - swap
-      - fallback
-      - optional
-
-  NavbarLink:
-    union:
-      filled: NavbarLinkMetadata
-      outlined: NavbarLinkMetadata
-      minimal: NavbarLinkMetadata
-      github: NavbarGithubMetadata
-
-      # deprecated
-      primary: NavbarLinkMetadata # -> outlined
-      secondary: NavbarLinkMetadata # -> minimal
-
-  NavbarLinkMetadata:
-    properties:
-      url: string
-      text: optional<string>
-      icon: optional<string>
-      rightIcon: optional<string>
-      rounded: optional<boolean>
-
-  NavbarGithubMetadata:
-    properties:
-      url: string # github repo url
-
   NavigationConfig:
+    availability: deprecated
     discriminated: false
     union:
       - UnversionedNavigationConfig
@@ -245,20 +158,30 @@ types:
 
   UnversionedTabbedNavigationConfig:
     properties:
-      tabs: list<NavigationTab>
+      tabs:
+        type: optional<list<NavigationTab>>
+        availability: deprecated
+      tabsV2: optional<list<NavigationTabV2>>
 
   NavigationTab:
+    availability: deprecated
     discriminated: false
     union:
       - NavigationTabGroup
       - NavigationTabLink
 
+  NavigationTabV2:
+    union:
+      group: NavigationTabGroup
+      link: NavigationTabLink
+      changelog: ChangelogSectionV2
+
   NavigationTabGroup:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       items: list<NavigationItem>
-      urlSlugOverride: optional<string>
+      skipUrlSlug: optional<boolean>
 
   NavigationTabLink:
     properties:
@@ -330,17 +253,31 @@ types:
     union:
       page: PageMetadata
       api: ApiSection
+      apiV2: ApiSectionV2
       section: DocsSection
       link: LinkMetadata
+      changelog: ChangelogSectionV2
 
   PageMetadata:
+    extends: NavigationNodeMetadata
     properties:
+      id:
+        type: commons.PageId
+        docs: This is a filepath relative to the fern folder, with a .md/.mdx extension.
       title: string
+
+  NavigationNodeMetadata:
+    properties:
       icon: optional<string>
       hidden: optional<boolean>
-      id: PageId
-      urlSlugOverride: optional<string>
-      fullSlug: optional<list<string>>
+      urlSlugOverride:
+        type: optional<string>
+        docs: |
+          Optional slug to override the generated slug, which is `kebabCase(title)`. This is ignored if `fullSlug` is provided.
+      fullSlug:
+        type: optional<list<string>>
+        docs: |
+          If provided, ignores `urlSlugOverride`, and its parent slugs, and instead uses `/${basepath}/${fullSlug.join('/')}` this page's pathname.
 
   LinkMetadata:
     properties:
@@ -349,27 +286,35 @@ types:
       url: string
 
   ApiSection:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       api: rootCommons.ApiDefinitionId
-      artifacts: optional<ApiArtifacts>
+      artifacts:
+        type: optional<ApiArtifacts>
+        availability: deprecated
       skipUrlSlug: optional<boolean>
       showErrors: optional<boolean>
-      changelog: optional<ChangelogSection>
-      hidden: optional<boolean>
-      urlSlugOverride: optional<string>
-      fullSlug: optional<list<string>>
+      changelog:
+        type: optional<ChangelogSection>
+        availability: deprecated
+      changelogV2: optional<ChangelogSectionV2>
       navigation: optional<ApiNavigationConfigRoot>
       longScrolling: optional<boolean>
       flattened: optional<boolean>
 
-  ApiNavigationConfigRoot:
+  ApiSectionV2:
     properties:
-      summaryPageId: optional<PageId>
+      node: navigation.ApiReferenceNode
+
+  ApiNavigationConfigRoot:
+    availability: deprecated
+    properties:
+      summaryPageId: optional<commons.PageId>
       items: list<ApiNavigationConfigItem>
 
   ApiNavigationConfigItem:
+    availability: deprecated
     union:
       subpackage: ApiNavigationConfigSubpackage
       endpointId: commons.EndpointId
@@ -378,12 +323,14 @@ types:
       page: PageMetadata
 
   ApiNavigationConfigSubpackage:
+    availability: deprecated
     properties:
-      summaryPageId: optional<PageId>
+      summaryPageId: optional<commons.PageId>
       subpackageId: commons.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
+    availability: deprecated
     properties:
       title:
         type: optional<string>
@@ -402,6 +349,14 @@ types:
       urlSlug: string
       fullSlug: optional<list<string>>
 
+  ChangelogSectionV2:
+    extends: NavigationNodeMetadata
+    properties:
+      title: optional<string>
+      description: optional<string>
+      pageId: optional<string>
+      items: list<ChangelogItem>
+
   ChangelogItem:
     properties:
       date: date
@@ -409,45 +364,22 @@ types:
       hidden: optional<boolean>
 
   DocsSection:
+    extends: NavigationNodeMetadata
     properties:
       title: string
-      icon: optional<string>
       items: list<NavigationItem>
-      urlSlugOverride: optional<string>
-      collapsed: optional<boolean>
-      hidden: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        # default: false
+        docs: |
+          This is only applicable to sections that are at the root level in the sidebar.
+          If false, the section title will be displayed as a header and the items will be displayed below it, and cannot be collapsed.
       skipUrlSlug: optional<boolean>
-      fullSlug: optional<list<string>>
-
-  ColorsConfig:
-    properties:
-      accentPrimary: optional<RgbaColor>
-
-  ColorsConfigV2:
-    properties:
-      accentPrimary: optional<ColorConfig>
-      background: optional<ColorConfig>
-
-  ColorConfig:
-    union:
-      unthemed: ColorUnthemedConfig
-      themed: ColorThemedConfig
-
-  ColorUnthemedConfig:
-    properties:
-      color: optional<RgbaColor>
-
-  ColorThemedConfig:
-    properties:
-      dark: optional<RgbaColor>
-      light: optional<RgbaColor>
-
-  RgbaColor:
-    properties:
-      r: integer
-      g: integer
-      b: integer
-      a: optional<double>
+      summaryPageId:
+        type: optional<commons.PageId>
+        availability: in-development
+        docs: |
+          If provided, clicking on this section will open this page instead of the first page in the section.
 
   ApiArtifacts:
     properties:
@@ -494,82 +426,6 @@ types:
       overlappingDomains: list<OverlappingCustomDomains>
 
   OverlappingCustomDomains: list<string>
-
-  CssConfig:
-    properties:
-      inline: optional<list<string>>
-
-  JsConfig:
-    properties:
-      remote: optional<list<JsRemoteConfig>>
-      files: list<JsFileConfig>
-      inline: optional<list<string>>
-
-  JsRemoteConfig:
-    properties:
-      url: Url
-      strategy: optional<JsScriptStrategy>
-
-  JsFileConfig:
-    properties:
-      fileId: FileId
-      strategy: optional<JsScriptStrategy>
-
-  JsScriptStrategy:
-    enum:
-      - beforeInteractive
-      - afterInteractive # default
-      - lazyOnload
-
-  IntegrationsConfig:
-    properties:
-      intercom: optional<string>
-
-  MetadataConfig:
-    properties:
-      "og:site_name": optional<string>
-      "og:title": optional<string>
-      "og:description": optional<string>
-      "og:url": optional<string>
-      "og:image": optional<FileIdOrUrl>
-      "og:image:width": optional<double>
-      "og:image:height": optional<double>
-      "og:locale": optional<string>
-      "og:logo": optional<FileIdOrUrl>
-      "twitter:title": optional<string>
-      "twitter:description": optional<string>
-      "twitter:image": optional<FileIdOrUrl>
-      "twitter:handle": optional<string>
-      "twitter:site": optional<string>
-      "twitter:url": optional<string>
-      "twitter:card": optional<TwitterCardSetting>
-
-  RedirectConfig:
-    properties:
-      source: string
-      destination: string
-
-  TwitterCardSetting:
-    enum:
-      - summary
-      - summary_large_image
-      - app
-      - player
-
-  FooterLink:
-    union:
-      github: Url
-      twitter: Url
-      x: Url
-      linkedin: Url
-      youtube: Url
-      instagram: Url
-      facebook: Url
-      discord: Url
-      slack: Url
-      hackernews: Url
-      medium: Url
-      website: Url
 
 errors:
   DocsRegistrationIdNotFound:

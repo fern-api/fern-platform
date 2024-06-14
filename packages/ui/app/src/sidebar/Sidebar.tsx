@@ -11,26 +11,18 @@ import { useSearchService } from "../services/useSearchService";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
-import { SidebarSection } from "./SidebarSection";
 import { SidebarTabButton } from "./SidebarTabButton";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
+import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
 export interface SidebarProps {
-    currentSlug: string[];
-    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     showSearchBar?: boolean;
 }
 
-const SidebarInner = memo<SidebarProps>(function SidebarInner({
-    currentSlug,
-    registerScrolledToPathListener,
-    logoHeight,
-    logoHref,
-    showSearchBar,
-}) {
-    const { layout, tabs, currentTabIndex, sidebarNodes } = useDocsContext();
+const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logoHref, showSearchBar }) {
+    const { layout, tabs, currentTabIndex, sidebar } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
     const layoutBreakpoint = useLayoutBreakpoint();
@@ -70,15 +62,9 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({
                             ))}
                         </ul>
                     )}
-                    <CollapseSidebarProvider navigationItems={sidebarNodes}>
+                    <CollapseSidebarProvider scrollRef={scrollRef}>
                         <FernTooltipProvider>
-                            <SidebarSection
-                                navigationItems={sidebarNodes}
-                                slug={currentSlug}
-                                registerScrolledToPathListener={registerScrolledToPathListener}
-                                depth={0}
-                                topLevel={true}
-                            />
+                            <SidebarRootNode node={sidebar} />
                         </FernTooltipProvider>
                     </CollapseSidebarProvider>
                     <MobileSidebarHeaderLinks />

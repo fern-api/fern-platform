@@ -13,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { getVenusClient, useOrganization, useOrganizations } from "@/services/venus";
+import { getVenusClient, useOrganization, useOrganizationIds, useRemoveUserFromOrg } from "@/services/venus";
 import { LightweightUser, Organization, OrganizationId } from "@fern-api/venus-api-sdk/api";
-import { FernButton, FernTooltip, RemoteFontAwesomeIcon, toast } from "@fern-ui/components";
+import { FernButton, RemoteFontAwesomeIcon, toast } from "@fern-ui/components";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
@@ -36,30 +36,24 @@ export const Route = createFileRoute("/_authenticated/team/$orgId")({
 
 const UserRow: React.FC<{
     user: LightweightUser;
-    auth0OrgId: OrganizationId;
-    toggleShouldRefetchOrg: (nextValue?: any) => void;
+    organization: Organization;
     token?: string;
-}> = ({ user, token, auth0OrgId, toggleShouldRefetchOrg }) => {
+}> = ({ user, token, organization }) => {
     const [isDialogOpen, toggleDialogOpen] = useToggle(false);
-    const [isDeleteUserLoading, toggleDeleteUserLoading] = useToggle(false);
+    const removeUserMutation = useRemoveUserFromOrg(organization);
 
     async function onDelete() {
-        toggleDeleteUserLoading(true);
         try {
             if (token) {
-                await getVenusClient({ token }).organization.removeUser({ userId: user.userId, auth0OrgId });
+                await removeUserMutation.mutateAsync({ token, userId: user.userId });
             }
         } catch (e) {
             toast.error("Failed to remove user. Please try again later.");
-            toggleDeleteUserLoading(false);
             toggleDialogOpen(false);
             return;
         }
         toast.success(`Successfully removed ${user.displayName} from your team!`);
-        toggleDeleteUserLoading(false);
         toggleDialogOpen(false);
-
-        toggleShouldRefetchOrg();
     }
 
     const deleteUserModal = (
@@ -75,8 +69,8 @@ const UserRow: React.FC<{
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <FernButton icon={!isDeleteUserLoading && "trash"} intent="danger" onClick={onDelete}>
-                        {isDeleteUserLoading ? (
+                    <FernButton icon={!removeUserMutation.isPending && "trash"} intent="danger" onClick={onDelete}>
+                        {removeUserMutation.isPending ? (
                             <RemoteFontAwesomeIcon
                                 icon="fa-solid fa-spinner-third"
                                 className="animate-spin text-white"
@@ -101,9 +95,7 @@ const UserRow: React.FC<{
                 <span>{user.displayName}</span>
                 {user.emailAddress && <span className="text-muted-foreground">{user.emailAddress}</span>}
             </div>
-            <FernTooltip content="Remove user from team" className="line-clamp-3">
-                {deleteUserModal}
-            </FernTooltip>
+            {deleteUserModal}
         </div>
     );
 };
@@ -112,22 +104,10 @@ const EmailFormSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
 });
 
-const TeamPage: React.FC = () => {
-    const { orgId } = Route.useParams();
-    const auth = useAuth0();
-    const [token, setToken] = useState<string>();
-    useEffect(() => {
-        const getToken = async () => {
-            setToken(await auth.getAccessTokenSilently());
-        };
-        if (!token) {
-            getToken();
-        }
-    }, [auth.isAuthenticated, auth.isLoading]);
-
-    const [maybeCurrentOrg, setMaybeCurrentOrg] = useState<Organization>();
-    const [organizations, setOrganizations] = useState<Organization[]>();
-
+const EmailPopover: React.FC<{
+    currentOrganization: Organization;
+    token?: string;
+}> = ({ token, currentOrganization }) => {
     const form = useForm<z.infer<typeof EmailFormSchema>>({
         resolver: zodResolver(EmailFormSchema),
         defaultValues: {
@@ -140,10 +120,10 @@ const TeamPage: React.FC = () => {
     async function onSubmitEmail(data: z.infer<typeof EmailFormSchema>) {
         toggleInviteUserLoading(true);
         try {
-            if (token && maybeCurrentOrg) {
+            if (token) {
                 await getVenusClient({ token }).organization.inviteUser({
                     emailAddress: data.email,
-                    auth0OrgId: OrganizationId(maybeCurrentOrg.auth0Id),
+                    auth0OrgId: OrganizationId(currentOrganization.auth0Id),
                 });
             }
         } catch (e) {
@@ -156,22 +136,87 @@ const TeamPage: React.FC = () => {
         toggleInviteUserLoading(false);
         toggleEmailPopover(false);
     }
+    return (
+        <Popover open={isEmailPopoverOpen} onOpenChange={toggleEmailPopover}>
+            <PopoverTrigger asChild>
+                <FernButton icon="user-plus" intent="success" onClick={toggleEmailPopover}>
+                    <span className="text-white">Add team member</span>
+                </FernButton>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 mr-10">
+                <div className="flex flex-col gap-4">
+                    <div className="space-y-2">
+                        <h4 className="font-medium leading-none">Send Invite</h4>
+                        <p className="text-sm text-muted-foreground">
+                            Enter the email of the team member you'd like to invite
+                        </p>
+                    </div>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmitEmail)} className="space-y-2">
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                id="email"
+                                                type="email"
+                                                placeholder="jane@doe.com"
+                                                className="h-8"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FernButton intent="success" full type="submit">
+                                {isInviteUserLoading ? (
+                                    <RemoteFontAwesomeIcon
+                                        icon="fa-solid fa-spinner-third"
+                                        className="animate-spin text-white"
+                                    />
+                                ) : (
+                                    <span className="text-white">Submit</span>
+                                )}
+                            </FernButton>
+                        </form>
+                    </Form>
+                </div>
+            </PopoverContent>
+        </Popover>
+    );
+};
 
-    const [shouldRefetchOrg, toggleShouldRefetchOrg] = useToggle(false);
-    const { isLoading: isOrgLoading, data: currentOrgQuery } = useOrganization(token, orgId);
-    const { isLoading: areOrgsLoading, data: organizationsQuery } = useOrganizations(token);
-    useEffect(() => {
-        if (!isOrgLoading) {
-            setMaybeCurrentOrg(currentOrgQuery);
-        }
-        if (!areOrgsLoading) {
-            setOrganizations(organizationsQuery.filter((org): org is Organization => org != null));
-        }
-    }, [isOrgLoading, areOrgsLoading]);
-
+const TeamPage: React.FC = () => {
+    const { orgId } = Route.useParams();
+    const auth = useAuth0();
     const navigate = useNavigate();
 
+    const [token, setToken] = useState<string>();
+    const [maybeCurrentOrgId, setMaybeCurrentOrgId] = useState<string>();
+
+    const { isLoading: areOrgIdsLoading, data: organizations } = useOrganizationIds(token);
+    const { isLoading: isOrgLoading, data: maybeCurrentOrg } = useOrganization(token, maybeCurrentOrgId);
+
+    useEffect(() => {
+        const getToken = async () => {
+            setToken(await auth.getAccessTokenSilently());
+        };
+        if (!token) {
+            getToken();
+        }
+    }, [auth.isAuthenticated, auth.isLoading]);
+
+    useEffect(() => {
+        if (!areOrgIdsLoading && organizations && organizations.length > 0) {
+            setMaybeCurrentOrgId(organizations.find((queriedOrgId) => queriedOrgId === orgId) ?? organizations[0]);
+        }
+    }, [areOrgIdsLoading, organizations, orgId]);
+
     return (
+        !isOrgLoading &&
         maybeCurrentOrg && (
             <>
                 <BreadcrumbHeader
@@ -181,10 +226,10 @@ const TeamPage: React.FC = () => {
                                   {
                                       name: maybeCurrentOrg.displayName,
                                       options: organizations
-                                          .filter((org) => org.organizationId !== maybeCurrentOrg.organizationId)
-                                          .map((org) => ({
-                                              name: org.displayName,
-                                              path: `/team/${org.organizationId}`,
+                                          .filter((orgId) => orgId !== maybeCurrentOrgId)
+                                          .map((orgId) => ({
+                                              name: orgId,
+                                              path: `/team/${orgId}`,
                                           })),
                                       action: (path) => navigate({ to: path }),
                                   },
@@ -199,67 +244,13 @@ const TeamPage: React.FC = () => {
                                 <h2>Your Team</h2>
                                 <span className="text-muted-foreground">@ {maybeCurrentOrg.displayName}</span>
                             </div>
-                            <Popover open={isEmailPopoverOpen} onOpenChange={toggleEmailPopover}>
-                                <PopoverTrigger asChild>
-                                    <FernButton icon="user-plus" intent="success" onClick={toggleEmailPopover}>
-                                        <span className="text-white">Add team member</span>
-                                    </FernButton>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-80 mr-10">
-                                    <div className="flex flex-col gap-4">
-                                        <div className="space-y-2">
-                                            <h4 className="font-medium leading-none">Send Invite</h4>
-                                            <p className="text-sm text-muted-foreground">
-                                                Enter the email of the team member you'd like to invite
-                                            </p>
-                                        </div>
-                                        <Form {...form}>
-                                            <form onSubmit={form.handleSubmit(onSubmitEmail)} className="space-y-2">
-                                                <FormField
-                                                    control={form.control}
-                                                    name="email"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormControl>
-                                                                <Input
-                                                                    id="email"
-                                                                    type="email"
-                                                                    placeholder="jane@doe.com"
-                                                                    className="h-8"
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <FernButton intent="success" full type="submit">
-                                                    {isInviteUserLoading ? (
-                                                        <RemoteFontAwesomeIcon
-                                                            icon="fa-solid fa-spinner-third"
-                                                            className="animate-spin text-white"
-                                                        />
-                                                    ) : (
-                                                        <span className="text-white">Submit</span>
-                                                    )}
-                                                </FernButton>
-                                            </form>
-                                        </Form>
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
+                            <EmailPopover currentOrganization={maybeCurrentOrg} token={token} />
                         </div>
                         <Separator decorative />
                         <ScrollArea className="flex flex-col flex-grow shrink px-6 gap-y-6" type="auto">
                             <div className="border rounded-md max-w-[80rem] self-center align-center mx-auto">
                                 {maybeCurrentOrg.users.map((user, index) => (
-                                    <UserRow
-                                        key={index}
-                                        user={user}
-                                        token={token}
-                                        auth0OrgId={OrganizationId(maybeCurrentOrg.auth0Id)}
-                                        toggleShouldRefetchOrg={toggleShouldRefetchOrg}
-                                    />
+                                    <UserRow key={index} user={user} token={token} organization={maybeCurrentOrg} />
                                 ))}
                             </div>
                         </ScrollArea>

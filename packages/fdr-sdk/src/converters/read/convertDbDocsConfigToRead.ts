@@ -1,8 +1,9 @@
-import { kebabCase } from "lodash-es";
 import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
+import { kebabCase } from "../../utils";
 import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
+import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export function convertDbDocsConfigToRead({
@@ -12,19 +13,13 @@ export function convertDbDocsConfigToRead({
 }): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
     return {
         navigation: transformNavigationConfigToRead(dbShape.navigation),
-        logo: dbShape.logo,
-        logoV2: dbShape.logoV2,
         logoHeight: dbShape.logoHeight,
         logoHref: dbShape.logoHref,
-        colors: dbShape.colors,
-        colorsV2: dbShape.colorsV2,
         colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
         navbarLinks: dbShape.navbarLinks,
         footerLinks: dbShape.footerLinks,
         title: dbShape.title,
         favicon: dbShape.favicon,
-        backgroundImage: dbShape.backgroundImage,
-        typography: dbShape.typography ?? transformTypographyV2ToV1(dbShape.typographyV2),
         typographyV2: dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
         layout: dbShape.layout,
         css: dbShape.css,
@@ -68,32 +63,32 @@ function transformTypographyToV2(
     };
 }
 
-function transformFontConfigV2ToV1(fontConfig: DocsV1Read.FontConfigV2 | undefined): DocsV1Read.FontConfig | undefined {
-    if (fontConfig == null) {
-        return undefined;
-    }
-    const firstVariant = fontConfig.variants[0];
-    if (firstVariant == null) {
-        return undefined;
-    }
-    return {
-        name: fontConfig.name,
-        fontFile: firstVariant.fontFile,
-    };
-}
+// function transformFontConfigV2ToV1(fontConfig: DocsV1Read.FontConfigV2 | undefined): DocsV1Read.FontConfig | undefined {
+//     if (fontConfig == null) {
+//         return undefined;
+//     }
+//     const firstVariant = fontConfig.variants[0];
+//     if (firstVariant == null) {
+//         return undefined;
+//     }
+//     return {
+//         name: fontConfig.name,
+//         fontFile: firstVariant.fontFile,
+//     };
+// }
 
-function transformTypographyV2ToV1(
-    typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-): DocsV1Read.DocsTypographyConfig | undefined {
-    if (typography == null) {
-        return undefined;
-    }
-    return {
-        headingsFont: transformFontConfigV2ToV1(typography.headingsFont),
-        bodyFont: transformFontConfigV2ToV1(typography.bodyFont),
-        codeFont: transformFontConfigV2ToV1(typography.codeFont),
-    };
-}
+// function transformTypographyV2ToV1(
+//     typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
+// ): DocsV1Read.DocsTypographyConfig | undefined {
+//     if (typography == null) {
+//         return undefined;
+//     }
+//     return {
+//         headingsFont: transformFontConfigV2ToV1(typography.headingsFont),
+//         bodyFont: transformFontConfigV2ToV1(typography.bodyFont),
+//         codeFont: transformFontConfigV2ToV1(typography.codeFont),
+//     };
+// }
 
 export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConfig): DocsV1Read.NavigationConfig {
     return visitDbNavigationConfig<DocsV1Read.NavigationConfig>(dbShape, {
@@ -127,7 +122,10 @@ function transformUnversionedNavigationConfigForDb(
     return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(config, {
         tabbed: (config) => {
             return {
-                tabs: config.tabs.map(transformNavigationTabForDb),
+                tabs:
+                    config.tabsV2?.map(transformNavigationTabV2ForDb) ??
+                    config.tabs?.map(transformNavigationTabForDb) ??
+                    [],
             };
         },
         untabbed: (config) => {
@@ -145,8 +143,30 @@ export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): Do
             type: "group",
             ...group,
             items: group.items.map(transformNavigationItemForDb),
+            skipUrlSlug: group.skipUrlSlug ?? false,
+            hidden: undefined,
+            fullSlug: undefined,
         }),
     });
+}
+
+export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2): DocsV1Read.NavigationTab {
+    switch (dbShape.type) {
+        case "link":
+            return dbShape;
+        case "group":
+            return {
+                ...dbShape,
+                items: dbShape.items.map(transformNavigationItemForDb),
+                skipUrlSlug: dbShape.skipUrlSlug ?? false,
+                hidden: undefined,
+                fullSlug: undefined,
+            };
+        case "changelog":
+            return dbShape;
+        default:
+            assertNever(dbShape);
+    }
 }
 
 export function isNavigationTabLink(tab: DocsV1Db.NavigationTab): tab is DocsV1Read.NavigationTabLink {
@@ -168,6 +188,12 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
                 ...dbShape,
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
             };
+        case "changelog":
+            return dbShape;
+        case "apiV2":
+            return dbShape;
+        default:
+            assertNever(dbShape);
     }
 }
 

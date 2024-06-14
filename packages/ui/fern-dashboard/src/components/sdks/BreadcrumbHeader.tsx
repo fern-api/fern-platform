@@ -50,7 +50,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
     const { logout } = useAuth0();
 
     return (
-        <nav className="flex flex-row contents-center items-center gap-x-4 fixed inset-x-0 top-0 z-50 bg-white shadow-sm translate-y-0 md:translate-y-0/2 dark:bg-gray-950 p-6 h-16 justify-between">
+        <nav className="flex flex-row contents-center items-center gap-x-4 fixed inset-x-0 top-0 z-50 bg-background shadow-sm translate-y-0 md:translate-y-0/2 dark:bg-gray-950 p-6 h-16 justify-between">
             <div className="flex flex-row gap-x-3 items-center">
                 <Link to="/">
                     <FernLogo className={cn("-mt-0.5 h-7 transition fill-black")} />
@@ -62,7 +62,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                             let item: React.ReactNode;
                             if ("options" in entry) {
                                 item = (
-                                    <BreadcrumbItem key={index}>
+                                    <BreadcrumbItem>
                                         {entry.options.length > 0 ? (
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
@@ -76,7 +76,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                                                                 size={3}
                                                             />
                                                         }
-                                                        className="w-full text-left gap-x-4 !p-0 !bg-white font-bold"
+                                                        className="w-full text-left gap-x-4 !p-0 !bg-background font-bold"
                                                         variant="outlined"
                                                         size="large"
                                                     />
@@ -111,7 +111,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                                                         size={3}
                                                     />
                                                 }
-                                                className="w-full text-left gap-x-4 !p-0 !pl-1 !bg-white"
+                                                className="w-full text-left gap-x-4 !p-0 !pl-1 !bg-background"
                                                 variant="outlined"
                                                 size="large"
                                             />
@@ -120,17 +120,17 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                                 );
                             } else {
                                 item = (
-                                    <BreadcrumbItem key={index}>
+                                    <BreadcrumbItem>
                                         <BreadcrumbLink href={entry.path}>{entry.name}</BreadcrumbLink>
                                     </BreadcrumbItem>
                                 );
                             }
 
                             return (
-                                <>
+                                <div key={index}>
                                     {item}
                                     {index < entries.length - 1 && <FernBreadcrumbSeparator />}
-                                </>
+                                </div>
                             );
                         })}
                     </BreadcrumbList>

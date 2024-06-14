@@ -5,12 +5,18 @@
 import * as Sentry from "@sentry/nextjs";
 
 const sentryEnv = process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev";
+const assetPrefix =
+    process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
+const tunnelPath = "/api/fern-docs/monitoring";
 
 Sentry.init({
     dsn: "https://216ad381a8f652e036b1833af58627e5@o4507138224160768.ingest.us.sentry.io/4507148139495424",
     // Do not enable sentry locally
     enabled: process.env.NODE_ENV === "production",
     environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
+
+    // This forces the browser to send all events to app.buildwithfern.com/api/fern-docs/monitoring
+    tunnel: assetPrefix == null ? tunnelPath : new URL(tunnelPath, assetPrefix).href,
 
     // Performance Monitoring
     tracesSampleRate: sentryEnv === "dev" ? 0.5 : 0.75, //  Capture 75% of the transactions
@@ -54,4 +60,6 @@ Sentry.init({
 
         return event;
     },
+
+    spotlight: process.env.NODE_ENV === "development",
 });

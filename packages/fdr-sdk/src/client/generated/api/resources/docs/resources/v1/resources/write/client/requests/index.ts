@@ -1,2 +1,2 @@
-export { StartDocsRegisterRequest } from "./StartDocsRegisterRequest";
-export { RegisterDocsRequest } from "./RegisterDocsRequest";
+export { type StartDocsRegisterRequest } from "./StartDocsRegisterRequest";
+export { type RegisterDocsRequest } from "./RegisterDocsRequest";

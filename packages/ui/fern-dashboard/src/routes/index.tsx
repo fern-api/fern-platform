@@ -1,6 +1,8 @@
+import { Loading } from "@/components/Loading";
 import { ErrorRenderer } from "@/components/errors/ErrorRenderer";
 import { useOrganizationIds } from "@/services/venus";
 import { useAuth0 } from "@auth0/auth0-react";
+import { toast } from "@fern-ui/components";
 import { CatchBoundary, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
@@ -37,20 +39,21 @@ const Index: React.FC = () => {
     // Check for our organization query to complete
     const { isLoading: isDataLoading, data: fetchedIds } = useOrganizationIds(token);
     useEffect(() => {
-        if (!isDataLoading) {
+        if (token && auth.isAuthenticated && !isDataLoading) {
             if (!fetchedIds || fetchedIds.length === 0) {
-                throw new Error("No organizations found");
+                navigate({ to: "/login", search: { error: "no_orgs", redirect: false } });
+                toast.error("We had trouble finding your organization. Please try again later.", { id: "no_orgs" });
+                return;
             }
             navigate({ to: "/team/$orgId", params: { orgId: fetchedIds[0] } });
         }
-    }, [isAuthLoading, auth.isAuthenticated, isDataLoading]);
+    }, [token, isAuthLoading, auth.isAuthenticated, isDataLoading]);
 
     // Outlet depending on the auth status
     if (isAuthLoading) {
-        return <div>Loading...</div>;
+        return <Loading fullPage />;
     }
     if (!auth.isAuthenticated) {
-        console.debug("User is not authenticated, redirecting to /login");
         navigate({ to: "/login" });
     }
 };

@@ -1,10 +1,7 @@
-import { ErrorComponentProps } from "@tanstack/react-router";
+import { toast } from "@fern-ui/components";
+import { ErrorComponentProps, Navigate } from "@tanstack/react-router";
 
 export const ErrorRenderer: React.FC<ErrorComponentProps> = (props) => {
-    return (
-        <div>
-            {props.error.name}
-            {props.error.message}
-        </div>
-    );
+    toast.error(props.error.message);
+    return <Navigate to="/login" search={{ error: "catch_boundary", redirect: false }} />;
 };

@@ -2,6 +2,8 @@ name: Test FDR ETE
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "fern/apis/fdr/**"
       - "fern/fern.config.json"
@@ -9,6 +11,17 @@ on:
       - "servers/fdr/**"
       - ".github/workflows/deploy-fdr.yml"
       - "packages/fdr-sdk/**"
+      - "packages/commons/github/**"
+      - "pnpm-lock.yaml"
+  pull_request:
+    paths:
+      - "fern/apis/fdr/**"
+      - "fern/fern.config.json"
+      - "servers/fdr-deploy/**"
+      - "servers/fdr/**"
+      - ".github/workflows/deploy-fdr.yml"
+      - "packages/fdr-sdk/**"
+      - "packages/commons/github/**"
       - "pnpm-lock.yaml"
 
 env:
@@ -28,10 +41,5 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Setup database
-        # TODO: re-enable when moving to turbo
-        # pnpm turbo --filter= docker:local
-        run: |
-          cd servers/fdr
-          pnpm run docker:local
-          pnpm run test:ete
+      - name: Run ete test
+        run: pnpm --filter=@fern-platform/fdr test:ete

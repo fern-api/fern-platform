@@ -1,27 +1,22 @@
-import { SidebarNode, getUnversionedSlug, visitSidebarNode } from "@fern-ui/fdr-utils";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { NextSeo } from "@fern-ui/next-seo";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { debounce, memoize } from "lodash-es";
-import Head from "next/head";
+import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { renderToString } from "react-dom/server";
-import { captureSentryError } from "../../analytics/sentry";
-import { MdxContent } from "../../mdx/MdxContent";
-import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
-import { useCloseMobileSidebar, useCloseSearchDialog } from "../../sidebar/atom";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useFeatureFlags } from "../FeatureFlagContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
-import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
         resolvedPath: ResolvedPath;
         domain: string;
         basePath: string | undefined;
-        title: string | undefined;
+        // title: string | undefined;
     }>;
 }
 
@@ -95,21 +90,16 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     children,
     domain,
     basePath,
-    title,
 }) => {
-    const { sidebarNodes, versions, currentVersionIndex } = useDocsContext();
+    const docsContext = useDocsContext();
+    const { nodes, versions, currentVersionId } = docsContext;
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 
-    const [activeNavigatable, setActiveNavigatable] = useState(() =>
-        resolveActiveSidebarNode(
-            sidebarNodes,
-            resolvedPath.fullSlug.split("/").filter((str) => str.trim().length > 0),
-        ),
-    );
+    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(resolvedPath.fullSlug));
 
     const [, anchor] = router.asPath.split("#");
-    const selectedSlug = activeNavigatable?.slug.join("/") ?? "";
+    const selectedSlug = activeNavigatable?.slug ?? "";
     const resolvedRoute = `/${selectedSlug}${anchor != null ? `#${anchor}` : ""}`;
 
     useEffect(() => {
@@ -149,9 +139,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         };
     }, []);
 
-    // const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
-    const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
-
     const onScrollToPath = useEventCallback(
         debounce(
             (fullSlug: string) => {
@@ -160,8 +147,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
                 justScrolledTo = `/${fullSlug}`;
                 void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
-                scrollToPathListeners.invokeListeners(fullSlug);
-                setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, fullSlug.split("/")));
+                setActiveNavigatable(nodes.slugMap.get(fullSlug));
                 startScrollTracking(`/${fullSlug}`, true);
             },
             300,
@@ -176,12 +162,9 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         justScrolledTo = undefined;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(resolveActiveSidebarNode(sidebarNodes, decodeURI(fullSlug).split("/")));
+        setActiveNavigatable(nodes.slugMap.get(fullSlug));
         startScrollTracking(route);
     });
-
-    const closeMobileSidebar = useCloseMobileSidebar();
-    const closeSearchDialog = useCloseSearchDialog();
 
     useEffect(() => {
         const handleRouteChange = (route: string, options: { shallow: boolean }) => {
@@ -198,8 +181,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 }
             }
             navigateToPath(route);
-            closeMobileSidebar();
-            closeSearchDialog();
         };
         const handleRouteChangeError = (err: Error, route: string, options: { shallow: boolean }) => {
             if (process.env.NODE_ENV === "development") {
@@ -221,21 +202,17 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             router.events.off("hashChangeComplete", handleRouteChange);
             router.events.off("routeChangeError", handleRouteChangeError);
         };
-    }, [closeMobileSidebar, closeSearchDialog, navigateToPath, router.events]);
+    }, [navigateToPath, router.events]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
             navigateToPath(as);
             startScrollTracking(as);
-            closeMobileSidebar();
-            closeSearchDialog();
             return true;
         });
-    }, [router, navigateToPath, closeMobileSidebar, closeSearchDialog]);
+    }, [router, navigateToPath]);
 
-    const frontmatter = getFrontmatter(resolvedPath);
-    const activeTitle = convertToTitle(activeNavigatable, frontmatter);
-    const activeDescription = convertDescriptionToString(activeNavigatable, frontmatter);
+    const seo = useMemo(() => getNextSeoProps(resolvedPath, activeNavigatable), [activeNavigatable, resolvedPath]);
 
     return (
         <NavigationContext.Provider
@@ -245,104 +222,67 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                     activeNavigatable,
                     onScrollToPath,
-                    registerScrolledToPathListener: scrollToPathListeners.registerListener,
                     resolvedPath,
-                    activeVersion: versions[currentVersionIndex ?? 0],
+                    activeVersion: versions.find((version) => version.id === currentVersionId),
                     selectedSlug,
-                    unversionedSlug: getUnversionedSlug(
-                        selectedSlug.split("/"),
-                        versions[currentVersionIndex ?? 0]?.slug ?? [],
-                        basePath?.split("/").filter((part) => part.length > 0) ?? [],
+                    unversionedSlug: FernNavigation.utils.getUnversionedSlug(
+                        selectedSlug,
+                        versions.find((version) => version.id === currentVersionId)?.slug,
+                        basePath,
                     ),
                 }),
                 [
                     activeNavigatable,
                     basePath,
-                    currentVersionIndex,
+                    currentVersionId,
                     domain,
                     onScrollToPath,
                     resolvedPath,
-                    scrollToPathListeners.registerListener,
                     selectedSlug,
                     versions,
                 ],
             )}
         >
-            <Head>
-                {activeTitle != null && <title>{title != null ? `${activeTitle} – ${title}` : activeTitle}</title>}
-                {activeDescription != null && <meta name="description" content={activeDescription} />}
-                {frontmatter?.image != null && <meta property="og:image" content={frontmatter.image} />}
-            </Head>
+            <NextSeo {...seo} />
             {children}
         </NavigationContext.Provider>
     );
 };
 
-function getFrontmatter(resolvedPath: ResolvedPath): FernDocsFrontmatter | undefined {
-    if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.serializedMdxContent !== "string") {
-        return resolvedPath.serializedMdxContent.frontmatter;
-    }
-    return undefined;
-}
+// function convertToTitle(
+//     page: FernNavigation.NavigationNodeWithMetadata | undefined,
+//     frontmatter: FernDocsFrontmatter | undefined,
+// ): string | undefined {
+//     return frontmatter?.title ?? page?.title;
+// }
 
-function convertToTitle(
-    page: SidebarNode.Page | undefined,
-    frontmatter: FernDocsFrontmatter | undefined,
-): string | undefined {
-    return frontmatter?.title ?? page?.title;
-}
+// function convertDescriptionToString(frontmatter: FernDocsFrontmatter | undefined): string | undefined {
+//     // const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
+//     const description = frontmatter?.description ?? frontmatter?.excerpt ?? undefined;
 
-function convertDescriptionToString(
-    page: SidebarNode.Page | undefined,
-    frontmatter: FernDocsFrontmatter | undefined,
-): string | undefined {
-    const description = frontmatter?.description ?? page?.description ?? frontmatter?.excerpt ?? undefined;
+//     if (description == null) {
+//         return;
+//     }
 
-    if (description == null) {
-        return;
-    }
+//     if (typeof description === "string") {
+//         return description;
+//     }
 
-    if (typeof description === "string") {
-        return description;
-    }
+//     const mdxContent = <MdxContent mdx={description} />;
 
-    const mdxContent = <MdxContent mdx={description} />;
+//     try {
+//         return renderToString(mdxContent);
+//     } catch (e) {
+//         // eslint-disable-next-line no-console
+//         console.error("Error rendering MDX to string", e);
 
-    try {
-        return renderToString(mdxContent);
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Error rendering MDX to string", e);
+//         captureSentryError(e, {
+//             context: "NavigationContext",
+//             errorSource: "convertDescriptionToString",
+//             errorDescription:
+//                 "An error occurred while rendering the description (which is a serialized MDX content) to string for the meta description tag. This impacts SEO",
+//         });
 
-        captureSentryError(e, {
-            context: "NavigationContext",
-            errorSource: "convertDescriptionToString",
-            errorDescription:
-                "An error occurred while rendering the description (which is a serialized MDX content) to string for the meta description tag. This impacts SEO",
-        });
-
-        return undefined;
-    }
-}
-
-const resolveActiveSidebarNode = memoize(
-    (sidebarNodes: SidebarNode[], fullSlug: string[]): SidebarNode.Page | undefined => {
-        const hits: SidebarNode.Page[] = [];
-
-        for (const node of sidebarNodes) {
-            visitSidebarNode(node, (n) => {
-                if (n.type === "page" && n.slug.join("/") === fullSlug.join("/")) {
-                    hits.push(n);
-                    return false;
-                }
-                return true;
-            });
-            if (hits.length > 0) {
-                break;
-            }
-        }
-
-        return hits[0];
-    },
-    (_sidebarNodes, fullSlug) => fullSlug.join("/"),
-);
+//         return undefined;
+//     }
+// }

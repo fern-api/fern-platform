@@ -1,6 +1,9 @@
-import { resolveSidebarNodesRoot, visitSidebarNodeRaw } from "@fern-ui/fdr-utils";
-import { ApiDefinitionResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
+import { ApiDefinitionResolver, ApiTypeResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
+import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
+import { getXFernHostNode } from "../../../utils/xFernHost";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
@@ -15,25 +18,10 @@ const resolveApiHandler: NextApiHandler = async (
             return;
         }
 
-        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? req.headers["x-fern-host"];
-        if (typeof xFernHost === "string") {
-            req.headers.host = xFernHost;
-            res.setHeader("host", xFernHost);
-        } else {
-            res.status(400).json(null);
-            return;
-        }
-        const hostWithoutTrailingSlash = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-        const fullUrl = req.url;
+        const xFernHost = getXFernHostNode(req);
+        res.setHeader("host", xFernHost);
 
-        if (fullUrl == null) {
-            res.status(400).json(null);
-            return;
-        }
-
-        const maybePathName = fullUrl.split("/api/fern-docs/resolve-api")[0] ?? "";
-        const pathname = maybePathName.startsWith("/") ? maybePathName : `/${maybePathName}`;
-        const url = `${hostWithoutTrailingSlash}${pathname}`;
+        const url = buildUrlFromApiNode(xFernHost, req);
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
         const docsResponse = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
@@ -46,41 +34,38 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const docs = docsResponse.body;
-        const docsDefinition = docs.definition;
-        const docsConfig = docsDefinition.config;
-
-        const basePathSlug =
-            docs.baseUrl.basePath != null ? docs.baseUrl.basePath.split("/").filter((t) => t.length > 0) : [];
-
-        const root = resolveSidebarNodesRoot(
-            docsConfig.navigation,
-            docs.definition.apis,
-            docs.definition.pages,
-            basePathSlug,
-            docs.baseUrl.domain,
-        );
-
-        const entryPromises: Promise<[string, ResolvedRootPackage]>[] = [];
+        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docsResponse.body);
 
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
-        visitSidebarNodeRaw(root, (node) => {
-            if (node.type === "apiSection" && node.flattenedApiDefinition != null) {
-                const entry = ApiDefinitionResolver.resolve(
-                    node.title,
-                    node.flattenedApiDefinition,
-                    docsDefinition.pages,
-                    undefined,
-                    featureFlags,
-                    docs.baseUrl.domain,
-                ).then((resolved) => [node.api, resolved] as [string, ResolvedRootPackage]);
-                entryPromises.push(entry);
-                return "skip";
+        const packagesPromise: Promise<ResolvedRootPackage>[] = [];
+        FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {
+            const api = docs.definition.apis[apiReference.apiDefinitionId];
+            if (api == null) {
+                return;
             }
-            return undefined;
+            const holder = ApiDefinitionHolder.create(api);
+            const typeResolver = new ApiTypeResolver(api.types);
+            const resolved = ApiDefinitionResolver.resolve(
+                apiReference,
+                holder,
+                typeResolver,
+                docs.definition.pages,
+                undefined,
+                featureFlags,
+                docs.baseUrl.domain,
+            );
+            packagesPromise.push(resolved);
         });
 
-        res.status(200).json(Object.fromEntries(await Promise.all(entryPromises)));
+        const toRet: Record<string, ResolvedRootPackage> = {};
+
+        const packages = await Promise.all(packagesPromise);
+        packages.forEach((p) => {
+            toRet[p.api] = p;
+        });
+
+        res.status(200).json(toRet);
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
@@ -89,17 +74,3 @@ const resolveApiHandler: NextApiHandler = async (
 };
 
 export default resolveApiHandler;
-
-// function findApiSection(api: string, sidebarNodes: SidebarNode[]): SidebarNode.ApiSection | undefined {
-//     for (const node of sidebarNodes) {
-//         if (node.type === "apiSection" && node.api === api) {
-//             return node;
-//         } else if (node.type === "section") {
-//             const found = findApiSection(api, node.items);
-//             if (found != null) {
-//                 return found;
-//             }
-//         }
-//     }
-//     return undefined;
-// }

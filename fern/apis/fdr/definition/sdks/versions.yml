@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  base-path: /sdks
+  auth: true
+  endpoints:
+    computeSemanticVersion:
+      audiences:
+        - fiddle
+      docs: |
+        Computes a semantic version for the SDK to be relesed on.
+
+        The endpoint tries to find existing versions by looking up against 
+        registries and github repositories. If none are found an error is thrown. 
+
+        If a version is found, a new semantic version is returned.
+      path: /semantic-version/compute
+      request:
+        name: ComputeSemanticVersionRequest
+        body:
+          # TODO(armando): take the inputted API Definition, release type (beta/alpha),
+          # and generator version upgrade to make this more robust
+          properties:
+            package:
+              type: string
+              docs: The name of the package (e.g. `@org/sdk` or `com.org:org-java`)
+            language:
+              type: Language
+            githubRepository:
+              type: optional<string>
+              docs: |
+                The name of the GitHub repository (e.g. `owner/repo`). 
+                The repositories latest release will be queried to find the existing 
+                package version.
+      response: ComputedSemanticVersionResponse
+      errors:
+        - FailedToComputeExistingVersion
+        - FailedToIncrementVersion
+
+types:
+  Language:
+    enum:
+      - Go
+      - TypeScript
+      - Java
+      - Python
+      - Csharp
+      - Ruby
+
+  VersionBump:
+    enum:
+      - MAJOR
+      - MINOR
+      - PATCH
+
+  ComputedSemanticVersionResponse:
+    properties:
+      version:
+        type: string
+        docs: The recommended version to release the SDK at
+      bump: VersionBump
+
+errors:
+  FailedToComputeExistingVersion:
+    status-code: 400
+
+  FailedToIncrementVersion:
+    status-code: 500

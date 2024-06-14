@@ -41,5 +41,8 @@ function isVersionedNavigationConfig(
 export function isTabbedNavigationConfig(
     config: DocsV1Write.UnversionedNavigationConfig,
 ): config is DocsV1Write.UnversionedTabbedNavigationConfig {
-    return Array.isArray((config as DocsV1Write.UnversionedTabbedNavigationConfig).tabs);
+    return (
+        Array.isArray((config as DocsV1Write.UnversionedTabbedNavigationConfig).tabs) ||
+        Array.isArray((config as DocsV1Write.UnversionedTabbedNavigationConfig).tabsV2)
+    );
 }

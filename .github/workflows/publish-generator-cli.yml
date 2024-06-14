@@ -1,0 +1,39 @@
+name: Publish Generator CLI
+
+on:
+  workflow_call:
+
+env:
+  PACKAGE_NAME: "@fern-api/generator-cli"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+
+jobs:
+  publish_sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: 🧪 Build and test
+        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Publish generator-cli
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        run: |
+          git_version="$(scripts/generator-cli-version.sh)"
+          cd packages/generator-cli
+          mv package.json package.json.tmp
+          version_replace="s/0.0.0/${git_version}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          rm -rf package.json.tmp
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm publish --access public

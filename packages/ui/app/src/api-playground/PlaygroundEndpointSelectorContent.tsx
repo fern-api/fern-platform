@@ -1,13 +1,12 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { SidebarNode } from "@fern-ui/fdr-utils";
+import { isNonNullish } from "@fern-ui/core-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn, { clsx } from "clsx";
-import { compact, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { ResolvedApiDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { usePlaygroundContext } from "./PlaygroundContext";
 
@@ -16,75 +15,83 @@ const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => 
 export interface PlaygroundEndpointSelectorContentProps {
     apiGroups: ApiGroup[];
     closeDropdown?: () => void;
-    selectedEndpoint?: SidebarNode.ApiPage;
+    selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
+    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiDefinition>;
 }
 
 export interface ApiGroup {
-    api: FdrAPI.ApiId;
-    id: string;
+    api: FernNavigation.ApiDefinitionId;
+    id: FernNavigation.NodeId;
     breadcrumbs: readonly string[];
-    items: SidebarNode.ApiPage[];
+    items: FernNavigation.NavigationNodeApiLeaf[];
 }
 
-function isApiGroupNotEmpty(group: ApiGroup): boolean {
-    return group.items.filter((item) => item.type === "page").length > 0;
-}
-
-export function flattenApiSection(navigation: SidebarNode[]): ApiGroup[] {
+export function flattenApiSection(root: FernNavigation.SidebarRootNode): ApiGroup[] {
     const result: ApiGroup[] = [];
-    for (const node of navigation) {
-        visitDiscriminatedUnion(node, "type")._visit({
-            section: (section) => {
-                result.push(
-                    ...flattenApiSection(section.items).map((group) => ({
-                        ...group,
-                        breadcrumbs: [section.title, ...group.breadcrumbs],
-                    })),
-                );
-            },
-            apiSection: (apiSection) => {
-                result.push({
-                    api: apiSection.api,
-                    id: apiSection.id,
-                    breadcrumbs: apiSection.isSidebarFlattened ? [] : [apiSection.title],
-                    items: apiSection.items
-                        .filter((item): item is SidebarNode.ApiPage => item.type === "page")
-                        .flatMap((item): SidebarNode.ApiPage[] =>
-                            SidebarNode.isEndpointPage(item) ? compact([item, item.stream]) : [item],
-                        ),
-                });
+    FernNavigation.utils.traverseNavigation(root, (node, _, parents) => {
+        if (node.type === "changelog") {
+            return "skip";
+        }
+        if (node.type === "apiReference" || node.type === "apiPackage") {
+            // webhooks are not supported in the playground
+            const items = node.children.filter(FernNavigation.isApiLeaf).filter((item) => item.type !== "webhook");
+            if (items.length === 0) {
+                return;
+            }
 
-                result.push(
-                    ...flattenApiSection(
-                        apiSection.items.filter(
-                            (item): item is SidebarNode.SubpackageSection => item.type === "apiSection",
-                        ),
-                    ).map((group) => ({
-                        ...group,
-                        breadcrumbs: apiSection.isSidebarFlattened
-                            ? group.breadcrumbs
-                            : [apiSection.title, ...group.breadcrumbs],
-                    })),
-                );
-            },
-            pageGroup: noop,
-            _other: noop,
-        });
+            const breadcrumbs = [...parents, node]
+                .filter(FernNavigation.isSection)
+                .filter((n) => {
+                    if (n.type === "apiReference") {
+                        return n.hideTitle !== true;
+                    }
+                    return true;
+                })
+                .map((parent) => parent.title);
+            result.push({
+                api: node.apiDefinitionId,
+                id: node.id,
+                breadcrumbs,
+                items,
+            });
+        }
+        return;
+    });
+
+    if (result.length === 0) {
+        return [];
     }
-    return result.filter(isApiGroupNotEmpty);
+
+    /**
+     * we want to get the lowest level of breadcrumbs shared by all groups
+     * for example:
+     * - [a, b, c]
+     * - [a, b, d]
+     *
+     * the shared breadcrumbs would be [a, b], and the resulting breadcrumbs for each group would be [c] and [d]
+     */
+    const allBreadcrumbs = result.map((group) => group.breadcrumbs);
+    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumbs) => {
+        return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumbs[idx]);
+    }, allBreadcrumbs[0]);
+
+    return result.map((group) => ({
+        ...group,
+        breadcrumbs: group.breadcrumbs.slice(sharedBreadcrumbs.length),
+    }));
 }
 
-function matchesEndpoint(query: string, group: ApiGroup, endpoint: SidebarNode.ApiPage): boolean {
+function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigation.NavigationNodeApiLeaf): boolean {
     return (
         group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
         endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
-        (endpoint.apiType === "endpoint" && endpoint.method.toLowerCase().includes(query.toLowerCase()))
+        (endpoint.type === "endpoint" && endpoint.method.toLowerCase().includes(query.toLowerCase()))
     );
 }
 
 export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, PlaygroundEndpointSelectorContentProps>(
-    ({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
+    ({ apiGroups, closeDropdown, selectedEndpoint, className, nodeIdToApiDefinition }, ref) => {
         const scrollRef = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(ref, () => scrollRef.current!);
@@ -99,28 +106,13 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             selectedItemRef.current?.scrollIntoView({ block: "center" });
         }, []);
 
-        const createSelectEndpoint = (group: ApiGroup, endpoint: SidebarNode.EndpointPage) => () => {
-            setSelectionStateAndOpen({
-                type: "endpoint",
-                api: group.api,
-                endpointId: endpoint.slug.join("/"),
-            });
-            closeDropdown?.();
-        };
-
-        const createSelectWebSocket = (group: ApiGroup, websocket: SidebarNode.ApiPage) => () => {
-            setSelectionStateAndOpen({
-                type: "websocket",
-                api: group.api,
-                webSocketId: websocket.slug.join("/"),
-            });
+        const createSelectEndpoint = (endpoint: FernNavigation.NavigationNodeApiLeaf) => () => {
+            setSelectionStateAndOpen(endpoint);
             closeDropdown?.();
         };
 
         function renderApiDefinitionPackage(apiGroup: ApiGroup) {
-            const endpoints = apiGroup.items.filter((endpoint): endpoint is SidebarNode.ApiPage =>
-                matchesEndpoint(filterValue, apiGroup, endpoint),
-            );
+            const endpoints = apiGroup.items.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
             if (endpoints.length === 0) {
                 return null;
             }
@@ -140,15 +132,16 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     )}
                     <ul className="relative z-0 list-none">
                         {endpoints.map((endpointItem) => {
-                            const active = endpointItem.slug.join("/") === selectedEndpoint?.slug.join("/");
+                            const apiDefinition = nodeIdToApiDefinition.get(endpointItem.id);
+                            const active = endpointItem.id === selectedEndpoint?.id;
                             const text = renderTextWithHighlight(endpointItem.title, filterValue);
-                            if (endpointItem.apiType === "endpoint") {
+                            if (endpointItem.type === "endpoint") {
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
                                         <FernTooltip
                                             content={
-                                                endpointItem.description != null ? (
-                                                    <Markdown className="text-xs" mdx={endpointItem.description} />
+                                                apiDefinition?.description != null ? (
+                                                    <Markdown className="text-xs" mdx={apiDefinition.description} />
                                                 ) : undefined
                                             }
                                             side="right"
@@ -159,25 +152,30 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
-                                                onClick={createSelectEndpoint(apiGroup, endpointItem)}
-                                                rightIcon={
+                                                onClick={createSelectEndpoint(endpointItem)}
+                                                icon={
                                                     <HttpMethodTag
-                                                        method={endpointItem.method}
+                                                        method={
+                                                            endpointItem.isResponseStream
+                                                                ? "STREAM"
+                                                                : endpointItem.method
+                                                        }
                                                         size="sm"
                                                         active={active}
+                                                        className="mr-1"
                                                     />
                                                 }
                                             />
                                         </FernTooltip>
                                     </li>
                                 );
-                            } else if (endpointItem.apiType === "websocket") {
+                            } else if (endpointItem.type === "webSocket") {
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
                                         <FernTooltip
                                             content={
-                                                endpointItem.description != null ? (
-                                                    <Markdown className="text-xs" mdx={endpointItem.description} />
+                                                apiDefinition?.description != null ? (
+                                                    <Markdown className="text-xs" mdx={apiDefinition.description} />
                                                 ) : undefined
                                             }
                                             side="right"
@@ -188,8 +186,8 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 variant="minimal"
                                                 intent={active ? "primary" : "none"}
                                                 active={active}
-                                                onClick={createSelectWebSocket(apiGroup, endpointItem)}
-                                                rightIcon={<HttpMethodTag method="WSS" size="sm" />}
+                                                onClick={createSelectEndpoint(endpointItem)}
+                                                icon={<HttpMethodTag method="WSS" size="sm" className="mr-1" />}
                                             />
                                         </FernTooltip>
                                     </li>

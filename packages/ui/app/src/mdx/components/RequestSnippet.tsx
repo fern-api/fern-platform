@@ -1,11 +1,12 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
-import { atom, useAtom } from "jotai";
-import { useCallback, useEffect, useMemo } from "react";
+import { useAtom } from "jotai";
+import { useCallback, useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
 import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
+import { ApiReferenceButton } from "../../components/ApiReferenceButton";
 import { useNavigationContext } from "../../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
@@ -23,47 +24,19 @@ export declare namespace RequestSnippet {
     }
 }
 
-const selectedClientAtom = atom<Record<string, CodeExample | undefined>>({});
-
 function useSelectedClient(
-    path: string,
-    method: string,
     clients: CodeExampleGroup[],
     exampleName: string | undefined,
 ): [CodeExample | undefined, (nextClient: CodeExample) => void] {
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
-    const [selectedClientMap, setSelectedClientMap] = useAtom(selectedClientAtom);
-    const selectedClient =
-        selectedClientMap[`${path}-${method}`] ??
-        (clients.find((c) => c.language === selectedLanguage)?.examples ?? clients[0]?.examples)?.find(
-            (example) => exampleName == null || example.name === exampleName,
-        );
-
-    const setSelectedClient = useCallback(
-        (nextClient: CodeExample | ((prev: CodeExample | undefined) => CodeExample | undefined)) => {
-            setSelectedClientMap((prev) => ({
-                ...prev,
-                [`${path}-${method}`]: typeof nextClient === "function" ? nextClient(selectedClient) : nextClient,
-            }));
-        },
-        [setSelectedClientMap, path, method, selectedClient],
-    );
-
-    useEffect(() => {
-        setSelectedClient(
-            (prev) =>
-                clients
-                    .find((c) => c.language === selectedLanguage)
-                    ?.examples.find((example) => exampleName == null || example.name === exampleName) ?? prev,
-        );
-    }, [clients, exampleName, selectedLanguage, setSelectedClient]);
+    const client = clients.find((c) => c.language === selectedLanguage) ?? clients[0];
+    const selectedClient = exampleName ? client.examples.find((e) => e.name === exampleName) : client.examples[0];
 
     const handleClickClient = useCallback(
         (nextClient: CodeExample) => {
-            setSelectedClient(nextClient);
             setSelectedLanguage(nextClient.language);
         },
-        [setSelectedClient, setSelectedLanguage],
+        [setSelectedLanguage],
     );
 
     return [selectedClient, handleClickClient];
@@ -126,7 +99,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     }, [method, path, resolvedPath]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
-    const [selectedClient, setSelectedClient] = useSelectedClient(path, method, clients, example);
+    const [selectedClient, setSelectedClient] = useSelectedClient(clients, example);
 
     if (endpoint == null || selectedClient == null) {
         return null;
@@ -143,13 +116,16 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                     />
                 }
                 actions={
-                    clients.length > 1 ? (
-                        <CodeExampleClientDropdown
-                            clients={clients}
-                            onClickClient={setSelectedClient}
-                            selectedClient={selectedClient}
-                        />
-                    ) : undefined
+                    <>
+                        {clients.length > 1 && (
+                            <CodeExampleClientDropdown
+                                clients={clients}
+                                onClickClient={setSelectedClient}
+                                selectedClient={selectedClient}
+                            />
+                        )}
+                        <ApiReferenceButton slug={endpoint.slug} />
+                    </>
                 }
                 code={selectedClient.code}
                 language={selectedClient.language}
@@ -199,7 +175,7 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     }, [method, path, resolvedPath]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
-    const [selectedClient] = useSelectedClient(path, method, clients, example);
+    const [selectedClient] = useSelectedClient(clients, example);
 
     if (endpoint == null) {
         return null;

@@ -1,8 +1,9 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import { DefaultSeo } from "@fern-ui/next-seo";
 import { Provider as JotaiProvider, createStore } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
-import { Router } from "next/router";
+import type { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
@@ -32,22 +33,23 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     return (
         <FernTooltipProvider>
-            <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                <ThemeProvider colors={pageProps?.colors}>
-                    <IsReadyProvider>
-                        <RouteListenerContextProvider>
-                            <DatadogInit />
-                            <JotaiProvider store={store}>
+            <DefaultSeo {...pageProps?.seo} />
+            <JotaiProvider store={store}>
+                <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                    <ThemeProvider colors={pageProps?.colors}>
+                        <IsReadyProvider>
+                            <RouteListenerContextProvider>
+                                <DatadogInit />
                                 <LayoutBreakpointProvider>
                                     <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
                                     <Component {...pageProps} />
                                 </LayoutBreakpointProvider>
-                            </JotaiProvider>
-                        </RouteListenerContextProvider>
-                    </IsReadyProvider>
-                    <Toaster />
-                </ThemeProvider>
-            </FernErrorBoundary>
+                            </RouteListenerContextProvider>
+                        </IsReadyProvider>
+                        <Toaster />
+                    </ThemeProvider>
+                </FernErrorBoundary>
+            </JotaiProvider>
         </FernTooltipProvider>
     );
 }

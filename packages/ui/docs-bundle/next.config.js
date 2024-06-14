@@ -1,4 +1,5 @@
-const assetPrefix = process.env.CDN_URI != null ? new URL("/", process.env.CDN_URI).href : undefined;
+const assetPrefix =
+    process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -21,6 +22,7 @@ const nextConfig = {
     assetPrefix,
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
+        // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
         const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
         const HAS_HOST = { type: "host", value: "(?<host>.*)" };
 
@@ -43,6 +45,8 @@ const nextConfig = {
                  */
                 { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
                 { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
+                { source: "/:prefix*/robots.txt", destination: "/api/fern-docs/robots.txt" },
+                { source: "/:prefix*/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
                 /**
                  * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
                  * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that
@@ -160,7 +164,7 @@ module.exports = withSentryConfig(
         // This can increase your server load as well as your hosting bill.
         // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
         // side errors will fail.
-        tunnelRoute: "/monitoring",
+        tunnelRoute: "/api/fern-docs/monitoring",
 
         // Hides source maps from generated client bundles
         hideSourceMaps: true,

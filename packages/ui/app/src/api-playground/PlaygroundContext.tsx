@@ -1,8 +1,11 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as Sentry from "@sentry/nextjs";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import useSWR from "swr";
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
@@ -15,12 +18,7 @@ import {
     isWebSocket,
 } from "../resolver/types";
 import { APIS } from "../sidebar/atom";
-import {
-    PlaygroundSelectionState,
-    createFormStateKey,
-    getInitialEndpointRequestFormStateWithExample,
-    usePlaygroundHeight,
-} from "./PlaygroundDrawer";
+import { getInitialEndpointRequestFormStateWithExample, usePlaygroundHeight } from "./PlaygroundDrawer";
 import { PlaygroundRequestFormState } from "./types";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
@@ -29,8 +27,8 @@ const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => 
 
 interface PlaygroundContextValue {
     hasPlayground: boolean;
-    selectionState: PlaygroundSelectionState | undefined;
-    setSelectionStateAndOpen: (state: PlaygroundSelectionState) => void;
+    selectionState: FernNavigation.NavigationNodeApiLeaf | undefined;
+    setSelectionStateAndOpen: (state: FernNavigation.NavigationNodeApiLeaf) => void;
     expandPlayground: () => void;
     collapsePlayground: () => void;
 }
@@ -49,27 +47,25 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
     {},
 );
 
+const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    return res.json();
+};
+
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
-    const { basePath, apis: apiIds } = useDocsContext();
-    const [selectionState, setSelectionState] = useState<PlaygroundSelectionState | undefined>();
+    const { basePath } = useDocsContext();
+    const [selectionState, setSelectionState] = useState<FernNavigation.NavigationNodeApiLeaf | undefined>();
 
+    const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
+
+    const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher);
     useEffect(() => {
-        const unfetchedApis = apiIds.filter((apiId) => apis[apiId] == null);
-        if (unfetchedApis.length === 0) {
-            return;
+        if (data != null) {
+            setApis(data);
         }
-        const fetchApis = async () => {
-            const r = await fetch(urljoin(basePath ?? "", "/api/fern-docs/resolve-api"));
-            const data: Record<string, ResolvedRootPackage> | null = await r.json();
-            if (data == null) {
-                return;
-            }
-            setApis((currentApis) => ({ ...currentApis, ...data }));
-        };
-        void fetchApis();
-    }, [apiIds, apis, basePath, setApis]);
+    }, [data, setApis]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
@@ -88,28 +84,31 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const collapsePlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
 
     const setSelectionStateAndOpen = useCallback(
-        async (newSelectionState: PlaygroundSelectionState) => {
-            const matchedPackage = flattenedApis[newSelectionState.api];
+        async (newSelectionState: FernNavigation.NavigationNodeApiLeaf) => {
+            const matchedPackage = flattenedApis[newSelectionState.apiDefinitionId];
             if (matchedPackage == null) {
+                Sentry.captureMessage("Could not find package for API playground selection state", "fatal");
                 return;
             }
 
             if (newSelectionState.type === "endpoint") {
                 const matchedEndpoint = matchedPackage.apiDefinitions.find(
-                    (definition) =>
-                        isEndpoint(definition) && definition.slug.join("/") === newSelectionState.endpointId,
+                    (definition) => isEndpoint(definition) && definition.id === newSelectionState.endpointId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;
+                if (matchedEndpoint == null) {
+                    Sentry.captureMessage("Could not find endpoint for API playground selection state", "fatal");
+                }
                 setSelectionState(newSelectionState);
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     endpointId: newSelectionState.endpointId,
                     endpointName: matchedEndpoint?.title,
                 });
-                if (matchedEndpoint != null && globalFormState[createFormStateKey(newSelectionState)] == null) {
+                if (matchedEndpoint != null && globalFormState[newSelectionState.id] == null) {
                     setGlobalFormState((currentFormState) => {
                         return {
                             ...currentFormState,
-                            [createFormStateKey(newSelectionState)]: getInitialEndpointRequestFormStateWithExample(
+                            [newSelectionState.id]: getInitialEndpointRequestFormStateWithExample(
                                 matchedPackage?.auth,
                                 matchedEndpoint,
                                 matchedEndpoint?.examples[0],
@@ -118,11 +117,13 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                         };
                     });
                 }
-            } else if (newSelectionState.type === "websocket") {
+            } else if (newSelectionState.type === "webSocket") {
                 const matchedWebSocket = matchedPackage.apiDefinitions.find(
-                    (definition) =>
-                        isWebSocket(definition) && definition.slug.join("/") === newSelectionState.webSocketId,
+                    (definition) => isWebSocket(definition) && definition.id === newSelectionState.webSocketId,
                 ) as ResolvedApiDefinition.Endpoint | undefined;
+                if (matchedWebSocket == null) {
+                    Sentry.captureMessage("Could not find websocket for API playground selection state", "fatal");
+                }
                 setSelectionState(newSelectionState);
                 expandPlayground();
                 capturePosthogEvent("api_playground_opened", {

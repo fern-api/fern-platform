@@ -6,12 +6,15 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["./src/**/*", "../components/src/FernLogo.tsx"],
+  "include": ["./src/**/*"],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },
     { "path": "../components" },
     { "path": "../../commons/react/react-commons" },
-    { "path": "../../template-resolver" }
+    { "path": "../../template-resolver" },
+    { "path": "../../fdr-sdk" },
+    { "path": "../../commons/fdr-utils" },
+    { "path": "../../commons/next-seo" }
   ]
 }

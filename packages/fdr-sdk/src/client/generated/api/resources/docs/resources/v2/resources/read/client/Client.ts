@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as FernRegistry from "../../../../../../..";
+import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Read {
@@ -16,19 +16,29 @@ export declare namespace Read {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Read {
     constructor(protected readonly _options: Read.Options = {}) {}
 
+    /**
+     * @param {FernRegistry.docs.v2.read.GetOrganizationForUrlRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.getOrganizationForUrl({
+     *         url: "string"
+     *     })
+     */
     public async getOrganizationForUrl(
         request: FernRegistry.docs.v2.read.GetOrganizationForUrlRequest,
         requestOptions?: Read.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.OrgId, FernRegistry.docs.v2.read.getOrganizationForUrl.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/organization-for-url"
             ),
             method: "POST",
@@ -42,6 +52,7 @@ export class Read {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -66,6 +77,15 @@ export class Read {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v2.read.LoadDocsForUrlRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.getDocsForUrl({
+     *         url: "string"
+     *     })
+     */
     public async getDocsForUrl(
         request: FernRegistry.docs.v2.read.LoadDocsForUrlRequest,
         requestOptions?: Read.RequestOptions
@@ -77,7 +97,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/load-with-url"
             ),
             method: "POST",
@@ -91,6 +111,7 @@ export class Read {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -116,6 +137,15 @@ export class Read {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v2.read.LoadPrivateDocsForUrlRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.getPrivateDocsForUrl({
+     *         url: "string"
+     *     })
+     */
     public async getPrivateDocsForUrl(
         request: FernRegistry.docs.v2.read.LoadPrivateDocsForUrlRequest,
         requestOptions?: Read.RequestOptions
@@ -127,7 +157,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/private/load-with-url"
             ),
             method: "POST",
@@ -141,6 +171,7 @@ export class Read {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -168,6 +199,12 @@ export class Read {
 
     /**
      * Loads the Docs Config and any referenced APIs by ID.
+     *
+     * @param {FernRegistry.DocsConfigId} docsConfigId
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.getDocsConfigById("string")
      */
     public async getDocsConfigById(
         docsConfigId: FernRegistry.DocsConfigId,
@@ -180,8 +217,8 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
-                `/v2/registry/docs/${docsConfigId}`
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                `/v2/registry/docs/${encodeURIComponent(docsConfigId)}`
             ),
             method: "GET",
             headers: {
@@ -193,6 +230,7 @@ export class Read {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -217,6 +255,15 @@ export class Read {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment({
+     *         indexSegmentId: "string"
+     *     })
+     */
     public async getSearchApiKeyForIndexSegment(
         request: FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentRequest,
         requestOptions?: Read.RequestOptions
@@ -228,7 +275,7 @@ export class Read {
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Dev,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/v2/registry/docs/search-api-key-with-index-segment"
             ),
             method: "POST",
@@ -242,6 +289,7 @@ export class Read {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -266,7 +314,7 @@ export class Read {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

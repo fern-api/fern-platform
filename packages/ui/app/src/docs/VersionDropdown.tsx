@@ -1,40 +1,41 @@
 import { FernButton } from "@fern-ui/components";
-import { SidebarVersionInfo, getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
+import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import urljoin from "url-join";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 export declare namespace VersionDropdown {
-    export interface Props {
-        currentVersionIndex: number | null | undefined;
-        versions: SidebarVersionInfo[];
-    }
+    export interface Props {}
 }
 
-export const VersionDropdown: React.FC<VersionDropdown.Props> = ({ currentVersionIndex, versions }) => {
+export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
+    const { versions, currentVersionId } = useDocsContext();
     const { unversionedSlug } = useNavigationContext();
+
+    const currentVersion = versions.find(({ id }) => id === currentVersionId);
 
     if (versions.length <= 1) {
         return null;
     }
-    const currentVersion = versions[currentVersionIndex ?? 0];
     return (
         <div className="flex w-32">
             <FernLinkDropdown
-                value={currentVersion?.id}
-                options={versions.map(({ id: versionName, availability, slug }) => ({
+                value={currentVersionId}
+                options={versions.map(({ id, title, availability, slug }) => ({
                     type: "value",
-                    label: versionName,
+                    label: title,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
-                    value: versionName,
+                    value: id,
                     disabled: availability == null,
-                    href: `${slug.length > 0 ? `/${slug.join("/")}` : ""}${unversionedSlug.length > 0 ? `/${unversionedSlug.join("/")}` : ""}`,
+                    href: urljoin("/", slug, unversionedSlug),
                 }))}
             >
                 <FernButton
                     intent="primary"
                     variant="outlined"
-                    text={currentVersion?.id}
+                    text={currentVersion?.title ?? currentVersionId}
                     rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}
                     disableAutomaticTooltip
                 />

@@ -1,4 +1,3 @@
-import "./index.scss";
 export * from "./Empty";
 export * from "./FernAudioPlayer";
 export * from "./FernButton";
@@ -8,7 +7,6 @@ export * from "./FernChip";
 export * from "./FernCollapse";
 export * from "./FernDropdown";
 export * from "./FernInput";
-export * from "./FernLogo";
 export * from "./FernModal";
 export * from "./FernNumericInput";
 export * from "./FernRadioGroup";

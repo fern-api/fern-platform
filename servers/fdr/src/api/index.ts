@@ -1,13 +1,15 @@
+export * as DocsV1Db from "./DocsV1Db";
+export * as DocsV1Read from "./DocsV1Read";
+export * as DocsV1Write from "./DocsV1Write";
 export { FernRegistry as FdrAPI } from "./generated";
+export * as Algolia from "./generated/api/resources/algolia";
 export * as APIV1Db from "./generated/api/resources/api/resources/v1/resources/db";
 export * as APIV1Read from "./generated/api/resources/api/resources/v1/resources/read";
 export { ReadService as APIV1ReadService } from "./generated/api/resources/api/resources/v1/resources/read/service/ReadService";
 export * as APIV1Write from "./generated/api/resources/api/resources/v1/resources/register";
 export { RegisterService as APIV1WriteService } from "./generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
-export * as DocsV1Db from "./generated/api/resources/docs/resources/v1/resources/db";
-export * as DocsV1Read from "./generated/api/resources/docs/resources/v1/resources/read";
+export { DiffService } from "./generated/api/resources/diff/service/DiffService";
 export { ReadService as DocsV1ReadService } from "./generated/api/resources/docs/resources/v1/resources/read/service/ReadService";
-export * as DocsV1Write from "./generated/api/resources/docs/resources/v1/resources/write";
 export { WriteService as DocsV1WriteService } from "./generated/api/resources/docs/resources/v1/resources/write/service/WriteService";
 export * as DocsV2Read from "./generated/api/resources/docs/resources/v2/resources/read";
 export { ReadService as DocsV2ReadService } from "./generated/api/resources/docs/resources/v2/resources/read/service/ReadService";
@@ -16,5 +18,4 @@ export { WriteService as DocsV2WriteService } from "./generated/api/resources/do
 export { SnippetsService } from "./generated/api/resources/snippets/service/SnippetsService";
 export { SnippetsFactoryService } from "./generated/api/resources/snippetsFactory/service/SnippetsFactoryService";
 export { TemplatesService } from "./generated/api/resources/templates/service/TemplatesService";
-export { DiffService } from "./generated/api/resources/diff/service/DiffService";
 export { register } from "./generated/register";

@@ -1,9 +1,13 @@
 export * as api from "./api";
 export * as docs from "./docs";
+export * as navigation from "./navigation";
+export * as algolia from "./algolia";
+export * from "./algolia/types";
 export * as commons from "./commons";
 export * from "./commons/types";
 export * as diff from "./diff";
 export * from "./diff/types";
+export * as sdks from "./sdks";
 export * as snippetsFactory from "./snippetsFactory";
 export * from "./snippetsFactory/types";
 export * as snippets from "./snippets";

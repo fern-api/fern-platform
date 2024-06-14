@@ -20,10 +20,8 @@
   ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build && pnpm --filter=@fern-ui/components compile:sass && pnpm --filter=@fern-ui/components copy-files",
-    "compile:sass": "sass src/index.scss src/index.css --style compressed",
-    "copy-files": "copyfiles -u 1 src/**/index.scss src/**/index.scss dist/ && copyfiles -u 1 src/**/index.scss src/**/index.scss ./",
-    "test": "vitest --passWithNoTests --globals --disable-console-intercept",
+    "compile": "tsc --build",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",

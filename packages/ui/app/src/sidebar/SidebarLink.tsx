@@ -1,7 +1,6 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import { joinUrlSlugs } from "@fern-ui/fdr-utils";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
@@ -12,18 +11,24 @@ import {
     PropsWithChildren,
     ReactElement,
     ReactNode,
+    RefObject,
     createElement,
     forwardRef,
     memo,
+    useCallback,
     useEffect,
+    useImperativeHandle,
     useRef,
 } from "react";
+import { ChevronDown } from "react-feather";
+import urljoin from "url-join";
 import { getRouteNodeWithAnchor } from "../util/anchor";
-import { useIsMobileSidebarOpen } from "./atom";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
+    nodeId: FernNavigation.NodeId;
     icon?: ReactElement | string;
-    slug?: readonly string[];
+    slug?: FernNavigation.Slug;
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     className?: string;
     linkClassName?: string;
@@ -35,9 +40,9 @@ interface SidebarSlugLinkProps {
     toggleExpand?: () => void;
     expanded?: boolean;
     rightElement?: ReactNode;
-    registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
+    registerScrolledToPathListener: (nodeId: FernNavigation.NodeId, ref: RefObject<HTMLDivElement>) => () => void;
     tooltipContent?: ReactNode;
-    hidden: boolean;
+    hidden?: boolean;
     scrollOnShallow?: boolean;
     as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
@@ -49,11 +54,11 @@ type SidebarLinkProps = PropsWithChildren<
         rel?: string | undefined;
         target?: HTMLAttributeAnchorTarget | undefined;
 
-        elementRef?: React.Ref<HTMLLIElement>;
+        elementRef?: React.Ref<HTMLDivElement>;
     }
 >;
 
-const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((props, ref) => {
+const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props, parentRef) => {
     const {
         icon,
         className,
@@ -69,7 +74,6 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         expanded = false,
         rightElement,
         children,
-        elementRef,
         tooltipContent,
         target,
         rel,
@@ -77,6 +81,10 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
         scrollOnShallow,
         as = "span",
     } = props;
+
+    const ref = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(parentRef, () => ref.current!);
 
     if (hidden && !expanded && !selected) {
         return null;
@@ -110,7 +118,6 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                     onClick?.(e);
                     toggleExpand?.();
                 }}
-                ref={ref}
             >
                 {child}
             </button>
@@ -131,11 +138,13 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
 
     const expandButton = (toggleExpand != null || expanded) && (
         <span
-            className="fern-sidebar-link-expand opacity-60 transition-opacity group-hover:opacity-100 lg:group-hover/sidebar:opacity-100"
+            className={clsx("fern-sidebar-link-expand", {
+                "opacity-50 transition-opacity group-hover:opacity-80": !showIndicator,
+            })}
             data-state={showIndicator ? "active" : "inactive"}
         >
-            <ChevronDownIcon
-                className={cn("transition-transform size-5 lg:size-icon", {
+            <ChevronDown
+                className={cn("size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -144,8 +153,9 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
     );
 
     return (
-        <li ref={elementRef} className="fern-sidebar-item">
+        <>
             <div
+                ref={ref}
                 className={cn("fern-sidebar-link-container group", className)}
                 data-state={selected ? "active" : "inactive"}
             >
@@ -161,10 +171,9 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                                     )}
                                 />
                             ))}
-                            {expandButton}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:text-text-default">
+                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:t-accent-aaa my-0.5">
                                         {typeof icon === "string" ? (
                                             <RemoteFontAwesomeIcon
                                                 icon={icon}
@@ -184,7 +193,7 @@ const SidebarLinkInternal = forwardRef<HTMLButtonElement, SidebarLinkProps>((pro
                 )}
             </div>
             {children}
-        </li>
+        </>
     );
 });
 
@@ -192,36 +201,42 @@ SidebarLinkInternal.displayName = "SidebarLink";
 
 export const SidebarLink = memo(SidebarLinkInternal);
 
-const SidebarSlugLinkInternal = forwardRef<HTMLButtonElement, PropsWithChildren<SidebarSlugLinkProps>>((props, ref) => {
-    const { slug, registerScrolledToPathListener, ...innerProps } = props;
-    const elementRef = useRef<HTMLLIElement>(null);
-    const isMobileSidebarOpen = useIsMobileSidebarOpen();
+export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<SidebarSlugLinkProps>>(
+    (props, parentRef) => {
+        const { slug, registerScrolledToPathListener, onClick, ...innerProps } = props;
+        const ref = useRef<HTMLDivElement>(null);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        useImperativeHandle(parentRef, () => ref.current!);
+        const isMobileSidebarOpen = useIsMobileSidebarOpen();
+        const closeMobileSidebar = useCloseMobileSidebar();
 
-    useEffect(() => {
-        if (slug == null) {
-            return undefined;
-        }
-        return registerScrolledToPathListener(joinUrlSlugs(...slug), () => {
-            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
-        });
-    }, [slug, registerScrolledToPathListener]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        useEffect(() => registerScrolledToPathListener(props.nodeId, ref), [props.nodeId]);
 
-    useEffect(() => {
-        if (isMobileSidebarOpen && props.selected) {
-            elementRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
-        }
-    }, [isMobileSidebarOpen, props.selected]);
+        useEffect(() => {
+            if (isMobileSidebarOpen && props.selected) {
+                ref.current?.scrollIntoView({ block: "center" });
+            }
+        }, [isMobileSidebarOpen, props.selected]);
+        const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>>(
+            (e) => {
+                onClick?.(e);
+                if (slug != null) {
+                    closeMobileSidebar();
+                }
+            },
+            [closeMobileSidebar, onClick, slug],
+        );
 
-    return (
-        <SidebarLink
-            {...innerProps}
-            ref={ref}
-            elementRef={elementRef}
-            href={slug != null ? `/${slug.join("/")}` : undefined}
-        />
-    );
-});
+        return (
+            <SidebarLink
+                {...innerProps}
+                ref={ref}
+                href={slug != null ? urljoin("/", slug) : undefined}
+                onClick={handleClick}
+            />
+        );
+    },
+);
 
-SidebarSlugLinkInternal.displayName = "SidebarSlugLink";
-
-export const SidebarSlugLink = memo(SidebarSlugLinkInternal);
+SidebarSlugLink.displayName = "SidebarSlugLink";

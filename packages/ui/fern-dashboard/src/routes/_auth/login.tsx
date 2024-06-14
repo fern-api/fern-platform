@@ -8,7 +8,7 @@ import { z } from "zod";
 // We try to leverage auth0's loginWithRedirect method to redirect the user to the login page
 // but since it has some papercuts and needs error handling, we're making a custom login page
 // to handle errors and allow users to reattempt logging in.
-const maybeOrganizationSearchSchema = z.object({
+export const maybeOrganizationSearchSchema = z.object({
     invitation: z.optional(z.string()),
     organization: z.optional(z.string()),
     organization_name: z.optional(z.string()),
@@ -30,6 +30,7 @@ const Login: React.FC = () => {
             authorizationParams: {
                 organization,
                 invitation,
+                connection: "github",
             },
         });
     } else if (invitation != null || organization != null || organization_name != null) {

@@ -9,13 +9,10 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
   },
   "items": [
     {
-      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "availability": undefined,
       "description": undefined,
-      "id": "subpackage_merchants",
       "items": [
         {
-          "apiPackageId": "subpackage_merchants",
           "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
           "auth": {
             "tokenName": "token",
@@ -28,8 +25,9 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
           "errors": [],
           "examples": [],
           "headers": [],
-          "id": "getMerchants",
+          "id": "subpackage_merchants.getMerchants",
           "method": "GET",
+          "nodeId": "api-reference.subpackage_merchants.subpackage_merchants.getMerchants",
           "path": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -48,25 +46,19 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
             },
             "statusCode": 200,
           },
-          "slug": [
-            "merchants",
-            "get-merchants",
-          ],
+          "slug": "api-reference/merchants/get-merchants",
           "snippetTemplates": undefined,
           "stream": undefined,
           "title": "Get Merchants",
           "type": "endpoint",
         },
       ],
-      "name": "Merchants",
-      "slug": [
-        "merchants",
-      ],
+      "slug": "api-reference/merchants",
       "title": "Merchants",
       "type": "subpackage",
     },
   ],
-  "slug": [],
+  "slug": "api-reference",
   "type": "rootPackage",
   "types": {
     "type_merchants:Merchant": {
@@ -117,6 +109,309 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
               "typeId": "type_merchants:Merchant",
             },
             "type": "optional",
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`] = `
+{
+  "api": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+  "auth": {
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "items": [
+    {
+      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "auth": undefined,
+      "availability": undefined,
+      "defaultEnvironment": {
+        "baseUrl": "https://api.sayari.com",
+        "id": "Production",
+      },
+      "description": "Hit the auth endpoint to get a bearer token",
+      "environments": [
+        {
+          "baseUrl": "https://api.sayari.com",
+          "id": "Production",
+        },
+      ],
+      "errors": [],
+      "examples": [],
+      "headers": [],
+      "id": "getToken",
+      "method": "POST",
+      "nodeId": "api-reference.getToken",
+      "path": [
+        {
+          "type": "literal",
+          "value": "",
+        },
+        {
+          "type": "literal",
+          "value": "/oauth/token",
+        },
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "requestBody": {
+        "availability": undefined,
+        "contentType": "application/json",
+        "description": undefined,
+        "shape": {
+          "availability": undefined,
+          "description": undefined,
+          "extends": [],
+          "name": undefined,
+          "properties": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "hidden": false,
+              "key": "client_id",
+              "valueShape": {
+                "availability": undefined,
+                "description": undefined,
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                },
+              },
+            },
+            {
+              "availability": undefined,
+              "description": undefined,
+              "hidden": false,
+              "key": "client_secret",
+              "valueShape": {
+                "availability": undefined,
+                "description": undefined,
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                },
+              },
+            },
+            {
+              "availability": undefined,
+              "description": undefined,
+              "hidden": false,
+              "key": "audience",
+              "valueShape": {
+                "availability": undefined,
+                "description": undefined,
+                "type": "literal",
+                "value": {
+                  "type": "stringLiteral",
+                  "value": "sayari.com",
+                },
+              },
+            },
+            {
+              "availability": undefined,
+              "description": undefined,
+              "hidden": false,
+              "key": "grant_type",
+              "valueShape": {
+                "availability": undefined,
+                "description": undefined,
+                "type": "literal",
+                "value": {
+                  "type": "stringLiteral",
+                  "value": "client_credentials",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+      },
+      "responseBody": {
+        "availability": undefined,
+        "description": undefined,
+        "shape": {
+          "type": "reference",
+          "typeId": "type_auth:AuthResponse",
+        },
+        "statusCode": 200,
+      },
+      "slug": "api-reference/get-token",
+      "snippetTemplates": undefined,
+      "stream": undefined,
+      "title": "Get Token",
+      "type": "endpoint",
+    },
+    {
+      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "auth": {
+        "tokenName": "token",
+        "type": "bearerAuth",
+      },
+      "availability": undefined,
+      "defaultEnvironment": {
+        "baseUrl": "https://api.sayari.com",
+        "id": "Production",
+      },
+      "description": undefined,
+      "environments": [
+        {
+          "baseUrl": "https://api.sayari.com",
+          "id": "Production",
+        },
+      ],
+      "errors": [],
+      "examples": [],
+      "headers": [],
+      "id": "testAuth",
+      "method": "POST",
+      "nodeId": "api-reference.testAuth",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/test/authed",
+        },
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "requestBody": {
+        "availability": undefined,
+        "contentType": "text/plain",
+        "description": undefined,
+        "shape": {
+          "availability": undefined,
+          "description": undefined,
+          "type": "unknown",
+        },
+      },
+      "responseBody": {
+        "availability": undefined,
+        "description": undefined,
+        "shape": {
+          "availability": undefined,
+          "description": undefined,
+          "type": "unknown",
+        },
+        "statusCode": 200,
+      },
+      "slug": "api-reference/test-authed",
+      "snippetTemplates": undefined,
+      "stream": undefined,
+      "title": "Get Token",
+      "type": "endpoint",
+    },
+    {
+      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "auth": {
+        "headerWireValue": "test-api-key",
+        "type": "header",
+      },
+      "availability": undefined,
+      "defaultEnvironment": {
+        "baseUrl": "https://api.sayari.com",
+        "id": "Production",
+      },
+      "description": undefined,
+      "environments": [
+        {
+          "baseUrl": "https://api.sayari.com",
+          "id": "Production",
+        },
+      ],
+      "errors": [],
+      "examples": [],
+      "headers": [],
+      "id": "testHeaderAuth",
+      "method": "POST",
+      "nodeId": "api-reference.testHeaderAuth",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/test/authed",
+        },
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "requestBody": {
+        "availability": undefined,
+        "contentType": "text/plain",
+        "description": undefined,
+        "shape": {
+          "availability": undefined,
+          "description": undefined,
+          "type": "unknown",
+        },
+      },
+      "responseBody": {
+        "availability": undefined,
+        "description": undefined,
+        "shape": {
+          "availability": undefined,
+          "description": undefined,
+          "type": "unknown",
+        },
+        "statusCode": 200,
+      },
+      "slug": "api-reference/test-header-auth",
+      "snippetTemplates": undefined,
+      "stream": undefined,
+      "title": "Get Token",
+      "type": "endpoint",
+    },
+  ],
+  "slug": "api-reference",
+  "type": "rootPackage",
+  "types": {
+    "type_auth:AuthResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "extends": [],
+      "name": "AuthResponse",
+      "properties": [
+        {
+          "availability": undefined,
+          "description": "The bearer token you will pass in to subsequent API calls to authenticate.",
+          "hidden": false,
+          "key": "access_token",
+          "valueShape": {
+            "availability": undefined,
+            "description": undefined,
+            "type": "primitive",
+            "value": {
+              "type": "string",
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": "Tells you how long (in seconds) until your bearer token expires.",
+          "hidden": false,
+          "key": "expires_in",
+          "valueShape": {
+            "availability": undefined,
+            "description": undefined,
+            "type": "primitive",
+            "value": {
+              "type": "integer",
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": "Will always be "Bearer"",
+          "hidden": false,
+          "key": "token_type",
+          "valueShape": {
+            "availability": undefined,
+            "description": undefined,
+            "type": "primitive",
+            "value": {
+              "type": "string",
+            },
           },
         },
       ],

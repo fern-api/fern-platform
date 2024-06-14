@@ -1,11 +1,83 @@
 import type { Element, ElementContent, Root } from "hast";
 import { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import { visit } from "unist-util-visit";
+import { CONTINUE, visit } from "unist-util-visit";
 import { wrapChildren } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {
+        // convert img to Image
+        visit(tree, (node) => {
+            if (isMdxJsxFlowElement(node)) {
+                if (node.name === "img") {
+                    node.name = "Image";
+                } else if (node.name === "iframe") {
+                    node.name = "IFrame";
+                }
+            }
+        });
+
+        /**
+         * The code below copies the `example` prop of an
+         * `EndpointRequestSnippet` to the next `EndpointResponseSnippet` in the
+         * tree. For this behavior to take effect, the following conditions
+         * must be met:
+         *
+         * - The `EndpointResponseSnippet` must not have an `example` prop.
+         * - The `EndpointResponseSnippet` must have the same `path` and
+         * `method` props as the `EndpointRequestSnippet`.
+         */
+
+        let request: { path: string; method: string; example: string } | undefined;
+
+        visit(tree, (node) => {
+            if (isMdxJsxFlowElement(node)) {
+                const isRequestSnippet = node.name === "EndpointRequestSnippet";
+                const isResponseSnippet = node.name === "EndpointResponseSnippet";
+
+                // check that the current node is a request or response snippet
+                if (isRequestSnippet || isResponseSnippet) {
+                    const props = collectProps(node);
+
+                    if (isRequestSnippet) {
+                        if (
+                            typeof props.path === "string" &&
+                            typeof props.method === "string" &&
+                            typeof props.example === "string"
+                        ) {
+                            // if the request snippet contains all of the
+                            // required props, record them and continue to the
+                            // next node
+                            request = {
+                                path: props.path,
+                                method: props.method,
+                                example: props.example,
+                            };
+
+                            // this avoids the request reference from being
+                            // reset to undefined at the end of this iteration
+                            return CONTINUE;
+                        }
+                    } else if (
+                        !props.example &&
+                        request &&
+                        request.path === props.path &&
+                        request.method === props.method
+                    ) {
+                        // if the response snippet meets the conditions, copy
+                        // the example prop from the request snippet
+                        node.attributes.push(toAttribute("example", request.example));
+                    }
+
+                    // reset the request reference in all cases (except when the
+                    // request snippet props are being recorded)
+                    request = undefined;
+                }
+            }
+
+            return CONTINUE; // this line helps avoid a typescript warning
+        });
+
         visit(tree, (node, index, parent) => {
             if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
                 return;
@@ -38,18 +110,6 @@ export function rehypeFernComponents(): (tree: Root) => void {
 
                 if (node.name === "Accordion") {
                     transformAccordion(node, index, parent);
-                }
-            }
-        });
-
-        // convert img to Image
-        visit(tree, (node, index) => {
-            if (index == null) {
-                return;
-            }
-            if (isMdxJsxFlowElement(node)) {
-                if (node.name === "img") {
-                    node.name = "Image";
                 }
             }
         });

@@ -8,6 +8,7 @@ import { Api } from "./api/resources/api/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
 import { Diff } from "./api/resources/diff/client/Client";
 import { DocsCache } from "./api/resources/docsCache/client/Client";
+import { Sdks } from "./api/resources/sdks/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
@@ -21,6 +22,7 @@ export declare namespace FernRegistryClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -49,6 +51,12 @@ export class FernRegistryClient {
 
     public get docsCache(): DocsCache {
         return (this._docsCache ??= new DocsCache(this._options));
+    }
+
+    protected _sdks: Sdks | undefined;
+
+    public get sdks(): Sdks {
+        return (this._sdks ??= new Sdks(this._options));
     }
 
     protected _snippetsFactory: SnippetsFactory | undefined;

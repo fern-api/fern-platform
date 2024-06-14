@@ -1,3 +1,4 @@
+import { Loading } from "@/components/Loading";
 import { ErrorRenderer } from "@/components/errors/ErrorRenderer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CatchBoundary, Outlet, createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -25,12 +26,10 @@ const AuthenticatedOutlet: React.FC = () => {
     }, [auth, auth.isLoading]);
 
     if (isAuthLoading) {
-        console.log("Loading...");
-        return <div>Loading...</div>;
+        return <Loading fullPage />;
     }
 
     if (!auth.isAuthenticated) {
-        console.debug("User is not authenticated, redirecting to /login");
         navigate({ to: "/login" });
     }
 

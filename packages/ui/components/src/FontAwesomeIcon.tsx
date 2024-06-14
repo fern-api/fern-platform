@@ -37,6 +37,14 @@ export const RemoteFontAwesomeIcon = forwardRef<HTMLSpanElement, RemoteFontAweso
 );
 
 function getIconUrl(icon: string | undefined): string {
+    if (icon == null) {
+        return "";
+    }
+
+    if (icon.startsWith("http")) {
+        return icon;
+    }
+
     const parsed = parseFontAwesomeIcon(icon);
     if (!parsed) {
         return "";
@@ -46,17 +54,14 @@ function getIconUrl(icon: string | undefined): string {
 }
 
 function getCdnHost() {
-    const CDN_HOST = process.env?.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
+    const CDN_HOST = process?.env?.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
     if (CDN_HOST == null) {
-        return "https://fontawesome-cdn.vercel.app";
+        return "https://icons.ferndocs.com";
     }
     return CDN_HOST;
 }
 
-function parseFontAwesomeIcon(icon: string | undefined): [string, string] | undefined {
-    if (!icon) {
-        return;
-    }
+function parseFontAwesomeIcon(icon: string): [string, string] | undefined {
     const [left, right] = icon.split(" ");
     if (left && right) {
         return [left.replace("fa-", ""), right.replace("fa-", "")];

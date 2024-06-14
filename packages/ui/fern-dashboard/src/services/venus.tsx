@@ -1,7 +1,7 @@
 import { getEnvVar } from "@/utils";
 import { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { Organization, OrganizationId } from "@fern-api/venus-api-sdk/api";
-import { UseQueryResult, queryOptions, useQueries, useQuery } from "@tanstack/react-query";
+import { UseQueryResult, queryOptions, useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAPIResponse } from "./fern";
 
 export function getVenusClient({ token }: { token: string }) {
@@ -11,12 +11,19 @@ export function getVenusClient({ token }: { token: string }) {
     });
 }
 
-export function useOrganization(token: string | undefined, orgId: string): UseQueryResult<Organization | undefined> {
+function getOrganizationQueryKey(orgId: string) {
+    return ["organization", orgId];
+}
+
+export function useOrganization(
+    token: string | undefined,
+    orgId: string | undefined,
+): UseQueryResult<Organization | undefined> {
     return useQuery({
-        queryKey: ["organization", orgId],
-        queryFn: () => getVenusClient({ token: token! }).organization.get(OrganizationId(orgId)),
+        queryKey: getOrganizationQueryKey(orgId!),
+        queryFn: () => getVenusClient({ token: token! }).organization.get(OrganizationId(orgId!)),
         select: (data) => getAPIResponse(data),
-        enabled: !!token,
+        enabled: !!token && !!orgId,
     });
 }
 
@@ -28,7 +35,7 @@ export function useOrganizations(token: string | undefined): {
     return useQueries({
         queries: (orgIds ?? []).map((orgId) =>
             queryOptions({
-                queryKey: ["organization", orgId],
+                queryKey: getOrganizationQueryKey(orgId),
                 queryFn: () => getVenusClient({ token: token! }).organization.get(OrganizationId(orgId)),
                 select: (data) => getAPIResponse(data),
                 enabled: !!token && !isLoading,
@@ -49,5 +56,22 @@ export function useOrganizationIds(token: string | undefined): UseQueryResult<st
         queryFn: () => getVenusClient({ token: token! }).organization.getOrgIdsFromToken(),
         select: (data) => getAPIResponse(data),
         enabled: !!token,
+    });
+}
+
+export function useRemoveUserFromOrg(organization: Organization) {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ token, userId }: { token: string; userId: string }) =>
+            getVenusClient({ token }).organization.removeUser({
+                userId,
+                auth0OrgId: OrganizationId(organization.auth0Id),
+            }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: getOrganizationQueryKey(organization.organizationId),
+            });
+        },
     });
 }

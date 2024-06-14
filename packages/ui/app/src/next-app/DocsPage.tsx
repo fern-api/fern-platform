@@ -1,5 +1,6 @@
-import { DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
-import type { ColorsConfig, SidebarNavigation } from "@fern-ui/fdr-utils";
+import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
+import type { DefaultSeoProps } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
@@ -8,13 +9,22 @@ import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvide
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
+import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace DocsPage {
+    export interface Navigation {
+        currentTabIndex: number | undefined;
+        tabs: SidebarTab[];
+        currentVersionId: FernNavigation.VersionId | undefined;
+        versions: SidebarVersionInfo[];
+        sidebar: FernNavigation.SidebarRootNode;
+    }
+
     export interface Props {
         // docs: DocsV2Read.LoadDocsForUrlResponse;
         baseUrl: DocsV2Read.BaseUrl;
-        navigation: SidebarNavigation;
+        navigation: Navigation;
 
         title: string | undefined;
         favicon: string | undefined;
@@ -28,19 +38,23 @@ export declare namespace DocsPage {
         logoHeight: DocsV1Read.Height | undefined;
         logoHref: DocsV1Read.Url | undefined;
 
-        search: DocsV1Read.SearchInfo;
+        search: Algolia.SearchInfo;
         files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
         resolvedPath: ResolvedPath;
 
         featureFlags: FeatureFlags;
         apis: FdrAPI.ApiDefinitionId[];
+
+        seo: DefaultSeoProps;
     }
 }
 
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
 
-    const { baseUrl, title, layout, logoHeight, logoHref, resolvedPath } = pageProps;
+    const { baseUrl, layout, logoHeight, logoHref, resolvedPath } = pageProps;
+
+    useConsoleMessage();
 
     return (
         <FeatureFlagContext.Provider value={featureFlags}>
@@ -50,7 +64,6 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     resolvedPath={resolvedPath} // this changes between pages
                     domain={baseUrl.domain}
                     basePath={baseUrl.basePath}
-                    title={title}
                 >
                     <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                     <Docs logoHeight={logoHeight} logoHref={logoHref} />

@@ -1,62 +1,33 @@
-import { buildUrl, getAllUrlsFromDocsConfig } from "@fern-ui/fdr-utils";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { NextRequest, NextResponse } from "next/server";
+import urljoin from "url-join";
+import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { jsonResponse } from "../../../utils/serverResponse";
-import { toValidPathname } from "../../../utils/toValidPathname";
+import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
-
-function getHostFromUrl(url: string | undefined): string | undefined {
-    if (url == null) {
-        return undefined;
-    }
-    const urlObj = new URL(url);
-    return urlObj.host;
-}
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
 
-    let xFernHost = req.headers.get("x-fern-host") ?? getHostFromUrl(req.nextUrl.href);
+    const xFernHost = getXFernHostEdge(req);
+    const headers = new Headers();
+    headers.set("x-fern-host", xFernHost);
 
-    if (xFernHost != null && xFernHost.includes("localhost")) {
-        xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
+    const url = buildUrlFromApiEdge(xFernHost, req);
+    const docs = await loadWithUrl(url);
+
+    if (docs == null) {
+        return jsonResponse(404, [], { headers });
     }
 
-    const headers: Record<string, string> = {};
+    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const slugCollector = NodeCollector.collect(node);
+    const urls = slugCollector.getPageSlugs().map((slug) => urljoin(xFernHost, slug));
 
-    if (xFernHost != null) {
-        // when we call res.revalidate() nextjs uses
-        // req.headers.host to make the network request
-        xFernHost = xFernHost.endsWith("/") ? xFernHost.slice(0, -1) : xFernHost;
-        headers["x-fern-host"] = xFernHost;
-    } else {
-        return jsonResponse(400, [], headers);
-    }
-
-    try {
-        const url = buildUrl({ host: xFernHost, pathname: toValidPathname(req.nextUrl.searchParams.get("basePath")) });
-        // eslint-disable-next-line no-console
-        console.log("[sitemap] Loading docs for", url);
-        const docs = await loadWithUrl(url);
-
-        if (docs == null) {
-            return jsonResponse(404, [], headers);
-        }
-
-        const urls = getAllUrlsFromDocsConfig(
-            xFernHost,
-            docs.baseUrl.basePath,
-            docs.definition.config.navigation,
-            docs.definition.apis,
-        );
-
-        return jsonResponse(200, urls, headers);
-    } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-        return jsonResponse(500, [], headers);
-    }
+    return jsonResponse(200, urls, { headers });
 }

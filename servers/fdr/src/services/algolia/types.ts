@@ -1,4 +1,4 @@
-import { DocsV1Db, DocsV1Read } from "../../api";
+import { Algolia, DocsV1Db } from "../../api";
 import type { DocsVersion } from "../../types";
 
 export type IndexSegment =
@@ -21,4 +21,4 @@ type WithObjectId<T> = {
     objectID: string;
 } & T;
 
-export type AlgoliaSearchRecord = WithObjectId<DocsV1Read.AlgoliaRecord>;
+export type AlgoliaSearchRecord = WithObjectId<Algolia.AlgoliaRecord>;
