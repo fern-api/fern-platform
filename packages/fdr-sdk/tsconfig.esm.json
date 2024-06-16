@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@fern-platform/configs/tsconfig/library.json",
+  "compilerOptions": {
+    "outDir": "./dist/mjs",
+    "rootDir": "./src",
+    "lib": ["DOM", "ESNext"]
+    // "composite": false,
+    // "incremental": false
+  },
+  "include": ["./src/**/*"]
+}
