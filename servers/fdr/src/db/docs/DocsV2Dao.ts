@@ -125,6 +125,9 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                     domain: docsRegistrationInfo.fernUrl.hostname,
                     path: docsRegistrationInfo.fernUrl.path,
                 },
+                orderBy: {
+                    updatedTime: "desc",
+                },
             });
 
             // Step 2: Create new index segments associated with docs
