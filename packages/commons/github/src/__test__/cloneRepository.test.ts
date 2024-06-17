@@ -1,28 +1,28 @@
 import { cloneRepository } from "../cloneRepository";
 
 describe("cloneRepository", () => {
-    it("fern-api/fern", async () => {
+    it("fern-api/docs-starter-openapi", async () => {
         const repository = await cloneRepository({
-            githubRepository: "github.com/fern-api/fern",
+            githubRepository: "github.com/fern-api/docs-starter-openapi",
             installationToken: undefined,
         });
         const readme = await repository.getReadme();
         expect(readme).contains("Fern");
     });
     it("invalid installation token", async () => {
-        expect(async () => {
+        await expect(async () => {
             await cloneRepository({
-                githubRepository: "https://github.com/fern-api/does-not-exist",
-                installationToken: "xyz",
+                githubRepository: "https://github.com/fern-api/fern-platform",
+                installationToken: "ghp_xyz",
             });
-        }).toThrow(Error);
+        }).rejects.toThrow();
     });
     it("repository does not exist", async () => {
-        expect(async () => {
+        await expect(async () => {
             await cloneRepository({
                 githubRepository: "https://github.com/fern-api/does-not-exist",
                 installationToken: undefined,
             });
-        }).toThrow(Error);
+        }).rejects.toThrow();
     });
 });
