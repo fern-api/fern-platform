@@ -113,7 +113,7 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
         } else if (env.REPO_TO_RUN_ON !== undefined) {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
         }
-
+        console.log("Encountered installation", installation.repository.full_name);
         await updateOpenApiSpecInternal(
             installation.octokit,
             installation.repository,
