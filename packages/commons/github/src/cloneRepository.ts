@@ -13,14 +13,17 @@ export async function cloneRepository({
     installationToken,
 }: {
     githubRepository: string;
-    installationToken: string;
+    installationToken: string | undefined;
 }): Promise<ClonedRepository> {
     const repositoryReference = parseRepository(githubRepository);
-    const url = repositoryReference.getAuthedCloneUrl(installationToken);
+    const cloneUrl =
+        installationToken != null
+            ? repositoryReference.getAuthedCloneUrl(installationToken)
+            : repositoryReference.cloneUrl;
     const dir = await tmp.dir();
     const clonePath = AbsoluteFilePath.of(dir.path);
     const git = simpleGit(clonePath);
-    await git.clone(url, ".");
+    await git.clone(cloneUrl, ".");
 
     return new ClonedRepository({
         git,
