@@ -114,10 +114,23 @@ export class AlgoliaSearchRecordGenerator {
                 switch (tab.type) {
                     case "group":
                         return tab.items.flatMap((item) =>
-                            this.generateAlgoliaSearchRecordsForNavigationItem(item, context),
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: tab.urlSlug,
+                                    skipUrlSlug: tab.skipUrlSlug,
+                                }),
+                            ),
                         );
                     case "changelog":
-                        return this.generateAlgoliaSearchRecordsForChangelogSection(tab, context);
+                        return this.generateAlgoliaSearchRecordsForChangelogSection(
+                            tab,
+                            context.withPathPart({
+                                name: tab.title ?? "Changelog",
+                                urlSlug: tab.urlSlug,
+                            }),
+                        );
                     default:
                         return [];
                 }

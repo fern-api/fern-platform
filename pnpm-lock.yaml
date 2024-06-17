@@ -241,6 +241,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../packages/commons/github
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
@@ -421,6 +424,9 @@ importers:
       octokit:
         specifier: ^3.2.0
         version: 3.2.1
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -440,6 +446,9 @@ importers:
       prettier:
         specifier: ^3.2.4
         version: 3.2.5
+      simple-git:
+        specifier: ^3.24.0
+        version: 3.24.0
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -5462,7 +5471,6 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@kwsites/file-exists@1.1.1(supports-color@8.1.1):
     resolution: {integrity: sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==}
@@ -24145,7 +24153,6 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /simple-git@3.24.0(supports-color@8.1.1):
     resolution: {integrity: sha512-QqAKee9Twv+3k8IFOFfPB2hnk6as6Y6ACUpwCtQvRYBAes23Wv3SZlHVobAzqcE8gfsisCvPw3HGW3HYM+VYYw==}

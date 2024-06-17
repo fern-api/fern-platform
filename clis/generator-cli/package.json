@@ -24,6 +24,7 @@
     "depcheck": "depcheck"
   },
   "devDependencies": {
+    "@fern-api/github": "workspace:*",
     "@fern-api/fs-utils": "0.15.0-rc63",
     "@types/jest": "^29.5.11",
     "@types/lodash-es": "^4.17.12",
