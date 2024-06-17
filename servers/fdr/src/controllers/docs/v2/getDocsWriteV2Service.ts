@@ -145,15 +145,12 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
                 })();
 
-                const indexSegments =
-                    docsRegistrationInfo.isPreview || docsRegistrationInfo.authType !== AuthType.PUBLIC
-                        ? []
-                        : await uploadToAlgolia(
-                              app,
-                              docsRegistrationInfo.fernUrl,
-                              dbDocsDefinition,
-                              apiDefinitionsById,
-                          );
+                const indexSegments = await uploadToAlgoliaForRegistration(
+                    app,
+                    docsRegistrationInfo,
+                    dbDocsDefinition,
+                    apiDefinitionsById,
+                );
 
                 await app.docsDefinitionCache.storeDocsForUrl({
                     docsRegistrationInfo,
@@ -205,6 +202,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             }
         },
         reindexAlgoliaSearchRecords: async (req, res) => {
+            // step 1. load from db
             const parsedUrl = ParsedBaseUrl.parse(req.body.url);
             const response = await app.dao.docsV2().loadDocsForURL(parsedUrl.toURL());
 
@@ -212,7 +210,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 throw new DocsV2Write.DocsNotFoundError();
             }
 
-            if (response.authType !== AuthType.PUBLIC) {
+            if (response.authType !== AuthType.PUBLIC || response.isPreview || response.docsConfigInstanceId == null) {
                 throw new DocsV2Write.ReindexNotAllowedError();
             }
 
@@ -225,6 +223,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
             })();
 
+            // step 2. create new index segments in algolia
             const indexSegments = await uploadToAlgolia(
                 app,
                 ParsedBaseUrl.parse(response.domain),
@@ -232,16 +231,9 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 apiDefinitionsById,
             );
 
-            await app.docsDefinitionCache.storeDocsForUrl({
-                // not sure if this is the right way to do it
-                docsRegistrationInfo: {
-                    fernUrl: ParsedBaseUrl.parse(response.domain),
-                    orgId: response.orgId,
-                    customUrls: [],
-                    s3FileInfos: {},
-                    isPreview: false,
-                    authType: AuthType.PUBLIC,
-                },
+            // step 3. store docs + new algolia segments
+            await app.docsDefinitionCache.replaceDocsForInstanceId({
+                instanceId: response.docsConfigInstanceId,
                 dbDocsDefinition: response.docsDefinition,
                 indexSegments,
             });
@@ -251,24 +243,32 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
     });
 }
 
+async function uploadToAlgoliaForRegistration(
+    app: FdrApplication,
+    docsRegistrationInfo: DocsRegistrationInfo,
+    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
+    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
+): Promise<IndexSegment[]> {
+    // TODO: make sure to store private docs index into user-restricted algolia index
+    // see https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
+    if (docsRegistrationInfo.authType !== AuthType.PUBLIC) {
+        return [];
+    }
+
+    // skip algolia step for preview
+    if (docsRegistrationInfo.isPreview) {
+        return [];
+    }
+
+    return uploadToAlgolia(app, docsRegistrationInfo.fernUrl, dbDocsDefinition, apiDefinitionsById);
+}
+
 async function uploadToAlgolia(
     app: FdrApplication,
-    // docsRegistrationInfo: DocsRegistrationInfo,
     url: ParsedBaseUrl,
     dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
     apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
 ): Promise<IndexSegment[]> {
-    // // TODO: make sure to store private docs index into user-restricted algolia index
-    // // see https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
-    // if (docsRegistrationInfo.authType !== AuthType.PUBLIC) {
-    //     return [];
-    // }
-
-    // // skip algolia step for preview
-    // if (docsRegistrationInfo.isPreview) {
-    //     return [];
-    // }
-
     app.logger.debug(`[${url.getFullUrl()}] Generating new index segments`);
     const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
         dbDocsDefinition,
