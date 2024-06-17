@@ -1,5 +1,5 @@
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
-import { readFile } from "fs/promises";
+import { lstat, readFile } from "fs/promises";
+import path from "path";
 import { SimpleGit } from "simple-git";
 import { README_FILEPATH } from "./constants";
 
@@ -7,22 +7,31 @@ import { README_FILEPATH } from "./constants";
 // and is ready to be used.
 export class ClonedRepository {
     private git: SimpleGit;
-    private clonePath: AbsoluteFilePath;
+    private clonePath: string;
 
-    constructor({ git, clonePath }: { git: SimpleGit; clonePath: AbsoluteFilePath }) {
+    constructor({ git, clonePath }: { git: SimpleGit; clonePath: string }) {
         this.git = git;
         this.clonePath = clonePath;
     }
 
     public async getReadme(): Promise<string | undefined> {
-        return await this.readFile({ relativeFilePath: RelativeFilePath.of(README_FILEPATH) });
+        return await this.readFile({ relativeFilePath: README_FILEPATH });
     }
 
-    private async readFile({ relativeFilePath }: { relativeFilePath: RelativeFilePath }): Promise<string | undefined> {
-        const absoluteFilePath = join(this.clonePath, relativeFilePath);
-        if (!doesPathExist(join(absoluteFilePath))) {
+    private async readFile({ relativeFilePath }: { relativeFilePath: string }): Promise<string | undefined> {
+        const absoluteFilePath = path.join(this.clonePath, relativeFilePath);
+        if (!doesPathExist(absoluteFilePath)) {
             return undefined;
         }
         return await readFile(absoluteFilePath, "utf-8");
+    }
+}
+
+async function doesPathExist(filepath: string): Promise<boolean> {
+    try {
+        await lstat(filepath);
+        return true;
+    } catch {
+        return false;
     }
 }

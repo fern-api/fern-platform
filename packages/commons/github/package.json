@@ -35,7 +35,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fs-utils": "0.15.0-rc63",
     "octokit": "^3.2.0",
     "tmp-promise": "^3.0.3"
   },

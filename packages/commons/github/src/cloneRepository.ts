@@ -1,4 +1,3 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import simpleGit from "simple-git";
 import tmp from "tmp-promise";
 import { ClonedRepository } from "./ClonedRepository";
@@ -21,7 +20,7 @@ export async function cloneRepository({
             ? repositoryReference.getAuthedCloneUrl(installationToken)
             : repositoryReference.cloneUrl;
     const dir = await tmp.dir();
-    const clonePath = AbsoluteFilePath.of(dir.path);
+    const clonePath = dir.path;
     const git = simpleGit(clonePath);
     await git.clone(cloneUrl, ".");
 
