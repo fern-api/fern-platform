@@ -12,6 +12,8 @@ import * as FernGeneratorCli from "../../../index";
  * that comes from each generator (i.e. features, requirements, and more).
  */
 export interface ReadmeConfig {
+    /** If specified, the original README.md will be fetched from this remote (if it exists). */
+    remote?: FernGeneratorCli.Remote;
     language: FernGeneratorCli.LanguageInfo;
     organization: string;
     bannerLink?: string;
