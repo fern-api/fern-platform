@@ -1,6 +1,8 @@
 service: "fern-bot"
 frameworkVersion: "3"
-plugins: ["serverless-esbuild"]
+plugins:
+  - "serverless-esbuild"
+  - "serverless-step-functions"
 provider:
   name: aws
   runtime: nodejs18.x
@@ -22,23 +24,80 @@ provider:
     GITHUB_APP_WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
     CO_API_KEY: ${env:CO_API_KEY, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
+
 functions:
-  updateOpenApiSpec:
+  # For on-demand invoking update, especially useful for triggering one-off updates
+  updateOpenApiSpecs:
+    timeout: 900
+    memorySize: 10240
+    ephemeralStorageSize: 10240
+    handler: "src/functions/oas-cron/updateOpenApiSpecs.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+
+  # The functions needed for the step function
+  updateRepoDataset:
     # 900 second timeout, e.g. 15 minutes
     timeout: 900
     # 10GB memory
     memorySize: 10240
     # 10GB storage
     ephemeralStorageSize: 10240
-    handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
+    handler: "src/functions/oas-cron/updateRepoData.handler"
     # Adding a layer to have git available in the lambda
     # https://github.com/lambci/git-lambda-layer
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-    events:
-      - schedule:
-          rate: cron(0 0 * * ? *)
-          enabled: true
+
+  updateOpenApiSpec:
+    timeout: 900
+    memorySize: 10240
+    ephemeralStorageSize: 10240
+    handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+
+stepFunctions:
+  stateMachines:
+    updateSpecs:
+      events:
+        - schedule:
+            rate: cron(0 0 * * ? *)
+            enabled: true
+      definition:
+        StartAt: UpdateRepoDataset
+        States:
+          UpdateRepoDataInS3:
+            Type: Task
+            Resource:
+              Fn::Sub: "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:service}-${opt:stage}-updateRepoDataset"
+            Next: UpdateSpecsInRepo
+          # UpdateSpecsInRepo:
+          #   Type: Map
+          #   ItemReader:
+          #     ReaderConfig:
+          #       InputType: CSV
+          #       CSVHeaderLocation: FIRST_ROW
+          #     Resource: "arn:aws:states:::s3:getObject"
+          #     Parameters:
+          #       Bucket: "fern-bot"
+          #       Key: "lambdas/repos.csv"
+          #   ItemProcessor:
+          #     ProcessorConfig:
+          #       Mode: DISTRIBUTED
+          #       ExecutionType: STANDARD
+          #     StartAt: HandleRepo
+          #     States:
+          #       HandleRepo:
+          #         Type: Task
+          #         Resource: "arn:aws:states:::lambda:invoke"
+          #         Parameters:
+          #           "Payload.$": "$"
+          #           FunctionName:
+          #             Fn::GetAtt: [updateOpenApiSpec, Arn]
+          #         End: true
+          #   End: true
+
 custom:
   esbuild:
     minify: true
