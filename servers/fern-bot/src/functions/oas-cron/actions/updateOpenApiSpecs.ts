@@ -104,9 +104,6 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
         console.log("REPO_TO_RUN_ON has been specified, only running on:", env.REPO_TO_RUN_ON);
     }
     await app.eachRepository(async (installation) => {
-        if (installation.repository.full_name.includes("elevenlabs")) {
-            console.log("encountered elevenlabs repo: ", installation.repository.full_name);
-        }
         // Github repo and org names are case insentitive, so we should compare them as both lowercase
         if (
             env.REPO_TO_RUN_ON !== undefined &&
@@ -116,6 +113,7 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
         } else if (env.REPO_TO_RUN_ON !== undefined) {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
         }
+
         await updateOpenApiSpecInternal(
             installation.octokit,
             installation.repository,
