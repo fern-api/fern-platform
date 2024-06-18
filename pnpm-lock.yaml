@@ -951,6 +951,9 @@ importers:
 
   packages/template-resolver:
     dependencies:
+      '@wasm-fmt/ruff_fmt':
+        specifier: ^0.5.10
+        version: 0.5.10
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -11657,6 +11660,10 @@ packages:
   /@vue/shared@3.4.27:
     resolution: {integrity: sha512-DL3NmY2OFlqmYYrzp39yi3LDkKxa5vZVwxWdQ3rG0ekuWscHraeIbnI8t+aZK7qhYqEqWKTUdijadunb9pnrgA==}
     dev: true
+
+  /@wasm-fmt/ruff_fmt@0.5.10:
+    resolution: {integrity: sha512-PR0uVT1xGBJh9t22b2Hd7smFjlKygwN30DgDQ1QovFmZZiTkS7Y8yHiyMYsPKlbEko3Q2fnfCTJJOCZm8NqWWA==}
+    dev: false
 
   /@webassemblyjs/ast@1.12.1:
     resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
