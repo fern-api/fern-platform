@@ -6,8 +6,6 @@
   ],
   "type": "module",
   "module": "src/index.ts",
-  "source": "src/index.ts",
-  "main": "src/index.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -16,6 +14,7 @@
   },
   "scripts": {
     "compile": "tsc --build",
+    "compile:cjs": "tsc --build -f tsconfig.cjs.json",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
