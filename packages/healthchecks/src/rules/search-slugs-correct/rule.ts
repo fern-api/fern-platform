@@ -1,5 +1,5 @@
 import { SearchForFacetValuesResponse, SearchResponse } from "@algolia/client-search";
-import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { FdrAPI, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import algoliasearch, { SearchClient } from "algoliasearch";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
@@ -34,7 +34,7 @@ export class SearchSlugsCorrectRule implements Rule {
                     case "unversioned": {
                         const algolia = algoliasearch(
                             process.env.ALGOLIA_APP_ID ?? "",
-                            searchInfo.value.indexSegment.searchApiKey,
+                            await getApiKeyForSegmentIndex({ fdr, indexSegmentId: searchInfo.value.indexSegment.id }),
                         );
                         const value = await sampleRecordsFromIndexSegement({
                             algolia,
@@ -54,7 +54,10 @@ export class SearchSlugsCorrectRule implements Rule {
                     case "versioned": {
                         const invalidSlugs: string[] = [];
                         for (const [_, segmentId] of Object.entries(searchInfo.value.indexSegmentsByVersionId)) {
-                            const algolia = algoliasearch(process.env.ALGOLIA_APP_ID ?? "", segmentId.searchApiKey);
+                            const algolia = algoliasearch(
+                                process.env.ALGOLIA_APP_ID ?? "",
+                                await getApiKeyForSegmentIndex({ fdr, indexSegmentId: segmentId.id }),
+                            );
                             const value = await sampleRecordsFromIndexSegement({
                                 algolia,
                                 slugs,
@@ -77,6 +80,22 @@ export class SearchSlugsCorrectRule implements Rule {
                 }
         }
     }
+}
+
+export async function getApiKeyForSegmentIndex({
+    fdr,
+    indexSegmentId,
+}: {
+    fdr: FdrClient;
+    indexSegmentId: string;
+}): Promise<string> {
+    const response = await fdr.docs.v2.read.getSearchApiKeyForIndexSegment({
+        indexSegmentId,
+    });
+    if (!response.ok) {
+        throw new Error("Failed to load index segment api key");
+    }
+    return response.body.searchApiKey;
 }
 
 interface ValidRecordResult {

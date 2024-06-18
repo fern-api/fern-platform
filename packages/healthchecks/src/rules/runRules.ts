@@ -28,17 +28,17 @@ const FDR_CLIENT = new FdrClient({ environment: "https://registry.buildwithfern.
 
 export async function runRules({ url }: { url: string }): Promise<RuleResult[]> {
     const rules = getAllRules();
-    const rulePromises: Promise<RuleResult>[] = [];
+    const results: RuleResult[] = [];
     for (const rule of rules) {
         try {
-            const rulePromise = rule.run({
+            const result = await rule.run({
                 url,
                 fdr: FDR_CLIENT,
             });
-            rulePromises.push(rulePromise);
+            results.push(result);
         } catch (error) {
-            console.error(`Error running rule ${rule.name}`);
+            console.error(`Error running rule ${rule.name}`, JSON.stringify(error));
         }
     }
-    return await Promise.all(rulePromises);
+    return results;
 }
