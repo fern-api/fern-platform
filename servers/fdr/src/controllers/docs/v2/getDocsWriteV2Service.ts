@@ -1,5 +1,6 @@
 import { convertDocsDefinitionToDb, DocsV1Db } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
+import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
@@ -90,7 +91,10 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             });
             const docsRegistrationId = uuidv4();
             const fernUrl = ParsedBaseUrl.parse(
-                `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`,
+                urlJoin(
+                    `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`,
+                    req.body.basePath ?? "/",
+                ),
             );
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
                 domain: fernUrl.hostname,
