@@ -31,7 +31,6 @@ const nextConfig = {
 
         const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
         const THREW_ERROR = { type: "query", key: "error", value: "true" };
-        const PATH_STAR = "/:path*";
         return {
             beforeFiles: [
                 /**
@@ -83,18 +82,33 @@ const nextConfig = {
                  */
                 ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
                     has: [HOST_RULE, HAS_FERN_TOKEN],
-                    source: PATH_STAR,
+                    source: "/:path*",
                     destination: "/dynamic/:host/:path*",
                 })),
                 ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
                     has: [HOST_RULE, THREW_ERROR],
-                    source: PATH_STAR,
+                    source: "/:path*",
                     destination: "/dynamic/:host/:path*",
                 })),
                 ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
                     has: [HOST_RULE],
-                    source: PATH_STAR,
+                    source: "/:path*",
                     destination: "/static/:host/:path*",
+                })),
+                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+                    has: [HOST_RULE, HAS_FERN_TOKEN],
+                    source: "/",
+                    destination: "/dynamic/:host/",
+                })),
+                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+                    has: [HOST_RULE, THREW_ERROR],
+                    source: "/",
+                    destination: "/dynamic/:host/",
+                })),
+                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+                    has: [HOST_RULE],
+                    source: "/",
+                    destination: "/static/:host/",
                 })),
             ],
         };

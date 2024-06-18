@@ -1,7 +1,6 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import urljoin from "url-join";
 import { captureSentryError } from "../analytics/sentry";
 import { FeatureFlags } from "../contexts/FeatureFlagContext";
 import {
@@ -14,6 +13,7 @@ import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
 import { Changelog } from "./dateUtils";
+import { slugToHref } from "./slugToHref";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
     const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
@@ -54,7 +54,7 @@ async function getSubtitle(
             data: {
                 pageTitle: node.title,
                 pageId,
-                route: urljoin("/", node.slug),
+                route: slugToHref(node.slug),
             },
         });
         return undefined;
@@ -201,7 +201,7 @@ async function getNeighbor(
     }
     const excerpt = await getSubtitle(node, pages);
     return {
-        fullSlug: urljoin(node.slug),
+        fullSlug: node.slug,
         title: node.title,
         excerpt,
     };
