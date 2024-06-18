@@ -220,7 +220,7 @@ describe("Snippet Template Resolver", () => {
             payload: CHAT_COMPLETION_PAYLOAD,
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
         });
-        const customSnippet = await resolver.resolve();
+        const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "python") {
             throw new Error("Expected snippet to be python");
