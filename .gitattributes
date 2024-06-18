@@ -1,4 +1,1 @@
-clis/generator-cli/configuration/generated/** linguist-generated=true
-packages/template-resolver/src/generated/** linguist-generated=true
-packages/fdr-sdk/src/client/generated/** linguist-generated=true
-servers/fdr/src/api/generated/** linguist-generated=true
+**/generated linguist-generated=true
