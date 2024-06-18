@@ -300,7 +300,7 @@ export class SnippetTemplateResolver {
             dedupedImports.add(value);
         });
 
-        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}
+        return `${[...dedupedImports].join("\n")}
 
 ${typeof clientSnippet === "string" ? clientSnippet : clientSnippet?.invocation}        
 ${endpointSnippet?.invocation}
