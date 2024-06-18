@@ -68,6 +68,18 @@ service:
         - rootCommons.UnauthorizedError
         - rootCommons.UserNotInOrgError
         - v1DocsWrite.DocsRegistrationIdNotFound
+
+    reindexAlgoliaSearchRecords:
+      method: POST
+      path: /algolia/reindex
+      request:
+        name: ReindexAlgoliaRecordsRequest
+        body:
+          properties:
+            url: string
+      errors:
+        - DocsNotFoundError
+        - ReindexNotAllowedError
 types:
   ImageFilePath:
     properties:
@@ -116,3 +128,11 @@ errors:
   InvalidCustomDomainError:
     status-code: 400
     # type: InvalidCustomDomainErrorBody
+
+  DocsNotFoundError:
+    status-code: 404
+    docs: Docs not found.
+
+  ReindexNotAllowedError:
+    status-code: 403
+    docs: Reindexing is not allowed for this domain.

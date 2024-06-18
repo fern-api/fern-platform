@@ -145,7 +145,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
                 })();
 
-                const indexSegments = await uploadToAlgolia(
+                const indexSegments = await uploadToAlgoliaForRegistration(
                     app,
                     docsRegistrationInfo,
                     dbDocsDefinition,
@@ -201,10 +201,49 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 throw e;
             }
         },
+        reindexAlgoliaSearchRecords: async (req, res) => {
+            // step 1. load from db
+            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
+            const response = await app.dao.docsV2().loadDocsForURL(parsedUrl.toURL());
+
+            if (response == null) {
+                throw new DocsV2Write.DocsNotFoundError();
+            }
+
+            if (response.authType !== AuthType.PUBLIC || response.isPreview || response.docsConfigInstanceId == null) {
+                throw new DocsV2Write.ReindexNotAllowedError();
+            }
+
+            const apiDefinitionsById = await (async () => {
+                const apiIdDefinitionTuples = await Promise.all(
+                    response.docsDefinition.referencedApis.map(
+                        async (id) => [id, await app.services.db.getApiDefinition(id)] as const,
+                    ),
+                );
+                return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
+            })();
+
+            // step 2. create new index segments in algolia
+            const indexSegments = await uploadToAlgolia(
+                app,
+                ParsedBaseUrl.parse(response.domain),
+                response.docsDefinition,
+                apiDefinitionsById,
+            );
+
+            // step 3. store docs + new algolia segments
+            await app.docsDefinitionCache.replaceDocsForInstanceId({
+                instanceId: response.docsConfigInstanceId,
+                dbDocsDefinition: response.docsDefinition,
+                indexSegments,
+            });
+
+            res.send();
+        },
     });
 }
 
-async function uploadToAlgolia(
+async function uploadToAlgoliaForRegistration(
     app: FdrApplication,
     docsRegistrationInfo: DocsRegistrationInfo,
     dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
@@ -221,10 +260,19 @@ async function uploadToAlgolia(
         return [];
     }
 
-    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating new index segments`);
+    return uploadToAlgolia(app, docsRegistrationInfo.fernUrl, dbDocsDefinition, apiDefinitionsById);
+}
+
+async function uploadToAlgolia(
+    app: FdrApplication,
+    url: ParsedBaseUrl,
+    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
+    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
+): Promise<IndexSegment[]> {
+    app.logger.debug(`[${url.getFullUrl()}] Generating new index segments`);
     const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
         dbDocsDefinition,
-        url: docsRegistrationInfo.fernUrl.getFullUrl(),
+        url: url.getFullUrl(),
     });
     const configSegmentTuples =
         generateNewIndexSegmentsResult.type === "versioned"
@@ -232,17 +280,17 @@ async function uploadToAlgolia(
             : [generateNewIndexSegmentsResult.configSegmentTuple];
     const newIndexSegments = configSegmentTuples.map(([, seg]) => seg);
 
-    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Generating search records for all versions`);
+    app.logger.debug(`[${url.getFullUrl()}] Generating search records for all versions`);
     const searchRecords = await app.services.algolia.generateSearchRecords({
         docsDefinition: dbDocsDefinition,
         apiDefinitionsById,
         configSegmentTuples,
     });
 
-    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Uploading search records to Algolia`);
+    app.logger.debug(`[${url.getFullUrl()}] Uploading search records to Algolia`);
     await app.services.algolia.uploadSearchRecords(searchRecords);
 
-    app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Updating db docs definitions`);
+    app.logger.debug(`[${url.getFullUrl()}] Updating db docs definitions`);
 
     return newIndexSegments;
 }
