@@ -1,4 +1,5 @@
 import { get } from "lodash-es";
+import { formatSnippet } from "./formatSnippet";
 import {
     AuthPayload,
     CustomSnippetPayload,
@@ -342,6 +343,17 @@ ${endpointSnippet?.invocation}
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1TemplateToSnippet(sdk, template);
+            default:
+                throw new Error(`Unknown template version: ${template.type}`);
+        }
+    }
+
+    public async resolveWithFormatting(): Promise<Snippet> {
+        const sdk: Sdk = this.endpointSnippetTemplate.sdk;
+        const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+        switch (template.type) {
+            case "v1":
+                return await formatSnippet(this.resolveSnippetV1TemplateToSnippet(sdk, template));
             default:
                 throw new Error(`Unknown template version: ${template.type}`);
         }
