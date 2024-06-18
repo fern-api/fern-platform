@@ -256,7 +256,7 @@ export class SnippetTemplateResolver {
 
     private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
         const clientSnippet =
-            typeof clientInformation === "string"
+            typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
                 : this.resolveV1Template(template.clientInstantiation);
         let endpointSnippet: V1Snippet | undefined;
@@ -289,7 +289,7 @@ export class SnippetTemplateResolver {
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet?.invocation}\n${
+        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${typeof clientSnippet === "string" ? clientSnippet : clientSnippet?.invocation}\n${
             endpointSnippet?.invocation
         }`;
     }

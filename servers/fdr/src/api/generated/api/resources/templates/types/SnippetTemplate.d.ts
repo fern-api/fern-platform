@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../..";
 export interface SnippetTemplate {
-    clientInstantiation: FernRegistry.Template;
+    clientInstantiation: FernRegistry.ClientInstantiation;
     functionInvocation: FernRegistry.Template;
 }

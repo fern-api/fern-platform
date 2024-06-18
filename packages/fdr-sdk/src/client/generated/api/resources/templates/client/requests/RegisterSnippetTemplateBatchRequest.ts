@@ -23,19 +23,7 @@ import * as FernRegistry from "../../../../index";
  *                 },
  *                 snippetTemplate: {
  *                     type: "v1",
- *                     clientInstantiation: {
- *                         type: "generic",
- *                         imports: ["string"],
- *                         isOptional: true,
- *                         templateString: "string",
- *                         templateInputs: [{
- *                                 type: "template",
- *                                 value: {
- *                                     "key": "value"
- *                                 }
- *                             }],
- *                         inputDelimiter: "string"
- *                     },
+ *                     clientInstantiation: "string",
  *                     functionInvocation: {
  *                         type: "generic",
  *                         imports: ["string"],
@@ -53,19 +41,7 @@ import * as FernRegistry from "../../../../index";
  *                 additionalTemplates: {
  *                     "string": {
  *                         type: "v1",
- *                         clientInstantiation: {
- *                             type: "generic",
- *                             imports: ["string"],
- *                             isOptional: true,
- *                             templateString: "string",
- *                             templateInputs: [{
- *                                     type: "template",
- *                                     value: {
- *                                         "key": "value"
- *                                     }
- *                                 }],
- *                             inputDelimiter: "string"
- *                         },
+ *                         clientInstantiation: "string",
  *                         functionInvocation: {
  *                             type: "generic",
  *                             imports: ["string"],

@@ -203,8 +203,15 @@ types:
 
   SnippetTemplate:
     properties:
-      clientInstantiation: Template
+      clientInstantiation: ClientInstantiation
       functionInvocation: Template
+
+  ClientInstantiation: 
+    discriminated: false
+    union: 
+      - string
+      - Template 
+  
   VersionedSnippetTemplate:
     audiences:
       - templateResolver
