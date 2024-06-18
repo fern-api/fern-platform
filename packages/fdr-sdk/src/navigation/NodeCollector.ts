@@ -19,13 +19,21 @@ interface NavigationNodeWithMetadataAndParents {
     prev: NavigationNodeNeighbor | undefined;
 }
 
+const NodeCollectorInstances = new WeakMap<NavigationNode, NodeCollector>();
+
 export class NodeCollector {
     private idToNode = new Map<FernNavigation.NodeId, NavigationNode>();
     private slugToNode: Record<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> = {};
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
 
     public static collect(rootNode: NavigationNode): NodeCollector {
-        return new NodeCollector(rootNode);
+        const existing = NodeCollectorInstances.get(rootNode);
+        if (existing != null) {
+            return existing;
+        }
+        const instance = new NodeCollector(rootNode);
+        NodeCollectorInstances.set(rootNode, instance);
+        return instance;
     }
 
     #last: NavigationNodeWithMetadataAndParents | undefined;
@@ -85,7 +93,7 @@ export class NodeCollector {
         } else {
             if (isPage(existing.node)) {
                 // eslint-disable-next-line no-console
-                console.warn(`Duplicate slug found: ${node.slug}`);
+                console.warn(`Duplicate slug found: ${node.slug}`, node.title);
             }
             this.orphanedNodes.push(node);
         }
