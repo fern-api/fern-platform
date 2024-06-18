@@ -2859,6 +2859,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                 },
             ],
         },
-        clientInstantiation: `const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });`,
+        clientInstantiation:
+            'const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });',
     },
 };
