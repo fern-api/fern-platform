@@ -1,35 +1,29 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Snippet Template Resolver > Empty payload 1`] = `
-"
-
-from elevenlabs.client import AsyncElevenLabs
+"from elevenlabs.client import AsyncElevenLabs
 
 client = AsyncElevenLabs(
     api_key="YOUR_API_KEY",
-)        
-await client.voices.get_all(
-	
 )
+await client.voices.get_all()
 "
 `;
 
 exports[`Snippet Template Resolver > Test Chat Completion snippet 1`] = `
-"
-
-from octoai.client import AsyncOctoAI
+"from octoai.client import AsyncOctoAI
 
 client = AsyncOctoAI(
     api_key="YOUR_API_KEY",
 )
-        
+
 await client.text_gen.create_chat_completion_stream(
-max_tokens=512,
-messages=[],
-model="qwen1.5-32b-chat",
-presence_penalty=0,
-temperature=0.1,
-top_p=0.9
+    max_tokens=512,
+    messages=[],
+    model="qwen1.5-32b-chat",
+    presence_penalty=0,
+    temperature=0.1,
+    top_p=0.9,
 )
 "
 `;
@@ -39,16 +33,16 @@ exports[`Snippet Template Resolver > Test Snippet Template Resolution 1`] = `
 
 from octoai import AsyncAcme
 
-client = AsyncAcme(api_key='YOUR_API_KEY')        
+client = AsyncAcme(api_key="YOUR_API_KEY")
 client.image_gen.generate_sdxl(
-	ImageGenerationRequest(
-		prompt="A prompt",
-		negative_prompt="A negative prompt",
-		tune_id="someId",
-		offset="10",
-		output_format="pcm_16000",
-		loras={"key1": "value1", "key2": "value2"}
-	)
+    ImageGenerationRequest(
+        prompt="A prompt",
+        negative_prompt="A negative prompt",
+        tune_id="someId",
+        offset="10",
+        output_format="pcm_16000",
+        loras={"key1": "value1", "key2": "value2"},
+    )
 )
 "
 `;

@@ -26,6 +26,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@wasm-fmt/ruff_fmt": "^0.5.10",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
