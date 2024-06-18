@@ -194,6 +194,13 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 where: {
                     docsConfigInstanceId: instanceId,
                 },
+                select: {
+                    domain: true,
+                    path: true,
+                    orgID: true,
+                    isPreview: true,
+                    authType: true,
+                },
                 orderBy: {
                     updatedTime: "desc",
                 },
@@ -201,7 +208,6 @@ export class DocsV2DaoImpl implements DocsV2Dao {
 
             // Step 2: Create new index segments associated with docs
             const indexSegmentIds = indexSegments.map((s) => s.id);
-
             await tx.indexSegment.createMany({
                 data: indexSegments.map((seg) => ({
                     id: seg.id,
@@ -210,10 +216,12 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             });
 
             // Step 3: Store Docs Config Instance
-            await tx.docsConfigInstances.create({
+            await tx.docsConfigInstances.update({
+                where: {
+                    docsConfigInstanceId: instanceId,
+                },
                 data: {
                     docsConfig: writeBuffer(dbDocsDefinition.config),
-                    docsConfigInstanceId: instanceId,
                     referencedApiDefinitionIds: dbDocsDefinition.referencedApis,
                 },
             });
