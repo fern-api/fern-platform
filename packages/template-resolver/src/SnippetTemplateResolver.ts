@@ -291,7 +291,7 @@ export class SnippetTemplateResolver {
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
         const dedupedImports = new Set();
-        if (typeof clientSnippet != "string") {
+        if (typeof clientSnippet !== "string") {
             clientSnippet?.imports.forEach((value) => {
                 dedupedImports.add(value);
             });
