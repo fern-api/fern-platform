@@ -41,7 +41,7 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
@@ -98,7 +98,7 @@ export class SnippetTemplateResolver {
                         invocation: template.templateString.replace(
                             // TODO: fix the typescript generator to create literals not as types
                             TemplateSentinel,
-                            "",
+                            ""
                         ),
                     };
                 }
@@ -129,7 +129,7 @@ export class SnippetTemplateResolver {
                           invocation: template.templateString.replace(
                               // TODO: fix the typescript generator to create literals not as types
                               TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", ")
                           ),
                       }
                     : undefined;
@@ -154,7 +154,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -184,7 +184,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", ")
                     ),
                 };
             }
@@ -211,7 +211,7 @@ export class SnippetTemplateResolver {
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
                     template.templateInput ?? { location: "RELATIVE" },
-                    payloadOverride,
+                    payloadOverride
                 );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
                     return undefined;
@@ -230,7 +230,7 @@ export class SnippetTemplateResolver {
 
                 const evaluatedMember: V1Snippet | undefined = this.resolveV1Template(
                     selectedMemberTemplate,
-                    payloadOverride,
+                    payloadOverride
                 );
                 return evaluatedMember != null
                     ? {
@@ -290,9 +290,21 @@ export class SnippetTemplateResolver {
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${typeof clientSnippet === "string" ? clientSnippet : clientSnippet?.invocation}\n${
-            endpointSnippet?.invocation
-        }`;
+        const dedupedImports = new Set();
+        if (typeof clientSnippet != "string") {
+            clientSnippet?.imports.forEach((value) => {
+                dedupedImports.add(value);
+            });
+        }
+        endpointSnippet?.imports.forEach((value) => {
+            dedupedImports.add(value);
+        });
+
+        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}
+
+${typeof clientSnippet === "string" ? clientSnippet : clientSnippet?.invocation}        
+${endpointSnippet?.invocation}
+`;
     }
 
     private resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Snippet {
