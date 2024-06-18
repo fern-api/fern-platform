@@ -6,8 +6,8 @@ export function accessByPath(object: unknown, path: string[] | string): unknown 
             if (res == null) {
                 return undefined;
             }
-            if (Array.isArray(res) || res instanceof Array) {
-                res = res[0];
+            if ((Array.isArray(res) || res instanceof Array) && !isNaN(Number(idx))) {
+                res = res[Number(idx)];
             } else {
                 res = (res as any)[idx];
             }
@@ -23,7 +23,7 @@ function splitPath(path: string): string[] {
     const result: string[] = [];
     for (const part of path.split(".")) {
         // Use regex to find parts within brackets
-        let matches = part.match(/([^\[\]]+)|(\d+)/g);
+        const matches = part.match(/([^\[\]]+)|(\d+)/g);
         if (matches) {
             result.push(...matches);
         } else {
