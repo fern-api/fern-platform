@@ -33,7 +33,7 @@ export async function runRules({ url }: { url: string }): Promise<RuleResult[]> 
         try {
             const rulePromise = rule.run({
                 url,
-                fdr: FDR_CLIENT
+                fdr: FDR_CLIENT,
             });
             rulePromises.push(rulePromise);
         } catch (error) {
