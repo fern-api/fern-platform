@@ -9,6 +9,7 @@ export function accessByPath(object: unknown, path: string[] | string): unknown 
             if ((Array.isArray(res) || res instanceof Array) && !isNaN(Number(idx))) {
                 res = res[Number(idx)];
             } else {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 res = (res as any)[idx];
             }
         }
@@ -23,7 +24,7 @@ function splitPath(path: string): string[] {
     const result: string[] = [];
     for (const part of path.split(".")) {
         // Use regex to find parts within brackets
-        const matches = part.match(/([^\[\]]+)|(\d+)/g);
+        const matches = part.match(/([^[\]]+)|(\d+)/g);
         if (matches) {
             result.push(...matches);
         } else {
