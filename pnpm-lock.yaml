@@ -950,9 +950,6 @@ importers:
       '@wasm-fmt/ruff_fmt':
         specifier: ^0.5.10
         version: 0.5.10
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
