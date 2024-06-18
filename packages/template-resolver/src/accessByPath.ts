@@ -20,6 +20,11 @@ export function accessByPath(object: unknown, path: string[] | string): unknown 
     return undefined;
 }
 
+/**
+ *
+ * @param path a path like `a.b.c[0].d
+ * @returns ['a', 'b', 'c', '0', 'd']
+ */
 function splitPath(path: string): string[] {
     const result: string[] = [];
     for (const part of path.split(".")) {
