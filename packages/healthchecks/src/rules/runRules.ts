@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { FdrClient } from "@fern-api/fdr-sdk";
 import { AllPagesLoadRule } from "./all-pages-load";
+import { SearchSlugsCorrectRule } from "./search-slugs-correct";
 
 export interface RuleArgs {
     url: string;
@@ -16,11 +17,11 @@ export interface Rule {
 export interface RuleResult {
     name: string;
     success: boolean;
-    message: string;
+    message?: string;
 }
 
 function getAllRules(): Rule[] {
-    return [new AllPagesLoadRule()];
+    return [new AllPagesLoadRule(), new SearchSlugsCorrectRule()];
 }
 
 const FDR_CLIENT = new FdrClient({ environment: "https://registry.buildwithfern.com" });
@@ -32,7 +33,7 @@ export async function runRules({ url }: { url: string }): Promise<RuleResult[]> 
         try {
             const rulePromise = rule.run({
                 url,
-                fdr: FDR_CLIENT,
+                fdr: FDR_CLIENT
             });
             rulePromises.push(rulePromise);
         } catch (error) {

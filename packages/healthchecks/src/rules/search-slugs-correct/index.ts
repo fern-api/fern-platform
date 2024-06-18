@@ -1,0 +1,1 @@
+export { SearchSlugsCorrectRule } from "./rule";
