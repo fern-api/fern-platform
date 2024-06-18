@@ -37,7 +37,7 @@ export async function runRules({ url }: { url: string }): Promise<RuleResult[]> 
             });
             results.push(result);
         } catch (error) {
-            console.error(`Error running rule ${rule.name}`);
+            console.error(`Error running rule ${rule.name}`, JSON.stringify(error));
         }
     }
     return results;
