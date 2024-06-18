@@ -39,6 +39,10 @@ RUN pnpm turbo --filter=@fern-platform/fdr compile
 FROM base AS runner
 WORKDIR /app
 
+# Install dockerize
+RUN apk add --no-cache curl
+RUN curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.7.0/dockerize-linux-amd64-v0.7.0.tar.gz | tar -xzC /usr/local/bin
+
 RUN npm install -g prisma
 
 ARG DATABASE_URL
@@ -46,4 +50,4 @@ ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=installer /app .
 
-ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run.sh"]
+ENTRYPOINT ["dockerize", "-wait", "tcp://postgres:5432", "-wait", "tcp://redis:6379", "-timeout", "60s", "/bin/sh", "/app/servers/fdr/scripts/run.sh"]

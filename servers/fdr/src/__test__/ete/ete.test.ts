@@ -2,7 +2,7 @@ const PORT = 8080;
 
 it("check health", async () => {
     // wait ten seconds
-    await sleep(10000);
+    await sleep(10_000);
     // register empty definition
     const response = await fetch(`http://localhost:${PORT}/health`);
     expect(response.status).toEqual(200);
