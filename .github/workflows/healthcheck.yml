@@ -1,7 +1,6 @@
 name: Docs Healthchecks
 
 on:
-  pull_request:
   workflow_call:
   workflow_dispatch:
   schedule:
