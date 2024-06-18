@@ -10,6 +10,7 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
 
 jobs:
   run:
