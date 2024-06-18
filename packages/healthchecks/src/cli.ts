@@ -30,8 +30,8 @@ void yargs(hideBin(process.argv))
                 console.log(`Running rules for ${url}.`);
                 try {
                     const results = await runRules({ url });
+                    resultsWithUrl.push({ url, results });
                     for (const result of results) {
-                        resultsWithUrl.push({ url, results });
                         if (!result.success) {
                             failure = true;
                         }

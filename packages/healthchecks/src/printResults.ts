@@ -8,7 +8,7 @@ export function printResults(results: { url: string; results: RuleResult[] }[]):
             Url: r.url,
         };
         for (const res of r.results) {
-            row[res.name] = res.success ? emoji.emojify(":x:") : emoji.emojify(":white_check_mark:");
+            row[res.name] = res.success ? emoji.emojify(":white_check_mark:") : emoji.emojify(":x:");
         }
         return row;
     });
