@@ -30,6 +30,5 @@ function splitPath(path: string): string[] {
             result.push(part);
         }
     }
-    console.log(result);
     return result;
 }
