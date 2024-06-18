@@ -25,7 +25,6 @@ exports[`Snippet Template Resolver > Test empty payload 1`] = `
 "
 
 const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });
-
 await cohere.chatStream(
 	
 )"

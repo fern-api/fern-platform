@@ -116,6 +116,7 @@ export class SnippetTemplateResolver {
                         if (payloadOverride == null && input.value.isOptional && input.value.type === "enum") {
                             continue;
                         }
+                        
                         const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
