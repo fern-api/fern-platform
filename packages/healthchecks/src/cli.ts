@@ -2,7 +2,8 @@
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { getAllFernDocsWebsites } from "./getDocsURLs";
-import { runRules } from "./rules/runRules";
+import { printResults } from "./printResults";
+import { RuleResult, runRules } from "./rules/runRules";
 
 void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-healthchecks")
@@ -24,22 +25,22 @@ void yargs(hideBin(process.argv))
         async (argv) => {
             const urls = argv.url != null ? [argv.url] : await getAllFernDocsWebsites();
             let failure = false;
+            const resultsWithUrl: { url: string; results: RuleResult[] }[] = [];
             for (const url of urls) {
                 console.log(`Running rules for ${url}.`);
                 try {
                     const results = await runRules({ url });
                     for (const result of results) {
-                        if (result.success) {
-                            console.log(`:white_check_mark:  Rule ${result.name} passed`);
-                        } else {
+                        resultsWithUrl.push({ url, results });
+                        if (!result.success) {
                             failure = true;
-                            console.log(`:redx:  Rule ${result.name} failed. ${result.message}`);
                         }
                     }
                 } catch (err) {
                     console.error(`Failed to run rules for ${url}.`);
                 }
             }
+            printResults(resultsWithUrl);
             process.exit(failure ? 1 : 0);
         },
     )
