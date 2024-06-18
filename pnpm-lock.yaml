@@ -827,6 +827,13 @@ importers:
         version: 1.6.0(@types/node@18.19.33)
 
   packages/healthchecks:
+    dependencies:
+      '@algolia/client-search':
+        specifier: ^4.23.3
+        version: 4.23.3
+      algoliasearch:
+        specifier: ^4.22.1
+        version: 4.23.3
     devDependencies:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
@@ -834,6 +841,9 @@ importers:
       '@fern-fern/vercel':
         specifier: 0.0.7
         version: 0.0.7
+      '@fern-ui/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
