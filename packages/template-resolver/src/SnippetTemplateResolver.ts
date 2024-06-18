@@ -1,5 +1,6 @@
 import { get } from "lodash-es";
 import {
+    AuthPayload,
     CustomSnippetPayload,
     EndpointSnippetTemplate,
     ParameterPayload,
@@ -55,6 +56,13 @@ export class SnippetTemplateResolver {
         return undefined;
     }
 
+    private accessAuthPayloadByPath(authPayload?: AuthPayload, locationPath?: string): unknown {
+        if (authPayload != null) {
+            return this.accessByPath(authPayload, locationPath);
+        }
+        return undefined;
+    }
+
     private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
             return this.accessByPath(payloadOverride, location.path);
@@ -72,6 +80,8 @@ export class SnippetTemplateResolver {
                 return this.accessParameterPayloadByPath(this.payload.pathParameters, location.path);
             case "HEADERS":
                 return this.accessParameterPayloadByPath(this.payload.headers, location.path);
+            case "AUTH":
+                return this.accessAuthPayloadByPath(this.payload.auth, location.path);
             default:
                 throw new Error(`Unknown payload input type: ${location.location}`);
         }
@@ -106,6 +116,7 @@ export class SnippetTemplateResolver {
                         if (payloadOverride == null && input.value.isOptional && input.value.type === "enum") {
                             continue;
                         }
+
                         const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
@@ -245,7 +256,10 @@ export class SnippetTemplateResolver {
     }
 
     private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
-        const clientSnippet = template.clientInstantiation;
+        const clientSnippet =
+            typeof template.clientInstantiation === "string"
+                ? template.clientInstantiation
+                : this.resolveV1Template(template.clientInstantiation);
         let endpointSnippet: V1Snippet | undefined;
         if (this.isPayloadEmpty()) {
             let invocation: string;
@@ -276,9 +290,21 @@ export class SnippetTemplateResolver {
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
-            endpointSnippet?.invocation
-        }`;
+        const dedupedImports = new Set();
+        if (typeof clientSnippet !== "string") {
+            clientSnippet?.imports.forEach((value) => {
+                dedupedImports.add(value);
+            });
+        }
+        endpointSnippet?.imports.forEach((value) => {
+            dedupedImports.add(value);
+        });
+
+        return `${[...dedupedImports].join("\n")}
+
+${typeof clientSnippet === "string" ? clientSnippet : clientSnippet?.invocation}        
+${endpointSnippet?.invocation}
+`;
     }
 
     private resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Snippet {

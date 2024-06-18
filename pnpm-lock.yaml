@@ -826,6 +826,10 @@ importers:
         specifier: ^1.5.0
         version: 1.6.0(@types/node@18.19.33)
 
+  packages/fdr-sdk/dist/cjs: {}
+
+  packages/fdr-sdk/dist/mjs: {}
+
   packages/healthchecks:
     dependencies:
       '@algolia/client-search':

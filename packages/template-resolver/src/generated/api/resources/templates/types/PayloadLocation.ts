@@ -7,7 +7,7 @@
  * Note that RELATIVE should be used for iterables primarily, so be
  * able to specify the path to the field relative to the iterated on object
  */
-export type PayloadLocation = "BODY" | "QUERY" | "PATH" | "HEADERS" | "RELATIVE";
+export type PayloadLocation = "BODY" | "QUERY" | "PATH" | "HEADERS" | "RELATIVE" | "AUTH";
 
 export const PayloadLocation = {
     Body: "BODY",
@@ -15,4 +15,5 @@ export const PayloadLocation = {
     Path: "PATH",
     Headers: "HEADERS",
     Relative: "RELATIVE",
+    Auth: "AUTH",
 } as const;
