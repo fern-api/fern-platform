@@ -1,4 +1,4 @@
-import { get } from "lodash-es";
+import { accessByPath } from "./accessByPath";
 import { formatSnippet } from "./formatSnippet";
 import {
     AuthPayload,
@@ -37,7 +37,10 @@ export class SnippetTemplateResolver {
     }
 
     private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        return path != null && jsonObject != null && path.length > 0 ? get(jsonObject, path) : jsonObject;
+        if (path != null && jsonObject != null && path.length > 0) {
+            return accessByPath(jsonObject, path);
+        }
+        return jsonObject;
     }
 
     private accessParameterPayloadByPath(
