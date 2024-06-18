@@ -10,6 +10,7 @@ export function printResults(results: { url: string; results: RuleResult[] }[]):
         for (const res of r.results) {
             row[res.name] = res.success ? emoji.emojify(":x:") : emoji.emojify(":white_check_mark:");
         }
+        return row;
     });
     printTable(items);
 }
