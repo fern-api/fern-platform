@@ -1,0 +1,24 @@
+{
+  "name": "fern-file-scanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.71",
+    "@types/node": "^18.7.18",
+    "esbuild": "0.20.2",
+    "serverless": "^3.0.0",
+    "serverless-esbuild": "^1.23.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.335.0",
+    "file-type": "^19.0.0",
+    "is-svg": "^5.0.1"
+  }
+}
