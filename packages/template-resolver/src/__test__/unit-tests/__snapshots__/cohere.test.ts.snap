@@ -1,33 +1,31 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Snippet Template Resolver > Test Chat Completion snippet 1`] = `
-"
-
-const cohere = new CohereClient({ token: "BE_1234", clientName: "Cohere's Client" });        
-await cohere.chatStream(
-	{
-		message: "Hello world!",
-		chatHistory: [
-			{ 
-				role: "USER", 
-				message: "Hello"
-			},
-			{ 
-				role: "CHATBOT", 
-				message: "Hi! How can I help you today?"
-			}
-		]
-	}
-)
+"const cohere = new CohereClient({
+    token: "BE_1234",
+    clientName: "Cohere's Client",
+});
+await cohere.chatStream({
+    message: "Hello world!",
+    chatHistory: [
+        {
+            role: "USER",
+            message: "Hello",
+        },
+        {
+            role: "CHATBOT",
+            message: "Hi! How can I help you today?",
+        },
+    ],
+});
 "
 `;
 
 exports[`Snippet Template Resolver > Test empty payload 1`] = `
-"
-
-const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });        
-await cohere.chatStream(
-	
-)
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await cohere.chatStream();
 "
 `;
