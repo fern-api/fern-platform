@@ -23,7 +23,7 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "test": "vitest"
+    "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
     "@wasm-fmt/ruff_fmt": "^0.5.10",
