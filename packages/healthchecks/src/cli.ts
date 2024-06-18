@@ -25,15 +25,19 @@ void yargs(hideBin(process.argv))
             const urls = argv.url != null ? [argv.url] : await getAllFernDocsWebsites();
             let failure = false;
             for (const url of urls) {
-                console.log(`Running rules for ${url}...`);
-                const results = await runRules({ url });
-                for (const result of results) {
-                    if (result.success) {
-                        console.log(`:white_check_mark:  Rule ${result.name} passed`);
-                    } else {
-                        failure = true;
-                        console.log(`:redx:  Rule ${result.name} failed. ${result.message}`);
+                console.log(`Running rules for ${url}.`);
+                try {
+                    const results = await runRules({ url });
+                    for (const result of results) {
+                        if (result.success) {
+                            console.log(`:white_check_mark:  Rule ${result.name} passed`);
+                        } else {
+                            failure = true;
+                            console.log(`:redx:  Rule ${result.name} failed. ${result.message}`);
+                        }
                     }
+                } catch (err) {
+                    console.error(`Failed to run rules for ${url}.`);
                 }
             }
             process.exit(failure ? 1 : 0);
