@@ -43,6 +43,7 @@ service:
         name: StartDocsPreviewRegisterRequestV2
         body:
           properties:
+            basePath: optional<string>
             orgId: rootCommons.OrgId
             authConfig: optional<AuthConfig>
             filepaths:

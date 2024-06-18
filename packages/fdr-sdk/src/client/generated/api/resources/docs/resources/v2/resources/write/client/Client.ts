@@ -104,6 +104,7 @@ export class Write {
      *
      * @example
      *     await fernRegistry.docs.v2.write.startDocsPreviewRegister({
+     *         basePath: "string",
      *         orgId: "string",
      *         authConfig: {
      *             type: "public"
