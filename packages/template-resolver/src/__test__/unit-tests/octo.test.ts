@@ -3,7 +3,7 @@ import { FernRegistry } from "../../generated";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../octo";
 
 describe("Snippet Template Resolver", () => {
-    it("Test Snippet Template Resolution", () => {
+    it("Test Snippet Template Resolution", async () => {
         // Example with an object, a list of strings, a list of objects, and an enum
         const payload: FernRegistry.CustomSnippetPayload = {
             pathParameters: [{ name: "tune_id", value: "someId" }],
@@ -164,7 +164,7 @@ describe("Snippet Template Resolver", () => {
             },
         };
         const resolver = new SnippetTemplateResolver({ payload, endpointSnippetTemplate });
-        const customSnippet = resolver.resolve();
+        const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "python") {
             throw new Error("Expected snippet to be python");
@@ -173,7 +173,7 @@ describe("Snippet Template Resolver", () => {
         expect(customSnippet.sync_client).toMatchSnapshot();
     });
 
-    it("Empty payload", () => {
+    it("Empty payload", async () => {
         const resolver = new SnippetTemplateResolver({
             payload: {
                 headers: undefined,
@@ -206,7 +206,7 @@ describe("Snippet Template Resolver", () => {
                 },
             },
         });
-        const customSnippet = resolver.resolve();
+        const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "python") {
             throw new Error("Expected snippet to be python");
@@ -215,12 +215,12 @@ describe("Snippet Template Resolver", () => {
         expect(customSnippet.sync_client).toMatchSnapshot();
     });
 
-    it("Test Chat Completion snippet", () => {
+    it("Test Chat Completion snippet", async () => {
         const resolver = new SnippetTemplateResolver({
             payload: CHAT_COMPLETION_PAYLOAD,
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
         });
-        const customSnippet = resolver.resolve();
+        const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "python") {
             throw new Error("Expected snippet to be python");

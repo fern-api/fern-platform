@@ -1,15 +1,18 @@
 import { migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
+import urljoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Db } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
+import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 import { IndexSegmentIds, PrismaTransaction, ReferencedAPIDefinitionIds } from "../types";
 
 export interface StoreDocsDefinitionResponse {
-    previousAlogliaIndex?: string;
+    // previousAlogliaIndex?: string;
     docsDefinitionId: string;
+    domains: ParsedBaseUrl[];
 }
 
 export interface LoadDocsDefinitionByUrlResponse {
@@ -23,6 +26,7 @@ export interface LoadDocsDefinitionByUrlResponse {
     updatedTime: Date;
     authType: AuthType;
     hasPublicS3Assets: boolean;
+    isPreview: boolean;
 }
 
 export interface LoadDocsConfigResponse {
@@ -43,6 +47,16 @@ export interface DocsV2Dao {
         indexSegments,
     }: {
         docsRegistrationInfo: DocsRegistrationInfo;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
+        indexSegments: IndexSegment[];
+    }): Promise<StoreDocsDefinitionResponse>;
+
+    replaceDocsDefinition({
+        instanceId,
+        dbDocsDefinition,
+        indexSegments,
+    }: {
+        instanceId: string;
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
@@ -89,6 +103,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             updatedTime: docsDomain.updatedTime,
             authType: docsDomain.authType,
             hasPublicS3Assets: docsDomain.hasPublicS3Assets,
+            isPreview: docsDomain.isPreview,
         };
     }
 
@@ -119,17 +134,8 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         return await this.prisma.$transaction(async (tx) => {
             const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
 
-            // Step 1: Load Previous Docs
-            const previousDocs = await tx.docsV2.findFirst({
-                where: {
-                    domain: docsRegistrationInfo.fernUrl.hostname,
-                    path: docsRegistrationInfo.fernUrl.path,
-                },
-            });
-
-            // Step 2: Create new index segments associated with docs
+            // Step 1: Create new index segments associated with docs
             const indexSegmentIds = indexSegments.map((s) => s.id);
-
             await tx.indexSegment.createMany({
                 data: indexSegments.map((seg) => ({
                     id: seg.id,
@@ -137,7 +143,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 })),
             });
 
-            // Step 3: Store Docs Config Instance
+            // Step 2: Store Docs Config Instance
             const instanceId = generateDocsDefinitionInstanceId();
             await tx.docsConfigInstances.create({
                 data: {
@@ -147,7 +153,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 },
             });
 
-            // Step 4: Upsert the fern docs domain + custom domain url with the docs definition + algolia index
+            // Step 3: Upsert the fern docs domain + custom domain url with the docs definition + algolia index
             await Promise.all(
                 [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map((url) =>
                     createOrUpdateDocsDefinition({
@@ -165,8 +171,81 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             );
 
             return {
-                algoliaIndex: previousDocs?.algoliaIndex,
                 docsDefinitionId: instanceId,
+                domains: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
+            };
+        });
+    }
+
+    async replaceDocsDefinition({
+        instanceId,
+        dbDocsDefinition,
+        indexSegments,
+    }: {
+        instanceId: string;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
+        indexSegments: IndexSegment[];
+    }): Promise<StoreDocsDefinitionResponse> {
+        return this.prisma.$transaction(async (tx) => {
+            const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
+
+            // Step 1: Load Previous Docs
+            const previousDocs = await tx.docsV2.findMany({
+                where: {
+                    docsConfigInstanceId: instanceId,
+                },
+                select: {
+                    domain: true,
+                    path: true,
+                    orgID: true,
+                    isPreview: true,
+                    authType: true,
+                },
+                orderBy: {
+                    updatedTime: "desc",
+                },
+            });
+
+            // Step 2: Create new index segments associated with docs
+            const indexSegmentIds = indexSegments.map((s) => s.id);
+            await tx.indexSegment.createMany({
+                data: indexSegments.map((seg) => ({
+                    id: seg.id,
+                    version: seg.type === "versioned" ? seg.version.id : null,
+                })),
+            });
+
+            // Step 3: Store Docs Config Instance
+            await tx.docsConfigInstances.update({
+                where: {
+                    docsConfigInstanceId: instanceId,
+                },
+                data: {
+                    docsConfig: writeBuffer(dbDocsDefinition.config),
+                    referencedApiDefinitionIds: dbDocsDefinition.referencedApis,
+                },
+            });
+
+            // Step 4: Upsert the fern docs domain + custom domain url with the docs definition + algolia index
+            await Promise.all(
+                previousDocs.map((previousDoc) =>
+                    createOrUpdateDocsDefinition({
+                        tx,
+                        instanceId,
+                        domain: previousDoc.domain,
+                        path: previousDoc.path,
+                        orgId: previousDoc.orgID,
+                        bufferDocsDefinition,
+                        indexSegmentIds,
+                        isPreview: previousDoc.isPreview,
+                        authType: previousDoc.authType,
+                    }),
+                ),
+            );
+
+            return {
+                docsDefinitionId: instanceId,
+                domains: previousDocs.map((doc) => ParsedBaseUrl.parse(urljoin(doc.domain, doc.path))),
             };
         });
     }

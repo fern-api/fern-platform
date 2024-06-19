@@ -1,4 +1,4 @@
-import { FernNavigation, NodeCollector } from "@fern-api/fdr-sdk";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class AllPagesLoadRule implements Rule {
@@ -17,10 +17,8 @@ export class AllPagesLoadRule implements Rule {
             };
         }
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(getDocsForUrlResponse.body);
-        const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector
-            .getPageSlugs()
-            .map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/ ${slug}`);
+        const slugCollector = FernNavigation.NodeCollector.collect(node);
+        const urls = slugCollector.getPageSlugs().map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
 
         const responses = await Promise.all(
             urls.map(async (url) => {

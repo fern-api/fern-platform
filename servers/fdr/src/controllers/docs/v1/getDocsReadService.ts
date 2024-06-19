@@ -72,6 +72,7 @@ export async function getDocsForDomain({
                           updatedTime: docsV2.updatedTime,
                           authType: docsV2.authType,
                           hasPublicS3Assets: docsV2.hasPublicS3Assets,
+                          isPreview: docsV2.isPreview,
                       }
                     : null,
         }),

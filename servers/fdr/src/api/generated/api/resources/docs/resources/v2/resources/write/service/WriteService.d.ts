@@ -21,6 +21,11 @@ export interface WriteServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
+    reindexAlgoliaSearchRecords(req: express.Request<never, never, FernRegistry.docs.v2.write.ReindexAlgoliaRecordsRequest, never>, res: {
+        send: () => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }): void | Promise<void>;
 }
 export declare class WriteService {
     private readonly methods;

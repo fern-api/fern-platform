@@ -104,6 +104,7 @@ export class Write {
      *
      * @example
      *     await fernRegistry.docs.v2.write.startDocsPreviewRegister({
+     *         basePath: "string",
      *         orgId: "string",
      *         authConfig: {
      *             type: "public"
@@ -228,6 +229,61 @@ export class Write {
         return {
             ok: false,
             error: FernRegistry.docs.v2.write.finishDocsRegister.Error._unknown(_response.error),
+        };
+    }
+
+    /**
+     * @param {FernRegistry.docs.v2.write.ReindexAlgoliaRecordsRequest} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.write.reindexAlgoliaSearchRecords({
+     *         url: "string"
+     *     })
+     */
+    public async reindexAlgoliaSearchRecords(
+        request: FernRegistry.docs.v2.write.ReindexAlgoliaRecordsRequest,
+        requestOptions?: Write.RequestOptions
+    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/algolia/reindex"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: undefined,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error)?.error) {
+                case "DocsNotFoundError":
+                case "ReindexNotAllowedError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error,
+                    };
+            }
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._unknown(_response.error),
         };
     }
 

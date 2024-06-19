@@ -9,6 +9,10 @@ types:
       (i.e. specified in the generators.yml), and dynamically generated information
       that comes from each generator (i.e. features, requirements, and more).
     properties:
+      remote:
+        docs: |
+          If specified, the original README.md will be fetched from this remote (if it exists).
+        type: optional<Remote>
       language: LanguageInfo
       organization: string
       bannerLink: optional<string>
@@ -19,6 +23,21 @@ types:
           Specifies the list of features supported by a specific generator.
           The features are rendered in the order they're specified.
         type: optional<list<ReadmeFeature>>
+
+  Remote:
+    docs: |
+      The remote where the README.md is hosted.
+    union:
+      github: GithubRemote
+
+  GithubRemote:
+    properties:
+      repoUrl:
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+        type: string
+      installationToken:
+        docs: The token used to clone the GitHub repository.
+        type: string
 
   ReadmeFeature:
     docs: |

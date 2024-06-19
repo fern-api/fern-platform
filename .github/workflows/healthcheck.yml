@@ -10,6 +10,7 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
 
 jobs:
   run:
@@ -25,7 +26,7 @@ jobs:
       - name: 🧪 Build Healthchecks CLI
         run: |
           pnpm turbo compile
-          pnpm --filter=@fern-api/healthchecks dist:cli
+          pnpm --filter=@fern-api/healthchecks compile
 
       - name: Run Healthchecks
         run: |

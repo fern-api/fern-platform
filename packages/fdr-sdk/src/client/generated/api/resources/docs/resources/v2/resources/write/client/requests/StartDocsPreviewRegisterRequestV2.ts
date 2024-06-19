@@ -7,6 +7,7 @@ import * as FernRegistry from "../../../../../../../../index";
 /**
  * @example
  *     {
+ *         basePath: "string",
  *         orgId: "string",
  *         authConfig: {
  *             type: "public"
@@ -22,6 +23,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *     }
  */
 export interface StartDocsPreviewRegisterRequestV2 {
+    basePath?: string;
     orgId: FernRegistry.OrgId;
     authConfig?: FernRegistry.docs.v2.write.AuthConfig;
     /** Relative filepath from docs folder. */

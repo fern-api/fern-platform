@@ -151,7 +151,7 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3(ts-node@10.9.2)
       ts-node:
-        specifier: ^10.9.1
+        specifier: ^10.9.2
         version: 10.9.2(@types/node@18.19.33)(typescript@5.4.3)
       tsx:
         specifier: ^4.7.1
@@ -241,6 +241,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../packages/commons/github
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
@@ -382,8 +385,8 @@ importers:
         specifier: workspace:*
         version: link:../../fdr-sdk
       url-join:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 5.0.0
+        version: 5.0.0
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -391,9 +394,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       depcheck:
         specifier: ^1.4.3
         version: 1.4.7
@@ -421,6 +421,9 @@ importers:
       octokit:
         specifier: ^3.2.0
         version: 3.2.1
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -440,6 +443,9 @@ importers:
       prettier:
         specifier: ^3.2.4
         version: 3.2.5
+      simple-git:
+        specifier: ^3.24.0
+        version: 3.24.0
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -777,8 +783,8 @@ importers:
         specifier: ^3.5.3
         version: 3.5.3
       url-join:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 5.0.0
+        version: 5.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.18.9
@@ -807,9 +813,6 @@ importers:
       '@types/title':
         specifier: ^3.4.3
         version: 3.4.3
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       eslint:
         specifier: ^8.56.0
         version: 8.57.0
@@ -824,6 +827,19 @@ importers:
         version: 1.6.0(@types/node@18.19.33)
 
   packages/healthchecks:
+    dependencies:
+      '@algolia/client-search':
+        specifier: ^4.23.3
+        version: 4.23.3
+      algoliasearch:
+        specifier: ^4.22.1
+        version: 4.23.3
+      console-table-printer:
+        specifier: ^2.12.0
+        version: 2.12.0
+      node-emoji:
+        specifier: ^2.1.3
+        version: 2.1.3
     devDependencies:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
@@ -831,12 +847,18 @@ importers:
       '@fern-fern/vercel':
         specifier: 0.0.7
         version: 0.0.7
+      '@fern-ui/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
+      '@types/node-emoji':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.32
@@ -925,9 +947,9 @@ importers:
 
   packages/template-resolver:
     dependencies:
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
+      prettier:
+        specifier: ^2.8.8
+        version: 2.8.8
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -953,9 +975,6 @@ importers:
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.8.8
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -1188,8 +1207,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       url-join:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 5.0.0
+        version: 5.0.0
       vfile:
         specifier: ^6.0.1
         version: 6.0.1
@@ -1275,9 +1294,6 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@5.2.11)
@@ -1568,8 +1584,8 @@ importers:
         specifier: ^0.33.3
         version: 0.33.3
       url-join:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 5.0.0
+        version: 5.0.0
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -1595,9 +1611,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.3.0
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
@@ -1922,8 +1935,8 @@ importers:
         specifier: ^5.1.2
         version: 5.1.3(@babel/core@7.24.5)(react@18.3.1)
       url-join:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 5.0.0
+        version: 5.0.0
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -1952,9 +1965,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.3.0
-      '@types/url-join':
-        specifier: 4.0.1
-        version: 4.0.1
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
@@ -2090,6 +2100,9 @@ importers:
       semver:
         specifier: ^7.6.2
         version: 7.6.2
+      url-join:
+        specifier: 5.0.0
+        version: 5.0.0
       uuid:
         specifier: ^9.0.0
         version: 9.0.1
@@ -5653,6 +5666,13 @@ packages:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: false
 
+  /@kwsites/file-exists@1.1.1:
+    resolution: {integrity: sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==}
+    dependencies:
+      debug: 4.3.4(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
+
   /@kwsites/file-exists@1.1.1(supports-color@8.1.1):
     resolution: {integrity: sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==}
     dependencies:
@@ -8293,7 +8313,6 @@ packages:
   /@sindresorhus/is@4.6.0:
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
-    dev: true
 
   /@sindresorhus/is@5.6.0:
     resolution: {integrity: sha512-TV7t8GKYaJWsn00tFDqBw8+Uqmr8A0fRU1tvTQhyZzGv0sJCGRQL3JGMI3ucuKo3XIZdUP+Lx7/gh2t3lewy7g==}
@@ -11276,6 +11295,13 @@ packages:
     resolution: {integrity: sha512-0ikrnug3/IyneSHqCBeslAhlK2aBfYek1fGo4bP4QnZPmiqSGRK+Oy7ZMisLWkesffJvQ1cqAcBnJC+8+nxIAg==}
     dev: true
 
+  /@types/node-emoji@2.1.0:
+    resolution: {integrity: sha512-LBGWP2LL5A+PpcvzrgXCFcHt9N1l5bqQn05ZUQFFM625k/tmc2w9ghT4kUwQN6gIPlX6qnDOfekmJmV9BywV9g==}
+    deprecated: This is a stub types definition. node-emoji provides its own type definitions, so you do not need this installed.
+    dependencies:
+      node-emoji: 2.1.3
+    dev: true
+
   /@types/node-fetch@2.6.9:
     resolution: {integrity: sha512-bQVlnMLFJ2d35DkPNjEPmd9ueO/rh5EiaZt2bhqiSarPjZIuIV6bPQVqcrEyvNo+AfTrRGVazle1tl597w3gfA==}
     dependencies:
@@ -11444,6 +11470,7 @@ packages:
 
   /@types/url-join@4.0.1:
     resolution: {integrity: sha512-wDXw9LEEUHyV+7UWy7U315nrJGJ7p1BzaCxDpEoLr789Dk1WDVMMlf3iBfbG2F8NdWnYyFbtTxUn2ZNbm1Q4LQ==}
+    dev: false
 
   /@types/uuid@9.0.8:
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -13552,7 +13579,6 @@ packages:
   /char-regex@1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
     engines: {node: '>=10'}
-    dev: true
 
   /character-entities-html4@2.1.0:
     resolution: {integrity: sha512-1v7fgQRj6hnSwFpq1Eu0ynr/CDEw0rXo2B61qXrLNdHZmPKgb7fqS1a2JwF0rISo9q77jDI8VMEHoApn8qDoZA==}
@@ -14037,6 +14063,12 @@ packages:
   /console-browserify@1.2.0:
     resolution: {integrity: sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==}
     dev: true
+
+  /console-table-printer@2.12.0:
+    resolution: {integrity: sha512-Q/Ax+UOpZw0oPZGmv8bH8/W5NpC2rAYy6cX20BVLGQ45v944oL+srmLTZAse/5a3vWDl0MXR/0GTEdsz2dDTbg==}
+    dependencies:
+      simple-wcswidth: 1.0.1
+    dev: false
 
   /constants-browserify@1.0.0:
     resolution: {integrity: sha512-xFxOwqIzR/e1k1gLiWEophSCMqXcwVHIH7akf7b/vxcUeGunlj3hvZaaqxwHsTgn+IndtkQJgSztIDWeumWJDQ==}
@@ -15092,6 +15124,9 @@ packages:
 
   /emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
+
+  /emojilib@2.4.0:
+    resolution: {integrity: sha512-5U0rVMU5Y2n2+ykNLQqMoqklN9ICBT/KsvC1Gz6vqHbz2AXXGkG+Pm5rMWk/8Vjrr/mY9985Hi8DYzn1F09Nyw==}
 
   /emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
@@ -21439,6 +21474,15 @@ packages:
     engines: {node: '>=10.5.0'}
     dev: false
 
+  /node-emoji@2.1.3:
+    resolution: {integrity: sha512-E2WEOVsgs7O16zsURJ/eH8BqhF029wGpEOnv7Urwdo2wmQanOACwJQh0devF9D9RhoZru0+9JXIS0dBXIAz+lA==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@sindresorhus/is': 4.6.0
+      char-regex: 1.0.2
+      emojilib: 2.4.0
+      skin-tone: 2.0.0
+
   /node-fetch-native@1.6.4:
     resolution: {integrity: sha512-IhOigYzAKHd244OC0JIMIUrjzctirCmPkaIfhDeGcEETWof5zKYUW7e7MYvChGWh/4CJeXEgsRyGzuF334rOOQ==}
     dev: true
@@ -22859,7 +22903,7 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: true
+    dev: false
 
   /prettier@3.2.5:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
@@ -24618,6 +24662,15 @@ packages:
       simple-concat: 1.0.1
     dev: true
 
+  /simple-git@3.24.0:
+    resolution: {integrity: sha512-QqAKee9Twv+3k8IFOFfPB2hnk6as6Y6ACUpwCtQvRYBAes23Wv3SZlHVobAzqcE8gfsisCvPw3HGW3HYM+VYYw==}
+    dependencies:
+      '@kwsites/file-exists': 1.1.1
+      '@kwsites/promise-deferred': 1.1.1
+      debug: 4.3.4(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
+
   /simple-git@3.24.0(supports-color@8.1.1):
     resolution: {integrity: sha512-QqAKee9Twv+3k8IFOFfPB2hnk6as6Y6ACUpwCtQvRYBAes23Wv3SZlHVobAzqcE8gfsisCvPw3HGW3HYM+VYYw==}
     dependencies:
@@ -24639,6 +24692,10 @@ packages:
       semver: 7.6.2
     dev: true
 
+  /simple-wcswidth@1.0.1:
+    resolution: {integrity: sha512-xMO/8eNREtaROt7tJvWJqHBDTMFN4eiQ5I4JRMuilwfnFcV5W9u7RUkueNkdw0jPqGMX36iCywelS5yilTuOxg==}
+    dev: false
+
   /sirv@2.0.4:
     resolution: {integrity: sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==}
     engines: {node: '>= 10'}
@@ -24651,6 +24708,12 @@ packages:
   /sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: true
+
+  /skin-tone@2.0.0:
+    resolution: {integrity: sha512-kUMbT1oBJCpgrnKoSr0o6wPtvRWT9W9UKvGLwfJYO2WuahZRHOpEyL1ckyMGgMWh0UdpmaoFqKKD29WTomNEGA==}
+    engines: {node: '>=8'}
+    dependencies:
+      unicode-emoji-modifier-base: 1.0.0
 
   /slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -26426,6 +26489,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /unicode-emoji-modifier-base@1.0.0:
+    resolution: {integrity: sha512-yLSH4py7oFH3oG/9K+XWrz1pSi3dfUrWEnInbxMfArOfc1+33BlGPQtLsOYwvdMy11AwUBetYuaRxSPqgkq+8g==}
+    engines: {node: '>=4'}
+
   /unicode-match-property-ecmascript@2.0.0:
     resolution: {integrity: sha512-5kaZCrbp5mmbz5ulBkDkbY0SsPOjKqVS35VpL9ulMPfSl0J0Xsm+9Evphv9CoIZFwre7aJoa94AY6seMKGVN5Q==}
     engines: {node: '>=4'}
@@ -26678,6 +26745,11 @@ packages:
 
   /url-join@4.0.1:
     resolution: {integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==}
+
+  /url-join@5.0.0:
+    resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: false
 
   /url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}

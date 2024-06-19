@@ -1,3 +1,4 @@
+import { cloneRepository } from "@fern-api/github";
 import fs from "fs";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernGeneratorCli } from "../configuration/generated";
@@ -36,7 +37,7 @@ export class ReadmeGenerator {
         this.writeHeader({ writer });
         this.writeBlocks({
             writer,
-            blocks: this.mergeBlocks({ blocks }),
+            blocks: await this.mergeBlocks({ blocks }),
         });
         writer.end();
 
@@ -93,16 +94,31 @@ export class ReadmeGenerator {
         });
     }
 
-    private mergeBlocks({ blocks }: { blocks: Block[] }): Block[] {
-        if (this.originalReadme == null) {
+    private async mergeBlocks({ blocks }: { blocks: Block[] }): Promise<Block[]> {
+        const originalReadmeContent = await this.getOriginalReadmeContent();
+        if (originalReadmeContent == null) {
             return blocks;
         }
-        const parsed = this.readmeParser.parse({ content: this.originalReadme });
+        const parsed = this.readmeParser.parse({ content: originalReadmeContent });
         const merger = new BlockMerger({
             original: parsed.blocks,
             updated: blocks,
         });
         return merger.merge();
+    }
+
+    private async getOriginalReadmeContent(): Promise<string | undefined> {
+        if (this.originalReadme != null) {
+            return this.originalReadme;
+        }
+        if (this.readmeConfig.remote != null) {
+            const clonedRepository = await cloneRepository({
+                githubRepository: this.readmeConfig.remote.repoUrl,
+                installationToken: this.readmeConfig.remote.installationToken,
+            });
+            return await clonedRepository.getReadme();
+        }
+        return undefined;
     }
 
     private writeBlocks({ writer, blocks }: { writer: Writer; blocks: Block[] }): void {

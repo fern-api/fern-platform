@@ -30,12 +30,11 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "url-join": "4.0.1"
+    "url-join": "5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
-    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
