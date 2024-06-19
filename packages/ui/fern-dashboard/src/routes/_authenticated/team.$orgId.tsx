@@ -92,7 +92,7 @@ const UserRow: React.FC<{
             <div className="flex flex-row gap-x-3 items-center">
                 <Avatar className="h-9 w-9">
                     <AvatarImage src={user.pictureUrl} />
-                    <AvatarFallback>{user.displayName.at(0)?.toUpperCase()}</AvatarFallback>
+                    <AvatarFallback>{user.displayName.charAt(0)?.toUpperCase()}</AvatarFallback>
                 </Avatar>
 
                 <span>{user.displayName}</span>
