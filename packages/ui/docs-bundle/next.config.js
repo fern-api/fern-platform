@@ -74,7 +74,10 @@ const nextConfig = {
 
         if (process.env.VERCEL) {
             if (process.env.VERCEL_ENV !== "production") {
+                // enable vercel toolbar
                 scriptSrc.push("https://vercel.live");
+                connectSrc.push("https://vercel.live");
+                connectSrc.push("https://*.pusher.com");
             }
         }
 
@@ -100,18 +103,16 @@ const nextConfig = {
         if (process.env.VERCEL) {
             if (process.env.VERCEL_ENV !== "production") {
                 ContentSecurityPolicy.push("worker-src 'self' blob:");
-            } else {
-                ContentSecurityPolicy.push(`report-uri ${reportUri}`, `report-to csp-endpoint`);
             }
         }
 
-        const ContentSecurityHeaders = [{ key: "Content-Security-Policy", value: ContentSecurityPolicy.join("; ") }];
+        ContentSecurityPolicy.push(`report-uri ${reportUri}`);
+        ContentSecurityPolicy.push("report-to csp-endpoint");
 
-        if (process.env.VERCEL) {
-            if (process.env.VERCEL_ENV !== "production") {
-                ContentSecurityHeaders.push({ key: "Report-To", value: ReportTo });
-            }
-        }
+        const ContentSecurityHeaders = [
+            { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
+            { key: "Report-To", value: ReportTo },
+        ];
 
         const AccessControlHeaders = [
             {
