@@ -2,7 +2,7 @@ import { migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
 import urljoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db } from "../../api";
+import { DocsV1Db, DocsV2Read } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
@@ -60,6 +60,8 @@ export interface DocsV2Dao {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
+
+    listAllDocsUrls(): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -174,6 +176,20 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 docsDefinitionId: instanceId,
                 domains: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
             };
+        });
+    }
+
+    public listAllDocsUrls(): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+        const response = this.prisma.docsV2.groupBy({
+            where: {
+                isPreview: false,
+                authType: "PUBLIC",
+            },
+            by: ["orgID", "domain", "path", "updatedTime"],
+            orderBy: {
+                updatedTime: "desc",
+            },
+            take: 100,
         });
     }
 

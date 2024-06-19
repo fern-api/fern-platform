@@ -314,6 +314,52 @@ export class Read {
         };
     }
 
+    /**
+     * Returns a list of all public docs.
+     *
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.listAllDocsUrls()
+     */
+    public async listAllDocsUrls(
+        requestOptions?: Read.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+            FernRegistry.docs.v2.read.listAllDocsUrls.Error
+        >
+    > {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/urls"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: _response.body as FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+            };
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.read.listAllDocsUrls.Error._unknown(_response.error),
+        };
+    }
+
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {

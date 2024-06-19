@@ -73,6 +73,20 @@ service:
       errors:
         - IndexSegmentNotFoundError
 
+    listAllDocsUrls:
+      method: GET
+      path: /urls
+      request:
+        name: ListAllDocsUrlsRequest
+        query-parameters:
+          pageNumber: optional<integer>
+          pageSize: optional<integer>
+      response: ListAllDocsUrlsResponse
+      docs: Returns a list of all public docs.
+      # pagination:
+      #   offset: $request.pageNumber
+      #   results: $response.urls
+
 types:
   GetDocsConfigByIdResponse:
     properties:
@@ -93,6 +107,17 @@ types:
     properties:
       domain: string
       basePath: optional<string>
+
+  ListAllDocsUrlsResponse:
+    properties:
+      urls: list<DocsDomainItem>
+
+  DocsDomainItem:
+    extends: BaseUrl
+    properties:
+      organizationId: rootCommons.OrgId
+      # createdAt: datetime
+      updatedAt: datetime
 
 errors:
   DocsDefinitionNotFoundError:
