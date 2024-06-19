@@ -265,29 +265,31 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             });
 
             await sdkDao.createManySdks(sdks, tx);
-            for (const snippetTemplate of snippetTemplates) {
-                const existingTemplate = await tx.snippetTemplate.findFirst({
-                    where: {
-                        orgId: snippetTemplate.orgId,
-                        endpointPath: snippetTemplate.endpointPath,
-                        endpointMethod: snippetTemplate.endpointMethod,
-                        identifierOverride: snippetTemplate.identifierOverride,
-                        sdkId: snippetTemplate.sdkId,
-                    },
-                });
-                if (existingTemplate == null) {
-                    tx.snippetTemplate.create({
-                        data: snippetTemplate,
-                    });
-                } else {
-                    await tx.snippetTemplate.update({
+            await Promise.all(
+                snippetTemplates.map(async (snippetTemplate) => {
+                    const existingTemplate = await tx.snippetTemplate.findFirst({
                         where: {
-                            id: existingTemplate.id,
+                            orgId: snippetTemplate.orgId,
+                            endpointPath: snippetTemplate.endpointPath,
+                            endpointMethod: snippetTemplate.endpointMethod,
+                            identifierOverride: snippetTemplate.identifierOverride,
+                            sdkId: snippetTemplate.sdkId,
                         },
-                        data: snippetTemplate,
                     });
-                }
-            }
+                    if (existingTemplate == null) {
+                        tx.snippetTemplate.create({
+                            data: snippetTemplate,
+                        });
+                    } else {
+                        await tx.snippetTemplate.update({
+                            where: {
+                                id: existingTemplate.id,
+                            },
+                            data: snippetTemplate,
+                        });
+                    }
+                }),
+            );
         });
     }
 
