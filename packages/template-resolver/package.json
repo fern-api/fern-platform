@@ -8,6 +8,11 @@
   "module": "src/index.ts",
   "source": "src/index.ts",
   "main": "dist/index.js",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
