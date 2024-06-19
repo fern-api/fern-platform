@@ -93,7 +93,7 @@ module.exports = {
                 "accent-highlight-faded": "var(--accent-2)",
                 background: withOpacity("--background"),
 
-                "method-get": "var(--green-a10, #ttu)",
+                "method-get": "var(--green-a10)",
                 "method-post": "var(--blue-a10)",
                 "method-delete": "var(--red-a10)",
                 "method-put": "var(--amber-a10)",
