@@ -74,6 +74,11 @@ const nextConfig = {
             ...DOCS_FILES_URLS,
         ].join(" ");
 
+        const reportUri =
+            "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
+
+        const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
+
         const ContentSecurityPolicy = [
             `default-src ${defaultSrc}`,
             `script-src ${scriptSrc}`,
@@ -86,9 +91,11 @@ const nextConfig = {
             "form-action 'self'",
             "frame-ancestors 'none'",
             "upgrade-insecure-requests",
+            `report-uri ${reportUri}`,
+            `report-to csp-endpoint`,
         ].join("; ");
 
-        const ACCESS_CONTROL_HEADERS = [
+        const AccessControlHeaders = [
             {
                 key: "Access-Control-Allow-Origin",
                 value: "*",
@@ -110,11 +117,11 @@ const nextConfig = {
         return [
             {
                 source: "/api/fern-docs/auth/:path*",
-                headers: ACCESS_CONTROL_HEADERS,
+                headers: AccessControlHeaders,
             },
             {
                 source: "/:prefix*/api/fern-docs/auth/:path*",
-                headers: ACCESS_CONTROL_HEADERS,
+                headers: AccessControlHeaders,
             },
             {
                 source: "/:path*",
@@ -122,6 +129,10 @@ const nextConfig = {
                     {
                         key: "Content-Security-Policy",
                         value: ContentSecurityPolicy,
+                    },
+                    {
+                        key: "Report-To",
+                        value: ReportTo,
                     },
                 ],
             },
