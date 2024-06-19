@@ -18,16 +18,21 @@ function getOrganizationQueryKey(orgId: string) {
 export function useOrganization(
     token: string | undefined,
     orgId: string | undefined,
+    shouldIncludeFernUsers: boolean | undefined,
 ): UseQueryResult<Organization | undefined> {
     return useQuery({
         queryKey: getOrganizationQueryKey(orgId!),
-        queryFn: () => getVenusClient({ token: token! }).organization.get(OrganizationId(orgId!)),
+        queryFn: () =>
+            getVenusClient({ token: token! }).organization.get(OrganizationId(orgId!), { shouldIncludeFernUsers }),
         select: (data) => getAPIResponse(data),
         enabled: !!token && !!orgId,
     });
 }
 
-export function useOrganizations(token: string | undefined): {
+export function useOrganizations(
+    token: string | undefined,
+    shouldIncludeFernUsers: boolean | undefined,
+): {
     data: (Organization | undefined)[];
     isLoading: boolean;
 } {
@@ -36,7 +41,10 @@ export function useOrganizations(token: string | undefined): {
         queries: (orgIds ?? []).map((orgId) =>
             queryOptions({
                 queryKey: getOrganizationQueryKey(orgId),
-                queryFn: () => getVenusClient({ token: token! }).organization.get(OrganizationId(orgId)),
+                queryFn: () =>
+                    getVenusClient({ token: token! }).organization.get(OrganizationId(orgId), {
+                        shouldIncludeFernUsers,
+                    }),
                 select: (data) => getAPIResponse(data),
                 enabled: !!token && !isLoading,
             }),

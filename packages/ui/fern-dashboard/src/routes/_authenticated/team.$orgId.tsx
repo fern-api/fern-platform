@@ -192,12 +192,6 @@ const EmailPopover: React.FC<{
     );
 };
 
-// TEMP TEMP: Filter out users within the fern orgs, unless the current user is a fern user
-const shouldIncludeUser = (user: LightweightUser, fernOrg: Organization, currentUserIsFernUser: boolean) => {
-    const fernUserIds = fernOrg.users.map((user) => user.userId);
-    return !fernUserIds.includes(user.userId) || currentUserIsFernUser;
-};
-
 const TeamPage: React.FC = () => {
     const { orgId } = Route.useParams();
     const auth = useAuth0();
@@ -207,8 +201,11 @@ const TeamPage: React.FC = () => {
     const [maybeCurrentOrgId, setMaybeCurrentOrgId] = useState<string>();
 
     const { isLoading: areOrgIdsLoading, data: organizations } = useOrganizationIds(token);
-    const { isLoading: isOrgLoading, data: maybeCurrentOrg } = useOrganization(token, maybeCurrentOrgId);
-    const { isLoading: isFernOrgLoading, data: maybeFernOrg } = useOrganization(token, FERN_ORG_NAME);
+    const { isLoading: isOrgLoading, data: maybeCurrentOrg } = useOrganization(
+        token,
+        maybeCurrentOrgId,
+        (organizations ?? []).includes(FERN_ORG_NAME),
+    );
 
     useEffect(() => {
         const getToken = async () => {
@@ -227,9 +224,7 @@ const TeamPage: React.FC = () => {
 
     return (
         !isOrgLoading &&
-        maybeCurrentOrg &&
-        !isFernOrgLoading &&
-        maybeFernOrg && (
+        maybeCurrentOrg && (
             <>
                 <BreadcrumbHeader
                     entries={
@@ -261,17 +256,9 @@ const TeamPage: React.FC = () => {
                         <Separator decorative />
                         <ScrollArea className="flex flex-col flex-grow shrink px-6 gap-y-6" type="auto">
                             <div className="border rounded-md max-w-[80rem] self-center align-center mx-auto">
-                                {maybeCurrentOrg.users
-                                    .filter((user) =>
-                                        shouldIncludeUser(
-                                            user,
-                                            maybeFernOrg,
-                                            (organizations ?? []).includes(FERN_ORG_NAME),
-                                        ),
-                                    )
-                                    .map((user, index) => (
-                                        <UserRow key={index} user={user} token={token} organization={maybeCurrentOrg} />
-                                    ))}
+                                {maybeCurrentOrg.users.map((user, index) => (
+                                    <UserRow key={index} user={user} token={token} organization={maybeCurrentOrg} />
+                                ))}
                             </div>
                         </ScrollArea>
                     </div>
