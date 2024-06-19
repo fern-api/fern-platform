@@ -72,19 +72,22 @@ const nextConfig = {
             ...DOCS_FILES_URLS,
         ];
 
+        const styleSrc = ["'self'", "'unsafe-inline'"];
+
         if (process.env.VERCEL) {
             if (process.env.VERCEL_ENV !== "production") {
                 // enable vercel toolbar
                 scriptSrc.push("https://vercel.live");
                 connectSrc.push("https://vercel.live");
                 connectSrc.push("https://*.pusher.com");
+                styleSrc.push("https://vercel.live");
             }
         }
 
         const ContentSecurityPolicy = [
             `default-src ${defaultSrc.join(" ")}`,
             `script-src ${scriptSrc.join(" ")}`,
-            "style-src 'self' 'unsafe-inline'",
+            `style-src ${styleSrc.join(" ")}`,
             "img-src 'self' https: blob: data:",
             `connect-src ${connectSrc.join(" ")}`,
             "frame-src 'self' https:",
