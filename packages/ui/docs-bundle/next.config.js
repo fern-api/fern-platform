@@ -55,6 +55,7 @@ const nextConfig = {
             "'self'",
             "https://*.buildwithfern.com",
             "https://*.ferndocs.com",
+            "wss://websocket.proxy.ferndocs.com",
             "https://*.algolia.net",
             "https://*.algolianet.com",
             "https://*.algolia.io",
@@ -79,7 +80,7 @@ const nextConfig = {
                 // enable vercel toolbar
                 scriptSrc.push("https://vercel.live");
                 connectSrc.push("https://vercel.live");
-                connectSrc.push("https://*.pusher.com");
+                connectSrc.push("wss://*.pusher.com");
                 styleSrc.push("https://vercel.live");
             }
         }
@@ -95,7 +96,7 @@ const nextConfig = {
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
-            "upgrade-insecure-requests",
+            // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
         ];
 
         const reportUri =
