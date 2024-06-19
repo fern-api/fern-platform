@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: 🧪 Build CJS and test
-        run: pnpm compile:cjs --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} compile:cjs 
 
       - name: Publish Template Resolver Package
         env:
