@@ -109,7 +109,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                 as styled JSX will only create one instance of global styles
                 for each component.
             */}
-            {/* eslint-disable-next-line react/no-unknown-property */}
             <style jsx global>
                 {`
                     ${stylesheet}

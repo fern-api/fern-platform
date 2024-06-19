@@ -1,5 +1,33 @@
 const assetPrefix =
     process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
+
+const DOCS_FILES_ALLOWLIST = [
+    {
+        protocol: "https",
+        hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "fdr-prod-docs-files-public.s3.amazonaws.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
+        port: "",
+    },
+];
+
+const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
+    ({ protocol, hostname, port }) => `${protocol}://${hostname}${port ? `:${port}` : ""}`,
+);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -20,6 +48,85 @@ const nextConfig = {
      * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
      */
     assetPrefix,
+    headers: async () => {
+        const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS].join(
+            " ",
+        );
+
+        const connectSrc = [
+            "'self'",
+            "https://*.buildwithfern.com",
+            "https://*.ferndocs.com",
+            "https://*.algolia.net",
+            "https://*.algolianet.com",
+            "https://*.algolia.io",
+            "https://*.posthog.com",
+            "https://cdn.segment.com",
+            "https://api.segment.io",
+        ].join(" ");
+
+        const scriptSrc = [
+            "'self'",
+            "'unsafe-eval'",
+            "'unsafe-inline'",
+            "https://*.posthog.com",
+            "https://cdn.segment.com",
+            ...DOCS_FILES_URLS,
+        ].join(" ");
+
+        const ContentSecurityPolicy = [
+            `default-src ${defaultSrc}`,
+            `script-src ${scriptSrc}`,
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' https: blob: data:",
+            `connect-src ${connectSrc}`,
+            "frame-src 'self' https:",
+            "object-src 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "frame-ancestors 'none'",
+            "upgrade-insecure-requests",
+        ].join("; ");
+
+        const ACCESS_CONTROL_HEADERS = [
+            {
+                key: "Access-Control-Allow-Origin",
+                value: "*",
+            },
+            {
+                key: "Access-Control-Allow-Methods",
+                value: "GET, POST, PUT, DELETE, OPTIONS",
+            },
+            {
+                key: "Access-Control-Allow-Headers",
+                value: "Content-Type, Authorization",
+            },
+            {
+                key: "Access-Control-Allow-Credentials",
+                value: "true",
+            },
+        ];
+
+        return [
+            {
+                source: "/api/fern-docs/auth/:path*",
+                headers: ACCESS_CONTROL_HEADERS,
+            },
+            {
+                source: "/:prefix*/api/fern-docs/auth/:path*",
+                headers: ACCESS_CONTROL_HEADERS,
+            },
+            {
+                source: "/:path*",
+                headers: [
+                    {
+                        key: "Content-Security-Policy",
+                        value: ContentSecurityPolicy,
+                    },
+                ],
+            },
+        ];
+    },
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
         // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
@@ -114,28 +221,7 @@ const nextConfig = {
         };
     },
     images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-prod-docs-files-public.s3.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
-                port: "",
-            },
-        ],
+        remotePatterns: DOCS_FILES_ALLOWLIST,
         path: assetPrefix != null ? `${assetPrefix}_next/image` : undefined,
     },
     env: {
