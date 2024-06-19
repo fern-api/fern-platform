@@ -6,6 +6,8 @@
   ],
   "type": "module",
   "module": "src/index.ts",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -25,7 +27,7 @@
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "@fern-api/ruff_fmt": "0.0.3"
+    "@fern-api/ruff_fmt": "0.0.2"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
