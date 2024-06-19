@@ -9,6 +9,7 @@ on:
     paths:
       - "packages/ui/fern-dashboard/**"
       - "packages/ui/components/**"
+      - ".github/workflows/preview-dashboard.yml"
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
