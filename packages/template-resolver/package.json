@@ -25,7 +25,7 @@
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "@wasm-fmt/ruff_fmt": "^0.5.10"
+    "@fern-api/ruff_fmt": "0.0.3"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
