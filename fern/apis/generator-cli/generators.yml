@@ -25,6 +25,17 @@ groups:
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true
 
+      - name: fernapi/fern-python-sdk
+        version: 2.9.9
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: "fern-fern-generator-cli-sdk"
+        config:
+          package_name: "generatorcli"
+          pydantic_config:
+            include_union_utils: true
+
       - name: fernapi/fern-go-sdk
         version: 0.22.0
         github:
