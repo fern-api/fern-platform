@@ -49,9 +49,7 @@ const nextConfig = {
      */
     assetPrefix,
     headers: async () => {
-        const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS].join(
-            " ",
-        );
+        const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
 
         const connectSrc = [
             "'self'",
@@ -63,7 +61,7 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             "https://api.segment.io",
-        ].join(" ");
+        ];
 
         const scriptSrc = [
             "'self'",
@@ -72,28 +70,48 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             ...DOCS_FILES_URLS,
-        ].join(" ");
+        ];
 
-        const reportUri =
-            "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
-
-        const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
+        if (process.env.VERCEL) {
+            if (process.env.VERCEL_ENV !== "production") {
+                scriptSrc.push("https://vercel.live");
+            }
+        }
 
         const ContentSecurityPolicy = [
-            `default-src ${defaultSrc}`,
-            `script-src ${scriptSrc}`,
+            `default-src ${defaultSrc.join(" ")}`,
+            `script-src ${scriptSrc.join(" ")}`,
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' https: blob: data:",
-            `connect-src ${connectSrc}`,
+            `connect-src ${connectSrc.join(" ")}`,
             "frame-src 'self' https:",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
             "upgrade-insecure-requests",
-            `report-uri ${reportUri}`,
-            `report-to csp-endpoint`,
-        ].join("; ");
+        ];
+
+        const reportUri =
+            "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
+
+        const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
+
+        if (process.env.VERCEL) {
+            if (process.env.VERCEL_ENV !== "production") {
+                ContentSecurityPolicy.push("worker-src 'self' blob:");
+            } else {
+                ContentSecurityPolicy.push(`report-uri ${reportUri}`, `report-to csp-endpoint`);
+            }
+        }
+
+        const ContentSecurityHeaders = [{ key: "Content-Security-Policy", value: ContentSecurityPolicy.join("; ") }];
+
+        if (process.env.VERCEL) {
+            if (process.env.VERCEL_ENV !== "production") {
+                ContentSecurityHeaders.push({ key: "Report-To", value: ReportTo });
+            }
+        }
 
         const AccessControlHeaders = [
             {
@@ -125,16 +143,7 @@ const nextConfig = {
             },
             {
                 source: "/:path*",
-                headers: [
-                    {
-                        key: "Content-Security-Policy",
-                        value: ContentSecurityPolicy,
-                    },
-                    {
-                        key: "Report-To",
-                        value: ReportTo,
-                    },
-                ],
+                headers: ContentSecurityHeaders,
             },
         ];
     },
