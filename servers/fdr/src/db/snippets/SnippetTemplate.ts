@@ -236,12 +236,12 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         const sdkDao = new SdkDaoImpl(this.prisma);
 
         await this.prisma.$transaction(async (tx) => {
-            const snippets: Prisma.Enumerable<WithoutQuestionMarks<Prisma.SnippetTemplateCreateManyInput>> = [];
+            const snippetTemplates: Prisma.Enumerable<WithoutQuestionMarks<Prisma.SnippetTemplateCreateManyInput>> = [];
             const sdks: Prisma.Enumerable<SdkPackage> = [];
             storeSnippetsInfo.snippets.map(async (snippet) => {
                 const sdkId = this.getSdkId(snippet.sdk);
 
-                snippets.push({
+                snippetTemplates.push({
                     id: uuidv4(),
                     orgId: storeSnippetsInfo.orgId,
                     apiName: storeSnippetsInfo.apiId,
@@ -265,9 +265,29 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             });
 
             await sdkDao.createManySdks(sdks, tx);
-            await tx.snippetTemplate.createMany({
-                data: snippets,
-            });
+            for (const snippetTemplate of snippetTemplates) {
+                const existingTemplate = await tx.snippetTemplate.findFirst({
+                    where: {
+                        orgId: snippetTemplate.orgId,
+                        endpointPath: snippetTemplate.endpointPath,
+                        endpointMethod: snippetTemplate.endpointMethod,
+                        identifierOverride: snippetTemplate.identifierOverride,
+                        sdkId: snippetTemplate.sdkId,
+                    },
+                });
+                if (existingTemplate == null) {
+                    tx.snippetTemplate.create({
+                        data: snippetTemplate,
+                    });
+                } else {
+                    await tx.snippetTemplate.update({
+                        where: {
+                            id: existingTemplate.id,
+                        },
+                        data: snippetTemplate,
+                    });
+                }
+            }
         });
     }
 

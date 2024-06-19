@@ -112,6 +112,8 @@ model Snippet {
   sdk                     Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
   snippet                 Bytes
   createdAt               DateTime   @default(now())
+
+  @@unique([orgId, sdkId, endpointMethod, endpointPath, identifierOverride], name: "snippet_template_id_tag")
 }
 
 model Sdk {
