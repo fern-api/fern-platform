@@ -26,8 +26,8 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: 🧪 Build and test
-        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+      - name: 🧪 Build CJS and test
+        run: pnpm compile:cjs --filter=${{ env.PACKAGE_NAME }}
 
       - name: Publish Template Resolver Package
         env:
@@ -39,9 +39,5 @@ jobs:
           VERSION="${tag#$prefix}"
 
           cd packages/template-resolver
-          mv package.json package.json.tmp
-          version_replace="s/0.0.0/${VERSION}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          node scripts/preparePackageJson.cjs $VERSION
           npm publish --access public

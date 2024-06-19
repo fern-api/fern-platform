@@ -16,6 +16,7 @@
   },
   "scripts": {
     "compile": "tsc --build",
+    "compile:cjs": "tsc --build -f tsconfig.cjs.json",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
