@@ -40,4 +40,6 @@ jobs:
 
           cd packages/template-resolver
           node scripts/preparePackageJson.cjs $VERSION
+
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           npm publish --access public
