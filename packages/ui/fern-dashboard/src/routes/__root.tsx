@@ -12,7 +12,7 @@ export const Route = createRootRouteWithContext()({
             >
                 <Outlet />
             </CatchBoundary>
-            <TanStackRouterDevtools />
+            {import.meta.env.DEV && <TanStackRouterDevtools />}
         </>
     ),
 });
